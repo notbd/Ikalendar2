@@ -30,6 +30,10 @@
 		7903FE4F28C45F0300245586 /* LocalizedStringKey+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4E28C45F0300245586 /* LocalizedStringKey+Ext.swift */; };
 		7903FE5128C45F3600245586 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5028C45F3600245586 /* Color+Ext.swift */; };
 		7903FE5328C45F4400245586 /* Binding+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5228C45F4400245586 /* Binding+Ext.swift */; };
+		7903FE5528C45FC000245586 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5428C45FBF00245586 /* MotionManager.swift */; };
+		7903FE5728C460C600245586 /* TimeLength.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5628C460C600245586 /* TimeLength.swift */; };
+		7903FE5928C4613500245586 /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5828C4613500245586 /* ModalDismissable.swift */; };
+		7903FE5B28C4619C00245586 /* UIKitIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5A28C4619C00245586 /* UIKitIntegration.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
 		79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713128C4052300A91055 /* IkaCatalog.swift */; };
@@ -86,6 +90,10 @@
 		7903FE4E28C45F0300245586 /* LocalizedStringKey+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizedStringKey+Ext.swift"; sourceTree = "<group>"; };
 		7903FE5028C45F3600245586 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
 		7903FE5228C45F4400245586 /* Binding+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Ext.swift"; sourceTree = "<group>"; };
+		7903FE5428C45FBF00245586 /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
+		7903FE5628C460C600245586 /* TimeLength.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLength.swift; sourceTree = "<group>"; };
+		7903FE5828C4613500245586 /* ModalDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
+		7903FE5A28C4619C00245586 /* UIKitIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitIntegration.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
 		79AA712F28C404FD00A91055 /* IkaPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreference.swift; sourceTree = "<group>"; };
 		79AA713128C4052300A91055 /* IkaCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaCatalog.swift; sourceTree = "<group>"; };
@@ -162,6 +170,7 @@
 		7903FE2228C430E400245586 /* MotionManager */ = {
 			isa = PBXGroup;
 			children = (
+				7903FE5428C45FBF00245586 /* MotionManager.swift */,
 			);
 			path = MotionManager;
 			sourceTree = "<group>";
@@ -169,6 +178,7 @@
 		7903FE2328C4310700245586 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				7903FE5628C460C600245586 /* TimeLength.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -176,6 +186,8 @@
 		7903FE2428C4312200245586 /* UIKitIntegrations */ = {
 			isa = PBXGroup;
 			children = (
+				7903FE5828C4613500245586 /* ModalDismissable.swift */,
+				7903FE5A28C4619C00245586 /* UIKitIntegration.swift */,
 			);
 			path = UIKitIntegrations;
 			sourceTree = "<group>";
@@ -483,6 +495,7 @@
 				7903FE2C28C4368D00245586 /* ListSeparator.swift in Sources */,
 				79D3E66F28C41CCE00005DB5 /* FootApparel.swift in Sources */,
 				79AA714728C4090A00A91055 /* RotationProtocol.swift in Sources */,
+				7903FE5728C460C600245586 /* TimeLength.swift in Sources */,
 				79AA714B28C411EB00A91055 /* BattleRotationDict.swift in Sources */,
 				7903FE2828C4325600245586 /* IkaPublisher.swift in Sources */,
 				79AA714428C408B500A91055 /* BattleRule.swift in Sources */,
@@ -492,11 +505,14 @@
 				79AA714D28C412E800A91055 /* SalmonRotation.swift in Sources */,
 				79AA715728C415A600A91055 /* SalmonWeapon.swift in Sources */,
 				79B92BB628B03B1F00544939 /* Ikalendar2App.swift in Sources */,
+				7903FE5B28C4619C00245586 /* UIKitIntegration.swift in Sources */,
 				79AA713F28C4085600A91055 /* GameMode.swift in Sources */,
 				79C1485A28C42A3B00587C6E /* KeyConstants.swift in Sources */,
 				79AA715028C413A900A91055 /* BattleStage.swift in Sources */,
 				79AA713928C4079900A91055 /* IkaMockData.swift in Sources */,
 				79D3E67128C41D7B00005DB5 /* SalmonApparel.swift in Sources */,
+				7903FE5928C4613500245586 /* ModalDismissable.swift in Sources */,
+				7903FE5528C45FC000245586 /* MotionManager.swift in Sources */,
 				79D3E67328C41DD900005DB5 /* HeadApparel.swift in Sources */,
 				7903FE3028C437F900245586 /* QuickBorder.swift in Sources */,
 				7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */,
