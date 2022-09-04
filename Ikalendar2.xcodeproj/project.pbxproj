@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2528C4322100245586 /* IkaDecoder.swift */; };
+		7903FE2828C4325600245586 /* IkaPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2728C4325600245586 /* IkaPublisher.swift */; };
+		7903FE2A28C4349E00245586 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2928C4349E00245586 /* SwiftyJSON.swift */; };
+		7903FE2C28C4368D00245586 /* ListSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2B28C4368D00245586 /* ListSeparator.swift */; };
+		7903FE2E28C436D000245586 /* SimpleHaptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2D28C436D000245586 /* SimpleHaptics.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
 		79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713128C4052300A91055 /* IkaCatalog.swift */; };
@@ -40,6 +45,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7903FE2528C4322100245586 /* IkaDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaDecoder.swift; sourceTree = "<group>"; };
+		7903FE2728C4325600245586 /* IkaPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPublisher.swift; sourceTree = "<group>"; };
+		7903FE2928C4349E00245586 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		7903FE2B28C4368D00245586 /* ListSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSeparator.swift; sourceTree = "<group>"; };
+		7903FE2D28C436D000245586 /* SimpleHaptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHaptics.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
 		79AA712F28C404FD00A91055 /* IkaPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreference.swift; sourceTree = "<group>"; };
 		79AA713128C4052300A91055 /* IkaCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaCatalog.swift; sourceTree = "<group>"; };
@@ -234,12 +244,12 @@
 		79B92BB428B03B1F00544939 /* Ikalendar2 */ = {
 			isa = PBXGroup;
 			children = (
-				79C1485628C4276900587C6E /* Utilities */,
-				79C1485528C426A600587C6E /* Constants */,
 				79B92BB928B03B2200544939 /* Assets.xcassets */,
 				79B92BC328B03BC000544939 /* Info.plist */,
 				79B92BB528B03B1F00544939 /* Ikalendar2App.swift */,
 				79B92BC628B0443C00544939 /* Screens */,
+				79C1485528C426A600587C6E /* Constants */,
+				79C1485628C4276900587C6E /* Utilities */,
 				79AA712D28C4000400A91055 /* Models */,
 				79C1485428C425BF00587C6E /* Preview Content */,
 			);
@@ -257,6 +267,9 @@
 		79B92BC728B0445800544939 /* Imports */ = {
 			isa = PBXGroup;
 			children = (
+				7903FE2928C4349E00245586 /* SwiftyJSON.swift */,
+				7903FE2B28C4368D00245586 /* ListSeparator.swift */,
+				7903FE2D28C436D000245586 /* SimpleHaptics.swift */,
 			);
 			path = Imports;
 			sourceTree = "<group>";
@@ -290,13 +303,13 @@
 		79C1485628C4276900587C6E /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				7903FE2428C4312200245586 /* UIKitIntegrations */,
-				7903FE2328C4310700245586 /* Others */,
-				7903FE2228C430E400245586 /* MotionManager */,
+				79C1485D28C42D4A00587C6E /* Publishers */,
+				79C1485E28C42D6600587C6E /* Decoders */,
 				7903FE2128C430C700245586 /* Modifiers */,
 				7903FE2028C42E4C00245586 /* Extensions */,
-				79C1485E28C42D6600587C6E /* Decoders */,
-				79C1485D28C42D4A00587C6E /* Publishers */,
+				7903FE2228C430E400245586 /* MotionManager */,
+				7903FE2428C4312200245586 /* UIKitIntegrations */,
+				7903FE2328C4310700245586 /* Others */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -304,6 +317,7 @@
 		79C1485D28C42D4A00587C6E /* Publishers */ = {
 			isa = PBXGroup;
 			children = (
+				7903FE2728C4325600245586 /* IkaPublisher.swift */,
 			);
 			path = Publishers;
 			sourceTree = "<group>";
@@ -311,6 +325,7 @@
 		79C1485E28C42D6600587C6E /* Decoders */ = {
 			isa = PBXGroup;
 			children = (
+				7903FE2528C4322100245586 /* IkaDecoder.swift */,
 			);
 			path = Decoders;
 			sourceTree = "<group>";
@@ -389,13 +404,17 @@
 				79C1485828C427B300587C6E /* Constants.swift in Sources */,
 				797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */,
 				79AA713C28C407F500A91055 /* IkaError.swift in Sources */,
+				7903FE2A28C4349E00245586 /* SwiftyJSON.swift in Sources */,
+				7903FE2E28C436D000245586 /* SimpleHaptics.swift in Sources */,
 				79AA715228C4145E00A91055 /* SalmonStage.swift in Sources */,
 				79B92BB828B03B1F00544939 /* ContentView.swift in Sources */,
 				79AA713628C4070700A91055 /* IkaStatus.swift in Sources */,
 				79AA714928C4095100A91055 /* BattleRotation.swift in Sources */,
+				7903FE2C28C4368D00245586 /* ListSeparator.swift in Sources */,
 				79D3E66F28C41CCE00005DB5 /* FootApparel.swift in Sources */,
 				79AA714728C4090A00A91055 /* RotationProtocol.swift in Sources */,
 				79AA714B28C411EB00A91055 /* BattleRotationDict.swift in Sources */,
+				7903FE2828C4325600245586 /* IkaPublisher.swift in Sources */,
 				79AA714428C408B500A91055 /* BattleRule.swift in Sources */,
 				79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */,
 				79AA714128C4087300A91055 /* BattleMode.swift in Sources */,
@@ -408,6 +427,7 @@
 				79AA713928C4079900A91055 /* IkaMockData.swift in Sources */,
 				79D3E67128C41D7B00005DB5 /* SalmonApparel.swift in Sources */,
 				79D3E67328C41DD900005DB5 /* HeadApparel.swift in Sources */,
+				7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */,
 				79C1485C28C42CDE00587C6E /* StyleConstants.swift in Sources */,
 				79AA713428C4056700A91055 /* IkaTimer.swift in Sources */,
 				79AA715928C4160D00A91055 /* MysteryWeapon.swift in Sources */,
