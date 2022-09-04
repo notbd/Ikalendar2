@@ -2,16 +2,16 @@
 //  Ikalendar2App.swift
 //  Ikalendar2
 //
-//  Created by Tianwei Zhang on 8/19/22.
+//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
 
 @main
 struct Ikalendar2App: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  var body: some Scene {
+    WindowGroup {
+      ContentView()
     }
+  }
 }
