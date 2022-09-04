@@ -16,14 +16,14 @@ struct ErrorView: View {
   var error: IkaError
 
   var body: some View {
-    GeometryReader { geometry in
+    GeometryReader { geo in
       VStack {
         Spacer()
         HStack {
           Spacer()
           ErrorViewContent(
             error: error,
-            maxWidth: geometry.size.width * Scoped.CONTENT_WIDTH_RATIO)
+            maxWidth: geo.size.width * Scoped.CONTENT_WIDTH_RATIO)
           Spacer()
         }
         Spacer()

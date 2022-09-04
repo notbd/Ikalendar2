@@ -1,7 +1,7 @@
 //
 //  SimpleHaptics.swift
 //
-//  Created by Tianwei Zhang on 4/2/21.
+//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
 //
 
 import UIKit

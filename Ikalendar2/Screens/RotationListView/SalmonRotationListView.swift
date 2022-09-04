@@ -24,7 +24,7 @@ struct SalmonRotationListView: View {
   }
 
   var body: some View {
-    GeometryReader { geometry in
+    GeometryReader { geo in
       Form {
         ForEach(
           Array(salmonRotations.enumerated()),
@@ -33,7 +33,7 @@ struct SalmonRotationListView: View {
           SalmonRotationRow(
             rotation: rotation,
             index: index,
-            width: geometry.size.width)
+            width: geo.size.width)
         }
       }
       .disabled(ikaCatalog.loadingStatus != .loaded)

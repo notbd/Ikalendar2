@@ -13,7 +13,7 @@ struct OnboardingView: View {
   @Environment(\.presentationMode) var presentationMode
 
   var body: some View {
-    GeometryReader { geometry in
+    GeometryReader { geo in
 
       HStack {
         Spacer()
@@ -25,7 +25,7 @@ struct OnboardingView: View {
 
           Text("Welcome Aboard")
             .font(.system(
-              geometry.size.width > 320 ? .largeTitle : .title,
+              geo.size.width > 320 ? .largeTitle : .title,
               design: .rounded))
             .fontWeight(.bold)
 
@@ -92,8 +92,8 @@ struct OnboardingView: View {
                   .foregroundColor(Color(UIColor.systemYellow))
               })
           }
-          .padding(.top, geometry.size.width > 320 ? 30 : 10)
-          .padding(.top, geometry.size.width > 375 ? 20 : 0)
+          .padding(.top, geo.size.width > 320 ? 30 : 10)
+          .padding(.top, geo.size.width > 375 ? 20 : 0)
           .padding(.bottom, 20)
 
           Spacer()
@@ -118,8 +118,8 @@ struct OnboardingView: View {
                 .font(.system(.body, design: .rounded))
                 .fontWeight(.semibold)
 
-                .frame(maxWidth: geometry.size.width > 320 ? 360 : 240)
-                .frame(height: geometry.size.width > 320 ? 48 : 42)
+                .frame(maxWidth: geo.size.width > 320 ? 360 : 240)
+                .frame(height: geo.size.width > 320 ? 48 : 42)
 
                 .background(Color.accentColor)
                 .cornerRadius(12)
@@ -127,12 +127,12 @@ struct OnboardingView: View {
             }
           }
         }
-        .padding(.bottom, geometry.size.width > 414 ? 40 : 20)
-        .padding(.leading, geometry.size.width > 320 ? 30 : 20)
-        .padding(.trailing, geometry.size.width > 320 ? 30 : 20)
+        .padding(.bottom, geo.size.width > 414 ? 40 : 20)
+        .padding(.leading, geo.size.width > 320 ? 30 : 20)
+        .padding(.trailing, geo.size.width > 320 ? 30 : 20)
 
-//                .padding(.leading,  geometry.size.width > 375 ? 5 : 0)
-//                .padding(.trailing, geometry.size.width > 375 ? 5 : 0)
+//                .padding(.leading,  geo.size.width > 375 ? 5 : 0)
+//                .padding(.trailing, geo.size.width > 375 ? 5 : 0)
         .frame(maxWidth: 512)
 
         Spacer()

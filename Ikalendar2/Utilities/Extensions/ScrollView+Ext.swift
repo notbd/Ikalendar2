@@ -24,16 +24,16 @@ extension ScrollView {
     @ViewBuilder configurator: @escaping (ScrollView<AnyView>) -> T)
     -> some View
   {
-    GeometryReader { geometryWithSafeArea in
+    GeometryReader { geoWithSafeArea in
       GeometryReader { _ in
         configurator(
           ScrollView<AnyView>(self.axes, showsIndicators: self.showsIndicators) {
             AnyView(
               VStack { self.content }
-                .padding(.top, geometryWithSafeArea.safeAreaInsets.top)
-                .padding(.bottom, geometryWithSafeArea.safeAreaInsets.bottom)
-                .padding(.leading, geometryWithSafeArea.safeAreaInsets.leading)
-                .padding(.trailing, geometryWithSafeArea.safeAreaInsets.trailing))
+                .padding(.top, geoWithSafeArea.safeAreaInsets.top)
+                .padding(.bottom, geoWithSafeArea.safeAreaInsets.bottom)
+                .padding(.leading, geoWithSafeArea.safeAreaInsets.leading)
+                .padding(.trailing, geoWithSafeArea.safeAreaInsets.trailing))
           })
       }
       .edgesIgnoringSafeArea(.all)

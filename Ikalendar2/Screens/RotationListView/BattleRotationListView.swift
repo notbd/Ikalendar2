@@ -25,7 +25,7 @@ struct BattleRotationListView: View {
   }
 
   var body: some View {
-    GeometryReader { geometry in
+    GeometryReader { geo in
       Form {
         ForEach(
           Array(battleRotations.enumerated()),
@@ -34,7 +34,7 @@ struct BattleRotationListView: View {
           BattleRotationRow(
             rotation: rotation,
             index: index,
-            width: geometry.size.width)
+            width: geo.size.width)
         }
       }
       .disabled(ikaCatalog.loadingStatus != .loaded)
