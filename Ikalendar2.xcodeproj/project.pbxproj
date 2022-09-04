@@ -35,6 +35,16 @@
 		7903FE5928C4613500245586 /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5828C4613500245586 /* ModalDismissable.swift */; };
 		7903FE5B28C4619C00245586 /* UIKitIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5A28C4619C00245586 /* UIKitIntegration.swift */; };
 		7903FE5F28C4625B00245586 /* SwiftUIBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5E28C4625B00245586 /* SwiftUIBlur.swift */; };
+		7903FE6128C46A1700245586 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6028C46A1700245586 /* RootView.swift */; };
+		7903FE6328C46A3400245586 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6228C46A3400245586 /* MainView.swift */; };
+		7903FE6528C46A4D00245586 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6428C46A4D00245586 /* ErrorView.swift */; };
+		7903FE6A28C46C6B00245586 /* BattleRotationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6928C46C6B00245586 /* BattleRotationListView.swift */; };
+		7903FE6C28C46CAF00245586 /* SalmonRotationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6B28C46CAF00245586 /* SalmonRotationListView.swift */; };
+		7903FE6E28C46CD200245586 /* SettingsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6D28C46CD200245586 /* SettingsMainView.swift */; };
+		7903FE7028C46CEF00245586 /* SettingsAppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6F28C46CEF00245586 /* SettingsAppIconView.swift */; };
+		7903FE7228C46D1800245586 /* SettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE7128C46D1800245586 /* SettingsAboutView.swift */; };
+		7903FE7428C46D4100245586 /* SettingsAcknowledgementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE7328C46D4100245586 /* SettingsAcknowledgementView.swift */; };
+		7903FE7628C46D6100245586 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE7528C46D6100245586 /* OnboardingView.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
 		79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713128C4052300A91055 /* IkaCatalog.swift */; };
@@ -96,6 +106,16 @@
 		7903FE5828C4613500245586 /* ModalDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
 		7903FE5A28C4619C00245586 /* UIKitIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitIntegration.swift; sourceTree = "<group>"; };
 		7903FE5E28C4625B00245586 /* SwiftUIBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIBlur.swift; sourceTree = "<group>"; };
+		7903FE6028C46A1700245586 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		7903FE6228C46A3400245586 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		7903FE6428C46A4D00245586 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		7903FE6928C46C6B00245586 /* BattleRotationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleRotationListView.swift; sourceTree = "<group>"; };
+		7903FE6B28C46CAF00245586 /* SalmonRotationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonRotationListView.swift; sourceTree = "<group>"; };
+		7903FE6D28C46CD200245586 /* SettingsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainView.swift; sourceTree = "<group>"; };
+		7903FE6F28C46CEF00245586 /* SettingsAppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAppIconView.swift; sourceTree = "<group>"; };
+		7903FE7128C46D1800245586 /* SettingsAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAboutView.swift; sourceTree = "<group>"; };
+		7903FE7328C46D4100245586 /* SettingsAcknowledgementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAcknowledgementView.swift; sourceTree = "<group>"; };
+		7903FE7528C46D6100245586 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
 		79AA712F28C404FD00A91055 /* IkaPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreference.swift; sourceTree = "<group>"; };
 		79AA713128C4052300A91055 /* IkaCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaCatalog.swift; sourceTree = "<group>"; };
@@ -207,6 +227,9 @@
 		7903FE5C28C4622400245586 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				7903FE7728C46D8D00245586 /* Rotations */,
+				7903FE7828C46D9B00245586 /* Overlays */,
+				7903FE7928C46DAE00245586 /* Buttons */,
 				7903FE5D28C4623000245586 /* UIViewRepresentables */,
 			);
 			path = Components;
@@ -218,6 +241,55 @@
 				7903FE5E28C4625B00245586 /* SwiftUIBlur.swift */,
 			);
 			path = UIViewRepresentables;
+			sourceTree = "<group>";
+		};
+		7903FE6628C46C1100245586 /* RotationListView */ = {
+			isa = PBXGroup;
+			children = (
+				7903FE6928C46C6B00245586 /* BattleRotationListView.swift */,
+				7903FE6B28C46CAF00245586 /* SalmonRotationListView.swift */,
+			);
+			path = RotationListView;
+			sourceTree = "<group>";
+		};
+		7903FE6728C46C2900245586 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				7903FE6D28C46CD200245586 /* SettingsMainView.swift */,
+				7903FE6F28C46CEF00245586 /* SettingsAppIconView.swift */,
+				7903FE7128C46D1800245586 /* SettingsAboutView.swift */,
+				7903FE7328C46D4100245586 /* SettingsAcknowledgementView.swift */,
+			);
+			path = SettingsView;
+			sourceTree = "<group>";
+		};
+		7903FE6828C46C3300245586 /* OnboardingView */ = {
+			isa = PBXGroup;
+			children = (
+				7903FE7528C46D6100245586 /* OnboardingView.swift */,
+			);
+			path = OnboardingView;
+			sourceTree = "<group>";
+		};
+		7903FE7728C46D8D00245586 /* Rotations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Rotations;
+			sourceTree = "<group>";
+		};
+		7903FE7828C46D9B00245586 /* Overlays */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Overlays;
+			sourceTree = "<group>";
+		};
+		7903FE7928C46DAE00245586 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		79AA712D28C4000400A91055 /* Models */ = {
@@ -352,7 +424,13 @@
 		79B92BC628B0443C00544939 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				7903FE6028C46A1700245586 /* RootView.swift */,
+				7903FE6228C46A3400245586 /* MainView.swift */,
 				79B92BB728B03B1F00544939 /* ContentView.swift */,
+				7903FE6428C46A4D00245586 /* ErrorView.swift */,
+				7903FE6628C46C1100245586 /* RotationListView */,
+				7903FE6728C46C2900245586 /* SettingsView */,
+				7903FE6828C46C3300245586 /* OnboardingView */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -505,8 +583,11 @@
 				7903FE4F28C45F0300245586 /* LocalizedStringKey+Ext.swift in Sources */,
 				7903FE2E28C436D000245586 /* SimpleHaptics.swift in Sources */,
 				7903FE3228C4385B00245586 /* SilhouetteFrame.swift in Sources */,
+				7903FE6E28C46CD200245586 /* SettingsMainView.swift in Sources */,
+				7903FE7228C46D1800245586 /* SettingsAboutView.swift in Sources */,
 				7903FE5328C45F4400245586 /* Binding+Ext.swift in Sources */,
 				79AA715228C4145E00A91055 /* SalmonStage.swift in Sources */,
+				7903FE6528C46A4D00245586 /* ErrorView.swift in Sources */,
 				7903FE3628C438FC00245586 /* RoundedFont.swift in Sources */,
 				79B92BB828B03B1F00544939 /* ContentView.swift in Sources */,
 				7903FE5F28C4625B00245586 /* SwiftUIBlur.swift in Sources */,
@@ -516,7 +597,9 @@
 				79D3E66F28C41CCE00005DB5 /* FootApparel.swift in Sources */,
 				79AA714728C4090A00A91055 /* RotationProtocol.swift in Sources */,
 				7903FE5728C460C600245586 /* TimeLength.swift in Sources */,
+				7903FE6328C46A3400245586 /* MainView.swift in Sources */,
 				79AA714B28C411EB00A91055 /* BattleRotationDict.swift in Sources */,
+				7903FE6128C46A1700245586 /* RootView.swift in Sources */,
 				7903FE2828C4325600245586 /* IkaPublisher.swift in Sources */,
 				79AA714428C408B500A91055 /* BattleRule.swift in Sources */,
 				7903FE5128C45F3600245586 /* Color+Ext.swift in Sources */,
@@ -540,10 +623,15 @@
 				79C1485C28C42CDE00587C6E /* StyleConstants.swift in Sources */,
 				7903FE4928C45DFC00245586 /* Date+Ext.swift in Sources */,
 				7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */,
+				7903FE7028C46CEF00245586 /* SettingsAppIconView.swift in Sources */,
 				79AA713428C4056700A91055 /* IkaTimer.swift in Sources */,
 				7903FE4B28C45E7D00245586 /* String+Ext.swift in Sources */,
+				7903FE7628C46D6100245586 /* OnboardingView.swift in Sources */,
 				79AA715928C4160D00A91055 /* MysteryWeapon.swift in Sources */,
 				7903FE4728C45D8000245586 /* DateFormatter+Ext.swift in Sources */,
+				7903FE6A28C46C6B00245586 /* BattleRotationListView.swift in Sources */,
+				7903FE6C28C46CAF00245586 /* SalmonRotationListView.swift in Sources */,
+				7903FE7428C46D4100245586 /* SettingsAcknowledgementView.swift in Sources */,
 				7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */,
 				7903FE4D28C45ED200245586 /* View+Ext.swift in Sources */,
 				7903FE4528C45CE900245586 /* ScrollView+Ext.swift in Sources */,
@@ -675,7 +763,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -706,7 +794,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
