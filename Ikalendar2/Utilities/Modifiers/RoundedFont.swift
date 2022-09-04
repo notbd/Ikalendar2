@@ -1,9 +1,8 @@
 //
 //  RoundedFont.swift
-//  ikalendar2
+//  Ikalendar2
 //
-//  Created by Peter Zhang on 6/9/21.
-//  Copyright © 2021 Tianwei Zhang. All rights reserved.
+//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI

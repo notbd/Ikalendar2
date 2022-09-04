@@ -1,8 +1,8 @@
 //
 //  FontIka.swift
-//  ikalendar2
+//  Ikalendar2
 //
-//  Created by Tianwei Zhang on 3/28/21.
+//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI

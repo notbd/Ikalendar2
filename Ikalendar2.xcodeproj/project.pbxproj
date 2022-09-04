@@ -22,6 +22,14 @@
 		7903FE4028C43A0F00245586 /* Inkling_v2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3D28C43A0F00245586 /* Inkling_v2.otf */; };
 		7903FE4128C43A0F00245586 /* Splatfont2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3E28C43A0F00245586 /* Splatfont2.ttf */; };
 		7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4228C43AB800245586 /* GrizzcoWeapon.swift */; };
+		7903FE4528C45CE900245586 /* ScrollView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4428C45CE900245586 /* ScrollView+Ext.swift */; };
+		7903FE4728C45D8000245586 /* DateFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4628C45D8000245586 /* DateFormatter+Ext.swift */; };
+		7903FE4928C45DFC00245586 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4828C45DFC00245586 /* Date+Ext.swift */; };
+		7903FE4B28C45E7D00245586 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4A28C45E7D00245586 /* String+Ext.swift */; };
+		7903FE4D28C45ED200245586 /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4C28C45ED200245586 /* View+Ext.swift */; };
+		7903FE4F28C45F0300245586 /* LocalizedStringKey+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4E28C45F0300245586 /* LocalizedStringKey+Ext.swift */; };
+		7903FE5128C45F3600245586 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5028C45F3600245586 /* Color+Ext.swift */; };
+		7903FE5328C45F4400245586 /* Binding+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5228C45F4400245586 /* Binding+Ext.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
 		79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713128C4052300A91055 /* IkaCatalog.swift */; };
@@ -70,6 +78,14 @@
 		7903FE3D28C43A0F00245586 /* Inkling_v2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inkling_v2.otf; sourceTree = "<group>"; };
 		7903FE3E28C43A0F00245586 /* Splatfont2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Splatfont2.ttf; sourceTree = "<group>"; };
 		7903FE4228C43AB800245586 /* GrizzcoWeapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrizzcoWeapon.swift; sourceTree = "<group>"; };
+		7903FE4428C45CE900245586 /* ScrollView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScrollView+Ext.swift"; sourceTree = "<group>"; };
+		7903FE4628C45D8000245586 /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
+		7903FE4828C45DFC00245586 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		7903FE4A28C45E7D00245586 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		7903FE4C28C45ED200245586 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
+		7903FE4E28C45F0300245586 /* LocalizedStringKey+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizedStringKey+Ext.swift"; sourceTree = "<group>"; };
+		7903FE5028C45F3600245586 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
+		7903FE5228C45F4400245586 /* Binding+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Ext.swift"; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
 		79AA712F28C404FD00A91055 /* IkaPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreference.swift; sourceTree = "<group>"; };
 		79AA713128C4052300A91055 /* IkaCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaCatalog.swift; sourceTree = "<group>"; };
@@ -118,6 +134,14 @@
 		7903FE2028C42E4C00245586 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				7903FE4428C45CE900245586 /* ScrollView+Ext.swift */,
+				7903FE4628C45D8000245586 /* DateFormatter+Ext.swift */,
+				7903FE4828C45DFC00245586 /* Date+Ext.swift */,
+				7903FE4A28C45E7D00245586 /* String+Ext.swift */,
+				7903FE4C28C45ED200245586 /* View+Ext.swift */,
+				7903FE4E28C45F0300245586 /* LocalizedStringKey+Ext.swift */,
+				7903FE5028C45F3600245586 /* Color+Ext.swift */,
+				7903FE5228C45F4400245586 /* Binding+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -447,8 +471,10 @@
 				797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */,
 				79AA713C28C407F500A91055 /* IkaError.swift in Sources */,
 				7903FE2A28C4349E00245586 /* SwiftyJSON.swift in Sources */,
+				7903FE4F28C45F0300245586 /* LocalizedStringKey+Ext.swift in Sources */,
 				7903FE2E28C436D000245586 /* SimpleHaptics.swift in Sources */,
 				7903FE3228C4385B00245586 /* SilhouetteFrame.swift in Sources */,
+				7903FE5328C45F4400245586 /* Binding+Ext.swift in Sources */,
 				79AA715228C4145E00A91055 /* SalmonStage.swift in Sources */,
 				7903FE3628C438FC00245586 /* RoundedFont.swift in Sources */,
 				79B92BB828B03B1F00544939 /* ContentView.swift in Sources */,
@@ -460,6 +486,7 @@
 				79AA714B28C411EB00A91055 /* BattleRotationDict.swift in Sources */,
 				7903FE2828C4325600245586 /* IkaPublisher.swift in Sources */,
 				79AA714428C408B500A91055 /* BattleRule.swift in Sources */,
+				7903FE5128C45F3600245586 /* Color+Ext.swift in Sources */,
 				79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */,
 				79AA714128C4087300A91055 /* BattleMode.swift in Sources */,
 				79AA714D28C412E800A91055 /* SalmonRotation.swift in Sources */,
@@ -475,10 +502,15 @@
 				7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */,
 				7903FE3A28C439A600245586 /* TappableAreaFrame.swift in Sources */,
 				79C1485C28C42CDE00587C6E /* StyleConstants.swift in Sources */,
+				7903FE4928C45DFC00245586 /* Date+Ext.swift in Sources */,
 				7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */,
 				79AA713428C4056700A91055 /* IkaTimer.swift in Sources */,
+				7903FE4B28C45E7D00245586 /* String+Ext.swift in Sources */,
 				79AA715928C4160D00A91055 /* MysteryWeapon.swift in Sources */,
+				7903FE4728C45D8000245586 /* DateFormatter+Ext.swift in Sources */,
 				7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */,
+				7903FE4D28C45ED200245586 /* View+Ext.swift in Sources */,
+				7903FE4528C45CE900245586 /* ScrollView+Ext.swift in Sources */,
 				79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */,
 				79AA715528C414FB00A91055 /* IkaWeapon.swift in Sources */,
 			);

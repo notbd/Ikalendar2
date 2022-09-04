@@ -1,8 +1,8 @@
 //
 //  GrizzcoWeapon.swift
-//  ikalendar2
+//  Ikalendar2
 //
-//  Created by Tianwei Zhang on 4/4/21.
+//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
 //
 
 import Foundation
