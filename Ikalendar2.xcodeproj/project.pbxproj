@@ -21,6 +21,7 @@
 		7903FE3F28C43A0F00245586 /* Splatfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3C28C43A0F00245586 /* Splatfont.ttf */; };
 		7903FE4028C43A0F00245586 /* Inkling_v2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3D28C43A0F00245586 /* Inkling_v2.otf */; };
 		7903FE4128C43A0F00245586 /* Splatfont2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3E28C43A0F00245586 /* Splatfont2.ttf */; };
+		7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4228C43AB800245586 /* GrizzcoWeapon.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
 		79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713128C4052300A91055 /* IkaCatalog.swift */; };
@@ -68,6 +69,7 @@
 		7903FE3C28C43A0F00245586 /* Splatfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Splatfont.ttf; sourceTree = "<group>"; };
 		7903FE3D28C43A0F00245586 /* Inkling_v2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inkling_v2.otf; sourceTree = "<group>"; };
 		7903FE3E28C43A0F00245586 /* Splatfont2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Splatfont2.ttf; sourceTree = "<group>"; };
+		7903FE4228C43AB800245586 /* GrizzcoWeapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrizzcoWeapon.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
 		79AA712F28C404FD00A91055 /* IkaPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreference.swift; sourceTree = "<group>"; };
 		79AA713128C4052300A91055 /* IkaCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaCatalog.swift; sourceTree = "<group>"; };
@@ -239,9 +241,10 @@
 		79AA715328C414E200A91055 /* Weapons */ = {
 			isa = PBXGroup;
 			children = (
-				79AA715428C414FB00A91055 /* IkaWeapon.swift */,
 				79AA715628C415A600A91055 /* SalmonWeapon.swift */,
+				79AA715428C414FB00A91055 /* IkaWeapon.swift */,
 				79AA715828C4160D00A91055 /* MysteryWeapon.swift */,
+				7903FE4228C43AB800245586 /* GrizzcoWeapon.swift */,
 			);
 			path = Weapons;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */,
 				79AA713428C4056700A91055 /* IkaTimer.swift in Sources */,
 				79AA715928C4160D00A91055 /* MysteryWeapon.swift in Sources */,
+				7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */,
 				79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */,
 				79AA715528C414FB00A91055 /* IkaWeapon.swift in Sources */,
 			);
