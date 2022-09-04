@@ -17,7 +17,7 @@ struct SalmonRotation: Rotation, Identifiable, Equatable {
   let endTime: Date
   let stage: SalmonStage?
   let weapons: [SalmonWeapon]?
-  var rewardGear: SalmonApparel?
+  var rewardApparel: SalmonApparel?
   let grizzcoWeapon: GrizzcoWeapon?
 
   // MARK: Lifecycle
@@ -27,14 +27,14 @@ struct SalmonRotation: Rotation, Identifiable, Equatable {
     endTime: Date,
     stage: SalmonStage? = nil,
     weapons: [SalmonWeapon]? = nil,
-    rewardGear: SalmonApparel? = nil,
+    rewardApparel: SalmonApparel? = nil,
     grizzcoWeapon: GrizzcoWeapon? = nil)
   {
     self.startTime = startTime
     self.endTime = endTime
     self.stage = stage
     self.weapons = weapons
-    self.rewardGear = rewardGear
+    self.rewardApparel = rewardApparel
     self.grizzcoWeapon = grizzcoWeapon
   }
 

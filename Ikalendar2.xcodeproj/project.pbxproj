@@ -34,6 +34,7 @@
 		7903FE5728C460C600245586 /* TimeLength.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5628C460C600245586 /* TimeLength.swift */; };
 		7903FE5928C4613500245586 /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5828C4613500245586 /* ModalDismissable.swift */; };
 		7903FE5B28C4619C00245586 /* UIKitIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5A28C4619C00245586 /* UIKitIntegration.swift */; };
+		7903FE5F28C4625B00245586 /* SwiftUIBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5E28C4625B00245586 /* SwiftUIBlur.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
 		79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713128C4052300A91055 /* IkaCatalog.swift */; };
@@ -94,6 +95,7 @@
 		7903FE5628C460C600245586 /* TimeLength.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLength.swift; sourceTree = "<group>"; };
 		7903FE5828C4613500245586 /* ModalDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
 		7903FE5A28C4619C00245586 /* UIKitIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitIntegration.swift; sourceTree = "<group>"; };
+		7903FE5E28C4625B00245586 /* SwiftUIBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIBlur.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
 		79AA712F28C404FD00A91055 /* IkaPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreference.swift; sourceTree = "<group>"; };
 		79AA713128C4052300A91055 /* IkaCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaCatalog.swift; sourceTree = "<group>"; };
@@ -200,6 +202,22 @@
 				7903FE3E28C43A0F00245586 /* Splatfont2.ttf */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		7903FE5C28C4622400245586 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7903FE5D28C4623000245586 /* UIViewRepresentables */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		7903FE5D28C4623000245586 /* UIViewRepresentables */ = {
+			isa = PBXGroup;
+			children = (
+				7903FE5E28C4625B00245586 /* SwiftUIBlur.swift */,
+			);
+			path = UIViewRepresentables;
 			sourceTree = "<group>";
 		};
 		79AA712D28C4000400A91055 /* Models */ = {
@@ -321,6 +339,7 @@
 				79B92BC328B03BC000544939 /* Info.plist */,
 				79B92BB528B03B1F00544939 /* Ikalendar2App.swift */,
 				79B92BC628B0443C00544939 /* Screens */,
+				7903FE5C28C4622400245586 /* Components */,
 				79C1485528C426A600587C6E /* Constants */,
 				79C1485628C4276900587C6E /* Utilities */,
 				79AA712D28C4000400A91055 /* Models */,
@@ -490,6 +509,7 @@
 				79AA715228C4145E00A91055 /* SalmonStage.swift in Sources */,
 				7903FE3628C438FC00245586 /* RoundedFont.swift in Sources */,
 				79B92BB828B03B1F00544939 /* ContentView.swift in Sources */,
+				7903FE5F28C4625B00245586 /* SwiftUIBlur.swift in Sources */,
 				79AA713628C4070700A91055 /* IkaStatus.swift in Sources */,
 				79AA714928C4095100A91055 /* BattleRotation.swift in Sources */,
 				7903FE2C28C4368D00245586 /* ListSeparator.swift in Sources */,
@@ -655,7 +675,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -686,7 +706,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

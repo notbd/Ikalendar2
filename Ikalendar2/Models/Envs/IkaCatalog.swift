@@ -168,12 +168,12 @@ final class IkaCatalog: ObservableObject {
   func loadCatalog() {
     let battleRotationDictPublisher = IkaPublisher.shared.getBattleRotationDictPublisher()
     let salmonRotationArrayPublisher = IkaPublisher.shared.getOatmealdomePublisher()
-    let rewardGearPublisher = IkaPublisher.shared.getRewardGearPublisher()
+    let rewardApparelPublisher = IkaPublisher.shared.getRewardApparelPublisher()
 
     let combinedPublisher = Publishers.Zip3(
       battleRotationDictPublisher,
       salmonRotationArrayPublisher,
-      rewardGearPublisher)
+      rewardApparelPublisher)
     combinedPublisher
       .receive(on: DispatchQueue.main)
       .sink { completion in
@@ -189,7 +189,7 @@ final class IkaCatalog: ObservableObject {
         DispatchQueue.main.async {
           self.battleRotations = battleRotations
           self.salmonRotations = salmonRotations
-          //          self.salmonRotations[0].rewardGear = rewardGear
+          //          self.salmonRotations[0].rewardApparel = rewardApparel
         }
       }
       .store(in: &dataTaskCancellables)

@@ -125,13 +125,13 @@ extension Constants.Styles {
         enum Stage {
           static let STAGE_IMG_CORNER_RADIUS: CGFloat = 4
 
-          static let GEAR_SECTION_WIDTH_RATIO: CGFloat = 0.2
+          static let APPAREL_SECTION_WIDTH_RATIO: CGFloat = 0.2
           static let LABEL_FONT_SIZE: CGFloat = 16
           static let OVERLAY_PADDING: CGFloat = 4
 
-          static let GEAR_IMG_PADDING: CGFloat = 2
-          static let GEAR_IMG_WIDTH_RATIO: CGFloat = 0.15
-          static let GEAR_SILHOUETTE_CORNER_RADIUS: CGFloat = 5
+          static let APPAREL_IMG_PADDING: CGFloat = 2
+          static let APPAREL_IMG_WIDTH_RATIO: CGFloat = 0.15
+          static let APPAREL_SILHOUETTE_CORNER_RADIUS: CGFloat = 5
         }
 
         enum Weapon {
