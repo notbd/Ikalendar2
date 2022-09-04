@@ -43,8 +43,8 @@ struct SalmonRotationRow: View {
       switch rowType {
       case .other:
         Section {
+//          SalmonRotationCellTertiary(rotation: rotation, width: width)
           SalmonRotationCellSecondary(rotation: rotation, width: width)
-//          SalmonRotationCellSecondary(rotation: rotation, width: width)
 //          Text("Other type row")
         }
 

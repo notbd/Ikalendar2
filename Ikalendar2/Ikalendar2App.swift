@@ -18,6 +18,7 @@ struct Ikalendar2App: App {
 
   var body: some Scene {
     WindowGroup {
+//      NavViewNew()
       RootView()
         .environmentObject(ikaCatalog)
         .environmentObject(ikaStatus)

@@ -54,6 +54,7 @@ struct SalmonRotationCellPrimary: View {
 //    }
 //    .padding(.vertical, Scoped.CELL_PADDING)
 //  }
+
   var body: some View {
     VStack(alignment: .leading, spacing: Scoped.CELL_SPACING) {
       SalmonRotationCellTimeTextSection(

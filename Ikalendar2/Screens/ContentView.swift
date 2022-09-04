@@ -76,29 +76,27 @@ struct ContentView: View {
 
         ToolbarItem(placement: .navigationBarLeading) {
           ToolbarRefreshButton(
-            alignment: .leading,
             isDisabled: ikaCatalog.loadingStatus == .loading,
             action: didTapRefreshButton)
         }
 
         ToolbarItem(placement: .navigationBarTrailing) {
           ToolbarSettingsButton(
-            alignment: .trailing,
             action: didTapSettingsButton)
         }
 
         ToolbarItemGroup(placement: .bottomBar) {
           // MARK: game mode button
 
-          ToolbarGameModeSwitchButton()
-
-          Spacer()
-
           if ikaStatus.gameModeSelection == .battle {
             // MARK: battle mode picker
 
             ToolbarBattleModePicker()
           }
+
+          Spacer()
+
+          ToolbarGameModeSwitchButton()
         }
       }
   }
@@ -110,7 +108,7 @@ struct ContentView: View {
 
         ToolbarItem(placement: .navigationBarLeading) {
           ToolbarRefreshButton(
-            alignment: .leading,
+            //            alignment: .leading,
             isDisabled: ikaCatalog.loadingStatus == .loading,
             action: didTapRefreshButton)
         }
