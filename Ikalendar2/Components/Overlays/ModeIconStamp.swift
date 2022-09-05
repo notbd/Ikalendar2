@@ -28,7 +28,7 @@ struct ModeIconStamp: View {
       .opacity(ikaCatalog.loadingStatus == .loaded ? 1 : 0)
       .animation(
         .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
-        value: ikaStatus.gameModeSelection)
+        value: motion.dx * motion.dy)
   }
 
   var gradientMask: some View {
