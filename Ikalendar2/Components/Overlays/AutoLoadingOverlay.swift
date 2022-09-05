@@ -28,7 +28,9 @@ struct AutoLoadingOverlay: View {
       }
       .opacity(autoLoadingStatus == .idle ? 0 : 1)
       .padding()
-      .animation(.easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION))
+      .animation(
+        .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
+        value: autoLoadingStatus)
   }
 
   var iconName: String {

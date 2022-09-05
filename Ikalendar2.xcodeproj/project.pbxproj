@@ -64,6 +64,7 @@
 		7903FEA228C472E800245586 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7903FEA428C472E800245586 /* Localizable.strings */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		79802FEA28C54ECA0048C478 /* NavViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79802FE928C54ECA0048C478 /* NavViewNew.swift */; };
+		79802FFA28C55B740048C478 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79802FF928C55B740048C478 /* ColorSchemeManager.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
 		79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713128C4052300A91055 /* IkaCatalog.swift */; };
 		79AA713428C4056700A91055 /* IkaTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713328C4056700A91055 /* IkaTimer.swift */; };
@@ -154,6 +155,16 @@
 		7903FEA528C472EB00245586 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
 		79802FE928C54ECA0048C478 /* NavViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavViewNew.swift; sourceTree = "<group>"; };
+		79802FED28C55B2A0048C478 /* Deprecated-Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Deprecated-Publisher.swift"; sourceTree = "<group>"; };
+		79802FEF28C55B2A0048C478 /* RuleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDetailView.swift; sourceTree = "<group>"; };
+		79802FF028C55B2A0048C478 /* StageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageDetailView.swift; sourceTree = "<group>"; };
+		79802FF228C55B2A0048C478 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		79802FF328C55B2A0048C478 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
+		79802FF428C55B2A0048C478 /* Coordinate2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate2D.swift; sourceTree = "<group>"; };
+		79802FF628C55B2A0048C478 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		79802FF728C55B2A0048C478 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		79802FF828C55B2A0048C478 /* FlatMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatMode.swift; sourceTree = "<group>"; };
+		79802FF928C55B740048C478 /* ColorSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeManager.swift; sourceTree = "<group>"; };
 		79AA712F28C404FD00A91055 /* IkaPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreference.swift; sourceTree = "<group>"; };
 		79AA713128C4052300A91055 /* IkaCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaCatalog.swift; sourceTree = "<group>"; };
 		79AA713328C4056700A91055 /* IkaTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaTimer.swift; sourceTree = "<group>"; };
@@ -226,12 +237,13 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
-		7903FE2228C430E400245586 /* MotionManager */ = {
+		7903FE2228C430E400245586 /* DeviceManagers */ = {
 			isa = PBXGroup;
 			children = (
 				7903FE5428C45FBF00245586 /* MotionManager.swift */,
+				79802FF928C55B740048C478 /* ColorSchemeManager.swift */,
 			);
-			path = MotionManager;
+			path = DeviceManagers;
 			sourceTree = "<group>";
 		};
 		7903FE2328C4310700245586 /* Others */ = {
@@ -401,6 +413,54 @@
 			path = "New View#####";
 			sourceTree = "<group>";
 		};
+		79802FEB28C55B2A0048C478 /* _Deprecated&Drafts */ = {
+			isa = PBXGroup;
+			children = (
+				79802FEC28C55B2A0048C478 /* Deprecated-Publishers */,
+				79802FEE28C55B2A0048C478 /* DetailView */,
+				79802FF528C55B2A0048C478 /* NetworkManager */,
+				79802FF728C55B2A0048C478 /* SidebarView.swift */,
+				79802FF828C55B2A0048C478 /* FlatMode.swift */,
+			);
+			path = "_Deprecated&Drafts";
+			sourceTree = "<group>";
+		};
+		79802FEC28C55B2A0048C478 /* Deprecated-Publishers */ = {
+			isa = PBXGroup;
+			children = (
+				79802FED28C55B2A0048C478 /* Deprecated-Publisher.swift */,
+			);
+			path = "Deprecated-Publishers";
+			sourceTree = "<group>";
+		};
+		79802FEE28C55B2A0048C478 /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+				79802FEF28C55B2A0048C478 /* RuleDetailView.swift */,
+				79802FF028C55B2A0048C478 /* StageDetailView.swift */,
+				79802FF128C55B2A0048C478 /* Detail-Components */,
+			);
+			path = DetailView;
+			sourceTree = "<group>";
+		};
+		79802FF128C55B2A0048C478 /* Detail-Components */ = {
+			isa = PBXGroup;
+			children = (
+				79802FF228C55B2A0048C478 /* MapView.swift */,
+				79802FF328C55B2A0048C478 /* CircleImage.swift */,
+				79802FF428C55B2A0048C478 /* Coordinate2D.swift */,
+			);
+			path = "Detail-Components";
+			sourceTree = "<group>";
+		};
+		79802FF528C55B2A0048C478 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				79802FF628C55B2A0048C478 /* NetworkManager.swift */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
 		79AA712D28C4000400A91055 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -522,11 +582,12 @@
 				79802FE828C54E9D0048C478 /* New View##### */,
 				79B92BC628B0443C00544939 /* Screens */,
 				7903FE5C28C4622400245586 /* Components */,
-				79C1485528C426A600587C6E /* Constants */,
 				79C1485628C4276900587C6E /* Utilities */,
 				79AA712D28C4000400A91055 /* Models */,
+				79C1485528C426A600587C6E /* Constants */,
 				7903FE3B28C439D600245586 /* Resources */,
 				7903FE9F28C4721A00245586 /* Localizations */,
+				79802FEB28C55B2A0048C478 /* _Deprecated&Drafts */,
 				79C1485428C425BF00587C6E /* Preview Content */,
 			);
 			path = Ikalendar2;
@@ -589,7 +650,7 @@
 				79C1485E28C42D6600587C6E /* Decoders */,
 				7903FE2128C430C700245586 /* Modifiers */,
 				7903FE2028C42E4C00245586 /* Extensions */,
-				7903FE2228C430E400245586 /* MotionManager */,
+				7903FE2228C430E400245586 /* DeviceManagers */,
 				7903FE2428C4312200245586 /* UIKitIntegrations */,
 				7903FE2328C4310700245586 /* Others */,
 			);
@@ -690,6 +751,7 @@
 			files = (
 				79C1485828C427B300587C6E /* Constants.swift in Sources */,
 				7903FE3428C438B400245586 /* FontIka.swift in Sources */,
+				79802FFA28C55B740048C478 /* ColorSchemeManager.swift in Sources */,
 				7903FE9A28C4702100245586 /* ToolbarSettingsButton.swift in Sources */,
 				797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */,
 				7903FE8728C46F5F00245586 /* BattleRotationStageCard.swift in Sources */,
@@ -905,7 +967,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -936,7 +998,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

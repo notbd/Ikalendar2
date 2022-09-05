@@ -34,14 +34,16 @@ extension Constants.Keys {
     static let SALMON_ROTATIONS = "https://splatoon2.ink/data/coop-schedules.json"
     static let TIMELINE = "https://splatoon2.ink/data/timeline.json"
 
-    static let NINTENDO_SPLATOON2_PAGE = "https://splatoon.nintendo.com/"
-    static let DEVELOPER_TWITTER = "https://twitter.com/gppppa_"
+    static let NINTENDO_SPLATOON2_PAGE = "https://www.nintendo.com/store/products/splatoon-2-switch/"
+    static let DEVELOPER_TWITTER = "https://twitter.com/zhang13music"
     static let DEVELOPER_EMAIL = "mailto:zhang13music@outlook.com"
     static let APP_STORE_PAGE = "https://apps.apple.com/app/id1529193361"
     static let APP_STORE_PAGE_US = "https://apps.apple.com/us/app/ikalendar2/id1529193361"
     static let APP_STORE_REVIEW = "https://apps.apple.com/app/id1529193361?action=write-review"
     static let SOURCE_CODE_REPO = "https://github.com/zhang13music/ikalendar-2"
     static let PRIVACY_POLICY = "https://github.com/zhang13music/ikalendar-2/wiki/Privacy-Policy"
+
+    static let THE_GOOD_STUFF = "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // Good stuff indeed!
   }
 
   enum Error {

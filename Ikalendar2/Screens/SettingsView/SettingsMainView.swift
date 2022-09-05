@@ -46,7 +46,7 @@ struct SettingsMainView: View {
           rowAcknowledgement
         }
       }
-      .roundedFont()
+//      .roundedFont()
       .navigationTitle("Settings")
       .navigationBarItems(trailing: doneButton)
     }
@@ -116,12 +116,16 @@ struct SettingsMainView: View {
         },
         label: Text("App Color Scheme"))
       {
-        ForEach(IkaPreference.AppColorScheme.allCases) { appColorScheme in
+        ForEach(ColorSchemeManager.AppColorScheme.allCases) { appColorScheme in
           Text(appColorScheme.name.localizedStringKey())
             .tag(appColorScheme)
         }
       }
       .pickerStyle(SegmentedPickerStyle())
+      .onChange(of: ikaPreference.appColorScheme) { colorScheme in
+        // handle color scheme changes
+        ColorSchemeManager.shared.handleTheme(for: colorScheme)
+      }
     }
   }
 

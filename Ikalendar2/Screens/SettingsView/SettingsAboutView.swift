@@ -13,6 +13,7 @@ import SwiftUI
 /// The About page in App Settings.
 struct SettingsAboutView: View {
   @Environment(\.openURL) var openURL
+//  @Environment(\.requestReview) var requestReview
 
   @State var appStoreOverlayPresented = false
 
@@ -42,7 +43,7 @@ struct SettingsAboutView: View {
         rowPrivacyPolicy
       }
     }
-    .roundedFont()
+//    .roundedFont()
     .navigationTitle("About")
     .navigationBarTitleDisplayMode(.inline)
   }
@@ -99,21 +100,23 @@ struct SettingsAboutView: View {
   // MARK: - Share Section
 
   var rowShare: some View {
-    Button {
-      Haptics.generate(.selection)
-      didTapShare()
-    } label: {
-      Label(
-        title: {
-          Text("Share ikalendar2")
-            .foregroundColor(.primary)
-        },
+    // NOTE: could not find error handling for invalid URL ShareLink as of iOS 16
+    // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 16
+    let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US)!
 
-        icon: {
-          Image(systemName: "square.and.arrow.up")
-            .foregroundColor(.accentColor)
-        })
-    }
+    return
+      ShareLink(item: shareURL) {
+        Label(
+          title: {
+            Text("Share ikalendar2")
+              .foregroundColor(.primary)
+          },
+
+          icon: {
+            Image(systemName: "square.and.arrow.up")
+              .foregroundColor(.accentColor)
+          })
+      }
   }
 
   // MARK: - Contact Section
@@ -271,25 +274,27 @@ struct SettingsAboutView: View {
   // MARK: Internal
 
   /// Handle the tap on the share button.
-  func didTapShare() {
-    guard let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE) else { return }
-    let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
-    let keyWindow = UIApplication.shared.windows.filter(\.isKeyWindow).first
-    if var topController = keyWindow?.rootViewController {
-      while let presentedViewController = topController.presentedViewController {
-        topController = presentedViewController
-      }
-      topController.present(
-        activityVC,
-        animated: true,
-        completion: nil)
-    }
-  }
+//  func didTapShare() {
+//    guard let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US) else { return }
+//    let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
+//    let keyWindow = UIApplication.shared.windows.filter(\.isKeyWindow).first
+//    if var topController = keyWindow?.rootViewController {
+//      while let presentedViewController = topController.presentedViewController {
+//        topController = presentedViewController
+//      }
+//      topController.present(
+//        activityVC,
+//        animated: true,
+//        completion: nil)
+//    }
+//  }
 
   /// Handle the tap on the rate button.
   func didTapRate() {
+//    requestReview()
     if
-      let scene = UIApplication.shared.connectedScenes
+      let scene =
+      UIApplication.shared.connectedScenes
         .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
     {
       SKStoreReviewController.requestReview(in: scene)

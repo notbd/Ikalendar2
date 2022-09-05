@@ -16,13 +16,11 @@ struct RootView: View {
 
   var body: some View {
     MainView()
-      .preferredColorScheme(ikaPreference.appColorScheme.systemValue)
       .fullScreenCover(isPresented: $ikaStatus.isSettingsPresented) {
         SettingsMainView()
           .environmentObject(ikaStatus)
           .environmentObject(ikaPreference)
           .accentColor(.orange)
-          .preferredColorScheme(ikaPreference.appColorScheme.systemValue)
       }
   }
 }

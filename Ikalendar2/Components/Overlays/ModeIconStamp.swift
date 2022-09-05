@@ -26,7 +26,9 @@ struct ModeIconStamp: View {
       .rotation3DEffect(.degrees(degrees * rot), axis: (x: y, y: x, z: 0))
       .offset(x: -10, y: -90)
       .opacity(ikaCatalog.loadingStatus == .loaded ? 1 : 0)
-      .animation(.easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION))
+      .animation(
+        .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
+        value: ikaStatus.gameModeSelection)
   }
 
   var gradientMask: some View {
@@ -56,7 +58,7 @@ struct ModeIconStamp: View {
     case .battle:
       imgFiln = ikaStatus.battleModeSelection.imgFilnLarge
     case .salmon:
-      imgFiln = "grizz"
+      imgFiln = "mr-grizz"
     }
 
     return

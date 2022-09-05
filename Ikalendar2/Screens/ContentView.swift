@@ -108,7 +108,6 @@ struct ContentView: View {
 
         ToolbarItem(placement: .navigationBarLeading) {
           ToolbarRefreshButton(
-            //            alignment: .leading,
             isDisabled: ikaCatalog.loadingStatus == .loading,
             action: didTapRefreshButton)
         }

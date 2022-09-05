@@ -24,7 +24,9 @@ struct LoadingOverlay: View {
       blurOverlay
       loadingIndicator
     }
-    .animation(.easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION))
+    .animation(
+      .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
+      value: loadingStatus)
   }
 
   var loadingIndicator: some View {
