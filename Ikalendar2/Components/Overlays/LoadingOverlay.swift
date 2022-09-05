@@ -22,7 +22,7 @@ struct LoadingOverlay: View {
   var body: some View {
     ZStack {
       blurOverlay
-      loadingIndicator
+//      loadingIndicator
     }
     .animation(
       .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),

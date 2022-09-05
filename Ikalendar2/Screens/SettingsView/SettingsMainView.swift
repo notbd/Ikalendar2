@@ -46,7 +46,6 @@ struct SettingsMainView: View {
           rowAcknowledgement
         }
       }
-//      .roundedFont()
       .navigationTitle("Settings")
       .navigationBarItems(trailing: doneButton)
     }
@@ -59,8 +58,9 @@ struct SettingsMainView: View {
 
   private var rowDefaultGameMode: some View {
     HStack {
-      Image(systemName: "rectangle.topthird.inset")
-        .foregroundColor(.accentColor)
+      Label(
+        "Game",
+        systemImage: "rectangle.topthird.inset")
 
       Spacer().frame(width: 50)
 
@@ -79,15 +79,14 @@ struct SettingsMainView: View {
 
   private var rowDefaultBattleMode: some View {
     HStack {
-      Image(systemName: "rectangle.bottomthird.inset.fill")
-        .foregroundColor(.accentColor)
+      Label(
+        "Battle",
+        systemImage: "rectangle.bottomthird.inset.fill")
 
       Spacer().frame(width: 50)
 
       Picker(
-        selection: $ikaPreference.defaultBattleMode.onSet { _ in
-          Haptics.generate(.selection)
-        },
+        selection: $ikaPreference.defaultBattleMode.onSet { _ in Haptics.generate(.selection) },
         label: Text("Default Battle Mode"))
       {
         ForEach(BattleMode.allCases) { battleMode in
@@ -108,12 +107,11 @@ struct SettingsMainView: View {
         "Color Scheme",
         systemImage: "circle.lefthalf.fill")
 
-      Spacer().frame(maxWidth: 50)
+      Spacer()
+        .frame(maxWidth: 20)
 
       Picker(
-        selection: $ikaPreference.appColorScheme.onSet { _ in
-          Haptics.generate(.selection)
-        },
+        selection: $ikaPreference.appColorScheme.onSet { _ in Haptics.generate(.selection) },
         label: Text("App Color Scheme"))
       {
         ForEach(ColorSchemeManager.AppColorScheme.allCases) { appColorScheme in
@@ -156,16 +154,21 @@ struct SettingsMainView: View {
       }
     } label: {
       HStack {
-        Label(
-          title: {
-            Text("App Language").foregroundColor(.primary)
-          },
-          icon: {
-            Image(systemName: "globe")
-          })
+        Label {
+          Text("App Language")
+            .foregroundColor(.primary)
+        }
+        icon: {
+          Image(systemName: "globe")
+        }
+
         Spacer()
-        Text(currLanguage).foregroundColor(.secondary)
-        Image(systemName: "arrow.up.forward.app.fill").foregroundColor(.secondary)
+
+        Text(currLanguage)
+          .foregroundColor(.secondary)
+
+        Image(systemName: "arrow.up.forward.app.fill")
+          .foregroundColor(.secondary)
       }
     }
   }

@@ -43,7 +43,6 @@ struct SettingsAboutView: View {
         rowPrivacyPolicy
       }
     }
-//    .roundedFont()
     .navigationTitle("About")
     .navigationBarTitleDisplayMode(.inline)
   }
@@ -55,8 +54,10 @@ struct SettingsAboutView: View {
   var iconContent: some View {
     HStack {
       Spacer()
+
       iconLabel
         .padding()
+
       Spacer()
     }
   }
@@ -71,30 +72,33 @@ struct SettingsAboutView: View {
     }
 
     var iconTitle: some View {
-      let elements = ["ikalendar", Constants.Keys.appVersion]
-      let title = elements.joined(separator: " ")
-      let text = Text(title)
-        .foregroundColor(.accentColor)
-        .fontWeight(.bold)
-        .font(.system(.largeTitle, design: .rounded))
+      let title = "ikalendar2"
+      let text =
+        Text(title)
+          .foregroundColor(.accentColor)
+          .fontWeight(.bold)
+          .font(.system(.largeTitle, design: .rounded))
       return text
     }
 
     var iconSubtitle: some View {
-      let elements = ["Build", Constants.Keys.appBuildNumber]
-      let subtitle = elements.joined(separator: " ")
-      let text = Text(subtitle)
-        .foregroundColor(.secondary)
-        .fontWeight(.regular)
-        .font(.system(.subheadline, design: .rounded))
+      let versionNumber = Constants.Keys.appVersion
+      let buildNumber = Constants.Keys.appBuildNumber
+      let subtitle = "Version \(versionNumber) (\(buildNumber))"
+      let text =
+        Text(subtitle)
+          .foregroundColor(.secondary)
+          .fontWeight(.regular)
+          .font(.system(.subheadline, design: .monospaced))
       return text
     }
 
-    return VStack(alignment: .center) {
-      iconImage
-      iconTitle
-      iconSubtitle
-    }
+    return
+      VStack(alignment: .center) {
+        iconImage
+        iconTitle
+        iconSubtitle
+      }
   }
 
   // MARK: - Share Section
@@ -106,44 +110,50 @@ struct SettingsAboutView: View {
 
     return
       ShareLink(item: shareURL) {
-        Label(
-          title: {
-            Text("Share ikalendar2")
-              .foregroundColor(.primary)
-          },
-
-          icon: {
-            Image(systemName: "square.and.arrow.up")
-              .foregroundColor(.accentColor)
-          })
+        Label {
+          Text("Share ikalendar2")
+            .foregroundColor(.primary)
+        }
+        icon: {
+          Image(systemName: "square.and.arrow.up")
+        }
       }
   }
 
   // MARK: - Contact Section
 
   var rowDeveloperTwitter: some View {
-    Button {
-      Haptics.generate(.selection)
-      if let url = URL(string: Constants.Keys.URL.DEVELOPER_TWITTER) {
-        openURL(url)
-      }
-    } label: {
-      Label(
-        title: {
+    let twitterURLString = Constants.Keys.URL.DEVELOPER_TWITTER
+    let twitterHandle =
+      twitterURLString.replacingOccurrences(
+        of: "https://twitter.com/",
+        with: "@")
+
+    return
+      Button {
+        Haptics.generate(.selection)
+        if let url = URL(string: twitterURLString) {
+          openURL(url)
+        }
+      } label: {
+        Label {
           HStack {
-            Text("Developer's Twitter")
+            Text("Developer")
               .foregroundColor(.primary)
+
             Spacer()
-            Text("@gppppa_")
+
+            Text(twitterHandle)
               .foregroundColor(.secondary)
           }
-        },
-
+        }
         icon: {
-          Image(systemName: "person.fill")
-            .foregroundColor(.blue)
-        })
-    }
+          Image("twitter_xsmall")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 18)
+        }
+      }
   }
 
   var rowDeveloperEmail: some View {
@@ -153,16 +163,13 @@ struct SettingsAboutView: View {
         openURL(url)
       }
     } label: {
-      Label(
-        title: {
-          Text("Send Feedback Email")
-            .foregroundColor(.primary)
-        },
-
-        icon: {
-          Image(systemName: "envelope")
-            .foregroundColor(.accentColor)
-        })
+      Label {
+        Text("Send Feedback Email")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(systemName: "envelope")
+      }
     }
   }
 
@@ -173,16 +180,13 @@ struct SettingsAboutView: View {
       Haptics.generate(.selection)
       appStoreOverlayPresented.toggle()
     } label: {
-      Label(
-        title: {
-          Text("View ikalendar2 on the App Store")
-            .foregroundColor(.primary)
-        },
-
-        icon: {
-          Image(systemName: "doc.text.fill.viewfinder")
-            .foregroundColor(.accentColor)
-        })
+      Label {
+        Text("View ikalendar2 on the App Store")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(systemName: "doc.text.fill.viewfinder")
+      }
     }
     .appStoreOverlay(isPresented: $appStoreOverlayPresented) {
       SKOverlay.AppConfiguration(appIdentifier: "1529193361", position: .bottom)
@@ -194,16 +198,13 @@ struct SettingsAboutView: View {
       Haptics.generate(.selection)
       didTapRate()
     } label: {
-      Label(
-        title: {
-          Text("Rate on the App Store")
-            .foregroundColor(.primary)
-        },
-
-        icon: {
-          Image(systemName: "star.fill")
-            .foregroundColor(.yellow)
-        })
+      Label {
+        Text("Rate on the App Store")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(systemName: "star.bubble")
+      }
     }
   }
 
@@ -214,16 +215,13 @@ struct SettingsAboutView: View {
         openURL(url)
       }
     } label: {
-      Label(
-        title: {
-          Text("Leave a Review")
-            .foregroundColor(.primary)
-        },
-
-        icon: {
-          Image(systemName: "highlighter")
-            .foregroundColor(.accentColor)
-        })
+      Label {
+        Text("Leave a Review")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(systemName: "highlighter")
+      }
     }
   }
 
@@ -236,16 +234,13 @@ struct SettingsAboutView: View {
         openURL(url)
       }
     } label: {
-      Label(
-        title: {
-          Text("Source Code")
-            .foregroundColor(.primary)
-        },
-
-        icon: {
-          Image(systemName: "chevron.left.slash.chevron.right")
-            .foregroundColor(.accentColor)
-        })
+      Label {
+        Text("Source Code")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(systemName: "chevron.left.slash.chevron.right")
+      }
     }
   }
 
@@ -256,16 +251,13 @@ struct SettingsAboutView: View {
         openURL(url)
       }
     } label: {
-      Label(
-        title: {
-          Text("Privacy Policy")
-            .foregroundColor(.primary)
-        },
-
-        icon: {
-          Image(systemName: "hand.raised.fill")
-            .foregroundColor(.accentColor)
-        })
+      Label {
+        Text("Privacy Policy")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(systemName: "hand.raised.fill")
+      }
     }
   }
 
@@ -273,7 +265,7 @@ struct SettingsAboutView: View {
 
   // MARK: Internal
 
-  /// Handle the tap on the share button.
+  /// Handle the tap on the share button. [Deprecated since iOS 16]
 //  func didTapShare() {
 //    guard let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US) else { return }
 //    let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)

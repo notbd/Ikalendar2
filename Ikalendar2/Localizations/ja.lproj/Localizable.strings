@@ -25,7 +25,7 @@
 "Share" = "共有";
 "Share ikalendar2" = "ikalendar2を共有";
 "Contact" = "連絡";
-"Developer's Twitter" = "開発者Twitter";
+"Developer" = "開発者";
 "Send Feedback Email" = "フィードバックメールを送信";
 "Review" = "レビュー";
 "View ikalendar2 on the App Store" = "ikalendar2をApp Storeで表示";
@@ -62,6 +62,7 @@
 
 // MARK: - GameMode
 
+"Game" = "ゲーム";
 "Battle" = "バトル";
 "Salmon Run" = "サーモンラン";
 

@@ -11,9 +11,9 @@ import SwiftUI
 @main
 struct Ikalendar2App: App {
   var ikaCatalog = IkaCatalog()
-  var ikaStatus: IkaStatus
+  var ikaStatus = IkaStatus()
   var ikaTimer = IkaTimer()
-  var ikaPreference: IkaPreference
+  var ikaPreference = IkaPreference()
   var motionManager = MotionManager()
 
   var body: some Scene {
@@ -38,7 +38,7 @@ struct Ikalendar2App: App {
       .register(defaults: [Constants.Keys.AppStorage.DEFAULT_GAME_MODE: "battle"])
     UserDefaults.standard
       .register(defaults: [Constants.Keys.AppStorage.DEFAULT_BATTLE_MODE: "gachi"])
-    ikaPreference = IkaPreference()
-    ikaStatus = IkaStatus()
+//    ikaPreference = IkaPreference()
+//    ikaStatus = IkaStatus()
   }
 }

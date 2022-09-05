@@ -26,6 +26,9 @@ struct ContentView: View {
           setRegularHoriClassToolbar(content: $0)
         }
         .navigationTitle(title)
+        .refreshable {
+          ikaCatalog.refreshCatalog()
+        }
         .overlay(
           ModeIconStamp(),
           alignment: .topTrailing)

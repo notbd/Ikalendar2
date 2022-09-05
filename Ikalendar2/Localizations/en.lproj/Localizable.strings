@@ -25,7 +25,7 @@
 "Share" = "Share";
 "Share ikalendar2" = "Share ikalendar2";
 "Contact" = "Contact";
-"Developer's Twitter" = "Twitter";
+"Developer" = "Developer";
 "Send Feedback Email" = "Send Feedback Email";
 "Review" = "Review";
 "View ikalendar2 on the App Store" = "View ikalendar2 on the App Store";
@@ -62,6 +62,7 @@
 
 // MARK: - GameMode
 
+"Game" = "Game";
 "Battle" = "Battle";
 "Salmon Run" = "Salmon Run";
 
