@@ -18,8 +18,8 @@ indentation: 2
 
 disabled_rules:
   - vertical_whitespace
-#  - identifier_name
-#  - nesting
+  - identifier_name
+  - nesting
   - opening_brace
 #  - comment_spacing
   - cyclomatic_complexity

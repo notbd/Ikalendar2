@@ -32,6 +32,6 @@ struct ToolbarSettingsButton: View {
 struct ToolbarSettingsButton_Previews: PreviewProvider {
   static var previews: some View {
     ToolbarSettingsButton(
-      action: { print("preview") })
+      action: { })
   }
 }

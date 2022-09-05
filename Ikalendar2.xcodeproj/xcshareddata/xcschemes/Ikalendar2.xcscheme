@@ -26,7 +26,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run SwiftLint"
-               scriptText = "if test -d &quot;/opt/homebrew/bin/&quot;; then&#10;  PATH=&quot;/opt/homebrew/bin/:${PATH}&quot;&#10;fi&#10;&#10;export PATH&#10;&#10;if which swiftlint &gt;/dev/null; then&#10;  swiftlint&#10;else&#10;  echo &quot;warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint&quot;&#10;fi&#10;">
+               scriptText = "if test -d &quot;/opt/homebrew/bin/&quot;; then&#10;  PATH=&quot;/opt/homebrew/bin/:${PATH}&quot;&#10;fi&#10;&#10;export PATH&#10;&#10;if which swiftlint &gt;/dev/null; then&#10;  swiftlint --version&#10;else&#10;  echo &quot;warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint&quot;&#10;fi&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"

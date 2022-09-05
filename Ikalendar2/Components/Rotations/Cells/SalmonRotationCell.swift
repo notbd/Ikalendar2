@@ -106,16 +106,17 @@ struct SalmonRotationCellPrimary: View {
 //      weaponsSection
 //        .padding(.vertical, Scoped.STAGE_PROGRESS_SECTION_PADDING)
 //
-  ////      ProgressView(value: ikaTimer.currentTime - rotation.startTime,
-  ////                   total: rotation.endTime - rotation.startTime,
-  ////                   label: {
-  ////                     HStack {
-  ////                       Spacer()
-  ////                       Text(ikaTimer.currentTime.toTimeRemainingString(until: rotation.endTime))
-  ////                         .scaledLimitedLine()
-  ////                         .fontIka(.ika2, size: Scoped.PROGRESS_FONT_SIZE)
-  ////                     }
-  ////                   })
+//        ProgressView(value: ikaTimer.currentTime - rotation.startTime,
+//                     total: rotation.endTime - rotation.startTime,
+//                     label: {
+//                       HStack {
+//                         Spacer()
+//                         Text(ikaTimer.currentTime
+//                          .toTimeRemainingString(until: rotation.endTime))
+//                           .scaledLimitedLine()
+//                           .fontIka(.ika2, size: Scoped.PROGRESS_FONT_SIZE)
+//                       }
+//                     })
 //    }
 //  }
 

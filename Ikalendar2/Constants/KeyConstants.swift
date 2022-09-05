@@ -34,7 +34,8 @@ extension Constants.Keys {
     static let SALMON_ROTATIONS = "https://splatoon2.ink/data/coop-schedules.json"
     static let TIMELINE = "https://splatoon2.ink/data/timeline.json"
 
-    static let NINTENDO_SPLATOON2_PAGE = "https://www.nintendo.com/store/products/splatoon-2-switch/"
+    static let NINTENDO_SPLATOON2_PAGE =
+      "https://www.nintendo.com/store/products/splatoon-2-switch/"
     static let DEVELOPER_TWITTER = "https://twitter.com/zhang13music"
     static let DEVELOPER_EMAIL = "mailto:zhang13music@outlook.com"
     static let APP_STORE_PAGE = "https://apps.apple.com/app/id1529193361"

@@ -268,7 +268,10 @@ struct SettingsAboutView: View {
   /// Handle the tap on the share button. [Deprecated since iOS 16]
 //  func didTapShare() {
 //    guard let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US) else { return }
-//    let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
+//    let activityVC =
+//      UIActivityViewController(
+//        activityItems: [shareURL],
+//        applicationActivities: nil)
 //    let keyWindow = UIApplication.shared.windows.filter(\.isKeyWindow).first
 //    if var topController = keyWindow?.rootViewController {
 //      while let presentedViewController = topController.presentedViewController {

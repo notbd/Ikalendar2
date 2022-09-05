@@ -239,7 +239,6 @@ final class IkaDecoder {
     return rewardApparel
   }
 
-  // TODO: Parse Oatmealdome data
   static func parseOatmealdome(from data: Data) throws -> [SalmonRotation] {
     var salmonRotations: [SalmonRotation] = []
 
@@ -300,7 +299,6 @@ final class IkaDecoder {
           }
           else {
             // ERROR: bad weapon id
-            dump(salmonRotations)
             throw IkaError.unableToComplete
           }
         }

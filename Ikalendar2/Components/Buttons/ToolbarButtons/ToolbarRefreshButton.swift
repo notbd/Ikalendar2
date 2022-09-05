@@ -35,6 +35,6 @@ struct ToolbarRefreshButton_Previews: PreviewProvider {
   static var previews: some View {
     ToolbarRefreshButton(
       isDisabled: false,
-      action: { print("preview") })
+      action: { })
   }
 }

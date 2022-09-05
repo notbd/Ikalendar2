@@ -683,6 +683,7 @@
 				79B92BAE28B03B1F00544939 /* Sources */,
 				79B92BAF28B03B1F00544939 /* Frameworks */,
 				79B92BB028B03B1F00544939 /* Resources */,
+				79802FFB28C5D4EF0048C478 /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -743,6 +744,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		79802FFB28C5D4EF0048C478 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		79B92BAE28B03B1F00544939 /* Sources */ = {
@@ -967,7 +990,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 149;
+				CURRENT_PROJECT_VERSION = 159;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -998,7 +1021,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 149;
+				CURRENT_PROJECT_VERSION = 159;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

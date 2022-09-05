@@ -69,6 +69,6 @@ struct ToolbarSFButton_Previews: PreviewProvider {
     ToolbarSFButton(
       name: "gear",
       alignment: .leading,
-      action: { print("preview") })
+      action: { })
   }
 }
