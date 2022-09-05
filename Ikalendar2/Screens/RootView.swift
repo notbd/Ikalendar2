@@ -11,6 +11,7 @@ import SwiftUI
 /// Provide an interface for some upfront View-level configurations.
 struct RootView: View {
   @Environment(\.colorScheme) var deviceColorScheme
+
   @EnvironmentObject var ikaStatus: IkaStatus
   @EnvironmentObject var ikaPreference: IkaPreference
 

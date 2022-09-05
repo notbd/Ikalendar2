@@ -11,9 +11,10 @@ import SwiftUI
 
 /// The main page for App Settings.
 struct SettingsMainView: View {
+  @Environment(\.openURL) var openURL
+
   @EnvironmentObject var ikaStatus: IkaStatus
   @EnvironmentObject var ikaPreference: IkaPreference
-  @Environment(\.openURL) var openURL
 
   private var currLanguage: String {
     if Locale.current.identifier.starts(with: "en") { return "English" }
