@@ -15,7 +15,7 @@ struct MainView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
   var body: some View {
-    NavigationView {
+    NavigationStack {
       if horizontalSizeClass == .compact {
         ContentView()
       }

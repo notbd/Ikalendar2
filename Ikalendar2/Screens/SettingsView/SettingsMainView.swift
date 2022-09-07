@@ -25,7 +25,7 @@ struct SettingsMainView: View {
   }
 
   var body: some View {
-    NavigationView {
+    NavigationStack {
       Form {
         Section(header: Text("Default Mode")) {
           rowDefaultGameMode
@@ -50,7 +50,6 @@ struct SettingsMainView: View {
       .navigationTitle("Settings")
       .navigationBarItems(trailing: doneButton)
     }
-    .navigationViewStyle(StackNavigationViewStyle())
   }
 
   // MARK: - Components ↓↓↓
@@ -121,10 +120,6 @@ struct SettingsMainView: View {
         }
       }
       .pickerStyle(SegmentedPickerStyle())
-      .onChange(of: ikaPreference.appColorScheme) { colorScheme in
-        // handle color scheme changes
-        ColorSchemeManager.shared.handleTheme(for: colorScheme)
-      }
     }
   }
 

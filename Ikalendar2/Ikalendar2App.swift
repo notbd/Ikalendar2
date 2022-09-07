@@ -10,15 +10,14 @@ import SwiftUI
 /// Main Application Entry.
 @main
 struct Ikalendar2App: App {
-  var ikaCatalog = IkaCatalog()
-  var ikaStatus = IkaStatus()
-  var ikaTimer = IkaTimer()
-  var ikaPreference = IkaPreference()
-  var motionManager = MotionManager()
+  private var ikaCatalog = IkaCatalog()
+  private var ikaStatus = IkaStatus()
+  private var ikaTimer = IkaTimer()
+  private var ikaPreference = IkaPreference()
+  private var motionManager = MotionManager()
 
   var body: some Scene {
     WindowGroup {
-//      NavViewNew()
       RootView()
         .environmentObject(ikaCatalog)
         .environmentObject(ikaStatus)

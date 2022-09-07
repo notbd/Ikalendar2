@@ -17,6 +17,14 @@ struct RootView: View {
 
   var body: some View {
     MainView()
+      .onAppear {
+        // set color scheme when launch
+        ColorSchemeManager.shared.handleTheme(for: ikaPreference.appColorScheme)
+      }
+      .onChange(of: ikaPreference.appColorScheme) { colorScheme in
+        // handle color scheme changes in Settings
+        ColorSchemeManager.shared.handleTheme(for: colorScheme)
+      }
       .fullScreenCover(isPresented: $ikaStatus.isSettingsPresented) {
         SettingsMainView()
           .environmentObject(ikaStatus)

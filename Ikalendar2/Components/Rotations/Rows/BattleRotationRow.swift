@@ -155,7 +155,8 @@ struct BattleRotationRow_Previews: PreviewProvider {
             .pickerStyle(SegmentedPickerStyle())
           }
 
-          ForEach(0 ..< IkaMockData.getBattleRotations()[modeSelection]!.count) { index in
+          ForEach(0 ..< IkaMockData.getBattleRotations()[modeSelection]!.count, id: \.self)
+          { index in
             BattleRotationRow(
               rotation: IkaMockData.getBattleRotations()[modeSelection]![index],
               index: index,

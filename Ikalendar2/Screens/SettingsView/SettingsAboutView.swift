@@ -151,7 +151,7 @@ struct SettingsAboutView: View {
           Image("twitter_xsmall")
             .resizable()
             .scaledToFit()
-            .frame(width: 18)
+            .frame(width: 16)
         }
       }
   }
