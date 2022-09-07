@@ -22,6 +22,7 @@ struct SettingsAboutView: View {
       Section(header: Spacer()) {
         iconContent
       }
+      .listRowBackground(Color.clear)
 
       Section(header: Text("Share")) {
         rowShare
@@ -56,7 +57,6 @@ struct SettingsAboutView: View {
       Spacer()
 
       iconLabel
-        .padding()
 
       Spacer()
     }
@@ -64,7 +64,7 @@ struct SettingsAboutView: View {
 
   var iconLabel: some View {
     var iconImage: some View {
-      Image(uiImage: UIImage(named: "AppIcon-1") ?? UIImage())
+      Image(uiImage: UIImage(named: "AppIcon") ?? UIImage())
         .resizable()
         .scaledToFit()
         .frame(width: 120, height: 120)

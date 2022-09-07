@@ -25,7 +25,8 @@ struct SettingsMainView: View {
   }
 
   var body: some View {
-    NavigationStack {
+    NavigationView {
+      // not using NavigationStack as of iOS 16 beta because of titleDisplayMode bug
       Form {
         Section(header: Text("Default Mode")) {
           rowDefaultGameMode
@@ -48,8 +49,10 @@ struct SettingsMainView: View {
         }
       }
       .navigationTitle("Settings")
+      .navigationBarTitleDisplayMode(.large)
       .navigationBarItems(trailing: doneButton)
     }
+    .navigationViewStyle(StackNavigationViewStyle())
   }
 
   // MARK: - Components ↓↓↓

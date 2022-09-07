@@ -12,10 +12,11 @@ import SwiftUI
 /// The view that displays the content in a NavigationView.
 struct ContentView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-  var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   @EnvironmentObject var ikaCatalog: IkaCatalog
   @EnvironmentObject var ikaStatus: IkaStatus
+
+  var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   var body: some View {
     ZStack {
@@ -35,8 +36,6 @@ struct ContentView: View {
         .overlay(
           AutoLoadingOverlay(autoLoadingStatus: ikaCatalog.autoLoadingStatus),
           alignment: .bottomTrailing)
-
-      // MARK: loading overlay
 
       LoadingOverlay(loadingStatus: ikaCatalog.loadingStatus)
     }
@@ -75,13 +74,11 @@ struct ContentView: View {
   func setCompactHoriClassToolbar<Content: View>(content: Content) -> some View {
     content
       .toolbar {
-        // MARK: refresh button
-
-        ToolbarItem(placement: .navigationBarLeading) {
-          ToolbarRefreshButton(
-            isDisabled: ikaCatalog.loadingStatus == .loading,
-            action: didTapRefreshButton)
-        }
+//        ToolbarItem(placement: .navigationBarLeading) {
+//          ToolbarRefreshButton(
+//            isDisabled: ikaCatalog.loadingStatus == .loading,
+//            action: didTapRefreshButton)
+//        }
 
         ToolbarItem(placement: .navigationBarTrailing) {
           ToolbarSettingsButton(
@@ -89,11 +86,7 @@ struct ContentView: View {
         }
 
         ToolbarItemGroup(placement: .bottomBar) {
-          // MARK: game mode button
-
           if ikaStatus.gameModeSelection == .battle {
-            // MARK: battle mode picker
-
             ToolbarBattleModePicker()
           }
 
@@ -107,8 +100,6 @@ struct ContentView: View {
   func setRegularHoriClassToolbar<Content: View>(content: Content) -> some View {
     content
       .toolbar {
-        // MARK: refresh button
-
         ToolbarItem(placement: .navigationBarLeading) {
           ToolbarRefreshButton(
             isDisabled: ikaCatalog.loadingStatus == .loading,

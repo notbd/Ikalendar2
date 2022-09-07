@@ -11,9 +11,9 @@ import SwiftUI
 @main
 struct Ikalendar2App: App {
   private var ikaCatalog = IkaCatalog()
-  private var ikaStatus = IkaStatus()
+  private var ikaStatus: IkaStatus
   private var ikaTimer = IkaTimer()
-  private var ikaPreference = IkaPreference()
+  private var ikaPreference: IkaPreference
   private var motionManager = MotionManager()
 
   var body: some Scene {
@@ -33,11 +33,14 @@ struct Ikalendar2App: App {
   init() {
     UIKitIntegration.customizeNavigationTitleText()
 //    UIKitIntegration.customizePickerText()
+
     UserDefaults.standard
       .register(defaults: [Constants.Keys.AppStorage.DEFAULT_GAME_MODE: "battle"])
     UserDefaults.standard
       .register(defaults: [Constants.Keys.AppStorage.DEFAULT_BATTLE_MODE: "gachi"])
-//    ikaPreference = IkaPreference()
-//    ikaStatus = IkaStatus()
+
+    // init here to avoid crash
+    ikaStatus = IkaStatus()
+    ikaPreference = IkaPreference()
   }
 }
