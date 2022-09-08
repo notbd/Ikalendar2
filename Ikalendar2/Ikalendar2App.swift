@@ -31,7 +31,7 @@ struct Ikalendar2App: App {
   // MARK: Lifecycle
 
   init() {
-//    UIKitIntegration.customizeNavigationTitleText()
+    UIKitIntegration.customizeNavigationTitleText()
 //    UIKitIntegration.customizePickerText()
 
     UserDefaults.standard

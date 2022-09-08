@@ -65,7 +65,7 @@ struct SettingsMainView: View {
         "Game",
         systemImage: "rectangle.topthird.inset")
 
-      Spacer().frame(width: 50)
+      Spacer().frame(width: 40)
 
       Picker(
         selection: $ikaPreference.defaultGameMode
@@ -87,7 +87,7 @@ struct SettingsMainView: View {
         "Battle",
         systemImage: "rectangle.bottomthird.inset.fill")
 
-      Spacer().frame(width: 50)
+      Spacer().frame(width: 40)
 
       Picker(
         selection: $ikaPreference.defaultBattleMode
@@ -113,7 +113,7 @@ struct SettingsMainView: View {
         systemImage: "circle.lefthalf.fill")
 
       Spacer()
-        .frame(maxWidth: 14)
+        .frame(maxWidth: 16)
 
       Picker(
         selection: $ikaPreference.appColorScheme
