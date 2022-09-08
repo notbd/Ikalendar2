@@ -44,14 +44,14 @@ struct ErrorViewContent: View {
     VStack(alignment: .leading) {
       Text(error.title)
         .scaledLimitedLine()
-        .if(Scoped.USES_CUSTOM_FONT) {
+        .if(Scoped.IF_USE_CUSTOM_FONT) {
           $0.fontIka(.ika1, size: Scoped.TITLE_CUSTOM_FONT_SIZE, relativeTo: .largeTitle)
         } else: {
           $0.font(.system(.largeTitle, design: .rounded))
         }
 
       Text(error.message)
-        .if(Scoped.USES_CUSTOM_FONT) {
+        .if(Scoped.IF_USE_CUSTOM_FONT) {
           $0.fontIka(.ika1, size: Scoped.MESSAGE_CUSTOM_FONT_SIZE, relativeTo: .caption)
         } else: {
           $0.font(.system(.caption, design: .rounded))

@@ -16,6 +16,8 @@ struct SettingsMainView: View {
   @EnvironmentObject var ikaStatus: IkaStatus
   @EnvironmentObject var ikaPreference: IkaPreference
 
+  typealias Scoped = Constants.Styles.Settings.Main
+
   private var currLanguage: String {
     if Locale.current.identifier.starts(with: "en") { return "English" }
     if Locale.current.identifier.starts(with: "ja") { return "日本語" }
@@ -35,7 +37,7 @@ struct SettingsMainView: View {
 
         Section(header: Text("Appearance")) {
           rowColorScheme
-          rowShuffleImages
+          rowAltStageImages
           rowAppIcon
         }
 
@@ -45,7 +47,7 @@ struct SettingsMainView: View {
 
         Section {
           rowAbout
-          rowAcknowledgement
+          rowCredits
         }
       }
       .navigationTitle("Settings")
@@ -63,9 +65,11 @@ struct SettingsMainView: View {
     HStack {
       Label(
         "Game",
-        systemImage: "rectangle.topthird.inset")
+        systemImage: Scoped.DEFAULT_GAME_MODE_SFSYMBOL)
+        .symbolRenderingMode(.palette)
+        .foregroundStyle(.primary, Color.accentColor)
 
-      Spacer().frame(width: 40)
+      Spacer().frame(width: Scoped.DEFAULT_MODE_PICKER_SPACING)
 
       Picker(
         selection: $ikaPreference.defaultGameMode
@@ -85,9 +89,11 @@ struct SettingsMainView: View {
     HStack {
       Label(
         "Battle",
-        systemImage: "rectangle.bottomthird.inset.fill")
+        systemImage: Scoped.DEFAULT_BATTLE_MODE_SFSYMBOL)
+        .symbolRenderingMode(.palette)
+        .foregroundStyle(.primary, Color.accentColor)
 
-      Spacer().frame(width: 40)
+      Spacer().frame(width: Scoped.DEFAULT_MODE_PICKER_SPACING)
 
       Picker(
         selection: $ikaPreference.defaultBattleMode
@@ -110,10 +116,13 @@ struct SettingsMainView: View {
     HStack {
       Label(
         "Color Scheme",
-        systemImage: "circle.lefthalf.fill")
+        systemImage: Scoped.COLOR_SCHEME_SFSYMBOL)
 
       Spacer()
-        .frame(maxWidth: 16)
+        .frame(
+          maxWidth: currLanguage == "English"
+            ? Scoped.COLOR_SCHEME_PICKER_SPACING_en
+            : Scoped.COLOR_SCHEME_PICKER_SPACING_ja)
 
       Picker(
         selection: $ikaPreference.appColorScheme
@@ -129,11 +138,11 @@ struct SettingsMainView: View {
     }
   }
 
-  private var rowShuffleImages: some View {
+  private var rowAltStageImages: some View {
     Toggle(isOn: .constant(true)) {
       Label(
-        "Shuffle Cover Images",
-        systemImage: "shuffle")
+        "Alternative Stage Images",
+        systemImage: Scoped.ALT_STAGE_IMG_SFSYMBOL)
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
   }
@@ -142,7 +151,7 @@ struct SettingsMainView: View {
     NavigationLink(destination: SettingsAppIconView()) {
       Label(
         "App Icon",
-        systemImage: "square.stack")
+        systemImage: Scoped.APP_ICON_SFSYMBOL)
     }
   }
 
@@ -157,11 +166,11 @@ struct SettingsMainView: View {
     } label: {
       HStack {
         Label {
-          Text("App Language")
+          Text("Preferred Language")
             .foregroundColor(.primary)
         }
         icon: {
-          Image(systemName: "globe")
+          Image(systemName: Scoped.PREF_LANG_SFSYMBOL)
         }
 
         Spacer()
@@ -169,7 +178,7 @@ struct SettingsMainView: View {
         Text(currLanguage)
           .foregroundColor(.secondary)
 
-        Image(systemName: "arrow.up.forward.app.fill")
+        Image(systemName: Scoped.PREF_LANG_JUMP_SFSYMBOL)
           .foregroundColor(.secondary)
       }
     }
@@ -181,15 +190,15 @@ struct SettingsMainView: View {
     NavigationLink(destination: SettingsAboutView()) {
       Label(
         "About",
-        systemImage: "house.fill")
+        systemImage: Scoped.ABOUT_SFSYMBOL)
     }
   }
 
-  private var rowAcknowledgement: some View {
+  private var rowCredits: some View {
     NavigationLink(destination: SettingsAcknowledgementView()) {
       Label(
-        "Acknowledgement",
-        systemImage: "bookmark.fill")
+        "Credits",
+        systemImage: Scoped.CREDITS_SFSYMBOL)
     }
   }
 
@@ -201,7 +210,7 @@ struct SettingsMainView: View {
       ikaStatus.isSettingsPresented.toggle()
     } label: {
       Text("Done")
-        .fontWeight(.semibold)
+        .fontWeight(Scoped.DONE_BUTTON_FONT_WEIGHT)
     }
   }
 }

@@ -15,12 +15,15 @@ import Foundation
 
 /// Constant data holding `keys` for the app.
 extension Constants.Keys {
-  static let appName =
+  static let appBundleName =
     Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "UNKNOWN"
+  static let appDisplayName =
+    Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "UNKNOWN"
   static let appVersion =
     Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
   static let appBuildNumber =
     Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown"
+  static let appStoreIdentifier = "1529193361"
 
   enum AppStorage {
     static let COLOR_SCHEME = "PREF_COLOR_SCHEME"

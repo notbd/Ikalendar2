@@ -38,11 +38,11 @@ extension Constants.Styles {
   }
 
   enum ToolbarButton {
-    static let SFSYMBOL_FONT_REG: Font = .system(size: 17, weight: .medium)
-    static let SFSYMBOL_FONT_SMALL: Font = .system(size: 15, weight: .medium)
-    static let IMG_SIDE: CGFloat = 28
+    static let SFSYMBOL_FONT_SIZE_REG: Font = .system(size: 17, weight: .medium)
+    static let SFSYMBOL_FONT_SIZE_SMALL: Font = .system(size: 15, weight: .medium)
+    static let IMG_SIDE_LEN: CGFloat = 28
 
-    static let SILHOUETTE_SIDE: CGFloat = 36
+    static let SILHOUETTE_SIDE_LEN: CGFloat = 36
     static let SILHOUETTE_CORNER_RADIUS: CGFloat = 5
 
     static let GAME_MODE_SWITCH_SFSYMBOL = "rectangle.fill.on.rectangle.angled.fill"
@@ -51,9 +51,61 @@ extension Constants.Styles {
   enum Error {
     static let CONTENT_WIDTH_RATIO: CGFloat = 0.8
 
-    static let USES_CUSTOM_FONT = true
+    static let IF_USE_CUSTOM_FONT = true
     static let TITLE_CUSTOM_FONT_SIZE: CGFloat = 31
     static let MESSAGE_CUSTOM_FONT_SIZE: CGFloat = 16
+  }
+
+  enum Settings {
+    enum Main {
+      static let DEFAULT_GAME_MODE_SFSYMBOL = "rectangle.topthird.inset.filled"
+      static let DEFAULT_BATTLE_MODE_SFSYMBOL = "rectangle.bottomthird.inset.filled"
+      static let DEFAULT_MODE_PICKER_SPACING: CGFloat = 40
+
+      static let COLOR_SCHEME_SFSYMBOL = "circle.lefthalf.fill"
+      static let COLOR_SCHEME_PICKER_SPACING_en: CGFloat = 45
+      static let COLOR_SCHEME_PICKER_SPACING_ja: CGFloat = 16
+
+      static let ALT_STAGE_IMG_SFSYMBOL = "compass.drawing"
+
+      static let APP_ICON_SFSYMBOL = "square.stack"
+
+      static let PREF_LANG_SFSYMBOL = "globe"
+      static let PREF_LANG_JUMP_SFSYMBOL = "arrow.up.forward.app.fill"
+
+      static let ABOUT_SFSYMBOL = "house.fill"
+
+      static let CREDITS_SFSYMBOL = "bookmark.fill"
+
+      static let DONE_BUTTON_FONT_WEIGHT: Font.Weight = .semibold
+    }
+
+    enum About {
+      static let APP_ICON_NAME = "AppIcon"
+      static let APP_ICON_SIDE_LEN: CGFloat = 120
+      static let APP_ICON_CORNER_RADIUS: CGFloat = 16
+      static let APP_ICON_TITLE_FONT: Font = .system(.largeTitle, design: .rounded)
+      static let APP_ICON_TITLE_FONT_WEIGHT: Font.Weight = .bold
+      static let APP_ICON_SUBTITLE_FONT: Font = .system(.subheadline, design: .monospaced)
+      static let APP_ICON_SUBTITLE_FONT_WEIGHT: Font.Weight = .regular
+
+      static let SHARE_SFSYMBOL = "square.and.arrow.up"
+
+      static let TWITTER_ICON_NAME = "twitter_xsmall"
+      static let TWITTER_ICON_SIDE_LEN: CGFloat = 16
+
+      static let EMAIL_SFSYMBOL = "envelope"
+
+      static let RATING_SFSYMBOL = "star.leadinghalf.filled"
+
+      static let REVIEW_SFSYMBOL = "highlighter"
+
+      static let VIEW_ON_APP_STORE_SFSYMBOL = "doc.text.fill.viewfinder"
+
+      static let SOURCE_CODE_SFSYMBOL = "chevron.left.slash.chevron.right"
+
+      static let PRIVACY_POLICY_SFSYMBOL = "hand.raised.fill"
+    }
   }
 
   enum Rotation {

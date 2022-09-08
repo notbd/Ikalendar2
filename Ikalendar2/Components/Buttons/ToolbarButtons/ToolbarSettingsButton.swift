@@ -18,10 +18,10 @@ struct ToolbarSettingsButton: View {
   var body: some View {
     Button(action: action) {
       Image(systemName: "gear")
-        .font(Scoped.SFSYMBOL_FONT_REG)
+        .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
         .foregroundColor(.primary)
         .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
-        .frame(width: Scoped.SILHOUETTE_SIDE, height: Scoped.SILHOUETTE_SIDE)
+        .frame(width: Scoped.SILHOUETTE_SIDE_LEN, height: Scoped.SILHOUETTE_SIDE_LEN)
         .silhouetteFrame(cornerRadius: Scoped.SILHOUETTE_CORNER_RADIUS)
     }
   }

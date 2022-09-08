@@ -39,7 +39,7 @@ struct Ikalendar2App: App {
     UserDefaults.standard
       .register(defaults: [Constants.Keys.AppStorage.DEFAULT_BATTLE_MODE: "gachi"])
 
-    // init here to avoid crash
+    // init these here to avoid crash
     ikaPreference = IkaPreference()
     ikaStatus = IkaStatus()
   }

@@ -15,12 +15,14 @@ struct SettingsAboutView: View {
   @Environment(\.openURL) var openURL
 //  @Environment(\.requestReview) var requestReview
 
+  typealias Scoped = Constants.Styles.Settings.About
+
   @State var appStoreOverlayPresented = false
 
   var body: some View {
     Form {
       Section(header: Spacer()) {
-        iconContent
+        appIconContent
       }
       .listRowBackground(Color.clear)
 
@@ -34,9 +36,9 @@ struct SettingsAboutView: View {
       }
 
       Section(header: Text("Review")) {
+        rowRating
+        rowLeavingReview
         rowAppStoreOverlay
-        rowGiveRate
-        rowLeaveReview
       }
 
       Section(header: Text("Others")) {
@@ -52,52 +54,50 @@ struct SettingsAboutView: View {
 
   // MARK: - Icon Section
 
-  var iconContent: some View {
+  var appIconContent: some View {
     HStack {
       Spacer()
-
-      iconLabel
-
+      appIconLabel
       Spacer()
     }
   }
 
-  var iconLabel: some View {
-    var iconImage: some View {
-      Image(uiImage: UIImage(named: "AppIcon") ?? UIImage())
+  var appIconLabel: some View {
+    var appIconImage: some View {
+      Image(uiImage: UIImage(named: Scoped.APP_ICON_NAME) ?? UIImage())
         .resizable()
         .scaledToFit()
-        .frame(width: 120, height: 120)
-        .cornerRadius(16)
+        .frame(width: Scoped.APP_ICON_SIDE_LEN, height: Scoped.APP_ICON_SIDE_LEN)
+        .cornerRadius(Scoped.APP_ICON_CORNER_RADIUS)
     }
 
-    var iconTitle: some View {
-      let title = "ikalendar2"
+    var appIconTitle: some View {
+      let title = Constants.Keys.appDisplayName
       let text =
         Text(title)
+          .font(Scoped.APP_ICON_TITLE_FONT)
+          .fontWeight(Scoped.APP_ICON_TITLE_FONT_WEIGHT)
           .foregroundColor(.accentColor)
-          .fontWeight(.bold)
-          .font(.system(.largeTitle, design: .rounded))
       return text
     }
 
-    var iconSubtitle: some View {
+    var appIconSubtitle: some View {
       let versionNumber = Constants.Keys.appVersion
       let buildNumber = Constants.Keys.appBuildNumber
       let subtitle = "Version \(versionNumber) (\(buildNumber))"
       let text =
         Text(subtitle)
+          .font(Scoped.APP_ICON_SUBTITLE_FONT)
+          .fontWeight(Scoped.APP_ICON_SUBTITLE_FONT_WEIGHT)
           .foregroundColor(.secondary)
-          .fontWeight(.regular)
-          .font(.system(.subheadline, design: .monospaced))
       return text
     }
 
     return
       VStack(alignment: .center) {
-        iconImage
-        iconTitle
-        iconSubtitle
+        appIconImage
+        appIconTitle
+        appIconSubtitle
       }
   }
 
@@ -115,7 +115,7 @@ struct SettingsAboutView: View {
             .foregroundColor(.primary)
         }
         icon: {
-          Image(systemName: "square.and.arrow.up")
+          Image(systemName: Scoped.SHARE_SFSYMBOL)
         }
       }
   }
@@ -138,20 +138,18 @@ struct SettingsAboutView: View {
       } label: {
         Label {
           HStack {
-            Text("Developer")
+            Text("Developer's Twitter")
               .foregroundColor(.primary)
-
             Spacer()
-
             Text(twitterHandle)
               .foregroundColor(.secondary)
           }
         }
         icon: {
-          Image("twitter_xsmall")
+          Image(Scoped.TWITTER_ICON_NAME)
             .resizable()
             .scaledToFit()
-            .frame(width: 16)
+            .frame(width: Scoped.TWITTER_ICON_SIDE_LEN)
         }
       }
   }
@@ -164,51 +162,33 @@ struct SettingsAboutView: View {
       }
     } label: {
       Label {
-        Text("Send Feedback Email")
+        Text("Feedback Email")
           .foregroundColor(.primary)
       }
       icon: {
-        Image(systemName: "envelope")
+        Image(systemName: Scoped.EMAIL_SFSYMBOL)
       }
     }
   }
 
   // MARK: - Review Section
 
-  var rowAppStoreOverlay: some View {
-    Button {
-      Haptics.generate(.selection)
-      appStoreOverlayPresented.toggle()
-    } label: {
-      Label {
-        Text("View ikalendar2 on the App Store")
-          .foregroundColor(.primary)
-      }
-      icon: {
-        Image(systemName: "doc.text.fill.viewfinder")
-      }
-    }
-    .appStoreOverlay(isPresented: $appStoreOverlayPresented) {
-      SKOverlay.AppConfiguration(appIdentifier: "1529193361", position: .bottom)
-    }
-  }
-
-  var rowGiveRate: some View {
+  var rowRating: some View {
     Button {
       Haptics.generate(.selection)
       didTapRate()
     } label: {
       Label {
-        Text("Rate on the App Store")
+        Text("Rate ikalendar2")
           .foregroundColor(.primary)
       }
       icon: {
-        Image(systemName: "star.bubble")
+        Image(systemName: Scoped.RATING_SFSYMBOL)
       }
     }
   }
 
-  var rowLeaveReview: some View {
+  var rowLeavingReview: some View {
     Button {
       Haptics.generate(.selection)
       if let url = URL(string: Constants.Keys.URL.APP_STORE_REVIEW) {
@@ -220,8 +200,28 @@ struct SettingsAboutView: View {
           .foregroundColor(.primary)
       }
       icon: {
-        Image(systemName: "highlighter")
+        Image(systemName: Scoped.REVIEW_SFSYMBOL)
       }
+    }
+  }
+
+  var rowAppStoreOverlay: some View {
+    Button {
+      Haptics.generate(.selection)
+      appStoreOverlayPresented.toggle()
+    } label: {
+      Label {
+        Text("View ikalendar2 on the App Store")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(systemName: Scoped.VIEW_ON_APP_STORE_SFSYMBOL)
+      }
+    }
+    .appStoreOverlay(isPresented: $appStoreOverlayPresented) {
+      SKOverlay.AppConfiguration(
+        appIdentifier: Constants.Keys.appStoreIdentifier,
+        position: .bottom)
     }
   }
 
@@ -239,7 +239,7 @@ struct SettingsAboutView: View {
           .foregroundColor(.primary)
       }
       icon: {
-        Image(systemName: "chevron.left.slash.chevron.right")
+        Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
       }
     }
   }
@@ -256,7 +256,7 @@ struct SettingsAboutView: View {
           .foregroundColor(.primary)
       }
       icon: {
-        Image(systemName: "hand.raised.fill")
+        Image(systemName: Scoped.PRIVACY_POLICY_SFSYMBOL)
       }
     }
   }
