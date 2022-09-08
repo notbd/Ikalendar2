@@ -18,9 +18,8 @@ struct ToolbarGameModeSwitchButton: View {
   var body: some View {
     Menu {
       Picker(
-        selection: $ikaStatus.gameModeSelection.onSet { _ in
-          Haptics.generate(.warning)
-        },
+        selection: $ikaStatus.gameModeSelection
+          .onSet { _ in Haptics.generate(.warning) },
         label: Text("Game Mode"))
       {
         ForEach(GameMode.allCases) { gameMode in
@@ -36,8 +35,9 @@ struct ToolbarGameModeSwitchButton: View {
       Label(
         "Game Mode Switch",
         systemImage: Scoped.GAME_MODE_SWITCH_SFSYMBOL)
-        .font(Scoped.SFSYMBOL_FONT)
+        .font(Scoped.SFSYMBOL_FONT_SMALL)
         .foregroundColor(Color.primary)
+        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
         .tappableAreaFrame()
     }
     .onTapGesture {

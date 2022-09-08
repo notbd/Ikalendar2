@@ -57,13 +57,12 @@
 		7903FE9328C4701000245586 /* AutoLoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9028C4701000245586 /* AutoLoadingOverlay.swift */; };
 		7903FE9428C4701000245586 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9128C4701000245586 /* LoadingOverlay.swift */; };
 		7903FE9A28C4702100245586 /* ToolbarSettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9528C4702100245586 /* ToolbarSettingsButton.swift */; };
-		7903FE9B28C4702100245586 /* ToolbarSFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9628C4702100245586 /* ToolbarSFButton.swift */; };
 		7903FE9C28C4702100245586 /* ToolbarGameModeSwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9728C4702100245586 /* ToolbarGameModeSwitchButton.swift */; };
 		7903FE9D28C4702100245586 /* ToolbarButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9828C4702100245586 /* ToolbarButtonAlignment.swift */; };
 		7903FE9E28C4702100245586 /* ToolbarRefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */; };
 		7903FEA228C472E800245586 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7903FEA428C472E800245586 /* Localizable.strings */; };
+		79189B4828C95E75006E78F9 /* OffsettableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
-		79802FEA28C54ECA0048C478 /* NavViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79802FE928C54ECA0048C478 /* NavViewNew.swift */; };
 		79802FFA28C55B740048C478 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79802FF928C55B740048C478 /* ColorSchemeManager.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
 		79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713128C4052300A91055 /* IkaCatalog.swift */; };
@@ -147,14 +146,13 @@
 		7903FE9028C4701000245586 /* AutoLoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLoadingOverlay.swift; sourceTree = "<group>"; };
 		7903FE9128C4701000245586 /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		7903FE9528C4702100245586 /* ToolbarSettingsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarSettingsButton.swift; sourceTree = "<group>"; };
-		7903FE9628C4702100245586 /* ToolbarSFButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarSFButton.swift; sourceTree = "<group>"; };
 		7903FE9728C4702100245586 /* ToolbarGameModeSwitchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarGameModeSwitchButton.swift; sourceTree = "<group>"; };
 		7903FE9828C4702100245586 /* ToolbarButtonAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarButtonAlignment.swift; sourceTree = "<group>"; };
 		7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarRefreshButton.swift; sourceTree = "<group>"; };
 		7903FEA328C472E800245586 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7903FEA528C472EB00245586 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsettableScrollView.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
-		79802FE928C54ECA0048C478 /* NavViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavViewNew.swift; sourceTree = "<group>"; };
 		79802FED28C55B2A0048C478 /* Deprecated-Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Deprecated-Publisher.swift"; sourceTree = "<group>"; };
 		79802FEF28C55B2A0048C478 /* RuleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDetailView.swift; sourceTree = "<group>"; };
 		79802FF028C55B2A0048C478 /* StageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageDetailView.swift; sourceTree = "<group>"; };
@@ -250,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				7903FE5628C460C600245586 /* TimeLength.swift */,
+				79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -391,7 +390,6 @@
 				7903FE9828C4702100245586 /* ToolbarButtonAlignment.swift */,
 				7903FE9528C4702100245586 /* ToolbarSettingsButton.swift */,
 				7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */,
-				7903FE9628C4702100245586 /* ToolbarSFButton.swift */,
 				7903FE9728C4702100245586 /* ToolbarGameModeSwitchButton.swift */,
 			);
 			path = ToolbarButtons;
@@ -408,7 +406,6 @@
 		79802FE828C54E9D0048C478 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				79802FE928C54ECA0048C478 /* NavViewNew.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -779,6 +776,7 @@
 				797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */,
 				7903FE8728C46F5F00245586 /* BattleRotationStageCard.swift in Sources */,
 				79AA713C28C407F500A91055 /* IkaError.swift in Sources */,
+				79189B4828C95E75006E78F9 /* OffsettableScrollView.swift in Sources */,
 				7903FE2A28C4349E00245586 /* SwiftyJSON.swift in Sources */,
 				7903FE4F28C45F0300245586 /* LocalizedStringKey+Ext.swift in Sources */,
 				7903FE2E28C436D000245586 /* SimpleHaptics.swift in Sources */,
@@ -802,7 +800,6 @@
 				7903FE5728C460C600245586 /* TimeLength.swift in Sources */,
 				7903FE6328C46A3400245586 /* MainView.swift in Sources */,
 				79AA714B28C411EB00A91055 /* BattleRotationDict.swift in Sources */,
-				79802FEA28C54ECA0048C478 /* NavViewNew.swift in Sources */,
 				7903FE6128C46A1700245586 /* RootView.swift in Sources */,
 				7903FE2828C4325600245586 /* IkaPublisher.swift in Sources */,
 				79AA714428C408B500A91055 /* BattleRule.swift in Sources */,
@@ -843,7 +840,6 @@
 				79AA715928C4160D00A91055 /* MysteryWeapon.swift in Sources */,
 				7903FE4728C45D8000245586 /* DateFormatter+Ext.swift in Sources */,
 				7903FE6A28C46C6B00245586 /* BattleRotationListView.swift in Sources */,
-				7903FE9B28C4702100245586 /* ToolbarSFButton.swift in Sources */,
 				7903FE6C28C46CAF00245586 /* SalmonRotationListView.swift in Sources */,
 				7903FE7428C46D4100245586 /* SettingsAcknowledgementView.swift in Sources */,
 				7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */,
@@ -990,7 +986,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 228;
+				CURRENT_PROJECT_VERSION = 280;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1021,7 +1017,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 228;
+				CURRENT_PROJECT_VERSION = 280;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

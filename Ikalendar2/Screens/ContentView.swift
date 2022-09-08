@@ -126,9 +126,8 @@ struct ToolbarBattleModePicker: View {
 
   var body: some View {
     Picker(
-      selection: $ikaStatus.battleModeSelection.onSet { _ in
-        Haptics.generate(.soft)
-      },
+      selection: $ikaStatus.battleModeSelection
+        .onSet { _ in Haptics.generate(.soft) },
       label: Text("Battle Mode"))
     {
       ForEach(BattleMode.allCases) { battleMode in

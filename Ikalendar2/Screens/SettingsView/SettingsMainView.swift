@@ -68,7 +68,8 @@ struct SettingsMainView: View {
       Spacer().frame(width: 50)
 
       Picker(
-        selection: $ikaPreference.defaultGameMode.onSet { _ in Haptics.generate(.selection) },
+        selection: $ikaPreference.defaultGameMode
+          .onSet { _ in Haptics.generate(.selection) },
         label: Text("Default Game Mode"))
       {
         ForEach(GameMode.allCases) { gameMode in
@@ -89,7 +90,8 @@ struct SettingsMainView: View {
       Spacer().frame(width: 50)
 
       Picker(
-        selection: $ikaPreference.defaultBattleMode.onSet { _ in Haptics.generate(.selection) },
+        selection: $ikaPreference.defaultBattleMode
+          .onSet { _ in Haptics.generate(.selection) },
         label: Text("Default Battle Mode"))
       {
         ForEach(BattleMode.allCases) { battleMode in
@@ -111,10 +113,11 @@ struct SettingsMainView: View {
         systemImage: "circle.lefthalf.fill")
 
       Spacer()
-        .frame(maxWidth: 20)
+        .frame(maxWidth: 14)
 
       Picker(
-        selection: $ikaPreference.appColorScheme.onSet { _ in Haptics.generate(.selection) },
+        selection: $ikaPreference.appColorScheme
+          .onSet { _ in Haptics.generate(.selection) },
         label: Text("App Color Scheme"))
       {
         ForEach(ColorSchemeManager.AppColorScheme.allCases) { appColorScheme in

@@ -31,7 +31,7 @@ struct Ikalendar2App: App {
   // MARK: Lifecycle
 
   init() {
-    UIKitIntegration.customizeNavigationTitleText()
+//    UIKitIntegration.customizeNavigationTitleText()
 //    UIKitIntegration.customizePickerText()
 
     UserDefaults.standard
@@ -40,7 +40,7 @@ struct Ikalendar2App: App {
       .register(defaults: [Constants.Keys.AppStorage.DEFAULT_BATTLE_MODE: "gachi"])
 
     // init here to avoid crash
-    ikaStatus = IkaStatus()
     ikaPreference = IkaPreference()
+    ikaStatus = IkaStatus()
   }
 }

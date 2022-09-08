@@ -19,8 +19,8 @@ struct ToolbarRefreshButton: View {
   var body: some View {
     Button(action: action) {
       Image(systemName: "arrow.triangle.2.circlepath")
+        .font(Scoped.SFSYMBOL_FONT_REG)
         .foregroundColor(.primary)
-        .font(Scoped.SFSYMBOL_FONT)
         .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
         .frame(width: Scoped.SILHOUETTE_SIDE, height: Scoped.SILHOUETTE_SIDE)
         .silhouetteFrame(cornerRadius: Scoped.SILHOUETTE_CORNER_RADIUS)

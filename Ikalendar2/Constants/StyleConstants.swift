@@ -38,7 +38,8 @@ extension Constants.Styles {
   }
 
   enum ToolbarButton {
-    static let SFSYMBOL_FONT: Font = .system(size: 17, weight: .medium)
+    static let SFSYMBOL_FONT_REG: Font = .system(size: 17, weight: .medium)
+    static let SFSYMBOL_FONT_SMALL: Font = .system(size: 15, weight: .medium)
     static let IMG_SIDE: CGFloat = 28
 
     static let SILHOUETTE_SIDE: CGFloat = 36

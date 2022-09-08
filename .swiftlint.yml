@@ -11,7 +11,7 @@ excluded:
   - Carthage
   - Pods
   - Imports
-  - Tests
+  - Ikalendar2/Tests
 
 indentation: 2
 
