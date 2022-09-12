@@ -43,7 +43,7 @@
 		7903FE6E28C46CD200245586 /* SettingsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6D28C46CD200245586 /* SettingsMainView.swift */; };
 		7903FE7028C46CEF00245586 /* SettingsAppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6F28C46CEF00245586 /* SettingsAppIconView.swift */; };
 		7903FE7228C46D1800245586 /* SettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE7128C46D1800245586 /* SettingsAboutView.swift */; };
-		7903FE7428C46D4100245586 /* SettingsAcknowledgementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE7328C46D4100245586 /* SettingsAcknowledgementView.swift */; };
+		7903FE7428C46D4100245586 /* SettingsCreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE7328C46D4100245586 /* SettingsCreditsView.swift */; };
 		7903FE7628C46D6100245586 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE7528C46D6100245586 /* OnboardingView.swift */; };
 		7903FE7F28C46EA500245586 /* BattleRotationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE7E28C46EA500245586 /* BattleRotationRow.swift */; };
 		7903FE8128C46F0600245586 /* SalmonRotationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE8028C46F0600245586 /* SalmonRotationRow.swift */; };
@@ -132,7 +132,7 @@
 		7903FE6D28C46CD200245586 /* SettingsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainView.swift; sourceTree = "<group>"; };
 		7903FE6F28C46CEF00245586 /* SettingsAppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAppIconView.swift; sourceTree = "<group>"; };
 		7903FE7128C46D1800245586 /* SettingsAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAboutView.swift; sourceTree = "<group>"; };
-		7903FE7328C46D4100245586 /* SettingsAcknowledgementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAcknowledgementView.swift; sourceTree = "<group>"; };
+		7903FE7328C46D4100245586 /* SettingsCreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCreditsView.swift; sourceTree = "<group>"; };
 		7903FE7528C46D6100245586 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		7903FE7E28C46EA500245586 /* BattleRotationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleRotationRow.swift; sourceTree = "<group>"; };
 		7903FE8028C46F0600245586 /* SalmonRotationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonRotationRow.swift; sourceTree = "<group>"; };
@@ -306,7 +306,7 @@
 				7903FE6D28C46CD200245586 /* SettingsMainView.swift */,
 				7903FE6F28C46CEF00245586 /* SettingsAppIconView.swift */,
 				7903FE7128C46D1800245586 /* SettingsAboutView.swift */,
-				7903FE7328C46D4100245586 /* SettingsAcknowledgementView.swift */,
+				7903FE7328C46D4100245586 /* SettingsCreditsView.swift */,
 			);
 			path = SettingsView;
 			sourceTree = "<group>";
@@ -841,7 +841,7 @@
 				7903FE4728C45D8000245586 /* DateFormatter+Ext.swift in Sources */,
 				7903FE6A28C46C6B00245586 /* BattleRotationListView.swift in Sources */,
 				7903FE6C28C46CAF00245586 /* SalmonRotationListView.swift in Sources */,
-				7903FE7428C46D4100245586 /* SettingsAcknowledgementView.swift in Sources */,
+				7903FE7428C46D4100245586 /* SettingsCreditsView.swift in Sources */,
 				7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */,
 				7903FE4D28C45ED200245586 /* View+Ext.swift in Sources */,
 				7903FE4528C45CE900245586 /* ScrollView+Ext.swift in Sources */,
@@ -987,7 +987,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1833;
+				CURRENT_PROJECT_VERSION = 1837;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1020,7 +1020,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1833;
+				CURRENT_PROJECT_VERSION = 1837;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

@@ -11,10 +11,11 @@ import SwiftUI
 @main
 struct Ikalendar2App: App {
   private var ikaCatalog = IkaCatalog()
-  private var ikaStatus: IkaStatus
   private var ikaTimer = IkaTimer()
-  private var ikaPreference: IkaPreference
   private var motionManager = MotionManager()
+
+  private var ikaStatus: IkaStatus
+  private var ikaPreference: IkaPreference
 
   var body: some Scene {
     WindowGroup {

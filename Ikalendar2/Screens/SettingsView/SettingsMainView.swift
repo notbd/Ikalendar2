@@ -195,7 +195,7 @@ struct SettingsMainView: View {
   }
 
   private var rowCredits: some View {
-    NavigationLink(destination: SettingsAcknowledgementView()) {
+    NavigationLink(destination: SettingsCreditsView()) {
       Label(
         "Credits",
         systemImage: Scoped.CREDITS_SFSYMBOL)
