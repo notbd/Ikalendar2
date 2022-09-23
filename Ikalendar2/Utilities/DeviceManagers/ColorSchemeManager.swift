@@ -23,7 +23,7 @@ final class ColorSchemeManager {
     var name: String {
       switch self {
       case .system:
-        return "System"
+        return "Follow System"
       case .dark:
         return "Dark"
       case .light:

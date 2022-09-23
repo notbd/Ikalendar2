@@ -13,7 +13,7 @@
 "Default Mode" = "デフォルトモード";
 "Appearance" = "外観";
 "Color Scheme" = "外観モード";
-"System" = "システム";
+"Follow System" = "システムと同じ";
 "Dark" = "ダーク";
 "Light" = "ライト";
 "Alternative Stage Images" = "追加ステージ画像を利用";
@@ -64,6 +64,7 @@
 
 "Game" = "ゲーム";
 "Battle" = "バトル";
+"Salmon" = "サーモン";
 "Salmon Run" = "サーモンラン";
 
 // MARK: - BattleMode

@@ -34,7 +34,7 @@ extension GameMode {
 extension GameMode {
   var sfSymbolIdle: String {
     switch self {
-    case .battle: return "flag.2.crossed"
+    case .battle: return "flag"
     case .salmon: return "lifepreserver"
     }
   }
@@ -43,7 +43,7 @@ extension GameMode {
 extension GameMode {
   var sfSymbolSelected: String {
     switch self {
-    case .battle: return "flag.2.crossed.fill"
+    case .battle: return "flag.fill"
     case .salmon: return "lifepreserver.fill"
     }
   }

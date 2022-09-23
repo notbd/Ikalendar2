@@ -127,14 +127,14 @@ struct SettingsMainView: View {
       Picker(
         selection: $ikaPreference.appColorScheme
           .onSet { _ in Haptics.generate(.selection) },
-        label: Text("App Color Scheme"))
+        label: Spacer())
       {
         ForEach(ColorSchemeManager.AppColorScheme.allCases) { appColorScheme in
           Text(appColorScheme.name.localizedStringKey())
             .tag(appColorScheme)
         }
       }
-      .pickerStyle(SegmentedPickerStyle())
+//      .pickerStyle(SegmentedPickerStyle())
     }
   }
 

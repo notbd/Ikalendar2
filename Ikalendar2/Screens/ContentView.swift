@@ -92,7 +92,7 @@ struct ContentView: View {
 
           Spacer()
 
-          ToolbarGameModeSwitchButton()
+          ToolbarGameModePicker()
         }
       }
   }
@@ -133,6 +133,31 @@ struct ToolbarBattleModePicker: View {
       ForEach(BattleMode.allCases) { battleMode in
         Text(battleMode.shortName.localizedStringKey())
           .tag(battleMode)
+      }
+    }
+    .pickerStyle(SegmentedPickerStyle())
+  }
+}
+
+// MARK: - ToolbarGameModePicker
+
+/// A picker component for the game mode
+struct ToolbarGameModePicker: View {
+  @EnvironmentObject var ikaStatus: IkaStatus
+
+  var body: some View {
+    Picker(
+      selection: $ikaStatus.gameModeSelection
+        .onSet { _ in Haptics.generate(.soft) },
+      label: Text("Game Mode"))
+    {
+      ForEach(GameMode.allCases) { gameMode in
+        Label(
+          gameMode.name.localizedStringKey(),
+          systemImage: ikaStatus.gameModeSelection == gameMode
+            ? gameMode.sfSymbolSelected
+            : gameMode.sfSymbolIdle)
+          .tag(gameMode)
       }
     }
     .pickerStyle(SegmentedPickerStyle())

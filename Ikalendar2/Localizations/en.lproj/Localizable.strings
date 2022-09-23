@@ -12,8 +12,8 @@
 "Done" = "Done";
 "Default Mode" = "Default Mode";
 "Appearance" = "Appearance";
-"Color Scheme" = "Color";
-"System" = "System";
+"Color Scheme" = "Color Scheme";
+"Follow System" = "Follow System";
 "Dark" = "Dark";
 "Light" = "Light";
 "Alternative Stage Images" = "Alt Stage Appearances";
@@ -64,6 +64,7 @@
 
 "Game" = "Game";
 "Battle" = "Battle";
+"Salmon" = "Salmon";
 "Salmon Run" = "Salmon Run";
 
 // MARK: - BattleMode
