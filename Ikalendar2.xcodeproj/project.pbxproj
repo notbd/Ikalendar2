@@ -62,6 +62,7 @@
 		7903FE9E28C4702100245586 /* ToolbarRefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */; };
 		7903FEA228C472E800245586 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7903FEA428C472E800245586 /* Localizable.strings */; };
 		79189B4828C95E75006E78F9 /* OffsettableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */; };
+		792E1FBD28DE89C100C3789D /* SettingsAdvancedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E1FBC28DE89C100C3789D /* SettingsAdvancedView.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		79802FFA28C55B740048C478 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79802FF928C55B740048C478 /* ColorSchemeManager.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
@@ -152,6 +153,7 @@
 		7903FEA328C472E800245586 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7903FEA528C472EB00245586 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsettableScrollView.swift; sourceTree = "<group>"; };
+		792E1FBC28DE89C100C3789D /* SettingsAdvancedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAdvancedView.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
 		79802FED28C55B2A0048C478 /* Deprecated-Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Deprecated-Publisher.swift"; sourceTree = "<group>"; };
 		79802FEF28C55B2A0048C478 /* RuleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDetailView.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 			children = (
 				7903FE6D28C46CD200245586 /* SettingsMainView.swift */,
 				7903FE6F28C46CEF00245586 /* SettingsAppIconView.swift */,
+				792E1FBC28DE89C100C3789D /* SettingsAdvancedView.swift */,
 				7903FE7128C46D1800245586 /* SettingsAboutView.swift */,
 				7903FE7328C46D4100245586 /* SettingsCreditsView.swift */,
 			);
@@ -786,6 +789,7 @@
 				7903FE9C28C4702100245586 /* ToolbarGameModeSwitchButton.swift in Sources */,
 				7903FE5328C45F4400245586 /* Binding+Ext.swift in Sources */,
 				7903FE9328C4701000245586 /* AutoLoadingOverlay.swift in Sources */,
+				792E1FBD28DE89C100C3789D /* SettingsAdvancedView.swift in Sources */,
 				79AA715228C4145E00A91055 /* SalmonStage.swift in Sources */,
 				7903FE6528C46A4D00245586 /* ErrorView.swift in Sources */,
 				7903FE9E28C4702100245586 /* ToolbarRefreshButton.swift in Sources */,
@@ -987,7 +991,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1852;
+				CURRENT_PROJECT_VERSION = 1860;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1020,7 +1024,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1852;
+				CURRENT_PROJECT_VERSION = 1860;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

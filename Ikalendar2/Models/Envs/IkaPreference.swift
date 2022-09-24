@@ -23,4 +23,13 @@ final class IkaPreference: ObservableObject {
   var appColorScheme: ColorSchemeManager.AppColorScheme =
     .system { willSet { objectWillChange.send() }}
 
+  // Bottom Toolbar Picker Positioning
+  @AppStorage(Constants.Keys.AppStorage.BOTTOM_TOOLBAR_PICKER_POSITIONING)
+  var bottomToolbarPickerPositioning: IkaPreference.BottomToolbarPickerPositioning =
+    .regular { willSet { objectWillChange.send() }}
+
+  enum BottomToolbarPickerPositioning: String {
+    case regular
+    case reverse
+  }
 }

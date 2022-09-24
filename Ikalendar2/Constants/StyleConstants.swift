@@ -66,9 +66,9 @@ extension Constants.Styles {
       static let COLOR_SCHEME_PICKER_SPACING_en: CGFloat = 45
       static let COLOR_SCHEME_PICKER_SPACING_ja: CGFloat = 16
 
-      static let ALT_STAGE_IMG_SFSYMBOL = "compass.drawing"
-
       static let APP_ICON_SFSYMBOL = "square.stack"
+
+      static let ADVANCED_SFSYMBOL = "wand.and.stars"
 
       static let PREF_LANG_SFSYMBOL = "globe"
       static let PREF_LANG_JUMP_SFSYMBOL = "arrow.up.forward.app.fill"
@@ -78,6 +78,12 @@ extension Constants.Styles {
       static let CREDITS_SFSYMBOL = "bookmark.fill"
 
       static let DONE_BUTTON_FONT_WEIGHT: Font.Weight = .semibold
+    }
+
+    enum Advanced {
+      static let ALT_STAGE_IMG_SFSYMBOL = "compass.drawing"
+
+      static let BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL = "arrow.left.arrow.right"
     }
 
     enum About {

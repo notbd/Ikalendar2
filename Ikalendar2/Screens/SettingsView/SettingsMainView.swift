@@ -28,7 +28,7 @@ struct SettingsMainView: View {
 
   var body: some View {
     NavigationView {
-      // not using NavigationStack as of iOS 16 beta because of titleDisplayMode bug
+      // not using NavigationStack for Settings as of iOS 16 beta because of titleDisplayMode bug
       Form {
         Section(header: Text("Default Mode")) {
           rowDefaultGameMode
@@ -37,8 +37,8 @@ struct SettingsMainView: View {
 
         Section(header: Text("Appearance")) {
           rowColorScheme
-          rowAltStageImages
           rowAppIcon
+          rowAdvanced
         }
 
         Section(header: Text("Language")) {
@@ -134,17 +134,7 @@ struct SettingsMainView: View {
             .tag(appColorScheme)
         }
       }
-//      .pickerStyle(SegmentedPickerStyle())
     }
-  }
-
-  private var rowAltStageImages: some View {
-    Toggle(isOn: .constant(true)) {
-      Label(
-        "Alternative Stage Images",
-        systemImage: Scoped.ALT_STAGE_IMG_SFSYMBOL)
-    }
-    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
   }
 
   private var rowAppIcon: some View {
@@ -152,6 +142,14 @@ struct SettingsMainView: View {
       Label(
         "App Icon",
         systemImage: Scoped.APP_ICON_SFSYMBOL)
+    }
+  }
+
+  private var rowAdvanced: some View {
+    NavigationLink(destination: SettingsAdvancedView()) {
+      Label(
+        "Advanced Options",
+        systemImage: Scoped.ADVANCED_SFSYMBOL)
     }
   }
 

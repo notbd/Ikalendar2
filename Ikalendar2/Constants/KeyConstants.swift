@@ -26,9 +26,12 @@ extension Constants.Keys {
   static let appStoreIdentifier = "1529193361"
 
   enum AppStorage {
+    static let DEFAULT_GAME_MODE = "PREF_DEFAULT_GAME_MODE"
+    static let DEFAULT_BATTLE_MODE = "PREF_DEFAULT_BATTLE_MODE"
+
     static let COLOR_SCHEME = "PREF_COLOR_SCHEME"
-    static let DEFAULT_GAME_MODE = "DEFAULT_GAME_MODE"
-    static let DEFAULT_BATTLE_MODE = "DEFAULT_BATTLE_MODE"
+
+    static let BOTTOM_TOOLBAR_PICKER_POSITIONING = "PREF_BOTTOM_TOOLBAR_PICKER_POSITIONING"
   }
 
   enum URL {
