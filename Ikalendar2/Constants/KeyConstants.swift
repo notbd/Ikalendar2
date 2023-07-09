@@ -41,10 +41,10 @@ extension Constants.Keys {
     static let APP_STORE_PAGE = "https://apps.apple.com/app/id1529193361"
     static let APP_STORE_PAGE_US = "https://apps.apple.com/us/app/ikalendar2/id1529193361"
     static let APP_STORE_REVIEW = "https://apps.apple.com/app/id1529193361?action=write-review"
-    static let SOURCE_CODE_REPO = "https://github.com/zhang13music/ikalendar-2"
-    static let PRIVACY_POLICY = "https://github.com/zhang13music/ikalendar-2/wiki/Privacy-Policy"
+    static let SOURCE_CODE_REPO = "https://github.com/zhang13music/Ikalendar2"
+    static let PRIVACY_POLICY = "https://github.com/zhang13music/Ikalendar2/wiki/Privacy-Policy"
 
-    static let THE_GOOD_STUFF = "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // Good stuff indeed!
+    static let SOME_GOOD_STUFF = "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // Good stuff indeed!
   }
 
   enum Error {
