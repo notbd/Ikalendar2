@@ -2,7 +2,7 @@
 //  IkaPreference.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
 import Combine
@@ -24,12 +24,6 @@ final class IkaPreference: ObservableObject {
     .system { willSet { objectWillChange.send() }}
 
   // Bottom Toolbar Picker Positioning
-  @AppStorage(Constants.Keys.AppStorage.BOTTOM_TOOLBAR_PICKER_POSITIONING)
-  var bottomToolbarPickerPositioning: IkaPreference.BottomToolbarPickerPositioning =
-    .regular { willSet { objectWillChange.send() }}
-
-  enum BottomToolbarPickerPositioning: String {
-    case regular
-    case reverse
-  }
+  @AppStorage(Constants.Keys.AppStorage.IF_REVERSE_TOOLBAR_PICKERS)
+  var ifReverseToolbarPickers = false { willSet { objectWillChange.send() }}
 }

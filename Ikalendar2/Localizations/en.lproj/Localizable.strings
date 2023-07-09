@@ -2,7 +2,7 @@
   Localizable.strings
   ikalendar2
 
-  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
+  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 
 */
 
@@ -12,7 +12,7 @@
 "Done" = "Done";
 "Default Mode" = "Default Mode";
 "Appearance" = "Appearance";
-"Color Scheme" = "Color Scheme";
+"Color Scheme" = "Appearance";
 "Follow System" = "Follow System";
 "Dark" = "Dark";
 "Light" = "Light";

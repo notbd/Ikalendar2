@@ -2,7 +2,7 @@
 //  StyleConstants.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -98,7 +98,7 @@ extension Constants.Styles {
       static let SHARE_SFSYMBOL = "square.and.arrow.up"
 
       static let TWITTER_ICON_NAME = "twitter_xsmall"
-      static let TWITTER_ICON_SIDE_LEN: CGFloat = 16
+      static let TWITTER_ICON_SIDE_LEN: CGFloat = 17
 
       static let EMAIL_SFSYMBOL = "envelope"
 

@@ -2,7 +2,7 @@
 //  IkaError.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
 // MARK: - IkaError

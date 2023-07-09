@@ -2,7 +2,7 @@
 //  OnboardingView.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -111,7 +111,7 @@ struct OnboardingView: View {
 
             Button {
               Haptics.generate(.success)
-              self.presentationMode.wrappedValue.dismiss()
+              presentationMode.wrappedValue.dismiss()
             } label: {
               Text("Continue")
                 .foregroundColor(.white)

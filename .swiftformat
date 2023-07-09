@@ -4,7 +4,7 @@
 ### Following _Airbnb Swift Style Guide_ [https://github.com/airbnb/swift]
 ### with some minor personal adjustments.
 ###
-### Copyright (c) 2022 TIANWEI ZHANG
+### Copyright (c) 2023 TIANWEI ZHANG
 ###
 
 
@@ -14,13 +14,14 @@
 --exclude     \
   Pods,       \
   Carthage,   \
+  .build,     \
   Imports,
 
 
 ### FORMAT OPTIONS
 
 ## swiftVersion
---swiftversion 5.7
+--swiftversion 5.8
 
 ## fileHeader
 --header "\n {file}\n Ikalendar2\n\n Copyright (c) {year} TIANWEI ZHANG. All rights reserved.\n"

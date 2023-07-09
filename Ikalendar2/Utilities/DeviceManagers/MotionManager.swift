@@ -2,7 +2,7 @@
 //  MotionManager.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
 import CoreMotion
@@ -42,12 +42,12 @@ class MotionManager: ObservableObject {
       zs.append(CGFloat(newData.z))
 
       // Calculate the difference between current value and array average
-      self.dx = CGFloat(newData.x) - xs.reduce(0, +) / CGFloat(xs.count)
-      self.dy = CGFloat(newData.y) - ys.reduce(0, +) / CGFloat(ys.count)
-      self.dz = CGFloat(newData.z) - zs.reduce(0, +) / CGFloat(zs.count)
+      dx = CGFloat(newData.x) - xs.reduce(0, +) / CGFloat(xs.count)
+      dy = CGFloat(newData.y) - ys.reduce(0, +) / CGFloat(ys.count)
+      dz = CGFloat(newData.z) - zs.reduce(0, +) / CGFloat(zs.count)
 
       // Send change
-      self.objectWillChange.send()
+      objectWillChange.send()
     }
   }
 

@@ -2,7 +2,7 @@
 //  SettingsAboutView.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
 import StoreKit
@@ -265,7 +265,7 @@ struct SettingsAboutView: View {
 
   // MARK: Internal
 
-  /// Handle the tap on the share button. [Deprecated since iOS 16]
+  // Handle the tap on the share button. [Deprecated since iOS 16]
 //  func didTapShare() {
 //    guard let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US) else { return }
 //    let activityVC =

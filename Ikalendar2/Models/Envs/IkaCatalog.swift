@@ -2,7 +2,7 @@
 //  IkaCatalog.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
 import Combine
@@ -20,9 +20,6 @@ final class IkaCatalog: ObservableObject {
     case error(IkaError)
   }
 
-  @Published var loadingStatus = LoadingStatus.loading
-  @Published var loadedVSErrorStatus = LoadingStatus.loading
-
   enum AutoLoadingStatus: Equatable {
     case autoLoading
     case autoLoaded(AutoLoadedStatus)
@@ -34,6 +31,8 @@ final class IkaCatalog: ObservableObject {
     }
   }
 
+  @Published var loadingStatus = LoadingStatus.loading
+  @Published var loadedVSErrorStatus = LoadingStatus.loading
   @Published var autoLoadingStatus = AutoLoadingStatus.idle
 
   private var protectedCancellables = Set<AnyCancellable>()
@@ -167,7 +166,7 @@ final class IkaCatalog: ObservableObject {
   /// Load the catalog and set corresponding current loading status.
   func loadCatalog() {
     let battleRotationDictPublisher = IkaPublisher.shared.getBattleRotationDictPublisher()
-    let salmonRotationArrayPublisher = IkaPublisher.shared.getOatmealdomePublisher()
+    let salmonRotationArrayPublisher = IkaPublisher.shared.getSalmonRotationArrayPublisher()
     let rewardApparelPublisher = IkaPublisher.shared.getRewardApparelPublisher()
 
     let combinedPublisher = Publishers.Zip3(

@@ -2,7 +2,7 @@
 //  MainView.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -17,6 +17,7 @@ struct MainView: View {
   var body: some View {
     NavigationStack {
       if horizontalSizeClass == .compact {
+//        SettingsAdvancedView()
         ContentView()
       }
       else {

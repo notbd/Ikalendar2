@@ -2,15 +2,9 @@
 //  KeyConstants.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2022 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
-//
-//  KeyConstants.swift
-//  ikalendar2
-//
-//  Created by Tianwei Zhang on 3/27/21.
-//
 import Foundation
 
 /// Constant data holding `keys` for the app.
@@ -31,7 +25,7 @@ extension Constants.Keys {
 
     static let COLOR_SCHEME = "PREF_COLOR_SCHEME"
 
-    static let BOTTOM_TOOLBAR_PICKER_POSITIONING = "PREF_BOTTOM_TOOLBAR_PICKER_POSITIONING"
+    static let IF_REVERSE_TOOLBAR_PICKERS = "PREF_IF_REVERSE_TOOLBAR_PICKERS"
   }
 
   enum URL {
