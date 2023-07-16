@@ -10,21 +10,20 @@ import SwiftUI
 /// Main Application Entry.
 @main
 struct Ikalendar2App: App {
-  private var ikaCatalog = IkaCatalog()
-  private var ikaTimer = IkaTimer()
-  private var motionManager = MotionManager()
-
+  private var ikaCatalog: IkaCatalog
   private var ikaStatus: IkaStatus
   private var ikaPreference: IkaPreference
+  private var ikaTimeManager: IkaTimeManager
+  private var ikaMotionManager: IkaMotionManager
 
   var body: some Scene {
     WindowGroup {
       RootView()
         .environmentObject(ikaCatalog)
         .environmentObject(ikaStatus)
-        .environmentObject(ikaTimer)
         .environmentObject(ikaPreference)
-        .environmentObject(motionManager)
+        .environmentObject(ikaTimeManager)
+        .environmentObject(ikaMotionManager)
         .accentColor(.orange)
     }
   }
@@ -32,7 +31,7 @@ struct Ikalendar2App: App {
   // MARK: Lifecycle
 
   init() {
-    UIKitIntegration.customizeNavigationTitleText()
+//    UIKitIntegration.customizeNavigationTitleText()
 //    UIKitIntegration.customizePickerText()
 
     UserDefaults.standard
@@ -40,8 +39,10 @@ struct Ikalendar2App: App {
     UserDefaults.standard
       .register(defaults: [Constants.Keys.AppStorage.DEFAULT_BATTLE_MODE: "gachi"])
 
-    // init these here to avoid crash
-    ikaPreference = IkaPreference()
-    ikaStatus = IkaStatus()
+    ikaCatalog = .shared
+    ikaStatus = .shared
+    ikaPreference = .shared
+    ikaTimeManager = .shared
+    ikaMotionManager = .shared
   }
 }

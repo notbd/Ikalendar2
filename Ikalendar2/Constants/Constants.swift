@@ -7,6 +7,7 @@
 
 /// Constant data holding app parameters and configurations.
 enum Constants {
+  enum Configs { }
   enum Keys { }
   enum Styles { }
 }

@@ -19,7 +19,7 @@ struct ToolbarGameModeSwitchButton: View {
     Menu {
       Picker(
         selection: $ikaStatus.gameModeSelection
-          .onSet { _ in Haptics.generate(.warning) },
+          .onSet { _ in SimpleHaptics.generateTask(.warning) },
         label: Text("Game Mode"))
       {
         ForEach(GameMode.allCases) { gameMode in
@@ -31,7 +31,8 @@ struct ToolbarGameModeSwitchButton: View {
             .tag(gameMode)
         }
       }
-    } label: {
+    }
+    label: {
       Label(
         "Game Mode Switch",
         systemImage: Scoped.GAME_MODE_SWITCH_SFSYMBOL)
@@ -41,7 +42,7 @@ struct ToolbarGameModeSwitchButton: View {
         .tappableAreaFrame()
     }
     .onTapGesture {
-      Haptics.generate(.selection)
+      SimpleHaptics.generateTask(.selection)
     }
   }
 }
@@ -51,6 +52,6 @@ struct ToolbarGameModeSwitchButton: View {
 struct ToolbarGameModeSwitchButton_Previews: PreviewProvider {
   static var previews: some View {
     ToolbarGameModeSwitchButton()
-      .environmentObject(IkaCatalog())
+      .environmentObject(IkaCatalog.shared)
   }
 }

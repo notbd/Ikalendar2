@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  RotationsView.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-// MARK: - ContentView
+// MARK: - RotationsView
 
 /// The view that displays the content in a NavigationView.
-struct ContentView: View {
+struct RotationsView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
   @EnvironmentObject var ikaCatalog: IkaCatalog
@@ -28,34 +28,31 @@ struct ContentView: View {
         }
         .navigationTitle(title)
         .refreshable {
-          ikaCatalog.refreshCatalog()
+          await ikaCatalog.loadCatalog()
         }
         .overlay(
           ModeIconStamp(),
           alignment: .topTrailing)
         .overlay(
-          AutoLoadingOverlay(autoLoadingStatus: ikaCatalog.autoLoadingStatus),
+          AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
           alignment: .bottomTrailing)
 
-      LoadingOverlay(loadingStatus: ikaCatalog.loadingStatus)
+      LoadingOverlay(loadStatus: ikaCatalog.loadStatus)
     }
   }
 
   var content: some View {
     Group {
-      switch ikaCatalog.loadedVSErrorStatus {
-      // For better visual: not switch content during loading
+      switch ikaCatalog.loadStatusWithLoadingDropped {
       case .error(let ikaError):
         ErrorView(error: ikaError)
-      case .loaded:
+      default:
         switch ikaStatus.gameModeSelection {
         case .battle:
           BattleRotationListView()
         case .salmon:
           SalmonRotationListView()
         }
-      default:
-        Spacer()
       }
     }
   }
@@ -71,12 +68,12 @@ struct ContentView: View {
 
   // MARK: Internal
 
-  func setCompactHoriClassToolbar<Content: View>(content: Content) -> some View {
+  func setCompactHoriClassToolbar(content: some View) -> some View {
     content
       .toolbar {
 //        ToolbarItem(placement: .navigationBarLeading) {
 //          ToolbarRefreshButton(
-//            isDisabled: ikaCatalog.loadingStatus == .loading,
+//            isDisabled: ikaCatalog.loadStatus == .loading,
 //            action: didTapRefreshButton)
 //        }
 
@@ -97,23 +94,24 @@ struct ContentView: View {
       }
   }
 
-  func setRegularHoriClassToolbar<Content: View>(content: Content) -> some View {
+  func setRegularHoriClassToolbar(content: some View) -> some View {
+//    content
+//      .toolbar {
+//        ToolbarItem(placement: .navigationBarLeading) {
+//          ToolbarRefreshButton(
+//            isDisabled: ikaCatalog.loadStatus == .loading,
+//            action: didTapRefreshButton)
+//        }
+//      }
     content
-      .toolbar {
-        ToolbarItem(placement: .navigationBarLeading) {
-          ToolbarRefreshButton(
-            isDisabled: ikaCatalog.loadingStatus == .loading,
-            action: didTapRefreshButton)
-        }
-      }
   }
 
-  func didTapRefreshButton() {
-    ikaCatalog.refreshCatalog()
-  }
+//  func didTapRefreshButton() {
+//    ikaCatalog.refreshCatalog()
+//  }
 
   func didTapSettingsButton() {
-    Haptics.generate(.selection)
+    SimpleHaptics.generateTask(.selection)
     ikaStatus.isSettingsPresented.toggle()
   }
 }
@@ -127,7 +125,7 @@ struct ToolbarBattleModePicker: View {
   var body: some View {
     Picker(
       selection: $ikaStatus.battleModeSelection
-        .onSet { _ in Haptics.generate(.soft) },
+        .onSet { _ in SimpleHaptics.generateTask(.soft) },
       label: Text("Battle Mode"))
     {
       ForEach(BattleMode.allCases) { battleMode in
@@ -148,7 +146,7 @@ struct ToolbarGameModePicker: View {
   var body: some View {
     Picker(
       selection: $ikaStatus.gameModeSelection
-        .onSet { _ in Haptics.generate(.soft) },
+        .onSet { _ in SimpleHaptics.generateTask(.soft) },
       label: Text("Game Mode"))
     {
       ForEach(GameMode.allCases) { gameMode in
@@ -164,11 +162,11 @@ struct ToolbarGameModePicker: View {
   }
 }
 
-// MARK: - ContentView_Previews
+// MARK: - RotationView_Previews
 
-struct ContentView_Previews: PreviewProvider {
+struct RotationView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView()
-      .environmentObject(IkaCatalog())
+    RotationsView()
+      .environmentObject(IkaCatalog.shared)
   }
 }

@@ -13,12 +13,12 @@ import SwiftUI
 struct BattleRotationListView: View {
   @EnvironmentObject var ikaCatalog: IkaCatalog
   @EnvironmentObject var ikaStatus: IkaStatus
-  @EnvironmentObject var ikaTimer: IkaTimer
+  @EnvironmentObject var ikaTimeManager: IkaTimeManager
 
   var battleRotations: [BattleRotation] {
-    let rawRotations = ikaCatalog.battleRotations[ikaStatus.battleModeSelection]!
-    func filterCurrent<T: Rotation>(rotation: T) -> Bool {
-      !rotation.isExpired(currentTime: ikaTimer.currentTime)
+    let rawRotations = ikaCatalog.battleRotationDict[ikaStatus.battleModeSelection]!
+    func filterCurrent(rotation: some Rotation) -> Bool {
+      !rotation.isExpired(currentTime: ikaTimeManager.currentTime)
     }
     let results = rawRotations.filter(filterCurrent)
     return results
@@ -37,7 +37,7 @@ struct BattleRotationListView: View {
             width: geo.size.width)
         }
       }
-      .disabled(ikaCatalog.loadingStatus != .loaded)
+      .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }
 }
@@ -47,6 +47,6 @@ struct BattleRotationListView: View {
 struct BattleRotationListView_Previews: PreviewProvider {
   static var previews: some View {
     BattleRotationListView()
-      .environmentObject(IkaCatalog())
+      .environmentObject(IkaCatalog.shared)
   }
 }

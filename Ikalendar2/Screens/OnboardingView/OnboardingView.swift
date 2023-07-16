@@ -110,7 +110,7 @@ struct OnboardingView: View {
             // MARK: Dismiss Button
 
             Button {
-              Haptics.generate(.success)
+              SimpleHaptics.generateTask(.success)
               presentationMode.wrappedValue.dismiss()
             } label: {
               Text("Continue")

@@ -12,7 +12,7 @@ import SwiftUI
 struct AutoLoadingOverlay: View {
   typealias Scoped = Constants.Styles.Overlay.AutoLoading
 
-  var autoLoadingStatus: IkaCatalog.AutoLoadingStatus
+  var autoLoadStatus: IkaCatalog.AutoLoadStatus
 
   var body: some View {
     Image(systemName: iconName)
@@ -20,21 +20,21 @@ struct AutoLoadingOverlay: View {
       .font(Scoped.SFSYMBOL_FONT)
       .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
       .frame(width: Scoped.SILHOUETTE_SIDE, height: Scoped.SILHOUETTE_SIDE)
-      .if(autoLoadingStatus != .idle) {
+      .if(autoLoadStatus != .idle) {
         $0
           .silhouetteFrame(
             cornerRadius: Scoped.SILHOUETTE_CORNER_RADIUS,
             colorScheme: .dark)
       }
-      .opacity(autoLoadingStatus == .idle ? 0 : 1)
+      .opacity(autoLoadStatus == .idle ? 0 : 1)
       .padding()
       .animation(
         .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
-        value: autoLoadingStatus)
+        value: autoLoadStatus)
   }
 
   var iconName: String {
-    switch autoLoadingStatus {
+    switch autoLoadStatus {
     case .autoLoading:
       return Scoped.LOADING_SFSYMBOL
     case .autoLoaded(let loadedStatus):
@@ -54,6 +54,6 @@ struct AutoLoadingOverlay: View {
 
 struct AutoLoadingOverlay_Previews: PreviewProvider {
   static var previews: some View {
-    AutoLoadingOverlay(autoLoadingStatus: .autoLoading)
+    AutoLoadingOverlay(autoLoadStatus: .autoLoading)
   }
 }

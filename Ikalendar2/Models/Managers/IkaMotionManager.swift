@@ -1,20 +1,26 @@
 //
-//  MotionManager.swift
+//  IkaMotionManager.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
+import Combine
 import CoreMotion
 import SwiftUI
 
 /// A CoreMotion manager class to broadcast device motions.
-class MotionManager: ObservableObject {
-  private let motionManager = CMMotionManager()
+final class IkaMotionManager: ObservableObject {
 
-  var xs: [CGFloat] = []
-  var ys: [CGFloat] = []
-  var zs: [CGFloat] = []
+  /// The shared singleton instance
+  static let shared = IkaMotionManager()
+
+  private let motionManager = CMMotionManager()
+  private var cancellables = Set<AnyCancellable>()
+
+  private var xs: [CGFloat] = []
+  private var ys: [CGFloat] = []
+  private var zs: [CGFloat] = []
 
   var dx: CGFloat = 0
   var dy: CGFloat = 0
@@ -22,7 +28,20 @@ class MotionManager: ObservableObject {
 
   // MARK: Lifecycle
 
-  init() {
+  private init() {
+    setupMotionUpdates()
+    subscribeToAppLifecycleEvents()
+  }
+
+  // MARK: Internal
+
+  func shutdown() {
+    motionManager.stopDeviceMotionUpdates()
+  }
+
+  // MARK: Private
+
+  private func setupMotionUpdates() {
     let cycle = 10.0
     let interval = 0.1
     var arrayCapacity: Int { Int(cycle / interval) }
@@ -51,9 +70,32 @@ class MotionManager: ObservableObject {
     }
   }
 
-  // MARK: Internal
+  private func subscribeToAppLifecycleEvents() {
+    let notificationCenter = NotificationCenter.default
 
-  func shutdown() {
-    motionManager.stopDeviceMotionUpdates()
+    notificationCenter.publisher(for: UIScene.didActivateNotification)
+      .sink { [weak self] _ in
+        self?.startMotionUpdates()
+      }
+      .store(in: &cancellables)
+
+    notificationCenter.publisher(for: UIScene.willDeactivateNotification)
+      .sink { [weak self] _ in
+        self?.stopMotionUpdates()
+      }
+      .store(in: &cancellables)
   }
+
+  private func startMotionUpdates() {
+    if !motionManager.isDeviceMotionActive {
+      setupMotionUpdates()
+    }
+  }
+
+  private func stopMotionUpdates() {
+    if motionManager.isDeviceMotionActive {
+      motionManager.stopDeviceMotionUpdates()
+    }
+  }
+
 }

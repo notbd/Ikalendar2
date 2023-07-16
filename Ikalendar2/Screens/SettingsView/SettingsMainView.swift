@@ -73,7 +73,7 @@ struct SettingsMainView: View {
 
       Picker(
         selection: $ikaPreference.defaultGameMode
-          .onSet { _ in Haptics.generate(.selection) },
+          .onSet { _ in SimpleHaptics.generateTask(.selection) },
         label: Text("Default Game Mode"))
       {
         ForEach(GameMode.allCases) { gameMode in
@@ -97,7 +97,7 @@ struct SettingsMainView: View {
 
       Picker(
         selection: $ikaPreference.defaultBattleMode
-          .onSet { _ in Haptics.generate(.selection) },
+          .onSet { _ in SimpleHaptics.generateTask(.selection) },
         label: Text("Default Battle Mode"))
       {
         ForEach(BattleMode.allCases) { battleMode in
@@ -126,10 +126,10 @@ struct SettingsMainView: View {
 
       Picker(
         selection: $ikaPreference.appColorScheme
-          .onSet { _ in Haptics.generate(.selection) },
+          .onSet { _ in SimpleHaptics.generateTask(.selection) },
         label: Spacer())
       {
-        ForEach(ColorSchemeManager.AppColorScheme.allCases) { appColorScheme in
+        ForEach(IkaColorSchemeManager.AppColorScheme.allCases) { appColorScheme in
           Text(appColorScheme.name.localizedStringKey())
             .tag(appColorScheme)
         }
@@ -157,7 +157,7 @@ struct SettingsMainView: View {
 
   private var rowAppLanguage: some View {
     Button {
-      Haptics.generate(.selection)
+      SimpleHaptics.generateTask(.selection)
       if let url = URL(string: UIApplication.openSettingsURLString) {
         openURL(url)
       }
@@ -204,7 +204,7 @@ struct SettingsMainView: View {
 
   private var doneButton: some View {
     Button {
-      Haptics.generate(.selection)
+      SimpleHaptics.generateTask(.selection)
       ikaStatus.isSettingsPresented.toggle()
     } label: {
       Text("Done")

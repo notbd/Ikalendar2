@@ -20,8 +20,8 @@ extension ScrollView {
   /// with chance to setup the nested ScrollView inside the closure.
   /// - Parameter configurator: The configuration of the ScrollView.
   /// - Returns: The fixed ScrollView.
-  func fixFlickering<T: View>(
-    @ViewBuilder configurator: @escaping (ScrollView<AnyView>) -> T)
+  func fixFlickering(
+    @ViewBuilder configurator: @escaping (ScrollView<AnyView>) -> some View)
     -> some View
   {
     GeometryReader { geoWithSafeArea in

@@ -148,17 +148,17 @@ extension Constants.Styles {
         }
 
         enum Primary {
-          // body
+          /// body
           static let CELL_SPACING: CGFloat = 8
           static let STAGE_PROGRESS_SECTION_PADDING: CGFloat = 4
           static let CELL_PADDING: CGFloat = 3
 
-          // stage and progress section
+          /// stage and progress section
           static let STAGE_PROGRESS_SECTION_SPACING: CGFloat = 6
           static let LABEL_FONT_SIZE: CGFloat = 16
           static let PROGRESS_FONT_SIZE: CGFloat = 15
 
-          // weapon section
+          /// weapon section
           static let WEAPON_SINGLE_WIDTH_RATIO: CGFloat = 0.18
         }
 

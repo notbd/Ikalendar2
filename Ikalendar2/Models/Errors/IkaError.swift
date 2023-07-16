@@ -7,25 +7,26 @@
 
 // MARK: - IkaError
 
-/// A custom error type for the app.
-enum IkaError: Error {
+/// A custom error type for the Ikalendar2 app.
+enum IkaError: Error, Equatable {
   typealias Scoped = Constants.Keys.Error
 
-  case unableToComplete
-  case invalidResponse
-  case invalidData
-  case unknownError
+  case serverError(IkaServerErrorType)
+  case connectionError
+  case unknownError(Error)
+
+  static func == (lhs: IkaError, rhs: IkaError) -> Bool {
+    lhs.message == rhs.message
+  }
 }
 
 extension IkaError {
   var title: String {
     switch self {
-    case .unableToComplete:
-      return Scoped.Title.UNABLE_TO_COMPLETE
-    case .invalidResponse:
-      return Scoped.Title.INVALID_RESPONSE
-    case .invalidData:
-      return Scoped.Title.INVALID_DATA
+    case .serverError:
+      return Scoped.Title.SERVER_ERROR
+    case .connectionError:
+      return Scoped.Title.CONNECTION_ERROR
     case .unknownError:
       return Scoped.Title.UNKNOWN_ERROR
     }
@@ -35,14 +36,33 @@ extension IkaError {
 extension IkaError {
   var message: String {
     switch self {
-    case .unableToComplete:
-      return Scoped.Message.UNABLE_TO_COMPLETE
-    case .invalidResponse:
-      return Scoped.Message.INVALID_RESPONSE
-    case .invalidData:
-      return Scoped.Message.INVALID_DATA
-    case .unknownError:
-      return Scoped.Message.UNKNOWN_ERROR
+    case .serverError(let serverErrorType):
+      return Scoped.Message.SERVER_ERROR(serverErrorType.title)
+    case .connectionError:
+      return Scoped.Message.CONNECTION_ERROR
+    case .unknownError(let error):
+      return Scoped.Message.UNKNOWN_ERROR(error.localizedDescription)
+    }
+  }
+}
+
+// MARK: - IkaServerErrorType
+
+/// A sub-type for IkaError.serverError
+enum IkaServerErrorType: String {
+  typealias Scoped = Constants.Keys.Error
+
+  case badResponse
+  case badData
+}
+
+extension IkaServerErrorType {
+  var title: String {
+    switch self {
+    case .badResponse:
+      return Scoped.Title.BAD_RESPONSE
+    case .badData:
+      return Scoped.Title.BAD_DATA
     }
   }
 }

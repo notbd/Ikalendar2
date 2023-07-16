@@ -7,7 +7,8 @@
 
 import UIKit
 
-class UIKitIntegration {
+@MainActor
+enum UIKitIntegration {
   /// Customize the navigation title text.
   static func customizeNavigationTitleText() {
     // MARK: - Set NavBar Font to SF Pro Rounded

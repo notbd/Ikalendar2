@@ -1,5 +1,5 @@
 //
-//  NetworkManager.swift
+//  Deprecated-NetworkManager.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -8,10 +8,13 @@
 import Combine
 import Foundation
 
+/// [DEPRECATED]
+///
 /// A singleton network manager that relies on completion handler.
-final class NetworkManager {
-  // The shared singleton instance
-  static let shared = NetworkManager()
+final class DeprecatedNetworkManager {
+
+  /// The shared singleton instance
+  static let shared = DeprecatedNetworkManager()
 
   // MARK: Lifecycle
 
@@ -75,13 +78,13 @@ final class NetworkManager {
         [200, 304].contains(response.statusCode)
       else {
         // FAILED: empty or invalid response
-        completion(.failure(.invalidResponse))
+        completion(.failure(.badResponse))
         return
       }
 
-      guard let data = data else {
+      guard let data else {
         // FAILED: empty data
-        completion(.failure(.invalidData))
+        completion(.failure(.badData))
         return
       }
 
@@ -93,7 +96,7 @@ final class NetworkManager {
       }
       catch {
         // FAILED: bad data
-        completion(.failure(.invalidData))
+        completion(.failure(.badData))
       }
     }
 

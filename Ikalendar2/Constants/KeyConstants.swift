@@ -49,33 +49,35 @@ extension Constants.Keys {
 
   enum Error {
     enum Title {
-      static let UNABLE_TO_COMPLETE = "Connection Error"
-      static let INVALID_RESPONSE = "Server Error"
-      static let INVALID_DATA = "Server Error"
+      static let SERVER_ERROR = "Server Error"
+      static let CONNECTION_ERROR = "Connection Error"
       static let UNKNOWN_ERROR = "Unknown Error"
+
+      static let BAD_RESPONSE = "BAD_STATUS_CODE"
+      static let BAD_DATA = "BAD_DATA"
     }
 
     enum Message {
-      static let UNABLE_TO_COMPLETE =
+      static let SERVER_ERROR = { (type: String) in
         """
-        Cannot connect to the server.
-        Please check your internet connection and tap the mode icon to refresh.
-        """
-      static let INVALID_RESPONSE =
-        """
-        Invalid response from the server.
-        If this persists, please contact support.
-        """
-      static let INVALID_DATA =
-        """
-        The data received from the server was invalid.
+        The response from the server was invalid. \(type)
         Please try again later or contact support.
         """
-      static let UNKNOWN_ERROR =
+      }
+
+      static let CONNECTION_ERROR =
+        """
+        Unable to connect.
+        Please check your internet connection and refresh.
+        """
+      static let UNKNOWN_ERROR = { (error: String) in
         """
         Ooops...
         An unknown error was encountered ¯\\_(ツ)_/¯
+        \(error)
         """
+      }
+
     }
   }
 }

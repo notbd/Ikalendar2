@@ -14,7 +14,7 @@ final class IkaDecoder {
   /// - Parameter data: The data to parse from.
   /// - Throws:
   ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
-  ///   - `IkaError.invalidData`: if JSON is in of unsupported format.
+  ///   - `IkaError.badData`: if JSON is in of unsupported format.
   /// - Returns: The parsed dictionary (will NOT be empty).
   static func parseBattleRotationDict(from data: Data) throws -> BattleRotationDict {
     var battleRotationDict = BattleRotationDict()
@@ -29,7 +29,7 @@ final class IkaDecoder {
       guard let rotationArrayJSON = rootJSON[battleModeString].array
       else {
         // ERROR: parse rotation array
-        throw IkaError.invalidData
+        throw IkaError.serverError(.badData)
       }
 
       for rotationJSON in rotationArrayJSON {
@@ -41,7 +41,7 @@ final class IkaDecoder {
           let stageBNameString = rotationJSON["stage_b"]["name"].string
         else {
           // ERROR: rotation attributes of wrong type or structure
-          throw IkaError.invalidData
+          throw IkaError.serverError(.badData)
         }
 
         let startTime = Date(timeIntervalSince1970: startTimeDouble)
@@ -53,7 +53,7 @@ final class IkaDecoder {
           let stageB = BattleStage(rawValue: stageBNameString)
         else {
           // ERROR: invalid rule or stage key
-          throw IkaError.invalidData
+          throw IkaError.serverError(.badData)
         }
 
         // SUCCESS: construct rotation using parsed data and append to array in dict
@@ -67,7 +67,7 @@ final class IkaDecoder {
 
       if battleRotationDict[battleMode]!.isEmpty {
         // ERROR: empty data for a battle rule
-        throw IkaError.invalidData
+        throw IkaError.serverError(.badData)
       }
     }
 
@@ -79,7 +79,7 @@ final class IkaDecoder {
   /// - Parameter data: The data to parse from.
   /// - Throws:
   ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
-  ///   - `IkaError.invalidData`: if JSON is of unsupported format.
+  ///   - `IkaError.badData`: if JSON is of unsupported format.
   /// - Returns: The parsed array (will NOT be empty).
   static func parseSalmonRotationArray(from data: Data) throws -> [SalmonRotation] {
     var salmonRotations: [SalmonRotation] = []
@@ -91,7 +91,7 @@ final class IkaDecoder {
     guard let detailsArrayJSON = rootJSON["details"].array
     else {
       // ERROR: parse details array
-      throw IkaError.invalidData
+      throw IkaError.serverError(.badData)
     }
 
     for rotationDetailsJSON in detailsArrayJSON {
@@ -100,7 +100,7 @@ final class IkaDecoder {
         let endTimeDouble = rotationDetailsJSON["end_time"].double
       else {
         // ERROR: rotation time of wrong type or structure
-        throw IkaError.invalidData
+        throw IkaError.serverError(.badData)
       }
 
       let startTime = Date(timeIntervalSince1970: startTimeDouble)
@@ -133,7 +133,7 @@ final class IkaDecoder {
           }
           else {
             // ERROR: bad weapon id
-            throw IkaError.invalidData
+            throw IkaError.serverError(.badData)
           }
         }
       }
@@ -155,7 +155,7 @@ final class IkaDecoder {
     guard !salmonRotations.isEmpty
     else {
       // ERROR: empty detailed rotations
-      throw IkaError.invalidData
+      throw IkaError.serverError(.badData)
     }
 
     // Get remaining rotations from schedules array
@@ -187,7 +187,7 @@ final class IkaDecoder {
   /// - Parameter data: The data to parse from.
   /// - Throws:
   ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
-  ///   - `IkaError.invalidData`: if JSON is of unsupported format.
+  ///   - `IkaError.badData`: if JSON is of unsupported format.
   /// - Returns: The parsed SalmonApparel.
   static func parseRewardApparel(from data: Data) throws -> SalmonApparel {
     // Will throw SwiftyJSONError if parsing fails
@@ -198,7 +198,7 @@ final class IkaDecoder {
     guard let apparelTypeString = apparelJSON["kind"].string
     else {
       // ERROR: bad apparel kind
-      throw IkaError.invalidData
+      throw IkaError.serverError(.badData)
     }
 
     let apparelIDInt: Int
@@ -213,7 +213,7 @@ final class IkaDecoder {
     }
     else {
       // ERROR: bad apparel id
-      throw IkaError.invalidData
+      throw IkaError.serverError(.badData)
     }
 
     // Find apparel with type and id
@@ -232,7 +232,7 @@ final class IkaDecoder {
     guard let rewardApparel = rewardApparelOptional
     else {
       // ERROR: apparel of non-existing kind or non-existing id
-      throw IkaError.invalidData
+      throw IkaError.serverError(.badData)
     }
 
     // SUCCESS: return the apparel
@@ -249,7 +249,7 @@ final class IkaDecoder {
     guard let phasesJSON = rootJSON["Phases"].array
     else {
       // ERROR: parse details array
-      throw IkaError.invalidData
+      throw IkaError.serverError(.badData)
     }
 
     for phaseJSON in phasesJSON {
@@ -259,7 +259,7 @@ final class IkaDecoder {
         let endTimeString = phaseJSON["EndDateTime"].string
       else {
         // ERROR: rotation time of wrong type or structure
-        throw IkaError.invalidData
+        throw IkaError.serverError(.badData)
       }
 
       // Set up date formatter to format the date string
@@ -271,7 +271,7 @@ final class IkaDecoder {
         let endTime = dateFormatterGMT0000.date(from: endTimeString + "+0000")
       else {
         // ERROR: rotation time of wrong type or structure
-        throw IkaError.invalidData
+        throw IkaError.serverError(.badData)
       }
 
       var stage: SalmonStage?
@@ -283,7 +283,7 @@ final class IkaDecoder {
         let stageID = phaseJSON["StageID"].int
       else {
         // ERROR: rotation time of wrong type or structure
-        throw IkaError.invalidData
+        throw IkaError.serverError(.badData)
       }
       stage = SalmonStage(rawValue: stageID)
 
@@ -299,7 +299,7 @@ final class IkaDecoder {
           }
           else {
             // ERROR: bad weapon id
-            throw IkaError.unableToComplete
+            throw IkaError.serverError(.badData)
           }
         }
       }
@@ -314,7 +314,7 @@ final class IkaDecoder {
         let grizzcoWeaponID = phaseJSON["RareWeaponID"].int
       else {
         // ERROR: rotation time of wrong type or structure
-        throw IkaError.invalidData
+        throw IkaError.serverError(.badData)
       }
       grizzcoWeapon = GrizzcoWeapon(rawValue: grizzcoWeaponID)
 
@@ -331,10 +331,8 @@ final class IkaDecoder {
     guard !salmonRotations.isEmpty
     else {
       // ERROR: empty detailed rotations
-      throw IkaError.invalidData
+      throw IkaError.serverError(.badData)
     }
-
-    // TODO: Add reward apparel
 
     return salmonRotations
   }

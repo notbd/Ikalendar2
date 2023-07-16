@@ -13,7 +13,7 @@ import SwiftUI
 struct SalmonRotationRow: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-  @EnvironmentObject var ikaTimer: IkaTimer
+  @EnvironmentObject var ikaTimeManager: IkaTimeManager
 
   var rotation: SalmonRotation
   var index: Int
@@ -23,7 +23,7 @@ struct SalmonRotationRow: View {
     typealias Scoped = Constants.Styles.Rotation.Salmon.Header
 
     if index == 0 {
-      if rotation.isCurrent(currentTime: ikaTimer.currentTime) {
+      if rotation.isCurrent(currentTime: ikaTimeManager.currentTime) {
         return .first(.busy)
       }
       else {

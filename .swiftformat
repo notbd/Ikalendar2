@@ -49,7 +49,12 @@
 # indent
 --ifdef no-indent
 --indent 2
+--indentcase false
 --indentstrings true
+
+# modifierOrder
+--modifierorder nonisolated,static,public,private
+
 
 # organizeDeclarations
 --beforemarks enum,let,typealias,var
@@ -61,7 +66,7 @@
 --extensionacl on-declarations
 
 # redundantType
---redundanttype inferred
+--redundanttype infer-locals-only
 
 # sortedImports
 --importgrouping testable-last
@@ -70,7 +75,7 @@
 --trimwhitespace always
 
 # wrap
---maxwidth 130 # recommend 100 but _strictly enforce_ 130
+--maxwidth 110 # recommend 100 but _strictly enforce_ 110
 --wrapternary before-operators
 
 # wrapArguments
@@ -101,6 +106,7 @@
     blankLinesAtStartOfScope,       \
     blankLinesBetweenScopes,        \
 #    braces,                         \ # sometimes prefer Allman over K&R
+    conditionalAssignment,          \
     consecutiveBlankLines,          \
     consecutiveSpaces,              \
     duplicateImports,               \
@@ -109,7 +115,10 @@
     enumNamespaces,                 \
     extensionAccessControl,         \
     fileHeader,                     \
+    genericExtensions,              \
+    hoistAwait,                     \
     hoistPatternLet,                \
+    hoistTry,                       \
     indent,                         \
 #    initCoderUnavailable,           \
     leadingDelimiters,              \
@@ -117,6 +126,7 @@
     linebreaks,                     \
     modifierOrder,                  \
     numberFormatting,               \
+    opaqueGenericParameters,        \
 #    preferKeyPath,                  \
     redundantBackticks,             \
     redundantBreak,                 \
@@ -129,6 +139,7 @@
     redundantLetError,              \
     redundantNilInit,               \
     redundantObjc,                  \
+    redundantOptionalBinding,       \
     redundantParens,                \
     redundantPattern,               \
     redundantRawValues,             \
@@ -163,17 +174,19 @@
     wrapArguments,                  \
     wrapAttributes,                 \
     wrapMultilineStatementBraces,   \
+    wrapSingleLineComments,         \
     yodaConditions,
 
 ## Opt-in Rules (disabled by default)
 --rules                             \
     acronyms,                       \
+    blankLineAfterImports,          \
     blankLinesBetweenImports,       \
     blockComments,                  \
+    docComments,                    \
     isEmpty,                        \
     markTypes,                      \
     organizeDeclarations,           \
-#    preferDouble,                   \
 #    sortedSwitchCases,              \
 #    wrapConditionalBodies,          \
     wrapEnumCases,                  \

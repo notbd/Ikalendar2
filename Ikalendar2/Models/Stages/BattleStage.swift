@@ -19,7 +19,7 @@ enum BattleStage: String, Identifiable, CaseIterable {
   case kelpDome = "Kelp Dome"
   case makoMart = "MakoMart"
   case mantaMaria = "Manta Maria"
-  // #10
+  /// #10
   case morayTowers = "Moray Towers"
   case musselforgeFitness = "Musselforge Fitness"
   case newAlbacoreHotel = "New Albacore Hotel"
@@ -30,7 +30,7 @@ enum BattleStage: String, Identifiable, CaseIterable {
   case skipperPavilion = "Skipper Pavilion"
   case snapperCanal = "Snapper Canal"
   case starfishMainstage = "Starfish Mainstage"
-  // #20
+  /// #20
   case sturgeonShipyard = "Sturgeon Shipyard"
   case theReef = "The Reef"
   case wahooWorld = "Wahoo World"

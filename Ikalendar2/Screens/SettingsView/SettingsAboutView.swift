@@ -131,7 +131,7 @@ struct SettingsAboutView: View {
 
     return
       Button {
-        Haptics.generate(.selection)
+        SimpleHaptics.generateTask(.selection)
         if let url = URL(string: twitterURLString) {
           openURL(url)
         }
@@ -156,7 +156,7 @@ struct SettingsAboutView: View {
 
   var rowDeveloperEmail: some View {
     Button {
-      Haptics.generate(.selection)
+      SimpleHaptics.generateTask(.selection)
       if let url = URL(string: Constants.Keys.URL.DEVELOPER_EMAIL) {
         openURL(url)
       }
@@ -175,7 +175,7 @@ struct SettingsAboutView: View {
 
   var rowRating: some View {
     Button {
-      Haptics.generate(.selection)
+      SimpleHaptics.generateTask(.selection)
       didTapRate()
     } label: {
       Label {
@@ -190,7 +190,7 @@ struct SettingsAboutView: View {
 
   var rowLeavingReview: some View {
     Button {
-      Haptics.generate(.selection)
+      SimpleHaptics.generateTask(.selection)
       if let url = URL(string: Constants.Keys.URL.APP_STORE_REVIEW) {
         openURL(url)
       }
@@ -207,7 +207,7 @@ struct SettingsAboutView: View {
 
   var rowAppStoreOverlay: some View {
     Button {
-      Haptics.generate(.selection)
+      SimpleHaptics.generateTask(.selection)
       appStoreOverlayPresented.toggle()
     } label: {
       Label {
@@ -229,7 +229,7 @@ struct SettingsAboutView: View {
 
   var rowSourceCode: some View {
     Button {
-      Haptics.generate(.selection)
+      SimpleHaptics.generateTask(.selection)
       if let url = URL(string: Constants.Keys.URL.SOURCE_CODE_REPO) {
         openURL(url)
       }
@@ -246,7 +246,7 @@ struct SettingsAboutView: View {
 
   var rowPrivacyPolicy: some View {
     Button {
-      Haptics.generate(.selection)
+      SimpleHaptics.generateTask(.selection)
       if let url = URL(string: Constants.Keys.URL.PRIVACY_POLICY) {
         openURL(url)
       }

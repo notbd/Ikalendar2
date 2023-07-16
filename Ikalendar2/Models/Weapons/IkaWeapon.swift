@@ -9,7 +9,7 @@
 
 /// Data model for the normal weapons.
 enum IkaWeapon: Int, Identifiable, CaseIterable {
-  // Shooters
+  /// Shooters
   case splooshOMatic = 0
   case splattershotJr = 10
   case splashOMatic = 20
@@ -20,26 +20,26 @@ enum IkaWeapon: Int, Identifiable, CaseIterable {
   case splattershotPro = 70
   case gal96 = 80
   case jetSquelcher = 90
-  // Blasters
+  /// Blasters
   case lunaBlaster = 200
   case blaster = 210
   case rangeBlaster = 220
   case clashBlaster = 230
   case rapidBlaster = 240
   case rapidBlasterPro = 250
-  // Nozzlenoses
+  /// Nozzlenoses
   case l3Nozzlenose = 300
   case h3Nozzlenose = 310
-  // Squeezer
+  /// Squeezer
   case squeezer = 400
-  // Rollers
+  /// Rollers
   case carbonRoller = 1000
   case splatRoller = 1010
   case dynamoRoller = 1020
   case flingzaRoller = 1030
   case inkbrush = 1100
   case octobrush = 1110
-  // Chargers
+  /// Chargers
   case classicSquiffer = 2000
   case splatCharger = 2010
   case splatterscope = 2020
@@ -47,25 +47,25 @@ enum IkaWeapon: Int, Identifiable, CaseIterable {
   case eliter4KScope = 2040
   case bamboozler14MkI = 2050
   case gooTuber = 2060
-  // Sloshers
+  /// Sloshers
   case slosher = 3000
   case triSlosher = 3010
   case sloshingMachine = 3020
   case bloblobber = 3030
   case explosher = 3040
-  // Splatlings
+  /// Splatlings
   case miniSplatling = 4000
   case heavySplatling = 4010
   case hydraSplatling = 4020
   case ballpointSplatling = 4030
   case nautilus47 = 4040
-  // Dualies
+  /// Dualies
   case dappleDualies = 5000
   case splatDualies = 5010
   case gloogaDualies = 5020
   case dualieSquelchers = 5030
   case darkTetraDualies = 5040
-  // Brellas
+  /// Brellas
   case splatBrella = 6000
   case tentaBrella = 6010
   case undercoverBrella = 6020

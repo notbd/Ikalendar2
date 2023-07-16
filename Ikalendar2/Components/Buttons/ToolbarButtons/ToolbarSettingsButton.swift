@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - ToolbarSettingsButton
 
-// A settings button in the toolbar.
+/// A settings button in the toolbar.
 struct ToolbarSettingsButton: View {
   typealias Scoped = Constants.Styles.ToolbarButton
 

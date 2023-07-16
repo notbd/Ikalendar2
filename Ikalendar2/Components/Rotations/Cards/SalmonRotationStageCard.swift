@@ -16,7 +16,7 @@ import SwiftUI
 struct SalmonRotationStageCard: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Stage
 
-  @EnvironmentObject var ikaTimer: IkaTimer
+  @EnvironmentObject var ikaTimeManager: IkaTimeManager
 
   var rotation: SalmonRotation
   let fontSize: CGFloat
@@ -68,7 +68,7 @@ struct SalmonRotationStageCard: View {
 
   var rewardGearImg: some View {
     var isShown: Bool {
-      rotation.isCurrent(currentTime: ikaTimer.currentTime) && rotation.rewardApparel != nil
+      rotation.isCurrent(currentTime: ikaTimeManager.currentTime) && rotation.rewardApparel != nil
     }
     var content: some View {
       Image(rotation.rewardApparel?.imgFiln ?? "salmon")

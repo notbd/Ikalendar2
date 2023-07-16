@@ -17,7 +17,7 @@ struct BattleRotationCellPrimary: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
-  @EnvironmentObject var ikaTimer: IkaTimer
+  @EnvironmentObject var ikaTimeManager: IkaTimeManager
   @EnvironmentObject var ikaPreference: IkaPreference
 
   var rotation: BattleRotation
@@ -35,7 +35,7 @@ struct BattleRotationCellPrimary: View {
       Spacer()
 
       ProgressView(
-        value: ikaTimer.currentTime - rotation.startTime,
+        value: ikaTimeManager.currentTime - rotation.startTime,
         total: rotation.endTime - rotation.startTime)
         .padding(.bottom, 4)
 
@@ -85,7 +85,7 @@ struct BattleRotationCellPrimary: View {
       Spacer()
       HStack {
         Spacer()
-        Text(ikaTimer.currentTime.toTimeRemainingString(until: rotation.endTime))
+        Text(ikaTimeManager.currentTime.toTimeRemainingString(until: rotation.endTime))
           .scaledLimitedLine()
           .foregroundColor(.secondary)
           .fontIka(

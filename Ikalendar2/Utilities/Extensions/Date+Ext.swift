@@ -32,8 +32,8 @@ extension Date {
 }
 
 extension Date {
-  private static let ikaTimeFormatter = DateFormatter(ikaType: .time)
-  private static let ikaDateFormatter = DateFormatter(ikaType: .date)
+  static private let ikaTimeFormatter = DateFormatter(ikaType: .time)
+  static private let ikaDateFormatter = DateFormatter(ikaType: .date)
 
   // MARK: Internal
 

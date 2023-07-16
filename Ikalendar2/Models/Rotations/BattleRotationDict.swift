@@ -12,6 +12,17 @@ typealias BattleRotationDict = [BattleMode: [BattleRotation]]
 extension BattleRotationDict {
   var numOfRounds: Int { self[.gachi]!.count }
 
+  /// True if any battle mode has an empty array.
+  var isEmpty: Bool {
+    self[.regular]!.isEmpty || self[.gachi]!.isEmpty || self[.league]!.isEmpty
+  }
+
+  /// True if the dict is outdated and needs to reload at the moment.
+  /// Embodies isEmpty() check internally.
+  var isOutdated: Bool {
+    !isEmpty && Date() > self[.gachi]![0].endTime
+  }
+
   // MARK: Lifecycle
 
   init() {
@@ -22,23 +33,4 @@ extension BattleRotationDict {
     ]
   }
 
-  // MARK: Internal
-
-  /// Check if any battle mode has an empty array.
-  /// - Returns: The boolean val.
-  func isEmpty() -> Bool {
-    self[.regular]!.isEmpty || self[.gachi]!.isEmpty || self[.league]!.isEmpty
-  }
-
-  /// Check if the dict needs to refresh.
-  /// - Parameter currentTime: The current time.
-  /// - Returns: The boolean val.
-  func doesNeedToRefresh(currentTime: Date) -> Bool {
-    if isEmpty() {
-      return false
-    }
-    else {
-      return currentTime > self[.gachi]![0].endTime
-    }
-  }
 }

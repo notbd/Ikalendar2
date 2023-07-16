@@ -45,7 +45,7 @@ trailing_comma:
   mandatory_comma: true
 
 line_length:
-  - 100 # warning
+  - 110 # warning
   - 130 # error
 
 type_body_length:

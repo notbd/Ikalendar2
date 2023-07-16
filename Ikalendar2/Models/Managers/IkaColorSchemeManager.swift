@@ -1,5 +1,5 @@
 //
-//  ColorSchemeManager.swift
+//  IkaColorSchemeManager.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -9,9 +9,10 @@ import Foundation
 import UIKit
 
 /// A singleton color scheme manager that relies on completion handler.
-final class ColorSchemeManager {
-  // The shared singleton instance
-  static let shared = ColorSchemeManager()
+@MainActor
+final class IkaColorSchemeManager {
+  /// The shared singleton instance
+  static let shared = IkaColorSchemeManager()
 
   enum AppColorScheme: String, Identifiable, CaseIterable {
     case system

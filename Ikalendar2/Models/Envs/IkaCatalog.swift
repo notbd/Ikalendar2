@@ -8,19 +8,29 @@
 import Combine
 import SwiftUI
 
+// MARK: - IkaCatalog
+
 /// An EnvObj class that is shared among all the views.
 /// Contains the rotation data and its loading status.
+@MainActor
 final class IkaCatalog: ObservableObject {
-  @Published var battleRotations = BattleRotationDict()
-  @Published var salmonRotations = [SalmonRotation]()
 
-  enum LoadingStatus: Equatable {
+  typealias Scoped = Constants.Configs.Catalog
+
+  static let shared = IkaCatalog()
+
+  private let ikaNetworkManager = IkaNetworkManager.shared
+
+  @Published private(set) var battleRotationDict = BattleRotationDict()
+  @Published private(set) var salmonRotations = [SalmonRotation]()
+
+  enum LoadStatus: Equatable {
     case loading
     case loaded
     case error(IkaError)
   }
 
-  enum AutoLoadingStatus: Equatable {
+  enum AutoLoadStatus: Equatable {
     case autoLoading
     case autoLoaded(AutoLoadedStatus)
     case idle
@@ -31,221 +41,181 @@ final class IkaCatalog: ObservableObject {
     }
   }
 
-  @Published var loadingStatus = LoadingStatus.loading
-  @Published var loadedVSErrorStatus = LoadingStatus.loading
-  @Published var autoLoadingStatus = AutoLoadingStatus.idle
-
-  private var protectedCancellables = Set<AnyCancellable>()
-  private var dataTaskCancellables = Set<AnyCancellable>()
-
-  private var loadedVSErrorPublisher: AnyPublisher<LoadingStatus, Never> {
-    $loadingStatus
+  @Published private(set) var loadStatus: LoadStatus = .loading
+  @Published private(set) var autoLoadStatus = AutoLoadStatus.idle
+  @Published private(set) var loadStatusWithLoadingDropped: LoadStatus = .loading
+  var loadStatusWithLoadingDroppedPublisher: AnyPublisher<LoadStatus, Never> {
+    $loadStatus
       .removeDuplicates()
-      .filter { ikaError in
-        switch ikaError {
-        case .error,
-             .loaded:
-          return true
-        default:
-          return false
-        }
-      }
+      .filter { $0 != .loading }
       .eraseToAnyPublisher()
   }
 
-  private let autoRefreshPublisher = Timer.publish(
-    every: 2,
-    tolerance: 0.2,
-    on: .main,
-    in: .common).autoconnect()
+  private var subscriptionTask: Task<Void, Never>?
+  private var checkAutoLoadNecessityTask: Task<Void, Error>?
 
   // MARK: Lifecycle
 
-  init() {
-    // set up publishers
-    setUpLoadedVSErrorPublisher()
-    setUpAutoLoadPublisher()
+  private init() {
+    subscribeToLoadStatusWithLoadingDroppedPublisher()
+    Task {
+      await loadCatalog()
+      startCheckAutoLoadNecessityTask()
+    }
+  }
 
-    // load first set of data
-    loadCatalog()
+  deinit {
+    subscriptionTask?.cancel()
+    checkAutoLoadNecessityTask?.cancel()
   }
 
   // MARK: Internal
 
-  // MARK: - Status Marking
-
-  /// Mark the `loadingStatus` as `.loading`
-  func markAsLoading() {
-    DispatchQueue.main.async {
-      Haptics.generate(.selection)
-      self.loadingStatus = .loading
+  func loadCatalog()
+    async
+  {
+    await setLoadStatus(.loading)
+    do {
+      try await loadData()
+      await setLoadStatus(.loaded)
+    }
+    catch let error as IkaError {
+      await setLoadStatus(.error(error))
+    }
+    catch {
+      await setLoadStatus(.error(.unknownError(error as Error)))
     }
   }
 
-  /// Mark the `loadingStatus` as `.loaded`
-  func markAsLoaded() {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-      Haptics.generate(.success)
-      self.loadingStatus = .loaded
+  // MARK: Private
+
+  private func subscribeToLoadStatusWithLoadingDroppedPublisher() {
+    subscriptionTask = Task {
+      for await newValue in loadStatusWithLoadingDroppedPublisher.values {
+        self.loadStatusWithLoadingDropped = newValue
+      }
     }
   }
 
-  /// Mark the `loadingStatus` as `.error`
-  /// - Parameter error: The IkaError error type.
-  func markAsError(error: IkaError) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-      Haptics.generate(.error)
-      self.loadingStatus = .error(error)
-    }
+  private func loadData()
+    async throws
+  {
+    let (loadedBattleRotationDict, loadedSalmonRotations, loadedRewardApparel) =
+      try await (
+        ikaNetworkManager.getBattleRotationDict(),
+        ikaNetworkManager.getSalmonRotationArray(),
+        ikaNetworkManager.getRewardApparel())
+
+    battleRotationDict = loadedBattleRotationDict
+    salmonRotations = loadedSalmonRotations
+    salmonRotations[0].rewardApparel = loadedRewardApparel
   }
 
-  /// Mark the `autoLoadingStatus` as `.autoLoading`
-  func markAsAutoLoading() {
-    DispatchQueue.main.async {
-      self.autoLoadingStatus = .autoLoading
-    }
-  }
+  private func startCheckAutoLoadNecessityTask() {
+    checkAutoLoadNecessityTask =
+      Task { [weak self] in
+        guard let self else { return }
 
-  /// Mark the `autoLoadingStatus` as `.autoLoaded`
-  /// then mark it as `.idle` after a while.
-  /// - Parameter status: The autoloaded status.
-  func markAsAutoLoaded(status: AutoLoadingStatus.AutoLoadedStatus) {
-    DispatchQueue.main.async {
-      Haptics.generate(.selection)
-      self.autoLoadingStatus = .autoLoaded(status)
-    }
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-      self.cancelAutoLoadingStatus()
-    }
-  }
-
-  /// Mark the `autoLoadingStatus` as `.idle`
-  func cancelAutoLoadingStatus() {
-    DispatchQueue.main.async {
-      self.autoLoadingStatus = .idle
-    }
-  }
-
-  // MARK: - Set Up Publishers
-
-  /// Set up the publisher that checks to see if needs to start autoloading the catalog.
-  func setUpAutoLoadPublisher() {
-    autoRefreshPublisher
-      .receive(on: DispatchQueue.main)
-      .sink { currentTime in
-        guard
-          !self.battleRotations.isEmpty,
-          self.loadingStatus != .loading,
-          self.autoLoadingStatus != .autoLoading
-        else { return }
-
-        if self.battleRotations.doesNeedToRefresh(currentTime: currentTime) {
-          self.autoLoadBattleRotations()
+        while true {
+          try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadCheckInterval * 1_000_000_000))
+          if ifShouldAutoLoad() { await autoLoadBattleRotationDict() }
         }
       }
-      .store(in: &protectedCancellables)
   }
 
-  /// Set up the publisher that publishes change if loadingStatus is
-  /// switched `TO` `loaded` or `.error`
-  func setUpLoadedVSErrorPublisher() {
-    loadedVSErrorPublisher
-      .receive(on: DispatchQueue.main)
-      .assign(to: \.loadedVSErrorStatus, on: self)
-      .store(in: &protectedCancellables)
-  }
+  private func autoLoadBattleRotationDict()
+    async
+  {
+    guard autoLoadStatus == .idle else { return }
+    await setAutoLoadStatus(.autoLoading)
 
-  // MARK: - Basic Loading & Refreshing
+    var autoLoadAttempts = 0
 
-  /// Refresh the catalog once.
-  func refreshCatalog() {
-    markAsLoading()
-    loadCatalog()
-  }
+    do {
+      while true {
+        let loadedBattleRotationDict = try await ikaNetworkManager.getBattleRotationDict()
+        autoLoadAttempts += 1
 
-  /// Load the catalog and set corresponding current loading status.
-  func loadCatalog() {
-    let battleRotationDictPublisher = IkaPublisher.shared.getBattleRotationDictPublisher()
-    let salmonRotationArrayPublisher = IkaPublisher.shared.getSalmonRotationArrayPublisher()
-    let rewardApparelPublisher = IkaPublisher.shared.getRewardApparelPublisher()
-
-    let combinedPublisher = Publishers.Zip3(
-      battleRotationDictPublisher,
-      salmonRotationArrayPublisher,
-      rewardApparelPublisher)
-    combinedPublisher
-      .receive(on: DispatchQueue.main)
-      .sink { completion in
-        switch completion {
-        case .failure(let ikaError):
-          self.markAsError(error: ikaError)
-        case .finished:
-          self.markAsLoaded()
-          self.cancelAutoLoadingStatus()
-          self.dataTaskCancellables.removeAll()
-        }
-      } receiveValue: { battleRotations, salmonRotations, _ in
-        DispatchQueue.main.async {
-          self.battleRotations = battleRotations
-          self.salmonRotations = salmonRotations
-          //          self.salmonRotations[0].rewardApparel = rewardApparel
-        }
-      }
-      .store(in: &dataTaskCancellables)
-  }
-
-  // MARK: - Auto Refreshing
-
-  /// Start autoloading the battle rotations.
-  func autoLoadBattleRotations() {
-    let maxAttempts = 8
-    var currAttempts = 0
-    let attemptPublisher = Timer.publish(
-      every: 2,
-      tolerance: 0.2,
-      on: .main,
-      in: .common).autoconnect()
-    markAsAutoLoading()
-    attemptPublisher
-      .receive(on: DispatchQueue.main)
-      .sink { _ in
-        guard currAttempts < maxAttempts
-        else {
-          // exceeds max num of attempts: Silently drops the autoload
-          self.markAsAutoLoaded(status: .failure)
-          // stop data tasks
-          self.dataTaskCancellables.removeAll()
-          return
-        }
-
-        currAttempts += 1
-        let battleRotationDictPublisher = IkaPublisher.shared.getBattleRotationDictPublisher()
-        battleRotationDictPublisher
-          .receive(on: DispatchQueue.main)
-          .sink { completion in
-            switch completion {
-            case .failure(let ikaError):
-              self.markAsError(error: ikaError)
-              self.markAsAutoLoaded(status: .failure)
-            case .finished:
-              break
-            }
-          } receiveValue: { battleRotations in
-            // duplicate: skip
-            guard battleRotations != self.battleRotations
-            else { return }
-
-            // new rotation data: set
-            DispatchQueue.main.async {
-              self.battleRotations = battleRotations
-            }
-            self.markAsAutoLoaded(status: .success)
-
-            // stop attempting
-            self.dataTaskCancellables.removeAll()
+        if loadedBattleRotationDict == battleRotationDict {
+          if autoLoadAttempts >= Scoped.autoLoadMaxAttempts {
+            await setAutoLoadStatus(.autoLoaded(.failure))
+            break
           }
-          .store(in: &self.dataTaskCancellables)
+
+          try await Task.sleep(
+            nanoseconds: UInt64(Constants.Configs.Catalog.autoLoadAttemptInterval * 1_000_000_000))
+          continue
+        }
+
+        battleRotationDict = loadedBattleRotationDict
+        await setAutoLoadStatus(.autoLoaded(.success))
+        break
       }
-      .store(in: &dataTaskCancellables)
+    }
+    catch let error as IkaError {
+      await setLoadStatus(.error(error))
+    }
+    catch {
+      await setLoadStatus(.error(.unknownError(error as Error)))
+    }
+  }
+
+  private func setLoadStatus(_ newVal: LoadStatus)
+    async
+  {
+    switch newVal {
+    case .loading:
+      await SimpleHaptics.generate(.selection)
+      loadStatus = .loading
+    case .loaded:
+      try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusLoadedDelay * 1_000_000_000))
+      await SimpleHaptics.generate(.success)
+      loadStatus = .loaded
+    case .error(let ikaError):
+      try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusErrorDelay * 1_000_000_000))
+      await SimpleHaptics.generate(.error)
+      loadStatus = .error(ikaError)
+    }
+  }
+
+  private func setAutoLoadStatus(_ newVal: AutoLoadStatus)
+    async
+  {
+    switch newVal {
+    case .autoLoading:
+      autoLoadStatus = .autoLoading
+    case .autoLoaded(let result):
+      await SimpleHaptics.generate(.selection)
+      autoLoadStatus = .autoLoaded(result)
+      // automatically fall back to idle after a while
+      try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
+      autoLoadStatus = .idle
+    case .idle:
+      autoLoadStatus = .idle
+    }
+  }
+
+  private func ifShouldAutoLoad()
+    -> Bool
+  {
+    loadStatus != .loading &&
+      autoLoadStatus == .idle &&
+      battleRotationDict.isOutdated
+  }
+
+}
+
+extension Task where Failure == Error {
+  static func delayed(
+    byTimeInterval delayInterval: TimeInterval,
+    priority: TaskPriority? = nil,
+    operation: @escaping @Sendable () async throws -> Success)
+    -> Task
+  {
+    Task(priority: priority) {
+      let delay = UInt64(delayInterval * 1_000_000_000)
+      try await Task<Never, Never>.sleep(nanoseconds: delay)
+      return try await operation()
+    }
   }
 }

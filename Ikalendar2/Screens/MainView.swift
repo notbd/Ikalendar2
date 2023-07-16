@@ -17,11 +17,10 @@ struct MainView: View {
   var body: some View {
     NavigationStack {
       if horizontalSizeClass == .compact {
-//        SettingsAdvancedView()
-        ContentView()
+        RotationsView()
       }
       else {
-        ContentView()
+        RotationsView()
       }
     }
   }

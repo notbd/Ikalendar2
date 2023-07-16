@@ -9,11 +9,11 @@ import SwiftUI
 
 // MARK: - ModeIconStamp
 
-/// A mode icon overlay of the ContentView.
+/// A mode icon overlay of the RotationsView.
 struct ModeIconStamp: View {
   @EnvironmentObject var ikaCatalog: IkaCatalog
   @EnvironmentObject var ikaStatus: IkaStatus
-  @EnvironmentObject var motion: MotionManager
+  @EnvironmentObject var motion: IkaMotionManager
 
   var x: CGFloat { motion.dx }
   var y: CGFloat { motion.dy }
@@ -25,7 +25,7 @@ struct ModeIconStamp: View {
       .rotationEffect(.degrees(8))
       .rotation3DEffect(.degrees(degrees * rot), axis: (x: y, y: x, z: 0))
       .offset(x: -10, y: -90)
-      .opacity(ikaCatalog.loadingStatus == .loaded ? 1 : 0)
+//      .opacity(ikaCatalog.loadStatus == .loaded ? 1 : 0)
       .animation(
         .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
         value: motion.dx * motion.dy)

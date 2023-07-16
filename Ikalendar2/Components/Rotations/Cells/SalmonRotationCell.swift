@@ -32,7 +32,7 @@ struct GaugeProgressStyle: ProgressViewStyle {
 struct SalmonRotationCellPrimary: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Cell.Primary
 
-  @EnvironmentObject var ikaTimer: IkaTimer
+  @EnvironmentObject var ikaTimeManager: IkaTimeManager
 
   var rotation: SalmonRotation
   var width: CGFloat
@@ -82,12 +82,12 @@ struct SalmonRotationCellPrimary: View {
         width: width)
 
       ProgressView(
-        value: ikaTimer.currentTime - rotation.startTime,
+        value: ikaTimeManager.currentTime - rotation.startTime,
         total: rotation.endTime - rotation.startTime,
         label: {
           HStack {
             Spacer()
-            Text(ikaTimer.currentTime.toTimeRemainingString(until: rotation.endTime))
+            Text(ikaTimeManager.currentTime.toTimeRemainingString(until: rotation.endTime))
               .scaledLimitedLine()
               .fontIka(.ika2, size: Scoped.PROGRESS_FONT_SIZE)
           }
@@ -106,12 +106,12 @@ struct SalmonRotationCellPrimary: View {
 //      weaponsSection
 //        .padding(.vertical, Scoped.STAGE_PROGRESS_SECTION_PADDING)
 //
-//        ProgressView(value: ikaTimer.currentTime - rotation.startTime,
+//        ProgressView(value: ikaTimeManager.currentTime - rotation.startTime,
 //                     total: rotation.endTime - rotation.startTime,
 //                     label: {
 //                       HStack {
 //                         Spacer()
-//                         Text(ikaTimer.currentTime
+//                         Text(ikaTimeManager.currentTime
 //                          .toTimeRemainingString(until: rotation.endTime))
 //                           .scaledLimitedLine()
 //                           .fontIka(.ika2, size: Scoped.PROGRESS_FONT_SIZE)
@@ -121,12 +121,12 @@ struct SalmonRotationCellPrimary: View {
 //  }
 
 //  var progressSection: some View {
-//    ProgressView(value: ikaTimer.currentTime - rotation.startTime,
+//    ProgressView(value: ikaTimeManager.currentTime - rotation.startTime,
 //                 total: rotation.endTime - rotation.startTime,
 //                 label: {
 //                   HStack {
 //                     Spacer()
-//                     Text(ikaTimer.currentTime.toTimeRemainingString(until: rotation.endTime))
+//                     Text(ikaTimeManager.currentTime.toTimeRemainingString(until: rotation.endTime))
 //                       .scaledLimitedLine()
 //                       .fontIka(.ika2, size: Scoped.PROGRESS_FONT_SIZE)
 //                   }
@@ -176,7 +176,7 @@ struct SalmonRotationCellPrimary: View {
 struct SalmonRotationCellSecondary: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Cell.Secondary
 
-  @EnvironmentObject var ikaTimer: IkaTimer
+  @EnvironmentObject var ikaTimeManager: IkaTimeManager
 
   var rotation: SalmonRotation
   var width: CGFloat
@@ -203,7 +203,7 @@ struct SalmonRotationCellSecondary: View {
 
           stageAndWeaponSection
 
-          if rotation.isCurrent(currentTime: ikaTimer.currentTime) {
+          if rotation.isCurrent(currentTime: ikaTimeManager.currentTime) {
             progressSection
           }
         }
@@ -229,12 +229,12 @@ struct SalmonRotationCellSecondary: View {
 
   var progressSection: some View {
     ProgressView(
-      value: ikaTimer.currentTime - rotation.startTime,
+      value: ikaTimeManager.currentTime - rotation.startTime,
       total: rotation.endTime - rotation.startTime,
       label: {
         HStack {
           Spacer()
-          Text(ikaTimer.currentTime.toTimeRemainingString(until: rotation.endTime))
+          Text(ikaTimeManager.currentTime.toTimeRemainingString(until: rotation.endTime))
             .scaledLimitedLine()
             .fontIka(.ika2, size: Scoped.PROGRESS_FONT_SIZE)
         }
@@ -269,7 +269,7 @@ struct SalmonRotationCellTertiary: View {
 struct SalmonRotationCellTimeTextSection: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Cell.Shared.TimeTextSection
 
-  @EnvironmentObject var ikaTimer: IkaTimer
+  @EnvironmentObject var ikaTimeManager: IkaTimeManager
 
   var iconName: String
   var rotation: SalmonRotation
@@ -288,7 +288,7 @@ struct SalmonRotationCellTimeTextSection: View {
       HStack(spacing: Scoped.TIME_TEXT_SPACING) {
         Text(rotation.startTime.toSalmonTimeString(
           includingDate: true,
-          currentTime: ikaTimer.currentTime))
+          currentTime: ikaTimeManager.currentTime))
           .scaledLimitedLine()
           .fontIka(.ika2, size: Scoped.TIME_TEXT_FONT_SIZE)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_HORIZONTAL)
@@ -299,7 +299,7 @@ struct SalmonRotationCellTimeTextSection: View {
 
         Text(rotation.endTime.toSalmonTimeString(
           includingDate: true,
-          currentTime: ikaTimer.currentTime))
+          currentTime: ikaTimeManager.currentTime))
           .scaledLimitedLine()
           .fontIka(.ika2, size: Scoped.TIME_TEXT_FONT_SIZE)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_HORIZONTAL)

@@ -10,7 +10,11 @@ import SwiftUI
 
 /// An EnvObj class that is shared among all the views.
 /// Contains the app status.
+@MainActor
 final class IkaStatus: ObservableObject {
+
+  static let shared = IkaStatus()
+
   @Published var isSettingsPresented = false
 
   @Published var gameModeSelection = GameMode(
@@ -20,4 +24,9 @@ final class IkaStatus: ObservableObject {
   @Published var battleModeSelection = BattleMode(
     rawValue: UserDefaults.standard.string(
       forKey: Constants.Keys.AppStorage.DEFAULT_BATTLE_MODE)!)!
+
+  // MARK: Lifecycle
+
+  private init() { }
+
 }

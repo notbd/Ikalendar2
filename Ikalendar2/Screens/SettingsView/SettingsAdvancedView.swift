@@ -70,7 +70,7 @@ struct SettingsAdvancedView: View {
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
     .onChange(of: ikaPreference.ifReverseToolbarPickers) { _ in
-      /// use _isOn here..
+      // use _isOn here..
       ifToolbarPreviewPresented = true
       DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
         ifToolbarPreviewPresented = false

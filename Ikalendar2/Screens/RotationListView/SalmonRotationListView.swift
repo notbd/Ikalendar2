@@ -12,12 +12,12 @@ import SwiftUI
 /// The view that displays a list of salmon rotations.
 struct SalmonRotationListView: View {
   @EnvironmentObject var ikaCatalog: IkaCatalog
-  @EnvironmentObject var ikaTimer: IkaTimer
+  @EnvironmentObject var ikaTimeManager: IkaTimeManager
 
   var salmonRotations: [SalmonRotation] {
     let rawRotations = ikaCatalog.salmonRotations
-    func filterCurrent<T: Rotation>(rotation: T) -> Bool {
-      !rotation.isExpired(currentTime: ikaTimer.currentTime)
+    func filterCurrent(rotation: some Rotation) -> Bool {
+      !rotation.isExpired(currentTime: ikaTimeManager.currentTime)
     }
     let results = rawRotations.filter(filterCurrent)
     return results
@@ -36,7 +36,7 @@ struct SalmonRotationListView: View {
             width: geo.size.width)
         }
       }
-      .disabled(ikaCatalog.loadingStatus != .loaded)
+      .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }
 }

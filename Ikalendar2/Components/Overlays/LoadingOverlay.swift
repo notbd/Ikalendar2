@@ -13,10 +13,10 @@ import SwiftUI
 struct LoadingOverlay: View {
   typealias Scoped = Constants.Styles.Overlay.Loading
 
-  var loadingStatus: IkaCatalog.LoadingStatus
+  var loadStatus: IkaCatalog.LoadStatus
 
   var isLoading: Bool {
-    loadingStatus == .loading
+    loadStatus == .loading
   }
 
   var body: some View {
@@ -26,7 +26,7 @@ struct LoadingOverlay: View {
     }
     .animation(
       .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
-      value: loadingStatus)
+      value: loadStatus)
   }
 
   var loadingIndicator: some View {
@@ -47,6 +47,6 @@ struct LoadingOverlay: View {
 
 struct LoadingOverlay_Previews: PreviewProvider {
   static var previews: some View {
-    LoadingOverlay(loadingStatus: .loading)
+    LoadingOverlay(loadStatus: .loading)
   }
 }

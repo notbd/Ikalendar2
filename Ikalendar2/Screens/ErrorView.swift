@@ -17,16 +17,19 @@ struct ErrorView: View {
 
   var body: some View {
     GeometryReader { geo in
-      VStack {
-        Spacer()
-        HStack {
+      List {
+        Section {
           Spacer()
-          ErrorViewContent(
-            error: error,
-            maxWidth: geo.size.width * Scoped.CONTENT_WIDTH_RATIO)
+          HStack {
+            Spacer()
+            ErrorViewContent(
+              error: error,
+              maxWidth: geo.size.width * Scoped.CONTENT_WIDTH_RATIO)
+            Spacer()
+          }
           Spacer()
         }
-        Spacer()
+        .listRowBackground(Color.clear)
       }
     }
   }
@@ -66,6 +69,6 @@ struct ErrorViewContent: View {
 
 struct ErrorView_Previews: PreviewProvider {
   static var previews: some View {
-    ErrorView(error: .invalidData)
+    ErrorView(error: .serverError(.badData))
   }
 }

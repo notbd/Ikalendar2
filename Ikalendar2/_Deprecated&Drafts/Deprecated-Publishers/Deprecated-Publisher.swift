@@ -75,7 +75,7 @@ final class DeprecatedIkaPublisher {
           [200, 304].contains(response.statusCode)
         else {
           // FAILED: empty or invalid response
-          throw IkaError.invalidResponse
+          throw IkaError.badResponse
         }
 
         do {
@@ -86,7 +86,7 @@ final class DeprecatedIkaPublisher {
         }
         catch {
           // FAILED: bad data
-          throw IkaError.invalidData
+          throw IkaError.badData
         }
       }
       .receive(on: DispatchQueue.main)

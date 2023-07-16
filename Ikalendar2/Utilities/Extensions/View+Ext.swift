@@ -25,9 +25,9 @@ extension View {
   ///   - transform: The transform function/modifier.
   /// - Returns: The resulted view.
   @ViewBuilder
-  func `if`<Transform: View>(
+  func `if`(
     _ condition: Bool,
-    transform: (Self) -> Transform)
+    transform: (Self) -> some View)
     -> some View
   {
     if condition {
@@ -55,10 +55,10 @@ extension View {
   ///   - elseTransform: The condition to apply for the transform is false.
   /// - Returns: The resulted view.
   @ViewBuilder
-  func `if`<TrueContent: View, FalseContent: View>(
+  func `if`(
     _ condition: Bool,
-    if ifTransform: (Self) -> TrueContent,
-    else elseTransform: (Self) -> FalseContent)
+    if ifTransform: (Self) -> some View,
+    else elseTransform: (Self) -> some View)
     -> some View
   {
     if condition {
@@ -85,12 +85,12 @@ extension View {
   ///   - transform: The transform function/modifier.
   /// - Returns: The resulted view.
   @ViewBuilder
-  func ifLet<V, Transform: View>(
+  func ifLet<V>(
     _ value: V?,
-    transform: (Self, V) -> Transform)
+    transform: (Self, V) -> some View)
     -> some View
   {
-    if let value = value {
+    if let value {
       transform(self, value)
     }
     else {
