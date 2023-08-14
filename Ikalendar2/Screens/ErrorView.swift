@@ -18,19 +18,20 @@ struct ErrorView: View {
   var body: some View {
     GeometryReader { geo in
       List {
-        Section {
+        //        Section {
+        Spacer()
+        HStack {
           Spacer()
-          HStack {
-            Spacer()
-            ErrorViewContent(
-              error: error,
-              maxWidth: geo.size.width * Scoped.CONTENT_WIDTH_RATIO)
-            Spacer()
-          }
+          ErrorViewContent(
+            error: error,
+            maxWidth: geo.size.width * Scoped.CONTENT_WIDTH_RATIO)
           Spacer()
         }
-        .listRowBackground(Color.clear)
+        Spacer()
+//      }
       }
+//        .listRowBackground(Color.clear)
+//        .listStyle(PlainListStyle())
     }
   }
 }

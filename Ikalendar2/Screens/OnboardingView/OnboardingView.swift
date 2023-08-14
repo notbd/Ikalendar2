@@ -117,10 +117,8 @@ struct OnboardingView: View {
                 .foregroundColor(.white)
                 .font(.system(.body, design: .rounded))
                 .fontWeight(.semibold)
-
                 .frame(maxWidth: geo.size.width > 320 ? 360 : 240)
                 .frame(height: geo.size.width > 320 ? 48 : 42)
-
                 .background(Color.accentColor)
                 .cornerRadius(12)
                 .shadow(radius: 6)

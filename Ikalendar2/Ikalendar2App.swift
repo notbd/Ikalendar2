@@ -31,9 +31,6 @@ struct Ikalendar2App: App {
   // MARK: Lifecycle
 
   init() {
-//    UIKitIntegration.customizeNavigationTitleText()
-//    UIKitIntegration.customizePickerText()
-
     UserDefaults.standard
       .register(defaults: [Constants.Keys.AppStorage.DEFAULT_GAME_MODE: "battle"])
     UserDefaults.standard
