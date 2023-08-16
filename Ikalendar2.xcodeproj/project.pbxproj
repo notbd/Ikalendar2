@@ -155,15 +155,6 @@
 		79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsettableScrollView.swift; sourceTree = "<group>"; };
 		792E1FBC28DE89C100C3789D /* SettingsAdvancedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAdvancedView.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
-		79802FED28C55B2A0048C478 /* Deprecated-Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Deprecated-Publisher.swift"; sourceTree = "<group>"; };
-		79802FEF28C55B2A0048C478 /* RuleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDetailView.swift; sourceTree = "<group>"; };
-		79802FF028C55B2A0048C478 /* StageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageDetailView.swift; sourceTree = "<group>"; };
-		79802FF228C55B2A0048C478 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		79802FF328C55B2A0048C478 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
-		79802FF428C55B2A0048C478 /* Coordinate2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate2D.swift; sourceTree = "<group>"; };
-		79802FF628C55B2A0048C478 /* Deprecated-NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Deprecated-NetworkManager.swift"; sourceTree = "<group>"; };
-		79802FF728C55B2A0048C478 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
-		79802FF828C55B2A0048C478 /* FlatMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatMode.swift; sourceTree = "<group>"; };
 		79802FF928C55B740048C478 /* IkaColorSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaColorSchemeManager.swift; sourceTree = "<group>"; };
 		79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigConstants.swift; sourceTree = "<group>"; };
 		79AA712F28C404FD00A91055 /* IkaPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreference.swift; sourceTree = "<group>"; };
@@ -406,54 +397,6 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		79802FEB28C55B2A0048C478 /* _Deprecated&Drafts */ = {
-			isa = PBXGroup;
-			children = (
-				79802FEC28C55B2A0048C478 /* Deprecated-Publishers */,
-				79802FEE28C55B2A0048C478 /* DetailView */,
-				79802FF528C55B2A0048C478 /* Deprecated-NetworkManager */,
-				79802FF728C55B2A0048C478 /* SidebarView.swift */,
-				79802FF828C55B2A0048C478 /* FlatMode.swift */,
-			);
-			path = "_Deprecated&Drafts";
-			sourceTree = "<group>";
-		};
-		79802FEC28C55B2A0048C478 /* Deprecated-Publishers */ = {
-			isa = PBXGroup;
-			children = (
-				79802FED28C55B2A0048C478 /* Deprecated-Publisher.swift */,
-			);
-			path = "Deprecated-Publishers";
-			sourceTree = "<group>";
-		};
-		79802FEE28C55B2A0048C478 /* DetailView */ = {
-			isa = PBXGroup;
-			children = (
-				79802FEF28C55B2A0048C478 /* RuleDetailView.swift */,
-				79802FF028C55B2A0048C478 /* StageDetailView.swift */,
-				79802FF128C55B2A0048C478 /* Detail-Components */,
-			);
-			path = DetailView;
-			sourceTree = "<group>";
-		};
-		79802FF128C55B2A0048C478 /* Detail-Components */ = {
-			isa = PBXGroup;
-			children = (
-				79802FF228C55B2A0048C478 /* MapView.swift */,
-				79802FF328C55B2A0048C478 /* CircleImage.swift */,
-				79802FF428C55B2A0048C478 /* Coordinate2D.swift */,
-			);
-			path = "Detail-Components";
-			sourceTree = "<group>";
-		};
-		79802FF528C55B2A0048C478 /* Deprecated-NetworkManager */ = {
-			isa = PBXGroup;
-			children = (
-				79802FF628C55B2A0048C478 /* Deprecated-NetworkManager.swift */,
-			);
-			path = "Deprecated-NetworkManager";
-			sourceTree = "<group>";
-		};
 		79AA712D28C4000400A91055 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -580,7 +523,6 @@
 				79C1485528C426A600587C6E /* Constants */,
 				7903FE3B28C439D600245586 /* Resources */,
 				7903FE9F28C4721A00245586 /* Localizations */,
-				79802FEB28C55B2A0048C478 /* _Deprecated&Drafts */,
 				79C1485428C425BF00587C6E /* Preview Content */,
 			);
 			path = Ikalendar2;
