@@ -13,7 +13,7 @@ enum IkaError: Error, Equatable {
 
   case serverError(IkaServerErrorType)
   case connectionError
-  case unknownError(Error)
+  case unknownError
 
   static func == (lhs: IkaError, rhs: IkaError) -> Bool {
     lhs.message == rhs.message
@@ -37,11 +37,16 @@ extension IkaError {
   var message: String {
     switch self {
     case .serverError(let serverErrorType):
-      return Scoped.Message.SERVER_ERROR(serverErrorType.title)
+      switch serverErrorType {
+      case .badResponse:
+        return Scoped.Message.SERVER_ERROR_BAD_RESPONSE
+      case .badData:
+        return Scoped.Message.SERVER_ERROR_BAD_DATA
+      }
     case .connectionError:
       return Scoped.Message.CONNECTION_ERROR
-    case .unknownError(let error):
-      return Scoped.Message.UNKNOWN_ERROR(error.localizedDescription)
+    case .unknownError:
+      return Scoped.Message.UNKNOWN_ERROR
     }
   }
 }
@@ -54,15 +59,4 @@ enum IkaServerErrorType: String {
 
   case badResponse
   case badData
-}
-
-extension IkaServerErrorType {
-  var title: String {
-    switch self {
-    case .badResponse:
-      return Scoped.Title.BAD_RESPONSE
-    case .badData:
-      return Scoped.Title.BAD_DATA
-    }
-  }
 }

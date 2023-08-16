@@ -18,51 +18,57 @@ struct ErrorView: View {
   var body: some View {
     GeometryReader { geo in
       List {
-        //        Section {
-        Spacer()
-        HStack {
-          Spacer()
-          ErrorViewContent(
-            error: error,
-            maxWidth: geo.size.width * Scoped.CONTENT_WIDTH_RATIO)
-          Spacer()
+        Section {
+          errorText
+            .padding(.top, geo.size.height * 0.2)
         }
-        Spacer()
-//      }
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
+
+        Section {
+          errorImage
+            .frame(width: geo.size.width * 0.15) // adjust image width
+            .frame(maxWidth: .infinity, alignment: .leading) // horizontally align the image
+            .padding(.top, geo.size.height * 0.05)
+        }
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
       }
-//        .listRowBackground(Color.clear)
-//        .listStyle(PlainListStyle())
     }
   }
-}
 
-// MARK: - ErrorViewContent
-
-struct ErrorViewContent: View {
-  typealias Scoped = Constants.Styles.Error
-
-  var error: IkaError
-  var maxWidth: CGFloat
-
-  var body: some View {
+  private var errorText: some View {
     VStack(alignment: .leading) {
-      Text(error.title)
+      Text(error.title.localizedStringKey())
         .scaledLimitedLine()
         .if(Scoped.IF_USE_CUSTOM_FONT) {
-          $0.fontIka(.ika1, size: Scoped.TITLE_CUSTOM_FONT_SIZE, relativeTo: .largeTitle)
+          $0.fontIka(
+            .ika2,
+            size: Scoped.TITLE_CUSTOM_FONT_SIZE,
+            relativeTo: .largeTitle)
         } else: {
           $0.font(.system(.largeTitle, design: .rounded))
         }
+        .padding(.bottom, Scoped.TITLE_MESSAGE_SPACING)
 
-      Text(error.message)
+      Text(error.message.localizedStringKey())
         .if(Scoped.IF_USE_CUSTOM_FONT) {
-          $0.fontIka(.ika1, size: Scoped.MESSAGE_CUSTOM_FONT_SIZE, relativeTo: .caption)
+          $0.fontIka(
+            .ika2,
+            size: Scoped.MESSAGE_CUSTOM_FONT_SIZE,
+            relativeTo: .body)
         } else: {
-          $0.font(.system(.caption, design: .rounded))
+          $0.font(.system(.body, design: .rounded))
         }
     }
     .foregroundColor(.secondary)
-    .frame(maxWidth: maxWidth)
+  }
+
+  private var errorImage: some View {
+    Image("little-buddy")
+      .resizable()
+      .scaledToFit()
+      .grayscale(1.0)
   }
 }
 

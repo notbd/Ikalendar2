@@ -39,6 +39,28 @@
 "Splatoon™ 2" = "スプラトゥーン™ 2";
 "Official Website" = "公式サイト";
 
+// MARK: - Error
+
+"key.title.server_error" = "サーバーエラー";
+"key.title.connection_error" = "インターネット未接続";
+"key.title.unknown_error" = "不明なエラー";
+
+"key.message.server_error.bad_response" =
+"サーバーからの予期しないレスポンスが受信されました。
+再度試してみてください。問題が続く場合、サポートまでお知らせください。";
+
+"key.message.server_error.bad_data" =
+"サーバーから無効なデータが受信されました。
+再度試してみてください。問題が続く場合、サポートまでお知らせください。";
+
+"key.message.connection_error" =
+"接続エラーが発生しました。
+インターネット接続を確認して、再試行してください。";
+
+"key.message.unknown_error" =
+"恐れ入りますが、
+予期しないエラーが発生しました。";
+
 // MARK: - RowHeaderPrefix
 
 "Now:" = "今:";

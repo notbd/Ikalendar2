@@ -83,7 +83,7 @@ final class IkaCatalog: ObservableObject {
       await setLoadStatus(.error(error))
     }
     catch {
-      await setLoadStatus(.error(.unknownError(error as Error)))
+      await setLoadStatus(.error(.unknownError))
     }
   }
 
@@ -156,7 +156,7 @@ final class IkaCatalog: ObservableObject {
       await setLoadStatus(.error(error))
     }
     catch {
-      await setLoadStatus(.error(.unknownError(error as Error)))
+      await setLoadStatus(.error(.unknownError))
     }
   }
 
@@ -203,19 +203,4 @@ final class IkaCatalog: ObservableObject {
       battleRotationDict.isOutdated
   }
 
-}
-
-extension Task where Failure == Error {
-  static func delayed(
-    byTimeInterval delayInterval: TimeInterval,
-    priority: TaskPriority? = nil,
-    operation: @escaping @Sendable () async throws -> Success)
-    -> Task
-  {
-    Task(priority: priority) {
-      let delay = UInt64(delayInterval * 1_000_000_000)
-      try await Task<Never, Never>.sleep(nanoseconds: delay)
-      return try await operation()
-    }
-  }
 }

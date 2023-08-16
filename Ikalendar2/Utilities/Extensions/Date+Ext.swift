@@ -110,8 +110,7 @@ extension Date {
     let seconds = remainingTime % 60
     let timeLength = TimeLength(days: days, hours: hours, minutes: minutes, seconds: seconds)
     let timeLengthString = timeLength.getLocalizedStringDescription()
-    return String(
-      format: NSLocalizedString("remaining %@", comment: ""),
-      timeLengthString)
+
+    return String(localized: "remaining \(timeLengthString)")
   }
 }

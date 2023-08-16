@@ -20,12 +20,12 @@ extension Constants.Keys {
   static let appStoreIdentifier = "1529193361"
 
   enum AppStorage {
-    static let DEFAULT_GAME_MODE = "PREF_DEFAULT_GAME_MODE"
-    static let DEFAULT_BATTLE_MODE = "PREF_DEFAULT_BATTLE_MODE"
+    static let DEFAULT_GAME_MODE = "pref.default.game_mode"
+    static let DEFAULT_BATTLE_MODE = "pref.default.battle_mode"
 
-    static let COLOR_SCHEME = "PREF_COLOR_SCHEME"
+    static let COLOR_SCHEME = "pref.color_scheme"
 
-    static let IF_REVERSE_TOOLBAR_PICKERS = "PREF_IF_REVERSE_TOOLBAR_PICKERS"
+    static let IF_REVERSE_TOOLBAR_PICKERS = "pref.if_reverse_toolbar_pickers"
   }
 
   enum URL {
@@ -44,40 +44,21 @@ extension Constants.Keys {
     static let SOURCE_CODE_REPO = "https://github.com/zhang13music/Ikalendar2"
     static let PRIVACY_POLICY = "https://github.com/zhang13music/Ikalendar2/wiki/Privacy-Policy"
 
-    static let SOME_GOOD_STUFF = "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // Good stuff indeed!
+    static let THE_GOOD_STUFF = "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // good stuff indeed!
   }
 
   enum Error {
     enum Title {
-      static let SERVER_ERROR = "Server Error"
-      static let CONNECTION_ERROR = "Connection Error"
-      static let UNKNOWN_ERROR = "Unknown Error"
-
-      static let BAD_RESPONSE = "BAD_STATUS_CODE"
-      static let BAD_DATA = "BAD_DATA"
+      static let SERVER_ERROR = "key.title.server_error"
+      static let CONNECTION_ERROR = "key.title.connection_error"
+      static let UNKNOWN_ERROR = "key.title.unknown_error"
     }
 
     enum Message {
-      static let SERVER_ERROR = { (type: String) in
-        """
-        The response from the server was invalid. \(type)
-        Please try again later or contact support.
-        """
-      }
-
-      static let CONNECTION_ERROR =
-        """
-        Unable to connect.
-        Please check your internet connection and refresh.
-        """
-      static let UNKNOWN_ERROR = { (error: String) in
-        """
-        Ooops...
-        An unknown error was encountered ¯\\_(ツ)_/¯
-        \(error)
-        """
-      }
-
+      static let SERVER_ERROR_BAD_RESPONSE = "key.message.server_error.bad_response"
+      static let SERVER_ERROR_BAD_DATA = "key.message.server_error.bad_data"
+      static let CONNECTION_ERROR = "key.message.connection_error"
+      static let UNKNOWN_ERROR = "key.message.unknown_error"
     }
   }
 }

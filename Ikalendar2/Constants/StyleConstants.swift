@@ -52,8 +52,9 @@ extension Constants.Styles {
     static let CONTENT_WIDTH_RATIO: CGFloat = 0.8
 
     static let IF_USE_CUSTOM_FONT = true
-    static let TITLE_CUSTOM_FONT_SIZE: CGFloat = 31
-    static let MESSAGE_CUSTOM_FONT_SIZE: CGFloat = 16
+    static let TITLE_CUSTOM_FONT_SIZE: CGFloat = 36
+    static let MESSAGE_CUSTOM_FONT_SIZE: CGFloat = 19
+    static let TITLE_MESSAGE_SPACING: CGFloat = 4
   }
 
   enum Settings {
@@ -63,7 +64,7 @@ extension Constants.Styles {
       static let DEFAULT_MODE_PICKER_SPACING: CGFloat = 40
 
       static let COLOR_SCHEME_SFSYMBOL = "circle.lefthalf.fill"
-      static let COLOR_SCHEME_PICKER_SPACING_en: CGFloat = 45
+      static let COLOR_SCHEME_PICKER_SPACING_en: CGFloat = 20
       static let COLOR_SCHEME_PICKER_SPACING_ja: CGFloat = 16
 
       static let APP_ICON_SFSYMBOL = "square.stack"

@@ -118,12 +118,6 @@ struct SettingsMainView: View {
         "Color Scheme",
         systemImage: Scoped.COLOR_SCHEME_SFSYMBOL)
 
-      Spacer()
-        .frame(
-          maxWidth: currLanguage == "English"
-            ? Scoped.COLOR_SCHEME_PICKER_SPACING_en
-            : Scoped.COLOR_SCHEME_PICKER_SPACING_ja)
-
       Picker(
         selection: $ikaPreference.appColorScheme
           .onSet { _ in SimpleHaptics.generateTask(.selection) },
