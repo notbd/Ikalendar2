@@ -25,7 +25,7 @@ struct SalmonRotationListView: View {
 
   var body: some View {
     GeometryReader { geo in
-      Form {
+      List {
         ForEach(
           Array(salmonRotations.enumerated()),
           id: \.offset)

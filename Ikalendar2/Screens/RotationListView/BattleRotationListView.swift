@@ -26,7 +26,7 @@ struct BattleRotationListView: View {
 
   var body: some View {
     GeometryReader { geo in
-      Form {
+      List {
         ForEach(
           Array(battleRotations.enumerated()),
           id: \.offset)

@@ -132,7 +132,7 @@ struct BattleRotationHeader: View {
       // Content
       Text("\(startTimeString) - \(endTimeString)")
         .scaledLimitedLine()
-        .fontIka(.ika1, size: Scoped.CONTENT_FONT_SIZE)
+        .fontIka(.ika2, size: Scoped.CONTENT_FONT_SIZE)
         .foregroundColor(.secondary)
     }
   }
