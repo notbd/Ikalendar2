@@ -45,7 +45,6 @@
 "key.title.connection_error" = "Connection Error";
 "key.title.unknown_error" = "Unknown Error";
 
-
 "key.message.server_error.bad_response" =
 "Unexpected response received from the server.
 Please try again later or contact support.";
@@ -59,7 +58,7 @@ Please try again later or contact support.";
 Please check your internet connection and try again.";
 
 "key.message.unknown_error" =
-"Ooops...
+"Oops...
 An unexpected error was encountered.";
 
 // MARK: - RowHeaderPrefix
