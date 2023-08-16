@@ -28,7 +28,7 @@ struct ErrorView: View {
         Section {
           errorImage
             .frame(width: geo.size.width * 0.15) // adjust image width
-            .frame(maxWidth: .infinity, alignment: .leading) // horizontally align the image
+            .hAlignment(.leading) // horizontally align the image
             .padding(.top, geo.size.height * 0.05)
         }
         .listRowBackground(Color.clear)
@@ -68,7 +68,7 @@ struct ErrorView: View {
     Image("little-buddy")
       .resizable()
       .scaledToFit()
-      .grayscale(1.0)
+      .grayscale(0.9)
   }
 }
 

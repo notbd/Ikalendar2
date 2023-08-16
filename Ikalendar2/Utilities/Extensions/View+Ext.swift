@@ -97,4 +97,35 @@ extension View {
       self
     }
   }
+
+  /// Adjusts the horizontal alignment of the view.
+  ///
+  /// This function extends the `View` by providing a more readable way to set horizontal alignment.
+  /// The view is aligned within an infinite width to achieve the desired horizontal alignment.
+  ///
+  /// - Parameters:
+  ///   - alignment: The horizontal alignment type. Defaults to `.center`.
+  /// - Returns: A view that adjusts its alignment according to the specified parameter.
+  @ViewBuilder
+  func hAlignment(_ alignment: Alignment = .center) -> some View {
+    frame(
+      maxWidth: .infinity,
+      alignment: alignment)
+  }
+
+
+  /// Adjusts the vertical alignment of the view.
+  ///
+  /// This function extends the `View` by providing a more readable way to set vertical alignment.
+  /// The view is aligned within an infinite height to achieve the desired vertical alignment.
+  ///
+  /// - Parameters:
+  ///   - alignment: The vertical alignment type. Defaults to `.center`.
+  /// - Returns: A view that adjusts its alignment according to the specified parameter.
+  @ViewBuilder
+  func vAlignment(_ alignment: Alignment = .center) -> some View {
+    frame(
+      maxHeight: .infinity,
+      alignment: alignment)
+  }
 }
