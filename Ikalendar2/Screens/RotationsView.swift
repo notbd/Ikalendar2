@@ -24,7 +24,7 @@ struct RotationsView: View {
         .if(isHorizontalCompact) {
           setCompactHoriClassToolbar(content: $0)
         } else: {
-          setRegularHoriClassToolbar(content: $0)
+          $0
         }
         .navigationTitle(title)
         .refreshable {
@@ -71,12 +71,6 @@ struct RotationsView: View {
   func setCompactHoriClassToolbar(content: some View) -> some View {
     content
       .toolbar {
-//        ToolbarItem(placement: .navigationBarLeading) {
-//          ToolbarRefreshButton(
-//            isDisabled: ikaCatalog.loadStatus == .loading,
-//            action: didTapRefreshButton)
-//        }
-
         ToolbarItem(placement: .navigationBarTrailing) {
           ToolbarSettingsButton(
             action: didTapSettingsButton)
@@ -94,21 +88,6 @@ struct RotationsView: View {
       }
   }
 
-  func setRegularHoriClassToolbar(content: some View) -> some View {
-//    content
-//      .toolbar {
-//        ToolbarItem(placement: .navigationBarLeading) {
-//          ToolbarRefreshButton(
-//            isDisabled: ikaCatalog.loadStatus == .loading,
-//            action: didTapRefreshButton)
-//        }
-//      }
-    content
-  }
-
-//  func didTapRefreshButton() {
-//    ikaCatalog.refreshCatalog()
-//  }
 
   func didTapSettingsButton() {
     SimpleHaptics.generateTask(.selection)
