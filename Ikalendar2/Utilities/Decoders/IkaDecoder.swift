@@ -14,7 +14,7 @@ final class IkaDecoder {
   /// - Parameter data: The data to parse from.
   /// - Throws:
   ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
-  ///   - `IkaError.badData`: if JSON is in of unsupported format.
+  ///   - `IkaError.badData`: if JSON is of unsupported format.
   /// - Returns: The parsed dictionary (will NOT be empty).
   static func parseBattleRotationDict(from data: Data)
     throws -> BattleRotationDict
@@ -245,6 +245,12 @@ final class IkaDecoder {
     return rewardApparel
   }
 
+  /// Parse the data from oatmealdome.me into a salmon rotation array.
+  /// - Parameter data: The data to parse from.
+  /// - Throws:
+  ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
+  ///   - `IkaError.badData`: if JSON is of unsupported format.
+  /// - Returns: The parsed array (will NOT be empty).
   static func parseOatmealdome(from data: Data)
     throws -> [SalmonRotation]
   {
