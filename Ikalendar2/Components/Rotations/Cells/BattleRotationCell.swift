@@ -24,20 +24,18 @@ struct BattleRotationCellPrimary: View {
   var width: CGFloat
 
   var body: some View {
-    VStack {
+    VStack(spacing: 0) {
       HStack(alignment: .center) {
         ruleSection
         Spacer()
         remainingTimeSection
       }
 
-      // If no spacer here layout will break??? Can't find the bug here
-      Spacer()
-
       ProgressView(
         value: ikaTimeManager.currentTime - rotation.startTime,
         total: rotation.endTime - rotation.startTime)
-        .padding(.bottom, 4)
+        .padding(.top, Scoped.PROGRESS_BAR_PADDING_TOP)
+        .padding(.bottom, Scoped.PROGRESS_BAR_PADDING_BOTTOM)
 
       HStack(
         alignment: .center,
