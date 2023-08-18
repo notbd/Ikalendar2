@@ -109,18 +109,17 @@ extension SalmonRotationRow {
 struct SalmonRotationHeader: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Header
 
+  @Environment(\.colorScheme) var deviceColorScheme
+
   var prefixString: String
 
   var body: some View {
-    HStack(spacing: Scoped.SPACING) {
       Text(prefixString.localizedStringKey())
         .fontIka(.ika1, size: Scoped.FONT_SIZE)
         .foregroundColor(Color.systemBackground)
         .padding(.horizontal, Scoped.PREFIX_PADDING)
-        .silhouetteFrame(
-          cornerRadius: Scoped.PREFIX_SILHOUETTE_CORNER_RADIUS,
-          colorScheme: .inverted)
-    }
+        .background(Color.secondary)
+        .cornerRadius(Scoped.PREFIX_SILHOUETTE_CORNER_RADIUS)
   }
 }
 

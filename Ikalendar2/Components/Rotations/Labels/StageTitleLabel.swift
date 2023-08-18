@@ -15,30 +15,14 @@ struct StageTitleLabel: View {
 
   let title: String
   let fontSize: CGFloat
-  var avoidBlur = false
 
   var body: some View {
-    // Use ZStack instead of silhouette to enable offset adjustment
-    ZStack {
-      if avoidBlur {
-        Rectangle()
-          .foregroundColor(.black)
-          .opacity(0.7)
-          .cornerRadius(Scoped.BACKGROUND_CORNER_RADIUS)
-      }
-      else {
-        Blur(style: .systemChromeMaterialDark)
-          .cornerRadius(Scoped.BACKGROUND_CORNER_RADIUS)
-      }
-
-      Text(title.localizedStringKey())
-        .scaledLimitedLine()
-        .fontIka(.ika2, size: fontSize)
-        .foregroundColor(.white)
-        .padding(.horizontal, Scoped.TEXT_PADDING_HORIZONTAL)
-        .offset(y: Scoped.TEXT_OFFSET_Y)
-    }
-    .fixedSize()
+    Text(title.localizedStringKey())
+      .scaledLimitedLine()
+      .fontIka(.ika2, size: fontSize)
+      .padding(.horizontal, Scoped.TEXT_PADDING_HORIZONTAL)
+      .background(.thinMaterial)
+      .cornerRadius(Scoped.BACKGROUND_CORNER_RADIUS)
   }
 }
 

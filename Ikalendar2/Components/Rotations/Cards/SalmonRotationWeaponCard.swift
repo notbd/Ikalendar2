@@ -18,21 +18,15 @@ struct SalmonRotationWeaponCardPrimary: View {
   var width: CGFloat
 
   var body: some View {
-    VStack(alignment: .center) {
-      Image(weapon.imgFiln)
-        .resizable()
-        .scaledToFit()
-        .cornerRadius(Scoped.IMG_CORNER_RADIUS)
-        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
-        .padding(Scoped.IMG_PADDING)
-        .silhouetteFrame(cornerRadius: Scoped.SILHOUETTE_CORNER_RADIUS)
-
-//      Text(weapon.name)
-//        .scaledLimitedLine()
-//        .fontIka(.ika2, size: Scoped.FONT_SIZE)
-//        .frame(height: width * Scoped.TEXT_FRAME_HEIGHT_RATIO)
-    }
-    .frame(width: width)
+    Image(weapon.imgFiln)
+      .resizable()
+      .scaledToFit()
+      .cornerRadius(Scoped.IMG_CORNER_RADIUS)
+      .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+      .padding(Scoped.IMG_PADDING)
+      .background(.thinMaterial)
+      .cornerRadius(Scoped.SILHOUETTE_CORNER_RADIUS)
+      .frame(width: width)
   }
 }
 
@@ -71,7 +65,8 @@ struct SalmonRotationWeaponCardSecondaryIcon: View {
       .scaledToFit()
       .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
       .padding(Scoped.IMG_PADDING)
-      .silhouetteFrame(cornerRadius: Scoped.SILHOUETTE_CORNER_RADIUS)
+      .background(.thinMaterial)
+      .cornerRadius(Scoped.SILHOUETTE_CORNER_RADIUS)
   }
 }
 

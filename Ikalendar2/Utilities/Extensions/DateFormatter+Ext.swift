@@ -28,14 +28,14 @@ extension DateFormatter {
         // Japanese
         dateFormat = "ah:mm"
       }
-      else if locale.identifier.starts(with: "zh_Hans") {
-        // Simplified Han
-        dateFormat = "a h:mm"
-      }
-      else if locale.identifier.starts(with: "zh_Hant") {
-        // Traditional Han
-        dateFormat = "a h:mm"
-      }
+//      else if locale.identifier.starts(with: "zh_Hans") {
+//        // Simplified Han
+//        dateFormat = "a h:mm"
+//      }
+//      else if locale.identifier.starts(with: "zh_Hant") {
+//        // Traditional Han
+//        dateFormat = "a h:mm"
+//      }
       else {
         // default: English
         dateFormat = "h:mm a"

@@ -16,7 +16,9 @@ final class IkaDecoder {
   ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
   ///   - `IkaError.badData`: if JSON is in of unsupported format.
   /// - Returns: The parsed dictionary (will NOT be empty).
-  static func parseBattleRotationDict(from data: Data) throws -> BattleRotationDict {
+  static func parseBattleRotationDict(from data: Data)
+    throws -> BattleRotationDict
+  {
     var battleRotationDict = BattleRotationDict()
 
     // Will throw SwiftyJSONError if parsing fails
@@ -81,7 +83,9 @@ final class IkaDecoder {
   ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
   ///   - `IkaError.badData`: if JSON is of unsupported format.
   /// - Returns: The parsed array (will NOT be empty).
-  static func parseSalmonRotationArray(from data: Data) throws -> [SalmonRotation] {
+  static func parseSalmonRotationArray(from data: Data)
+    throws -> [SalmonRotation]
+  {
     var salmonRotations: [SalmonRotation] = []
 
     // Will throw SwiftyJSONError if parsing fails
@@ -189,7 +193,9 @@ final class IkaDecoder {
   ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
   ///   - `IkaError.badData`: if JSON is of unsupported format.
   /// - Returns: The parsed SalmonApparel.
-  static func parseRewardApparel(from data: Data) throws -> SalmonApparel {
+  static func parseRewardApparel(from data: Data)
+    throws -> SalmonApparel
+  {
     // Will throw SwiftyJSONError if parsing fails
     let rootJSON = try JSON(data: data)
 
@@ -239,7 +245,9 @@ final class IkaDecoder {
     return rewardApparel
   }
 
-  static func parseOatmealdome(from data: Data) throws -> [SalmonRotation] {
+  static func parseOatmealdome(from data: Data)
+    throws -> [SalmonRotation]
+  {
     var salmonRotations: [SalmonRotation] = []
 
     // Will throw SwiftyJSONError if parsing fails

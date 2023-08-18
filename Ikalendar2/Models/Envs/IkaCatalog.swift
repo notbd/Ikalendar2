@@ -43,8 +43,8 @@ final class IkaCatalog: ObservableObject {
 
   @Published private(set) var loadStatus: LoadStatus = .loading
   @Published private(set) var autoLoadStatus = AutoLoadStatus.idle
-  @Published private(set) var loadStatusWithLoadingDropped: LoadStatus = .loading
-  var loadStatusWithLoadingDroppedPublisher: AnyPublisher<LoadStatus, Never> {
+  @Published private(set) var loadStatusWithLoadingIgnored: LoadStatus = .loading
+  var loadStatusWithLoadingIgnoredPublisher: AnyPublisher<LoadStatus, Never> {
     $loadStatus
       .removeDuplicates()
       .filter { $0 != .loading }
@@ -57,7 +57,7 @@ final class IkaCatalog: ObservableObject {
   // MARK: Lifecycle
 
   private init() {
-    subscribeToLoadStatusWithLoadingDroppedPublisher()
+    subscribeToLoadStatusWithLoadingIgnoredPublisher()
     Task {
       await loadCatalog()
       startCheckAutoLoadNecessityTask()
@@ -89,10 +89,10 @@ final class IkaCatalog: ObservableObject {
 
   // MARK: Private
 
-  private func subscribeToLoadStatusWithLoadingDroppedPublisher() {
+  private func subscribeToLoadStatusWithLoadingIgnoredPublisher() {
     subscriptionTask = Task {
-      for await newValue in loadStatusWithLoadingDroppedPublisher.values {
-        self.loadStatusWithLoadingDropped = newValue
+      for await newValue in loadStatusWithLoadingIgnoredPublisher.values {
+        self.loadStatusWithLoadingIgnored = newValue
       }
     }
   }
@@ -149,6 +149,9 @@ final class IkaCatalog: ObservableObject {
 
         battleRotationDict = loadedBattleRotationDict
         await setAutoLoadStatus(.autoLoaded(.success))
+//        if loadStatus != .loaded {
+//          await setLoadStatus(.loaded)
+//        }
         break
       }
     }
@@ -187,17 +190,17 @@ final class IkaCatalog: ObservableObject {
     case .autoLoaded(let result):
       await SimpleHaptics.generate(.selection)
       autoLoadStatus = .autoLoaded(result)
-      // automatically fall back to idle after a while
-      try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
-      autoLoadStatus = .idle
+//      Task {
+          // automatically fall back to idle after a while
+          try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
+          autoLoadStatus = .idle
+//      }
     case .idle:
       autoLoadStatus = .idle
     }
   }
 
-  private func ifShouldAutoLoad()
-    -> Bool
-  {
+  private func ifShouldAutoLoad() -> Bool {
     loadStatus != .loading &&
       autoLoadStatus == .idle &&
       battleRotationDict.isOutdated

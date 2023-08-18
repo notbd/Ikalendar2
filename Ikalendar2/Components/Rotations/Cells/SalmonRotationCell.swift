@@ -292,7 +292,8 @@ struct SalmonRotationCellTimeTextSection: View {
           .scaledLimitedLine()
           .fontIka(.ika2, size: Scoped.TIME_TEXT_FONT_SIZE)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_HORIZONTAL)
-          .silhouetteFrame(cornerRadius: Scoped.TIME_TEXT_SILHOUETTE_CORNER_RADIUS)
+          .background(.thinMaterial)
+          .cornerRadius(Scoped.TIME_TEXT_SILHOUETTE_CORNER_RADIUS)
         Text("-")
           .scaledLimitedLine()
           .fontIka(.ika2, size: Scoped.TIME_TEXT_FONT_SIZE)
@@ -303,7 +304,8 @@ struct SalmonRotationCellTimeTextSection: View {
           .scaledLimitedLine()
           .fontIka(.ika2, size: Scoped.TIME_TEXT_FONT_SIZE)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_HORIZONTAL)
-          .silhouetteFrame(cornerRadius: Scoped.TIME_TEXT_SILHOUETTE_CORNER_RADIUS)
+          .background(.thinMaterial)
+          .cornerRadius(Scoped.TIME_TEXT_SILHOUETTE_CORNER_RADIUS)
       }
     }
     .padding(.vertical, Scoped.TIME_TEXT_SECTION_PADDING)

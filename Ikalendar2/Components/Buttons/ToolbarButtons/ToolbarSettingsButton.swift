@@ -22,7 +22,8 @@ struct ToolbarSettingsButton: View {
         .foregroundColor(.primary)
         .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
         .frame(width: Scoped.SILHOUETTE_SIDE_LEN, height: Scoped.SILHOUETTE_SIDE_LEN)
-        .silhouetteFrame(cornerRadius: Scoped.SILHOUETTE_CORNER_RADIUS)
+        .background(.thinMaterial)
+        .cornerRadius(Scoped.SILHOUETTE_CORNER_RADIUS)
     }
   }
 }

@@ -76,9 +76,8 @@ struct SalmonRotationStageCard: View {
         .scaledToFit()
         .padding(Scoped.APPAREL_IMG_PADDING)
         .frame(width: width * Scoped.APPAREL_IMG_WIDTH_RATIO)
-        .silhouetteFrame(
-          cornerRadius: Scoped.APPAREL_SILHOUETTE_CORNER_RADIUS,
-          colorScheme: .light)
+        .background(.thinMaterial)
+        .cornerRadius(Scoped.APPAREL_SILHOUETTE_CORNER_RADIUS)
     }
     return content
       .opacity(isShown ? 1 : 0)

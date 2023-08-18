@@ -119,7 +119,6 @@ extension Constants.Styles {
     enum Label {
       static let BACKGROUND_CORNER_RADIUS: CGFloat = 5
       static let TEXT_PADDING_HORIZONTAL: CGFloat = 6
-      static let TEXT_OFFSET_Y: CGFloat = -0.5
     }
 
     // MARK: - SALMON RUN
@@ -128,8 +127,6 @@ extension Constants.Styles {
       enum Header {
         static let FIRST_PREFIX_STRINGS = (busy: "Open!", idle: "Next:")
         static let SECOND_PREFIX_STRING = "Soon:"
-
-        static let SPACING: CGFloat = 16
 
         static let PREFIX_SILHOUETTE_CORNER_RADIUS: CGFloat = 8
         static let FONT_SIZE: CGFloat = 15

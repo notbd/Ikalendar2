@@ -124,9 +124,8 @@ struct BattleRotationHeader: View {
           .fontIka(.ika1, size: Scoped.PREFIX_FONT_SIZE)
           .foregroundColor(Color.systemBackground)
           .padding(.horizontal, Scoped.PREFIX_PADDING)
-          .silhouetteFrame(
-            cornerRadius: Scoped.PREFIX_SILHOUETTE_CORNER_RADIUS,
-            colorScheme: .inverted)
+          .background(Color.secondary)
+          .cornerRadius(Scoped.PREFIX_SILHOUETTE_CORNER_RADIUS)
       }
 
       // Content

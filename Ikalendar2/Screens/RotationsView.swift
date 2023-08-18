@@ -43,7 +43,7 @@ struct RotationsView: View {
 
   var content: some View {
     Group {
-      switch ikaCatalog.loadStatusWithLoadingDropped {
+      switch ikaCatalog.loadStatusWithLoadingIgnored {
       case .error(let ikaError):
         ErrorView(error: ikaError)
       default:

@@ -21,25 +21,14 @@ struct LoadingOverlay: View {
 
   var body: some View {
     ZStack {
-      blurOverlay
-//      loadingIndicator
+      Spacer()
+        .background(.ultraThinMaterial)
+        .edgesIgnoringSafeArea(.all)
+        .opacity(isLoading ? 1 : 0)
     }
     .animation(
       .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
       value: loadStatus)
-  }
-
-  var loadingIndicator: some View {
-    ProgressView()
-      .padding()
-      .silhouetteFrame(cornerRadius: Scoped.SILHOUETTE_CORNER_RADIUS)
-      .opacity(isLoading ? 1 : 0)
-  }
-
-  var blurOverlay: some View {
-    Blur(style: .regular)
-      .edgesIgnoringSafeArea(.all)
-      .opacity(isLoading ? 1 : 0)
   }
 }
 
