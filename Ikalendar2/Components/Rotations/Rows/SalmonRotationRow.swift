@@ -114,12 +114,12 @@ struct SalmonRotationHeader: View {
   var prefixString: String
 
   var body: some View {
-      Text(prefixString.localizedStringKey())
-        .fontIka(.ika1, size: Scoped.FONT_SIZE)
-        .foregroundColor(Color.systemBackground)
-        .padding(.horizontal, Scoped.PREFIX_PADDING)
-        .background(Color.secondary)
-        .cornerRadius(Scoped.PREFIX_SILHOUETTE_CORNER_RADIUS)
+    Text(prefixString.localizedStringKey())
+      .fontIka(.ika1, size: Scoped.FONT_SIZE)
+      .foregroundColor(Color.systemBackground)
+      .padding(.horizontal, Scoped.PREFIX_PADDING)
+      .background(Color.secondary)
+      .cornerRadius(Scoped.PREFIX_SILHOUETTE_CORNER_RADIUS)
   }
 }
 

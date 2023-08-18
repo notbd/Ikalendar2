@@ -113,7 +113,6 @@ extension View {
       alignment: alignment)
   }
 
-
   /// Adjusts the vertical alignment of the view.
   ///
   /// This function extends the `View` by providing a more readable way to set vertical alignment.

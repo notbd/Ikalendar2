@@ -88,7 +88,6 @@ struct RotationsView: View {
       }
   }
 
-
   func didTapSettingsButton() {
     SimpleHaptics.generateTask(.selection)
     ikaStatus.isSettingsPresented.toggle()

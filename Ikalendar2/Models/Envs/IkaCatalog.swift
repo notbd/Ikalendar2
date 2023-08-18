@@ -149,9 +149,9 @@ final class IkaCatalog: ObservableObject {
 
         battleRotationDict = loadedBattleRotationDict
         await setAutoLoadStatus(.autoLoaded(.success))
-//        if loadStatus != .loaded {
-//          await setLoadStatus(.loaded)
-//        }
+        if loadStatus != .loaded {
+          await setLoadStatus(.loaded)
+        }
         break
       }
     }
@@ -190,11 +190,11 @@ final class IkaCatalog: ObservableObject {
     case .autoLoaded(let result):
       await SimpleHaptics.generate(.selection)
       autoLoadStatus = .autoLoaded(result)
-//      Task {
-          // automatically fall back to idle after a while
-          try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
-          autoLoadStatus = .idle
-//      }
+      Task {
+        // automatically fall back to idle after a while
+        try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
+        autoLoadStatus = .idle
+      }
     case .idle:
       autoLoadStatus = .idle
     }
@@ -205,5 +205,4 @@ final class IkaCatalog: ObservableObject {
       autoLoadStatus == .idle &&
       battleRotationDict.isOutdated
   }
-
 }
