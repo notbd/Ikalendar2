@@ -10,7 +10,7 @@ import Foundation
 // MARK: - GrizzcoWeapon
 
 /// Data model for the grizzco weapons.
-enum GrizzcoWeapon: Int, Identifiable, CaseIterable {
+enum GrizzcoWeapon: Int, Identifiable, CaseIterable, Equatable {
   case blaster = 20000
   case brella = 20010
   case charger = 20020

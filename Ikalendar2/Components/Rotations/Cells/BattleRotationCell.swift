@@ -121,7 +121,7 @@ struct BattleRotationCellSecondary: View {
           .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
           .frame(maxWidth: width * Scoped.RULE_IMG_MAX_WIDTH)
           .padding(Scoped.RULE_IMG_PADDING)
-          .background(.thinMaterial)
+          .background(Color.tertiarySystemBackground)
           .cornerRadius(Scoped.RULE_IMG_FRAME_CORNER_RADIUS)
 
         // Rule title

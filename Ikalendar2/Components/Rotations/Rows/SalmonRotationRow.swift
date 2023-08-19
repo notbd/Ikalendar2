@@ -28,7 +28,7 @@ struct SalmonRotationRow: View {
       return isCurrent ? .first(.active) : .first(.idle)
     }
     else if index == 1 {
-      return isCurrent ? .second(.active) : .second(.idle)
+      return .second
     }
     else {
       return .other
@@ -63,7 +63,7 @@ extension SalmonRotationRow {
     typealias Scoped = Constants.Styles.Rotation.Salmon.Header
 
     case first(SalmonCurrentStatus)
-    case second(SalmonCurrentStatus)
+    case second
     case other
 
     enum SalmonCurrentStatus {
@@ -81,13 +81,8 @@ extension SalmonRotationRow {
           return Scoped.FIRST_PREFIX_STRINGS.idle
         }
 
-      case .second(let currentStatus):
-        switch currentStatus {
-        case .active:
-          return Scoped.SECOND_PREFIX_STRINGS.active
-        case .idle:
-          return Scoped.SECOND_PREFIX_STRINGS.idle
-        }
+      case .second:
+        return Scoped.SECOND_PREFIX_STRING
 
       case .other:
         return ""

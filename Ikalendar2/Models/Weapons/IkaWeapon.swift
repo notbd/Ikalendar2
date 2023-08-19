@@ -8,7 +8,7 @@
 // MARK: - IkaWeapon
 
 /// Data model for the normal weapons.
-enum IkaWeapon: Int, Identifiable, CaseIterable {
+enum IkaWeapon: Int, Identifiable, CaseIterable, Equatable {
   /// Shooters
   case splooshOMatic = 0
   case splattershotJr = 10

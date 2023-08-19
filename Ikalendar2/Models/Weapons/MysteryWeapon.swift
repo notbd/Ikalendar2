@@ -8,7 +8,7 @@
 // MARK: - MysteryWeapon
 
 /// Data model for the mystery weapons.
-enum MysteryWeapon: Int, Identifiable, CaseIterable {
+enum MysteryWeapon: Int, Identifiable, CaseIterable, Equatable {
   case green = -1
   case gold = -2
 

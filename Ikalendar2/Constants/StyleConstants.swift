@@ -125,7 +125,7 @@ extension Constants.Styles {
     enum Salmon {
       enum Header {
         static let FIRST_PREFIX_STRINGS = (active: "Open!", idle: "Soon:")
-        static let SECOND_PREFIX_STRINGS = (active: "Next:", idle: "After the Next:")
+        static let SECOND_PREFIX_STRING = "Next:"
 
         static let PREFIX_FRAME_CORNER_RADIUS: CGFloat = 8
         static let PREFIX_FONT_SIZE: CGFloat = 16
