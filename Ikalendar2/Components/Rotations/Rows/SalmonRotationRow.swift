@@ -42,9 +42,13 @@ struct SalmonRotationRow: View {
         rowWidth: rowWidth)
     } header: {
       switch rowType {
-      case .first,
-           .second:
+      case .first:
+        SalmonRotationHeader(
+          prefixString: rowType.prefixString,
+          startTime: isCurrent ? nil : rotation.startTime)
+      case .second:
         SalmonRotationHeader(prefixString: rowType.prefixString)
+
       case .other:
         EmptyView()
       }
@@ -98,17 +102,34 @@ extension SalmonRotationRow {
 struct SalmonRotationHeader: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Header
 
-  @Environment(\.colorScheme) var deviceColorScheme
+  @EnvironmentObject var ikaTimeManager: IkaTimeManager
 
   var prefixString: String
+  var startTime: Date?
 
   var body: some View {
-    Text(prefixString.localizedStringKey())
-      .fontIka(.ika1, size: Scoped.FONT_SIZE)
-      .foregroundColor(Color.systemBackground)
-      .padding(.horizontal, Scoped.PREFIX_PADDING)
-      .background(Color.secondary)
-      .cornerRadius(Scoped.PREFIX_FRAME_CORNER_RADIUS)
+    HStack {
+      Text(prefixString.localizedStringKey())
+        .fontIka(
+          .ika1,
+          size: Scoped.PREFIX_FONT_SIZE,
+          relativeTo: .title3)
+        .foregroundColor(Color.systemBackground)
+        .padding(.horizontal, Scoped.PREFIX_PADDING)
+        .background(Color.secondary)
+        .cornerRadius(Scoped.PREFIX_FRAME_CORNER_RADIUS)
+
+      Spacer()
+
+      if startTime != nil {
+        Text(ikaTimeManager.currentTime.toTimeUntilString(until: startTime!))
+          .scaledLimitedLine()
+          .fontIka(
+            .ika2,
+            size: Scoped.CONTENT_FONT_SIZE,
+            relativeTo: .headline)
+      }
+    }
   }
 }
 

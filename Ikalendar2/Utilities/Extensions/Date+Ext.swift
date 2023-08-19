@@ -102,7 +102,7 @@ extension Date {
   func toTimeRemainingString(until deadline: Date) -> String {
     let remainingTime = Int(deadline - self)
     // if time has already passed
-    if remainingTime < 0 { return String.localizedString(for: "Finished") }
+    if remainingTime < 0 { return String.localizedString(for: "Time's Up") }
     // convert time interval to TimeLength
     let days = remainingTime / (24 * 60 * 60)
     let hours = (remainingTime / (60 * 60)) % 24
@@ -112,5 +112,23 @@ extension Date {
     let timeLengthString = timeLength.getLocalizedStringDescription()
 
     return String(localized: "remaining \(timeLengthString)")
+  }
+
+  /// Convert the Date to a time until string.
+  /// - Parameter deadline: The deadline to compute the remaining time from.
+  /// - Returns: The until time string.
+  func toTimeUntilString(until deadline: Date) -> String {
+    let untilTime = Int(deadline - self)
+    // if time has already passed
+    if untilTime < 0 { return String.localizedString(for: "Time's Up") }
+    // convert time interval to TimeLength
+    let days = untilTime / (24 * 60 * 60)
+    let hours = (untilTime / (60 * 60)) % 24
+    let minutes = (untilTime / 60) % 60
+    let seconds = untilTime % 60
+    let timeLength = TimeLength(days: days, hours: hours, minutes: minutes, seconds: seconds)
+    let timeLengthString = timeLength.getLocalizedStringDescription()
+
+    return String(localized: "\(timeLengthString) until")
   }
 }

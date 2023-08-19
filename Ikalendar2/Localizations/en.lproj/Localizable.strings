@@ -76,9 +76,9 @@ An unexpected error was encountered.";
 "hours" = "h";
 "minutes" = "m";
 "seconds" = "s";
-"Finished" = "Finished";
-"remaining" = "remaining";
+"Time's Up" = "Time's Up";
 "remaining %@" = "%@ remaining";
+"%@ until" = "in %@";
 // Date
 "Today" = "Today";
 "Yesterday" = "Yesterday";

@@ -128,8 +128,10 @@ extension Constants.Styles {
         static let SECOND_PREFIX_STRINGS = (active: "Next:", idle: "After the Next:")
 
         static let PREFIX_FRAME_CORNER_RADIUS: CGFloat = 8
-        static let FONT_SIZE: CGFloat = 15
+        static let PREFIX_FONT_SIZE: CGFloat = 16
         static let PREFIX_PADDING: CGFloat = 8
+
+        static let CONTENT_FONT_SIZE: CGFloat = 16
       }
 
       enum Cell {
@@ -140,7 +142,7 @@ extension Constants.Styles {
         static let CELL_PADDING_TOP: CGFloat = 2
         static let CELL_PADDING_BOTTOM: CGFloat = 6
 
-        static let PROGRESS_FONT_SIZE: CGFloat = 15
+        static let PROGRESS_FONT_SIZE: CGFloat = 16
 
         enum TimeTextSection {
           static let SALMON_ICON_WIDTH_RATIO: CGFloat = 0.08
@@ -200,7 +202,7 @@ extension Constants.Styles {
           static let RULE_FONT_SIZE_REGULAR: CGFloat = 48
           static let RULE_SECTION_HEIGHT_RATIO: CGFloat = 0.12
 
-          static let REMAINING_TIME_FONT_RATIO: CGFloat = 0.038
+          static let REMAINING_TIME_FONT_RATIO: CGFloat = 0.042
           static let REMAINING_TIME_TEXT_MAX_WIDTH_RATIO: CGFloat = 0.34
           static let REMAINING_TIME_SECTION_WIDTH_RATIO: CGFloat = 0.35
         }

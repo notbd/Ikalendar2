@@ -67,7 +67,7 @@
 "Next:" = "つぎ:";
 "Open!" = "オープン!";
 "Soon:" = "もうすぐ:";
-"After the Next:" = "次の次:";
+"After the Next:" = "つぎのつぎ:";
 
 // MARK: - Time
 
@@ -76,9 +76,9 @@
 "hours" = "時間";
 "minutes" = "分";
 "seconds" = "秒";
-"Finished" = "終わり";
-"remaining" = "残り";
-"remaining %@" = "残り %@";
+"Time's Up" = "時間です";
+"remaining %@" = "残り%@";
+"%@ until" = "あと%@";
 // Date
 "Today" = "きょう";
 "Yesterday" = "きのう";

@@ -121,7 +121,10 @@ struct BattleRotationHeader: View {
       // Prefix
       if !rowType.prefixString.isEmpty {
         Text(rowType.prefixString.localizedStringKey())
-          .fontIka(.ika1, size: Scoped.PREFIX_FONT_SIZE)
+          .fontIka(
+            .ika1,
+            size: Scoped.PREFIX_FONT_SIZE,
+            relativeTo: .title3)
           .foregroundColor(Color.systemBackground)
           .padding(.horizontal, Scoped.PREFIX_PADDING)
           .background(Color.secondary)

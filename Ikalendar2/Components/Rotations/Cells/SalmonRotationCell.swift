@@ -73,7 +73,7 @@ struct SalmonRotationCell: View {
             .fontIka(
               .ika2,
               size: Scoped.PROGRESS_FONT_SIZE,
-              relativeTo: .body)
+              relativeTo: .headline)
         }
       })
   }
