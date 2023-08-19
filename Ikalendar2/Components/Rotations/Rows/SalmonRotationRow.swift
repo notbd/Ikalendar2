@@ -17,21 +17,18 @@ struct SalmonRotationRow: View {
 
   var rotation: SalmonRotation
   var index: Int
-  var width: CGFloat
+  var rowWidth: CGFloat
+
+  var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimeManager.currentTime) }
 
   var rowType: RowType {
     typealias Scoped = Constants.Styles.Rotation.Salmon.Header
 
     if index == 0 {
-      if rotation.isCurrent(currentTime: ikaTimeManager.currentTime) {
-        return .first(.busy)
-      }
-      else {
-        return .first(.idle)
-      }
+      return isCurrent ? .first(.active) : .first(.idle)
     }
     else if index == 1 {
-      return .second
+      return isCurrent ? .second(.active) : .second(.idle)
     }
     else {
       return .other
@@ -39,30 +36,17 @@ struct SalmonRotationRow: View {
   }
 
   var body: some View {
-    Group {
+    Section {
+      SalmonRotationCell(
+        rotation: rotation,
+        rowWidth: rowWidth)
+    } header: {
       switch rowType {
+      case .first,
+           .second:
+        SalmonRotationHeader(prefixString: rowType.prefixString)
       case .other:
-        Section {
-//          SalmonRotationCellTertiary(rotation: rotation, width: width)
-          SalmonRotationCellSecondary(rotation: rotation, width: width)
-//          Text("Other type row")
-        }
-
-      default:
-        Section(header: SalmonRotationHeader(prefixString: rowType.prefixString)) {
-          switch rowType {
-          case .first(.busy):
-//            switch horizontalSizeClass {
-//            case .regular:
-//              SalmonRotationCellPrimary(rotation: rotation, width: width)
-//            default:
-//              SalmonRotationCellPrimary(rotation: rotation, width: width)
-//            }
-            SalmonRotationCellPrimary(rotation: rotation, width: width)
-          default:
-            SalmonRotationCellSecondary(rotation: rotation, width: width)
-          }
-        }
+        EmptyView()
       }
     }
   }
@@ -71,15 +55,15 @@ struct SalmonRotationRow: View {
 // MARK: SalmonRotationRow.RowType
 
 extension SalmonRotationRow {
-  enum RowType {
+  enum RowType: Equatable {
     typealias Scoped = Constants.Styles.Rotation.Salmon.Header
 
     case first(SalmonCurrentStatus)
-    case second
+    case second(SalmonCurrentStatus)
     case other
 
     enum SalmonCurrentStatus {
-      case busy
+      case active
       case idle
     }
 
@@ -87,14 +71,19 @@ extension SalmonRotationRow {
       switch self {
       case .first(let currentStatus):
         switch currentStatus {
-        case .busy:
-          return Scoped.FIRST_PREFIX_STRINGS.busy
+        case .active:
+          return Scoped.FIRST_PREFIX_STRINGS.active
         case .idle:
           return Scoped.FIRST_PREFIX_STRINGS.idle
         }
 
-      case .second:
-        return Scoped.SECOND_PREFIX_STRING
+      case .second(let currentStatus):
+        switch currentStatus {
+        case .active:
+          return Scoped.SECOND_PREFIX_STRINGS.active
+        case .idle:
+          return Scoped.SECOND_PREFIX_STRINGS.idle
+        }
 
       case .other:
         return ""
@@ -119,12 +108,17 @@ struct SalmonRotationHeader: View {
       .foregroundColor(Color.systemBackground)
       .padding(.horizontal, Scoped.PREFIX_PADDING)
       .background(Color.secondary)
-      .cornerRadius(Scoped.PREFIX_SILHOUETTE_CORNER_RADIUS)
+      .cornerRadius(Scoped.PREFIX_FRAME_CORNER_RADIUS)
   }
 }
 
-// struct SalmonRotationRow_Previews: PreviewProvider {
-//  static var previews: some View {
-//    SalmonRotationRow()
-//  }
-// }
+// MARK: - SalmonRotationRow_Previews
+
+struct SalmonRotationRow_Previews: PreviewProvider {
+  static var previews: some View {
+    SalmonRotationRow(
+      rotation: IkaMockData.getSalmonRotation(),
+      index: 0,
+      rowWidth: 390)
+  }
+}

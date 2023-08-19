@@ -7,21 +7,19 @@
 
 import SwiftUI
 
-// MARK: - SalmonRotationStageCardPrimary
+// MARK: - SalmonRotationStageCard
 
 /// A card component that displays the stage information of a salmon rotation.
-/// - Parameters:
-///   - swapLabels: if swap the position for title label and reward gear label
-///                    (default: left -> gear, right -> title)
 struct SalmonRotationStageCard: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Stage
 
   @EnvironmentObject var ikaTimeManager: IkaTimeManager
 
   var rotation: SalmonRotation
-  let fontSize: CGFloat
-  var swapLabels = false
-  var width: CGFloat
+  var rowWidth: CGFloat
+
+  private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
+  private var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimeManager.currentTime) }
 
   var body: some View {
     Image(rotation.stage!.imgFiln)
@@ -36,56 +34,53 @@ struct SalmonRotationStageCard: View {
   }
 
   var overlay: some View {
-    HStack(alignment: .bottom) {
-      if swapLabels {
-        stageTitleLabel
-        Spacer()
-      }
-      HStack(alignment: .bottom) {
-        if swapLabels {
-          Spacer()
-        }
-        rewardGearImg
-        if !swapLabels {
-          Spacer()
-        }
-      }
-      .frame(width: width * Scoped.APPAREL_SECTION_WIDTH_RATIO)
-      if !swapLabels {
-        Spacer()
-        stageTitleLabel
-      }
+    var rewardApparelSection: some View {
+      rewardApparelImg
+        .hAlignment(isCurrent ? .trailing : .leading)
+        .vAlignment(.bottom)
     }
-    .padding(.bottom, Scoped.OVERLAY_PADDING)
-    .padding(.horizontal, Scoped.OVERLAY_PADDING)
+
+    return
+      HStack(alignment: .bottom) {
+        if isCurrent {
+          stageTitleLabel
+          Spacer()
+          rewardApparelSection
+        }
+        else {
+          rewardApparelSection
+          Spacer()
+          stageTitleLabel
+        }
+      }
+      .padding(Scoped.OVERLAY_PADDING)
   }
 
   var stageTitleLabel: some View {
     StageTitleLabel(
       title: rotation.stage!.name,
-      fontSize: fontSize)
+      fontSize: Scoped.LABEL_FONT_SIZE,
+      relTextStyle: .body)
   }
 
-  var rewardGearImg: some View {
-    var isShown: Bool {
-      rotation.isCurrent(currentTime: ikaTimeManager.currentTime) && rotation.rewardApparel != nil
-    }
-    var content: some View {
-      Image(rotation.rewardApparel?.imgFiln ?? "salmon")
-        .resizable()
-        .scaledToFit()
-        .padding(Scoped.APPAREL_IMG_PADDING)
-        .frame(width: width * Scoped.APPAREL_IMG_WIDTH_RATIO)
-        .background(.thinMaterial)
-        .cornerRadius(Scoped.APPAREL_SILHOUETTE_CORNER_RADIUS)
-    }
-    return content
-      .opacity(isShown ? 1 : 0)
+  var rewardApparelImg: some View {
+    Image(rotation.rewardApparel?.imgFiln ?? "salmon")
+      .resizable()
+      .scaledToFit()
+      .padding(Scoped.APPAREL_IMG_PADDING)
+      .frame(width: rowWidth * Scoped.APPAREL_IMG_WIDTH_RATIO)
+      .background(.thinMaterial)
+      .cornerRadius(Scoped.APPAREL_FRAME_CORNER_RADIUS)
+      .opacity(isCurrent && hasRewardApparel ? 1 : 0)
   }
 }
 
-// struct SalmonRotationStageCard_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SalmonRotationStageCard()
-//    }
-// }
+// MARK: - SalmonRotationStageCard_Previews
+
+struct SalmonRotationStageCard_Previews: PreviewProvider {
+  static var previews: some View {
+    SalmonRotationStageCard(
+      rotation: IkaMockData.getSalmonRotation(),
+      rowWidth: 390)
+  }
+}

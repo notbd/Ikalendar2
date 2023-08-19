@@ -22,9 +22,11 @@ struct ToolbarRefreshButton: View {
         .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
         .foregroundColor(.primary)
         .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
-        .frame(width: Scoped.SILHOUETTE_SIDE_LEN, height: Scoped.SILHOUETTE_SIDE_LEN)
+        .frame(
+          width: Scoped.FRAME_SIDE_LEN,
+          height: Scoped.FRAME_SIDE_LEN)
         .background(.thinMaterial)
-        .cornerRadius(Scoped.SILHOUETTE_CORNER_RADIUS)
+        .cornerRadius(Scoped.FRAME_CORNER_RADIUS)
     }
     .disabled(isDisabled)
   }

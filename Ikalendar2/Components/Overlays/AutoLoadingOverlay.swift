@@ -18,9 +18,11 @@ struct AutoLoadingOverlay: View {
     Image(systemName: iconName)
       .foregroundColor(.white)
       .font(Scoped.SFSYMBOL_FONT)
-      .frame(width: Scoped.SILHOUETTE_SIDE, height: Scoped.SILHOUETTE_SIDE)
+      .frame(
+        width: Scoped.FRAME_SIDE,
+        height: Scoped.FRAME_SIDE)
       .background(.thinMaterial)
-      .cornerRadius(Scoped.SILHOUETTE_CORNER_RADIUS)
+      .cornerRadius(Scoped.FRAME_CORNER_RADIUS)
       .opacity(autoLoadStatus == .idle ? 0 : 1)
       .padding()
       .animation(

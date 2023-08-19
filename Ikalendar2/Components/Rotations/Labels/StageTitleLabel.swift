@@ -15,11 +15,15 @@ struct StageTitleLabel: View {
 
   let title: String
   let fontSize: CGFloat
+  let relTextStyle: Font.TextStyle
 
   var body: some View {
     Text(title.localizedStringKey())
       .scaledLimitedLine()
-      .fontIka(.ika2, size: fontSize)
+      .fontIka(
+        .ika2,
+        size: fontSize,
+        relativeTo: relTextStyle)
       .padding(.horizontal, Scoped.TEXT_PADDING_HORIZONTAL)
       .background(.thinMaterial)
       .cornerRadius(Scoped.BACKGROUND_CORNER_RADIUS)
@@ -32,6 +36,7 @@ struct StageTitleLabel_Previews: PreviewProvider {
   static var previews: some View {
     StageTitleLabel(
       title: BattleStage.humpbackPumpTrack.name,
-      fontSize: 12)
+      fontSize: 12,
+      relTextStyle: .body)
   }
 }

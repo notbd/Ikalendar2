@@ -7,35 +7,11 @@
 
 import SwiftUI
 
-// MARK: - SalmonRotationWeaponCardPrimary
+// MARK: - SalmonRotationWeaponCard
 
-/// The primary version of a card component that displays
-/// the weapon information of a salmon rotation.
-struct SalmonRotationWeaponCardPrimary: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Weapon.Primary
-
-  var weapon: SalmonWeapon
-  var width: CGFloat
-
-  var body: some View {
-    Image(weapon.imgFiln)
-      .resizable()
-      .scaledToFit()
-      .cornerRadius(Scoped.IMG_CORNER_RADIUS)
-      .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
-      .padding(Scoped.IMG_PADDING)
-      .background(.thinMaterial)
-      .cornerRadius(Scoped.SILHOUETTE_CORNER_RADIUS)
-      .frame(width: width)
-  }
-}
-
-// MARK: - SalmonRotationWeaponCardSecondary
-
-/// The secondary version of a card component that displays
-/// the weapon information of a salmon rotation.
-struct SalmonRotationWeaponCardSecondary: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Weapon.Secondary
+/// The card component that displays the weapon information of a salmon rotation.
+struct SalmonRotationWeaponCard: View {
+  typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Weapon
 
   var weapons: [SalmonWeapon]!
 
@@ -48,16 +24,16 @@ struct SalmonRotationWeaponCardSecondary: View {
     LazyVGrid(columns: columns) {
       ForEach(Array(weapons.enumerated()), id: \.offset) { _, weapon in
         // enumerate the array identify weapons even with same id (e.g. 4 randoms)
-        SalmonRotationWeaponCardSecondaryIcon(weapon: weapon)
+        SalmonRotationWeaponCardIcon(weapon: weapon)
       }
     }
   }
 }
 
-// MARK: - SalmonRotationWeaponCardSecondaryIcon
+// MARK: - SalmonRotationWeaponCardIcon
 
-struct SalmonRotationWeaponCardSecondaryIcon: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Weapon.Secondary
+struct SalmonRotationWeaponCardIcon: View {
+  typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Weapon
   var weapon: SalmonWeapon
   var body: some View {
     Image(weapon.imgFiln)
@@ -66,12 +42,19 @@ struct SalmonRotationWeaponCardSecondaryIcon: View {
       .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
       .padding(Scoped.IMG_PADDING)
       .background(.thinMaterial)
-      .cornerRadius(Scoped.SILHOUETTE_CORNER_RADIUS)
+      .cornerRadius(Scoped.FRAME_CORNER_RADIUS)
   }
 }
 
-// struct SalmonRotationWeaponCard_Previews: PreviewProvider {
-//  static var previews: some View {
-//    SalmonRotationWeaponCard()
-//  }
-// }
+// MARK: - SalmonRotationWeaponCard_Previews
+
+struct SalmonRotationWeaponCard_Previews: PreviewProvider {
+  static var previews: some View {
+    SalmonRotationWeaponCard(weapons: [
+      SalmonWeapon(5030)!,
+      SalmonWeapon(1020)!,
+      SalmonWeapon(310)!,
+      SalmonWeapon(-1)!,
+    ])
+  }
+}

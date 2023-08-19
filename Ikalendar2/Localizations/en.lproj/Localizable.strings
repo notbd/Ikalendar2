@@ -66,7 +66,8 @@ An unexpected error was encountered.";
 "Now:" = "Now:";
 "Next:" = "Next:";
 "Open!" = "Open!";
-"Soon:" = "Soon:";
+"Soon:" = "Next:";
+"After the Next:" = "Soon:";
 
 // MARK: - Time
 
@@ -220,7 +221,20 @@ An unexpected error was encountered.";
 "Grizzco Blaster" = "Grizzco Blaster";
 "Grizzco Charger" = "Grizzco Charger";
 
-// MARK: - ClothesGear
+// MARK: - HeadApparel
+
+"Headlamp Helmet" = "Headlamp Helmet";
+"Dust Blocker 2000" = "Dust Blocker 2000";
+"Welding Mask" = "Welding Mask";
+"Beekeeper Hat" = "Beekeeper Hat";
+"Octoleet Goggles" = "Octoleet Goggles";
+"Cap of Legend" = "Cap of Legend";
+"Oceanic Hard Hat" = "Oceanic Hard Hat";
+"Worker's Head Towel" = "Worker's Head Towel";
+"Worker's Cap" = "Worker's Cap";
+"Sailor Cap" = "Sailor Cap";
+
+// MARK: - ClothesApparel
 
 "Squiddor Polo" = "Squiddor Polo";
 "Anchor Life Vest" = "Anchor Life Vest";
@@ -233,23 +247,10 @@ An unexpected error was encountered.";
 "Office Attire" = "Office Attire";
 "SRL Coat" = "SRL Coat";
 
-// MARK: - ShoesGear
+// MARK: - ShoesApparel
 
 "Angry Rain Boots" = "Angry Rain Boots";
 "Non-slip Senseis" = "Non-slip Senseis";
 "Friendship Bracelet" = "Friendship Bracelet";
 "Flipper Floppers" = "Flipper Floppers";
 "Wooden Sandals" = "Wooden Sandals";
-
-// MARK: - HeadGear
-
-"Headlamp Helmet" = "Headlamp Helmet";
-"Dust Blocker 2000" = "Dust Blocker 2000";
-"Welding Mask" = "Welding Mask";
-"Beekeeper Hat" = "Beekeeper Hat";
-"Octoleet Goggles" = "Octoleet Goggles";
-"Cap of Legend" = "Cap of Legend";
-"Oceanic Hard Hat" = "Oceanic Hard Hat";
-"Worker's Head Towel" = "Worker's Head Towel";
-"Worker's Cap" = "Worker's Cap";
-"Sailor Cap" = "Sailor Cap";

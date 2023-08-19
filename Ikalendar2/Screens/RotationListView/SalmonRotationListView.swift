@@ -33,7 +33,7 @@ struct SalmonRotationListView: View {
           SalmonRotationRow(
             rotation: rotation,
             index: index,
-            width: geo.size.width)
+            rowWidth: geo.size.width)
         }
       }
       .disabled(ikaCatalog.loadStatus != .loaded)

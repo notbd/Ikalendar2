@@ -37,7 +37,7 @@ final class IkaNetworkManager {
       decodeUsing: IkaDecoder.parseSalmonRotationArray)
   }
 
-  /// Asynchronously get the reward gear from the `splatoon2.ink` api
+  /// Asynchronously get the reward apparel from the `splatoon2.ink` api
   func getRewardApparel()
     async throws -> SalmonApparel
   {

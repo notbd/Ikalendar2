@@ -17,18 +17,17 @@ extension Constants.Styles {
 
   enum Frame {
     static let MIN_TAPPABLE_AREA_SIDE: CGFloat = 44
-    static let SILHOUETTE_BACKGROUND_COLOR = Color(UIColor.systemGray2)
   }
 
   enum Overlay {
     enum Loading {
-      static let SILHOUETTE_CORNER_RADIUS: CGFloat = 5
+      static let FRAME_CORNER_RADIUS: CGFloat = 5
     }
 
     enum AutoLoading {
       static let SFSYMBOL_FONT: Font = .system(size: 20, weight: .medium)
-      static let SILHOUETTE_SIDE: CGFloat = 36
-      static let SILHOUETTE_CORNER_RADIUS: CGFloat = 5
+      static let FRAME_SIDE: CGFloat = 36
+      static let FRAME_CORNER_RADIUS: CGFloat = 5
 
       static let LOADING_SFSYMBOL = "icloud.and.arrow.down.fill"
       static let LOADED_SUCCESS_SFSYMBOL = "checkmark.icloud.fill"
@@ -42,8 +41,8 @@ extension Constants.Styles {
     static let SFSYMBOL_FONT_SIZE_SMALL: Font = .system(size: 15, weight: .medium)
     static let IMG_SIDE_LEN: CGFloat = 28
 
-    static let SILHOUETTE_SIDE_LEN: CGFloat = 36
-    static let SILHOUETTE_CORNER_RADIUS: CGFloat = 5
+    static let FRAME_SIDE_LEN: CGFloat = 36
+    static let FRAME_CORNER_RADIUS: CGFloat = 5
 
     static let GAME_MODE_SWITCH_SFSYMBOL = "rectangle.fill.on.rectangle.angled.fill"
   }
@@ -125,56 +124,30 @@ extension Constants.Styles {
 
     enum Salmon {
       enum Header {
-        static let FIRST_PREFIX_STRINGS = (busy: "Open!", idle: "Next:")
-        static let SECOND_PREFIX_STRING = "Soon:"
+        static let FIRST_PREFIX_STRINGS = (active: "Open!", idle: "Soon:")
+        static let SECOND_PREFIX_STRINGS = (active: "Next:", idle: "After the Next:")
 
-        static let PREFIX_SILHOUETTE_CORNER_RADIUS: CGFloat = 8
+        static let PREFIX_FRAME_CORNER_RADIUS: CGFloat = 8
         static let FONT_SIZE: CGFloat = 15
         static let PREFIX_PADDING: CGFloat = 8
       }
 
       enum Cell {
-        enum Shared {
-          enum TimeTextSection {
-            static let SALMON_ICON_WIDTH_RATIO: CGFloat = 0.08
-            static let TIME_TEXT_SPACING: CGFloat = 4
-            static let TIME_TEXT_FONT_SIZE: CGFloat = 20
-            static let TIME_TEXT_SINGLE_PADDING_HORIZONTAL: CGFloat = 5
-            static let TIME_TEXT_SILHOUETTE_CORNER_RADIUS: CGFloat = 6
-            static let TIME_TEXT_SECTION_PADDING: CGFloat = 4
-          }
-        }
+        static let STAGE_HEIGHT_RATIO: CGFloat = 0.36
+        static let STAGE_HEIGHT_ADJUSTMENT_CONSTANT: CGFloat = -25
 
-        enum Primary {
-          /// body
-          static let CELL_SPACING: CGFloat = 8
-          static let STAGE_PROGRESS_SECTION_PADDING: CGFloat = 4
-          static let CELL_PADDING: CGFloat = 3
+        static let CELL_SPACING: CGFloat = 10
+        static let CELL_PADDING_TOP: CGFloat = 2
+        static let CELL_PADDING_BOTTOM: CGFloat = 6
 
-          /// stage and progress section
-          static let STAGE_PROGRESS_SECTION_SPACING: CGFloat = 6
-          static let LABEL_FONT_SIZE: CGFloat = 16
-          static let PROGRESS_FONT_SIZE: CGFloat = 15
+        static let PROGRESS_FONT_SIZE: CGFloat = 15
 
-          /// weapon section
-          static let WEAPON_SINGLE_WIDTH_RATIO: CGFloat = 0.18
-        }
-
-        enum Secondary {
-          static let STAGE_HEIGHT_RATIO: CGFloat = 0.36
-          static let STAGE_HEIGHT_ADJUSTMENT_CONSTANT: CGFloat = -25
-          static let CELL_SPACING: CGFloat = 5
-          static let CELL_PADDING_VERTICAL: CGFloat = 0
-          static let CELL_PADDING_BOTTOM: CGFloat = 9
-
-          static let LABEL_FONT_SIZE: CGFloat = 12
-
-          static let PROGRESS_FONT_SIZE: CGFloat = 15
-        }
-
-        enum Tertiary {
-          static let CELL_SPACING: CGFloat = 5
-          static let CELL_PADDING: CGFloat = 0
+        enum TimeTextSection {
+          static let SALMON_ICON_WIDTH_RATIO: CGFloat = 0.08
+          static let TIME_TEXT_SPACING: CGFloat = 4
+          static let TIME_TEXT_FONT_SIZE: CGFloat = 20
+          static let TIME_TEXT_SINGLE_PADDING_HORIZONTAL: CGFloat = 5
+          static let TIME_TEXT_FRAME_CORNER_RADIUS: CGFloat = 6
         }
       }
 
@@ -182,28 +155,17 @@ extension Constants.Styles {
         enum Stage {
           static let STAGE_IMG_CORNER_RADIUS: CGFloat = 4
 
-          static let APPAREL_SECTION_WIDTH_RATIO: CGFloat = 0.2
-          static let LABEL_FONT_SIZE: CGFloat = 16
+          static let LABEL_FONT_SIZE: CGFloat = 12
           static let OVERLAY_PADDING: CGFloat = 4
 
           static let APPAREL_IMG_PADDING: CGFloat = 2
           static let APPAREL_IMG_WIDTH_RATIO: CGFloat = 0.15
-          static let APPAREL_SILHOUETTE_CORNER_RADIUS: CGFloat = 5
+          static let APPAREL_FRAME_CORNER_RADIUS: CGFloat = 5
         }
 
         enum Weapon {
-          enum Primary {
-            static let IMG_CORNER_RADIUS: CGFloat = 4
-            static let IMG_PADDING: CGFloat = 4
-            static let SILHOUETTE_CORNER_RADIUS: CGFloat = 5
-            static let FONT_SIZE: CGFloat = 13
-            static let TEXT_FRAME_HEIGHT_RATIO: CGFloat = 0.2
-          }
-
-          enum Secondary {
-            static let IMG_PADDING: CGFloat = 3
-            static let SILHOUETTE_CORNER_RADIUS: CGFloat = 5
-          }
+          static let IMG_PADDING: CGFloat = 3
+          static let FRAME_CORNER_RADIUS: CGFloat = 5
         }
       }
     }
@@ -217,7 +179,7 @@ extension Constants.Styles {
 
         static let SPACING: CGFloat = 16
 
-        static let PREFIX_SILHOUETTE_CORNER_RADIUS: CGFloat = 8
+        static let PREFIX_FRAME_CORNER_RADIUS: CGFloat = 8
         static let PREFIX_FONT_SIZE: CGFloat = 16
         static let PREFIX_PADDING: CGFloat = 8
 
@@ -248,7 +210,7 @@ extension Constants.Styles {
 
           static let RULE_IMG_MAX_WIDTH: CGFloat = 0.1
           static let RULE_IMG_PADDING: CGFloat = 5
-          static let RULE_IMG_SILHOUETTE_CORNER_RADIUS: CGFloat = 12
+          static let RULE_IMG_FRAME_CORNER_RADIUS: CGFloat = 12
 
           static let RULE_FONT_SIZE: CGFloat = 18
           static let RULE_TITLE_HEIGHT: CGFloat = 24

@@ -122,7 +122,7 @@ struct BattleRotationCellSecondary: View {
           .frame(maxWidth: width * Scoped.RULE_IMG_MAX_WIDTH)
           .padding(Scoped.RULE_IMG_PADDING)
           .background(.thinMaterial)
-          .cornerRadius(Scoped.RULE_IMG_SILHOUETTE_CORNER_RADIUS)
+          .cornerRadius(Scoped.RULE_IMG_FRAME_CORNER_RADIUS)
 
         // Rule title
         Text(rotation.rule.name.localizedStringKey())

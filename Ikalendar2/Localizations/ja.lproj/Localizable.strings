@@ -67,6 +67,7 @@
 "Next:" = "つぎ:";
 "Open!" = "オープン!";
 "Soon:" = "もうすぐ:";
+"After the Next:" = "次の次:";
 
 // MARK: - Time
 
@@ -220,7 +221,20 @@
 "Grizzco Blaster" = "クマサン印のブラスター";
 "Grizzco Charger" = "クマサン印のチャージャー";
 
-// MARK: - ClothesGear
+// MARK: - HeadApparel
+
+"Headlamp Helmet" = "ヘッドライトヘルム";
+"Dust Blocker 2000" = "ダストブロッカー 2.5";
+"Welding Mask" = "アイアンマスカレイド";
+"Beekeeper Hat" = "ガーディアンアーミーハット";
+"Octoleet Goggles" = "ゾネスティックスコープ";
+"Cap of Legend" = "レジェンドのぼうし";
+"Oceanic Hard Hat" = "オーシャンズヘルム";
+"Worker's Head Towel" = "アセストップソシナ";
+"Worker's Cap" = "スペボウ レプリカ";
+"Sailor Cap" = "マリリンハットウィズピンズ";
+
+// MARK: - ClothesApparel
 
 "Squiddor Polo" = "イカテンくんポロ";
 "Anchor Life Vest" = "アンカーベスト";
@@ -233,23 +247,10 @@
 "Office Attire" = "ジムパーソンアーマー";
 "SRL Coat" = "アカシックコート";
 
-// MARK: - ShoesGear
+// MARK: - ShoesApparel
 
 "Angry Rain Boots" = "マッドラバー";
 "Non-slip Senseis" = "ノンスリップタクミ";
 "Friendship Bracelet" = "チギリノヒモ";
 "Flipper Floppers" = "ゲソバタアシスト";
 "Wooden Sandals" = "バンカラコロン";
-
-// MARK: - HeadGear
-
-"Headlamp Helmet" = "ヘッドライトヘルム";
-"Dust Blocker 2000" = "ダストブロッカー 2.5";
-"Welding Mask" = "アイアンマスカレイド";
-"Beekeeper Hat" = "ガーディアンアーミーハット";
-"Octoleet Goggles" = "ゾネスティックスコープ";
-"Cap of Legend" = "レジェンドのぼうし";
-"Oceanic Hard Hat" = "オーシャンズヘルム";
-"Worker's Head Towel" = "アセストップソシナ";
-"Worker's Cap" = "スペボウ レプリカ";
-"Sailor Cap" = "マリリンハットウィズピンズ";

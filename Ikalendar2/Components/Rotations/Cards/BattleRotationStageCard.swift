@@ -26,7 +26,8 @@ struct BattleRotationStageCardPrimary: View {
       .overlay(
         StageTitleLabel(
           title: stage.name,
-          fontSize: Scoped.LABEL_FONT_SIZE)
+          fontSize: Scoped.LABEL_FONT_SIZE,
+          relTextStyle: .body)
           .padding(.leading, Scoped.LABEL_PADDING_LEADING)
           .padding(.bottom, Scoped.LABEL_PADDING_BOTTOMTRAILING)
           .padding(.trailing, Scoped.LABEL_PADDING_BOTTOMTRAILING),
@@ -54,7 +55,10 @@ struct BattleRotationStageCardSecondary: View {
 
       Text(stage.name.localizedStringKey())
         .scaledLimitedLine()
-        .fontIka(.ika2, size: Scoped.FONT_SIZE)
+        .fontIka(
+          .ika2,
+          size: Scoped.FONT_SIZE,
+          relativeTo: .body)
     }
   }
 }

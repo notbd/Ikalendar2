@@ -7,209 +7,45 @@
 
 import SwiftUI
 
-// MARK: - GaugeProgressStyle
+// MARK: - SalmonRotationCell
 
-struct GaugeProgressStyle: ProgressViewStyle {
-  var strokeColor = Color.orange
-  var strokeWidth = 10.0
-
-  func makeBody(configuration: Configuration) -> some View {
-    let fractionCompleted = configuration.fractionCompleted ?? 0
-
-    return ZStack {
-      Circle()
-        .trim(from: 0, to: CGFloat(fractionCompleted))
-        .stroke(strokeColor, style: StrokeStyle(lineWidth: CGFloat(strokeWidth), lineCap: .round))
-        .rotationEffect(.degrees(-90))
-    }
-  }
-}
-
-// MARK: - SalmonRotationCellPrimary
-
-/// The primary version of a cell component for the salmon rotation that takes
-/// all the space in the list content.
-struct SalmonRotationCellPrimary: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Cell.Primary
+/// The view for the salmon rotation info that takes the entire space in the list content.
+struct SalmonRotationCell: View {
+  typealias Scoped = Constants.Styles.Rotation.Salmon.Cell
 
   @EnvironmentObject var ikaTimeManager: IkaTimeManager
 
   var rotation: SalmonRotation
-  var width: CGFloat
+  var rowWidth: CGFloat
 
-//  var body: some View {
-//    VStack(alignment: .leading, spacing: Scoped.CELL_SPACING) {
-//      SalmonRotationCellTimeTextSection(iconName: "salmon",
-//                                        rotation: rotation,
-//                                        width: width)
-//
-  ////      HStack {
-//      VStack {
-//        stageAndWeaponSection
-//        progressSection
-//      }
-//
-  ////      weaponsSection
-  ////        .padding(.vertical, Scoped.STAGE_PROGRESS_SECTION_PADDING)
-//    }
-//    .padding(.vertical, Scoped.CELL_PADDING)
-//  }
+  var hasStageAndWeapon: Bool { rotation.stage != nil && rotation.weapons != nil }
+  var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimeManager.currentTime) }
+
+  var stageHeight: CGFloat {
+    rowWidth * Scoped.STAGE_HEIGHT_RATIO + Scoped.STAGE_HEIGHT_ADJUSTMENT_CONSTANT
+  }
 
   var body: some View {
-    VStack(alignment: .leading, spacing: Scoped.CELL_SPACING) {
+    VStack(
+      alignment: .leading,
+      spacing: Scoped.CELL_SPACING)
+    {
       SalmonRotationCellTimeTextSection(
         iconName: "salmon",
         rotation: rotation,
-        width: width)
+        rowWidth: rowWidth)
 
-      stageAndProgressSection
+      if hasStageAndWeapon {
+        stageAndWeaponSection
 
-      weaponsSection
-        .padding(.vertical, Scoped.STAGE_PROGRESS_SECTION_PADDING)
-    }
-    .padding(.vertical, Scoped.CELL_PADDING)
-  }
-
-  var stageAndProgressSection: some View {
-    VStack(
-      alignment: .leading,
-      spacing: Scoped.STAGE_PROGRESS_SECTION_SPACING)
-    {
-      SalmonRotationStageCard(
-        rotation: rotation,
-        fontSize: Scoped.LABEL_FONT_SIZE,
-        swapLabels: true,
-        width: width)
-
-      ProgressView(
-        value: ikaTimeManager.currentTime - rotation.startTime,
-        total: rotation.endTime - rotation.startTime,
-        label: {
-          HStack {
-            Spacer()
-            Text(ikaTimeManager.currentTime.toTimeRemainingString(until: rotation.endTime))
-              .scaledLimitedLine()
-              .fontIka(.ika2, size: Scoped.PROGRESS_FONT_SIZE)
-          }
-        })
-    }
-  }
-
-//  var stageAndWeaponSection: some View {
-//    VStack(alignment: .leading,
-//           spacing: Scoped.STAGE_PROGRESS_SECTION_SPACING) {
-//      SalmonRotationStageCard(rotation: rotation,
-//                              fontSize: Scoped.LABEL_FONT_SIZE,
-//                              swapLabels: true,
-//                              width: width)
-//
-//      weaponsSection
-//        .padding(.vertical, Scoped.STAGE_PROGRESS_SECTION_PADDING)
-//
-//        ProgressView(value: ikaTimeManager.currentTime - rotation.startTime,
-//                     total: rotation.endTime - rotation.startTime,
-//                     label: {
-//                       HStack {
-//                         Spacer()
-//                         Text(ikaTimeManager.currentTime
-//                          .toTimeRemainingString(until: rotation.endTime))
-//                           .scaledLimitedLine()
-//                           .fontIka(.ika2, size: Scoped.PROGRESS_FONT_SIZE)
-//                       }
-//                     })
-//    }
-//  }
-
-//  var progressSection: some View {
-//    ProgressView(value: ikaTimeManager.currentTime - rotation.startTime,
-//                 total: rotation.endTime - rotation.startTime,
-//                 label: {
-//                   HStack {
-//                     Spacer()
-//                     Text(ikaTimeManager.currentTime.toTimeRemainingString(until: rotation.endTime))
-//                       .scaledLimitedLine()
-//                       .fontIka(.ika2, size: Scoped.PROGRESS_FONT_SIZE)
-//                   }
-//                 })
-//      .progressViewStyle(GaugeProgressStyle())
-//  }
-
-  var weaponsSection: some View {
-    let columns: [GridItem] = [
-      GridItem(.flexible()),
-      GridItem(.flexible()),
-      GridItem(.flexible()),
-      GridItem(.flexible()),
-    ]
-
-    return
-      LazyVGrid(columns: columns) {
-        ForEach(Array(rotation.weapons!.enumerated()), id: \.offset) { _, weapon in
-          // enumerate the array identify weapons even with same id (e.g. 4 randoms)
-          SalmonRotationWeaponCardPrimary(
-            weapon: weapon,
-            width: width * Scoped.WEAPON_SINGLE_WIDTH_RATIO)
+        if isCurrent {
+          progressSection
         }
       }
-
-//    HStack {
-//      ForEach(Array(rotation.weapons!.enumerated()), id: \.offset) { index, weapon in
-//        if index == 0 {
-//          SalmonRotationWeaponCardPrimary(weapon: weapon,
-//                                          width: width * Scoped
-//                                            .WEAPON_SINGLE_WIDTH_RATIO)
-//        } else {
-//          Spacer()
-//          SalmonRotationWeaponCardPrimary(weapon: weapon,
-//                                          width: width * Scoped
-//                                            .WEAPON_SINGLE_WIDTH_RATIO)
-//        }
-//      }
-//    }
-  }
-}
-
-// MARK: - SalmonRotationCellSecondary
-
-/// The secondary version of a cell component for the salmon rotation that takes
-/// all the space in the list content.
-struct SalmonRotationCellSecondary: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Cell.Secondary
-
-  @EnvironmentObject var ikaTimeManager: IkaTimeManager
-
-  var rotation: SalmonRotation
-  var width: CGFloat
-
-  var hasStageAndWeapon: Bool { rotation.stage != nil && rotation.weapons != nil }
-
-  var stageHeight: CGFloat {
-    width * Scoped.STAGE_HEIGHT_RATIO + Scoped.STAGE_HEIGHT_ADJUSTMENT_CONSTANT
-  }
-
-  var body: some View {
-    Group {
-      if !hasStageAndWeapon {
-        SalmonRotationCellTertiary(
-          rotation: rotation,
-          width: width)
-      }
-      else {
-        VStack(alignment: .leading, spacing: Scoped.CELL_SPACING) {
-          SalmonRotationCellTimeTextSection(
-            iconName: "salmon",
-            rotation: rotation,
-            width: width)
-
-          stageAndWeaponSection
-
-          if rotation.isCurrent(currentTime: ikaTimeManager.currentTime) {
-            progressSection
-          }
-        }
-        .padding(.vertical, Scoped.CELL_PADDING_VERTICAL)
+    }
+    .if(hasStageAndWeapon) {
+      $0.padding(.top, Scoped.CELL_PADDING_TOP)
         .padding(.bottom, Scoped.CELL_PADDING_BOTTOM)
-      }
     }
   }
 
@@ -217,12 +53,10 @@ struct SalmonRotationCellSecondary: View {
     HStack {
       SalmonRotationStageCard(
         rotation: rotation,
-        fontSize: Scoped.LABEL_FONT_SIZE,
-        swapLabels: false,
-        width: stageHeight * (16 / 9))
+        rowWidth: stageHeight * (16 / 9))
         .frame(height: stageHeight)
       Spacer()
-      SalmonRotationWeaponCardSecondary(weapons: rotation.weapons)
+      SalmonRotationWeaponCard(weapons: rotation.weapons)
         .frame(width: stageHeight)
     }
   }
@@ -236,30 +70,12 @@ struct SalmonRotationCellSecondary: View {
           Spacer()
           Text(ikaTimeManager.currentTime.toTimeRemainingString(until: rotation.endTime))
             .scaledLimitedLine()
-            .fontIka(.ika2, size: Scoped.PROGRESS_FONT_SIZE)
+            .fontIka(
+              .ika2,
+              size: Scoped.PROGRESS_FONT_SIZE,
+              relativeTo: .body)
         }
       })
-  }
-}
-
-// MARK: - SalmonRotationCellTertiary
-
-/// The tertiary version of a cell component for the salmon rotation that takes
-/// all the space in the list content.
-struct SalmonRotationCellTertiary: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Cell.Tertiary
-
-  var rotation: SalmonRotation
-  var width: CGFloat
-
-  var body: some View {
-    VStack(alignment: .leading, spacing: Scoped.CELL_SPACING) {
-      SalmonRotationCellTimeTextSection(
-        iconName: "salmon",
-        rotation: rotation,
-        width: width)
-    }
-    .padding(.vertical, Scoped.CELL_PADDING)
   }
 }
 
@@ -267,13 +83,13 @@ struct SalmonRotationCellTertiary: View {
 
 /// A HStack component containing the time text of a salmon rotation.
 struct SalmonRotationCellTimeTextSection: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Cell.Shared.TimeTextSection
+  typealias Scoped = Constants.Styles.Rotation.Salmon.Cell.TimeTextSection
 
   @EnvironmentObject var ikaTimeManager: IkaTimeManager
 
   var iconName: String
   var rotation: SalmonRotation
-  var width: CGFloat
+  var rowWidth: CGFloat
 
   var body: some View {
     HStack {
@@ -281,7 +97,7 @@ struct SalmonRotationCellTimeTextSection: View {
         .resizable()
         .scaledToFit()
         .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
-        .frame(width: width * Scoped.SALMON_ICON_WIDTH_RATIO)
+        .frame(width: rowWidth * Scoped.SALMON_ICON_WIDTH_RATIO)
 
       Spacer()
 
@@ -290,30 +106,43 @@ struct SalmonRotationCellTimeTextSection: View {
           includingDate: true,
           currentTime: ikaTimeManager.currentTime))
           .scaledLimitedLine()
-          .fontIka(.ika2, size: Scoped.TIME_TEXT_FONT_SIZE)
+          .fontIka(
+            .ika2,
+            size: Scoped.TIME_TEXT_FONT_SIZE,
+            relativeTo: .headline)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_HORIZONTAL)
           .background(.thinMaterial)
-          .cornerRadius(Scoped.TIME_TEXT_SILHOUETTE_CORNER_RADIUS)
+          .cornerRadius(Scoped.TIME_TEXT_FRAME_CORNER_RADIUS)
+
         Text("-")
           .scaledLimitedLine()
-          .fontIka(.ika2, size: Scoped.TIME_TEXT_FONT_SIZE)
+          .fontIka(
+            .ika2,
+            size: Scoped.TIME_TEXT_FONT_SIZE,
+            relativeTo: .headline)
 
         Text(rotation.endTime.toSalmonTimeString(
           includingDate: true,
           currentTime: ikaTimeManager.currentTime))
           .scaledLimitedLine()
-          .fontIka(.ika2, size: Scoped.TIME_TEXT_FONT_SIZE)
+          .fontIka(
+            .ika2,
+            size: Scoped.TIME_TEXT_FONT_SIZE,
+            relativeTo: .headline)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_HORIZONTAL)
           .background(.thinMaterial)
-          .cornerRadius(Scoped.TIME_TEXT_SILHOUETTE_CORNER_RADIUS)
+          .cornerRadius(Scoped.TIME_TEXT_FRAME_CORNER_RADIUS)
       }
     }
-    .padding(.vertical, Scoped.TIME_TEXT_SECTION_PADDING)
   }
 }
 
-// struct SalmonRotationCell_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SalmonRotationCell()
-//    }
-// }
+// MARK: - SalmonRotationCell_Previews
+
+struct SalmonRotationCell_Previews: PreviewProvider {
+  static var previews: some View {
+    SalmonRotationCell(
+      rotation: IkaMockData.getSalmonRotation(),
+      rowWidth: 390)
+  }
+}

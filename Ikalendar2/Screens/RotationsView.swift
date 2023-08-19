@@ -23,8 +23,6 @@ struct RotationsView: View {
       content
         .if(isHorizontalCompact) {
           setCompactHoriClassToolbar(content: $0)
-        } else: {
-          $0
         }
         .navigationTitle(title)
         .refreshable {

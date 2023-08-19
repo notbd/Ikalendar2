@@ -125,7 +125,7 @@ struct BattleRotationHeader: View {
           .foregroundColor(Color.systemBackground)
           .padding(.horizontal, Scoped.PREFIX_PADDING)
           .background(Color.secondary)
-          .cornerRadius(Scoped.PREFIX_SILHOUETTE_CORNER_RADIUS)
+          .cornerRadius(Scoped.PREFIX_FRAME_CORNER_RADIUS)
       }
 
       // Content
