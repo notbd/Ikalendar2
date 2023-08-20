@@ -13,8 +13,8 @@ struct Ikalendar2App: App {
   private var ikaCatalog: IkaCatalog
   private var ikaStatus: IkaStatus
   private var ikaPreference: IkaPreference
-  private var ikaTimeManager: IkaTimeManager
-  private var ikaMotionManager: IkaMotionManager
+  private var ikaTimePublisher: IkaTimePublisher
+  private var ikaMotionPublisher: IkaMotionPublisher
 
   var body: some Scene {
     WindowGroup {
@@ -22,8 +22,8 @@ struct Ikalendar2App: App {
         .environmentObject(ikaCatalog)
         .environmentObject(ikaStatus)
         .environmentObject(ikaPreference)
-        .environmentObject(ikaTimeManager)
-        .environmentObject(ikaMotionManager)
+        .environmentObject(ikaTimePublisher)
+        .environmentObject(ikaMotionPublisher)
         .accentColor(.orange)
     }
   }
@@ -39,7 +39,7 @@ struct Ikalendar2App: App {
     ikaCatalog = .shared
     ikaStatus = .shared
     ikaPreference = .shared
-    ikaTimeManager = .shared
-    ikaMotionManager = .shared
+    ikaTimePublisher = .shared
+    ikaMotionPublisher = .shared
   }
 }

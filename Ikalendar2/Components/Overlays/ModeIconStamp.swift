@@ -13,10 +13,10 @@ import SwiftUI
 struct ModeIconStamp: View {
   @EnvironmentObject var ikaCatalog: IkaCatalog
   @EnvironmentObject var ikaStatus: IkaStatus
-  @EnvironmentObject var motion: IkaMotionManager
+  @EnvironmentObject var ikaMotionPublisher: IkaMotionPublisher
 
-  var x: CGFloat { motion.dx }
-  var y: CGFloat { motion.dy }
+  var x: CGFloat { ikaMotionPublisher.dx }
+  var y: CGFloat { ikaMotionPublisher.dy }
   var rot: Double { Double((pow(x, 2) + pow(y, 2)).squareRoot()) }
   var degrees: Double = 22
 
@@ -28,7 +28,7 @@ struct ModeIconStamp: View {
 //      .opacity(ikaCatalog.loadStatus == .loaded ? 1 : 0)
       .animation(
         .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
-        value: motion.dx * motion.dy)
+        value: ikaMotionPublisher.dx * ikaMotionPublisher.dy)
   }
 
   var gradientMask: some View {

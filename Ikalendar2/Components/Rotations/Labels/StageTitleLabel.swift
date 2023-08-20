@@ -25,7 +25,7 @@ struct StageTitleLabel: View {
         size: fontSize,
         relativeTo: relTextStyle)
       .padding(.horizontal, Scoped.TEXT_PADDING_HORIZONTAL)
-      .background(.thinMaterial)
+      .background(.ultraThinMaterial)
       .cornerRadius(Scoped.BACKGROUND_CORNER_RADIUS)
   }
 }

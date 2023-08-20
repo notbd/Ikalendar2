@@ -24,7 +24,7 @@ final class IkaPreference: ObservableObject {
 
   /// Color Scheme
   @AppStorage(Constants.Keys.AppStorage.COLOR_SCHEME)
-  var appColorScheme: IkaColorSchemeManager.AppColorScheme =
+  var appPreferredColorScheme: IkaColorSchemeManager.AppColorScheme =
     .system { willSet { objectWillChange.send() }}
 
   /// Bottom Toolbar Picker Positioning

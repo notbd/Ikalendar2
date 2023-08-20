@@ -11,7 +11,7 @@ import SwiftUI
 
 /// A row containing all the information of a battle rotation.
 struct BattleRotationRow: View {
-  @EnvironmentObject var ikaTimeManager: IkaTimeManager
+  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
   var rotation: BattleRotation
   var index: Int
@@ -20,10 +20,10 @@ struct BattleRotationRow: View {
   var rowType: RowType {
     typealias Scoped = Constants.Styles.Rotation.Battle.Header
 
-    if rotation.isCurrent(currentTime: ikaTimeManager.currentTime) {
+    if rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) {
       return .now
     }
-    else if rotation.isNext(currentTime: ikaTimeManager.currentTime) {
+    else if rotation.isNext(currentTime: ikaTimePublisher.currentTime) {
       return .next
     }
     else {
@@ -79,7 +79,7 @@ extension BattleRotationRow {
 struct BattleRotationHeader: View {
   typealias Scoped = Constants.Styles.Rotation.Battle.Header
 
-  @EnvironmentObject var ikaTimeManager: IkaTimeManager
+  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
   var rotation: BattleRotation
   var rowType: BattleRotationRow.RowType
@@ -91,7 +91,7 @@ struct BattleRotationHeader: View {
     {
       return rotation.startTime.toBattleTimeString(
         includingDate: true,
-        currentTime: ikaTimeManager.currentTime)
+        currentTime: ikaTimePublisher.currentTime)
     }
     else {
       return rotation.startTime.toBattleTimeString()
@@ -109,7 +109,7 @@ struct BattleRotationHeader: View {
     {
       return rotation.endTime.toBattleTimeString(
         includingDate: true,
-        currentTime: ikaTimeManager.currentTime)
+        currentTime: ikaTimePublisher.currentTime)
     }
     else {
       return rotation.endTime.toBattleTimeString()

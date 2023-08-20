@@ -13,13 +13,13 @@ import SwiftUI
 struct SalmonRotationRow: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-  @EnvironmentObject var ikaTimeManager: IkaTimeManager
+  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
   var rotation: SalmonRotation
   var index: Int
   var rowWidth: CGFloat
 
-  var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimeManager.currentTime) }
+  var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
 
   var rowType: RowType {
     typealias Scoped = Constants.Styles.Rotation.Salmon.Header
@@ -97,7 +97,7 @@ extension SalmonRotationRow {
 struct SalmonRotationHeader: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Header
 
-  @EnvironmentObject var ikaTimeManager: IkaTimeManager
+  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
   var prefixString: String
   var startTime: Date?
@@ -117,7 +117,7 @@ struct SalmonRotationHeader: View {
       Spacer()
 
       if startTime != nil {
-        Text(ikaTimeManager.currentTime.toTimeUntilString(until: startTime!))
+        Text(ikaTimePublisher.currentTime.toTimeUntilString(until: startTime!))
           .scaledLimitedLine()
           .fontIka(
             .ika2,

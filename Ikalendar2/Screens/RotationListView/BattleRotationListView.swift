@@ -13,12 +13,12 @@ import SwiftUI
 struct BattleRotationListView: View {
   @EnvironmentObject var ikaCatalog: IkaCatalog
   @EnvironmentObject var ikaStatus: IkaStatus
-  @EnvironmentObject var ikaTimeManager: IkaTimeManager
+  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
   var battleRotations: [BattleRotation] {
     let rawRotations = ikaCatalog.battleRotationDict[ikaStatus.battleModeSelection]!
     func filterCurrent(rotation: some Rotation) -> Bool {
-      !rotation.isExpired(currentTime: ikaTimeManager.currentTime)
+      !rotation.isExpired(currentTime: ikaTimePublisher.currentTime)
     }
     let results = rawRotations.filter(filterCurrent)
     return results

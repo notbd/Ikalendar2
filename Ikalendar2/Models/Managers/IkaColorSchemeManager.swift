@@ -40,7 +40,7 @@ final class IkaColorSchemeManager {
 
   // MARK: Internal
 
-  func handleTheme(for colorScheme: AppColorScheme) {
+  func handleColorSchemeChange(for colorScheme: AppColorScheme) {
     let keyWindow =
       UIApplication
         .shared

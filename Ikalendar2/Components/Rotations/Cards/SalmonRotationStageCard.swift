@@ -13,13 +13,13 @@ import SwiftUI
 struct SalmonRotationStageCard: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Stage
 
-  @EnvironmentObject var ikaTimeManager: IkaTimeManager
+  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
   var rotation: SalmonRotation
   var rowWidth: CGFloat
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
-  private var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimeManager.currentTime) }
+  private var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
 
   var body: some View {
     Image(rotation.stage!.imgFiln)
@@ -69,7 +69,7 @@ struct SalmonRotationStageCard: View {
       .scaledToFit()
       .padding(Scoped.APPAREL_IMG_PADDING)
       .frame(width: rowWidth * Scoped.APPAREL_IMG_WIDTH_RATIO)
-      .background(.thinMaterial)
+      .background(.ultraThinMaterial)
       .cornerRadius(Scoped.APPAREL_FRAME_CORNER_RADIUS)
       .opacity(isCurrent && hasRewardApparel ? 1 : 0)
   }

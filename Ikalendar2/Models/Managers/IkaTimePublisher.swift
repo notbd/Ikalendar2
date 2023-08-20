@@ -1,5 +1,5 @@
 //
-//  IkaTimeManager.swift
+//  IkaTimePublisher.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -13,10 +13,10 @@ import UIKit
 /// Will publish the current time every second.
 /// Will also publish signals for auto load every 2 seconds.
 /// Publishing purposefully kept alive when app goes to background.
-final class IkaTimeManager: ObservableObject {
+final class IkaTimePublisher: ObservableObject {
 
   /// The shared singleton instance
-  static let shared = IkaTimeManager()
+  static let shared = IkaTimePublisher()
 
   /// Properties to be subscribed to
   @Published private(set) var currentTime = Date()

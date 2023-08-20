@@ -1,5 +1,5 @@
 //
-//  IkaMotionManager.swift
+//  IkaMotionPublisher.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -9,11 +9,11 @@ import Combine
 import CoreMotion
 import SwiftUI
 
-/// A CoreMotion manager class to broadcast device motions.
-final class IkaMotionManager: ObservableObject {
+/// A CoreMotion publisher class to broadcast device motions.
+final class IkaMotionPublisher: ObservableObject {
 
   /// The shared singleton instance
-  static let shared = IkaMotionManager()
+  static let shared = IkaMotionPublisher()
 
   private let motionManager = CMMotionManager()
   private var cancellables = Set<AnyCancellable>()

@@ -119,7 +119,7 @@ struct SettingsMainView: View {
         systemImage: Scoped.COLOR_SCHEME_SFSYMBOL)
 
       Picker(
-        selection: $ikaPreference.appColorScheme
+        selection: $ikaPreference.appPreferredColorScheme
           .onSet { _ in SimpleHaptics.generateTask(.selection) },
         label: Spacer())
       {

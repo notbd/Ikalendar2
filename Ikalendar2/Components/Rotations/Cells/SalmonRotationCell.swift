@@ -13,13 +13,13 @@ import SwiftUI
 struct SalmonRotationCell: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Cell
 
-  @EnvironmentObject var ikaTimeManager: IkaTimeManager
+  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
   var rotation: SalmonRotation
   var rowWidth: CGFloat
 
   var hasStageAndWeapon: Bool { rotation.stage != nil && rotation.weapons != nil }
-  var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimeManager.currentTime) }
+  var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
 
   var stageHeight: CGFloat {
     rowWidth * Scoped.STAGE_HEIGHT_RATIO + Scoped.STAGE_HEIGHT_ADJUSTMENT_CONSTANT
@@ -63,12 +63,12 @@ struct SalmonRotationCell: View {
 
   var progressSection: some View {
     ProgressView(
-      value: ikaTimeManager.currentTime - rotation.startTime,
+      value: ikaTimePublisher.currentTime - rotation.startTime,
       total: rotation.endTime - rotation.startTime,
       label: {
         HStack {
           Spacer()
-          Text(ikaTimeManager.currentTime.toTimeRemainingString(until: rotation.endTime))
+          Text(ikaTimePublisher.currentTime.toTimeRemainingString(until: rotation.endTime))
             .scaledLimitedLine()
             .fontIka(
               .ika2,
@@ -85,7 +85,7 @@ struct SalmonRotationCell: View {
 struct SalmonRotationCellTimeTextSection: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Cell.TimeTextSection
 
-  @EnvironmentObject var ikaTimeManager: IkaTimeManager
+  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
   var iconName: String
   var rotation: SalmonRotation
@@ -104,14 +104,14 @@ struct SalmonRotationCellTimeTextSection: View {
       HStack(spacing: Scoped.TIME_TEXT_SPACING) {
         Text(rotation.startTime.toSalmonTimeString(
           includingDate: true,
-          currentTime: ikaTimeManager.currentTime))
+          currentTime: ikaTimePublisher.currentTime))
           .scaledLimitedLine()
           .fontIka(
             .ika2,
             size: Scoped.TIME_TEXT_FONT_SIZE,
             relativeTo: .headline)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_HORIZONTAL)
-          .background(Color.tertiarySystemBackground)
+          .background(Color.tertiarySystemGroupedBackground)
           .cornerRadius(Scoped.TIME_TEXT_FRAME_CORNER_RADIUS)
 
         Text("-")
@@ -123,14 +123,14 @@ struct SalmonRotationCellTimeTextSection: View {
 
         Text(rotation.endTime.toSalmonTimeString(
           includingDate: true,
-          currentTime: ikaTimeManager.currentTime))
+          currentTime: ikaTimePublisher.currentTime))
           .scaledLimitedLine()
           .fontIka(
             .ika2,
             size: Scoped.TIME_TEXT_FONT_SIZE,
             relativeTo: .headline)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_HORIZONTAL)
-          .background(Color.tertiarySystemBackground)
+          .background(Color.tertiarySystemGroupedBackground)
           .cornerRadius(Scoped.TIME_TEXT_FRAME_CORNER_RADIUS)
       }
     }

@@ -17,7 +17,7 @@ struct BattleRotationCellPrimary: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
-  @EnvironmentObject var ikaTimeManager: IkaTimeManager
+  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
   @EnvironmentObject var ikaPreference: IkaPreference
 
   var rotation: BattleRotation
@@ -32,7 +32,7 @@ struct BattleRotationCellPrimary: View {
       }
 
       ProgressView(
-        value: ikaTimeManager.currentTime - rotation.startTime,
+        value: ikaTimePublisher.currentTime - rotation.startTime,
         total: rotation.endTime - rotation.startTime)
         .padding(.top, Scoped.PROGRESS_BAR_PADDING_TOP)
         .padding(.bottom, Scoped.PROGRESS_BAR_PADDING_BOTTOM)
@@ -83,7 +83,7 @@ struct BattleRotationCellPrimary: View {
       Spacer()
       HStack {
         Spacer()
-        Text(ikaTimeManager.currentTime.toTimeRemainingString(until: rotation.endTime))
+        Text(ikaTimePublisher.currentTime.toTimeRemainingString(until: rotation.endTime))
           .scaledLimitedLine()
           .foregroundColor(.secondary)
           .fontIka(
@@ -121,7 +121,7 @@ struct BattleRotationCellSecondary: View {
           .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
           .frame(maxWidth: width * Scoped.RULE_IMG_MAX_WIDTH)
           .padding(Scoped.RULE_IMG_PADDING)
-          .background(Color.tertiarySystemBackground)
+          .background(Color.tertiarySystemGroupedBackground)
           .cornerRadius(Scoped.RULE_IMG_FRAME_CORNER_RADIUS)
 
         // Rule title
