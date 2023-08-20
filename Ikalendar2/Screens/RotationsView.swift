@@ -5,6 +5,7 @@
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
+import SimpleHaptics
 import SwiftUI
 
 // MARK: - RotationsView

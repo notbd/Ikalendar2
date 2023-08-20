@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SimpleHaptics
 import SwiftUI
 
 // MARK: - IkaCatalog

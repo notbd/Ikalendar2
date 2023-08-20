@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Xcode format settings"
-               scriptText = "set -e&#10;&#10;defaults write com.apple.dt.Xcode AutomaticallyCheckSpellingWhileTyping -bool YES&#10;&#10;defaults write com.apple.dt.Xcode DVTTextEditorTrimTrailingWhitespace -bool YES&#10;defaults write com.apple.dt.Xcode DVTTextEditorTrimWhitespaceOnlyLines -bool YES&#10;&#10;defaults write com.apple.dt.Xcode DVTTextIndentTabWidth -int 2&#10;defaults write com.apple.dt.Xcode DVTTextIndentWidth -int 2&#10;&#10;defaults write com.apple.dt.Xcode DVTTextPageGuideLocation -int 100&#10;">
+               scriptText = "set -e&#10;&#10;defaults write com.apple.dt.Xcode AutomaticallyCheckSpellingWhileTyping -bool YES&#10;&#10;defaults write com.apple.dt.Xcode DVTTextEditorTrimTrailingWhitespace -bool YES&#10;defaults write com.apple.dt.Xcode DVTTextEditorTrimWhitespaceOnlyLines -bool YES&#10;&#10;defaults write com.apple.dt.Xcode DVTTextIndentTabWidth -int 2&#10;defaults write com.apple.dt.Xcode DVTTextIndentWidth -int 2&#10;&#10;defaults write com.apple.dt.Xcode DVTTextPageGuideLocation -int 110&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
