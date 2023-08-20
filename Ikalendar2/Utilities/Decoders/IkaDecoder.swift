@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 /// A decoder class to parse the data got from the api
 /// into our data model.

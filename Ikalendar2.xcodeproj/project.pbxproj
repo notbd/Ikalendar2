@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2528C4322100245586 /* IkaDecoder.swift */; };
-		7903FE2A28C4349E00245586 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2928C4349E00245586 /* SwiftyJSON.swift */; };
-		7903FE2C28C4368D00245586 /* ListSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2B28C4368D00245586 /* ListSeparator.swift */; };
 		7903FE2E28C436D000245586 /* SimpleHaptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2D28C436D000245586 /* SimpleHaptics.swift */; };
 		7903FE3028C437F900245586 /* QuickBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2F28C437F900245586 /* QuickBorder.swift */; };
 		7903FE3428C438B400245586 /* FontIka.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3328C438B400245586 /* FontIka.swift */; };
@@ -30,9 +28,7 @@
 		7903FE5328C45F4400245586 /* Binding+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5228C45F4400245586 /* Binding+Ext.swift */; };
 		7903FE5528C45FC000245586 /* IkaMotionPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5428C45FBF00245586 /* IkaMotionPublisher.swift */; };
 		7903FE5728C460C600245586 /* TimeLength.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5628C460C600245586 /* TimeLength.swift */; };
-		7903FE5928C4613500245586 /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5828C4613500245586 /* ModalDismissable.swift */; };
 		7903FE5B28C4619C00245586 /* UIKitIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5A28C4619C00245586 /* UIKitIntegration.swift */; };
-		7903FE5F28C4625B00245586 /* SwiftUIBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5E28C4625B00245586 /* SwiftUIBlur.swift */; };
 		7903FE6128C46A1700245586 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6028C46A1700245586 /* RootView.swift */; };
 		7903FE6328C46A3400245586 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6228C46A3400245586 /* MainView.swift */; };
 		7903FE6528C46A4D00245586 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6428C46A4D00245586 /* ErrorView.swift */; };
@@ -59,6 +55,8 @@
 		7903FE9D28C4702100245586 /* ToolbarButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9828C4702100245586 /* ToolbarButtonAlignment.swift */; };
 		7903FE9E28C4702100245586 /* ToolbarRefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */; };
 		7903FEA228C472E800245586 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7903FEA428C472E800245586 /* Localizable.strings */; };
+		790AAE472A919814003E2C5D /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790AAE462A919814003E2C5D /* ModalDismissable.swift */; };
+		790AAE4A2A91A0DB003E2C5D /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 790AAE492A91A0DB003E2C5D /* SwiftyJSON */; };
 		79189B4828C95E75006E78F9 /* OffsettableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */; };
 		792E1FBD28DE89C100C3789D /* SettingsAdvancedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E1FBC28DE89C100C3789D /* SettingsAdvancedView.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
@@ -98,8 +96,6 @@
 
 /* Begin PBXFileReference section */
 		7903FE2528C4322100245586 /* IkaDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaDecoder.swift; sourceTree = "<group>"; };
-		7903FE2928C4349E00245586 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
-		7903FE2B28C4368D00245586 /* ListSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSeparator.swift; sourceTree = "<group>"; };
 		7903FE2D28C436D000245586 /* SimpleHaptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHaptics.swift; sourceTree = "<group>"; };
 		7903FE2F28C437F900245586 /* QuickBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBorder.swift; sourceTree = "<group>"; };
 		7903FE3328C438B400245586 /* FontIka.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontIka.swift; sourceTree = "<group>"; };
@@ -120,9 +116,7 @@
 		7903FE5228C45F4400245586 /* Binding+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Ext.swift"; sourceTree = "<group>"; };
 		7903FE5428C45FBF00245586 /* IkaMotionPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaMotionPublisher.swift; sourceTree = "<group>"; };
 		7903FE5628C460C600245586 /* TimeLength.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLength.swift; sourceTree = "<group>"; };
-		7903FE5828C4613500245586 /* ModalDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
 		7903FE5A28C4619C00245586 /* UIKitIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitIntegration.swift; sourceTree = "<group>"; };
-		7903FE5E28C4625B00245586 /* SwiftUIBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIBlur.swift; sourceTree = "<group>"; };
 		7903FE6028C46A1700245586 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		7903FE6228C46A3400245586 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		7903FE6428C46A4D00245586 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -150,6 +144,7 @@
 		7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarRefreshButton.swift; sourceTree = "<group>"; };
 		7903FEA328C472E800245586 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7903FEA528C472EB00245586 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		790AAE462A919814003E2C5D /* ModalDismissable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
 		79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsettableScrollView.swift; sourceTree = "<group>"; };
 		792E1FBC28DE89C100C3789D /* SettingsAdvancedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAdvancedView.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
@@ -194,6 +189,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				790AAE4A2A91A0DB003E2C5D /* SwiftyJSON in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,8 +235,8 @@
 		7903FE2428C4312200245586 /* UIKitIntegrations */ = {
 			isa = PBXGroup;
 			children = (
-				7903FE5828C4613500245586 /* ModalDismissable.swift */,
 				7903FE5A28C4619C00245586 /* UIKitIntegration.swift */,
+				790AAE462A919814003E2C5D /* ModalDismissable.swift */,
 			);
 			path = UIKitIntegrations;
 			sourceTree = "<group>";
@@ -261,17 +257,8 @@
 				7903FE7728C46D8D00245586 /* Rotations */,
 				7903FE7828C46D9B00245586 /* Overlays */,
 				7903FE7928C46DAE00245586 /* Buttons */,
-				7903FE5D28C4623000245586 /* UIViewRepresentables */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		7903FE5D28C4623000245586 /* UIViewRepresentables */ = {
-			isa = PBXGroup;
-			children = (
-				7903FE5E28C4625B00245586 /* SwiftUIBlur.swift */,
-			);
-			path = UIViewRepresentables;
 			sourceTree = "<group>";
 		};
 		7903FE6628C46C1100245586 /* RotationListView */ = {
@@ -542,8 +529,6 @@
 		79B92BC728B0445800544939 /* Imports */ = {
 			isa = PBXGroup;
 			children = (
-				7903FE2928C4349E00245586 /* SwiftyJSON.swift */,
-				7903FE2B28C4368D00245586 /* ListSeparator.swift */,
 				7903FE2D28C436D000245586 /* SimpleHaptics.swift */,
 			);
 			path = Imports;
@@ -624,6 +609,9 @@
 			dependencies = (
 			);
 			name = Ikalendar2;
+			packageProductDependencies = (
+				790AAE492A91A0DB003E2C5D /* SwiftyJSON */,
+			);
 			productName = Ikalendar2;
 			productReference = 79B92BB228B03B1F00544939 /* Ikalendar2.app */;
 			productType = "com.apple.product-type.application";
@@ -653,6 +641,9 @@
 				Base,
 			);
 			mainGroup = 79B92BA928B03B1F00544939;
+			packageReferences = (
+				790AAE482A91A0DB003E2C5D /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+			);
 			productRefGroup = 79B92BB328B03B1F00544939 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -715,7 +706,6 @@
 				7903FE8728C46F5F00245586 /* BattleRotationStageCard.swift in Sources */,
 				79AA713C28C407F500A91055 /* IkaError.swift in Sources */,
 				79189B4828C95E75006E78F9 /* OffsettableScrollView.swift in Sources */,
-				7903FE2A28C4349E00245586 /* SwiftyJSON.swift in Sources */,
 				7903FE4F28C45F0300245586 /* LocalizedStringKey+Ext.swift in Sources */,
 				7903FE2E28C436D000245586 /* SimpleHaptics.swift in Sources */,
 				7903FE6E28C46CD200245586 /* SettingsMainView.swift in Sources */,
@@ -729,10 +719,8 @@
 				7903FE9E28C4702100245586 /* ToolbarRefreshButton.swift in Sources */,
 				7903FE3628C438FC00245586 /* RoundedFont.swift in Sources */,
 				79B92BB828B03B1F00544939 /* RotationsView.swift in Sources */,
-				7903FE5F28C4625B00245586 /* SwiftUIBlur.swift in Sources */,
 				79AA713628C4070700A91055 /* IkaStatus.swift in Sources */,
 				79AA714928C4095100A91055 /* BattleRotation.swift in Sources */,
-				7903FE2C28C4368D00245586 /* ListSeparator.swift in Sources */,
 				79D3E66F28C41CCE00005DB5 /* FootApparel.swift in Sources */,
 				79AA714728C4090A00A91055 /* RotationProtocol.swift in Sources */,
 				7903FE5728C460C600245586 /* TimeLength.swift in Sources */,
@@ -756,7 +744,6 @@
 				79AA713928C4079900A91055 /* IkaMockData.swift in Sources */,
 				79D3E67128C41D7B00005DB5 /* SalmonApparel.swift in Sources */,
 				7903FE8D28C46F9100245586 /* StageTitleLabel.swift in Sources */,
-				7903FE5928C4613500245586 /* ModalDismissable.swift in Sources */,
 				7903FE5528C45FC000245586 /* IkaMotionPublisher.swift in Sources */,
 				7903FE8528C46F3E00245586 /* SalmonRotationCell.swift in Sources */,
 				7903FE9D28C4702100245586 /* ToolbarButtonAlignment.swift in Sources */,
@@ -769,6 +756,7 @@
 				7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */,
 				7903FE7028C46CEF00245586 /* SettingsAppIconView.swift in Sources */,
 				79AA713428C4056700A91055 /* IkaTimePublisher.swift in Sources */,
+				790AAE472A919814003E2C5D /* ModalDismissable.swift in Sources */,
 				7903FE4B28C45E7D00245586 /* String+Ext.swift in Sources */,
 				7903FE8B28C46F7A00245586 /* SalmonRotationWeaponCard.swift in Sources */,
 				79A7258F2A5E9367007E9C92 /* ConfigConstants.swift in Sources */,
@@ -927,7 +915,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2546;
+				CURRENT_PROJECT_VERSION = 2549;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -960,7 +948,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2546;
+				CURRENT_PROJECT_VERSION = 2549;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1008,6 +996,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		790AAE482A91A0DB003E2C5D /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		790AAE492A91A0DB003E2C5D /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 790AAE482A91A0DB003E2C5D /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 79B92BAA28B03B1F00544939 /* Project object */;
 }
