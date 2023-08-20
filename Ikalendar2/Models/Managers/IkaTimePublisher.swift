@@ -9,20 +9,21 @@ import Combine
 import Foundation
 import UIKit
 
-/// An EnvObj class that is shared among all the views.
-/// Will publish the current time every second.
-/// Will also publish signals for auto load every 2 seconds.
-/// Publishing purposefully kept alive when app goes to background.
+/// `IkaTimePublisher` is an observable object designed to provide time-based events to subscribers.
+/// It publishes the current time every second and provides signals for auto-loading checks based on
+/// the `autoLoadAttemptInterval` value.
+/// This behavior persists even when the app transitions to the background.
 final class IkaTimePublisher: ObservableObject {
 
   /// The shared singleton instance
   static let shared = IkaTimePublisher()
 
-  /// Properties to be subscribed to
+  /// Represents the current time and updates every second.
   @Published private(set) var currentTime = Date()
+  /// A publisher that sends out a signal for auto-load checks every two seconds.
   let autoLoadCheckPublisher = PassthroughSubject<Void, Never>()
 
-  /// Cancellable subscriptions
+  /// Contains all the active subscriptions for this object.
   private var cancellables = Set<AnyCancellable>()
 
   // MARK: Lifecycle
@@ -34,6 +35,7 @@ final class IkaTimePublisher: ObservableObject {
 
   // MARK: Private
 
+  /// Starts the process of updating the `currentTime` property every second.
   private func startUpdatingCurrentTime() {
     Timer
       .publish(
@@ -48,6 +50,7 @@ final class IkaTimePublisher: ObservableObject {
       .store(in: &cancellables)
   }
 
+  /// Starts the process of sending auto-load check signals every `autoLoadAttemptInterval`.
   private func startPublishingAutoLoadChecks() {
     Timer
       .publish(
