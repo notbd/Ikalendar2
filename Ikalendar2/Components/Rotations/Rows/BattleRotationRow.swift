@@ -47,7 +47,7 @@ struct BattleRotationRow: View {
 
 extension BattleRotationRow {
   enum RowType {
-    typealias Scoped = Constants.Styles.Rotation.Battle.Header
+    typealias Scoped = Constants.Styles.Rotation.Header.Battle
 
     case now
     case next
@@ -56,9 +56,9 @@ extension BattleRotationRow {
     var prefixString: String? {
       switch self {
       case .now:
-        return Scoped.CURRENT_PREFIX_STRING
+          return Scoped.CURRENT_PREFIX_STRING
       case .next:
-        return Scoped.NEXT_PREFIX_STRING
+          return Scoped.NEXT_PREFIX_STRING
       case .other:
         return nil
       }
@@ -70,7 +70,7 @@ extension BattleRotationRow {
 
 /// The header of the battle rotation row.
 struct BattleRotationHeader: View {
-  typealias Scoped = Constants.Styles.Rotation.Battle.Header
+  typealias Scoped = Constants.Styles.Rotation.Header
 
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 

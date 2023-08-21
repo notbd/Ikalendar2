@@ -55,7 +55,7 @@ struct SalmonRotationRow: View {
 
 extension SalmonRotationRow {
   enum RowType: Equatable {
-    typealias Scoped = Constants.Styles.Rotation.Salmon.Header
+    typealias Scoped = Constants.Styles.Rotation.Header.Salmon
 
     case first(SalmonCurrentStatus)
     case second
@@ -90,7 +90,7 @@ extension SalmonRotationRow {
 
 /// The header of the salmon rotation row.
 struct SalmonRotationHeader: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Header
+  typealias Scoped = Constants.Styles.Rotation.Header
 
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
