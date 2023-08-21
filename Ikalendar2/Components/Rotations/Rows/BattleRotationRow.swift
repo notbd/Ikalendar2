@@ -18,34 +18,27 @@ struct BattleRotationRow: View {
   var width: CGFloat
 
   var rowType: RowType {
-    typealias Scoped = Constants.Styles.Rotation.Battle.Header
-
-    if rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) {
+    // expired rotations already filtered out, so index will reflect truth
+    switch index {
+    case 0:
       return .now
-    }
-    else if rotation.isNext(currentTime: ikaTimePublisher.currentTime) {
+    case 1:
       return .next
-    }
-    else {
+    default:
       return .other
     }
   }
 
   var body: some View {
-    Section(header: BattleRotationHeader(
-      rotation: rotation,
-      rowType: rowType))
-    {
-      switch rowType {
-      case .now:
-        BattleRotationCellPrimary(
-          rotation: rotation,
-          width: width)
-      default:
-        BattleRotationCellSecondary(
-          rotation: rotation,
-          width: width)
-      }
+    Section {
+      BattleRotationCell(
+        type: rowType == .now ? .primary : .secondary,
+        rotation: rotation,
+        width: width)
+    } header: {
+      BattleRotationHeader(
+        rotation: rotation,
+        rowType: rowType)
     }
   }
 }
@@ -60,14 +53,14 @@ extension BattleRotationRow {
     case next
     case other
 
-    var prefixString: String {
+    var prefixString: String? {
       switch self {
       case .now:
         return Scoped.CURRENT_PREFIX_STRING
       case .next:
         return Scoped.NEXT_PREFIX_STRING
       case .other:
-        return ""
+        return nil
       }
     }
   }
@@ -85,57 +78,49 @@ struct BattleRotationHeader: View {
   var rowType: BattleRotationRow.RowType
 
   var startTimeString: String {
-    if
-      Calendar.current.isDateInYesterday(rotation.startTime) ||
+    let ifIncludeDate = Calendar.current.isDateInYesterday(rotation.startTime) ||
       Calendar.current.isDateInTomorrow(rotation.startTime)
-    {
-      return rotation.startTime.toBattleTimeString(
-        includingDate: true,
-        currentTime: ikaTimePublisher.currentTime)
-    }
-    else {
-      return rotation.startTime.toBattleTimeString()
-    }
+
+    return rotation.startTime.toBattleTimeString(
+      includeDate: ifIncludeDate,
+      currentTime: ikaTimePublisher.currentTime)
   }
 
   var endTimeString: String {
-    if
-      (
-        Calendar.current.isDateInYesterday(rotation.startTime) &&
-          Calendar.current.isDateInToday(rotation.endTime)) ||
+    let ifIncludeDate = (
+      Calendar.current.isDateInYesterday(rotation.startTime) &&
+        Calendar.current.isDateInToday(rotation.endTime)) ||
       (
         Calendar.current.isDateInToday(rotation.startTime) &&
           Calendar.current.isDateInTomorrow(rotation.endTime))
-    {
-      return rotation.endTime.toBattleTimeString(
-        includingDate: true,
-        currentTime: ikaTimePublisher.currentTime)
-    }
-    else {
-      return rotation.endTime.toBattleTimeString()
-    }
+
+    return rotation.endTime.toBattleTimeString(
+      includeDate: ifIncludeDate,
+      currentTime: ikaTimePublisher.currentTime)
   }
 
   var body: some View {
     HStack(spacing: Scoped.SPACING) {
-      // Prefix
-      if !rowType.prefixString.isEmpty {
-        Text(rowType.prefixString.localizedStringKey())
+      // skip if `prefixString` is nil (case .other)
+      if let prefixString = rowType.prefixString {
+        Text(prefixString.localizedStringKey())
           .fontIka(
             .ika1,
             size: Scoped.PREFIX_FONT_SIZE,
-            relativeTo: .title3)
+            relativeTo: .title2)
           .foregroundColor(Color.systemBackground)
           .padding(.horizontal, Scoped.PREFIX_PADDING)
           .background(Color.secondary)
           .cornerRadius(Scoped.PREFIX_FRAME_CORNER_RADIUS)
       }
 
-      // Content
+      // Battle Time String
       Text("\(startTimeString) - \(endTimeString)")
         .scaledLimitedLine()
-        .fontIka(.ika2, size: Scoped.CONTENT_FONT_SIZE)
-        .foregroundColor(.secondary)
+        .fontIka(
+          .ika2,
+          size: Scoped.CONTENT_FONT_SIZE,
+          relativeTo: .headline)
     }
   }
 }

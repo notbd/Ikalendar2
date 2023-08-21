@@ -7,6 +7,33 @@
 
 import SwiftUI
 
+// MARK: - BattleRotationCell
+
+struct BattleRotationCell: View {
+
+  let type: CellType
+  let rotation: BattleRotation
+  let width: CGFloat
+
+  enum CellType {
+    case primary
+    case secondary
+  }
+
+  var body: some View {
+    switch type {
+    case .primary:
+      BattleRotationCellPrimary(
+        rotation: rotation,
+        width: width)
+    case .secondary:
+      BattleRotationCellSecondary(
+        rotation: rotation,
+        width: width)
+    }
+  }
+}
+
 // MARK: - BattleRotationCellPrimary
 
 /// The primary version of a cell component for the battle rotation that takes
@@ -71,7 +98,8 @@ struct BattleRotationCellPrimary: View {
           .ika2,
           size: isHorizontalCompact
             ? Scoped.RULE_FONT_SIZE_COMPACT
-            : Scoped.RULE_FONT_SIZE_REGULAR)
+            : Scoped.RULE_FONT_SIZE_REGULAR,
+          relativeTo: .title)
     }
     .frame(height: width * Scoped.RULE_SECTION_HEIGHT_RATIO)
   }
@@ -88,7 +116,8 @@ struct BattleRotationCellPrimary: View {
           .foregroundColor(.secondary)
           .fontIka(
             .ika2,
-            size: width * Scoped.REMAINING_TIME_FONT_RATIO)
+            size: width * Scoped.REMAINING_TIME_FONT_RATIO,
+            relativeTo: .headline)
       }
       .frame(maxWidth: width * Scoped.REMAINING_TIME_TEXT_MAX_WIDTH_RATIO)
     }
@@ -127,7 +156,10 @@ struct BattleRotationCellSecondary: View {
         // Rule title
         Text(rotation.rule.name.localizedStringKey())
           .scaledLimitedLine()
-          .fontIka(.ika2, size: Scoped.RULE_FONT_SIZE)
+          .fontIka(
+            .ika2,
+            size: Scoped.RULE_FONT_SIZE,
+            relativeTo: .body)
           .frame(height: Scoped.RULE_TITLE_HEIGHT)
       }
       .frame(maxWidth: width * Scoped.RULE_SECTION_WIDTH_RATIO)

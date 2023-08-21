@@ -11,8 +11,6 @@ import SwiftUI
 
 /// A row containing all the information of a salmon rotation.
 struct SalmonRotationRow: View {
-  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
   var rotation: SalmonRotation
@@ -22,15 +20,13 @@ struct SalmonRotationRow: View {
   var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
 
   var rowType: RowType {
-    typealias Scoped = Constants.Styles.Rotation.Salmon.Header
-
-    if index == 0 {
+    // expired rotations already filtered out, so index will reflect truth
+    switch index {
+    case 0:
       return isCurrent ? .first(.active) : .first(.idle)
-    }
-    else if index == 1 {
+    case 1:
       return .second
-    }
-    else {
+    default:
       return .other
     }
   }
@@ -42,12 +38,11 @@ struct SalmonRotationRow: View {
         rowWidth: rowWidth)
     } header: {
       switch rowType {
-      case .first:
+      case .first,
+           .second:
         SalmonRotationHeader(
-          prefixString: rowType.prefixString,
-          startTime: isCurrent ? nil : rotation.startTime)
-      case .second:
-        SalmonRotationHeader(prefixString: rowType.prefixString)
+          rotation: rotation,
+          rowType: rowType)
 
       case .other:
         EmptyView()
@@ -71,7 +66,7 @@ extension SalmonRotationRow {
       case idle
     }
 
-    var prefixString: String {
+    var prefixString: String? {
       switch self {
       case .first(let currentStatus):
         switch currentStatus {
@@ -85,7 +80,7 @@ extension SalmonRotationRow {
         return Scoped.SECOND_PREFIX_STRING
 
       case .other:
-        return ""
+        return nil
       }
     }
   }
@@ -99,16 +94,17 @@ struct SalmonRotationHeader: View {
 
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
-  var prefixString: String
-  var startTime: Date?
+  var rotation: SalmonRotation
+  var rowType: SalmonRotationRow.RowType
 
   var body: some View {
     HStack {
-      Text(prefixString.localizedStringKey())
+      // can force unwrap `prefixString` here because .other row type will not have header
+      Text(rowType.prefixString!.localizedStringKey())
         .fontIka(
           .ika1,
           size: Scoped.PREFIX_FONT_SIZE,
-          relativeTo: .title3)
+          relativeTo: .title2)
         .foregroundColor(Color.systemBackground)
         .padding(.horizontal, Scoped.PREFIX_PADDING)
         .background(Color.secondary)
@@ -116,8 +112,12 @@ struct SalmonRotationHeader: View {
 
       Spacer()
 
-      if startTime != nil {
-        Text(ikaTimePublisher.currentTime.toTimeUntilString(until: startTime!))
+      // Time Until String (if first rotation idle)
+      if
+        case .first(let currentStatus) = rowType,
+        currentStatus == .idle
+      {
+        Text(ikaTimePublisher.currentTime.toTimeUntilString(until: rotation.startTime))
           .scaledLimitedLine()
           .fontIka(
             .ika2,

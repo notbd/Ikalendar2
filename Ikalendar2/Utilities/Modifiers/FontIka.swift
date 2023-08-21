@@ -13,23 +13,6 @@ extension View {
   /// - Parameters:
   ///   - ikaFont: The type of the ika font.
   ///   - size: The size of the ika font.
-  /// - Returns: The modified view.
-  func fontIka(
-    _ ikaFont: IkaFont,
-    size: CGFloat)
-    -> some View
-  {
-    modifier(
-      FontIka(
-        ikaFont: ikaFont,
-        size: size))
-  }
-
-  /// A modifier function that quickly applies a custom ika font to the view.
-  ///
-  /// - Parameters:
-  ///   - ikaFont: The type of the ika font.
-  ///   - size: The size of the ika font.
   ///   - textStyle: The text style that this size is relative to.
   /// - Returns: The modified view.
   func fontIka(
@@ -39,7 +22,7 @@ extension View {
     -> some View
   {
     modifier(
-      FontIkaDynamic(
+      FontIka(
         ikaFont: ikaFont,
         size: size,
         textStyle: textStyle))
@@ -56,21 +39,6 @@ enum IkaFont: String {
 // MARK: - FontIka
 
 struct FontIka: ViewModifier {
-  var ikaFont: IkaFont
-  var size: CGFloat
-
-  func body(content: Content) -> some View {
-    content
-      .font(
-        .custom(
-          ikaFont.rawValue,
-          size: size))
-  }
-}
-
-// MARK: - FontIkaDynamic
-
-struct FontIkaDynamic: ViewModifier {
   var ikaFont: IkaFont
   var size: CGFloat
   var textStyle: Font.TextStyle

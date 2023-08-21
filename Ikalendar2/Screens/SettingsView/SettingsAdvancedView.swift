@@ -42,7 +42,6 @@ struct SettingsAdvancedView: View {
 
   private var rowAltStageImagesToggle: some View {
     // placeholder
-    // TODO: add all view content
     Toggle(isOn: .constant(true)) {
       Label(
         "Alternative Stage Images",

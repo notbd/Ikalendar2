@@ -15,27 +15,27 @@ struct SalmonRotationListView: View {
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
   var salmonRotations: [SalmonRotation] {
-    let rawRotations = ikaCatalog.salmonRotations
-    func filterCurrent(rotation: some Rotation) -> Bool {
-      !rotation.isExpired(currentTime: ikaTimePublisher.currentTime)
+    // filter out the expired ones and only display the current and future rotations
+    ikaCatalog.salmonRotations.filter {
+      !$0.isExpired(currentTime: ikaTimePublisher.currentTime)
     }
-    let results = rawRotations.filter(filterCurrent)
-    return results
   }
 
   var body: some View {
     GeometryReader { geo in
       List {
         ForEach(
-          Array(salmonRotations.enumerated()),
-          id: \.offset)
+          Array(zip(salmonRotations.indices, salmonRotations)),
+          id: \.0)
         { index, rotation in
           SalmonRotationRow(
             rotation: rotation,
             index: index,
             rowWidth: geo.size.width)
+            .listRowSeparator(.hidden)
         }
       }
+      .listStyle(.insetGrouped)
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }

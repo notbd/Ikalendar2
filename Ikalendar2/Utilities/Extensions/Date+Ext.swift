@@ -44,13 +44,13 @@ extension Date {
   ///   parameter has changed.
   /// - Returns: The battle time string.
   func toBattleTimeString(
-    includingDate: Bool = false,
+    includeDate: Bool = false,
     currentTime _: Date = Date())
     -> String
   {
     let timeString = Date.ikaTimeFormatter.string(from: self)
 
-    guard includingDate
+    guard includeDate
     else { return timeString }
 
     guard !Calendar.current.isDateInToday(self)

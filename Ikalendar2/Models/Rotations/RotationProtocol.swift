@@ -14,11 +14,10 @@ protocol Rotation {
   var id: String { get }
   var startTime: Date { get }
   var endTime: Date { get }
-  func isCurrent(currentTime: Date) -> Bool
 }
 
 extension Rotation {
-  /// Check if rotation is coming next according to the current time.
+  /// Check if rotation is current according to the current time.
   /// - Parameter currentTime: The current time.
   /// - Returns: The boolean val.
   func isCurrent(currentTime: Date) -> Bool {
@@ -30,5 +29,12 @@ extension Rotation {
   /// - Returns: The boolean val.
   func isExpired(currentTime: Date) -> Bool {
     endTime < currentTime
+  }
+
+  /// Check if rotation is yet to be started according to the current time.
+  /// - Parameter currentTime: The current time.
+  /// - Returns: The boolean val.
+  func isFuture(currentTime: Date) -> Bool {
+    currentTime > startTime && currentTime > endTime
   }
 }

@@ -46,7 +46,7 @@ trailing_comma:
 
 line_length:
   - 110 # warning
-  - 130 # error
+  - 120 # error
 
 type_body_length:
   - 1400 # warning

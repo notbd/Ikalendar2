@@ -157,7 +157,7 @@ extension Constants.Styles {
         enum Stage {
           static let STAGE_IMG_CORNER_RADIUS: CGFloat = 4
 
-          static let LABEL_FONT_SIZE: CGFloat = 12
+          static let LABEL_FONT_SIZE: CGFloat = 14
           static let OVERLAY_PADDING: CGFloat = 4
 
           static let APPAREL_IMG_PADDING: CGFloat = 2
@@ -185,7 +185,7 @@ extension Constants.Styles {
         static let PREFIX_FONT_SIZE: CGFloat = 16
         static let PREFIX_PADDING: CGFloat = 8
 
-        static let CONTENT_FONT_SIZE: CGFloat = 14
+        static let CONTENT_FONT_SIZE: CGFloat = 16
       }
 
       enum Cell {
@@ -228,7 +228,7 @@ extension Constants.Styles {
       enum Card {
         enum Primary {
           static let IMG_CORNER_RADIUS: CGFloat = 4
-          static let LABEL_FONT_SIZE: CGFloat = 12
+          static let LABEL_FONT_SIZE: CGFloat = 14
           static let LABEL_PADDING_LEADING: CGFloat = 20
           static let LABEL_PADDING_BOTTOMTRAILING: CGFloat = 2
         }
@@ -236,7 +236,7 @@ extension Constants.Styles {
         enum Secondary {
           static let IMG_CORNER_RADIUS: CGFloat = 4
           static let STAGE_IMG_OFFSET_Y: CGFloat = 6
-          static let FONT_SIZE: CGFloat = 11
+          static let FONT_SIZE: CGFloat = 12
         }
       }
     }

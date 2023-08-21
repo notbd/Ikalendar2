@@ -16,27 +16,27 @@ struct BattleRotationListView: View {
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
   var battleRotations: [BattleRotation] {
-    let rawRotations = ikaCatalog.battleRotationDict[ikaStatus.battleModeSelection]!
-    func filterCurrent(rotation: some Rotation) -> Bool {
-      !rotation.isExpired(currentTime: ikaTimePublisher.currentTime)
+    // filter out the expired ones and only display the current and future rotations
+    ikaCatalog.battleRotationDict[ikaStatus.battleModeSelection]!.filter {
+      !$0.isExpired(currentTime: ikaTimePublisher.currentTime)
     }
-    let results = rawRotations.filter(filterCurrent)
-    return results
   }
 
   var body: some View {
     GeometryReader { geo in
       List {
         ForEach(
-          Array(battleRotations.enumerated()),
-          id: \.offset)
+          Array(zip(battleRotations.indices, battleRotations)),
+          id: \.0)
         { index, rotation in
           BattleRotationRow(
             rotation: rotation,
             index: index,
             width: geo.size.width)
+            .listRowSeparator(.hidden)
         }
       }
+      .listStyle(.insetGrouped)
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }
