@@ -57,7 +57,7 @@
 
 
 # organizeDeclarations
---beforemarks enum,let,typealias,var
+--beforemarks enum,typealias,let,var
 --enumthreshold 20
 --organizetypes class,struct,enum,extension,actor
 --structthreshold 20

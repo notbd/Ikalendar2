@@ -19,7 +19,7 @@ struct SettingsMainView: View {
 
   typealias Scoped = Constants.Styles.Settings.Main
 
-  private var currLanguage: String {
+  private var currentLanguage: String {
     if Locale.current.identifier.starts(with: "en") { return "English" }
     if Locale.current.identifier.starts(with: "ja") { return "日本語" }
     if Locale.current.identifier.starts(with: "zh_Hans") { return "简体中文(beta)" }
@@ -30,7 +30,7 @@ struct SettingsMainView: View {
   var body: some View {
     NavigationView {
       // not using NavigationStack for Settings as of iOS 16 beta because of titleDisplayMode bug
-      Form {
+      List {
         Section(header: Text("Default Mode")) {
           rowDefaultGameMode
           rowDefaultBattleMode
@@ -51,14 +51,13 @@ struct SettingsMainView: View {
           rowCredits
         }
       }
+      .listStyle(.insetGrouped)
       .navigationTitle("Settings")
       .navigationBarTitleDisplayMode(.large)
       .navigationBarItems(trailing: doneButton)
     }
     .navigationViewStyle(StackNavigationViewStyle())
   }
-
-  // MARK: - Components ↓↓↓
 
   // MARK: - Default Mode Section
 
@@ -168,7 +167,7 @@ struct SettingsMainView: View {
 
         Spacer()
 
-        Text(currLanguage)
+        Text(currentLanguage)
           .foregroundColor(.secondary)
 
         Image(systemName: Scoped.PREF_LANG_JUMP_SFSYMBOL)

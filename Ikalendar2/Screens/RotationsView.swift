@@ -65,7 +65,7 @@ struct RotationsView: View {
     }
   }
 
-  // MARK: Internal
+  // MARK: Private
 
   private func setCompactHoriClassToolbar(content: some View) -> some View {
     content

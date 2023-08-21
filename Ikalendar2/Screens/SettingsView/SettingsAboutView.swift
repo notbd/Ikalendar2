@@ -13,10 +13,11 @@ import SwiftUI
 
 /// The About page in App Settings.
 struct SettingsAboutView: View {
-  @Environment(\.openURL) var openURL
 //  @Environment(\.requestReview) var requestReview
 
   typealias Scoped = Constants.Styles.Settings.About
+
+  @Environment(\.openURL) var openURL
 
   @State var appStoreOverlayPresented = false
 
@@ -50,8 +51,6 @@ struct SettingsAboutView: View {
     .navigationTitle("About")
     .navigationBarTitleDisplayMode(.inline)
   }
-
-  // MARK: - Components ↓↓↓
 
   // MARK: - Icon Section
 
@@ -262,9 +261,9 @@ struct SettingsAboutView: View {
     }
   }
 
-  // MARK: - End Components ↑↑↑
+  // MARK: Private
 
-  // MARK: Internal
+  // MARK: - End Components ↑↑↑
 
   // Handle the tap on the share button. [Deprecated since iOS 16]
 //  func didTapShare() {
