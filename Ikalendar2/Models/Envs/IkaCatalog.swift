@@ -261,8 +261,13 @@ final class IkaCatalog: ObservableObject {
     case .autoLoaded(let result):
       await SimpleHaptics.generate(.selection)
       autoLoadStatus = .autoLoaded(result)
+      // automatically fall back to idle after a while
       Task {
-        // automatically fall back to idle after a while
+        // blocked if app is in background - to make sure autoLoaded can be seen when switched back
+        while UIApplication.shared.applicationState != .active {
+          try? await Task.sleep(nanoseconds: UInt64(Scoped.activeStateCheckInterval * 1_000_000_000))
+        }
+
         try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
         autoLoadStatus = .idle
       }
