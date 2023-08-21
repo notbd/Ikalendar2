@@ -13,7 +13,7 @@ import SwiftUI
 struct ErrorView: View {
   typealias Scoped = Constants.Styles.Error
 
-  var error: IkaError
+  let error: IkaError
 
   var body: some View {
     GeometryReader { geo in

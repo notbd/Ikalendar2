@@ -13,11 +13,11 @@ import SwiftUI
 struct BattleRotationRow: View {
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
-  var rotation: BattleRotation
-  var index: Int
-  var width: CGFloat
+  let rotation: BattleRotation
+  let index: Int
+  let width: CGFloat
 
-  var rowType: RowType {
+  private var rowType: RowType {
     // expired rotations already filtered out, so index will reflect truth
     switch index {
     case 0:
@@ -74,10 +74,10 @@ struct BattleRotationHeader: View {
 
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
-  var rotation: BattleRotation
-  var rowType: BattleRotationRow.RowType
+  let rotation: BattleRotation
+  let rowType: BattleRotationRow.RowType
 
-  var startTimeString: String {
+  private var startTimeString: String {
     let ifIncludeDate = Calendar.current.isDateInYesterday(rotation.startTime) ||
       Calendar.current.isDateInTomorrow(rotation.startTime)
 
@@ -86,7 +86,7 @@ struct BattleRotationHeader: View {
       currentTime: ikaTimePublisher.currentTime)
   }
 
-  var endTimeString: String {
+  private var endTimeString: String {
     let ifIncludeDate = (
       Calendar.current.isDateInYesterday(rotation.startTime) &&
         Calendar.current.isDateInToday(rotation.endTime)) ||

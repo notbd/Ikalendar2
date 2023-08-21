@@ -55,7 +55,7 @@ struct SettingsAboutView: View {
 
   // MARK: - Icon Section
 
-  var appIconContent: some View {
+  private var appIconContent: some View {
     HStack {
       Spacer()
       appIconLabel
@@ -63,7 +63,7 @@ struct SettingsAboutView: View {
     }
   }
 
-  var appIconLabel: some View {
+  private var appIconLabel: some View {
     var appIconImage: some View {
       Image(uiImage: UIImage(named: Scoped.APP_ICON_NAME) ?? UIImage())
         .resizable()
@@ -104,7 +104,7 @@ struct SettingsAboutView: View {
 
   // MARK: - Share Section
 
-  var rowShare: some View {
+  private var rowShare: some View {
     // NOTE: could not find error handling for invalid URL ShareLink as of iOS 16
     // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 16
     let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US)!
@@ -123,7 +123,7 @@ struct SettingsAboutView: View {
 
   // MARK: - Contact Section
 
-  var rowDeveloperTwitter: some View {
+  private var rowDeveloperTwitter: some View {
     let twitterURLString = Constants.Keys.URL.DEVELOPER_TWITTER
     let twitterHandle =
       twitterURLString.replacingOccurrences(
@@ -155,7 +155,7 @@ struct SettingsAboutView: View {
       }
   }
 
-  var rowDeveloperEmail: some View {
+  private var rowDeveloperEmail: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
       if let url = URL(string: Constants.Keys.URL.DEVELOPER_EMAIL) {
@@ -174,7 +174,7 @@ struct SettingsAboutView: View {
 
   // MARK: - Review Section
 
-  var rowRating: some View {
+  private var rowRating: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
       didTapRate()
@@ -189,7 +189,7 @@ struct SettingsAboutView: View {
     }
   }
 
-  var rowLeavingReview: some View {
+  private var rowLeavingReview: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
       if let url = URL(string: Constants.Keys.URL.APP_STORE_REVIEW) {
@@ -206,7 +206,7 @@ struct SettingsAboutView: View {
     }
   }
 
-  var rowAppStoreOverlay: some View {
+  private var rowAppStoreOverlay: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
       appStoreOverlayPresented.toggle()
@@ -228,7 +228,7 @@ struct SettingsAboutView: View {
 
   // MARK: - Others Section
 
-  var rowSourceCode: some View {
+  private var rowSourceCode: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
       if let url = URL(string: Constants.Keys.URL.SOURCE_CODE_REPO) {
@@ -245,7 +245,7 @@ struct SettingsAboutView: View {
     }
   }
 
-  var rowPrivacyPolicy: some View {
+  private var rowPrivacyPolicy: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
       if let url = URL(string: Constants.Keys.URL.PRIVACY_POLICY) {
@@ -286,7 +286,7 @@ struct SettingsAboutView: View {
 //  }
 
   /// Handle the tap on the rate button.
-  func didTapRate() {
+  private func didTapRate() {
 //    requestReview()
     if
       let scene =

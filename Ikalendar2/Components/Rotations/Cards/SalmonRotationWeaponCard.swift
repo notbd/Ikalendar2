@@ -13,9 +13,9 @@ import SwiftUI
 struct SalmonRotationWeaponCard: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Weapon
 
-  var weapons: [SalmonWeapon]!
+  let weapons: [SalmonWeapon]!
 
-  let columns: [GridItem] = [
+  private let columns: [GridItem] = [
     GridItem(.flexible()),
     GridItem(.flexible()),
   ]
@@ -34,7 +34,9 @@ struct SalmonRotationWeaponCard: View {
 
 struct SalmonRotationWeaponCardIcon: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Weapon
-  var weapon: SalmonWeapon
+
+  let weapon: SalmonWeapon
+
   var body: some View {
     Image(weapon.imgFiln)
       .resizable()

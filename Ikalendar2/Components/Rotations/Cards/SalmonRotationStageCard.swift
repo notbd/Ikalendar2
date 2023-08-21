@@ -15,8 +15,8 @@ struct SalmonRotationStageCard: View {
 
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
-  var rotation: SalmonRotation
-  var rowWidth: CGFloat
+  let rotation: SalmonRotation
+  let rowWidth: CGFloat
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
   private var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
@@ -33,7 +33,7 @@ struct SalmonRotationStageCard: View {
         alignment: .bottom)
   }
 
-  var overlay: some View {
+  private var overlay: some View {
     var rewardApparelSection: some View {
       rewardApparelImg
         .hAlignment(isCurrent ? .trailing : .leading)
@@ -56,14 +56,14 @@ struct SalmonRotationStageCard: View {
       .padding(Scoped.OVERLAY_PADDING)
   }
 
-  var stageTitleLabel: some View {
+  private var stageTitleLabel: some View {
     StageTitleLabel(
       title: rotation.stage!.name,
       fontSize: Scoped.LABEL_FONT_SIZE,
       relTextStyle: .body)
   }
 
-  var rewardApparelImg: some View {
+  private var rewardApparelImg: some View {
     Image(rotation.rewardApparel?.imgFiln ?? "salmon")
       .resizable()
       .scaledToFit()

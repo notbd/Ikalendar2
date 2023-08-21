@@ -17,7 +17,7 @@ struct RotationsView: View {
   @EnvironmentObject var ikaCatalog: IkaCatalog
   @EnvironmentObject var ikaStatus: IkaStatus
 
-  var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   var body: some View {
     ZStack {
@@ -40,7 +40,7 @@ struct RotationsView: View {
     }
   }
 
-  var content: some View {
+  private var content: some View {
     Group {
       switch ikaCatalog.loadStatusWithLoadingIgnored {
       case .error(let ikaError):
@@ -56,7 +56,7 @@ struct RotationsView: View {
     }
   }
 
-  var title: LocalizedStringKey {
+  private var title: LocalizedStringKey {
     switch ikaStatus.gameModeSelection {
     case .battle:
       return ikaStatus.battleModeSelection.name.localizedStringKey()
@@ -67,7 +67,7 @@ struct RotationsView: View {
 
   // MARK: Internal
 
-  func setCompactHoriClassToolbar(content: some View) -> some View {
+  private func setCompactHoriClassToolbar(content: some View) -> some View {
     content
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
@@ -87,7 +87,7 @@ struct RotationsView: View {
       }
   }
 
-  func didTapSettingsButton() {
+  private func didTapSettingsButton() {
     SimpleHaptics.generateTask(.selection)
     ikaStatus.isSettingsPresented.toggle()
   }

@@ -15,13 +15,13 @@ struct SalmonRotationCell: View {
 
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
-  var rotation: SalmonRotation
-  var rowWidth: CGFloat
+  let rotation: SalmonRotation
+  let rowWidth: CGFloat
 
-  var hasStageAndWeapon: Bool { rotation.stage != nil && rotation.weapons != nil }
-  var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
+  private var hasStageAndWeapon: Bool { rotation.stage != nil && rotation.weapons != nil }
+  private var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
 
-  var stageHeight: CGFloat {
+  private var stageHeight: CGFloat {
     rowWidth * Scoped.STAGE_HEIGHT_RATIO + Scoped.STAGE_HEIGHT_ADJUSTMENT_CONSTANT
   }
 
@@ -49,7 +49,7 @@ struct SalmonRotationCell: View {
     }
   }
 
-  var stageAndWeaponSection: some View {
+  private var stageAndWeaponSection: some View {
     HStack {
       SalmonRotationStageCard(
         rotation: rotation,
@@ -61,7 +61,7 @@ struct SalmonRotationCell: View {
     }
   }
 
-  var progressSection: some View {
+  private var progressSection: some View {
     ProgressView(
       value: ikaTimePublisher.currentTime - rotation.startTime,
       total: rotation.endTime - rotation.startTime,
@@ -87,9 +87,9 @@ struct SalmonRotationCellTimeTextSection: View {
 
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
-  var iconName: String
-  var rotation: SalmonRotation
-  var rowWidth: CGFloat
+  let iconName: String
+  let rotation: SalmonRotation
+  let rowWidth: CGFloat
 
   var body: some View {
     HStack {

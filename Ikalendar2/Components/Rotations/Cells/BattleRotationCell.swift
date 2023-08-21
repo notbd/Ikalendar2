@@ -47,8 +47,8 @@ struct BattleRotationCellPrimary: View {
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
   @EnvironmentObject var ikaPreference: IkaPreference
 
-  var rotation: BattleRotation
-  var width: CGFloat
+  let rotation: BattleRotation
+  let width: CGFloat
 
   var body: some View {
     VStack(spacing: 0) {
@@ -78,7 +78,7 @@ struct BattleRotationCellPrimary: View {
 
   // MARK: Rule Section
 
-  var ruleSection: some View {
+  private var ruleSection: some View {
     HStack(
       alignment: .center,
       spacing: Scoped.RULE_SECTION_SPACING)
@@ -106,7 +106,7 @@ struct BattleRotationCellPrimary: View {
 
   // MARK: Remaining Time Section
 
-  var remainingTimeSection: some View {
+  private var remainingTimeSection: some View {
     HStack {
       Spacer()
       HStack {
@@ -134,8 +134,8 @@ struct BattleRotationCellSecondary: View {
 
   @EnvironmentObject var ikaPreference: IkaPreference
 
-  var rotation: BattleRotation
-  var width: CGFloat
+  let rotation: BattleRotation
+  let width: CGFloat
 
   var body: some View {
     HStack {

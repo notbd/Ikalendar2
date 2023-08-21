@@ -13,13 +13,13 @@ import SwiftUI
 struct SalmonRotationRow: View {
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
-  var rotation: SalmonRotation
-  var index: Int
-  var rowWidth: CGFloat
+  let rotation: SalmonRotation
+  let index: Int
+  let rowWidth: CGFloat
 
-  var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
+  private var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
 
-  var rowType: RowType {
+  private var rowType: RowType {
     // expired rotations already filtered out, so index will reflect truth
     switch index {
     case 0:
@@ -94,8 +94,8 @@ struct SalmonRotationHeader: View {
 
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
 
-  var rotation: SalmonRotation
-  var rowType: SalmonRotationRow.RowType
+  let rotation: SalmonRotation
+  let rowType: SalmonRotationRow.RowType
 
   var body: some View {
     HStack {

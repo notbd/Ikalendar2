@@ -14,7 +14,7 @@ import SwiftUI
 struct BattleRotationStageCardPrimary: View {
   typealias Scoped = Constants.Styles.Rotation.Battle.Card.Primary
 
-  var stage: BattleStage
+  let stage: BattleStage
 
   var body: some View {
     Image(stage.imgFilnLarge)
@@ -42,7 +42,7 @@ struct BattleRotationStageCardPrimary: View {
 struct BattleRotationStageCardSecondary: View {
   typealias Scoped = Constants.Styles.Rotation.Battle.Card.Secondary
 
-  var stage: BattleStage
+  let stage: BattleStage
 
   var body: some View {
     VStack(alignment: .trailing) {
