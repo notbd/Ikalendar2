@@ -7,10 +7,12 @@
 
 import Foundation
 
-/// A singleton network manager that relies on completion handler.
+/// `IkaNetworkManager` is a singleton class responsible for managing network requests related to the
+/// `splatoon2.ink` API.
+/// It provides methods for fetching different game data like battle rotations, salmon rotations, and reward
+/// apparel.
 final class IkaNetworkManager {
 
-  /// The shared singleton instance
   static let shared = IkaNetworkManager()
 
   // MARK: Lifecycle
@@ -19,7 +21,9 @@ final class IkaNetworkManager {
 
   // MARK: Internal
 
-  /// Asynchronously get the battle rotation dict from the `splatoon2.ink` api
+  /// Asynchronously fetches the battle rotation dictionary from the `splatoon2.ink` API.
+  /// - Returns: A `BattleRotationDict` object containing the battle rotation data.
+  /// - Throws: `IkaError` if there's any error during fetching or decoding.
   func getBattleRotationDict()
     async throws -> BattleRotationDict
   {
@@ -28,7 +32,9 @@ final class IkaNetworkManager {
       decodeUsing: IkaDecoder.parseBattleRotationDict)
   }
 
-  /// Asynchronously get the salmon rotation array from the `splatoon2.ink` api
+  /// Asynchronously fetches the salmon rotation array from the `splatoon2.ink` API.
+  /// - Returns: An array of `SalmonRotation` objects containing the salmon rotation data.
+  /// - Throws: `IkaError` if there's any error during fetching or decoding.
   func getSalmonRotations()
     async throws -> [SalmonRotation]
   {
@@ -37,7 +43,9 @@ final class IkaNetworkManager {
       decodeUsing: IkaDecoder.parseSalmonRotations)
   }
 
-  /// Asynchronously get the reward apparel from the `splatoon2.ink` api
+  /// Asynchronously fetches the reward apparel from the `splatoon2.ink` API.
+  /// - Returns: A `SalmonApparel` object containing the reward apparel data.
+  /// - Throws: `IkaError` if there's any error during fetching or decoding.
   func getRewardApparel()
     async throws -> SalmonApparel
   {
@@ -60,8 +68,8 @@ final class IkaNetworkManager {
   ///
   /// - Parameters:
   ///   - url: The URL from which to fetch the data.
-  ///   - decoder: A closure that takes raw `Data` as input and attempts to decode it into a model of
-  ///     type `T`. This closure must be capable of throwing an error if the decoding process fails.
+  ///   - decoder: A closure that takes raw `Data` and decodes it into a type `T`. This closure must be
+  ///              capable of throwing an error if the decoding process fails.
   ///
   /// - Returns: A model of type `T`, decoded from the fetched data.
   ///
