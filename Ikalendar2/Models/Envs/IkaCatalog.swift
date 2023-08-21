@@ -20,8 +20,6 @@ final class IkaCatalog: ObservableObject {
 
   static let shared = IkaCatalog()
 
-  private let ikaNetworkManager = IkaNetworkManager.shared
-
   @Published private(set) var battleRotationDict = BattleRotationDict()
   @Published private(set) var salmonRotations = [SalmonRotation]()
 
@@ -101,11 +99,12 @@ final class IkaCatalog: ObservableObject {
   private func loadData()
     async throws
   {
+    async let taskBattleRotationDict = IkaNetworkManager.shared.getBattleRotationDict()
+    async let taskSalmonRotations = IkaNetworkManager.shared.getSalmonRotations()
+    async let taskRewardApparel = IkaNetworkManager.shared.getRewardApparel()
+
     let (loadedBattleRotationDict, loadedSalmonRotations, loadedRewardApparel) =
-      try await (
-        ikaNetworkManager.getBattleRotationDict(),
-        ikaNetworkManager.getSalmonRotationArray(),
-        ikaNetworkManager.getRewardApparel())
+      try await (taskBattleRotationDict, taskSalmonRotations, taskRewardApparel)
 
     battleRotationDict = loadedBattleRotationDict
     salmonRotations = loadedSalmonRotations
@@ -119,48 +118,119 @@ final class IkaCatalog: ObservableObject {
 
         while true {
           try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadCheckInterval * 1_000_000_000))
-          if ifShouldAutoLoad() { await autoLoadBattleRotationDict() }
+          if ifShouldAutoLoad() { await autoLoadData() }
         }
       }
   }
 
-  private func autoLoadBattleRotationDict()
+  private func autoLoadData()
     async
   {
     guard autoLoadStatus == .idle else { return }
     await setAutoLoadStatus(.autoLoading)
 
-    var autoLoadAttempts = 0
+    let ifNeedAutoLoadSalmon = salmonRotations[0].isExpired(currentTime: IkaTimePublisher.shared.currentTime)
 
     do {
-      while true {
-        let loadedBattleRotationDict = try await ikaNetworkManager.getBattleRotationDict()
-        autoLoadAttempts += 1
+      try await withThrowingTaskGroup(of: Void.self) { group in
+        // always auto-load BattleRotationDict
+        group.addTask {
+          try await self.autoLoadBattleRotationDict()
+        }
 
-        if loadedBattleRotationDict == battleRotationDict {
-          if autoLoadAttempts >= Scoped.autoLoadMaxAttempts {
-            await setAutoLoadStatus(.autoLoaded(.failure))
-            break
+        // only auto-load SalmonRotations if needed
+        if ifNeedAutoLoadSalmon {
+          group.addTask {
+            try await self.autoLoadSalmonRotations()
           }
-
-          try await Task.sleep(
-            nanoseconds: UInt64(Constants.Configs.Catalog.autoLoadAttemptInterval * 1_000_000_000))
-          continue
         }
 
-        battleRotationDict = loadedBattleRotationDict
-        await setAutoLoadStatus(.autoLoaded(.success))
-        if loadStatus != .loaded {
-          await setLoadStatus(.loaded)
-        }
-        break
+        // wait for all tasks to finish
+        for try await _ in group { }
+      }
+
+//      // ALTERNATIVE: use async let
+//      async let taskBattleRotationDict: () = autoLoadBattleRotationDict()
+//
+//      var taskSalmonRotations: Task<Void, Error>?
+//      if ifNeedAutoLoadSalmon {
+//        taskSalmonRotations = Task {
+//          try await autoLoadSalmonRotations()
+//        }
+//      }
+//
+//      try await taskBattleRotationDict
+//      if let taskSalmonRotations {
+//        try await taskSalmonRotations.value
+//      }
+
+      // success
+      await setAutoLoadStatus(.autoLoaded(.success))
+      if loadStatus != .loaded {
+        await setLoadStatus(.loaded)
       }
     }
     catch let error as IkaError {
+      // error
       await setLoadStatus(.error(error))
     }
     catch {
+      // unknown error
       await setLoadStatus(.error(.unknownError))
+    }
+  }
+
+  private func autoLoadBattleRotationDict()
+    async throws
+  {
+    var autoLoadAttempts = 0
+
+    while true {
+      let loadedBattleRotationDict = try await IkaNetworkManager.shared.getBattleRotationDict()
+      autoLoadAttempts += 1
+
+      if loadedBattleRotationDict == battleRotationDict {
+        if autoLoadAttempts >= Scoped.autoLoadMaxAttempts {
+          await setAutoLoadStatus(.autoLoaded(.failure))
+          break
+        }
+
+        try await Task.sleep(
+          nanoseconds: UInt64(Constants.Configs.Catalog.autoLoadAttemptInterval * 1_000_000_000))
+        continue
+      }
+
+      battleRotationDict = loadedBattleRotationDict
+      break
+    }
+  }
+
+  private func autoLoadSalmonRotations()
+    async throws
+  {
+    var autoLoadAttempts = 0
+
+    while true {
+      let loadedSalmonRotations = try await IkaNetworkManager.shared.getSalmonRotations()
+      autoLoadAttempts += 1
+
+      if loadedSalmonRotations == salmonRotations {
+        if autoLoadAttempts >= Scoped.autoLoadMaxAttempts {
+          await setAutoLoadStatus(.autoLoaded(.failure))
+          break
+        }
+
+        try await Task.sleep(
+          nanoseconds: UInt64(Constants.Configs.Catalog.autoLoadAttemptInterval * 1_000_000_000))
+        continue
+      }
+
+      // success
+      let loadedRewardApparel = try await IkaNetworkManager.shared.getRewardApparel()
+      salmonRotations = loadedSalmonRotations
+      salmonRotations[0].rewardApparel = loadedRewardApparel
+
+      break
     }
   }
 

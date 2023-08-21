@@ -66,15 +66,13 @@ struct SalmonRotationCell: View {
       value: ikaTimePublisher.currentTime - rotation.startTime,
       total: rotation.endTime - rotation.startTime,
       label: {
-        HStack {
-          Spacer()
-          Text(ikaTimePublisher.currentTime.toTimeRemainingString(until: rotation.endTime))
-            .scaledLimitedLine()
-            .fontIka(
-              .ika2,
-              size: Scoped.PROGRESS_FONT_SIZE,
-              relativeTo: .headline)
-        }
+        Text(ikaTimePublisher.currentTime.toTimeRemainingString(until: rotation.endTime))
+          .scaledLimitedLine()
+          .fontIka(
+            .ika2,
+            size: Scoped.PROGRESS_FONT_SIZE,
+            relativeTo: .headline)
+          .hAlignment(.trailing)
       })
   }
 }

@@ -151,10 +151,11 @@ extension Constants.Styles {
           static let CELL_PADDING_TOP: CGFloat = 0
           static let CELL_PADDING_BOTTOM: CGFloat = 10
 
-          static let RULE_SECTION_SPACING: CGFloat = 10
+          static let RULE_SECTION_SPACING: CGFloat = 8
           static let RULE_IMG_MAX_WIDTH_RATIO: CGFloat = 0.11
           static let RULE_FONT_SIZE_COMPACT: CGFloat = 26
           static let RULE_FONT_SIZE_REGULAR: CGFloat = 48
+          static let RULE_SECTION_MAX_WIDTH_RATIO: CGFloat = 0.45
 
           static let REMAINING_TIME_FONT_SIZE: CGFloat = 15
           static let REMAINING_TIME_TEXT_MAX_WIDTH_RATIO: CGFloat = 0.32

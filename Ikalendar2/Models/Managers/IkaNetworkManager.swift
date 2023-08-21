@@ -29,12 +29,12 @@ final class IkaNetworkManager {
   }
 
   /// Asynchronously get the salmon rotation array from the `splatoon2.ink` api
-  func getSalmonRotationArray()
+  func getSalmonRotations()
     async throws -> [SalmonRotation]
   {
     try await fetchAndDecode(
       url: URL(string: Constants.Keys.URL.SALMON_ROTATIONS)!,
-      decodeUsing: IkaDecoder.parseSalmonRotationArray)
+      decodeUsing: IkaDecoder.parseSalmonRotations)
   }
 
   /// Asynchronously get the reward apparel from the `splatoon2.ink` api

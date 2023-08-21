@@ -99,6 +99,9 @@ struct BattleRotationCellPrimary: View {
             : Scoped.RULE_FONT_SIZE_REGULAR,
           relativeTo: .title)
     }
+    .frame(
+      maxWidth: rowWidth * Scoped.RULE_SECTION_MAX_WIDTH_RATIO,
+      alignment: .leading)
   }
 
   // MARK: Remaining Time Section

@@ -84,7 +84,7 @@ final class IkaDecoder {
   ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
   ///   - `IkaError.badData`: if JSON is of unsupported format.
   /// - Returns: The parsed array (will NOT be empty).
-  static func parseSalmonRotationArray(from data: Data)
+  static func parseSalmonRotations(from data: Data)
     throws -> [SalmonRotation]
   {
     var salmonRotations: [SalmonRotation] = []
