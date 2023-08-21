@@ -39,6 +39,7 @@ struct SalmonRotationWeaponCardIcon: View {
 
   var body: some View {
     Image(weapon.imgFiln)
+      .antialiased(true)
       .resizable()
       .scaledToFit()
       .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)

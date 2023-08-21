@@ -47,6 +47,7 @@ struct BattleRotationStageCardSecondary: View {
   var body: some View {
     VStack(alignment: .trailing) {
       Image(stage.imgFilnLarge)
+        .antialiased(true)
         .resizable()
         .scaledToFit()
         .cornerRadius(Scoped.IMG_CORNER_RADIUS)

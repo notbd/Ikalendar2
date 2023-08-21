@@ -49,6 +49,7 @@ struct OnboardingView: View {
                 Rotated3DOverlapView(
                   top: {
                     Image(BattleMode.league.imgFilnSmall)
+                      .antialiased(true)
                       .resizable()
                       .scaledToFit()
                       .shadow(radius: 5)
@@ -56,6 +57,7 @@ struct OnboardingView: View {
                   },
                   mid: {
                     Image(BattleMode.gachi.imgFilnSmall)
+                      .antialiased(true)
                       .resizable()
                       .scaledToFit()
                       .shadow(radius: 5)
@@ -63,6 +65,7 @@ struct OnboardingView: View {
                   },
                   bottom: {
                     Image(BattleMode.regular.imgFilnSmall)
+                      .antialiased(true)
                       .resizable()
                       .scaledToFit()
                       .shadow(radius: 10)

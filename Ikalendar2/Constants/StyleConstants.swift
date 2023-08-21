@@ -149,21 +149,19 @@ extension Constants.Styles {
           static let PROGRESS_BAR_PADDING_BOTTOM: CGFloat = 16
           static let STAGE_SECTION_SPACING_RATIO: CGFloat = 0.04
           static let CELL_PADDING_TOP: CGFloat = 0
-          static let CELL_PADDING_BOTTOM: CGFloat = 8
+          static let CELL_PADDING_BOTTOM: CGFloat = 10
 
           static let RULE_SECTION_SPACING: CGFloat = 10
-          static let RULE_IMG_MAX_WIDTH_RATIO: CGFloat = 0.09
-          static let RULE_FONT_SIZE_COMPACT: CGFloat = 28
+          static let RULE_IMG_MAX_WIDTH_RATIO: CGFloat = 0.11
+          static let RULE_FONT_SIZE_COMPACT: CGFloat = 26
           static let RULE_FONT_SIZE_REGULAR: CGFloat = 48
-          static let RULE_SECTION_HEIGHT_RATIO: CGFloat = 0.12
 
-          static let REMAINING_TIME_FONT_RATIO: CGFloat = 0.042
-          static let REMAINING_TIME_TEXT_MAX_WIDTH_RATIO: CGFloat = 0.34
-          static let REMAINING_TIME_SECTION_WIDTH_RATIO: CGFloat = 0.35
+          static let REMAINING_TIME_FONT_SIZE: CGFloat = 15
+          static let REMAINING_TIME_TEXT_MAX_WIDTH_RATIO: CGFloat = 0.32
         }
 
         enum Secondary {
-          static let RULE_SECTION_SPACING: CGFloat = 2
+          static let RULE_SECTION_SPACING: CGFloat = 4
 
           static let RULE_IMG_MAX_WIDTH: CGFloat = 0.1
           static let RULE_IMG_PADDING: CGFloat = 5
@@ -183,7 +181,7 @@ extension Constants.Styles {
       enum Card {
         enum Primary {
           static let IMG_CORNER_RADIUS: CGFloat = 4
-          static let LABEL_FONT_SIZE: CGFloat = 14
+          static let LABEL_FONT_SIZE: CGFloat = 13
           static let LABEL_PADDING_LEADING: CGFloat = 20
           static let LABEL_PADDING_BOTTOMTRAILING: CGFloat = 2
         }
@@ -212,7 +210,7 @@ extension Constants.Styles {
         enum TimeTextSection {
           static let SALMON_ICON_WIDTH_RATIO: CGFloat = 0.08
           static let TIME_TEXT_SPACING: CGFloat = 4
-          static let TIME_TEXT_FONT_SIZE: CGFloat = 20
+          static let TIME_TEXT_FONT_SIZE: CGFloat = 16
           static let TIME_TEXT_SINGLE_PADDING_HORIZONTAL: CGFloat = 5
           static let TIME_TEXT_FRAME_CORNER_RADIUS: CGFloat = 6
         }
@@ -222,7 +220,7 @@ extension Constants.Styles {
         enum Stage {
           static let STAGE_IMG_CORNER_RADIUS: CGFloat = 4
 
-          static let LABEL_FONT_SIZE: CGFloat = 14
+          static let LABEL_FONT_SIZE: CGFloat = 13
           static let OVERLAY_PADDING: CGFloat = 4
 
           static let APPAREL_IMG_PADDING: CGFloat = 2

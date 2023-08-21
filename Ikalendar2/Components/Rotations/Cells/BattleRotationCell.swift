@@ -10,26 +10,25 @@ import SwiftUI
 // MARK: - BattleRotationCell
 
 struct BattleRotationCell: View {
-
-  let type: CellType
-  let rotation: BattleRotation
-  let width: CGFloat
-
   enum CellType {
     case primary
     case secondary
   }
+
+  let type: CellType
+  let rotation: BattleRotation
+  let rowWidth: CGFloat
 
   var body: some View {
     switch type {
     case .primary:
       BattleRotationCellPrimary(
         rotation: rotation,
-        width: width)
+        rowWidth: rowWidth)
     case .secondary:
       BattleRotationCellSecondary(
         rotation: rotation,
-        width: width)
+        rowWidth: rowWidth)
     }
   }
 }
@@ -45,10 +44,9 @@ struct BattleRotationCellPrimary: View {
   var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
-  @EnvironmentObject var ikaPreference: IkaPreference
 
   let rotation: BattleRotation
-  let width: CGFloat
+  let rowWidth: CGFloat
 
   var body: some View {
     VStack(spacing: 0) {
@@ -66,7 +64,7 @@ struct BattleRotationCellPrimary: View {
 
       HStack(
         alignment: .center,
-        spacing: width * Scoped.STAGE_SECTION_SPACING_RATIO)
+        spacing: rowWidth * Scoped.STAGE_SECTION_SPACING_RATIO)
       {
         BattleRotationStageCardPrimary(stage: rotation.stageA)
         BattleRotationStageCardPrimary(stage: rotation.stageB)
@@ -85,11 +83,11 @@ struct BattleRotationCellPrimary: View {
     {
       // Rule icon
       Image(rotation.rule.imgFilnMid)
-        .resizable()
         .antialiased(true)
+        .resizable()
         .scaledToFit()
         .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
-        .frame(maxWidth: width * Scoped.RULE_IMG_MAX_WIDTH_RATIO)
+        .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH_RATIO)
 
       // Rule title
       Text(rotation.rule.name.localizedStringKey())
@@ -101,27 +99,21 @@ struct BattleRotationCellPrimary: View {
             : Scoped.RULE_FONT_SIZE_REGULAR,
           relativeTo: .title)
     }
-    .frame(height: width * Scoped.RULE_SECTION_HEIGHT_RATIO)
   }
 
   // MARK: Remaining Time Section
 
   private var remainingTimeSection: some View {
-    HStack {
-      Spacer()
-      HStack {
-        Spacer()
-        Text(ikaTimePublisher.currentTime.toTimeRemainingString(until: rotation.endTime))
-          .scaledLimitedLine()
-          .foregroundColor(.secondary)
-          .fontIka(
-            .ika2,
-            size: width * Scoped.REMAINING_TIME_FONT_RATIO,
-            relativeTo: .headline)
-      }
-      .frame(maxWidth: width * Scoped.REMAINING_TIME_TEXT_MAX_WIDTH_RATIO)
-    }
-    .frame(width: width * Scoped.REMAINING_TIME_SECTION_WIDTH_RATIO)
+    Text(ikaTimePublisher.currentTime.toTimeRemainingString(until: rotation.endTime))
+      .scaledLimitedLine()
+      .foregroundColor(.secondary)
+      .fontIka(
+        .ika2,
+        size: Scoped.REMAINING_TIME_FONT_SIZE,
+        relativeTo: .headline)
+      .frame(
+        maxWidth: rowWidth * Scoped.REMAINING_TIME_TEXT_MAX_WIDTH_RATIO,
+        alignment: .trailing)
   }
 }
 
@@ -132,10 +124,8 @@ struct BattleRotationCellPrimary: View {
 struct BattleRotationCellSecondary: View {
   typealias Scoped = Constants.Styles.Rotation.Battle.Cell.Secondary
 
-  @EnvironmentObject var ikaPreference: IkaPreference
-
   let rotation: BattleRotation
-  let width: CGFloat
+  let rowWidth: CGFloat
 
   var body: some View {
     HStack {
@@ -144,11 +134,11 @@ struct BattleRotationCellSecondary: View {
       VStack(spacing: Scoped.RULE_SECTION_SPACING) {
         // Rule img
         Image(rotation.rule.imgFilnMid)
-          .resizable()
           .antialiased(true)
+          .resizable()
           .scaledToFit()
           .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
-          .frame(maxWidth: width * Scoped.RULE_IMG_MAX_WIDTH)
+          .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH)
           .padding(Scoped.RULE_IMG_PADDING)
           .background(Color.tertiarySystemGroupedBackground)
           .cornerRadius(Scoped.RULE_IMG_FRAME_CORNER_RADIUS)
@@ -162,14 +152,14 @@ struct BattleRotationCellSecondary: View {
             relativeTo: .body)
           .frame(height: Scoped.RULE_TITLE_HEIGHT)
       }
-      .frame(maxWidth: width * Scoped.RULE_SECTION_WIDTH_RATIO)
+      .frame(maxWidth: rowWidth * Scoped.RULE_SECTION_WIDTH_RATIO)
       .padding(.trailing, Scoped.RULE_SECTION_PADDING_TRAILING)
 
       // MARK: Stage Section
 
       HStack(
         alignment: .center,
-        spacing: width * Scoped.STAGE_SECTION_SPACING_RATIO +
+        spacing: rowWidth * Scoped.STAGE_SECTION_SPACING_RATIO +
           Scoped.STAGE_SECTION_SPACING_ADJUSTMENT_CONSTANT)
       {
         BattleRotationStageCardSecondary(stage: rotation.stageA)
@@ -190,14 +180,14 @@ struct BattleRotationCell_Previews: PreviewProvider {
             rotation: IkaMockData.getBattleRotation(
               rule: .towerControl,
               rawStartTime: Date()),
-            width: geo.size.width)
+            rowWidth: geo.size.width)
         }
         Section {
           BattleRotationCellSecondary(
             rotation: IkaMockData.getBattleRotation(
               rule: .clamBlitz,
               rawStartTime: Date()),
-            width: geo.size.width)
+            rowWidth: geo.size.width)
         }
       }
       .listStyle(InsetGroupedListStyle())

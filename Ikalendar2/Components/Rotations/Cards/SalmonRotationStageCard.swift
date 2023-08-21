@@ -34,26 +34,19 @@ struct SalmonRotationStageCard: View {
   }
 
   private var overlay: some View {
-    var rewardApparelSection: some View {
-      rewardApparelImg
-        .hAlignment(isCurrent ? .trailing : .leading)
-        .vAlignment(.bottom)
-    }
-
-    return
-      HStack(alignment: .bottom) {
-        if isCurrent {
-          stageTitleLabel
-          Spacer()
-          rewardApparelSection
-        }
-        else {
-          rewardApparelSection
-          Spacer()
-          stageTitleLabel
-        }
+    HStack(alignment: .bottom) {
+      if isCurrent {
+        stageTitleLabel
+        Spacer()
+        rewardApparelImg
       }
-      .padding(Scoped.OVERLAY_PADDING)
+      else {
+        rewardApparelImg
+        Spacer()
+        stageTitleLabel
+      }
+    }
+    .padding(Scoped.OVERLAY_PADDING)
   }
 
   private var stageTitleLabel: some View {
@@ -65,6 +58,7 @@ struct SalmonRotationStageCard: View {
 
   private var rewardApparelImg: some View {
     Image(rotation.rewardApparel?.imgFiln ?? "salmon")
+      .antialiased(true)
       .resizable()
       .scaledToFit()
       .padding(Scoped.APPAREL_IMG_PADDING)

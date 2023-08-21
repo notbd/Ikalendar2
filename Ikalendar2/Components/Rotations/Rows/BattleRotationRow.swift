@@ -15,7 +15,7 @@ struct BattleRotationRow: View {
 
   let rotation: BattleRotation
   let index: Int
-  let width: CGFloat
+  let rowWidth: CGFloat
 
   private var rowType: RowType {
     // expired rotations already filtered out, so index will reflect truth
@@ -34,7 +34,7 @@ struct BattleRotationRow: View {
       BattleRotationCell(
         type: rowType == .now ? .primary : .secondary,
         rotation: rotation,
-        width: width)
+        rowWidth: rowWidth)
     } header: {
       BattleRotationHeader(
         rotation: rotation,
@@ -149,7 +149,7 @@ struct BattleRotationRow_Previews: PreviewProvider {
             BattleRotationRow(
               rotation: IkaMockData.getBattleRotations()[modeSelection]![index],
               index: index,
-              width: geo.size.width)
+              rowWidth: geo.size.width)
           }
         }
         .listStyle(InsetGroupedListStyle())

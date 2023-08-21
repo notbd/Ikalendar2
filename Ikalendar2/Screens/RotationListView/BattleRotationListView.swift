@@ -32,7 +32,7 @@ struct BattleRotationListView: View {
           BattleRotationRow(
             rotation: rotation,
             index: index,
-            width: geo.size.width)
+            rowWidth: geo.size.width)
             .listRowSeparator(.hidden)
         }
       }

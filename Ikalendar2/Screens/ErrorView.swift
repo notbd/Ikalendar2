@@ -66,6 +66,7 @@ struct ErrorView: View {
 
   private var errorImage: some View {
     Image("little-buddy")
+      .antialiased(true)
       .resizable()
       .scaledToFit()
       .grayscale(0.9)

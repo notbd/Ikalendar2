@@ -65,6 +65,7 @@ struct SettingsAboutView: View {
   private var appIconLabel: some View {
     var appIconImage: some View {
       Image(uiImage: UIImage(named: Scoped.APP_ICON_NAME) ?? UIImage())
+        .antialiased(true)
         .resizable()
         .scaledToFit()
         .frame(width: Scoped.APP_ICON_SIDE_LEN, height: Scoped.APP_ICON_SIDE_LEN)
@@ -147,6 +148,7 @@ struct SettingsAboutView: View {
         }
         icon: {
           Image(Scoped.TWITTER_ICON_NAME)
+            .antialiased(true)
             .resizable()
             .scaledToFit()
             .frame(width: Scoped.TWITTER_ICON_SIDE_LEN)
