@@ -20,16 +20,16 @@ struct ErrorView: View {
       List {
         Section {
           errorText
-            .padding(.top, geo.size.height * 0.2)
+            .padding(.top, geo.size.height * Scoped.ERROR_TEXT_PADDING_TOP_HEIGHT_RATIO)
         }
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
 
         Section {
           errorImage
-            .frame(width: geo.size.width * 0.15) // adjust image width
-            .hAlignment(.leading) // horizontally align the image
-            .padding(.top, geo.size.height * 0.05)
+            .frame(width: geo.size.width * Scoped.ERROR_IMG_WIDTH_RATIO)
+            .hAlignment(.leading)
+            .padding(.top, geo.size.height * Scoped.ERROR_IMG_PADDING_TOP_HEIGHT_RATIO)
         }
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
@@ -39,7 +39,7 @@ struct ErrorView: View {
 
   private var errorText: some View {
     VStack(alignment: .leading) {
-      Text(error.title.localizedStringKey())
+      Text(error.title.localizedStringKey)
         .scaledLimitedLine()
         .if(Scoped.IF_USE_CUSTOM_FONT) {
           $0.fontIka(
@@ -51,7 +51,7 @@ struct ErrorView: View {
         }
         .padding(.bottom, Scoped.TITLE_MESSAGE_SPACING)
 
-      Text(error.message.localizedStringKey())
+      Text(error.message.localizedStringKey)
         .if(Scoped.IF_USE_CUSTOM_FONT) {
           $0.fontIka(
             .ika2,

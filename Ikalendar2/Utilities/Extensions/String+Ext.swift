@@ -8,11 +8,7 @@
 import SwiftUI
 
 extension String {
-  /// Convert a string to a LocalizedStringKey with that string as the literal.
-  /// - Returns: The LocalizedStringKey.
-  func localizedStringKey() -> LocalizedStringKey {
-    LocalizedStringKey(self)
-  }
+  var localizedStringKey: LocalizedStringKey { LocalizedStringKey(self) }
 }
 
 extension String {

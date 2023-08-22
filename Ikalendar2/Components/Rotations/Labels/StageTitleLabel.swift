@@ -18,7 +18,7 @@ struct StageTitleLabel: View {
   let relTextStyle: Font.TextStyle
 
   var body: some View {
-    Text(title.localizedStringKey())
+    Text(title.localizedStringKey)
       .scaledLimitedLine()
       .fontIka(
         .ika2,

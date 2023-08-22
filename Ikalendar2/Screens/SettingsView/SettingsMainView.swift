@@ -12,12 +12,12 @@ import SwiftUI
 
 /// The main page for App Settings.
 struct SettingsMainView: View {
+  typealias Scoped = Constants.Styles.Settings.Main
+
   @Environment(\.openURL) var openURL
 
   @EnvironmentObject var ikaStatus: IkaStatus
   @EnvironmentObject var ikaPreference: IkaPreference
-
-  typealias Scoped = Constants.Styles.Settings.Main
 
   private var currentLanguage: String {
     if Locale.current.identifier.starts(with: "en") { return "English" }
@@ -38,8 +38,8 @@ struct SettingsMainView: View {
 
         Section(header: Text("Appearance")) {
           rowColorScheme
-          rowAppIcon
-          rowAdvanced
+          rowSwitchAppIcon
+          rowAdvancedOptions
         }
 
         Section(header: Text("Language")) {
@@ -77,7 +77,7 @@ struct SettingsMainView: View {
         label: Text("Default Game Mode"))
       {
         ForEach(GameMode.allCases) { gameMode in
-          Text(gameMode.name.localizedStringKey())
+          Text(gameMode.name.localizedStringKey)
             .tag(gameMode)
         }
       }
@@ -101,7 +101,7 @@ struct SettingsMainView: View {
         label: Text("Default Battle Mode"))
       {
         ForEach(BattleMode.allCases) { battleMode in
-          Text(battleMode.shortName.localizedStringKey())
+          Text(battleMode.shortName.localizedStringKey)
             .tag(battleMode)
         }
       }
@@ -123,24 +123,24 @@ struct SettingsMainView: View {
           .onSet { _ in SimpleHaptics.generateTask(.selection) },
         label: Spacer())
       {
-        ForEach(IkaColorSchemeManager.AppColorScheme.allCases) { appColorScheme in
-          Text(appColorScheme.name.localizedStringKey())
-            .tag(appColorScheme)
+        ForEach(IkaColorSchemeManager.AppPreferredColorScheme.allCases) { appPreferredColorScheme in
+          Text(appPreferredColorScheme.name.localizedStringKey)
+            .tag(appPreferredColorScheme)
         }
       }
     }
   }
 
-  private var rowAppIcon: some View {
-    NavigationLink(destination: SettingsAppIconView()) {
+  private var rowSwitchAppIcon: some View {
+    NavigationLink(destination: SettingsSwitchAppIconView()) {
       Label(
         "App Icon",
-        systemImage: Scoped.APP_ICON_SFSYMBOL)
+        systemImage: Scoped.SWITCH_APP_ICON_SFSYMBOL)
     }
   }
 
-  private var rowAdvanced: some View {
-    NavigationLink(destination: SettingsAdvancedView()) {
+  private var rowAdvancedOptions: some View {
+    NavigationLink(destination: SettingsAdvancedOptionsView()) {
       Label(
         "Advanced Options",
         systemImage: Scoped.ADVANCED_SFSYMBOL)

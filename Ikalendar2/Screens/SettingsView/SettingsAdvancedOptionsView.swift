@@ -1,5 +1,5 @@
 //
-//  SettingsAdvancedView.swift
+//  SettingsAdvancedOptionsView.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-// MARK: - SettingsAppearanceAdvancedView
+// MARK: - SettingsAdvancedOptionsView
 
-struct SettingsAdvancedView: View {
+struct SettingsAdvancedOptionsView: View {
   @EnvironmentObject var ikaStatus: IkaStatus
   @EnvironmentObject var ikaPreference: IkaPreference
 

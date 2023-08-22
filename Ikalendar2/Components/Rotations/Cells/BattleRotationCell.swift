@@ -90,7 +90,7 @@ struct BattleRotationCellPrimary: View {
         .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH_RATIO)
 
       // Rule title
-      Text(rotation.rule.name.localizedStringKey())
+      Text(rotation.rule.name.localizedStringKey)
         .scaledLimitedLine()
         .fontIka(
           .ika2,
@@ -147,7 +147,7 @@ struct BattleRotationCellSecondary: View {
           .cornerRadius(Scoped.RULE_IMG_FRAME_CORNER_RADIUS)
 
         // Rule title
-        Text(rotation.rule.name.localizedStringKey())
+        Text(rotation.rule.name.localizedStringKey)
           .scaledLimitedLine()
           .fontIka(
             .ika2,

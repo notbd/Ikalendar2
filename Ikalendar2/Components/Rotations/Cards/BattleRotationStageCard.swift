@@ -57,7 +57,7 @@ struct BattleRotationStageCardSecondary: View {
         .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
         .offset(y: Scoped.STAGE_IMG_OFFSET_Y)
 
-      Text(stage.name.localizedStringKey())
+      Text(stage.name.localizedStringKey)
         .scaledLimitedLine()
         .fontIka(
           .ika2,

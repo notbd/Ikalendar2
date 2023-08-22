@@ -59,9 +59,9 @@ struct RotationsView: View {
   private var title: LocalizedStringKey {
     switch ikaStatus.gameModeSelection {
     case .battle:
-      return ikaStatus.battleModeSelection.name.localizedStringKey()
+      return ikaStatus.battleModeSelection.name.localizedStringKey
     case .salmon:
-      return ikaStatus.gameModeSelection.name.localizedStringKey()
+      return ikaStatus.gameModeSelection.name.localizedStringKey
     }
   }
 
@@ -106,7 +106,7 @@ struct ToolbarBattleModePicker: View {
       label: Text("Battle Mode"))
     {
       ForEach(BattleMode.allCases) { battleMode in
-        Text(battleMode.shortName.localizedStringKey())
+        Text(battleMode.shortName.localizedStringKey)
           .tag(battleMode)
       }
     }
@@ -128,7 +128,7 @@ struct ToolbarGameModePicker: View {
     {
       ForEach(GameMode.allCases) { gameMode in
         Label(
-          gameMode.name.localizedStringKey(),
+          gameMode.name.localizedStringKey,
           systemImage: ikaStatus.gameModeSelection == gameMode
             ? gameMode.sfSymbolSelected
             : gameMode.sfSymbolIdle)

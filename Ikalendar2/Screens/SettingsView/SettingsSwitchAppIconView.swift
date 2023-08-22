@@ -1,5 +1,5 @@
 //
-//  SettingsAppIconView.swift
+//  SettingsSwitchAppIconView.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-// MARK: - SettingsAppIconView
+// MARK: - SettingsSwitchAppIconView
 
 /// The page for App Icon Settings.
-struct SettingsAppIconView: View {
+struct SettingsSwitchAppIconView: View {
   var body: some View {
     HStack {
       Image(systemName: "paintbrush.fill")
@@ -26,6 +26,6 @@ struct SettingsAppIconView: View {
 
 struct SettingsAppIconView_Previews: PreviewProvider {
   static var previews: some View {
-    SettingsAppIconView()
+    SettingsSwitchAppIconView()
   }
 }

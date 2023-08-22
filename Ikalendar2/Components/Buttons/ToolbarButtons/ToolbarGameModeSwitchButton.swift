@@ -25,7 +25,7 @@ struct ToolbarGameModeSwitchButton: View {
       {
         ForEach(GameMode.allCases) { gameMode in
           Label(
-            gameMode.name.localizedStringKey(),
+            gameMode.name.localizedStringKey,
             systemImage: ikaStatus.gameModeSelection == gameMode
               ? gameMode.sfSymbolSelected
               : gameMode.sfSymbolIdle)

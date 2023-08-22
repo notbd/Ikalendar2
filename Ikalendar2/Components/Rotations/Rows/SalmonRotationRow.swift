@@ -100,7 +100,7 @@ struct SalmonRotationHeader: View {
   var body: some View {
     HStack {
       // can force unwrap `prefixString` here because .other row type will not have header
-      Text(rowType.prefixString!.localizedStringKey())
+      Text(rowType.prefixString!.localizedStringKey)
         .fontIka(
           .ika1,
           size: Scoped.PREFIX_FONT_SIZE,

@@ -16,7 +16,7 @@ final class IkaColorSchemeManager {
 
   static let shared = IkaColorSchemeManager()
 
-  enum AppColorScheme: String, Identifiable, CaseIterable {
+  enum AppPreferredColorScheme: String, Identifiable, CaseIterable {
     case system
     case dark
     case light
@@ -56,7 +56,7 @@ final class IkaColorSchemeManager {
   ///
   /// - Parameter colorScheme: The desired color scheme, which could be system, dark, or light.
   /// - Note: The transition between the color schemes is animated for a smooth user experience.
-  func handleColorSchemeChange(for colorScheme: AppColorScheme) {
+  func handleColorSchemeChange(for colorScheme: AppPreferredColorScheme) {
     guard let keyWindow else { return }
 
     UIView.transition(

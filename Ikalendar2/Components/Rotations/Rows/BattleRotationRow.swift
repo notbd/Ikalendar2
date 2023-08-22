@@ -103,7 +103,7 @@ struct BattleRotationHeader: View {
     HStack(spacing: Scoped.SPACING) {
       // skip if `prefixString` is nil (case .other)
       if let prefixString = rowType.prefixString {
-        Text(prefixString.localizedStringKey())
+        Text(prefixString.localizedStringKey)
           .fontIka(
             .ika1,
             size: Scoped.PREFIX_FONT_SIZE,
