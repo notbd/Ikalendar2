@@ -15,7 +15,7 @@ struct LoadingOverlay: View {
 
   var loadStatus: IkaCatalog.LoadStatus
 
-  var isLoading: Bool {
+  private var isLoading: Bool {
     loadStatus == .loading
   }
 

@@ -49,22 +49,24 @@ struct TimeLength {
     // Always include seconds
     elements.append(String(seconds) + String.localizedString(for: "seconds"))
 
+    // Japanese
     if locale.identifier.starts(with: "ja") {
-      // Japanese
       return elements.joined()
     }
 
-    if locale.identifier.starts(with: "zh_Hans") {
-      // Simplified Han
+    // Simplified Han
+    else if locale.identifier.starts(with: "zh_Hans") {
       return elements.joined()
     }
 
-    if locale.identifier.starts(with: "zh_Hant") {
-      // Traditional Han
+    // Traditional Han
+    else if locale.identifier.starts(with: "zh_Hant") {
       return elements.joined()
     }
 
     // default: English
-    return elements.joined(separator: " ")
+    else {
+      return elements.joined(separator: " ")
+    }
   }
 }

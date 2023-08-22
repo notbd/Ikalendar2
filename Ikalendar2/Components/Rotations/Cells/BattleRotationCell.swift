@@ -41,9 +41,10 @@ struct BattleRotationCellPrimary: View {
   typealias Scoped = Constants.Styles.Rotation.Battle.Cell.Primary
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-  var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
-  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   let rotation: BattleRotation
   let rowWidth: CGFloat

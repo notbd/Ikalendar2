@@ -8,6 +8,7 @@
 
 // MARK: - Settings
 
+// Main
 "Settings" = "Settings";
 "Done" = "Done";
 "Default Mode" = "Default Mode";
@@ -16,13 +17,16 @@
 "Follow System" = "Follow System";
 "Dark" = "Dark";
 "Light" = "Light";
-"Alternative Stage Images" = "Alt Stage Appearances";
 "App Icon" = "App Icon";
 "Advanced Options" = "Advanced Options";
 "Language" = "Language";
 "Preferred Language" = "App Language";
 "About" = "About";
 "Credits" = "Credits";
+// Advanced Options
+"Alternative Stage Images" = "Alternative Stage Images";
+"Swap Bottom Toolbar Pickers" = "Swap Bottom Toolbar Pickers";
+// About
 "Share" = "Share";
 "Share ikalendar2" = "Share ikalendar2";
 "Contact" = "Contact";

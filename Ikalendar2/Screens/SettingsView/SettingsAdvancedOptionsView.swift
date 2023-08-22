@@ -10,34 +10,37 @@ import SwiftUI
 // MARK: - SettingsAdvancedOptionsView
 
 struct SettingsAdvancedOptionsView: View {
-  @EnvironmentObject var ikaStatus: IkaStatus
-  @EnvironmentObject var ikaPreference: IkaPreference
-
-  @State private var ifToolbarPreviewPresented = false
-
   typealias Scoped = Constants.Styles.Settings.Advanced
 
-//  let battleRotationExample =
-//    IkaMockData.getBattleRotation(rule: BattleRule.allCases.randomElement()!)
-//  let salmonRotationExample = IkaMockData.getSalmonRotation()
+  @EnvironmentObject private var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaPreference: IkaPreference
+
+  @State private var ifBottomToolbarPreviewPresented = false
+
+  //  let battleRotationExample =
+  //    IkaMockData.getBattleRotation(rule: BattleRule.allCases.randomElement()!)
+  //  let salmonRotationExample = IkaMockData.getSalmonRotation()
 
   var body: some View {
-    Form {
-      Section(header: Text("Alternative Stage Images")) {
+    List {
+      Section(header: Spacer()) {
         rowAltStageImagesToggle
       }
 
-      Section(header: Text("Bottom Toolbar Picker Positioning")) {
-        rowBottomToolbarPositioningPicker
-        rowBottomToolbarPositioningPreview
+      Section {
+        rowBottomToolbarPositioning
       }
     }
     .navigationTitle("Advanced Options")
-    .navigationBarTitleDisplayMode(.inline)
-    .sheet(isPresented: $ifToolbarPreviewPresented) {
-      Text("Hello World!")
-        .presentationDetents([.fraction(0.1)])
+    .navigationBarTitleDisplayMode(.large)
+    .sheet(isPresented: $ifBottomToolbarPreviewPresented) {
+      BottomToolbarPositioningPreview()
+        .presentationDetents([.fraction(Scoped.BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION)])
+        .presentationCornerRadius(0)
+        .presentationBackground(.ultraThinMaterial)
+        .interactiveDismissDisabled()
     }
+    .listStyle(.insetGrouped)
   }
 
   private var rowAltStageImagesToggle: some View {
@@ -50,40 +53,80 @@ struct SettingsAdvancedOptionsView: View {
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
   }
 
-//  private var rowAltStageImagesPreview: some View {
-//    // placeholder
-//    Toggle(isOn: .constant(true)) {
-//      Label(
-//        "Alternative Stage Images",
-//        systemImage: Scoped.ALT_STAGE_IMG_SFSYMBOL)
-//    }
-//    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-//  }
-
-  private var rowBottomToolbarPositioningPicker: some View {
-    // placeholder
-    Toggle(isOn: $ikaPreference.ifReverseToolbarPickers) {
+  private var rowBottomToolbarPositioning: some View {
+    Toggle(isOn: $ikaPreference.ifSwapBottomToolbarPickers) {
       Label(
-        "Reverse Toolbar Pickers",
+        "Swap Bottom Toolbar Pickers",
         systemImage: Scoped.BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL)
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-    .onChange(of: ikaPreference.ifReverseToolbarPickers) { _ in
-      // use _isOn here..
-      ifToolbarPreviewPresented = true
-      DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-        ifToolbarPreviewPresented = false
+    .onChange(of: ikaPreference.ifSwapBottomToolbarPickers) { _ in
+      ifBottomToolbarPreviewPresented.toggle()
+    }
+  }
+}
+
+// MARK: - BottomToolbarPositioningPreview
+
+struct BottomToolbarPositioningPreview: View {
+  typealias Scoped = Constants.Styles.Settings.Advanced
+
+  @Environment(\.dismiss) private var dismiss
+
+  @EnvironmentObject private var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaPreference: IkaPreference
+
+  var body: some View {
+    HStack {
+      if !ikaPreference.ifSwapBottomToolbarPickers {
+        // keep order
+        battleModePicker
+        Spacer()
+        gameModePicker
       }
+      else {
+        // swap order
+        gameModePicker
+        Spacer()
+        battleModePicker
+      }
+    }
+    .padding(.horizontal, Scoped.BOTTOM_TOOLBAR_PREVIEW_PADDING_HORIZONTAL)
+    .task {
+      try? await Task.sleep(
+        nanoseconds: UInt64(Scoped.BOTTOM_TOOLBAR_PREVIEW_LINGER_INTERVAL * 1_000_000_000))
+      dismiss()
     }
   }
 
-  private var rowBottomToolbarPositioningPreview: some View {
-    // placeholder
-    Toggle(isOn: .constant(true)) {
-      Label(
-        "Bottom Toolbar Picker Positioning",
-        systemImage: Scoped.BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL)
+  private var battleModePicker: some View {
+    Picker(
+      selection: .constant(ikaStatus.battleModeSelection),
+      label: Text("Battle Mode"))
+    {
+      ForEach(BattleMode.allCases) { battleMode in
+        Text(battleMode.shortName.localizedStringKey)
+          .tag(battleMode)
+      }
     }
-    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+    .pickerStyle(SegmentedPickerStyle())
+    .fixedSize()
+  }
+
+  private var gameModePicker: some View {
+    Picker(
+      selection: .constant(GameMode.battle),
+      label: Text("Game Mode"))
+    {
+      ForEach(GameMode.allCases) { gameMode in
+        Image(
+          systemName: ikaStatus.gameModeSelection == gameMode
+            ? gameMode.sfSymbolSelected
+            : gameMode.sfSymbolIdle)
+          .tag(gameMode)
+      }
+    }
+    .pickerStyle(SegmentedPickerStyle())
+    .fixedSize()
   }
 }

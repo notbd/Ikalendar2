@@ -14,7 +14,7 @@ import SwiftUI
 struct ToolbarGameModeSwitchButton: View {
   typealias Scoped = Constants.Styles.ToolbarButton
 
-  @EnvironmentObject var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaStatus: IkaStatus
 
   var body: some View {
     Menu {

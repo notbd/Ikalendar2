@@ -23,9 +23,9 @@ extension Constants.Keys {
     static let DEFAULT_GAME_MODE = "pref.default.game_mode"
     static let DEFAULT_BATTLE_MODE = "pref.default.battle_mode"
 
-    static let COLOR_SCHEME = "pref.color_scheme"
+    static let APP_PREFERRED_COLOR_SCHEME = "pref.app_preferred_color_scheme"
 
-    static let IF_REVERSE_TOOLBAR_PICKERS = "pref.if_reverse_toolbar_pickers"
+    static let IF_SWAP_BOTTOM_TOOLBAR_PICKERS = "pref.if_swap_bottom_toolbar_pickers"
   }
 
   enum URL {

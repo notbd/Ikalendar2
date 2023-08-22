@@ -11,8 +11,8 @@ import SwiftUI
 
 /// The view that displays a list of salmon rotations.
 struct SalmonRotationListView: View {
-  @EnvironmentObject var ikaCatalog: IkaCatalog
-  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
+  @EnvironmentObject private var ikaCatalog: IkaCatalog
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   private var salmonRotations: [SalmonRotation] {
     // filter out the expired ones and only display the current and future rotations

@@ -11,7 +11,7 @@ import SwiftUI
 
 /// A row containing all the information of a battle rotation.
 struct BattleRotationRow: View {
-  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let rotation: BattleRotation
   let index: Int
@@ -72,7 +72,7 @@ extension BattleRotationRow {
 struct BattleRotationHeader: View {
   typealias Scoped = Constants.Styles.Rotation.Header
 
-  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let rotation: BattleRotation
   let rowType: BattleRotationRow.RowType

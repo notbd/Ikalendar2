@@ -30,7 +30,7 @@ struct AutoLoadingOverlay: View {
         value: autoLoadStatus)
   }
 
-  var iconName: String {
+  private var iconName: String {
     switch autoLoadStatus {
     case .autoLoading:
       return Scoped.LOADING_SFSYMBOL

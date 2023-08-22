@@ -11,14 +11,14 @@ import SwiftUI
 
 /// A mode icon overlay of the RotationsView.
 struct ModeIconStamp: View {
-  @EnvironmentObject var ikaCatalog: IkaCatalog
-  @EnvironmentObject var ikaStatus: IkaStatus
-  @EnvironmentObject var ikaMotionPublisher: IkaMotionPublisher
+  @EnvironmentObject private var ikaCatalog: IkaCatalog
+  @EnvironmentObject private var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaMotionPublisher: IkaMotionPublisher
 
-  var x: CGFloat { ikaMotionPublisher.dx }
-  var y: CGFloat { ikaMotionPublisher.dy }
-  var rot: Double { Double((pow(x, 2) + pow(y, 2)).squareRoot()) }
-  var degrees: Double = 22
+  private var x: CGFloat { ikaMotionPublisher.dx }
+  private var y: CGFloat { ikaMotionPublisher.dy }
+  private var rot: Double { Double((pow(x, 2) + pow(y, 2)).squareRoot()) }
+  private var degrees: Double = 22
 
   var body: some View {
     icon
@@ -30,7 +30,7 @@ struct ModeIconStamp: View {
         value: ikaMotionPublisher.dx * ikaMotionPublisher.dy)
   }
 
-  var gradientMask: some View {
+  private var gradientMask: some View {
     // mask color does not matter; only opacity matters
     let maskColor = Color(UIColor.systemBackground)
     return LinearGradient(
@@ -51,7 +51,7 @@ struct ModeIconStamp: View {
       endPoint: .bottom)
   }
 
-  var icon: some View {
+  private var icon: some View {
     let imgFiln: String
     switch ikaStatus.gameModeSelection {
     case .battle:

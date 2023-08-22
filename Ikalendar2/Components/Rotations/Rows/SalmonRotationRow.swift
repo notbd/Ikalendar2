@@ -11,7 +11,7 @@ import SwiftUI
 
 /// A row containing all the information of a salmon rotation.
 struct SalmonRotationRow: View {
-  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let rotation: SalmonRotation
   let index: Int
@@ -92,7 +92,7 @@ extension SalmonRotationRow {
 struct SalmonRotationHeader: View {
   typealias Scoped = Constants.Styles.Rotation.Header
 
-  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let rotation: SalmonRotation
   let rowType: SalmonRotationRow.RowType

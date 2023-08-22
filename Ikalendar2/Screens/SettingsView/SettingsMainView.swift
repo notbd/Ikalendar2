@@ -14,10 +14,11 @@ import SwiftUI
 struct SettingsMainView: View {
   typealias Scoped = Constants.Styles.Settings.Main
 
-  @Environment(\.openURL) var openURL
+  @Environment(\.openURL) private var openURL
+  @Environment(\.dismiss) private var dismiss
 
-  @EnvironmentObject var ikaStatus: IkaStatus
-  @EnvironmentObject var ikaPreference: IkaPreference
+  @EnvironmentObject private var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaPreference: IkaPreference
 
   private var currentLanguage: String {
     if Locale.current.identifier.starts(with: "en") { return "English" }
@@ -199,7 +200,7 @@ struct SettingsMainView: View {
   private var doneButton: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
-      ikaStatus.isSettingsPresented.toggle()
+      dismiss()
     } label: {
       Text("Done")
         .fontWeight(Scoped.DONE_BUTTON_FONT_WEIGHT)

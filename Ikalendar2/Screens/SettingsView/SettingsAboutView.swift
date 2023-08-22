@@ -13,13 +13,13 @@ import SwiftUI
 
 /// The About page in App Settings.
 struct SettingsAboutView: View {
-//  @Environment(\.requestReview) var requestReview
+//  @Environment(\.requestReview) private var requestReview
 
   typealias Scoped = Constants.Styles.Settings.About
 
-  @Environment(\.openURL) var openURL
+  @Environment(\.openURL) private var openURL
 
-  @State var appStoreOverlayPresented = false
+  @State private var appStoreOverlayPresented = false
 
   var body: some View {
     Form {

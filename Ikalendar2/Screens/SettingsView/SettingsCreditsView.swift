@@ -11,8 +11,6 @@ import SwiftUI
 
 /// The Credits page in App Settings.
 struct SettingsCreditsView: View {
-  @Environment(\.openURL) var openURL
-
   var body: some View {
     Form { }
       .navigationTitle("Credits")

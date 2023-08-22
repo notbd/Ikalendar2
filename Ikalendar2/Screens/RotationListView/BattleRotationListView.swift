@@ -11,9 +11,9 @@ import SwiftUI
 
 /// The view that displays a list of battle rotations.
 struct BattleRotationListView: View {
-  @EnvironmentObject var ikaCatalog: IkaCatalog
-  @EnvironmentObject var ikaStatus: IkaStatus
-  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
+  @EnvironmentObject private var ikaCatalog: IkaCatalog
+  @EnvironmentObject private var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   private var battleRotations: [BattleRotation] {
     // filter out the expired ones and only display the current and future rotations

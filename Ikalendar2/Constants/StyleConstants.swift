@@ -84,8 +84,12 @@ extension Constants.Styles {
 
     enum Advanced {
       static let ALT_STAGE_IMG_SFSYMBOL = "compass.drawing"
-
       static let BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL = "arrow.left.arrow.right"
+
+      static let BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION: CGFloat = 0.07
+      static let BOTTOM_TOOLBAR_PREVIEW_PADDING_HORIZONTAL: CGFloat = 14
+      static let BOTTOM_TOOLBAR_PREVIEW_LINGER_INTERVAL: TimeInterval = 1.5
+
     }
 
     enum About {

@@ -11,7 +11,7 @@ import SwiftUI
 // MARK: - OnboardingView
 
 struct OnboardingView: View {
-  @Environment(\.presentationMode) var presentationMode
+  @Environment(\.presentationMode) private var presentationMode
 
   var body: some View {
     GeometryReader { geo in

@@ -13,7 +13,7 @@ import SwiftUI
 struct SalmonRotationStageCard: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Stage
 
-  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let rotation: SalmonRotation
   let rowWidth: CGFloat

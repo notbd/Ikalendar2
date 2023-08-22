@@ -23,13 +23,14 @@ final class IkaPreference: ObservableObject {
   var defaultBattleMode: BattleMode = .regular { willSet { objectWillChange.send() }}
 
   /// Color Scheme
-  @AppStorage(Constants.Keys.AppStorage.COLOR_SCHEME)
-  var appPreferredColorScheme: IkaColorSchemeManager.AppPreferredColorScheme =
-    .system { willSet { objectWillChange.send() }}
+  @AppStorage(Constants.Keys.AppStorage.APP_PREFERRED_COLOR_SCHEME)
+  var appPreferredColorScheme: IkaColorSchemeManager.AppPreferredColorScheme = .system {
+    willSet { objectWillChange.send() }
+  }
 
   /// Bottom Toolbar Picker Positioning
-  @AppStorage(Constants.Keys.AppStorage.IF_REVERSE_TOOLBAR_PICKERS)
-  var ifReverseToolbarPickers = false { willSet { objectWillChange.send() }}
+  @AppStorage(Constants.Keys.AppStorage.IF_SWAP_BOTTOM_TOOLBAR_PICKERS)
+  var ifSwapBottomToolbarPickers = false { willSet { objectWillChange.send() }}
 
   // MARK: Lifecycle
 

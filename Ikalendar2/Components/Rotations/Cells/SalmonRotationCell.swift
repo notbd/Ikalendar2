@@ -13,7 +13,7 @@ import SwiftUI
 struct SalmonRotationCell: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Cell
 
-  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let rotation: SalmonRotation
   let rowWidth: CGFloat
@@ -83,7 +83,7 @@ struct SalmonRotationCell: View {
 struct SalmonRotationCellTimeTextSection: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Cell.TimeTextSection
 
-  @EnvironmentObject var ikaTimePublisher: IkaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let iconName: String
   let rotation: SalmonRotation

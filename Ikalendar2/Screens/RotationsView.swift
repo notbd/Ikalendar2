@@ -14,8 +14,9 @@ import SwiftUI
 struct RotationsView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-  @EnvironmentObject var ikaCatalog: IkaCatalog
-  @EnvironmentObject var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaCatalog: IkaCatalog
+  @EnvironmentObject private var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaPreference: IkaPreference
 
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
@@ -71,18 +72,26 @@ struct RotationsView: View {
     content
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
-          ToolbarSettingsButton(
-            action: didTapSettingsButton)
+          ToolbarSettingsButton(action: didTapSettingsButton)
         }
 
         ToolbarItemGroup(placement: .bottomBar) {
-          if ikaStatus.gameModeSelection == .battle {
-            ToolbarBattleModePicker()
+          if !ikaPreference.ifSwapBottomToolbarPickers {
+            // keep order
+            if ikaStatus.gameModeSelection == .battle {
+              ToolbarBattleModePicker()
+            }
+            Spacer()
+            ToolbarGameModePicker()
           }
-
-          Spacer()
-
-          ToolbarGameModePicker()
+          else {
+            // swap order
+            ToolbarGameModePicker()
+            Spacer()
+            if ikaStatus.gameModeSelection == .battle {
+              ToolbarBattleModePicker()
+            }
+          }
         }
       }
   }
@@ -97,7 +106,7 @@ struct RotationsView: View {
 
 /// A picker component for the battle mode
 struct ToolbarBattleModePicker: View {
-  @EnvironmentObject var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaStatus: IkaStatus
 
   var body: some View {
     Picker(
@@ -118,7 +127,7 @@ struct ToolbarBattleModePicker: View {
 
 /// A picker component for the game mode
 struct ToolbarGameModePicker: View {
-  @EnvironmentObject var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaStatus: IkaStatus
 
   var body: some View {
     Picker(

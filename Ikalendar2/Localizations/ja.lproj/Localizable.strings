@@ -8,6 +8,7 @@
 
 // MARK: - Settings
 
+// Main
 "Settings" = "設定";
 "Done" = "完了";
 "Default Mode" = "デフォルトモード";
@@ -16,13 +17,16 @@
 "Follow System" = "システムと同じ";
 "Dark" = "ダーク";
 "Light" = "ライト";
-"Alternative Stage Images" = "追加ステージ画像を利用";
 "App Icon" = "アプリアイコン";
 "Advanced Options" = "高度なオプション";
 "Language" = "言語";
 "Preferred Language" = "アプリケーション言語";
 "About" = "ikalendar2について";
 "Credits" = "クレジット";
+// Advanced Options
+"Alternative Stage Images" = "追加ステージ画像を利用";
+"Swap Bottom Toolbar Pickers" = "下部工具列のピッカーを交換";
+// About
 "Share" = "共有";
 "Share ikalendar2" = "ikalendar2を共有";
 "Contact" = "連絡";

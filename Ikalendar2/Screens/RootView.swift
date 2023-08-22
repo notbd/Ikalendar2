@@ -10,10 +10,8 @@ import SwiftUI
 /// The entry view of the app.
 /// Provide an interface for some upfront View-level configurations.
 struct RootView: View {
-  @Environment(\.colorScheme) var deviceColorScheme
-
-  @EnvironmentObject var ikaStatus: IkaStatus
-  @EnvironmentObject var ikaPreference: IkaPreference
+  @EnvironmentObject private var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaPreference: IkaPreference
 
   var body: some View {
     MainView()
@@ -29,6 +27,7 @@ struct RootView: View {
           .environmentObject(ikaStatus)
           .environmentObject(ikaPreference)
           .accentColor(.orange)
+          .interactiveDismissDisabled()
       }
   }
 
