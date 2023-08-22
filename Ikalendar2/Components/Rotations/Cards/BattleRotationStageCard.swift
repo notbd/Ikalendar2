@@ -45,7 +45,10 @@ struct BattleRotationStageCardSecondary: View {
   let stage: BattleStage
 
   var body: some View {
-    VStack(alignment: .trailing) {
+    VStack(
+      alignment: .trailing,
+      spacing: Scoped.V_SPACING)
+    {
       Image(stage.imgFilnLarge)
         .antialiased(true)
         .resizable()

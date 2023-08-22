@@ -19,7 +19,7 @@ extension Constants.Configs {
 
     static let autoLoadMaxAttempts = 8
 
-    static let activeStateCheckInterval: TimeInterval = 2
+    static let activeStateCheckInterval: TimeInterval = 1
     static let autoLoadedLingerLength: TimeInterval = 2
   }
 
