@@ -81,7 +81,7 @@ struct SettingsAdvancedOptionsView: View {
 
   private var stageImagesPreviewHeader: some View {
     HStack {
-      Text("Example:")
+      Text("Preview:")
       Spacer()
       Button {
         // same rule, different stages
