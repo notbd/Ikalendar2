@@ -25,7 +25,10 @@ struct SettingsAdvancedOptionsView: View {
   var body: some View {
     GeometryReader { geo in
       List {
-        Section(header: Spacer()) {
+        Section(
+          header: Spacer(),
+          footer: Spacer())
+        {
           rowBottomToolbarPositioningSwitch
           rowAltStageImagesSwitch
         }
