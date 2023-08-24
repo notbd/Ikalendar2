@@ -24,8 +24,10 @@
 "About" = "About";
 "Credits" = "Credits";
 // Advanced Options
-"Alternative Stage Images" = "Alternative Stage Images";
 "Swap Bottom Toolbar Pickers" = "Swap Bottom Toolbar Pickers";
+"Alternative Stage Images" = "Alternative Stage Images";
+"Example:" = "Example:";
+"Shuffle" = "Shuffle";
 // About
 "Share" = "Share";
 "Share ikalendar2" = "Share ikalendar2";

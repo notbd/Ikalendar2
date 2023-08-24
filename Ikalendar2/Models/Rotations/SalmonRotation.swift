@@ -8,10 +8,10 @@
 import Foundation
 
 /// Data model for the salmon run rotation.
-struct SalmonRotation: Rotation, Identifiable, Equatable {
-  var id: String {
-    "\(startTime.timeIntervalSince1970)-\(stage?.name ?? "nil")"
-  }
+struct SalmonRotation: Rotation {
+  var id: String { description }
+
+  var description: String
 
   let startTime: Date
   let endTime: Date
@@ -19,6 +19,8 @@ struct SalmonRotation: Rotation, Identifiable, Equatable {
   let weapons: [SalmonWeapon]?
   var rewardApparel: SalmonApparel?
   let grizzcoWeapon: GrizzcoWeapon?
+
+  var stageAltImageName: String?
 
   // MARK: Lifecycle
 
@@ -36,6 +38,17 @@ struct SalmonRotation: Rotation, Identifiable, Equatable {
     self.weapons = weapons
     self.rewardApparel = rewardApparel
     self.grizzcoWeapon = grizzcoWeapon
+
+    description = "\(startTime.timeIntervalSince1970)-\(endTime.timeIntervalSince1970)-" +
+      "\(stage?.name ?? "nil")-\(weapons?.description ?? "nil")-" +
+      "\(rewardApparel?.name ?? "nil")-\(grizzcoWeapon?.name ?? "nil")"
+
+    guard let stage else { return }
+    let generator = SeededRandomGenerator(seed: description)
+    let numOfAltImages = AssetImageCounter.countImagesWithPrefix(stage.imgFiln + "_Alt")
+    let randomChoice = generator.nextInt(bound: numOfAltImages)
+
+    stageAltImageName = stage.imgFiln + "_Alt_\(randomChoice)"
   }
 
   // MARK: Internal
@@ -50,6 +63,11 @@ struct SalmonRotation: Rotation, Identifiable, Equatable {
     rhs: SalmonRotation)
     -> Bool
   {
-    lhs.id == rhs.id
+    lhs.startTime == rhs.startTime &&
+      lhs.endTime == rhs.endTime &&
+      lhs.stage == rhs.stage &&
+      lhs.weapons == rhs.weapons &&
+      lhs.rewardApparel == rhs.rewardApparel &&
+      lhs.grizzcoWeapon == rhs.grizzcoWeapon
   }
 }

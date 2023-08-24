@@ -8,7 +8,7 @@
 // MARK: - HeadApparel
 
 /// Data model for the head apparels.
-enum HeadApparel: Int, Identifiable, CaseIterable {
+enum HeadApparel: Int, Identifiable, CaseIterable, Equatable {
   case headlampHelmet = 21000
   case dustBlocker2000 = 21001
   case weldingMask = 21002

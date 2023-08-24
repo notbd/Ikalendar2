@@ -3,7 +3,7 @@
     {
       "identity" : "simplehaptics",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/zhang13music/SimpleHaptics",
+      "location" : "https://github.com/notbd/SimpleHaptics",
       "state" : {
         "branch" : "main",
         "revision" : "98a7d86027c3794e8805ac339bb8b85870f15ea0"

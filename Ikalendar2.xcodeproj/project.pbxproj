@@ -55,11 +55,13 @@
 		7903FE9E28C4702100245586 /* ToolbarRefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */; };
 		7903FEA228C472E800245586 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7903FEA428C472E800245586 /* Localizable.strings */; };
 		790AAE472A919814003E2C5D /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790AAE462A919814003E2C5D /* ModalDismissable.swift */; };
-		790AAE4A2A91A0DB003E2C5D /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 790AAE492A91A0DB003E2C5D /* SwiftyJSON */; };
-		790AAE4D2A91D9BB003E2C5D /* SimpleHaptics in Frameworks */ = {isa = PBXBuildFile; productRef = 790AAE4C2A91D9BB003E2C5D /* SimpleHaptics */; };
 		79189B4828C95E75006E78F9 /* OffsettableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */; };
 		792E1FBD28DE89C100C3789D /* SettingsAdvancedOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */; };
+		795A60A92A9759C9007B3861 /* AssetImageCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A60A82A9759C9007B3861 /* AssetImageCounter.swift */; };
+		795A60AB2A976745007B3861 /* SeededRandomGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
+		797C0E822A9725D900DA405A /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 797C0E812A9725D900DA405A /* SwiftyJSON */; };
+		797C0E852A97260F00DA405A /* SimpleHaptics in Frameworks */ = {isa = PBXBuildFile; productRef = 797C0E842A97260F00DA405A /* SimpleHaptics */; };
 		79802FFA28C55B740048C478 /* IkaColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79802FF928C55B740048C478 /* IkaColorSchemeManager.swift */; };
 		79A7258F2A5E9367007E9C92 /* ConfigConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
@@ -146,6 +148,8 @@
 		790AAE462A919814003E2C5D /* ModalDismissable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
 		79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsettableScrollView.swift; sourceTree = "<group>"; };
 		792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAdvancedOptionsView.swift; sourceTree = "<group>"; };
+		795A60A82A9759C9007B3861 /* AssetImageCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetImageCounter.swift; sourceTree = "<group>"; };
+		795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeededRandomGenerator.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
 		79802FF928C55B740048C478 /* IkaColorSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaColorSchemeManager.swift; sourceTree = "<group>"; };
 		79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigConstants.swift; sourceTree = "<group>"; };
@@ -188,8 +192,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				790AAE4A2A91A0DB003E2C5D /* SwiftyJSON in Frameworks */,
-				790AAE4D2A91D9BB003E2C5D /* SimpleHaptics in Frameworks */,
+				797C0E822A9725D900DA405A /* SwiftyJSON in Frameworks */,
+				797C0E852A97260F00DA405A /* SimpleHaptics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +232,8 @@
 			children = (
 				7903FE5628C460C600245586 /* TimeLength.swift */,
 				79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */,
+				795A60A82A9759C9007B3861 /* AssetImageCounter.swift */,
+				795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -609,8 +615,8 @@
 			);
 			name = Ikalendar2;
 			packageProductDependencies = (
-				790AAE492A91A0DB003E2C5D /* SwiftyJSON */,
-				790AAE4C2A91D9BB003E2C5D /* SimpleHaptics */,
+				797C0E812A9725D900DA405A /* SwiftyJSON */,
+				797C0E842A97260F00DA405A /* SimpleHaptics */,
 			);
 			productName = Ikalendar2;
 			productReference = 79B92BB228B03B1F00544939 /* Ikalendar2.app */;
@@ -642,8 +648,8 @@
 			);
 			mainGroup = 79B92BA928B03B1F00544939;
 			packageReferences = (
-				790AAE482A91A0DB003E2C5D /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				790AAE4B2A91D9BB003E2C5D /* XCRemoteSwiftPackageReference "SimpleHaptics" */,
+				797C0E802A9725D900DA405A /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				797C0E832A97260F00DA405A /* XCRemoteSwiftPackageReference "SimpleHaptics" */,
 			);
 			productRefGroup = 79B92BB328B03B1F00544939 /* Products */;
 			projectDirPath = "";
@@ -728,6 +734,7 @@
 				79AA714B28C411EB00A91055 /* BattleRotationDict.swift in Sources */,
 				7903FE6128C46A1700245586 /* RootView.swift in Sources */,
 				79AA714428C408B500A91055 /* BattleRule.swift in Sources */,
+				795A60AB2A976745007B3861 /* SeededRandomGenerator.swift in Sources */,
 				7903FE5128C45F3600245586 /* Color+Ext.swift in Sources */,
 				79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */,
 				7903FE7F28C46EA500245586 /* BattleRotationRow.swift in Sources */,
@@ -769,6 +776,7 @@
 				7903FE6C28C46CAF00245586 /* SalmonRotationListView.swift in Sources */,
 				7903FE7428C46D4100245586 /* SettingsCreditsView.swift in Sources */,
 				7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */,
+				795A60A92A9759C9007B3861 /* AssetImageCounter.swift in Sources */,
 				7903FE4D28C45ED200245586 /* View+Ext.swift in Sources */,
 				7903FE4528C45CE900245586 /* ScrollView+Ext.swift in Sources */,
 				79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */,
@@ -915,7 +923,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2765;
+				CURRENT_PROJECT_VERSION = 3160;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -948,7 +956,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2765;
+				CURRENT_PROJECT_VERSION = 3160;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -998,7 +1006,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		790AAE482A91A0DB003E2C5D /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+		797C0E802A9725D900DA405A /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
 			requirement = {
@@ -1006,9 +1014,9 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		790AAE4B2A91D9BB003E2C5D /* XCRemoteSwiftPackageReference "SimpleHaptics" */ = {
+		797C0E832A97260F00DA405A /* XCRemoteSwiftPackageReference "SimpleHaptics" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zhang13music/SimpleHaptics";
+			repositoryURL = "https://github.com/notbd/SimpleHaptics";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -1017,14 +1025,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		790AAE492A91A0DB003E2C5D /* SwiftyJSON */ = {
+		797C0E812A9725D900DA405A /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 790AAE482A91A0DB003E2C5D /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			package = 797C0E802A9725D900DA405A /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
 		};
-		790AAE4C2A91D9BB003E2C5D /* SimpleHaptics */ = {
+		797C0E842A97260F00DA405A /* SimpleHaptics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 790AAE4B2A91D9BB003E2C5D /* XCRemoteSwiftPackageReference "SimpleHaptics" */;
+			package = 797C0E832A97260F00DA405A /* XCRemoteSwiftPackageReference "SimpleHaptics" */;
 			productName = SimpleHaptics;
 		};
 /* End XCSwiftPackageProductDependency section */

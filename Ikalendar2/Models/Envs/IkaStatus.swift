@@ -27,6 +27,6 @@ final class IkaStatus: ObservableObject {
 
   // MARK: Lifecycle
 
-  private init() { }
+  init() { }
 
 }

@@ -55,9 +55,10 @@ struct SalmonRotationCell: View {
         rotation: rotation,
         rowWidth: stageHeight * (16 / 9))
         .frame(height: stageHeight)
+        .layoutPriority(2)
       Spacer()
       SalmonRotationWeaponCard(weapons: rotation.weapons)
-        .frame(width: stageHeight)
+        .layoutPriority(1)
     }
   }
 

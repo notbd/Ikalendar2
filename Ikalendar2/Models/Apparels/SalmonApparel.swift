@@ -8,7 +8,7 @@
 // MARK: - SalmonApparel
 
 /// Data model for the salmon run reward apparels.
-enum SalmonApparel {
+enum SalmonApparel: Equatable {
   case head(HeadApparel)
   case body(BodyApparel)
   case foot(FootApparel)

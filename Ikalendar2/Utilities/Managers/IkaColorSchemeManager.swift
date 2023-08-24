@@ -34,6 +34,17 @@ final class IkaColorSchemeManager {
       }
     }
 
+    var sfSymbol: String {
+      switch self {
+      case .system:
+        return "macbook.and.iphone"
+      case .dark:
+        return "moon.fill"
+      case .light:
+        return "sun.max.fill"
+      }
+    }
+
   }
 
   /// A computed property that returns the key window from the connected scenes.

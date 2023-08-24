@@ -14,10 +14,17 @@ import SwiftUI
 struct BattleRotationStageCardPrimary: View {
   typealias Scoped = Constants.Styles.Rotation.Battle.Card.Primary
 
+  @EnvironmentObject private var ikaPreference: IkaPreference
+
   let stage: BattleStage
+  let altImageName: String
+
+  private var stageImageName: String { ikaPreference.ifUseAltStageImages
+    ? altImageName
+    : stage.imgFilnLarge }
 
   var body: some View {
-    Image(stage.imgFilnLarge)
+    Image(stageImageName)
       .antialiased(true)
       .resizable()
       .scaledToFit()
@@ -42,14 +49,21 @@ struct BattleRotationStageCardPrimary: View {
 struct BattleRotationStageCardSecondary: View {
   typealias Scoped = Constants.Styles.Rotation.Battle.Card.Secondary
 
+  @EnvironmentObject private var ikaPreference: IkaPreference
+
   let stage: BattleStage
+  let altImageName: String
+
+  private var stageImageName: String { ikaPreference.ifUseAltStageImages
+    ? altImageName
+    : stage.imgFilnLarge }
 
   var body: some View {
     VStack(
       alignment: .trailing,
       spacing: Scoped.V_SPACING)
     {
-      Image(stage.imgFilnLarge)
+      Image(stageImageName)
         .antialiased(true)
         .resizable()
         .scaledToFit()
@@ -71,9 +85,9 @@ struct BattleRotationStageCardSecondary: View {
 
 struct BattleRotationStageCard_Previews: PreviewProvider {
   static var previews: some View {
-    BattleRotationStageCardPrimary(stage: .theReef)
+    BattleRotationStageCardPrimary(stage: .theReef, altImageName: "The_Reef_Alt_0")
       .previewLayout(.fixed(width: 320, height: 200))
-    BattleRotationStageCardSecondary(stage: .humpbackPumpTrack)
+    BattleRotationStageCardSecondary(stage: .humpbackPumpTrack, altImageName: "Humpback_Pump_Track_Alt_0")
       .previewLayout(.fixed(width: 300, height: 240))
   }
 }

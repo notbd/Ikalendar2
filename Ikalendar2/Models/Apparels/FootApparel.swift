@@ -8,7 +8,7 @@
 // MARK: - FootApparel
 
 /// Data model for the foot apparels.
-enum FootApparel: Int, Identifiable, CaseIterable {
+enum FootApparel: Int, Identifiable, CaseIterable, Equatable {
   case angryRainBoots = 21001
   case nonSlipSenseis = 21002
   case friendshipBracelet = 21004

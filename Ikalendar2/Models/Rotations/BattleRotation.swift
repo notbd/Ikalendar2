@@ -8,10 +8,10 @@
 import Foundation
 
 /// Data model for the battle rotation.
-struct BattleRotation: Rotation, Identifiable, Equatable {
-  var id: String {
-    "\(startTime.timeIntervalSince1970)-\(rule.name)"
-  }
+struct BattleRotation: Rotation {
+  var id: String { description }
+
+  var description: String
 
   let startTime: Date
   let endTime: Date
@@ -19,6 +19,37 @@ struct BattleRotation: Rotation, Identifiable, Equatable {
   let rule: BattleRule
   let stageA: BattleStage
   let stageB: BattleStage
+
+  var stageAltImageNameA: String
+  var stageAltImageNameB: String
+
+  // MARK: Lifecycle
+
+  init(
+    startTime: Date,
+    endTime: Date,
+    rule: BattleRule,
+    stageA: BattleStage,
+    stageB: BattleStage)
+  {
+    self.startTime = startTime
+    self.endTime = endTime
+    self.rule = rule
+    self.stageA = stageA
+    self.stageB = stageB
+
+    description = "\(startTime.timeIntervalSince1970)-\(endTime.timeIntervalSince1970)-" +
+      "\(rule.name)-\(stageA.name)-\(stageB.name)"
+
+    let generator = SeededRandomGenerator(seed: description)
+    let numOfAltImagesA = AssetImageCounter.countImagesWithPrefix(stageA.imgFiln + "_Alt")
+    let numOfAltImagesB = AssetImageCounter.countImagesWithPrefix(stageB.imgFiln + "_Alt")
+    let randomChoiceA = generator.nextInt(bound: numOfAltImagesA)
+    let randomChoiceB = generator.nextInt(bound: numOfAltImagesB)
+
+    stageAltImageNameA = stageA.imgFiln + "_Alt_\(randomChoiceA)"
+    stageAltImageNameB = stageB.imgFiln + "_Alt_\(randomChoiceB)"
+  }
 
   // MARK: Internal
 
@@ -32,7 +63,11 @@ struct BattleRotation: Rotation, Identifiable, Equatable {
     rhs: BattleRotation)
     -> Bool
   {
-    lhs.id == rhs.id
+    lhs.startTime == rhs.startTime &&
+      lhs.endTime == rhs.endTime &&
+      lhs.rule == rhs.rule &&
+      lhs.stageA == rhs.stageA &&
+      lhs.stageB == rhs.stageB
   }
 
   /// Check if rotation is coming next according to the current time.

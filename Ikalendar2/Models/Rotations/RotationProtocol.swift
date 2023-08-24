@@ -10,8 +10,9 @@ import Foundation
 // MARK: - Rotation
 
 /// Protocol for the rotation
-protocol Rotation {
+protocol Rotation: Identifiable, Equatable, CustomStringConvertible {
   var id: String { get }
+  var description: String { get }
   var startTime: Date { get }
   var endTime: Date { get }
 }

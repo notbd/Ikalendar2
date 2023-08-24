@@ -8,7 +8,7 @@
 // MARK: - BodyApparel
 
 /// Data model for the body apparels.
-enum BodyApparel: Int, Identifiable, CaseIterable {
+enum BodyApparel: Int, Identifiable, CaseIterable, Equatable {
   case squiddorPolo = 21000
   case anchorLifeVest = 21001
   case juiceParka = 21002

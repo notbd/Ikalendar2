@@ -13,6 +13,7 @@ import SwiftUI
 struct SalmonRotationStageCard: View {
   typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Stage
 
+  @EnvironmentObject private var ikaPreference: IkaPreference
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let rotation: SalmonRotation
@@ -20,9 +21,12 @@ struct SalmonRotationStageCard: View {
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
   private var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
+  private var stageImageName: String { ikaPreference.ifUseAltStageImages
+    ? rotation.stageAltImageName!
+    : rotation.stage!.imgFiln }
 
   var body: some View {
-    Image(rotation.stage!.imgFiln)
+    Image(stageImageName)
       .antialiased(true)
       .resizable()
       .scaledToFit()

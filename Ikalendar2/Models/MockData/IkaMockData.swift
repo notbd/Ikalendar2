@@ -38,7 +38,11 @@ struct IkaMockData {
       if mysteryWeaponType == nil {
         // No mystery weapons
         for _ in 0 ..< 4 {
-          let randomIkaWeapon = IkaWeapon.allCases.randomElement()!
+          // no duplicates
+          var randomIkaWeapon = IkaWeapon.allCases.randomElement()!
+          while weapons!.contains(.vanilla(randomIkaWeapon)) {
+            randomIkaWeapon = IkaWeapon.allCases.randomElement()!
+          }
           weapons!.append(SalmonWeapon(randomIkaWeapon.id)!)
         }
       }
@@ -48,7 +52,11 @@ struct IkaMockData {
         case .green:
           /// Green question mark
           for _ in 0 ..< 3 {
-            let randomIkaWeapon = IkaWeapon.allCases.randomElement()!
+            // no duplicates
+            var randomIkaWeapon = IkaWeapon.allCases.randomElement()!
+            while weapons!.contains(.vanilla(randomIkaWeapon)) {
+              randomIkaWeapon = IkaWeapon.allCases.randomElement()!
+            }
             weapons!.append(SalmonWeapon(randomIkaWeapon.id)!)
           }
           let mysteryWeapon = MysteryWeapon.green
@@ -63,12 +71,19 @@ struct IkaMockData {
       }
     }
 
+    let rewardApparel = [
+      SalmonApparel.head(.allCases.randomElement()!),
+      SalmonApparel.body(.allCases.randomElement()!),
+      SalmonApparel.foot(.allCases.randomElement()!),
+    ].randomElement()
+
     return
       SalmonRotation(
         startTime: startTime,
         endTime: endTime,
         stage: stage,
-        weapons: weapons)
+        weapons: weapons,
+        rewardApparel: rewardApparel)
   }
 
   /// Generate a mock SalmonRotation array data.
@@ -109,14 +124,18 @@ struct IkaMockData {
     return salmonRotations
   }
 
-  /// Generate a mock BattleRotation data.
+  /// Generate a battle rotation with random stages for a specified rule and raw start time.
+  ///
+  /// The battle stage `Shifty Station` is explicitly excluded from the random stage selection.
+  ///
   /// - Parameters:
-  ///   - rule: The rule of the rotation.
-  ///   - rawStartTime: The raw start time (rotation will start at the next
-  ///                       rounded hour of this time).
-  /// - Returns: The BattleRotation data.
+  ///   - rule: The battle rule for the rotation. Defaults to be random.
+  ///   - rawStartTime: The raw start time for the battle rotation. Generated rotation will have started at
+  ///                   the previous rounded hour.
+  ///
+  /// - Returns: The `BattleRotation` object.
   static func getBattleRotation(
-    rule: BattleRule,
+    rule: BattleRule = BattleRule.allCases.randomElement()!,
     rawStartTime: Date = Date())
     -> BattleRotation
   {
@@ -128,15 +147,27 @@ struct IkaMockData {
         to: startTime)!
 
     func getRandomBattleStage() -> BattleStage {
-      BattleStage.allCases.randomElement()!
+      var stage = BattleStage.allCases.randomElement()!
+      while stage == .shiftyStation {
+        // exclude shifty station
+        stage = BattleStage.allCases.randomElement()!
+      }
+      return stage
+    }
+
+    let randomStageA = getRandomBattleStage()
+    var randomStageB = getRandomBattleStage()
+    while randomStageB == randomStageA {
+      // avoid duplicate
+      randomStageB = getRandomBattleStage()
     }
 
     return BattleRotation(
       startTime: startTime,
       endTime: endTime,
       rule: rule,
-      stageA: getRandomBattleStage(),
-      stageB: getRandomBattleStage())
+      stageA: randomStageA,
+      stageB: randomStageB)
   }
 
   /// Generate a mock BattleRotationDict data.

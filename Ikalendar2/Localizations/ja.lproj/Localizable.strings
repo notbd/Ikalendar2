@@ -24,8 +24,10 @@
 "About" = "ikalendar2について";
 "Credits" = "クレジット";
 // Advanced Options
-"Alternative Stage Images" = "追加ステージ画像を利用";
 "Swap Bottom Toolbar Pickers" = "下部工具列のピッカーを交換";
+"Alternative Stage Images" = "追加ステージ画像を利用";
+"Example:" = "例:";
+"Shuffle" = "シャッフル";
 // About
 "Share" = "共有";
 "Share ikalendar2" = "ikalendar2を共有";

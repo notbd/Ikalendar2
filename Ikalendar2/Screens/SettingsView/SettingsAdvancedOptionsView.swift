@@ -17,43 +17,47 @@ struct SettingsAdvancedOptionsView: View {
 
   @State private var ifBottomToolbarPreviewPresented = false
 
-  //  let battleRotationExample =
-  //    IkaMockData.getBattleRotation(rule: BattleRule.allCases.randomElement()!)
-  //  let salmonRotationExample = IkaMockData.getSalmonRotation()
+  @State private var battleRotationExample: BattleRotation = IkaMockData.getBattleRotation()
+  @State private var salmonRotationExample: SalmonRotation = IkaMockData.getSalmonRotation()
+
+  @State private var rowWidth: CGFloat = 390
 
   var body: some View {
-    List {
-      Section(header: Spacer()) {
-        rowAltStageImagesToggle
-      }
+    GeometryReader { geo in
+      List {
+        Section(header: Spacer()) {
+          rowBottomToolbarPositioningSwitch
+          rowAltStageImagesSwitch
+        }
 
-      Section {
-        rowBottomToolbarPositioning
+        Section(header: stageImagesPreviewHeader) {
+          battleStagePreview
+            .animation(.easeOut, value: battleRotationExample)
+        }
+
+        Section {
+          salmonStagePreview
+            .animation(.easeOut, value: salmonRotationExample)
+        }
+      }
+      .navigationTitle("Advanced Options")
+      .navigationBarTitleDisplayMode(.large)
+      .sheet(isPresented: $ifBottomToolbarPreviewPresented) {
+        BottomToolbarPositioningPreview()
+          .presentationDetents([.fraction(Scoped.BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION)])
+          .presentationCornerRadius(0)
+          .presentationBackground(.ultraThinMaterial)
+          .interactiveDismissDisabled()
+      }
+      .listStyle(.insetGrouped)
+      .onAppear {
+        // sync rowWidth value
+        rowWidth = geo.size.width
       }
     }
-    .navigationTitle("Advanced Options")
-    .navigationBarTitleDisplayMode(.large)
-    .sheet(isPresented: $ifBottomToolbarPreviewPresented) {
-      BottomToolbarPositioningPreview()
-        .presentationDetents([.fraction(Scoped.BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION)])
-        .presentationCornerRadius(0)
-        .presentationBackground(.ultraThinMaterial)
-        .interactiveDismissDisabled()
-    }
-    .listStyle(.insetGrouped)
   }
 
-  private var rowAltStageImagesToggle: some View {
-    // placeholder
-    Toggle(isOn: .constant(true)) {
-      Label(
-        "Alternative Stage Images",
-        systemImage: Scoped.ALT_STAGE_IMG_SFSYMBOL)
-    }
-    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-  }
-
-  private var rowBottomToolbarPositioning: some View {
+  private var rowBottomToolbarPositioningSwitch: some View {
     Toggle(isOn: $ikaPreference.ifSwapBottomToolbarPickers) {
       Label(
         "Swap Bottom Toolbar Pickers",
@@ -64,6 +68,59 @@ struct SettingsAdvancedOptionsView: View {
       ifBottomToolbarPreviewPresented.toggle()
     }
   }
+
+  private var rowAltStageImagesSwitch: some View {
+    // placeholder
+    Toggle(isOn: $ikaPreference.ifUseAltStageImages) {
+      Label(
+        "Alternative Stage Images",
+        systemImage: Scoped.ALT_STAGE_IMG_SFSYMBOL)
+    }
+    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+  }
+
+  private var stageImagesPreviewHeader: some View {
+    HStack {
+      Text("Example:")
+      Spacer()
+      Button {
+        // same rule, different stages
+        var newBattleRotationExample = IkaMockData.getBattleRotation(rule: battleRotationExample.rule)
+        var newSalmonRotationExample = IkaMockData.getSalmonRotation()
+        while
+          newBattleRotationExample.stageA == battleRotationExample.stageA ||
+          newBattleRotationExample.stageB == battleRotationExample.stageB
+        {
+          newBattleRotationExample =
+            IkaMockData.getBattleRotation(rule: battleRotationExample.rule)
+        }
+        while newSalmonRotationExample.stage == salmonRotationExample.stage {
+          newSalmonRotationExample = IkaMockData.getSalmonRotation()
+        }
+        battleRotationExample = newBattleRotationExample
+        salmonRotationExample = newSalmonRotationExample
+      } label: {
+        Label(
+          "Shuffle",
+          systemImage: Scoped.ALT_STAGE_PREVIEW_SHUFFLE_SFSYMBOL)
+          .font(.footnote.bold())
+      }
+    }
+  }
+
+  private var battleStagePreview: some View {
+    BattleRotationCell(
+      type: .primary,
+      rotation: battleRotationExample,
+      rowWidth: rowWidth)
+  }
+
+  private var salmonStagePreview: some View {
+    SalmonRotationCell(
+      rotation: salmonRotationExample,
+      rowWidth: rowWidth)
+  }
+
 }
 
 // MARK: - BottomToolbarPositioningPreview
@@ -128,5 +185,15 @@ struct BottomToolbarPositioningPreview: View {
     }
     .pickerStyle(SegmentedPickerStyle())
     .fixedSize()
+  }
+}
+
+// MARK: - SettingsAdvancedOptionsView_Previews
+
+struct SettingsAdvancedOptionsView_Previews: PreviewProvider {
+  static var previews: some View {
+    SettingsAdvancedOptionsView()
+      .environmentObject(IkaStatus())
+      .environmentObject(IkaPreference())
   }
 }

@@ -8,7 +8,7 @@
 // MARK: - BattleStage
 
 /// Data model for the battle stages.
-enum BattleStage: String, Identifiable, CaseIterable {
+enum BattleStage: String, Identifiable, CaseIterable, Equatable {
   case anchoVGames = "Ancho-V Games"
   case arowanaMall = "Arowana Mall"
   case blackbellySkatepark = "Blackbelly Skatepark"

@@ -8,7 +8,7 @@
 // MARK: - SalmonStage
 
 /// Data model for the salmon run stages.
-enum SalmonStage: Int, Identifiable, CaseIterable {
+enum SalmonStage: Int, Identifiable, CaseIterable, Equatable {
   case spawningGrounds = 5000
   case maroonerSBay = 5001
   case lostOutpost = 5002
@@ -61,6 +61,4 @@ extension SalmonStage {
       .replacingOccurrences(of: " ", with: "_")
       .replacingOccurrences(of: "'", with: "_")
   }
-
-//  var imgFilnSmall: String { imgFiln + "_small" }
 }

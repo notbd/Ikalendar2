@@ -83,12 +83,13 @@ extension Constants.Styles {
     }
 
     enum Advanced {
-      static let ALT_STAGE_IMG_SFSYMBOL = "compass.drawing"
       static let BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL = "arrow.left.arrow.right"
-
       static let BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION: CGFloat = 0.07
       static let BOTTOM_TOOLBAR_PREVIEW_PADDING_HORIZONTAL: CGFloat = 14
       static let BOTTOM_TOOLBAR_PREVIEW_LINGER_INTERVAL: TimeInterval = 1.5
+
+      static let ALT_STAGE_IMG_SFSYMBOL = "compass.drawing"
+      static let ALT_STAGE_PREVIEW_SHUFFLE_SFSYMBOL = "arrow.triangle.2.circlepath"
 
     }
 
@@ -155,7 +156,7 @@ extension Constants.Styles {
           static let PROGRESS_BAR_PADDING_BOTTOM: CGFloat = 16
           static let STAGE_SECTION_SPACING_RATIO: CGFloat = 0.04
           static let CELL_PADDING_TOP: CGFloat = 0
-          static let CELL_PADDING_BOTTOM: CGFloat = 8
+          static let CELL_PADDING_BOTTOM: CGFloat = 10
 
           static let RULE_SECTION_SPACING: CGFloat = 8
           static let RULE_IMG_MAX_WIDTH_RATIO: CGFloat = 0.105

@@ -122,10 +122,12 @@ struct SettingsMainView: View {
       Picker(
         selection: $ikaPreference.appPreferredColorScheme
           .onSet { _ in SimpleHaptics.generateTask(.selection) },
-        label: Spacer())
+        label: EmptyView())
       {
         ForEach(IkaColorSchemeManager.AppPreferredColorScheme.allCases) { appPreferredColorScheme in
-          Text(appPreferredColorScheme.name.localizedStringKey)
+          Label(
+            appPreferredColorScheme.name.localizedStringKey,
+            systemImage: appPreferredColorScheme.sfSymbol)
             .tag(appPreferredColorScheme)
         }
       }

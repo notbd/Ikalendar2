@@ -67,8 +67,8 @@ struct BattleRotationCellPrimary: View {
         alignment: .center,
         spacing: rowWidth * Scoped.STAGE_SECTION_SPACING_RATIO)
       {
-        BattleRotationStageCardPrimary(stage: rotation.stageA)
-        BattleRotationStageCardPrimary(stage: rotation.stageB)
+        BattleRotationStageCardPrimary(stage: rotation.stageA, altImageName: rotation.stageAltImageNameA)
+        BattleRotationStageCardPrimary(stage: rotation.stageB, altImageName: rotation.stageAltImageNameB)
       }
     }
     .padding(.top, Scoped.CELL_PADDING_TOP)
@@ -166,8 +166,8 @@ struct BattleRotationCellSecondary: View {
         spacing: rowWidth * Scoped.STAGE_SECTION_SPACING_RATIO +
           Scoped.STAGE_SECTION_SPACING_ADJUSTMENT_CONSTANT)
       {
-        BattleRotationStageCardSecondary(stage: rotation.stageA)
-        BattleRotationStageCardSecondary(stage: rotation.stageB)
+        BattleRotationStageCardSecondary(stage: rotation.stageA, altImageName: rotation.stageAltImageNameA)
+        BattleRotationStageCardSecondary(stage: rotation.stageB, altImageName: rotation.stageAltImageNameB)
       }
     }
   }
