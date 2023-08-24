@@ -25,6 +25,7 @@ extension Constants.Keys {
 
     static let APP_PREFERRED_COLOR_SCHEME = "pref.app_preferred_color_scheme"
 
+    static let IF_USE_ALT_STAGE_IMAGES = "pref.if_use_alt_stage_images"
     static let IF_SWAP_BOTTOM_TOOLBAR_PICKERS = "pref.if_swap_bottom_toolbar_pickers"
   }
 
@@ -36,13 +37,13 @@ extension Constants.Keys {
 
     static let NINTENDO_SPLATOON2_PAGE =
       "https://www.nintendo.com/store/products/splatoon-2-switch/"
-    static let DEVELOPER_TWITTER = "https://twitter.com/zhang13music"
-    static let DEVELOPER_EMAIL = "mailto:zhang13music@outlook.com"
+    static let DEVELOPER_TWITTER = "https://twitter.com/no7bd"
+    static let DEVELOPER_EMAIL = "mailto:no7bd@outlook.com"
     static let APP_STORE_PAGE = "https://apps.apple.com/app/id1529193361"
     static let APP_STORE_PAGE_US = "https://apps.apple.com/us/app/ikalendar2/id1529193361"
     static let APP_STORE_REVIEW = "https://apps.apple.com/app/id1529193361?action=write-review"
-    static let SOURCE_CODE_REPO = "https://github.com/zhang13music/Ikalendar2"
-    static let PRIVACY_POLICY = "https://github.com/zhang13music/Ikalendar2/wiki/Privacy-Policy"
+    static let SOURCE_CODE_REPO = "https://github.com/notbd/Ikalendar2"
+    static let PRIVACY_POLICY = "https://github.com/notbd/Ikalendar2/wiki/Privacy-Policy"
 
     static let THE_GOOD_STUFF = "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // good stuff indeed!
   }
