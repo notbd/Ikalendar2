@@ -14,6 +14,7 @@ enum IkaError: Error, Equatable {
   case serverError(IkaServerErrorType)
   case connectionError
   case unknownError
+  case maxAttemptsExceeded
 
   static func == (lhs: IkaError, rhs: IkaError) -> Bool {
     lhs.message == rhs.message
@@ -29,6 +30,8 @@ extension IkaError {
       return Scoped.Title.CONNECTION_ERROR
     case .unknownError:
       return Scoped.Title.UNKNOWN_ERROR
+    case .maxAttemptsExceeded:
+      return Scoped.Title.MAX_ATTEMPTS_EXCEEDED
     }
   }
 }
@@ -47,6 +50,8 @@ extension IkaError {
       return Scoped.Message.CONNECTION_ERROR
     case .unknownError:
       return Scoped.Message.UNKNOWN_ERROR
+    case .maxAttemptsExceeded:
+      return Scoped.Message.MAX_ATTEMPTS_EXCEEDED
     }
   }
 }

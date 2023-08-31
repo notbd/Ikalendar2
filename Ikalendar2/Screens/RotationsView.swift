@@ -28,7 +28,7 @@ struct RotationsView: View {
         }
         .navigationTitle(title)
         .refreshable {
-          await ikaCatalog.loadCatalog()
+          await ikaCatalog.refresh()
         }
         .overlay(
           ModeIconStamp(),

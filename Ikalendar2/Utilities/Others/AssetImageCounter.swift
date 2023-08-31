@@ -21,10 +21,10 @@ struct AssetImageCounter {
     let imageNamesWithPrefix = (0 ..< 10).map { "\(prefix)_\($0)" }
 
     // Iterate through image names to check if they are present in the Asset catalog
-    for imageName in imageNamesWithPrefix {
-      if let _ = UIImage(named: imageName) {
-        count += 1
-      }
+    for imageName in imageNamesWithPrefix
+      where UIImage(named: imageName) != nil
+    {
+      count += 1
     }
 
     return count

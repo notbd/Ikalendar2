@@ -37,8 +37,8 @@ extension Constants.Keys {
 
     static let NINTENDO_SPLATOON2_PAGE =
       "https://www.nintendo.com/store/products/splatoon-2-switch/"
-    static let DEVELOPER_TWITTER = "https://twitter.com/no7bd"
-    static let DEVELOPER_EMAIL = "mailto:no7bd@outlook.com"
+    static let DEVELOPER_TWITTER = "https://twitter.com/defnotbd"
+    static let DEVELOPER_EMAIL = "mailto:defnotbd@outlook.com"
     static let APP_STORE_PAGE = "https://apps.apple.com/app/id1529193361"
     static let APP_STORE_PAGE_US = "https://apps.apple.com/us/app/ikalendar2/id1529193361"
     static let APP_STORE_REVIEW = "https://apps.apple.com/app/id1529193361?action=write-review"
@@ -53,6 +53,7 @@ extension Constants.Keys {
       static let SERVER_ERROR = "key.title.server_error"
       static let CONNECTION_ERROR = "key.title.connection_error"
       static let UNKNOWN_ERROR = "key.title.unknown_error"
+      static let MAX_ATTEMPTS_EXCEEDED = "key.title.max_attempts_exceeded" // not used for now
     }
 
     enum Message {
@@ -60,6 +61,7 @@ extension Constants.Keys {
       static let SERVER_ERROR_BAD_DATA = "key.message.server_error.bad_data"
       static let CONNECTION_ERROR = "key.message.connection_error"
       static let UNKNOWN_ERROR = "key.message.unknown_error"
+      static let MAX_ATTEMPTS_EXCEEDED = "key.message.max_attempts_exceeded" // not used for now
     }
   }
 }

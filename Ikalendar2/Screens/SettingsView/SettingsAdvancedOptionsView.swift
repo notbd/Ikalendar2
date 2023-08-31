@@ -20,7 +20,7 @@ struct SettingsAdvancedOptionsView: View {
   @State private var battleRotationExample: BattleRotation = IkaMockData.getBattleRotation()
   @State private var salmonRotationExample: SalmonRotation = IkaMockData.getSalmonRotation()
 
-  @State private var rowWidth: CGFloat = 390
+  @State private var rowWidth: CGFloat = 390 // initial value does not matter
 
   var body: some View {
     GeometryReader { geo in
@@ -73,7 +73,6 @@ struct SettingsAdvancedOptionsView: View {
   }
 
   private var rowAltStageImagesSwitch: some View {
-    // placeholder
     Toggle(isOn: $ikaPreference.ifUseAltStageImages) {
       Label(
         "Alternative Stage Images",
@@ -87,7 +86,7 @@ struct SettingsAdvancedOptionsView: View {
       Text("Preview:")
       Spacer()
       Button {
-        // same rule, different stages
+        // keep rule, shuffle stages
         var newBattleRotationExample = IkaMockData.getBattleRotation(rule: battleRotationExample.rule)
         var newSalmonRotationExample = IkaMockData.getSalmonRotation()
         while
