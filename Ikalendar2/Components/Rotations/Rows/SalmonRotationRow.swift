@@ -17,13 +17,11 @@ struct SalmonRotationRow: View {
   let index: Int
   let rowWidth: CGFloat
 
-  private var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
-
   private var rowType: RowType {
     // expired rotations already filtered out, so index will reflect truth
     switch index {
     case 0:
-      return isCurrent ? .first(.active) : .first(.idle)
+      return rotation.isCurrent ? .first(.active) : .first(.idle)
     case 1:
       return .second
     default:

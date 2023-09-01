@@ -17,9 +17,7 @@ struct BattleRotationListView: View {
 
   private var battleRotations: [BattleRotation] {
     // filter out the expired ones and only display the current and future rotations
-    ikaCatalog.battleRotationDict[ikaStatus.battleModeSelection]!.filter {
-      !$0.isExpired(currentTime: ikaTimePublisher.currentTime)
-    }
+    ikaCatalog.battleRotationDict[ikaStatus.battleModeSelection]!.filter { !$0.isExpired }
   }
 
   var body: some View {

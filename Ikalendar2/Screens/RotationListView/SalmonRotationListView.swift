@@ -16,9 +16,7 @@ struct SalmonRotationListView: View {
 
   private var salmonRotations: [SalmonRotation] {
     // filter out the expired ones and only display the current and future rotations
-    ikaCatalog.salmonRotations.filter {
-      !$0.isExpired(currentTime: ikaTimePublisher.currentTime)
-    }
+    ikaCatalog.salmonRotations.filter { !$0.isExpired }
   }
 
   var body: some View {

@@ -19,7 +19,6 @@ struct SalmonRotationCell: View {
   let rowWidth: CGFloat
 
   private var hasStageAndWeapon: Bool { rotation.stage != nil && rotation.weapons != nil }
-  private var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
 
   private var stageHeight: CGFloat {
     rowWidth * Scoped.STAGE_HEIGHT_RATIO + Scoped.STAGE_HEIGHT_ADJUSTMENT_CONSTANT
@@ -38,7 +37,7 @@ struct SalmonRotationCell: View {
       if hasStageAndWeapon {
         stageAndWeaponSection
 
-        if isCurrent {
+        if rotation.isCurrent {
           progressSection
         }
       }
@@ -102,9 +101,7 @@ struct SalmonRotationCellTimeTextSection: View {
       Spacer()
 
       HStack(spacing: Scoped.TIME_TEXT_SPACING) {
-        Text(rotation.startTime.toSalmonTimeString(
-          includingDate: true,
-          currentTime: ikaTimePublisher.currentTime))
+        Text(rotation.startTime.toSalmonTimeString(includingDate: true))
           .scaledLimitedLine()
           .fontIka(
             .ika2,
@@ -121,9 +118,7 @@ struct SalmonRotationCellTimeTextSection: View {
             size: Scoped.TIME_TEXT_FONT_SIZE,
             relativeTo: .headline)
 
-        Text(rotation.endTime.toSalmonTimeString(
-          includingDate: true,
-          currentTime: ikaTimePublisher.currentTime))
+        Text(rotation.endTime.toSalmonTimeString(includingDate: true))
           .scaledLimitedLine()
           .fontIka(
             .ika2,

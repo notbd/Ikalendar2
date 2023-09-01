@@ -20,7 +20,8 @@ extension BattleRotationDict {
   /// True if the dict is outdated and needs to reload at the moment.
   /// Embodies isEmpty() check internally.
   var isOutdated: Bool {
-    !isEmpty && Date() > self[.gachi]![0].endTime
+    !isEmpty &&
+      IkaTimePublisher.shared.currentTime > self[.gachi]![0].endTime
   }
 
   // MARK: Lifecycle

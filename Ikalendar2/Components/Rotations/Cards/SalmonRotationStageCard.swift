@@ -20,7 +20,6 @@ struct SalmonRotationStageCard: View {
   let rowWidth: CGFloat
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
-  private var isCurrent: Bool { rotation.isCurrent(currentTime: ikaTimePublisher.currentTime) }
   private var stageImageName: String { ikaPreference.ifUseAltStageImages
     ? rotation.stageAltImageName!
     : rotation.stage!.imgFiln }
@@ -39,7 +38,7 @@ struct SalmonRotationStageCard: View {
 
   private var overlay: some View {
     HStack(alignment: .bottom) {
-      if isCurrent {
+      if rotation.isCurrent {
         stageTitleLabel
         Spacer()
         rewardApparelImg
@@ -69,7 +68,7 @@ struct SalmonRotationStageCard: View {
       .frame(width: rowWidth * Scoped.APPAREL_IMG_WIDTH_RATIO)
       .background(.ultraThinMaterial)
       .cornerRadius(Scoped.APPAREL_FRAME_CORNER_RADIUS)
-      .opacity(isCurrent && hasRewardApparel ? 1 : 0)
+      .opacity(rotation.isCurrent && hasRewardApparel ? 1 : 0)
   }
 }
 

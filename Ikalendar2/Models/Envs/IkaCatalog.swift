@@ -53,6 +53,17 @@ final class IkaCatalog: ObservableObject {
   private var subscriptionTask: Task<Void, Never>?
   private var checkAutoLoadNecessityTask: Task<Void, Error>?
 
+  private var ifShouldAutoLoad: Bool {
+    loadStatus != .loading &&
+      autoLoadStatus == .idle &&
+      battleRotationDict.isOutdated
+  }
+
+  private var ifShouldAutoLoadSalmon: Bool {
+    salmonRotations[0].isExpired
+      || (salmonRotations[0].isCurrent && !salmonRotations[0].ifActiveWhenLoaded)
+  }
+
   // MARK: Lifecycle
 
   private init() {
@@ -93,7 +104,7 @@ final class IkaCatalog: ObservableObject {
 
         while true {
           try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadCheckInterval * 1_000_000_000))
-          if ifShouldAutoLoad() { await autoLoadCatalog() }
+          if ifShouldAutoLoad { await autoLoadCatalog() }
         }
       }
   }
@@ -151,22 +162,14 @@ final class IkaCatalog: ObservableObject {
 
   // MARK: - AUTO-LOAD
 
-  private func ifShouldAutoLoad() -> Bool {
-    loadStatus != .loading &&
-      autoLoadStatus == .idle &&
-      battleRotationDict.isOutdated
-  }
-
   private func autoLoadCatalog()
     async
   {
     guard autoLoadStatus == .idle else { return }
     await setAutoLoadStatus(.autoLoading)
 
-    let ifNeedAutoLoadSalmon = salmonRotations[0].isExpired(currentTime: IkaTimePublisher.shared.currentTime)
-
     do {
-      try await autoLoadData(includingSalmon: ifNeedAutoLoadSalmon)
+      try await autoLoadData()
 
       // success
       if loadStatus != .loaded { await setLoadStatus(.loaded) } // show rotations if prev loading error
@@ -192,7 +195,7 @@ final class IkaCatalog: ObservableObject {
     }
   }
 
-  private func autoLoadData(includingSalmon: Bool)
+  private func autoLoadData()
     async throws
   {
     try await withThrowingTaskGroup(of: Void.self) { group in
@@ -202,7 +205,7 @@ final class IkaCatalog: ObservableObject {
       }
 
       // only auto-load SalmonRotations if needed
-      if includingSalmon {
+      if ifShouldAutoLoadSalmon {
         group.addTask {
           try await self.autoLoadSalmonRotations()
         }
@@ -281,7 +284,6 @@ final class IkaCatalog: ObservableObject {
         while UIApplication.shared.applicationState != .active {
           try? await Task.sleep(nanoseconds: UInt64(Scoped.activeStateCheckInterval * 1_000_000_000))
         }
-
         try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
         autoLoadStatus = .idle
       }

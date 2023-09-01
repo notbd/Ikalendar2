@@ -18,24 +18,18 @@ protocol Rotation: Identifiable, Equatable, CustomStringConvertible {
 }
 
 extension Rotation {
-  /// Check if rotation is current according to the current time.
-  /// - Parameter currentTime: The current time.
-  /// - Returns: The boolean val.
-  func isCurrent(currentTime: Date) -> Bool {
-    currentTime > startTime && currentTime < endTime
+  /// If rotation is current according to the current time.
+  var isCurrent: Bool {
+    IkaTimePublisher.shared.currentTime > startTime && IkaTimePublisher.shared.currentTime < endTime
   }
 
-  /// Check if rotation is expired according to the current time.
-  /// - Parameter currentTime: The current time.
-  /// - Returns: The boolean val.
-  func isExpired(currentTime: Date) -> Bool {
-    endTime < currentTime
+  /// If rotation is expired according to the current time.
+  var isExpired: Bool {
+    endTime < IkaTimePublisher.shared.currentTime
   }
 
-  /// Check if rotation is yet to be started according to the current time.
-  /// - Parameter currentTime: The current time.
-  /// - Returns: The boolean val.
-  func isFuture(currentTime: Date) -> Bool {
-    currentTime > startTime && currentTime > endTime
+  /// If rotation is yet to be started according to the current time.
+  var isFuture: Bool {
+    IkaTimePublisher.shared.currentTime > startTime && IkaTimePublisher.shared.currentTime > endTime
   }
 }

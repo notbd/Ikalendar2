@@ -40,12 +40,9 @@ extension Date {
   /// Convert the Date to a battle time string.
   /// - Parameters:
   ///   - includingDate: If including the date in the time string (default to false).
-  ///   - currentTime: Placeholder to let SwiftUI recalculate the string every time this
   ///   parameter has changed.
   /// - Returns: The battle time string.
-  func toBattleTimeString(
-    includeDate: Bool = false,
-    currentTime _: Date = Date())
+  func toBattleTimeString(includeDate: Bool = false)
     -> String
   {
     let timeString = Date.ikaTimeFormatter.string(from: self)
@@ -62,19 +59,16 @@ extension Date {
     guard !Calendar.current.isDateInTomorrow(self)
     else { return String.localizedString(for: "Tomorrow") + " " + timeString }
 
-    // default: only time
+    // should not happen, but in case other than Today, Yesterday or Tomorrow
     return timeString
   }
 
   /// Convert the Date to a salmon time string.
   /// - Parameters:
   ///   - includingDate: If including the date in the time string (default to false).
-  ///   - currentTime: Placeholder to let SwiftUI recalculate the string every time this
   ///   parameter has changed.
   /// - Returns: The salmon time string.
-  func toSalmonTimeString(
-    includingDate: Bool = false,
-    currentTime _: Date = Date())
+  func toSalmonTimeString(includingDate: Bool = false)
     -> String
   {
     let timeString = Date.ikaTimeFormatter.string(from: self)
@@ -91,7 +85,7 @@ extension Date {
     guard !Calendar.current.isDateInTomorrow(self)
     else { return String.localizedString(for: "Tomorrow") + " " + timeString }
 
-    // default: date + time
+    // other than Today, Yesterday or Tomorrow
     let dateString = Date.ikaDateFormatter.string(from: self)
     return dateString + timeString
   }

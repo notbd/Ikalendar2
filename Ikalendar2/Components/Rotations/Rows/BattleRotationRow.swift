@@ -11,8 +11,6 @@ import SwiftUI
 
 /// A row containing all the information of a battle rotation.
 struct BattleRotationRow: View {
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
-
   let rotation: BattleRotation
   let index: Int
   let rowWidth: CGFloat
@@ -81,9 +79,7 @@ struct BattleRotationHeader: View {
     let ifIncludeDate = Calendar.current.isDateInYesterday(rotation.startTime) ||
       Calendar.current.isDateInTomorrow(rotation.startTime)
 
-    return rotation.startTime.toBattleTimeString(
-      includeDate: ifIncludeDate,
-      currentTime: ikaTimePublisher.currentTime)
+    return rotation.startTime.toBattleTimeString(includeDate: ifIncludeDate)
   }
 
   private var endTimeString: String {
@@ -94,9 +90,7 @@ struct BattleRotationHeader: View {
         Calendar.current.isDateInToday(rotation.startTime) &&
           Calendar.current.isDateInTomorrow(rotation.endTime))
 
-    return rotation.endTime.toBattleTimeString(
-      includeDate: ifIncludeDate,
-      currentTime: ikaTimePublisher.currentTime)
+    return rotation.endTime.toBattleTimeString(includeDate: ifIncludeDate)
   }
 
   var body: some View {

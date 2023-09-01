@@ -21,6 +21,7 @@ struct SalmonRotation: Rotation {
   let grizzcoWeapon: GrizzcoWeapon?
 
   var stageAltImageName: String?
+  var ifActiveWhenLoaded: Bool
 
   // MARK: Lifecycle
 
@@ -42,6 +43,9 @@ struct SalmonRotation: Rotation {
     description = "\(startTime.timeIntervalSince1970)-\(endTime.timeIntervalSince1970)-" +
       "\(stage?.name ?? "nil")-\(weapons?.description ?? "nil")-" +
       "\(rewardApparel?.name ?? "nil")-\(grizzcoWeapon?.name ?? "nil")"
+
+    ifActiveWhenLoaded = IkaTimePublisher.shared.currentTime > startTime && IkaTimePublisher.shared
+      .currentTime < endTime
 
     guard let stage else { return }
     let generator = SeededRandomGenerator(seed: description)
