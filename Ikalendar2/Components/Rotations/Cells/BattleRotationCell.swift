@@ -44,6 +44,7 @@ struct BattleRotationCellPrimary: View {
 
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
+  @State private var ruleIconHeight: CGFloat = .zero // initial value does not matter
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   let rotation: BattleRotation
@@ -67,8 +68,12 @@ struct BattleRotationCellPrimary: View {
         alignment: .center,
         spacing: rowWidth * Scoped.STAGE_SECTION_SPACING_RATIO)
       {
-        BattleRotationStageCardPrimary(stage: rotation.stageA, altImageName: rotation.stageAltImageNameA)
-        BattleRotationStageCardPrimary(stage: rotation.stageB, altImageName: rotation.stageAltImageNameB)
+        BattleRotationStageCardPrimary(
+          stage: rotation.stageA,
+          altImageName: rotation.stageAltImageNameA)
+        BattleRotationStageCardPrimary(
+          stage: rotation.stageB,
+          altImageName: rotation.stageAltImageNameB)
       }
     }
     .padding(.top, Scoped.CELL_PADDING_TOP)
@@ -89,6 +94,12 @@ struct BattleRotationCellPrimary: View {
         .scaledToFit()
         .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
         .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH_RATIO)
+        .background(
+          GeometryReader { geo in
+            Color.clear.onAppear {
+              ruleIconHeight = geo.size.height
+            }
+          })
 
       // Rule title
       Text(rotation.rule.name.localizedStringKey)
@@ -99,6 +110,7 @@ struct BattleRotationCellPrimary: View {
             ? Scoped.RULE_FONT_SIZE_COMPACT
             : Scoped.RULE_FONT_SIZE_REGULAR,
           relativeTo: .title)
+        .frame(maxHeight: ruleIconHeight)
     }
     .frame(
       maxWidth: rowWidth * Scoped.RULE_SECTION_MAX_WIDTH_RATIO,

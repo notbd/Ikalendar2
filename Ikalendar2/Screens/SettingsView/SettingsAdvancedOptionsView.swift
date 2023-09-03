@@ -17,8 +17,8 @@ struct SettingsAdvancedOptionsView: View {
 
   @State private var ifBottomToolbarPreviewPresented = false
 
-  @State private var battleRotationExample: BattleRotation = IkaMockData.getBattleRotation()
-  @State private var salmonRotationExample: SalmonRotation = IkaMockData.getSalmonRotation()
+  @State private var battleRotationPreviewData: BattleRotation = IkaMockData.getBattleRotation()
+  @State private var salmonRotationPreviewData: SalmonRotation = IkaMockData.getSalmonRotation()
 
   @State private var rowWidth: CGFloat = 390 // initial value does not matter
 
@@ -34,13 +34,13 @@ struct SettingsAdvancedOptionsView: View {
         }
 
         Section(header: stageImagesPreviewHeader) {
-          battleStagePreview
-            .animation(.easeOut, value: battleRotationExample)
+          battleRotationPreviewCell
+            .animation(.easeOut, value: battleRotationPreviewData)
         }
 
         Section {
-          salmonStagePreview
-            .animation(.easeOut, value: salmonRotationExample)
+          salmonRotationPreviewCell
+            .animation(.easeOut, value: salmonRotationPreviewData)
         }
       }
       .navigationTitle("Advanced Options")
@@ -86,21 +86,7 @@ struct SettingsAdvancedOptionsView: View {
       Text("Preview:")
       Spacer()
       Button {
-        // keep rule, shuffle stages
-        var newBattleRotationExample = IkaMockData.getBattleRotation(rule: battleRotationExample.rule)
-        var newSalmonRotationExample = IkaMockData.getSalmonRotation()
-        while
-          newBattleRotationExample.stageA == battleRotationExample.stageA ||
-          newBattleRotationExample.stageB == battleRotationExample.stageB
-        {
-          newBattleRotationExample =
-            IkaMockData.getBattleRotation(rule: battleRotationExample.rule)
-        }
-        while newSalmonRotationExample.stage == salmonRotationExample.stage {
-          newSalmonRotationExample = IkaMockData.getSalmonRotation()
-        }
-        battleRotationExample = newBattleRotationExample
-        salmonRotationExample = newSalmonRotationExample
+        shufflePreviewData()
       } label: {
         Label(
           "Shuffle",
@@ -110,17 +96,38 @@ struct SettingsAdvancedOptionsView: View {
     }
   }
 
-  private var battleStagePreview: some View {
+  private var battleRotationPreviewCell: some View {
     BattleRotationCell(
       type: .primary,
-      rotation: battleRotationExample,
+      rotation: battleRotationPreviewData,
       rowWidth: rowWidth)
   }
 
-  private var salmonStagePreview: some View {
+  private var salmonRotationPreviewCell: some View {
     SalmonRotationCell(
-      rotation: salmonRotationExample,
+      rotation: salmonRotationPreviewData,
       rowWidth: rowWidth)
+  }
+
+  // MARK: Private
+
+  private func shufflePreviewData() {
+    // make sure stages are different
+    var newBattleData = IkaMockData.getBattleRotation()
+    var newSalmonData = IkaMockData.getSalmonRotation()
+
+    while
+      newBattleData.stageA == battleRotationPreviewData.stageA ||
+      newBattleData.stageB == battleRotationPreviewData.stageB
+    {
+      newBattleData = IkaMockData.getBattleRotation()
+    }
+    while newSalmonData.stage == salmonRotationPreviewData.stage {
+      newSalmonData = IkaMockData.getSalmonRotation()
+    }
+
+    battleRotationPreviewData = newBattleData
+    salmonRotationPreviewData = newSalmonData
   }
 
 }

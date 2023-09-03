@@ -17,7 +17,7 @@ struct BattleRotationListView: View {
 
   private var battleRotations: [BattleRotation] {
     // filter: display current and future rotations only
-    ikaCatalog.battleRotationDict[ikaStatus.battleModeSelection]!.filter { !$0.isExpired }
+    ikaCatalog.battleRotationDict[ikaStatus.battleModeSelection]!.filter { !$0.isExpired() }
   }
 
   var body: some View {
@@ -25,7 +25,7 @@ struct BattleRotationListView: View {
       List {
         ForEach(
           Array(zip(battleRotations.indices, battleRotations)),
-          id: \.0)
+          id: \.1)
         { index, rotation in
           BattleRotationRow(
             rotation: rotation,
@@ -35,6 +35,7 @@ struct BattleRotationListView: View {
         }
       }
       .listStyle(.insetGrouped)
+      .animation(.easeOut, value: battleRotations.map { $0.id })
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }

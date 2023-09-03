@@ -37,7 +37,7 @@ struct SalmonRotationCell: View {
       if hasStageAndWeapon {
         stageAndWeaponSection
 
-        if rotation.isCurrent {
+        if rotation.isCurrent() {
           progressSection
         }
       }

@@ -60,8 +60,10 @@ final class IkaCatalog: ObservableObject {
   }
 
   private var ifShouldAutoLoadSalmon: Bool {
-    salmonRotations[0].isExpired
-      || (salmonRotations[0].isCurrent && !salmonRotations[0].ifActiveWhenLoaded)
+    guard let firstRotation = salmonRotations.first else { return true }
+    return
+      firstRotation.isExpired() ||
+      (firstRotation.isCurrent() && firstRotation.rewardApparel == nil)
   }
 
   // MARK: Lifecycle

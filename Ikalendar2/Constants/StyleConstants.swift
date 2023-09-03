@@ -156,10 +156,10 @@ extension Constants.Styles {
           static let PROGRESS_BAR_PADDING_BOTTOM: CGFloat = 16
           static let STAGE_SECTION_SPACING_RATIO: CGFloat = 0.04
           static let CELL_PADDING_TOP: CGFloat = 0
-          static let CELL_PADDING_BOTTOM: CGFloat = 10
+          static let CELL_PADDING_BOTTOM: CGFloat = 6
 
           static let RULE_SECTION_SPACING: CGFloat = 8
-          static let RULE_IMG_MAX_WIDTH_RATIO: CGFloat = 0.105
+          static let RULE_IMG_MAX_WIDTH_RATIO: CGFloat = 0.115
           static let RULE_FONT_SIZE_COMPACT: CGFloat = 26
           static let RULE_FONT_SIZE_REGULAR: CGFloat = 48
           static let RULE_SECTION_MAX_WIDTH_RATIO: CGFloat = 0.45

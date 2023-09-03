@@ -21,7 +21,7 @@ struct SalmonRotationRow: View {
     // expired rotations already filtered out, so index will reflect truth
     switch index {
     case 0:
-      return rotation.isCurrent ? .first(.active) : .first(.idle)
+      return rotation.isCurrent() ? .first(.active) : .first(.idle)
     case 1:
       return .second
     default:

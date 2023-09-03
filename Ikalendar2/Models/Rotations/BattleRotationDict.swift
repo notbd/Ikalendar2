@@ -10,28 +10,22 @@ import Foundation
 typealias BattleRotationDict = [BattleMode: [BattleRotation]]
 
 extension BattleRotationDict {
-  var numOfRounds: Int { self[.gachi]!.count }
-
-  /// True if any battle mode has an empty array.
+  /// Returns true if any `BattleMode`s contain empty rotations.
   var isEmpty: Bool {
-    self[.regular]!.isEmpty || self[.gachi]!.isEmpty || self[.league]!.isEmpty
+    values.contains { $0.isEmpty }
   }
 
-  /// True if the dict is outdated and needs to reload at the moment.
-  /// Embodies isEmpty() check internally.
+  /// Returns true if the dict is outdated.
   var isOutdated: Bool {
-    !isEmpty &&
-      IkaTimePublisher.shared.currentTime > self[.gachi]![0].endTime
+    !isEmpty && self[.gachi]!.first!.endTime < IkaTimePublisher.shared.currentTime
   }
 
   // MARK: Lifecycle
 
   init() {
-    self = [
-      .regular: [] as [BattleRotation],
-      .gachi: [] as [BattleRotation],
-      .league: [] as [BattleRotation],
-    ]
+    self = [:]
+    for mode in BattleMode.allCases {
+      self[mode] = []
+    }
   }
-
 }

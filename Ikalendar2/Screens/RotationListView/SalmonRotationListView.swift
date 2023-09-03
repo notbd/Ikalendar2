@@ -16,7 +16,7 @@ struct SalmonRotationListView: View {
 
   private var salmonRotations: [SalmonRotation] {
     // filter: display current and future rotations only
-    ikaCatalog.salmonRotations.filter { !$0.isExpired }
+    ikaCatalog.salmonRotations.filter { !$0.isExpired() }
   }
 
   var body: some View {
@@ -24,7 +24,7 @@ struct SalmonRotationListView: View {
       List {
         ForEach(
           Array(zip(salmonRotations.indices, salmonRotations)),
-          id: \.0)
+          id: \.1)
         { index, rotation in
           SalmonRotationRow(
             rotation: rotation,
@@ -34,6 +34,7 @@ struct SalmonRotationListView: View {
         }
       }
       .listStyle(.insetGrouped)
+      .animation(.easeOut, value: salmonRotations)
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }
