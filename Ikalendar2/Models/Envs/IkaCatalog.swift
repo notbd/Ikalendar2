@@ -132,14 +132,20 @@ final class IkaCatalog: ObservableObject {
   {
     async let taskBattleRotationDict = IkaNetworkManager.shared.getBattleRotationDict()
     async let taskSalmonRotations = IkaNetworkManager.shared.getSalmonRotations()
-    async let taskRewardApparel = IkaNetworkManager.shared.getRewardApparel()
+    async let taskSalmonRewardApparelInfo = IkaNetworkManager.shared.getSalmonRewardApparelInfo()
 
-    let (loadedBattleRotationDict, loadedSalmonRotations, loadedRewardApparel) =
-      try await (taskBattleRotationDict, taskSalmonRotations, taskRewardApparel)
+    let loadedBattleRotationDict = try await taskBattleRotationDict
+    var loadedSalmonRotations = try await taskSalmonRotations
+    let loadedSalmonRewardApparelInfo = try await taskSalmonRewardApparelInfo
+    // add reward apparel to corresponding salmon rotation
+    for (index, rotation) in loadedSalmonRotations.enumerated()
+      where rotation.startTime == loadedSalmonRewardApparelInfo.availableTime
+    {
+      loadedSalmonRotations[index].rewardApparel = loadedSalmonRewardApparelInfo.apparel
+    }
 
     battleRotationDict = loadedBattleRotationDict
     salmonRotations = loadedSalmonRotations
-    salmonRotations[0].rewardApparel = loadedRewardApparel
   }
 
   private func setLoadStatus(_ newVal: LoadStatus)
@@ -250,8 +256,12 @@ final class IkaCatalog: ObservableObject {
       // new attempt
       autoLoadAttempts += 1
       var loadedSalmonRotations = try await IkaNetworkManager.shared.getSalmonRotations()
-      let loadedRewardApparel = try await IkaNetworkManager.shared.getRewardApparel()
-      loadedSalmonRotations[0].rewardApparel = loadedRewardApparel
+      let loadedSalmonRewardApparelInfo = try await IkaNetworkManager.shared.getSalmonRewardApparelInfo()
+      for (index, rotation) in loadedSalmonRotations.enumerated()
+        where rotation.startTime == loadedSalmonRewardApparelInfo.availableTime
+      {
+        loadedSalmonRotations[index].rewardApparel = loadedSalmonRewardApparelInfo.apparel
+      }
 
       // found updates from server - success and return
       if loadedSalmonRotations != salmonRotations {

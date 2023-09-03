@@ -5,6 +5,16 @@
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
+import Foundation
+
+// MARK: - SalmonApparelInfo
+
+/// A wrapper data model for the salmon run reward apparel + its available time.
+struct SalmonApparelInfo {
+  let apparel: SalmonApparel
+  let availableTime: Date
+}
+
 // MARK: - SalmonApparel
 
 /// Data model for the salmon run reward apparels.
@@ -21,7 +31,10 @@ enum SalmonApparel: Equatable {
 
   // MARK: Lifecycle
 
-  init?(type: ApparelType, id: Int) {
+  init?(
+    type: ApparelType,
+    id: Int)
+  {
     switch type {
     case .head:
       guard let apparel = HeadApparel(rawValue: id) else { return nil }

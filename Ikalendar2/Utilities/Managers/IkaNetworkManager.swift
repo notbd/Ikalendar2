@@ -43,15 +43,15 @@ final class IkaNetworkManager {
       decodeUsing: IkaDecoder.parseSalmonRotations)
   }
 
-  /// Asynchronously fetches the reward apparel from the `splatoon2.ink` API.
-  /// - Returns: A `SalmonApparel` object containing the reward apparel data.
+  /// Asynchronously fetches the reward apparel info from the `splatoon2.ink` API.
+  /// - Returns: A `SalmonApparelInfo` object containing the reward apparel type and time.
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
-  func getRewardApparel()
-    async throws -> SalmonApparel
+  func getSalmonRewardApparelInfo()
+    async throws -> SalmonApparelInfo
   {
     try await fetchAndDecode(
-      url: URL(string: Constants.Keys.URL.TIMELINE)!,
-      decodeUsing: IkaDecoder.parseRewardApparel)
+      url: URL(string: Constants.Keys.URL.SALMON_APPAREL_INFO)!,
+      decodeUsing: IkaDecoder.parseSalmonRewardApparelInfo)
   }
 
   /// Asynchronously fetches and decodes data from a specified URL.
