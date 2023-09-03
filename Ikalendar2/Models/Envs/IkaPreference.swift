@@ -25,7 +25,7 @@ final class IkaPreference: ObservableObject {
 
   /// Color Scheme
   @AppStorage(Constants.Keys.AppStorage.APP_PREFERRED_COLOR_SCHEME)
-  var appPreferredColorScheme: IkaColorSchemeManager.AppPreferredColorScheme = .system {
+  var appPreferredColorScheme: IkaColorSchemeManager.AppPreferredColorScheme = .dark {
     willSet { objectWillChange.send() }
   }
 
