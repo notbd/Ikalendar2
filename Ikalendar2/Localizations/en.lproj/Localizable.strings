@@ -23,6 +23,13 @@
 "Preferred Language" = "App Language";
 "About" = "About";
 "Credits" = "Credits";
+// Alt App Icon
+"Modern Dark" = "Modern Dark";
+"Modern Light" = "Modern Light";
+"Mono Dark" = "Mono Dark";
+"Mono Light" = "Mono Light";
+"Legacy" = "Legacy";
+"Rick" = "Rick";
 // Advanced Options
 "Swap Bottom Toolbar Pickers" = "Swap Bottom Toolbar Pickers";
 "Alternative Stage Images" = "Alternative Stage Images";

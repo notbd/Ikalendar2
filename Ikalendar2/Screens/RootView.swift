@@ -17,9 +17,9 @@ struct RootView: View {
     MainView()
       .onAppear {
         // Apply correct colorScheme upon launch
-        IkaColorSchemeManager.shared.handleColorSchemeChange(for: ikaPreference.appPreferredColorScheme)
+        IkaColorSchemeManager.shared.handleColorSchemeChange(for: ikaPreference.preferredAppColorScheme)
       }
-      .onChange(of: ikaPreference.appPreferredColorScheme) { selectedColorScheme in
+      .onChange(of: ikaPreference.preferredAppColorScheme) { selectedColorScheme in
         IkaColorSchemeManager.shared.handleColorSchemeChange(for: selectedColorScheme)
       }
       .fullScreenCover(isPresented: $ikaStatus.isSettingsPresented) {

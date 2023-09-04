@@ -14,16 +14,18 @@ extension Constants.Keys {
   static let appDisplayName =
     Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "UNKNOWN"
   static let appVersion =
-    Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+    Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "UNKNOWN"
   static let appBuildNumber =
-    Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown"
+    Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "UNKNOWN"
   static let appStoreIdentifier = "1529193361"
 
   enum AppStorage {
     static let DEFAULT_GAME_MODE = "pref.default.game_mode"
     static let DEFAULT_BATTLE_MODE = "pref.default.battle_mode"
 
-    static let APP_PREFERRED_COLOR_SCHEME = "pref.app_preferred_color_scheme"
+    static let PREFERRED_APP_COLOR_SCHEME = "pref.preferred_app_color_scheme"
+
+    static let PREFERRED_APP_ICON = "pref.preferred_app_icon"
 
     static let IF_USE_ALT_STAGE_IMAGES = "pref.if_use_alt_stage_images"
     static let IF_SWAP_BOTTOM_TOOLBAR_PICKERS = "pref.if_swap_bottom_toolbar_pickers"

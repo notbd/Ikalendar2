@@ -125,11 +125,11 @@ struct SettingsMainView: View {
         .scaledLimitedLine()
 
       Picker(
-        selection: $ikaPreference.appPreferredColorScheme
+        selection: $ikaPreference.preferredAppColorScheme
           .onSet { _ in SimpleHaptics.generateTask(.selection) },
         label: EmptyView())
       {
-        ForEach(IkaColorSchemeManager.AppPreferredColorScheme.allCases) { appPreferredColorScheme in
+        ForEach(IkaColorSchemeManager.PreferredAppColorScheme.allCases) { appPreferredColorScheme in
           Label(
             appPreferredColorScheme.name.localizedStringKey,
             systemImage: appPreferredColorScheme.sfSymbol)
@@ -140,7 +140,7 @@ struct SettingsMainView: View {
   }
 
   private var rowSwitchAppIcon: some View {
-    NavigationLink(destination: SettingsSwitchAppIconView()) {
+    NavigationLink(destination: SettingsAltAppIconView()) {
       Label(
         "App Icon",
         systemImage: Scoped.SWITCH_APP_ICON_SFSYMBOL)

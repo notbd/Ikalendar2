@@ -23,6 +23,13 @@
 "Preferred Language" = "アプリケーション言語";
 "About" = "ikalendar2について";
 "Credits" = "クレジット";
+// Alt App Icon
+"Modern Dark" = "モダンダーク";
+"Modern Light" = "モダンライト";
+"Mono Dark" = "モノクロダーク";
+"Mono Light" = "モノクロライト";
+"Legacy" = "レガシー";
+"Rick" = "リック・アストリー";
 // Advanced Options
 "Swap Bottom Toolbar Pickers" = "下部工具列のピッカーを交換";
 "Alternative Stage Images" = "追加ステージ画像を利用";

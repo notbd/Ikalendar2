@@ -15,25 +15,32 @@ final class IkaPreference: ObservableObject {
 
   static let shared = IkaPreference()
 
-  /// Default Game Mode (initial value already set during App init, so init value here does not matter)
+  /// Default GameMode (initial value already set during App init, so init value here does not matter)
   @AppStorage(Constants.Keys.AppStorage.DEFAULT_GAME_MODE)
   var defaultGameMode: GameMode = .battle { willSet { objectWillChange.send() }}
 
-  /// Default Battle Mode (initial value already set during App init, so init value here does not matter)
+  /// Default BattleMode (initial value already set during App init, so init value here does not matter)
   @AppStorage(Constants.Keys.AppStorage.DEFAULT_BATTLE_MODE)
   var defaultBattleMode: BattleMode = .regular { willSet { objectWillChange.send() }}
 
-  /// Color Scheme
-  @AppStorage(Constants.Keys.AppStorage.APP_PREFERRED_COLOR_SCHEME)
-  var appPreferredColorScheme: IkaColorSchemeManager.AppPreferredColorScheme = .dark {
+  /// User preferred color scheme
+  @AppStorage(Constants.Keys.AppStorage.PREFERRED_APP_COLOR_SCHEME)
+  var preferredAppColorScheme: IkaColorSchemeManager.PreferredAppColorScheme = .dark {
     willSet { objectWillChange.send() }
   }
 
-  /// if Using Alt Stage Images
+  /// User preferred app icon
+  @AppStorage(Constants.Keys.AppStorage.PREFERRED_APP_ICON)
+  var preferredAppIcon: IkaAppIcon = .modernDark {
+    didSet { UIApplication.shared.setAlternateIconName(preferredAppIcon.alternateIconName) }
+    willSet { objectWillChange.send() }
+  }
+
+  /// If using alt stage images
   @AppStorage(Constants.Keys.AppStorage.IF_USE_ALT_STAGE_IMAGES)
   var ifUseAltStageImages = false { willSet { objectWillChange.send() }}
 
-  /// Bottom Toolbar Picker Positioning
+  /// Bottom toolbar picker positioning
   @AppStorage(Constants.Keys.AppStorage.IF_SWAP_BOTTOM_TOOLBAR_PICKERS)
   var ifSwapBottomToolbarPickers = false { willSet { objectWillChange.send() }}
 

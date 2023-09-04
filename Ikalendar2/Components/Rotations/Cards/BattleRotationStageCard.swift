@@ -36,8 +36,7 @@ struct BattleRotationStageCardPrimary: View {
           fontSize: Scoped.LABEL_FONT_SIZE,
           relTextStyle: .body)
           .padding(.leading, Scoped.LABEL_PADDING_LEADING)
-          .padding(.bottom, Scoped.LABEL_PADDING_BOTTOMTRAILING)
-          .padding(.trailing, Scoped.LABEL_PADDING_BOTTOMTRAILING),
+          .padding([.bottom, .trailing], Scoped.LABEL_PADDING_BOTTOMTRAILING),
         alignment: .bottomTrailing)
   }
 }
@@ -61,7 +60,7 @@ struct BattleRotationStageCardSecondary: View {
   var body: some View {
     VStack(
       alignment: .trailing,
-      spacing: Scoped.V_SPACING)
+      spacing: Scoped.SPACING_V)
     {
       Image(stageImageName)
         .antialiased(true)

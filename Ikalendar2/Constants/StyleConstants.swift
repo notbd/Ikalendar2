@@ -82,6 +82,24 @@ extension Constants.Styles {
       static let DONE_BUTTON_FONT_WEIGHT: Font.Weight = .semibold
     }
 
+    enum AltAppIcon {
+      static let SPACING_H: CGFloat = 16
+
+      static let APP_ICON_SIDE_LEN: CGFloat = 60
+      static let CLIP_SHAPE_CORNER_RADIUS: CGFloat = 14
+      static let STROKE_COLOR: Color = .tertiaryLabel
+      static let STROKE_LINE_WIDTH: CGFloat = 1
+      static let STROKE_OPACITY: CGFloat = 0.4
+
+      static let DISPLAY_NAME_COLOR: Color = .primary
+
+      static let ACTIVE_INDICATOR_SFSYMBOL = "checkmark.circle.fill"
+      static let ACTIVE_INDICATOR_FONT: Font = .title
+      static let ACTIVE_INDICATOR_SFSYMBOL_RENDERING_MODE: SymbolRenderingMode = .palette
+
+      static let ROW_PADDING_V: CGFloat = 4
+    }
+
     enum Advanced {
       static let BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL = "arrow.left.arrow.right"
       static let BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION: CGFloat = 0.07
@@ -94,7 +112,7 @@ extension Constants.Styles {
     }
 
     enum About {
-      static let APP_ICON_NAME = "AppIcon"
+      static let APP_ICON_NAME = "app-icon-modern-dark"
       static let APP_ICON_SIDE_LEN: CGFloat = 120
       static let APP_ICON_CORNER_RADIUS: CGFloat = 16
       static let APP_ICON_TITLE_FONT: Font = .system(.largeTitle, design: .rounded)
@@ -195,7 +213,7 @@ extension Constants.Styles {
         }
 
         enum Secondary {
-          static let V_SPACING: CGFloat = 8
+          static let SPACING_V: CGFloat = 8
           static let IMG_CORNER_RADIUS: CGFloat = 4
           static let STAGE_IMG_OFFSET_Y: CGFloat = 6
           static let FONT_SIZE: CGFloat = 12
