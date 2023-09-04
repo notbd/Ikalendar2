@@ -65,6 +65,7 @@ struct SettingsAdvancedOptionsView: View {
       Label(
         "Swap Bottom Toolbar Pickers",
         systemImage: Scoped.BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL)
+        .scaledLimitedLine()
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
     .onChange(of: ikaPreference.ifSwapBottomToolbarPickers) { _ in
@@ -77,6 +78,7 @@ struct SettingsAdvancedOptionsView: View {
       Label(
         "Alternative Stage Images",
         systemImage: Scoped.ALT_STAGE_IMG_SFSYMBOL)
+        .scaledLimitedLine()
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
   }

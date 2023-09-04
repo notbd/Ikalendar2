@@ -17,6 +17,7 @@ struct SettingsMainView: View {
   @Environment(\.openURL) private var openURL
   @Environment(\.dismiss) private var dismiss
 
+  @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
@@ -30,7 +31,7 @@ struct SettingsMainView: View {
 
   var body: some View {
     NavigationView {
-      // not using NavigationStack for Settings as of iOS 16 beta because of titleDisplayMode bug
+      // not using NavigationStack for Settings as of iOS 16 because of titleDisplayMode bug
       List {
         Section(header: Text("Default Mode")) {
           rowDefaultGameMode
@@ -58,6 +59,9 @@ struct SettingsMainView: View {
       .navigationBarItems(trailing: doneButton)
     }
     .navigationViewStyle(StackNavigationViewStyle())
+    .overlay(
+      AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
+      alignment: .bottomTrailing)
   }
 
   // MARK: - Default Mode Section
@@ -118,6 +122,7 @@ struct SettingsMainView: View {
       Label(
         "Color Scheme",
         systemImage: Scoped.COLOR_SCHEME_SFSYMBOL)
+        .scaledLimitedLine()
 
       Picker(
         selection: $ikaPreference.appPreferredColorScheme
@@ -163,6 +168,7 @@ struct SettingsMainView: View {
         Label {
           Text("Preferred Language")
             .foregroundColor(.primary)
+            .scaledLimitedLine()
         }
         icon: {
           Image(systemName: Scoped.PREF_LANG_SFSYMBOL)

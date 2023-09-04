@@ -17,7 +17,7 @@ struct SalmonRotationStageCard: View {
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let rotation: SalmonRotation
-  let rowWidth: CGFloat
+  let cardWidth: CGFloat
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
   private var stageImageName: String { ikaPreference.ifUseAltStageImages
@@ -65,7 +65,7 @@ struct SalmonRotationStageCard: View {
       .resizable()
       .scaledToFit()
       .padding(Scoped.APPAREL_IMG_PADDING)
-      .frame(width: rowWidth * Scoped.APPAREL_IMG_WIDTH_RATIO)
+      .frame(width: cardWidth * Scoped.APPAREL_IMG_WIDTH_RATIO)
       .background(.ultraThinMaterial)
       .cornerRadius(Scoped.APPAREL_FRAME_CORNER_RADIUS)
       .opacity(rotation.isCurrent() && hasRewardApparel ? 1 : 0)
@@ -78,6 +78,6 @@ struct SalmonRotationStageCard_Previews: PreviewProvider {
   static var previews: some View {
     SalmonRotationStageCard(
       rotation: IkaMockData.getSalmonRotation(),
-      rowWidth: 390)
+      cardWidth: 390)
   }
 }

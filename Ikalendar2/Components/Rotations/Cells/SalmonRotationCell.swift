@@ -30,7 +30,6 @@ struct SalmonRotationCell: View {
       spacing: Scoped.CELL_SPACING)
     {
       SalmonRotationCellTimeTextSection(
-        iconName: "salmon",
         rotation: rotation,
         rowWidth: rowWidth)
 
@@ -52,7 +51,7 @@ struct SalmonRotationCell: View {
     HStack {
       SalmonRotationStageCard(
         rotation: rotation,
-        rowWidth: stageHeight * (16 / 9))
+        cardWidth: stageHeight * (16 / 9))
         .frame(height: stageHeight)
         .layoutPriority(2)
       Spacer()
@@ -63,7 +62,7 @@ struct SalmonRotationCell: View {
 
   private var progressSection: some View {
     ProgressView(
-      value: ikaTimePublisher.currentTime - rotation.startTime,
+      value: min(ikaTimePublisher.currentTime, rotation.endTime) - rotation.startTime,
       total: rotation.endTime - rotation.startTime,
       label: {
         Text(ikaTimePublisher.currentTime.toTimeRemainingString(until: rotation.endTime))
@@ -85,13 +84,12 @@ struct SalmonRotationCellTimeTextSection: View {
 
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
-  let iconName: String
   let rotation: SalmonRotation
   let rowWidth: CGFloat
 
   var body: some View {
     HStack {
-      Image(iconName)
+      Image("salmon")
         .antialiased(true)
         .resizable()
         .scaledToFit()

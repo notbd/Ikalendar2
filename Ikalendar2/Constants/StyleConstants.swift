@@ -217,7 +217,7 @@ extension Constants.Styles {
         static let PROGRESS_FONT_SIZE: CGFloat = 16
 
         enum TimeTextSection {
-          static let SALMON_ICON_WIDTH_RATIO: CGFloat = 0.08
+          static let SALMON_ICON_WIDTH_RATIO: CGFloat = 0.09
           static let TIME_TEXT_SPACING: CGFloat = 4
           static let TIME_TEXT_FONT_SIZE: CGFloat = 16
           static let TIME_TEXT_SINGLE_PADDING_HORIZONTAL: CGFloat = 5
@@ -233,7 +233,7 @@ extension Constants.Styles {
           static let OVERLAY_PADDING: CGFloat = 4
 
           static let APPAREL_IMG_PADDING: CGFloat = 2
-          static let APPAREL_IMG_WIDTH_RATIO: CGFloat = 0.15
+          static let APPAREL_IMG_WIDTH_RATIO: CGFloat = 0.16
           static let APPAREL_FRAME_CORNER_RADIUS: CGFloat = 5
         }
 

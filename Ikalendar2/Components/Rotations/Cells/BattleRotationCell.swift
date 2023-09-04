@@ -59,7 +59,7 @@ struct BattleRotationCellPrimary: View {
       }
 
       ProgressView(
-        value: ikaTimePublisher.currentTime - rotation.startTime,
+        value: min(ikaTimePublisher.currentTime, rotation.endTime) - rotation.startTime,
         total: rotation.endTime - rotation.startTime)
         .padding(.top, Scoped.PROGRESS_BAR_PADDING_TOP)
         .padding(.bottom, Scoped.PROGRESS_BAR_PADDING_BOTTOM)
