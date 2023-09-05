@@ -71,6 +71,7 @@ struct SettingsAltAppIconRow: View {
   // MARK: Private
 
   private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
+    guard ikaPreference.preferredAppIcon != ikaAppIcon else { return }
     ikaPreference.preferredAppIcon = ikaAppIcon
   }
 }
