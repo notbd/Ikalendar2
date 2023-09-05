@@ -11,6 +11,8 @@ import SwiftUI
 
 /// A row containing all the information of a battle rotation.
 struct BattleRotationRow: View {
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+
   let rotation: BattleRotation
   let rowWidth: CGFloat
 
