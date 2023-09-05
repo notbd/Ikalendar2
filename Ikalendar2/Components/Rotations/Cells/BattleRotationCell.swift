@@ -44,36 +44,45 @@ struct BattleRotationCellPrimary: View {
 
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
-  @State private var ruleIconHeight: CGFloat = .zero // initial value does not matter
-  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
-
   let rotation: BattleRotation
   let rowWidth: CGFloat
 
+  @State private var ruleIconHeight: CGFloat = .zero // initial value does not matter
+
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
+
   var body: some View {
-    VStack(spacing: 0) {
+    VStack(spacing: Scoped.CELL_SPACING_V) {
       HStack(alignment: .center) {
         ruleSection
         Spacer()
         remainingTimeSection
       }
 
-      ProgressView(
-        value: min(ikaTimePublisher.currentTime, rotation.endTime) - rotation.startTime,
-        total: rotation.endTime - rotation.startTime)
-        .padding(.top, Scoped.PROGRESS_BAR_PADDING_TOP)
-        .padding(.bottom, Scoped.PROGRESS_BAR_PADDING_BOTTOM)
+      if rotation.isCurrent()
+      {
+        ProgressView(
+          value: min(ikaTimePublisher.currentTime, rotation.endTime) - rotation.startTime,
+          total: rotation.endTime - rotation.startTime)
+          .padding(.bottom, Scoped.PROGRESS_BAR_PADDING_BOTTOM)
+      }
 
       HStack(
         alignment: .center,
         spacing: rowWidth * Scoped.STAGE_SECTION_SPACING_RATIO)
       {
         BattleRotationStageCardPrimary(
-          stage: rotation.stageA,
-          altImageName: rotation.stageAltImageNameA)
+          rotation: rotation,
+          stageSelection: .stageA)
+          .matchedGeometryEffect(
+            id: rotation.id,
+            in: Constants.Namespaces.Battle.stageA)
         BattleRotationStageCardPrimary(
-          stage: rotation.stageB,
-          altImageName: rotation.stageAltImageNameB)
+          rotation: rotation,
+          stageSelection: .stageB)
+          .matchedGeometryEffect(
+            id: rotation.id,
+            in: Constants.Namespaces.Battle.stageB)
       }
     }
     .padding(.top, Scoped.CELL_PADDING_TOP)
@@ -91,7 +100,11 @@ struct BattleRotationCellPrimary: View {
       Image(rotation.rule.imgFilnMid)
         .antialiased(true)
         .resizable()
+        .matchedGeometryEffect(
+          id: rotation.id,
+          in: Constants.Namespaces.Battle.ruleIcon)
         .scaledToFit()
+        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
         .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
         .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH_RATIO)
         .background(
@@ -103,6 +116,9 @@ struct BattleRotationCellPrimary: View {
 
       // Rule title
       Text(rotation.rule.name.localizedStringKey)
+        .matchedGeometryEffect(
+          id: rotation.id,
+          in: Constants.Namespaces.Battle.ruleTitle)
         .scaledLimitedLine()
         .fontIka(
           .ika2,
@@ -110,6 +126,7 @@ struct BattleRotationCellPrimary: View {
             ? Scoped.RULE_FONT_SIZE_COMPACT
             : Scoped.RULE_FONT_SIZE_REGULAR,
           relativeTo: .title)
+
         .frame(maxHeight: ruleIconHeight)
     }
     .frame(
@@ -140,6 +157,8 @@ struct BattleRotationCellPrimary: View {
 struct BattleRotationCellSecondary: View {
   typealias Scoped = Constants.Styles.Rotation.Battle.Cell.Secondary
 
+  @EnvironmentObject private var ikaPreference: IkaPreference
+
   let rotation: BattleRotation
   let rowWidth: CGFloat
 
@@ -148,10 +167,13 @@ struct BattleRotationCellSecondary: View {
       // MARK: Rule section
 
       VStack(spacing: Scoped.RULE_SECTION_SPACING) {
-        // Rule img
+        // Rule icon
         Image(rotation.rule.imgFilnMid)
           .antialiased(true)
           .resizable()
+          .matchedGeometryEffect(
+            id: rotation.id,
+            in: Constants.Namespaces.Battle.ruleIcon)
           .scaledToFit()
           .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
           .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH)
@@ -161,11 +183,15 @@ struct BattleRotationCellSecondary: View {
 
         // Rule title
         Text(rotation.rule.name.localizedStringKey)
+          .matchedGeometryEffect(
+            id: rotation.id,
+            in: Constants.Namespaces.Battle.ruleTitle)
           .scaledLimitedLine()
           .fontIka(
             .ika2,
             size: Scoped.RULE_FONT_SIZE,
             relativeTo: .body)
+
           .frame(height: Scoped.RULE_TITLE_HEIGHT)
       }
       .frame(maxWidth: rowWidth * Scoped.RULE_SECTION_WIDTH_RATIO)
@@ -178,8 +204,18 @@ struct BattleRotationCellSecondary: View {
         spacing: rowWidth * Scoped.STAGE_SECTION_SPACING_RATIO +
           Scoped.STAGE_SECTION_SPACING_ADJUSTMENT_CONSTANT)
       {
-        BattleRotationStageCardSecondary(stage: rotation.stageA, altImageName: rotation.stageAltImageNameA)
-        BattleRotationStageCardSecondary(stage: rotation.stageB, altImageName: rotation.stageAltImageNameB)
+        BattleRotationStageCardSecondary(
+          rotation: rotation,
+          stageSelection: .stageA)
+          .matchedGeometryEffect(
+            id: rotation.id,
+            in: Constants.Namespaces.Battle.stageA)
+        BattleRotationStageCardSecondary(
+          rotation: rotation,
+          stageSelection: .stageB)
+          .matchedGeometryEffect(
+            id: rotation.id,
+            in: Constants.Namespaces.Battle.stageB)
       }
     }
   }

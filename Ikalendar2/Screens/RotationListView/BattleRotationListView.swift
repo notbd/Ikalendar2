@@ -23,19 +23,21 @@ struct BattleRotationListView: View {
   var body: some View {
     GeometryReader { geo in
       List {
-        ForEach(
-          Array(zip(battleRotations.indices, battleRotations)),
-          id: \.1)
-        { index, rotation in
+        ForEach(battleRotations)
+        { rotation in
           BattleRotationRow(
             rotation: rotation,
-            index: index,
             rowWidth: geo.size.width)
             .listRowSeparator(.hidden)
         }
       }
       .listStyle(.insetGrouped)
-      .animation(.easeOut, value: battleRotations.map { $0.id })
+      // map animation value to startTime to avoid animation during battle mode switch
+      .animation(
+        .spring(
+          response: 0.6,
+          dampingFraction: 0.8),
+        value: battleRotations.map { $0.startTime })
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }

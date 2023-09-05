@@ -20,10 +20,12 @@ struct BattleRotation: Rotation, Hashable {
 }
 
 extension BattleRotation {
+  var id: String { "\(startTime.timeIntervalSince1970)-\(endTime.timeIntervalSince1970)-\(rule)" }
+
   var description: String {
     id +
       "-" +
-      "\(rule.name)-\(stageA.name)-\(stageB.name)"
+      "\(stageA)-\(stageB)"
   }
 }
 

@@ -12,19 +12,12 @@ import SwiftUI
 /// A row containing all the information of a battle rotation.
 struct BattleRotationRow: View {
   let rotation: BattleRotation
-  let index: Int
   let rowWidth: CGFloat
 
   private var rowType: RowType {
-    // expired rotations already filtered out, so index will reflect truth
-    switch index {
-    case 0:
-      return .now
-    case 1:
-      return .next
-    default:
-      return .other
-    }
+    if rotation.isCurrent() { return .now }
+    else if rotation.isNext() { return .next }
+    else { return .other }
   }
 
   var body: some View {
@@ -142,7 +135,6 @@ struct BattleRotationRow_Previews: PreviewProvider {
           { index in
             BattleRotationRow(
               rotation: IkaMockData.getBattleRotations()[modeSelection]![index],
-              index: index,
               rowWidth: geo.size.width)
           }
         }

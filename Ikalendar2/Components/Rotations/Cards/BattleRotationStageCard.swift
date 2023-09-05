@@ -16,12 +16,25 @@ struct BattleRotationStageCardPrimary: View {
 
   @EnvironmentObject private var ikaPreference: IkaPreference
 
-  let stage: BattleStage
-  let altImageName: String
+  let rotation: BattleRotation
+  let stageSelection: BattleStageSelection
 
-  private var stageImageName: String { ikaPreference.ifUseAltStageImages
-    ? altImageName
-    : stage.imgFilnLarge }
+  private var stage: BattleStage {
+    stageSelection == .stageA ? rotation.stageA : rotation.stageB
+  }
+
+  private var stageImageName: String {
+    switch (ikaPreference.ifUseAltStageImages, stageSelection) {
+    case (true, .stageA):
+      return rotation.stageAltImageNameA
+    case (true, .stageB):
+      return rotation.stageAltImageNameB
+    case (false, .stageA):
+      return rotation.stageA.imgFilnLarge
+    case (false, .stageB):
+      return rotation.stageB.imgFilnLarge
+    }
+  }
 
   var body: some View {
     Image(stageImageName)
@@ -50,12 +63,25 @@ struct BattleRotationStageCardSecondary: View {
 
   @EnvironmentObject private var ikaPreference: IkaPreference
 
-  let stage: BattleStage
-  let altImageName: String
+  let rotation: BattleRotation
+  let stageSelection: BattleStageSelection
 
-  private var stageImageName: String { ikaPreference.ifUseAltStageImages
-    ? altImageName
-    : stage.imgFilnLarge }
+  private var stage: BattleStage {
+    stageSelection == .stageA ? rotation.stageA : rotation.stageB
+  }
+
+  private var stageImageName: String {
+    switch (ikaPreference.ifUseAltStageImages, stageSelection) {
+    case (true, .stageA):
+      return rotation.stageAltImageNameA
+    case (true, .stageB):
+      return rotation.stageAltImageNameB
+    case (false, .stageA):
+      return rotation.stageA.imgFilnLarge
+    case (false, .stageB):
+      return rotation.stageB.imgFilnLarge
+    }
+  }
 
   var body: some View {
     VStack(
@@ -80,13 +106,28 @@ struct BattleRotationStageCardSecondary: View {
   }
 }
 
+// MARK: - BattleStageSelection
+
+enum BattleStageSelection {
+  case stageA
+  case stageB
+}
+
 // MARK: - BattleRotationStageCard_Previews
 
 struct BattleRotationStageCard_Previews: PreviewProvider {
   static var previews: some View {
-    BattleRotationStageCardPrimary(stage: .theReef, altImageName: "The_Reef_Alt_0")
-      .previewLayout(.fixed(width: 320, height: 200))
-    BattleRotationStageCardSecondary(stage: .humpbackPumpTrack, altImageName: "Humpback_Pump_Track_Alt_0")
-      .previewLayout(.fixed(width: 300, height: 240))
+    let rotation = IkaMockData.getBattleRotation()
+    return
+      Group {
+        BattleRotationStageCardPrimary(
+          rotation: rotation,
+          stageSelection: .stageA)
+          .previewLayout(.fixed(width: 320, height: 200))
+        BattleRotationStageCardPrimary(
+          rotation: rotation,
+          stageSelection: .stageB)
+          .previewLayout(.fixed(width: 300, height: 240))
+      }
   }
 }

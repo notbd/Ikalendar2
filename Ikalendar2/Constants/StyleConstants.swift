@@ -170,8 +170,8 @@ extension Constants.Styles {
     enum Battle {
       enum Cell {
         enum Primary {
-          static let PROGRESS_BAR_PADDING_TOP: CGFloat = 8
-          static let PROGRESS_BAR_PADDING_BOTTOM: CGFloat = 16
+          static let CELL_SPACING_V: CGFloat = 8
+          static let PROGRESS_BAR_PADDING_BOTTOM: CGFloat = 8
           static let STAGE_SECTION_SPACING_RATIO: CGFloat = 0.04
           static let CELL_PADDING_TOP: CGFloat = 0
           static let CELL_PADDING_BOTTOM: CGFloat = 6
@@ -201,6 +201,9 @@ extension Constants.Styles {
 
           static let STAGE_SECTION_SPACING_RATIO: CGFloat = 0.04
           static let STAGE_SECTION_SPACING_ADJUSTMENT_CONSTANT: CGFloat = -6
+
+          static let ITEM_ID_RULE_ICON = "rule-icon"
+          static let ITEM_ID_RULE_TITLE = "rule-title"
         }
       }
 
@@ -226,7 +229,7 @@ extension Constants.Styles {
     enum Salmon {
       enum Cell {
         static let STAGE_HEIGHT_RATIO: CGFloat = 0.36
-        static let STAGE_HEIGHT_ADJUSTMENT_CONSTANT: CGFloat = -25
+        static let STAGE_HEIGHT_ADJUSTMENT_CONSTANT: CGFloat = -27
 
         static let CELL_SPACING: CGFloat = 10
         static let CELL_PADDING_TOP: CGFloat = 2

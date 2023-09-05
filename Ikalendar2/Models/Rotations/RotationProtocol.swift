@@ -65,16 +65,6 @@ extension Rotation {
 }
 
 extension Rotation {
-  /// Determines whether the rotation is currently active based on the current time.
-  ///
-  /// This function uses the shared instance of `IkaTimePublisher` to obtain the current time,
-  /// and checks if it falls within the time range defined by `startTime` and `endTime`.
-  ///
-  /// - Returns: A Boolean value indicating if the rotation is currently active.
-  func isCurrent() -> Bool {
-    IkaTimePublisher.shared.currentTime > startTime && IkaTimePublisher.shared.currentTime < endTime
-  }
-
   /// Determines whether the rotation has expired based on the current time.
   ///
   /// This function uses the shared instance of `IkaTimePublisher` to obtain the current time,
@@ -82,7 +72,18 @@ extension Rotation {
   ///
   /// - Returns: A Boolean value indicating if the rotation has expired.
   func isExpired() -> Bool {
-    endTime < IkaTimePublisher.shared.currentTime
+    endTime <= IkaTimePublisher.shared.currentTime
+  }
+
+  /// Determines whether the rotation is currently active based on the current time.
+  ///
+  /// This function uses the shared instance of `IkaTimePublisher` to obtain the current time,
+  /// and checks if it falls within the time range defined by `startTime` and `endTime`.
+  ///
+  /// - Returns: A Boolean value indicating if the rotation is currently active.
+  func isCurrent() -> Bool {
+    startTime <= IkaTimePublisher.shared.currentTime &&
+      endTime > IkaTimePublisher.shared.currentTime
   }
 
   /// Determines whether the rotation is scheduled for the future based on the current time.
@@ -92,6 +93,6 @@ extension Rotation {
   ///
   /// - Returns: A Boolean value indicating if the rotation is scheduled for the future.
   func isFuture() -> Bool {
-    IkaTimePublisher.shared.currentTime > startTime && IkaTimePublisher.shared.currentTime > endTime
+    startTime > IkaTimePublisher.shared.currentTime
   }
 }
