@@ -119,6 +119,7 @@ struct SettingsAdvancedOptionsView: View {
     var newSalmonData = IkaMockData.getSalmonRotation()
 
     while
+      newBattleData.rule == battleRotationPreviewData.rule ||
       newBattleData.stageA == battleRotationPreviewData.stageA ||
       newBattleData.stageB == battleRotationPreviewData.stageB
     {
@@ -131,7 +132,6 @@ struct SettingsAdvancedOptionsView: View {
     battleRotationPreviewData = newBattleData
     salmonRotationPreviewData = newSalmonData
   }
-
 }
 
 // MARK: - BottomToolbarPositioningPreview
