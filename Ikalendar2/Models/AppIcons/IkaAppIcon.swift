@@ -8,6 +8,8 @@
 import SwiftUI
 
 enum IkaAppIcon: String, CaseIterable, Identifiable {
+  static let defaultIcon = IkaAppIcon.modernDark
+
   case modernDark
   case modernLight
   case monoDark
@@ -60,17 +62,48 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     }
   }
 
-  var imageName: String {
-    "ikalendar2-" + iconSetName
-  }
+  enum DisplayMode {
+    case original
+    case mid
+    case small
 
-  var imageNameSmall: String {
-    imageName + "-small"
+    var sideLen: CGFloat {
+      switch self {
+      case .original:
+        return 1024
+      case .mid:
+        return 120
+      case .small:
+        return 60
+      }
+    }
+
+    var cornerRadius: CGFloat {
+      switch self {
+      case .original:
+        return 1024 * (14 / 60)
+      case .mid:
+        return 28
+      case .small:
+        return 14
+      }
+    }
+
+    var clipShape: some Shape {
+      RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+    }
   }
 
   // MARK: Internal
 
-  static func clipShape(cornerRadius: CGFloat) -> some Shape {
-    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+  func getImageName(_ displayMode: IkaAppIcon.DisplayMode) -> String {
+    switch displayMode {
+    case .original:
+      return "ikalendar2-" + iconSetName
+    case .mid:
+      return "ikalendar2-" + iconSetName + "-mid"
+    case .small:
+      return "ikalendar2-" + iconSetName + "-small"
+    }
   }
 }

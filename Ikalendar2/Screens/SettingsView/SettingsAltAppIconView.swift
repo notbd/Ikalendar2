@@ -39,16 +39,17 @@ struct SettingsAltAppIconRow: View {
     }
     label: {
       HStack(spacing: Scoped.SPACING_H) {
-        Image(ikaAppIcon.imageNameSmall)
+        Image(ikaAppIcon.getImageName(.small))
           .antialiased(true)
           .resizable()
           .scaledToFit()
           .frame(
-            width: Scoped.APP_ICON_SIDE_LEN,
-            height: Scoped.APP_ICON_SIDE_LEN)
-          .clipShape(IkaAppIcon.clipShape(cornerRadius: Scoped.CLIP_SHAPE_CORNER_RADIUS))
+            width: IkaAppIcon.DisplayMode.small.sideLen,
+            height: IkaAppIcon.DisplayMode.small.sideLen)
+          .clipShape(
+            IkaAppIcon.DisplayMode.small.clipShape)
           .overlay(
-            IkaAppIcon.clipShape(cornerRadius: Scoped.CLIP_SHAPE_CORNER_RADIUS)
+            IkaAppIcon.DisplayMode.small.clipShape
               .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
               .opacity(Scoped.STROKE_OPACITY))
 

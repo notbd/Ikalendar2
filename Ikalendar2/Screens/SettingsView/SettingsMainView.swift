@@ -159,10 +159,9 @@ struct SettingsMainView: View {
 
   private var rowAppLanguage: some View {
     Button {
+      guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
       SimpleHaptics.generateTask(.selection)
-      if let url = URL(string: UIApplication.openSettingsURLString) {
-        openURL(url)
-      }
+      openURL(url)
     } label: {
       HStack {
         Label {

@@ -13,7 +13,7 @@ import SwiftUI
 
 /// The About page in App Settings.
 struct SettingsAboutView: View {
-//  @Environment(\.requestReview) private var requestReview
+  @Environment(\.requestReview) private var requestReview
 
   typealias Scoped = Constants.Styles.Settings.About
 
@@ -23,7 +23,7 @@ struct SettingsAboutView: View {
 
   var body: some View {
     Form {
-      Section(header: Spacer()) {
+      Section {
         appIconContent
       }
       .listRowBackground(Color.clear)
@@ -32,15 +32,15 @@ struct SettingsAboutView: View {
         rowShare
       }
 
-      Section(header: Text("Contact")) {
-        rowDeveloperTwitter
-        rowDeveloperEmail
-      }
-
       Section(header: Text("Review")) {
         rowRating
         rowLeavingReview
         rowAppStoreOverlay
+      }
+
+      Section(header: Text("Contact")) {
+        rowDeveloperTwitter
+        rowDeveloperEmail
       }
 
       Section(header: Text("Others")) {
@@ -64,12 +64,19 @@ struct SettingsAboutView: View {
 
   private var appIconLabel: some View {
     var appIconImage: some View {
-      Image(uiImage: UIImage(named: Scoped.APP_ICON_NAME) ?? UIImage())
+      Image(IkaAppIcon.defaultIcon.getImageName(.mid))
         .antialiased(true)
         .resizable()
         .scaledToFit()
-        .frame(width: Scoped.APP_ICON_SIDE_LEN, height: Scoped.APP_ICON_SIDE_LEN)
-        .cornerRadius(Scoped.APP_ICON_CORNER_RADIUS)
+        .frame(
+          width: IkaAppIcon.DisplayMode.mid.sideLen,
+          height: IkaAppIcon.DisplayMode.mid.sideLen)
+        .clipShape(
+          IkaAppIcon.DisplayMode.mid.clipShape)
+        .overlay(
+          IkaAppIcon.DisplayMode.mid.clipShape
+            .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
+            .opacity(Scoped.STROKE_OPACITY))
     }
 
     var appIconTitle: some View {
@@ -102,25 +109,6 @@ struct SettingsAboutView: View {
       }
   }
 
-  // MARK: - Share Section
-
-  private var rowShare: some View {
-    // NOTE: could not find error handling for invalid URL ShareLink as of iOS 16
-    // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 16
-    let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US)!
-
-    return
-      ShareLink(item: shareURL) {
-        Label {
-          Text("Share ikalendar2")
-            .foregroundColor(.primary)
-        }
-        icon: {
-          Image(systemName: Scoped.SHARE_SFSYMBOL)
-        }
-      }
-  }
-
   // MARK: - Contact Section
 
   private var rowDeveloperTwitter: some View {
@@ -132,10 +120,9 @@ struct SettingsAboutView: View {
 
     return
       Button {
+        guard let url = URL(string: twitterURLString) else { return }
         SimpleHaptics.generateTask(.selection)
-        if let url = URL(string: twitterURLString) {
-          openURL(url)
-        }
+        openURL(url)
       } label: {
         Label {
           HStack {
@@ -158,10 +145,9 @@ struct SettingsAboutView: View {
 
   private var rowDeveloperEmail: some View {
     Button {
+      guard let url = URL(string: Constants.Keys.URL.DEVELOPER_EMAIL) else { return }
       SimpleHaptics.generateTask(.selection)
-      if let url = URL(string: Constants.Keys.URL.DEVELOPER_EMAIL) {
-        openURL(url)
-      }
+      openURL(url)
     } label: {
       Label {
         Text("Feedback Email")
@@ -178,7 +164,9 @@ struct SettingsAboutView: View {
   private var rowRating: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
-      didTapRate()
+      Task {
+        await requestReview()
+      }
     } label: {
       Label {
         Text("Rate ikalendar2")
@@ -192,10 +180,9 @@ struct SettingsAboutView: View {
 
   private var rowLeavingReview: some View {
     Button {
+      guard let url = URL(string: Constants.Keys.URL.APP_STORE_REVIEW) else { return }
       SimpleHaptics.generateTask(.selection)
-      if let url = URL(string: Constants.Keys.URL.APP_STORE_REVIEW) {
-        openURL(url)
-      }
+      openURL(url)
     } label: {
       Label {
         Text("Leave a Review")
@@ -227,14 +214,32 @@ struct SettingsAboutView: View {
     }
   }
 
+  // MARK: - Share Section
+
+  private var rowShare: some View {
+    // NOTE: could not find error handling for invalid URL ShareLink as of iOS 16
+    // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 16
+    let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US)!
+
+    return
+      ShareLink(item: shareURL) {
+        Label {
+          Text("Share ikalendar2")
+            .foregroundColor(.primary)
+        }
+        icon: {
+          Image(systemName: Scoped.SHARE_SFSYMBOL)
+        }
+      }
+  }
+
   // MARK: - Others Section
 
   private var rowSourceCode: some View {
     Button {
+      guard let url = URL(string: Constants.Keys.URL.SOURCE_CODE_REPO) else { return }
       SimpleHaptics.generateTask(.selection)
-      if let url = URL(string: Constants.Keys.URL.SOURCE_CODE_REPO) {
-        openURL(url)
-      }
+      openURL(url)
     } label: {
       Label {
         Text("Source Code")
@@ -248,10 +253,9 @@ struct SettingsAboutView: View {
 
   private var rowPrivacyPolicy: some View {
     Button {
+      guard let url = URL(string: Constants.Keys.URL.PRIVACY_POLICY) else { return }
       SimpleHaptics.generateTask(.selection)
-      if let url = URL(string: Constants.Keys.URL.PRIVACY_POLICY) {
-        openURL(url)
-      }
+      openURL(url)
     } label: {
       Label {
         Text("Privacy Policy")
@@ -263,40 +267,6 @@ struct SettingsAboutView: View {
     }
   }
 
-  // MARK: Private
-
-  // MARK: - End Components ↑↑↑
-
-  // Handle the tap on the share button. [Deprecated since iOS 16]
-//  func didTapShare() {
-//    guard let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US) else { return }
-//    let activityVC =
-//      UIActivityViewController(
-//        activityItems: [shareURL],
-//        applicationActivities: nil)
-//    let keyWindow = UIApplication.shared.windows.filter(\.isKeyWindow).first
-//    if var topController = keyWindow?.rootViewController {
-//      while let presentedViewController = topController.presentedViewController {
-//        topController = presentedViewController
-//      }
-//      topController.present(
-//        activityVC,
-//        animated: true,
-//        completion: nil)
-//    }
-//  }
-
-  /// Handle the tap on the rate button.
-  private func didTapRate() {
-//    requestReview()
-    if
-      let scene =
-      UIApplication.shared.connectedScenes
-        .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
-    {
-      SKStoreReviewController.requestReview(in: scene)
-    }
-  }
 }
 
 // MARK: - SettingsAboutView_Previews

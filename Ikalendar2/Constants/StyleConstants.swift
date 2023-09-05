@@ -85,8 +85,6 @@ extension Constants.Styles {
     enum AltAppIcon {
       static let SPACING_H: CGFloat = 16
 
-      static let APP_ICON_SIDE_LEN: CGFloat = 60
-      static let CLIP_SHAPE_CORNER_RADIUS: CGFloat = 14
       static let STROKE_COLOR: Color = .tertiaryLabel
       static let STROKE_LINE_WIDTH: CGFloat = 1
       static let STROKE_OPACITY: CGFloat = 0.4
@@ -112,9 +110,9 @@ extension Constants.Styles {
     }
 
     enum About {
-      static let APP_ICON_NAME = "app-icon-modern-dark"
-      static let APP_ICON_SIDE_LEN: CGFloat = 120
-      static let APP_ICON_CORNER_RADIUS: CGFloat = 16
+      static let STROKE_COLOR: Color = .tertiaryLabel
+      static let STROKE_LINE_WIDTH: CGFloat = 1
+      static let STROKE_OPACITY: CGFloat = 0.4
       static let APP_ICON_TITLE_FONT: Font = .system(.largeTitle, design: .rounded)
       static let APP_ICON_TITLE_FONT_WEIGHT: Font.Weight = .bold
       static let APP_ICON_SUBTITLE_FONT: Font = .system(.subheadline, design: .monospaced)
