@@ -54,6 +54,7 @@ final class IkaDecoder {
           BattleRotation(
             startTime: startTime,
             endTime: endTime,
+            mode: battleMode,
             rule: rule,
             stageA: stageA,
             stageB: stageB))

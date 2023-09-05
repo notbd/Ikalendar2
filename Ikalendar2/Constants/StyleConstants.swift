@@ -229,7 +229,7 @@ extension Constants.Styles {
     enum Salmon {
       enum Cell {
         static let STAGE_HEIGHT_RATIO: CGFloat = 0.36
-        static let STAGE_HEIGHT_ADJUSTMENT_CONSTANT: CGFloat = -27
+        static let STAGE_HEIGHT_ADJUSTMENT_CONSTANT: CGFloat = -26
 
         static let CELL_SPACING: CGFloat = 10
         static let CELL_PADDING_TOP: CGFloat = 2

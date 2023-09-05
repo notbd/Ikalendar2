@@ -34,7 +34,11 @@ struct SalmonRotationListView: View {
         }
       }
       .listStyle(.insetGrouped)
-      .animation(.easeOut, value: salmonRotations)
+      .animation(
+        .spring(
+          response: 0.6,
+          dampingFraction: 0.8),
+        value: salmonRotations)
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }

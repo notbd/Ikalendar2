@@ -44,12 +44,6 @@ final class IkaPreference: ObservableObject {
   @AppStorage(Constants.Keys.AppStorage.IF_SWAP_BOTTOM_TOOLBAR_PICKERS)
   var ifSwapBottomToolbarPickers = false { willSet { objectWillChange.send() }}
 
-//  /// Namespace for the battle rotation animation using `matchedGeometryEffect`
-//  @Namespace var battleRotationAnimation
-//
-//  /// Namespace for the salmon rotation animation using `matchedGeometryEffect`
-//  @Namespace var salmonRotationAnimation
-
   // MARK: Lifecycle
 
   init() { }

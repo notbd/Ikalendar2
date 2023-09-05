@@ -42,8 +42,6 @@ extension SalmonRotation {
   var description: String {
     id +
       "-" +
-      "\(startTime.timeIntervalSince1970)-\(endTime.timeIntervalSince1970)" +
-      "-" +
       "\(stage?.name ?? "nil")-\(weapons?.description ?? "nil")" +
       "-" +
       "\(rewardApparel?.name ?? "nil")-\(grizzcoWeapon?.name ?? "nil")"

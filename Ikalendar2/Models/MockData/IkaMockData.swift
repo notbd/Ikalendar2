@@ -135,6 +135,7 @@ struct IkaMockData {
   ///
   /// - Returns: The `BattleRotation` object.
   static func getBattleRotation(
+    mode: BattleMode = BattleMode.allCases.randomElement()!,
     rule: BattleRule = BattleRule.allCases.randomElement()!,
     rawStartTime: Date = Date())
     -> BattleRotation
@@ -165,6 +166,7 @@ struct IkaMockData {
     return BattleRotation(
       startTime: startTime,
       endTime: endTime,
+      mode: mode,
       rule: rule,
       stageA: randomStageA,
       stageB: randomStageB)

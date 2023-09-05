@@ -9,10 +9,10 @@ import SwiftUI
 
 /// Constant data holding `Namespace`s for the app.
 extension Constants.Namespaces {
-  enum Battle {
-    static let ruleIcon: Namespace.ID = Namespace().wrappedValue
-    static let ruleTitle: Namespace.ID = Namespace().wrappedValue
-    static let stageA: Namespace.ID = Namespace().wrappedValue
-    static let stageB: Namespace.ID = Namespace().wrappedValue
+  struct Battle {
+    let ruleIcon: Namespace.ID
+    let ruleTitle: Namespace.ID
+    let stageA: Namespace.ID
+    let stageB: Namespace.ID
   }
 }

@@ -19,16 +19,33 @@ struct BattleRotationCell: View {
   let rotation: BattleRotation
   let rowWidth: CGFloat
 
+  @Namespace var ruleIcon
+  @Namespace var ruleTitle
+  @Namespace var stageA
+  @Namespace var stageB
+
   var body: some View {
     switch type {
     case .primary:
       BattleRotationCellPrimary(
         rotation: rotation,
-        rowWidth: rowWidth)
+        rowWidth: rowWidth,
+        animationNamespaces:
+        .init(
+          ruleIcon: ruleIcon,
+          ruleTitle: ruleTitle,
+          stageA: stageA,
+          stageB: stageB))
     case .secondary:
       BattleRotationCellSecondary(
         rotation: rotation,
-        rowWidth: rowWidth)
+        rowWidth: rowWidth,
+        animationNamespaces:
+        .init(
+          ruleIcon: ruleIcon,
+          ruleTitle: ruleTitle,
+          stageA: stageA,
+          stageB: stageB))
     }
   }
 }
@@ -46,6 +63,7 @@ struct BattleRotationCellPrimary: View {
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
+  let animationNamespaces: Constants.Namespaces.Battle
 
   @State private var ruleIconHeight: CGFloat = .zero // initial value does not matter
 
@@ -76,13 +94,13 @@ struct BattleRotationCellPrimary: View {
           stageSelection: .stageA)
           .matchedGeometryEffect(
             id: rotation.id,
-            in: Constants.Namespaces.Battle.stageA)
+            in: animationNamespaces.stageA)
         BattleRotationStageCardPrimary(
           rotation: rotation,
           stageSelection: .stageB)
           .matchedGeometryEffect(
             id: rotation.id,
-            in: Constants.Namespaces.Battle.stageB)
+            in: animationNamespaces.stageB)
       }
     }
     .padding(.top, Scoped.CELL_PADDING_TOP)
@@ -102,7 +120,7 @@ struct BattleRotationCellPrimary: View {
         .resizable()
         .matchedGeometryEffect(
           id: rotation.id,
-          in: Constants.Namespaces.Battle.ruleIcon)
+          in: animationNamespaces.ruleIcon)
         .scaledToFit()
         .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
         .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
@@ -118,7 +136,7 @@ struct BattleRotationCellPrimary: View {
       Text(rotation.rule.name.localizedStringKey)
         .matchedGeometryEffect(
           id: rotation.id,
-          in: Constants.Namespaces.Battle.ruleTitle)
+          in: animationNamespaces.ruleTitle)
         .scaledLimitedLine()
         .fontIka(
           .ika2,
@@ -161,6 +179,7 @@ struct BattleRotationCellSecondary: View {
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
+  let animationNamespaces: Constants.Namespaces.Battle
 
   var body: some View {
     HStack {
@@ -173,7 +192,7 @@ struct BattleRotationCellSecondary: View {
           .resizable()
           .matchedGeometryEffect(
             id: rotation.id,
-            in: Constants.Namespaces.Battle.ruleIcon)
+            in: animationNamespaces.ruleIcon)
           .scaledToFit()
           .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
           .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH)
@@ -185,7 +204,7 @@ struct BattleRotationCellSecondary: View {
         Text(rotation.rule.name.localizedStringKey)
           .matchedGeometryEffect(
             id: rotation.id,
-            in: Constants.Namespaces.Battle.ruleTitle)
+            in: animationNamespaces.ruleTitle)
           .scaledLimitedLine()
           .fontIka(
             .ika2,
@@ -209,13 +228,13 @@ struct BattleRotationCellSecondary: View {
           stageSelection: .stageA)
           .matchedGeometryEffect(
             id: rotation.id,
-            in: Constants.Namespaces.Battle.stageA)
+            in: animationNamespaces.stageA)
         BattleRotationStageCardSecondary(
           rotation: rotation,
           stageSelection: .stageB)
           .matchedGeometryEffect(
             id: rotation.id,
-            in: Constants.Namespaces.Battle.stageB)
+            in: animationNamespaces.stageB)
       }
     }
   }
@@ -225,6 +244,11 @@ struct BattleRotationCellSecondary: View {
 
 struct BattleRotationCell_Previews: PreviewProvider {
   static var previews: some View {
+    @Namespace var ruleIcon
+    @Namespace var ruleTitle
+    @Namespace var stageA
+    @Namespace var stageB
+
     GeometryReader { geo in
       List {
         Section {
@@ -232,14 +256,26 @@ struct BattleRotationCell_Previews: PreviewProvider {
             rotation: IkaMockData.getBattleRotation(
               rule: .towerControl,
               rawStartTime: Date()),
-            rowWidth: geo.size.width)
+            rowWidth: geo.size.width,
+            animationNamespaces:
+            .init(
+              ruleIcon: ruleIcon,
+              ruleTitle: ruleTitle,
+              stageA: stageA,
+              stageB: stageB))
         }
         Section {
           BattleRotationCellSecondary(
             rotation: IkaMockData.getBattleRotation(
               rule: .clamBlitz,
               rawStartTime: Date()),
-            rowWidth: geo.size.width)
+            rowWidth: geo.size.width,
+            animationNamespaces:
+            .init(
+              ruleIcon: ruleIcon,
+              ruleTitle: ruleTitle,
+              stageA: stageA,
+              stageB: stageB))
         }
       }
       .listStyle(InsetGroupedListStyle())

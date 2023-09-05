@@ -14,18 +14,19 @@ struct BattleRotation: Rotation, Hashable {
   let startTime: Date
   let endTime: Date
 
+  let mode: BattleMode
   let rule: BattleRule
   let stageA: BattleStage
   let stageB: BattleStage
 }
 
 extension BattleRotation {
-  var id: String { "\(startTime)-\(endTime)-\(rule)" }
+  var id: String { "\(startTime)-\(endTime)-\(mode)" }
 
   var description: String {
     id +
       "-" +
-      "\(stageA)-\(stageB)"
+      "\(rule)-\(stageA)-\(stageB)"
   }
 }
 

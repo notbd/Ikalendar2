@@ -38,7 +38,7 @@ extension Rotation {
   /// Default implementation of the `id` property.
   ///
   /// Constructs the ID by combining the Unix timestamps of the `startTime` and `endTime` properties.
-  var id: String { "\(startTime.timeIntervalSince1970)-\(endTime.timeIntervalSince1970)" }
+  var id: String { "\(startTime)-\(endTime)" }
 
   // MARK: Internal
 
