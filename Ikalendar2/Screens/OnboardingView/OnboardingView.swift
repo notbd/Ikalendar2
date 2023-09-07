@@ -139,7 +139,6 @@ struct OnboardingView: View {
 
         Spacer()
       }
-      .allowAutoDismiss { false }
     }
   }
 }

@@ -13,18 +13,17 @@ import SwiftUI
 
 /// The About page in App Settings.
 struct SettingsAboutView: View {
-  @Environment(\.requestReview) private var requestReview
-
   typealias Scoped = Constants.Styles.Settings.About
 
+  @Environment(\.requestReview) private var requestReview
   @Environment(\.openURL) private var openURL
 
   @State private var appStoreOverlayPresented = false
 
   var body: some View {
-    Form {
+    List {
       Section {
-        appIconContent
+        rowAppInfo
       }
       .listRowBackground(Color.clear)
 
@@ -50,19 +49,12 @@ struct SettingsAboutView: View {
     }
     .navigationTitle("About")
     .navigationBarTitleDisplayMode(.inline)
+    .listStyle(.insetGrouped)
   }
 
   // MARK: - Icon Section
 
-  private var appIconContent: some View {
-    HStack {
-      Spacer()
-      appIconLabel
-      Spacer()
-    }
-  }
-
-  private var appIconLabel: some View {
+  private var rowAppInfo: some View {
     var appIconImage: some View {
       Image(IkaAppIcon.defaultIcon.getImageName(.mid))
         .antialiased(true)
@@ -77,6 +69,7 @@ struct SettingsAboutView: View {
           IkaAppIcon.DisplayMode.mid.clipShape
             .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
             .opacity(Scoped.STROKE_OPACITY))
+        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
     }
 
     var appIconTitle: some View {
@@ -107,56 +100,26 @@ struct SettingsAboutView: View {
         appIconTitle
         appIconSubtitle
       }
+      .hAlignment(.center)
   }
 
-  // MARK: - Contact Section
+  // MARK: - Share Section
 
-  private var rowDeveloperTwitter: some View {
-    let twitterURLString = Constants.Keys.URL.DEVELOPER_TWITTER
-    let twitterHandle =
-      twitterURLString.replacingOccurrences(
-        of: "https://twitter.com/",
-        with: "@")
+  private var rowShare: some View {
+    // NOTE: could not find error handling for invalid URL ShareLink as of iOS 16
+    // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 16
+    let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US)!
 
     return
-      Button {
-        guard let url = URL(string: twitterURLString) else { return }
-        SimpleHaptics.generateTask(.selection)
-        openURL(url)
-      } label: {
+      ShareLink(item: shareURL) {
         Label {
-          HStack {
-            Text("Developer's Twitter")
-              .foregroundColor(.primary)
-            Spacer()
-            Text(twitterHandle)
-              .foregroundColor(.secondary)
-          }
+          Text("Share ikalendar2")
+            .foregroundColor(.primary)
         }
         icon: {
-          Image(Scoped.TWITTER_ICON_NAME)
-            .antialiased(true)
-            .resizable()
-            .scaledToFit()
-            .frame(width: Scoped.TWITTER_ICON_SIDE_LEN)
+          Image(systemName: Scoped.SHARE_SFSYMBOL)
         }
       }
-  }
-
-  private var rowDeveloperEmail: some View {
-    Button {
-      guard let url = URL(string: Constants.Keys.URL.DEVELOPER_EMAIL) else { return }
-      SimpleHaptics.generateTask(.selection)
-      openURL(url)
-    } label: {
-      Label {
-        Text("Feedback Email")
-          .foregroundColor(.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.EMAIL_SFSYMBOL)
-      }
-    }
   }
 
   // MARK: - Review Section
@@ -214,23 +177,54 @@ struct SettingsAboutView: View {
     }
   }
 
-  // MARK: - Share Section
+  // MARK: - Contact Section
 
-  private var rowShare: some View {
-    // NOTE: could not find error handling for invalid URL ShareLink as of iOS 16
-    // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 16
-    let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US)!
+  private var rowDeveloperTwitter: some View {
+    let twitterURLString = Constants.Keys.URL.DEVELOPER_TWITTER
+    let twitterHandle =
+      twitterURLString.replacingOccurrences(
+        of: "https://twitter.com/",
+        with: "@")
 
     return
-      ShareLink(item: shareURL) {
+      Button {
+        guard let url = URL(string: twitterURLString) else { return }
+        SimpleHaptics.generateTask(.selection)
+        openURL(url)
+      } label: {
         Label {
-          Text("Share ikalendar2")
-            .foregroundColor(.primary)
+          HStack {
+            Text("Developer's Twitter")
+              .foregroundColor(.primary)
+            Spacer()
+            Text(twitterHandle)
+              .foregroundColor(.secondary)
+          }
         }
         icon: {
-          Image(systemName: Scoped.SHARE_SFSYMBOL)
+          Image(Scoped.TWITTER_ICON_NAME)
+            .antialiased(true)
+            .resizable()
+            .scaledToFit()
+            .frame(width: Scoped.TWITTER_ICON_SIDE_LEN)
         }
       }
+  }
+
+  private var rowDeveloperEmail: some View {
+    Button {
+      guard let url = URL(string: Constants.Keys.URL.DEVELOPER_EMAIL) else { return }
+      SimpleHaptics.generateTask(.selection)
+      openURL(url)
+    } label: {
+      Label {
+        Text("Feedback Email")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(systemName: Scoped.EMAIL_SFSYMBOL)
+      }
+    }
   }
 
   // MARK: - Others Section

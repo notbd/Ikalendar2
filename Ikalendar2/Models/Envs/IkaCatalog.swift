@@ -15,7 +15,6 @@ import SwiftUI
 /// Contains the rotation data and its loading status.
 @MainActor
 final class IkaCatalog: ObservableObject {
-
   typealias Scoped = Constants.Configs.Catalog
 
   static let shared = IkaCatalog()
@@ -23,11 +22,18 @@ final class IkaCatalog: ObservableObject {
   @Published private(set) var battleRotationDict = BattleRotationDict()
   @Published private(set) var salmonRotations = [SalmonRotation]()
 
+  // MARK: Load related
+
   enum LoadStatus: Equatable {
     case loading
     case loaded
     case error(IkaError)
   }
+
+  @Published private(set) var loadStatus: LoadStatus = .loading
+  @Published private(set) var loadStatusWithLoadingIgnored: LoadStatus = .loading
+
+  // MARK: Auto-Load related
 
   enum AutoLoadStatus: Equatable {
     case autoLoading
@@ -40,18 +46,9 @@ final class IkaCatalog: ObservableObject {
     }
   }
 
-  @Published private(set) var loadStatus: LoadStatus = .loading
   @Published private(set) var autoLoadStatus = AutoLoadStatus.idle
-  @Published private(set) var loadStatusWithLoadingIgnored: LoadStatus = .loading
-  var loadStatusWithLoadingIgnoredPublisher: AnyPublisher<LoadStatus, Never> {
-    $loadStatus
-      .removeDuplicates()
-      .filter { $0 != .loading }
-      .eraseToAnyPublisher()
-  }
 
-  private var subscriptionTask: Task<Void, Never>?
-  private var checkAutoLoadNecessityTask: Task<Void, Error>?
+  private var cancellables = Set<AnyCancellable>()
 
   private var ifShouldAutoLoad: Bool {
     loadStatus != .loading &&
@@ -69,16 +66,15 @@ final class IkaCatalog: ObservableObject {
   // MARK: Lifecycle
 
   private init() {
-    subscribeToLoadStatusWithLoadingIgnoredPublisher()
+    setUpFilteredLoadStatusSubscription()
     Task {
       await loadCatalog()
-      startCheckAutoLoadNecessityTask()
+      setUpAutoLoadCheckSubscription()
     }
   }
 
   deinit {
-    subscriptionTask?.cancel()
-    checkAutoLoadNecessityTask?.cancel()
+    cancellables.removeAll()
   }
 
   // MARK: Internal
@@ -91,24 +87,27 @@ final class IkaCatalog: ObservableObject {
 
   // MARK: Private
 
-  private func subscribeToLoadStatusWithLoadingIgnoredPublisher() {
-    subscriptionTask = Task {
-      for await newValue in loadStatusWithLoadingIgnoredPublisher.values {
-        self.loadStatusWithLoadingIgnored = newValue
+  private func setUpFilteredLoadStatusSubscription() {
+    $loadStatus
+      .removeDuplicates()
+      .filter { $0 != .loading }
+      .sink { [weak self] newStatus in
+        self?.loadStatusWithLoadingIgnored = newStatus
       }
-    }
+      .store(in: &cancellables)
   }
 
-  private func startCheckAutoLoadNecessityTask() {
-    checkAutoLoadNecessityTask =
-      Task { [weak self] in
-        guard let self else { return }
-
-        while true {
-          try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadCheckInterval * 1_000_000_000))
-          if ifShouldAutoLoad { await autoLoadCatalog() }
-        }
+  private func setUpAutoLoadCheckSubscription() {
+    IkaTimePublisher.shared.autoLoadCheckPublisher
+      .sink { [weak self] _ in
+        self?.handleAutoLoadCheck()
       }
+      .store(in: &cancellables)
+  }
+
+  private func handleAutoLoadCheck() {
+    guard ifShouldAutoLoad else { return }
+    Task { await autoLoadCatalog() }
   }
 
   // MARK: - LOAD

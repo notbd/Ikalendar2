@@ -45,6 +45,7 @@ struct SettingsAdvancedOptionsView: View {
       }
       .navigationTitle("Advanced Options")
       .navigationBarTitleDisplayMode(.large)
+      .listStyle(.insetGrouped)
       .sheet(isPresented: $ifBottomToolbarPreviewPresented) {
         BottomToolbarPositioningPreview()
           .presentationDetents([.fraction(Scoped.BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION)])
@@ -52,7 +53,6 @@ struct SettingsAdvancedOptionsView: View {
           .presentationBackground(.ultraThinMaterial)
           .interactiveDismissDisabled()
       }
-      .listStyle(.insetGrouped)
       .onAppear {
         // sync rowWidth value
         rowWidth = geo.size.width

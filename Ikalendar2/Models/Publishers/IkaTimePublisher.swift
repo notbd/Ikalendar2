@@ -29,14 +29,14 @@ final class IkaTimePublisher: ObservableObject {
   // MARK: Lifecycle
 
   private init() {
-    startUpdatingCurrentTime()
+    startPublishingCurrentTime()
     startPublishingAutoLoadChecks()
   }
 
   // MARK: Private
 
-  /// Starts the process of updating the `currentTime` property every second.
-  private func startUpdatingCurrentTime() {
+  /// Starts the process of publishing the `currentTime` property every second.
+  private func startPublishingCurrentTime() {
     Timer
       .publish(
         every: 1,
@@ -50,7 +50,7 @@ final class IkaTimePublisher: ObservableObject {
       .store(in: &cancellables)
   }
 
-  /// Starts the process of sending auto-load check signals every `autoLoadAttemptInterval`.
+  /// Starts the process of publishing auto-load check signals every `autoLoadAttemptInterval`.
   private func startPublishingAutoLoadChecks() {
     Timer
       .publish(

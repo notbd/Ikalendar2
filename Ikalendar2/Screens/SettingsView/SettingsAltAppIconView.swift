@@ -21,6 +21,7 @@ struct SettingsAltAppIconView: View {
     }
     .navigationTitle("App Icon")
     .navigationBarTitleDisplayMode(.large)
+    .listStyle(.insetGrouped)
   }
 }
 
@@ -52,6 +53,7 @@ struct SettingsAltAppIconRow: View {
             IkaAppIcon.DisplayMode.small.clipShape
               .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
               .opacity(Scoped.STROKE_OPACITY))
+          .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
 
         Text(ikaAppIcon.displayName.localizedStringKey)
           .foregroundColor(Scoped.DISPLAY_NAME_COLOR)
@@ -61,7 +63,7 @@ struct SettingsAltAppIconRow: View {
         if ikaAppIcon == ikaPreference.preferredAppIcon {
           Image(systemName: Scoped.ACTIVE_INDICATOR_SFSYMBOL)
             .font(Scoped.ACTIVE_INDICATOR_FONT)
-            .symbolRenderingMode(Scoped.ACTIVE_INDICATOR_SFSYMBOL_RENDERING_MODE)
+            .symbolRenderingMode(.palette)
             .foregroundStyle(Color.accentColor, Color.tertiarySystemGroupedBackground)
         }
       }

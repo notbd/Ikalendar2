@@ -21,6 +21,8 @@ struct SettingsMainView: View {
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
+  @State private var refreshableID = UUID()
+
   private var currentLanguage: String {
     if Locale.current.identifier.starts(with: "en") { return "English" }
     if Locale.current.identifier.starts(with: "ja") { return "日本語" }
@@ -53,15 +55,20 @@ struct SettingsMainView: View {
           rowCredits
         }
       }
-      .listStyle(.insetGrouped)
       .navigationTitle("Settings")
       .navigationBarTitleDisplayMode(.large)
+      .listStyle(.insetGrouped)
       .navigationBarItems(trailing: doneButton)
     }
+    .id(refreshableID)
     .navigationViewStyle(StackNavigationViewStyle())
     .overlay(
       AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
       alignment: .bottomTrailing)
+    .onReceive(DynamicTextStyleObserver.shared.textSizeDidChange) {
+      // force the view to refresh when the text size changes
+      refreshableID = UUID()
+    }
   }
 
   // MARK: - Default Mode Section
@@ -180,6 +187,7 @@ struct SettingsMainView: View {
 
         Image(systemName: Scoped.PREF_LANG_JUMP_SFSYMBOL)
           .foregroundColor(.secondary)
+          .symbolRenderingMode(.hierarchical)
       }
     }
   }
@@ -206,7 +214,6 @@ struct SettingsMainView: View {
 
   private var doneButton: some View {
     Button {
-      SimpleHaptics.generateTask(.selection)
       dismiss()
     } label: {
       Text("Done")

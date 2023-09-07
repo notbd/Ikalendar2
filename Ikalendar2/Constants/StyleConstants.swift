@@ -93,7 +93,6 @@ extension Constants.Styles {
 
       static let ACTIVE_INDICATOR_SFSYMBOL = "checkmark.circle.fill"
       static let ACTIVE_INDICATOR_FONT: Font = .title
-      static let ACTIVE_INDICATOR_SFSYMBOL_RENDERING_MODE: SymbolRenderingMode = .palette
 
       static let ROW_PADDING_V: CGFloat = 4
     }
@@ -113,27 +112,23 @@ extension Constants.Styles {
       static let STROKE_COLOR: Color = .tertiaryLabel
       static let STROKE_LINE_WIDTH: CGFloat = 1
       static let STROKE_OPACITY: CGFloat = 0.4
-      static let APP_ICON_TITLE_FONT: Font = .system(.largeTitle, design: .rounded)
+      static let APP_ICON_TITLE_FONT: Font = .system(.title, design: .rounded)
       static let APP_ICON_TITLE_FONT_WEIGHT: Font.Weight = .bold
       static let APP_ICON_SUBTITLE_FONT: Font = .system(.subheadline, design: .monospaced)
       static let APP_ICON_SUBTITLE_FONT_WEIGHT: Font.Weight = .regular
 
       static let SHARE_SFSYMBOL = "square.and.arrow.up"
 
-      static let TWITTER_ICON_NAME = "twitter_xsmall"
-      static let TWITTER_ICON_SIDE_LEN: CGFloat = 17
-
-      static let EMAIL_SFSYMBOL = "envelope"
-
-      static let RATING_SFSYMBOL = "star.leadinghalf.filled"
-
+      static let RATING_SFSYMBOL = "star.bubble.fill"
       static let REVIEW_SFSYMBOL = "highlighter"
-
       static let VIEW_ON_APP_STORE_SFSYMBOL = "doc.text.fill.viewfinder"
 
-      static let SOURCE_CODE_SFSYMBOL = "chevron.left.slash.chevron.right"
+      static let TWITTER_ICON_NAME = "twitter_xsmall"
+      static let TWITTER_ICON_SIDE_LEN: CGFloat = 17
+      static let EMAIL_SFSYMBOL = "envelope"
 
-      static let PRIVACY_POLICY_SFSYMBOL = "hand.raised.fill"
+      static let SOURCE_CODE_SFSYMBOL = "chevron.left.slash.chevron.right"
+      static let PRIVACY_POLICY_SFSYMBOL = "hand.raised"
     }
   }
 
