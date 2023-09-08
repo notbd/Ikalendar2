@@ -225,8 +225,7 @@ extension Constants.Styles {
         static let STAGE_HEIGHT_ADJUSTMENT_CONSTANT: CGFloat = -26
 
         static let CELL_SPACING: CGFloat = 10
-        static let CELL_PADDING_TOP: CGFloat = 2
-        static let CELL_PADDING_BOTTOM: CGFloat = 6
+        static let CELL_PADDING_BOTTOM: CGFloat = 2
 
         static let PROGRESS_FONT_SIZE: CGFloat = 16
 

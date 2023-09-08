@@ -42,8 +42,7 @@ struct SalmonRotationCell: View {
       }
     }
     .if(hasStageAndWeapon) {
-      $0.padding(.top, Scoped.CELL_PADDING_TOP)
-        .padding(.bottom, Scoped.CELL_PADDING_BOTTOM)
+      $0.padding(.bottom, Scoped.CELL_PADDING_BOTTOM)
     }
   }
 
