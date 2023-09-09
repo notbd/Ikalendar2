@@ -12,7 +12,7 @@ import SwiftUI
 /// The primary version of a card component that displays
 /// the stage information of a battle rotation.
 struct BattleRotationStageCardPrimary: View {
-  typealias Scoped = Constants.Styles.Rotation.Battle.Card.Primary
+  typealias Scoped = Constants.Style.Rotation.Battle.Card.Primary
 
   @EnvironmentObject private var ikaPreference: IkaPreference
 
@@ -42,7 +42,7 @@ struct BattleRotationStageCardPrimary: View {
       .resizable()
       .scaledToFit()
       .cornerRadius(Scoped.IMG_CORNER_RADIUS)
-      .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
       .overlay(
         StageTitleLabel(
           title: stage.name,
@@ -59,7 +59,7 @@ struct BattleRotationStageCardPrimary: View {
 /// The secondary version of a card component that displays
 /// the stage information of a battle rotation.
 struct BattleRotationStageCardSecondary: View {
-  typealias Scoped = Constants.Styles.Rotation.Battle.Card.Secondary
+  typealias Scoped = Constants.Style.Rotation.Battle.Card.Secondary
 
   @EnvironmentObject private var ikaPreference: IkaPreference
 
@@ -93,7 +93,7 @@ struct BattleRotationStageCardSecondary: View {
         .resizable()
         .scaledToFit()
         .cornerRadius(Scoped.IMG_CORNER_RADIUS)
-        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .offset(y: Scoped.STAGE_IMG_OFFSET_Y)
 
       Text(stage.name.localizedStringKey)

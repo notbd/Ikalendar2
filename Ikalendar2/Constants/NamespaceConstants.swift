@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Constant data holding `Namespace`s for the app.
-extension Constants.Namespaces {
+extension Constants.Namespace {
   struct Battle {
     let ruleIcon: Namespace.ID
     let ruleTitle: Namespace.ID

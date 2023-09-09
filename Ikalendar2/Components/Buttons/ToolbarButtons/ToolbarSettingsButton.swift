@@ -11,7 +11,7 @@ import SwiftUI
 
 /// A settings button in the toolbar.
 struct ToolbarSettingsButton: View {
-  typealias Scoped = Constants.Styles.ToolbarButton
+  typealias Scoped = Constants.Style.ToolbarButton
 
   let action: () -> Void
 
@@ -20,7 +20,7 @@ struct ToolbarSettingsButton: View {
       Image(systemName: "gear")
         .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
         .foregroundColor(.primary)
-        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .frame(
           width: Scoped.FRAME_SIDE_LEN,
           height: Scoped.FRAME_SIDE_LEN)

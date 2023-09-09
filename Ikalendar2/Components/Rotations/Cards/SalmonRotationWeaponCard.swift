@@ -11,7 +11,7 @@ import SwiftUI
 
 /// The card component that displays the weapon information of a salmon rotation.
 struct SalmonRotationWeaponCard: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Weapon
+  typealias Scoped = Constants.Style.Rotation.Salmon.Card.Weapon
 
   let weapons: [SalmonWeapon]!
 
@@ -33,7 +33,7 @@ struct SalmonRotationWeaponCard: View {
 // MARK: - SalmonRotationWeaponCardIcon
 
 struct SalmonRotationWeaponCardIcon: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Weapon
+  typealias Scoped = Constants.Style.Rotation.Salmon.Card.Weapon
 
   let weapon: SalmonWeapon
 
@@ -42,7 +42,7 @@ struct SalmonRotationWeaponCardIcon: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
       .padding(Scoped.IMG_PADDING)
       .background(Color.tertiarySystemGroupedBackground)
       .cornerRadius(Scoped.FRAME_CORNER_RADIUS)

@@ -13,7 +13,7 @@ import SwiftUI
 
 /// The About page in App Settings.
 struct SettingsAboutView: View {
-  typealias Scoped = Constants.Styles.Settings.About
+  typealias Scoped = Constants.Style.Settings.About
 
   @Environment(\.requestReview) private var requestReview
   @Environment(\.openURL) private var openURL
@@ -69,11 +69,11 @@ struct SettingsAboutView: View {
           IkaAppIcon.DisplayMode.mid.clipShape
             .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
             .opacity(Scoped.STROKE_OPACITY))
-        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
     }
 
     var appIconTitle: some View {
-      let title = Constants.Keys.BundleInfo.APP_DISPLAY_NAME
+      let title = Constants.Key.BundleInfo.APP_DISPLAY_NAME
       let text =
         Text(title)
           .font(Scoped.APP_ICON_TITLE_FONT)
@@ -83,8 +83,8 @@ struct SettingsAboutView: View {
     }
 
     var appIconSubtitle: some View {
-      let versionNumber = Constants.Keys.BundleInfo.APP_VERSION
-      let buildNumber = Constants.Keys.BundleInfo.APP_BUILD
+      let versionNumber = Constants.Key.BundleInfo.APP_VERSION
+      let buildNumber = Constants.Key.BundleInfo.APP_BUILD
       let subtitle = "Version \(versionNumber) (\(buildNumber))"
       let text =
         Text(subtitle)
@@ -108,7 +108,7 @@ struct SettingsAboutView: View {
   private var rowShare: some View {
     // NOTE: could not find error handling for invalid URL ShareLink as of iOS 16
     // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 16
-    let shareURL = URL(string: Constants.Keys.URL.APP_STORE_PAGE_US)!
+    let shareURL = URL(string: Constants.Key.URL.APP_STORE_PAGE_US)!
 
     return
       ShareLink(item: shareURL) {
@@ -141,7 +141,7 @@ struct SettingsAboutView: View {
 
   private var rowLeavingReview: some View {
     Button {
-      guard let url = URL(string: Constants.Keys.URL.APP_STORE_REVIEW) else { return }
+      guard let url = URL(string: Constants.Key.URL.APP_STORE_REVIEW) else { return }
       openURL(url)
     } label: {
       Label {
@@ -169,7 +169,7 @@ struct SettingsAboutView: View {
     }
     .appStoreOverlay(isPresented: $appStoreOverlayPresented) {
       SKOverlay.AppConfiguration(
-        appIdentifier: Constants.Keys.BundleInfo.APP_STORE_IDENTIFIER,
+        appIdentifier: Constants.Key.BundleInfo.APP_STORE_IDENTIFIER,
         position: .bottom)
     }
   }
@@ -177,9 +177,9 @@ struct SettingsAboutView: View {
   // MARK: - Contact Section
 
   private var rowDeveloperTwitter: some View {
-    let twitterURLString = Constants.Keys.URL.DEVELOPER_TWITTER
+    let twitterURLString = Constants.Key.URL.DEVELOPER_TWITTER
     let twitterHandle = twitterURLString
-      .shortenedURL(base: Constants.Keys.URL.TWITTER_BASE, newPrefix: "@")!
+      .shortenedURL(base: Constants.Key.URL.TWITTER_BASE, newPrefix: "@")!
 
     return
       Button {
@@ -209,7 +209,7 @@ struct SettingsAboutView: View {
 
   private var rowDeveloperEmail: some View {
     Button {
-      guard let url = URL(string: Constants.Keys.URL.DEVELOPER_EMAIL) else { return }
+      guard let url = URL(string: Constants.Key.URL.DEVELOPER_EMAIL) else { return }
       openURL(url)
     } label: {
       Label {
@@ -226,7 +226,7 @@ struct SettingsAboutView: View {
 
   private var rowSourceCode: some View {
     Button {
-      guard let url = URL(string: Constants.Keys.URL.SOURCE_CODE_REPO) else { return }
+      guard let url = URL(string: Constants.Key.URL.SOURCE_CODE_REPO) else { return }
       openURL(url)
     } label: {
       HStack {
@@ -240,14 +240,14 @@ struct SettingsAboutView: View {
 
         Spacer()
 
-        Constants.Styles.Global.EXTERNAL_LINK_JUMP_ICON
+        Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
       }
     }
   }
 
   private var rowPrivacyPolicy: some View {
     Button {
-      guard let url = URL(string: Constants.Keys.URL.PRIVACY_POLICY) else { return }
+      guard let url = URL(string: Constants.Key.URL.PRIVACY_POLICY) else { return }
       openURL(url)
     } label: {
       HStack {
@@ -261,7 +261,7 @@ struct SettingsAboutView: View {
 
         Spacer()
 
-        Constants.Styles.Global.EXTERNAL_LINK_JUMP_ICON
+        Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
       }
     }
   }

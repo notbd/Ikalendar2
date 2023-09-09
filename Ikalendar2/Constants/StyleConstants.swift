@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-/// Constant data holding `style parameters` for the app.
-extension Constants.Styles {
+/// Constant data holding `style` parameters for the app.
+extension Constants.Style {
   enum Global {
     static let SHADOW_RADIUS: CGFloat = 4
     static let MIN_TEXT_SCALE_FACTOR: CGFloat = 0.3

@@ -55,7 +55,7 @@ struct BattleRotationCell: View {
 /// The primary version of a cell component for the battle rotation that takes
 /// all the space in the list content.
 struct BattleRotationCellPrimary: View {
-  typealias Scoped = Constants.Styles.Rotation.Battle.Cell.Primary
+  typealias Scoped = Constants.Style.Rotation.Battle.Cell.Primary
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
@@ -63,7 +63,7 @@ struct BattleRotationCellPrimary: View {
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
-  let animationNamespaces: Constants.Namespaces.Battle
+  let animationNamespaces: Constants.Namespace.Battle
 
   @State private var ruleIconHeight: CGFloat = .zero // initial value does not matter
 
@@ -122,8 +122,8 @@ struct BattleRotationCellPrimary: View {
           id: rotation.id,
           in: animationNamespaces.ruleIcon)
         .scaledToFit()
-        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
-        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH_RATIO)
         .background(
           GeometryReader { geo in
@@ -173,13 +173,13 @@ struct BattleRotationCellPrimary: View {
 /// The secondary version of a cell component for the battle rotation
 /// that takes all the space in a list unit.
 struct BattleRotationCellSecondary: View {
-  typealias Scoped = Constants.Styles.Rotation.Battle.Cell.Secondary
+  typealias Scoped = Constants.Style.Rotation.Battle.Cell.Secondary
 
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
-  let animationNamespaces: Constants.Namespaces.Battle
+  let animationNamespaces: Constants.Namespace.Battle
 
   var body: some View {
     HStack {
@@ -194,7 +194,7 @@ struct BattleRotationCellSecondary: View {
             id: rotation.id,
             in: animationNamespaces.ruleIcon)
           .scaledToFit()
-          .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+          .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
           .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH)
           .padding(Scoped.RULE_IMG_PADDING)
           .background(Color.tertiarySystemGroupedBackground)

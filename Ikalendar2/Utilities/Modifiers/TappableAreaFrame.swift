@@ -22,7 +22,7 @@ struct TappableAreaFrame: ViewModifier {
   func body(content: Content) -> some View {
     content
       .frame(
-        width: Constants.Styles.Frame.MIN_TAPPABLE_AREA_SIDE,
-        height: Constants.Styles.Frame.MIN_TAPPABLE_AREA_SIDE)
+        width: Constants.Style.Frame.MIN_TAPPABLE_AREA_SIDE,
+        height: Constants.Style.Frame.MIN_TAPPABLE_AREA_SIDE)
   }
 }

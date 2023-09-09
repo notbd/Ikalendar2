@@ -11,7 +11,7 @@ import SwiftUI
 
 /// The view for the salmon rotation info that takes the entire space in the list content.
 struct SalmonRotationCell: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Cell
+  typealias Scoped = Constants.Style.Rotation.Salmon.Cell
 
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
@@ -78,7 +78,7 @@ struct SalmonRotationCell: View {
 
 /// A HStack component containing the time text of a salmon rotation.
 struct SalmonRotationCellTimeTextSection: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Cell.TimeTextSection
+  typealias Scoped = Constants.Style.Rotation.Salmon.Cell.TimeTextSection
 
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
@@ -91,7 +91,7 @@ struct SalmonRotationCellTimeTextSection: View {
         .antialiased(true)
         .resizable()
         .scaledToFit()
-        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .frame(width: rowWidth * Scoped.SALMON_ICON_WIDTH_RATIO)
 
       Spacer()

@@ -9,7 +9,7 @@
 
 /// A custom error type for the Ikalendar2 app.
 enum IkaError: Error, Equatable {
-  typealias Scoped = Constants.Keys.Error
+  typealias Scoped = Constants.Key.Error
 
   case serverError(IkaServerErrorType)
   case connectionError
@@ -60,7 +60,7 @@ extension IkaError {
 
 /// A sub-type for IkaError.serverError
 enum IkaServerErrorType: String {
-  typealias Scoped = Constants.Keys.Error
+  typealias Scoped = Constants.Key.Error
 
   case badResponse
   case badData

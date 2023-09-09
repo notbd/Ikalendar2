@@ -26,7 +26,7 @@ struct ModeIconStamp: View {
       .rotation3DEffect(.degrees(degrees * rot), axis: (x: y, y: x, z: 0))
       .offset(x: -10, y: -90)
       .animation(
-        .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
+        .easeOut(duration: Constants.Style.Global.ANIMATION_DURATION),
         value: ikaMotionPublisher.dx * ikaMotionPublisher.dy)
   }
 

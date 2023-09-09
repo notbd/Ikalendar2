@@ -59,7 +59,7 @@ struct SettingsCreditsView: View {
 // MARK: - CreditsDataSourceCell
 
 struct CreditsDataSourceCell: View {
-  typealias Scoped = Constants.Styles.Settings.Credits
+  typealias Scoped = Constants.Style.Settings.Credits
 
   @Environment(\.openURL) private var openURL
 
@@ -87,7 +87,7 @@ struct CreditsDataSourceCell: View {
 
         Spacer()
 
-        Constants.Styles.Global.EXTERNAL_LINK_JUMP_ICON
+        Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
       }
     }
   }
@@ -96,7 +96,7 @@ struct CreditsDataSourceCell: View {
 // MARK: - CreditsOpenSourceLibCell
 
 struct CreditsOpenSourceLibCell<Destination: View>: View {
-  typealias Scoped = Constants.Styles.Settings.Credits
+  typealias Scoped = Constants.Style.Settings.Credits
 
   @Environment(\.openURL) private var openURL
 
@@ -114,7 +114,7 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
           .foregroundColor(.primary)
           .font(.system(Scoped.CONTENT_FONT_PRIMARY, design: .rounded))
 
-        Text(urlString.shortenedURL(base: Constants.Keys.URL.GITHUB_BASE, newPrefix: "@")!)
+        Text(urlString.shortenedURL(base: Constants.Key.URL.GITHUB_BASE, newPrefix: "@")!)
           .foregroundColor(.secondary)
           .font(.system(Scoped.CONTENT_FONT_SECONDARY, design: .rounded))
       }
@@ -124,7 +124,7 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
         guard let url = URL(string: urlString) else { return }
         openURL(url)
       } label: {
-        Image(systemName: Constants.Styles.Global.EXTERNAL_LINK_SFSYMBOL)
+        Image(systemName: Constants.Style.Global.EXTERNAL_LINK_SFSYMBOL)
       }
       .tint(Scoped.SWIPE_ACTION_COLOR)
     }

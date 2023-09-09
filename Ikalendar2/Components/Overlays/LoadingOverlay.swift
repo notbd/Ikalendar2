@@ -11,7 +11,7 @@ import SwiftUI
 
 /// An overlay indicating the loading status of the app.
 struct LoadingOverlay: View {
-  typealias Scoped = Constants.Styles.Overlay.Loading
+  typealias Scoped = Constants.Style.Overlay.Loading
 
   var loadStatus: IkaCatalog.LoadStatus
 
@@ -27,7 +27,7 @@ struct LoadingOverlay: View {
         .opacity(isLoading ? 1 : 0)
     }
     .animation(
-      .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
+      .easeOut(duration: Constants.Style.Global.ANIMATION_DURATION),
       value: loadStatus)
   }
 }

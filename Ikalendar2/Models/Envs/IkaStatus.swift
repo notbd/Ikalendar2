@@ -19,11 +19,11 @@ final class IkaStatus: ObservableObject {
 
   @Published var gameModeSelection = GameMode(
     rawValue: UserDefaults.standard.string(
-      forKey: Constants.Keys.AppStorage.DEFAULT_GAME_MODE)!)!
+      forKey: Constants.Key.AppStorage.DEFAULT_GAME_MODE)!)!
 
   @Published var battleModeSelection = BattleMode(
     rawValue: UserDefaults.standard.string(
-      forKey: Constants.Keys.AppStorage.DEFAULT_BATTLE_MODE)!)!
+      forKey: Constants.Key.AppStorage.DEFAULT_BATTLE_MODE)!)!
 
   // MARK: Lifecycle
 

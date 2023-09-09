@@ -12,7 +12,7 @@ import SwiftUI
 
 /// The main page for App Settings.
 struct SettingsMainView: View {
-  typealias Scoped = Constants.Styles.Settings.Main
+  typealias Scoped = Constants.Style.Settings.Main
 
   @Environment(\.openURL) private var openURL
   @Environment(\.dismiss) private var dismiss
@@ -22,11 +22,11 @@ struct SettingsMainView: View {
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   private var currentLanguage: String {
-    if Locale.current.identifier.starts(with: "en") { return Constants.Keys.Locale.EN }
-    if Locale.current.identifier.starts(with: "ja") { return Constants.Keys.Locale.JA }
-    if Locale.current.identifier.starts(with: "zh_Hans") { return Constants.Keys.Locale.ZH_HANS }
-    if Locale.current.identifier.starts(with: "zh_Hant") { return Constants.Keys.Locale.ZH_HANT }
-    else { return Constants.Keys.Global.UNKNOWN }
+    if Locale.current.identifier.starts(with: "en") { return Constants.Key.Locale.EN }
+    if Locale.current.identifier.starts(with: "ja") { return Constants.Key.Locale.JA }
+    if Locale.current.identifier.starts(with: "zh_Hans") { return Constants.Key.Locale.ZH_HANS }
+    if Locale.current.identifier.starts(with: "zh_Hant") { return Constants.Key.Locale.ZH_HANT }
+    else { return Constants.Key.Global.UNKNOWN }
   }
 
   var body: some View {
@@ -191,7 +191,7 @@ struct SettingsMainView: View {
         Text(currentLanguage)
           .foregroundColor(.secondary)
 
-        Constants.Styles.Global.EXTERNAL_LINK_JUMP_ICON
+        Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
       }
     }
   }

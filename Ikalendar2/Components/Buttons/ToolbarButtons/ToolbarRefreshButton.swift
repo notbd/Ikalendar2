@@ -11,7 +11,7 @@ import SwiftUI
 
 /// A refresh button in the toolbar.
 struct ToolbarRefreshButton: View {
-  typealias Scoped = Constants.Styles.ToolbarButton
+  typealias Scoped = Constants.Style.ToolbarButton
 
   let isDisabled: Bool
   let action: () -> Void
@@ -21,7 +21,7 @@ struct ToolbarRefreshButton: View {
       Image(systemName: "arrow.triangle.2.circlepath")
         .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
         .foregroundColor(.primary)
-        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .frame(
           width: Scoped.FRAME_SIDE_LEN,
           height: Scoped.FRAME_SIDE_LEN)

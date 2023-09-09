@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - AutoLoadingOverlay
 
 struct AutoLoadingOverlay: View {
-  typealias Scoped = Constants.Styles.Overlay.AutoLoading
+  typealias Scoped = Constants.Style.Overlay.AutoLoading
 
   var autoLoadStatus: IkaCatalog.AutoLoadStatus
 
@@ -26,7 +26,7 @@ struct AutoLoadingOverlay: View {
       .opacity(autoLoadStatus == .idle ? 0 : 1)
       .padding()
       .animation(
-        .easeOut(duration: Constants.Styles.Global.ANIMATION_DURATION),
+        .easeOut(duration: Constants.Style.Global.ANIMATION_DURATION),
         value: autoLoadStatus)
   }
 

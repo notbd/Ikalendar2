@@ -8,7 +8,7 @@
 import Foundation
 
 /// Constant data holding `config`s for the app.
-extension Constants.Configs {
+extension Constants.Config {
   enum Catalog {
     /// Time Intervals are measured in second(s).
     static let loadStatusLoadedDelay: TimeInterval = 0.2

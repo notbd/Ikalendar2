@@ -12,7 +12,7 @@ import SwiftUI
 
 /// A game mode switch button in the toolbar.
 struct ToolbarGameModeSwitchButton: View {
-  typealias Scoped = Constants.Styles.ToolbarButton
+  typealias Scoped = Constants.Style.ToolbarButton
 
   @EnvironmentObject private var ikaStatus: IkaStatus
 
@@ -39,7 +39,7 @@ struct ToolbarGameModeSwitchButton: View {
         systemImage: Scoped.GAME_MODE_SWITCH_SFSYMBOL)
         .font(Scoped.SFSYMBOL_FONT_SIZE_SMALL)
         .foregroundColor(Color.primary)
-        .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .tappableAreaFrame()
     }
     .onTapGesture {

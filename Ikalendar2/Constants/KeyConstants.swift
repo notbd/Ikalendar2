@@ -7,21 +7,21 @@
 
 import Foundation
 
-/// Constant data holding `keys` for the app.
-extension Constants.Keys {
+/// Constant data holding `key`s for the app.
+extension Constants.Key {
   enum Global {
     static let UNKNOWN = "UNKNOWN"
   }
 
   enum BundleInfo {
     static let APP_BUNDLE_NAME =
-      Bundle.main.infoDictionary?["CFBundleName"] as? String ?? Constants.Keys.Global.UNKNOWN
+      Bundle.main.infoDictionary?["CFBundleName"] as? String ?? Constants.Key.Global.UNKNOWN
     static let APP_DISPLAY_NAME =
-      Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? Constants.Keys.Global.UNKNOWN
+      Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? Constants.Key.Global.UNKNOWN
     static let APP_VERSION =
-      Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? Constants.Keys.Global.UNKNOWN
+      Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? Constants.Key.Global.UNKNOWN
     static let APP_BUILD =
-      Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? Constants.Keys.Global.UNKNOWN
+      Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? Constants.Key.Global.UNKNOWN
     static let APP_STORE_IDENTIFIER = "1529193361"
   }
 

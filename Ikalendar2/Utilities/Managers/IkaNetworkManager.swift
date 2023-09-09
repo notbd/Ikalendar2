@@ -28,7 +28,7 @@ final class IkaNetworkManager {
     async throws -> BattleRotationDict
   {
     try await fetchAndDecode(
-      url: URL(string: Constants.Keys.URL.BATTLE_ROTATIONS)!,
+      url: URL(string: Constants.Key.URL.BATTLE_ROTATIONS)!,
       decodeUsing: IkaDecoder.parseBattleRotationDict)
   }
 
@@ -39,7 +39,7 @@ final class IkaNetworkManager {
     async throws -> [SalmonRotation]
   {
     try await fetchAndDecode(
-      url: URL(string: Constants.Keys.URL.SALMON_ROTATIONS)!,
+      url: URL(string: Constants.Key.URL.SALMON_ROTATIONS)!,
       decodeUsing: IkaDecoder.parseSalmonRotations)
   }
 
@@ -50,7 +50,7 @@ final class IkaNetworkManager {
     async throws -> SalmonApparelInfo
   {
     try await fetchAndDecode(
-      url: URL(string: Constants.Keys.URL.SALMON_APPAREL_INFO)!,
+      url: URL(string: Constants.Key.URL.SALMON_APPAREL_INFO)!,
       decodeUsing: IkaDecoder.parseSalmonRewardApparelInfo)
   }
 

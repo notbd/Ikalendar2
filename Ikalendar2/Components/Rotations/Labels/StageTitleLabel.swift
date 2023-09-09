@@ -11,7 +11,7 @@ import SwiftUI
 
 /// A label overlay displaying the title of the stage.
 struct StageTitleLabel: View {
-  typealias Scoped = Constants.Styles.Rotation.Label
+  typealias Scoped = Constants.Style.Rotation.Label
 
   let title: String
   let fontSize: CGFloat

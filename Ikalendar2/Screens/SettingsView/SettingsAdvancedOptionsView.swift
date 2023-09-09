@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - SettingsAdvancedOptionsView
 
 struct SettingsAdvancedOptionsView: View {
-  typealias Scoped = Constants.Styles.Settings.Advanced
+  typealias Scoped = Constants.Style.Settings.Advanced
 
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
@@ -135,7 +135,7 @@ struct SettingsAdvancedOptionsView: View {
 // MARK: - BottomToolbarPositioningPreview
 
 struct BottomToolbarPositioningPreview: View {
-  typealias Scoped = Constants.Styles.Settings.Advanced
+  typealias Scoped = Constants.Style.Settings.Advanced
 
   @Environment(\.dismiss) private var dismiss
 

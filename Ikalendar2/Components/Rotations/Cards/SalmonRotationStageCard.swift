@@ -11,7 +11,7 @@ import SwiftUI
 
 /// A card component that displays the stage information of a salmon rotation.
 struct SalmonRotationStageCard: View {
-  typealias Scoped = Constants.Styles.Rotation.Salmon.Card.Stage
+  typealias Scoped = Constants.Style.Rotation.Salmon.Card.Stage
 
   @EnvironmentObject private var ikaPreference: IkaPreference
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
@@ -30,7 +30,7 @@ struct SalmonRotationStageCard: View {
       .resizable()
       .scaledToFit()
       .cornerRadius(Scoped.STAGE_IMG_CORNER_RADIUS)
-      .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
       .overlay(
         overlay,
         alignment: .bottom)

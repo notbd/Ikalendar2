@@ -28,7 +28,7 @@ struct SettingsAltAppIconView: View {
 // MARK: - SettingsAltAppIconRow
 
 struct SettingsAltAppIconRow: View {
-  typealias Scoped = Constants.Styles.Settings.AltAppIcon
+  typealias Scoped = Constants.Style.Settings.AltAppIcon
 
   @EnvironmentObject private var ikaPreference: IkaPreference
 
@@ -53,7 +53,7 @@ struct SettingsAltAppIconRow: View {
             IkaAppIcon.DisplayMode.small.clipShape
               .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
               .opacity(Scoped.STROKE_OPACITY))
-          .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
+          .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
 
         Text(ikaAppIcon.displayName.localizedStringKey)
           .font(.system(.body, design: .rounded))

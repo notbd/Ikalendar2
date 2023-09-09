@@ -17,7 +17,7 @@ extension View {
   /// - Returns: The modified view.
   func scaledLimitedLine(
     lineLimit: Int = 1,
-    minScaleFactor: CGFloat = Constants.Styles.Global.MIN_TEXT_SCALE_FACTOR)
+    minScaleFactor: CGFloat = Constants.Style.Global.MIN_TEXT_SCALE_FACTOR)
     -> some View
   {
     modifier(

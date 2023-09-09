@@ -15,7 +15,7 @@ import SwiftUI
 /// Contains the rotation data and its loading status.
 @MainActor
 final class IkaCatalog: ObservableObject {
-  typealias Scoped = Constants.Configs.Catalog
+  typealias Scoped = Constants.Config.Catalog
 
   static let shared = IkaCatalog()
 
@@ -241,7 +241,7 @@ final class IkaCatalog: ObservableObject {
 
       // wait and retry
       try await Task.sleep(
-        nanoseconds: UInt64(Constants.Configs.Catalog.autoLoadAttemptInterval * 1_000_000_000))
+        nanoseconds: UInt64(Constants.Config.Catalog.autoLoadAttemptInterval * 1_000_000_000))
     }
 
     // timeout - fail and throw timeout error
@@ -272,7 +272,7 @@ final class IkaCatalog: ObservableObject {
 
       // wait and retry
       try await Task.sleep(
-        nanoseconds: UInt64(Constants.Configs.Catalog.autoLoadAttemptInterval * 1_000_000_000))
+        nanoseconds: UInt64(Constants.Config.Catalog.autoLoadAttemptInterval * 1_000_000_000))
     }
 
     // timeout - fail and throw timeout error

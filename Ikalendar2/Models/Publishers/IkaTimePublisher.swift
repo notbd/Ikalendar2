@@ -54,7 +54,7 @@ final class IkaTimePublisher: ObservableObject {
   private func startPublishingAutoLoadChecks() {
     Timer
       .publish(
-        every: Constants.Configs.Catalog.autoLoadAttemptInterval,
+        every: Constants.Config.Catalog.autoLoadAttemptInterval,
         tolerance: 0.2,
         on: .main,
         in: .common)

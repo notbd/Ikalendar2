@@ -11,7 +11,7 @@ import SwiftUI
 
 /// The error view showing the error if occurs.
 struct ErrorView: View {
-  typealias Scoped = Constants.Styles.Error
+  typealias Scoped = Constants.Style.Error
 
   let error: IkaError
 
