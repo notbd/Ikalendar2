@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Constant data holding `configs` for the app.
+/// Constant data holding `config`s for the app.
 extension Constants.Configs {
   enum Catalog {
     /// Time Intervals are measured in second(s).

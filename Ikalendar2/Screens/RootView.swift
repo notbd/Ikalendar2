@@ -14,21 +14,18 @@ struct RootView: View {
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
-  @State private var refreshableID = UUID()
+  @State private var refreshableMainViewID = UUID()
 
   var body: some View {
     MainView()
-      .id(refreshableID)
+      .id(refreshableMainViewID)
+      .onReceive(DynamicTextStyleObserver.shared.textSizeDidChange) { refreshViews() }
       .onAppear {
         // Apply correct colorScheme upon launch
         IkaColorSchemeManager.shared.handleColorSchemeChange(for: ikaPreference.preferredAppColorScheme)
       }
       .onChange(of: ikaPreference.preferredAppColorScheme) { selectedColorScheme in
         IkaColorSchemeManager.shared.handleColorSchemeChange(for: selectedColorScheme)
-      }
-      .onReceive(DynamicTextStyleObserver.shared.textSizeDidChange) {
-        // force the view to refresh when the text size changes
-        refreshableID = UUID()
       }
       .fullScreenCover(isPresented: $ikaStatus.isSettingsPresented) {
         SettingsMainView()
@@ -44,5 +41,12 @@ struct RootView: View {
   init() {
     // Initial setup of your NavigationBar styles
     UIFontCustomizer.customizeNavigationTitleText()
+  }
+
+  // MARK: Private
+
+  /// Force the view(s) to refresh when the text size changes in order to reflect the new NavBar title size.
+  private func refreshViews() {
+    refreshableMainViewID = UUID()
   }
 }

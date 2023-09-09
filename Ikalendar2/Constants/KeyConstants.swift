@@ -9,15 +9,21 @@ import Foundation
 
 /// Constant data holding `keys` for the app.
 extension Constants.Keys {
-  static let appBundleName =
-    Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "UNKNOWN"
-  static let appDisplayName =
-    Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "UNKNOWN"
-  static let appVersion =
-    Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "UNKNOWN"
-  static let appBuildNumber =
-    Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "UNKNOWN"
-  static let appStoreIdentifier = "1529193361"
+  enum Global {
+    static let UNKNOWN = "UNKNOWN"
+  }
+
+  enum BundleInfo {
+    static let APP_BUNDLE_NAME =
+      Bundle.main.infoDictionary?["CFBundleName"] as? String ?? Constants.Keys.Global.UNKNOWN
+    static let APP_DISPLAY_NAME =
+      Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? Constants.Keys.Global.UNKNOWN
+    static let APP_VERSION =
+      Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? Constants.Keys.Global.UNKNOWN
+    static let APP_BUILD =
+      Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? Constants.Keys.Global.UNKNOWN
+    static let APP_STORE_IDENTIFIER = "1529193361"
+  }
 
   enum AppStorage {
     static let DEFAULT_GAME_MODE = "pref.default.game_mode"
@@ -32,6 +38,9 @@ extension Constants.Keys {
   }
 
   enum URL {
+    static let TWITTER_BASE = "https://twitter.com"
+    static let GITHUB_BASE = "https://github.com"
+
     static let BATTLE_ROTATIONS = "https://splatoon2.ink/data/schedules.json"
     static let SALMON_ROTATIONS = "https://splatoon2.ink/data/coop-schedules.json"
     static let SALMON_APPAREL_INFO = "https://splatoon2.ink/data/timeline.json"
@@ -47,6 +56,13 @@ extension Constants.Keys {
     static let PRIVACY_POLICY = "https://github.com/notbd/Ikalendar2/wiki/Privacy-Policy"
 
     static let THE_GOOD_STUFF = "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // good stuff indeed!
+  }
+
+  enum Locale {
+    static let EN = "English"
+    static let JA = "日本語"
+    static let ZH_HANS = "简体中文(beta)"
+    static let ZH_HANT = "繁體中文(beta)"
   }
 
   enum Error {

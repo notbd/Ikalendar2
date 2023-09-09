@@ -56,6 +56,7 @@ struct SettingsAltAppIconRow: View {
           .shadow(radius: Constants.Styles.Global.SHADOW_RADIUS)
 
         Text(ikaAppIcon.displayName.localizedStringKey)
+          .font(.system(.body, design: .rounded))
           .foregroundColor(Scoped.DISPLAY_NAME_COLOR)
 
         Spacer()

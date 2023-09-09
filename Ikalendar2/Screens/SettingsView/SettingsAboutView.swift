@@ -73,7 +73,7 @@ struct SettingsAboutView: View {
     }
 
     var appIconTitle: some View {
-      let title = Constants.Keys.appDisplayName
+      let title = Constants.Keys.BundleInfo.APP_DISPLAY_NAME
       let text =
         Text(title)
           .font(Scoped.APP_ICON_TITLE_FONT)
@@ -83,8 +83,8 @@ struct SettingsAboutView: View {
     }
 
     var appIconSubtitle: some View {
-      let versionNumber = Constants.Keys.appVersion
-      let buildNumber = Constants.Keys.appBuildNumber
+      let versionNumber = Constants.Keys.BundleInfo.APP_VERSION
+      let buildNumber = Constants.Keys.BundleInfo.APP_BUILD
       let subtitle = "Version \(versionNumber) (\(buildNumber))"
       let text =
         Text(subtitle)
@@ -127,9 +127,7 @@ struct SettingsAboutView: View {
   private var rowRating: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
-      Task {
-        await requestReview()
-      }
+      Task { await requestReview() }
     } label: {
       Label {
         Text("Rate ikalendar2")
@@ -144,7 +142,6 @@ struct SettingsAboutView: View {
   private var rowLeavingReview: some View {
     Button {
       guard let url = URL(string: Constants.Keys.URL.APP_STORE_REVIEW) else { return }
-      SimpleHaptics.generateTask(.selection)
       openURL(url)
     } label: {
       Label {
@@ -172,7 +169,7 @@ struct SettingsAboutView: View {
     }
     .appStoreOverlay(isPresented: $appStoreOverlayPresented) {
       SKOverlay.AppConfiguration(
-        appIdentifier: Constants.Keys.appStoreIdentifier,
+        appIdentifier: Constants.Keys.BundleInfo.APP_STORE_IDENTIFIER,
         position: .bottom)
     }
   }
@@ -181,32 +178,31 @@ struct SettingsAboutView: View {
 
   private var rowDeveloperTwitter: some View {
     let twitterURLString = Constants.Keys.URL.DEVELOPER_TWITTER
-    let twitterHandle =
-      twitterURLString.replacingOccurrences(
-        of: "https://twitter.com/",
-        with: "@")
+    let twitterHandle = twitterURLString
+      .shortenedURL(base: Constants.Keys.URL.TWITTER_BASE, newPrefix: "@")!
 
     return
       Button {
         guard let url = URL(string: twitterURLString) else { return }
-        SimpleHaptics.generateTask(.selection)
         openURL(url)
       } label: {
-        Label {
-          HStack {
+        HStack {
+          Label {
             Text("Developer's Twitter")
               .foregroundColor(.primary)
-            Spacer()
-            Text(twitterHandle)
-              .foregroundColor(.secondary)
           }
-        }
-        icon: {
-          Image(Scoped.TWITTER_ICON_NAME)
-            .antialiased(true)
-            .resizable()
-            .scaledToFit()
-            .frame(width: Scoped.TWITTER_ICON_SIDE_LEN)
+          icon: {
+            Image(Scoped.TWITTER_ICON_NAME)
+              .antialiased(true)
+              .resizable()
+              .scaledToFit()
+              .frame(width: Scoped.TWITTER_ICON_SIDE_LEN)
+          }
+
+          Spacer()
+
+          Text(twitterHandle)
+            .foregroundColor(.secondary)
         }
       }
   }
@@ -214,7 +210,6 @@ struct SettingsAboutView: View {
   private var rowDeveloperEmail: some View {
     Button {
       guard let url = URL(string: Constants.Keys.URL.DEVELOPER_EMAIL) else { return }
-      SimpleHaptics.generateTask(.selection)
       openURL(url)
     } label: {
       Label {
@@ -232,15 +227,20 @@ struct SettingsAboutView: View {
   private var rowSourceCode: some View {
     Button {
       guard let url = URL(string: Constants.Keys.URL.SOURCE_CODE_REPO) else { return }
-      SimpleHaptics.generateTask(.selection)
       openURL(url)
     } label: {
-      Label {
-        Text("Source Code")
-          .foregroundColor(.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
+      HStack {
+        Label {
+          Text("Source Code")
+            .foregroundColor(.primary)
+        }
+        icon: {
+          Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
+        }
+
+        Spacer()
+
+        Constants.Styles.Global.EXTERNAL_LINK_JUMP_ICON
       }
     }
   }
@@ -248,15 +248,20 @@ struct SettingsAboutView: View {
   private var rowPrivacyPolicy: some View {
     Button {
       guard let url = URL(string: Constants.Keys.URL.PRIVACY_POLICY) else { return }
-      SimpleHaptics.generateTask(.selection)
       openURL(url)
     } label: {
-      Label {
-        Text("Privacy Policy")
-          .foregroundColor(.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.PRIVACY_POLICY_SFSYMBOL)
+      HStack {
+        Label {
+          Text("Privacy Policy")
+            .foregroundColor(.primary)
+        }
+        icon: {
+          Image(systemName: Scoped.PRIVACY_POLICY_SFSYMBOL)
+        }
+
+        Spacer()
+
+        Constants.Styles.Global.EXTERNAL_LINK_JUMP_ICON
       }
     }
   }

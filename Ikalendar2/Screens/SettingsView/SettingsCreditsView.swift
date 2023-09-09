@@ -12,13 +12,16 @@ import SwiftUI
 
 /// The Credits page in App Settings.
 struct SettingsCreditsView: View {
-
-  @Environment(\.openURL) private var openURL
-
   var body: some View {
     List {
       Section(header: Text("Data Source")) {
         rowSplatoon2Ink
+        rowJelonzoBot
+      }
+
+      Section(header: Text("Open Source Libraries")) {
+        rowSwiftyJSON
+        rowSimpleHaptics
       }
     }
     .navigationTitle("Credits")
@@ -27,27 +30,103 @@ struct SettingsCreditsView: View {
   }
 
   private var rowSplatoon2Ink: some View {
+    CreditsDataSourceCell(
+      name: "Splatoon2.ink",
+      urlString: "https://splatoon2.ink/about")
+  }
+
+  private var rowJelonzoBot: some View {
+    CreditsDataSourceCell(
+      name: "JelonzoBot",
+      urlString: "https://splatoon.oatmealdome.me/about")
+  }
+
+  private var rowSwiftyJSON: some View {
+    CreditsOpenSourceLibCell(
+      name: "SwiftyJSON",
+      urlString: "https://github.com/SwiftyJSON/SwiftyJSON",
+      destination: Text("SwiftyJSON"))
+  }
+
+  private var rowSimpleHaptics: some View {
+    CreditsOpenSourceLibCell(
+      name: "SimpleHaptics",
+      urlString: "https://github.com/notbd/SimpleHaptics",
+      destination: Text("SimpleHaptics"))
+  }
+}
+
+// MARK: - CreditsDataSourceCell
+
+struct CreditsDataSourceCell: View {
+  typealias Scoped = Constants.Styles.Settings.Credits
+
+  @Environment(\.openURL) private var openURL
+
+  let name: String
+  let urlString: String
+
+  var body: some View {
     Button {
-      guard let url = URL(string: "https://splatoon2.ink") else { return }
-      SimpleHaptics.generateTask(.selection)
+      guard let url = URL(string: urlString) else { return }
       openURL(url)
     } label: {
       HStack {
-        VStack(alignment: .leading) {
-          Text("Splatoon2.ink")
+        VStack(
+          alignment: .leading,
+          spacing: Scoped.CELL_SPACING_V)
+        {
+          Text(name)
             .foregroundColor(.primary)
-            .font(.headline)
+            .font(.system(Scoped.CONTENT_FONT_PRIMARY, design: .rounded))
 
-          Text("splatoon2.ink/about")
+          Text(urlString.shortenedURL()!)
             .foregroundColor(.secondary)
-            .font(.callout)
+            .font(.system(Scoped.CONTENT_FONT_SECONDARY, design: .rounded))
         }
 
         Spacer()
 
-        Image(systemName: "arrow.up.right.circle.fill")
-          .foregroundColor(.secondary)
+        Constants.Styles.Global.EXTERNAL_LINK_JUMP_ICON
       }
+    }
+  }
+}
+
+// MARK: - CreditsOpenSourceLibCell
+
+struct CreditsOpenSourceLibCell<Destination: View>: View {
+  typealias Scoped = Constants.Styles.Settings.Credits
+
+  @Environment(\.openURL) private var openURL
+
+  let name: String
+  let urlString: String
+  let destination: Destination
+
+  var body: some View {
+    NavigationLink(destination: destination) {
+      VStack(
+        alignment: .leading,
+        spacing: Scoped.CELL_SPACING_V)
+      {
+        Text(name)
+          .foregroundColor(.primary)
+          .font(.system(Scoped.CONTENT_FONT_PRIMARY, design: .rounded))
+
+        Text(urlString.shortenedURL(base: Constants.Keys.URL.GITHUB_BASE, newPrefix: "@")!)
+          .foregroundColor(.secondary)
+          .font(.system(Scoped.CONTENT_FONT_SECONDARY, design: .rounded))
+      }
+    }
+    .swipeActions {
+      Button {
+        guard let url = URL(string: urlString) else { return }
+        openURL(url)
+      } label: {
+        Image(systemName: Constants.Styles.Global.EXTERNAL_LINK_SFSYMBOL)
+      }
+      .tint(Scoped.SWIPE_ACTION_COLOR)
     }
   }
 }

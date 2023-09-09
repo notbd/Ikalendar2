@@ -21,14 +21,12 @@ struct SettingsMainView: View {
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
-  @State private var refreshableID = UUID()
-
   private var currentLanguage: String {
-    if Locale.current.identifier.starts(with: "en") { return "English" }
-    if Locale.current.identifier.starts(with: "ja") { return "日本語" }
-    if Locale.current.identifier.starts(with: "zh_Hans") { return "简体中文(beta)" }
-    if Locale.current.identifier.starts(with: "zh_Hant") { return "繁體中文(beta)" }
-    else { return "Unknown" }
+    if Locale.current.identifier.starts(with: "en") { return Constants.Keys.Locale.EN }
+    if Locale.current.identifier.starts(with: "ja") { return Constants.Keys.Locale.JA }
+    if Locale.current.identifier.starts(with: "zh_Hans") { return Constants.Keys.Locale.ZH_HANS }
+    if Locale.current.identifier.starts(with: "zh_Hant") { return Constants.Keys.Locale.ZH_HANT }
+    else { return Constants.Keys.Global.UNKNOWN }
   }
 
   var body: some View {
@@ -60,15 +58,10 @@ struct SettingsMainView: View {
       .listStyle(.insetGrouped)
       .navigationBarItems(trailing: doneButton)
     }
-    .id(refreshableID)
     .navigationViewStyle(StackNavigationViewStyle())
     .overlay(
       AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
       alignment: .bottomTrailing)
-    .onReceive(DynamicTextStyleObserver.shared.textSizeDidChange) {
-      // force the view to refresh when the text size changes
-      refreshableID = UUID()
-    }
   }
 
   // MARK: - Default Mode Section
@@ -80,8 +73,9 @@ struct SettingsMainView: View {
         systemImage: Scoped.DEFAULT_GAME_MODE_SFSYMBOL)
         .symbolRenderingMode(.palette)
         .foregroundStyle(.primary, Color.accentColor)
+        .layoutPriority(1)
 
-      Spacer().frame(width: Scoped.DEFAULT_MODE_PICKER_SPACING)
+      Spacer()
 
       Picker(
         selection: $ikaPreference.defaultGameMode
@@ -94,6 +88,7 @@ struct SettingsMainView: View {
         }
       }
       .pickerStyle(SegmentedPickerStyle())
+      .fixedSize()
     }
   }
 
@@ -105,7 +100,7 @@ struct SettingsMainView: View {
         .symbolRenderingMode(.palette)
         .foregroundStyle(.primary, Color.accentColor)
 
-      Spacer().frame(width: Scoped.DEFAULT_MODE_PICKER_SPACING)
+      Spacer()
 
       Picker(
         selection: $ikaPreference.defaultBattleMode
@@ -118,6 +113,7 @@ struct SettingsMainView: View {
         }
       }
       .pickerStyle(SegmentedPickerStyle())
+      .fixedSize()
       .disabled(ikaPreference.defaultGameMode != .battle)
     }
   }
@@ -129,18 +125,29 @@ struct SettingsMainView: View {
       Label(
         "Color Scheme",
         systemImage: Scoped.COLOR_SCHEME_SFSYMBOL)
-        .scaledLimitedLine()
 
-      Picker(
-        selection: $ikaPreference.preferredAppColorScheme
-          .onSet { _ in SimpleHaptics.generateTask(.selection) },
-        label: EmptyView())
-      {
-        ForEach(IkaColorSchemeManager.PreferredAppColorScheme.allCases) { appPreferredColorScheme in
-          Label(
-            appPreferredColorScheme.name.localizedStringKey,
-            systemImage: appPreferredColorScheme.sfSymbol)
-            .tag(appPreferredColorScheme)
+      Spacer()
+
+      Menu {
+        Picker(
+          selection: $ikaPreference.preferredAppColorScheme
+            .onSet { _ in SimpleHaptics.generateTask(.selection) },
+          label: EmptyView())
+        {
+          ForEach(IkaColorSchemeManager.PreferredAppColorScheme.allCases) { appPreferredColorScheme in
+            Label(
+              appPreferredColorScheme.name.localizedStringKey,
+              systemImage: appPreferredColorScheme.sfSymbol)
+              .tag(appPreferredColorScheme)
+          }
+        }
+      } label: {
+        HStack {
+          Image(systemName: ikaPreference.preferredAppColorScheme.sfSymbol)
+            .foregroundColor(.secondary)
+
+          Image(systemName: Scoped.COLOR_SCHEME_MENU_SFSYMBOL)
+            .foregroundColor(.tertiaryLabel)
         }
       }
     }
@@ -150,7 +157,7 @@ struct SettingsMainView: View {
     NavigationLink(destination: SettingsAltAppIconView()) {
       Label(
         "App Icon",
-        systemImage: Scoped.SWITCH_APP_ICON_SFSYMBOL)
+        systemImage: Scoped.ALT_APP_ICON_SFSYMBOL)
     }
   }
 
@@ -158,7 +165,7 @@ struct SettingsMainView: View {
     NavigationLink(destination: SettingsAdvancedOptionsView()) {
       Label(
         "Advanced Options",
-        systemImage: Scoped.ADVANCED_SFSYMBOL)
+        systemImage: Scoped.ADVANCED_OPTIONS_SFSYMBOL)
     }
   }
 
@@ -174,7 +181,6 @@ struct SettingsMainView: View {
         Label {
           Text("Preferred Language")
             .foregroundColor(.primary)
-            .scaledLimitedLine()
         }
         icon: {
           Image(systemName: Scoped.PREF_LANG_SFSYMBOL)
@@ -185,9 +191,7 @@ struct SettingsMainView: View {
         Text(currentLanguage)
           .foregroundColor(.secondary)
 
-        Image(systemName: Scoped.PREF_LANG_JUMP_SFSYMBOL)
-          .foregroundColor(.secondary)
-          .symbolRenderingMode(.hierarchical)
+        Constants.Styles.Global.EXTERNAL_LINK_JUMP_ICON
       }
     }
   }

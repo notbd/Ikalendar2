@@ -13,6 +13,14 @@ extension Constants.Styles {
     static let SHADOW_RADIUS: CGFloat = 4
     static let MIN_TEXT_SCALE_FACTOR: CGFloat = 0.3
     static let ANIMATION_DURATION = 0.2
+
+    static let EXTERNAL_LINK_SFSYMBOL = "link"
+    static let EXTERNAL_LINK_JUMP_SFSYMBOL = "arrow.up.forward.app.fill"
+    static var EXTERNAL_LINK_JUMP_ICON: some View {
+      Image(systemName: EXTERNAL_LINK_JUMP_SFSYMBOL)
+        .symbolRenderingMode(.hierarchical)
+        .foregroundColor(.secondary)
+    }
   }
 
   enum Frame {
@@ -62,18 +70,15 @@ extension Constants.Styles {
     enum Main {
       static let DEFAULT_GAME_MODE_SFSYMBOL = "rectangle.topthird.inset.filled"
       static let DEFAULT_BATTLE_MODE_SFSYMBOL = "rectangle.bottomthird.inset.filled"
-      static let DEFAULT_MODE_PICKER_SPACING: CGFloat = 40
 
       static let COLOR_SCHEME_SFSYMBOL = "circle.lefthalf.fill"
-      static let COLOR_SCHEME_PICKER_SPACING_en: CGFloat = 20
-      static let COLOR_SCHEME_PICKER_SPACING_ja: CGFloat = 16
+      static let COLOR_SCHEME_MENU_SFSYMBOL = "chevron.up.chevron.down"
 
-      static let SWITCH_APP_ICON_SFSYMBOL = "square.stack"
+      static let ALT_APP_ICON_SFSYMBOL = "square.stack"
 
-      static let ADVANCED_SFSYMBOL = "wand.and.stars"
+      static let ADVANCED_OPTIONS_SFSYMBOL = "wand.and.stars"
 
       static let PREF_LANG_SFSYMBOL = "globe"
-      static let PREF_LANG_JUMP_SFSYMBOL = "arrow.up.forward.app.fill"
 
       static let ABOUT_SFSYMBOL = "house.fill"
 
@@ -129,6 +134,13 @@ extension Constants.Styles {
 
       static let SOURCE_CODE_SFSYMBOL = "chevron.left.slash.chevron.right"
       static let PRIVACY_POLICY_SFSYMBOL = "hand.raised"
+    }
+
+    enum Credits {
+      static let CELL_SPACING_V: CGFloat = 4
+      static let CONTENT_FONT_PRIMARY: Font.TextStyle = .headline
+      static let CONTENT_FONT_SECONDARY: Font.TextStyle = .footnote
+      static let SWIPE_ACTION_COLOR: Color = .accentColor
     }
   }
 
