@@ -46,7 +46,7 @@ struct LicenseDetailsView: View {
         }
       }
     }
-    .animation(.default, value: licenseViewModel != nil)
+    .animation(.easeOut, value: licenseViewModel != nil)
   }
 
   private var licenseTypeBanner: some View {
@@ -83,11 +83,12 @@ struct LicenseDetailsView: View {
       if !ifError {
         Text(
           licenseViewModel != nil
-          ? licenseViewModel!.content
-          : Constants.Key.Placeholder.LICENSE_TEMPLATE_MIT)
-        .multilineTextAlignment(.leading)
-        .font(Scoped.LICENSE_CONTENT_FONT)
-        .hAlignment(.leading)
+            ? licenseViewModel!.content
+            : Constants.Key.Placeholder.LICENSE_TEMPLATE_MIT)
+          .multilineTextAlignment(.leading)
+          .font(Scoped.LICENSE_CONTENT_FONT)
+          .drawingGroup()
+          .hAlignment(.leading)
       }
       else {
         EmptyView()

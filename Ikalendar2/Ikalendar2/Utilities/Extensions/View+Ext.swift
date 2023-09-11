@@ -69,8 +69,7 @@ extension View {
     }
   }
 
-  /// This function will apply a transform to our view
-  /// if the value is non-nil.
+  /// This function will apply a transform to our view if the value is non-nil.
   ///
   /// ### Usage example: ###
   /// ```
@@ -95,6 +94,34 @@ extension View {
     }
     else {
       self
+    }
+  }
+
+  /// This function will apply a transform to our view if the value is nil.
+  ///
+  /// ### Usage example: ###
+  /// ```
+  /// var body: some view {
+  ///   myView
+  ///     .ifNil(optionalValue) { $0.hidden() }
+  /// }
+  /// ```
+  ///
+  /// - Parameters:
+  ///   - value: The optional value to evaluate.
+  ///   - transform: The transform function/modifier.
+  /// - Returns: The resulted view.
+  @ViewBuilder
+  func ifNil(
+    _ value: (some Any)?,
+    transform: (Self) -> some View)
+    -> some View
+  {
+    if let value {
+      self
+    }
+    else {
+      transform(self)
     }
   }
 
