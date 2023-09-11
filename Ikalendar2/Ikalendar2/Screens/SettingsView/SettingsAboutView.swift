@@ -225,18 +225,31 @@ struct SettingsAboutView: View {
   // MARK: - Others Section
 
   private var rowSourceCode: some View {
-    Button {
-      guard let url = URL(string: Constants.Key.URL.SOURCE_CODE_REPO) else { return }
-      openURL(url)
-    } label: {
-      Label {
-        Text("Source Code")
-          .foregroundColor(.primary)
+    let repoName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
+    let repoURLString = Constants.Key.URL.SOURCE_CODE_REPO
+    let destination = LicenseDetailsView(
+      repoName: repoName,
+      repoURLString: repoURLString)
+
+    return
+      NavigationLink(destination: destination) {
+        Label {
+          Text("Source Code")
+            .foregroundColor(.primary)
+        }
+        icon: {
+          Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
+        }
       }
-      icon: {
-        Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
+      .swipeActions {
+        Button {
+          guard let url = URL(string: repoURLString) else { return }
+          openURL(url)
+        } label: {
+          Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+        }
+        .tint(Color.accentColor)
       }
-    }
   }
 
   private var rowPrivacyPolicy: some View {

@@ -46,7 +46,7 @@ struct SettingsCreditsView: View {
       name: "SwiftyJSON",
       urlString: "https://github.com/SwiftyJSON/SwiftyJSON",
       destination:
-      SettingsLicenseDetailView(
+      LicenseDetailsView(
         repoName: "SwiftyJSON",
         repoURLString: "https://github.com/SwiftyJSON/SwiftyJSON"))
   }
@@ -55,7 +55,8 @@ struct SettingsCreditsView: View {
     CreditsOpenSourceLibCell(
       name: "SimpleHaptics",
       urlString: "https://github.com/notbd/SimpleHaptics",
-      destination: SettingsLicenseDetailView(
+      destination:
+      LicenseDetailsView(
         repoName: "SimpleHaptics",
         repoURLString: "https://github.com/notbd/SimpleHaptics"))
   }
@@ -131,7 +132,7 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
       } label: {
         Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
       }
-      .tint(Scoped.SWIPE_ACTION_COLOR)
+      .tint(Color.accentColor)
     }
   }
 }
