@@ -11,7 +11,6 @@ import SwiftUI
 extension Constants.Style {
   enum Global {
     static let SHADOW_RADIUS: CGFloat = 4
-    static let MIN_TEXT_SCALE_FACTOR: CGFloat = 0.3
     static let ANIMATION_DURATION = 0.2
 
     static let EXTERNAL_LINK_SFSYMBOL = "link"
@@ -126,7 +125,7 @@ extension Constants.Style {
 
       static let RATING_SFSYMBOL = "star.bubble.fill"
       static let REVIEW_SFSYMBOL = "highlighter"
-      static let VIEW_ON_APP_STORE_SFSYMBOL = "doc.text.fill.viewfinder"
+      static let VIEW_ON_APP_STORE_SFSYMBOL = "doc.viewfinder.fill"
 
       static let TWITTER_ICON_NAME = "twitter_xsmall"
       static let TWITTER_ICON_SIDE_LEN: CGFloat = 17
@@ -137,10 +136,21 @@ extension Constants.Style {
     }
 
     enum Credits {
-      static let CELL_SPACING_V: CGFloat = 4
+      static let CELL_SPACING_V: CGFloat = 5
       static let CONTENT_FONT_PRIMARY: Font.TextStyle = .headline
       static let CONTENT_FONT_SECONDARY: Font.TextStyle = .footnote
       static let SWIPE_ACTION_COLOR: Color = .accentColor
+
+      enum License {
+        static let CONTENT_SPACING_V: CGFloat = 24
+        static let LICENSE_SFSYMBOL = "doc.text"
+        static let ERROR_SFSYMBOL = "exclamationmark.triangle.fill"
+        static let LICENSE_ICON_FONT: Font = .largeTitle
+        static let LICENSE_ICON_FONT_WEIGHT: Font.Weight = .medium
+        static let LICENSE_CAPTION_FONT: Font = .caption
+        static let LICENSE_TYPE_FONT: Font = .title
+        static let LICENSE_CONTENT_FONT: Font = .system(.caption, design: .monospaced)
+      }
     }
   }
 

@@ -24,4 +24,7 @@ extension Constants.Config {
     static let autoLoadedLingerLength: TimeInterval = 2
   }
 
+  enum License {
+    static let licenseLoadedDelay: TimeInterval = 0.2
+  }
 }

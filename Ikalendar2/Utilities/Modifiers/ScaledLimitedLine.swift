@@ -13,11 +13,11 @@ extension View {
   ///
   /// - Parameters:
   ///   - lineLimit: The max number of lines (default to 1).
-  ///   - minScaleFactor: The minimum scale factor of the text (default to Constants config).
+  ///   - minScaleFactor: The minimum scale factor of the text (default to 0.3).
   /// - Returns: The modified view.
   func scaledLimitedLine(
     lineLimit: Int = 1,
-    minScaleFactor: CGFloat = Constants.Style.Global.MIN_TEXT_SCALE_FACTOR)
+    minScaleFactor: CGFloat = 0.3)
     -> some View
   {
     modifier(

@@ -50,6 +50,10 @@
 "Others" = "その他";
 "Source Code" = "ソースコード";
 "Privacy Policy" = "プライバシーポリシー";
+// Credits
+"Data Source" = "データ提供元";
+"Open Source Libraries" = "オープンソースライブラリ";
+"%@ be licensed under" = "%@が採用するオープンソースライセンスは";
 
 "Splatoon™ 2" = "スプラトゥーン™ 2";
 "Official Website" = "公式サイト";

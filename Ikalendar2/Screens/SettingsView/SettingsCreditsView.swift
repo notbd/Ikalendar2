@@ -45,14 +45,19 @@ struct SettingsCreditsView: View {
     CreditsOpenSourceLibCell(
       name: "SwiftyJSON",
       urlString: "https://github.com/SwiftyJSON/SwiftyJSON",
-      destination: Text("SwiftyJSON"))
+      destination:
+      SettingsLicenseDetailView(
+        repoName: "SwiftyJSON",
+        repoURLString: "https://github.com/SwiftyJSON/SwiftyJSON"))
   }
 
   private var rowSimpleHaptics: some View {
     CreditsOpenSourceLibCell(
       name: "SimpleHaptics",
       urlString: "https://github.com/notbd/SimpleHaptics",
-      destination: Text("SimpleHaptics"))
+      destination: SettingsLicenseDetailView(
+        repoName: "SimpleHaptics",
+        repoURLString: "https://github.com/notbd/SimpleHaptics"))
   }
 }
 
@@ -124,7 +129,7 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
         guard let url = URL(string: urlString) else { return }
         openURL(url)
       } label: {
-        Image(systemName: Constants.Style.Global.EXTERNAL_LINK_SFSYMBOL)
+        Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
       }
       .tint(Scoped.SWIPE_ACTION_COLOR)
     }

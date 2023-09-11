@@ -26,7 +26,7 @@ struct SettingsMainView: View {
     if Locale.current.identifier.starts(with: "ja") { return Constants.Key.Locale.JA }
     if Locale.current.identifier.starts(with: "zh_Hans") { return Constants.Key.Locale.ZH_HANS }
     if Locale.current.identifier.starts(with: "zh_Hant") { return Constants.Key.Locale.ZH_HANT }
-    else { return Constants.Key.Global.UNKNOWN }
+    else { return Constants.Key.Placeholder.UNKNOWN }
   }
 
   var body: some View {
@@ -55,8 +55,8 @@ struct SettingsMainView: View {
       }
       .navigationTitle("Settings")
       .navigationBarTitleDisplayMode(.large)
-      .listStyle(.insetGrouped)
       .navigationBarItems(trailing: doneButton)
+      .listStyle(.insetGrouped)
     }
     .navigationViewStyle(StackNavigationViewStyle())
     .overlay(
@@ -218,6 +218,7 @@ struct SettingsMainView: View {
 
   private var doneButton: some View {
     Button {
+      SimpleHaptics.generateTask(.medium)
       dismiss()
     } label: {
       Text("Done")

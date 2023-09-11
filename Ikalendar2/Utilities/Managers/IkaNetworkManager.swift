@@ -7,10 +7,11 @@
 
 import Foundation
 
-/// `IkaNetworkManager` is a singleton class responsible for managing network requests related to the
-/// `splatoon2.ink` API.
-/// It provides methods for fetching different game data like battle rotations, salmon rotations, and reward
-/// apparel.
+/// `IkaNetworkManager` is a singleton class that serves as the networking layer of the application.
+/// It is designed to handle asynchronous data fetching and decoding tasks in a unified manner.
+/// The class is architected to be easily extendable for supporting various types of data and sources.
+/// It is intended to be used in tandem with the `IkaDecoder` utility class for decoding the fetched data.
+///
 final class IkaNetworkManager {
 
   static let shared = IkaNetworkManager()
@@ -21,36 +22,84 @@ final class IkaNetworkManager {
 
   // MARK: Internal
 
-  /// Asynchronously fetches the battle rotation dictionary from the `splatoon2.ink` API.
-  /// - Returns: A `BattleRotationDict` object containing the battle rotation data.
+  /// Asynchronously fetches a text file from a specified URL and returns its content as a `String`.
+  /// It is intended for fetching read-only textual data like logs, licenses, configuration files, etc.
+  ///
+  /// - Parameter urlString: The URL String pointing to the text file.
+  ///
+  /// - Returns: A `String` containing the text file content.
+  ///
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
+  ///
+  func fetchTextFile(from urlString: String)
+    async throws -> String
+  {
+    guard let url = URL(string: urlString) else { throw IkaError.unknownError }
+
+    return try await fetchAndDecode(
+      url: url,
+      decodeUsing: IkaDecoder.parseText)
+  }
+
+  func fetchLicense(from githubRepoURLString: String)
+    async throws -> OpenSourceLicense
+  {
+    guard let githubAPIURLString = OpenSourceLicense.parseGithubAPIURLString(from: githubRepoURLString)
+    else { throw IkaError.unknownError }
+
+    guard let githubAPIURL = URL(string: githubAPIURLString)
+    else { throw IkaError.unknownError }
+
+    return try await fetchAndDecode(
+      url: githubAPIURL,
+      decodeUsing: IkaDecoder.parseLicenseFromGithubAPI)
+  }
+
+  /// Asynchronously fetches the battle rotation dictionary from the `splatoon2.ink` API.
+  ///
+  /// - Returns: A `BattleRotationDict` object containing the battle rotation data.
+  ///
+  /// - Throws: `IkaError` if there's any error during fetching or decoding.
+  ///
   func getBattleRotationDict()
     async throws -> BattleRotationDict
   {
-    try await fetchAndDecode(
-      url: URL(string: Constants.Key.URL.BATTLE_ROTATIONS)!,
+    guard let url = URL(string: Constants.Key.URL.BATTLE_ROTATIONS) else { throw IkaError.unknownError }
+
+    return try await fetchAndDecode(
+      url: url,
       decodeUsing: IkaDecoder.parseBattleRotationDict)
   }
 
   /// Asynchronously fetches the salmon rotation array from the `splatoon2.ink` API.
+  ///
   /// - Returns: An array of `SalmonRotation` objects containing the salmon rotation data.
+  ///
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
+  ///
   func getSalmonRotations()
     async throws -> [SalmonRotation]
   {
-    try await fetchAndDecode(
-      url: URL(string: Constants.Key.URL.SALMON_ROTATIONS)!,
+    guard let url = URL(string: Constants.Key.URL.SALMON_ROTATIONS) else { throw IkaError.unknownError }
+
+    return try await fetchAndDecode(
+      url: url,
       decodeUsing: IkaDecoder.parseSalmonRotations)
   }
 
   /// Asynchronously fetches the reward apparel info from the `splatoon2.ink` API.
+  ///
   /// - Returns: A `SalmonApparelInfo` object containing the reward apparel type and time.
+  ///
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
+  ///
   func getSalmonRewardApparelInfo()
     async throws -> SalmonApparelInfo
   {
-    try await fetchAndDecode(
-      url: URL(string: Constants.Key.URL.SALMON_APPAREL_INFO)!,
+    guard let url = URL(string: Constants.Key.URL.SALMON_APPAREL_INFO) else { throw IkaError.unknownError }
+
+    return try await fetchAndDecode(
+      url: url,
       decodeUsing: IkaDecoder.parseSalmonRewardApparelInfo)
   }
 

@@ -8,14 +8,84 @@
 import Foundation
 import SwiftyJSON
 
-/// A decoder class to parse the data model from raw api response data.
+/// `IkaDecoder` is a utility class designed to handle the parsing and decoding
+/// of various data types from raw API response data.
+///
+/// This class provides a collection of static methods aimed at decoding different
+/// kinds of data, such as text, JSON objects and binary data. The methods
+/// are designed to be extensible, allowing for the addition of further parsing
+/// functions as needed.
+///
 final class IkaDecoder {
-  /// Parse the data into a battle rotation dictionary.
+  /// Parses and decodes a text string from the given raw data.
+  ///
+  /// This function takes `Data` as an input parameter and attempts to decode it
+  /// into a `String` using UTF-8 encoding. If the decoding process fails, it throws
+  /// a custom error of type `IkaError.serverError(.badData)`.
+  ///
+  /// - Parameter data: The raw data to decode.
+  ///
+  /// - Returns: A decoded string if the decoding process is successful.
+  ///
+  /// - Throws:
+  ///   - `IkaError.serverError(.badData)`: If the decoding process fails.
+  ///
+  static func parseText(from data: Data)
+    throws -> String
+  {
+    guard let text = String(data: data, encoding: .utf8) else {
+      throw IkaError.serverError(.badData)
+    }
+    return text
+  }
+
+  /// Parse License from GitHub API.
+  static func parseLicenseFromGithubAPI(from data: Data)
+    throws -> OpenSourceLicense
+  {
+    // Will throw SwiftyJSONError if parsing fails
+    let rootJSON = try JSON(data: data)
+
+    // Get the GitHub API URL string and Parse into GitHub repo URL string
+    guard
+      let githubAPIURLString = rootJSON["url"].string,
+      let githubRepoURLString = OpenSourceLicense.parseGithubRepoURLString(from: githubAPIURLString)
+    else { throw IkaError.serverError(.badData) }
+
+    // Get license info
+    guard
+      let licenseType = rootJSON["license"]["spdx_id"].string,
+      let licenseTypeDescription = rootJSON["license"]["name"].string
+    else { throw IkaError.serverError(.badData) }
+
+    // Access 'content' key to get the Base64 encoded string
+    guard let base64Content = rootJSON["content"].string
+    else { throw IkaError.serverError(.badData) }
+
+    // GitHub adds a new newline character at the end - remove it
+    let sanitizedBase64Content = base64Content.replacingOccurrences(of: "\n", with: "")
+
+    // Decode Base64 to Data
+    guard
+      let decodedData = Data(base64Encoded: sanitizedBase64Content),
+      let decodedString = String(data: decodedData, encoding: .utf8)
+    else { throw IkaError.serverError(.badData) }
+
+    // Create and return License object
+    return OpenSourceLicense(
+      repoURL: githubRepoURLString,
+      type: licenseType,
+      typeDescription: licenseTypeDescription,
+      content: decodedString)
+  }
+
+  /// Decode the data into a battle rotation dictionary.
   /// - Parameter data: The data to parse from.
   /// - Throws:
   ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
   ///   - `IkaError.badData`: if JSON is of unsupported format.
   /// - Returns: The parsed dictionary (will NOT be empty).
+  ///
   static func parseBattleRotationDict(from data: Data)
     throws -> BattleRotationDict
   {
@@ -74,6 +144,7 @@ final class IkaDecoder {
   ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
   ///   - `IkaError.badData`: if JSON is of unsupported format.
   /// - Returns: The parsed array (will NOT be empty).
+  ///
   static func parseSalmonRotations(from data: Data)
     throws -> [SalmonRotation]
   {
@@ -169,6 +240,7 @@ final class IkaDecoder {
   ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
   ///   - `IkaError.badData`: if JSON is of unsupported format.
   /// - Returns: The parsed SalmonApparel info.
+  ///
   static func parseSalmonRewardApparelInfo(from data: Data)
     throws -> SalmonApparelInfo
   {

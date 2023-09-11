@@ -50,6 +50,10 @@
 "Others" = "Others";
 "Source Code" = "Source Code";
 "Privacy Policy" = "Privacy Policy";
+// Credits
+"Data Source" = "Data Source";
+"Open Source Libraries" = "Open Source Libraries";
+"%@ be licensed under" = "%@ is licensed under the";
 
 "Splatoon™ 2" = "Splatoon™ 2";
 "Official Website" = "Official Website";

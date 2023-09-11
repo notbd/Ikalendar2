@@ -64,6 +64,8 @@
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		797C0E822A9725D900DA405A /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 797C0E812A9725D900DA405A /* SwiftyJSON */; };
 		797C0E852A97260F00DA405A /* SimpleHaptics in Frameworks */ = {isa = PBXBuildFile; productRef = 797C0E842A97260F00DA405A /* SimpleHaptics */; };
+		797EA68E2AACF1350095A23B /* SettingsLicenseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EA68D2AACF1350095A23B /* SettingsLicenseDetailView.swift */; };
+		797EA6902AAD16620095A23B /* OpenSourceLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EA68F2AAD16620095A23B /* OpenSourceLicense.swift */; };
 		79802FFA28C55B740048C478 /* IkaColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79802FF928C55B740048C478 /* IkaColorSchemeManager.swift */; };
 		79A7258F2A5E9367007E9C92 /* ConfigConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
@@ -155,6 +157,8 @@
 		795A60A82A9759C9007B3861 /* AssetImageCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetImageCounter.swift; sourceTree = "<group>"; };
 		795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeededRandomGenerator.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
+		797EA68D2AACF1350095A23B /* SettingsLicenseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLicenseDetailView.swift; sourceTree = "<group>"; };
+		797EA68F2AAD16620095A23B /* OpenSourceLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceLicense.swift; sourceTree = "<group>"; };
 		79802FF928C55B740048C478 /* IkaColorSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaColorSchemeManager.swift; sourceTree = "<group>"; };
 		79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigConstants.swift; sourceTree = "<group>"; };
 		79AA712F28C404FD00A91055 /* IkaPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreference.swift; sourceTree = "<group>"; };
@@ -280,6 +284,7 @@
 				792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */,
 				7903FE7128C46D1800245586 /* SettingsAboutView.swift */,
 				7903FE7328C46D4100245586 /* SettingsCreditsView.swift */,
+				797EA68D2AACF1350095A23B /* SettingsLicenseDetailView.swift */,
 			);
 			path = SettingsView;
 			sourceTree = "<group>";
@@ -384,12 +389,13 @@
 			path = Observers;
 			sourceTree = "<group>";
 		};
-		79408C682AA5BA8B00141E58 /* AppIcons */ = {
+		79408C682AA5BA8B00141E58 /* Others */ = {
 			isa = PBXGroup;
 			children = (
 				79408C692AA5BAA800141E58 /* IkaAppIcon.swift */,
+				797EA68F2AAD16620095A23B /* OpenSourceLicense.swift */,
 			);
-			path = AppIcons;
+			path = Others;
 			sourceTree = "<group>";
 		};
 		79802FE828C54E9D0048C478 /* Tests */ = {
@@ -410,7 +416,7 @@
 				79AA714E28C4139000A91055 /* Stages */,
 				79AA715328C414E200A91055 /* Weapons */,
 				79AA715A28C41A6100A91055 /* Apparels */,
-				79408C682AA5BA8B00141E58 /* AppIcons */,
+				79408C682AA5BA8B00141E58 /* Others */,
 				79AA713728C4077F00A91055 /* MockData */,
 			);
 			path = Models;
@@ -769,6 +775,7 @@
 				7903FE8D28C46F9100245586 /* StageTitleLabel.swift in Sources */,
 				7903FE5528C45FC000245586 /* IkaMotionPublisher.swift in Sources */,
 				7903FE8528C46F3E00245586 /* SalmonRotationCell.swift in Sources */,
+				797EA68E2AACF1350095A23B /* SettingsLicenseDetailView.swift in Sources */,
 				7903FE9D28C4702100245586 /* ToolbarButtonAlignment.swift in Sources */,
 				79D3E67328C41DD900005DB5 /* HeadApparel.swift in Sources */,
 				790E2E142AA9946C00789465 /* DynamicTextStyleObserver.swift in Sources */,
@@ -778,6 +785,7 @@
 				79C1485C28C42CDE00587C6E /* StyleConstants.swift in Sources */,
 				7903FE4928C45DFC00245586 /* Date+Ext.swift in Sources */,
 				7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */,
+				797EA6902AAD16620095A23B /* OpenSourceLicense.swift in Sources */,
 				7903FE7028C46CEF00245586 /* SettingsAltAppIconView.swift in Sources */,
 				79AA713428C4056700A91055 /* IkaTimePublisher.swift in Sources */,
 				7903FE4B28C45E7D00245586 /* String+Ext.swift in Sources */,
@@ -940,7 +948,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3720;
+				CURRENT_PROJECT_VERSION = 3818;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -974,7 +982,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3720;
+				CURRENT_PROJECT_VERSION = 3818;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

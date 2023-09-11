@@ -229,18 +229,12 @@ struct SettingsAboutView: View {
       guard let url = URL(string: Constants.Key.URL.SOURCE_CODE_REPO) else { return }
       openURL(url)
     } label: {
-      HStack {
-        Label {
-          Text("Source Code")
-            .foregroundColor(.primary)
-        }
-        icon: {
-          Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
-        }
-
-        Spacer()
-
-        Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+      Label {
+        Text("Source Code")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
       }
     }
   }
@@ -250,18 +244,12 @@ struct SettingsAboutView: View {
       guard let url = URL(string: Constants.Key.URL.PRIVACY_POLICY) else { return }
       openURL(url)
     } label: {
-      HStack {
-        Label {
-          Text("Privacy Policy")
-            .foregroundColor(.primary)
-        }
-        icon: {
-          Image(systemName: Scoped.PRIVACY_POLICY_SFSYMBOL)
-        }
-
-        Spacer()
-
-        Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+      Label {
+        Text("Privacy Policy")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(systemName: Scoped.PRIVACY_POLICY_SFSYMBOL)
       }
     }
   }
