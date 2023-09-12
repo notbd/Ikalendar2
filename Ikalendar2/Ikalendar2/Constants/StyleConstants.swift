@@ -139,17 +139,17 @@ extension Constants.Style {
       static let CELL_SPACING_V: CGFloat = 5
       static let CONTENT_FONT_PRIMARY: Font.TextStyle = .headline
       static let CONTENT_FONT_SECONDARY: Font.TextStyle = .footnote
+    }
 
-      enum License {
-        static let CONTENT_SPACING_V: CGFloat = 24
-        static let LICENSE_SFSYMBOL = "doc.text"
-        static let ERROR_SFSYMBOL = "exclamationmark.triangle.fill"
-        static let LICENSE_ICON_FONT: Font = .largeTitle
-        static let LICENSE_ICON_FONT_WEIGHT: Font.Weight = .medium
-        static let LICENSE_CAPTION_FONT: Font = .caption
-        static let LICENSE_TYPE_FONT: Font = .title
-        static let LICENSE_CONTENT_FONT: Font = .system(size: 7, design: .monospaced)
-      }
+    enum License {
+      static let CONTENT_SPACING_V: CGFloat = 24
+      static let LICENSE_SFSYMBOL = "doc.text"
+      static let ERROR_SFSYMBOL = "exclamationmark.triangle.fill"
+      static let LICENSE_ICON_FONT: Font = .largeTitle
+      static let LICENSE_ICON_FONT_WEIGHT: Font.Weight = .medium
+      static let LICENSE_CAPTION_FONT: Font = .caption
+      static let LICENSE_TYPE_FONT: Font = .title
+      static let LICENSE_CONTENT_FONT: Font = .system(size: 7.5, design: .monospaced)
     }
   }
 

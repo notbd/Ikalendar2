@@ -11,7 +11,7 @@ import SwiftUI
 // MARK: - LicenseDetailsView
 
 struct LicenseDetailsView: View {
-  typealias Scoped = Constants.Style.Settings.Credits.License
+  typealias Scoped = Constants.Style.Settings.License
 
   @Environment(\.openURL) private var openURL
 

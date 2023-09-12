@@ -34,6 +34,7 @@ struct SalmonRotationStageCard: View {
       .overlay(
         overlay,
         alignment: .bottom)
+      .animation(.easeOut, value: ikaPreference.ifUseAltStageImages)
   }
 
   private var overlay: some View {
