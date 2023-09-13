@@ -13,12 +13,11 @@ import SwiftUI
 /// The view that displays the content in a NavigationView.
 struct RotationsView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
-
-  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   var body: some View {
     ZStack {

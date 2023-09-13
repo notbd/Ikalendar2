@@ -11,6 +11,9 @@ import SwiftUI
 /// The entry view of the app.
 /// Provide an interface for some upfront View-level configurations.
 struct RootView: View {
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
+
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
@@ -27,12 +30,24 @@ struct RootView: View {
       .onChange(of: ikaPreference.preferredAppColorScheme) { selectedColorScheme in
         IkaColorSchemeManager.shared.handleColorSchemeChange(for: selectedColorScheme)
       }
-      .fullScreenCover(isPresented: $ikaStatus.isSettingsPresented) {
-        SettingsMainView()
-          .environmentObject(ikaStatus)
-          .environmentObject(ikaPreference)
-          .accentColor(.orange)
-          .interactiveDismissDisabled()
+      .if(isHorizontalCompact) {
+        $0
+          .fullScreenCover(isPresented: $ikaStatus.isSettingsPresented) {
+            SettingsMainView()
+              .environmentObject(ikaStatus)
+              .environmentObject(ikaPreference)
+              .accentColor(.orange)
+              .interactiveDismissDisabled()
+          }
+      } else: {
+        $0
+          .sheet(isPresented: $ikaStatus.isSettingsPresented) {
+            SettingsMainView()
+              .environmentObject(ikaStatus)
+              .environmentObject(ikaPreference)
+              .accentColor(.orange)
+              .interactiveDismissDisabled()
+          }
       }
   }
 

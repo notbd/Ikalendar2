@@ -72,7 +72,7 @@ struct SettingsMainView: View {
   private var rowDefaultGameMode: some View {
     HStack {
       Label {
-        if rowWidth >= Scoped.DEFAULT_MODE_SHOW_NAME_THRESHOLD {
+        if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
           Text("Game")
         }
         else {
@@ -107,7 +107,7 @@ struct SettingsMainView: View {
   private var rowDefaultBattleMode: some View {
     HStack {
       Label {
-        if rowWidth >= Scoped.DEFAULT_MODE_SHOW_NAME_THRESHOLD {
+        if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
           Text("Battle")
         }
         else {

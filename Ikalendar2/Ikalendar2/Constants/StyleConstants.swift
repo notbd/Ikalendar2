@@ -67,7 +67,7 @@ extension Constants.Style {
 
   enum Settings {
     enum Main {
-      static let DEFAULT_MODE_SHOW_NAME_THRESHOLD: CGFloat = 375
+      static let DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD: CGFloat = 375
 
       static let COLOR_SCHEME_SFSYMBOL = "circle.lefthalf.fill"
       static let COLOR_SCHEME_MENU_SFSYMBOL = "chevron.up.chevron.down"
