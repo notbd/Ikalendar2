@@ -63,7 +63,7 @@
 		795A60AB2A976745007B3861 /* SeededRandomGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		797C0E822A9725D900DA405A /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 797C0E812A9725D900DA405A /* SwiftyJSON */; };
-		797EA68E2AACF1350095A23B /* LicenseDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EA68D2AACF1350095A23B /* LicenseDetailsView.swift */; };
+		797EA68E2AACF1350095A23B /* DetailsLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EA68D2AACF1350095A23B /* DetailsLicenseView.swift */; };
 		797EA6902AAD16620095A23B /* IkaOpenSourceLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EA68F2AAD16620095A23B /* IkaOpenSourceLicense.swift */; };
 		79802FFA28C55B740048C478 /* IkaColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79802FF928C55B740048C478 /* IkaColorSchemeManager.swift */; };
 		79A7258F2A5E9367007E9C92 /* ConfigConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */; };
@@ -159,7 +159,7 @@
 		795A60A82A9759C9007B3861 /* AssetImageCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetImageCounter.swift; sourceTree = "<group>"; };
 		795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeededRandomGenerator.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
-		797EA68D2AACF1350095A23B /* LicenseDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseDetailsView.swift; sourceTree = "<group>"; };
+		797EA68D2AACF1350095A23B /* DetailsLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsLicenseView.swift; sourceTree = "<group>"; };
 		797EA68F2AAD16620095A23B /* IkaOpenSourceLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaOpenSourceLicense.swift; sourceTree = "<group>"; };
 		79802FF928C55B740048C478 /* IkaColorSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaColorSchemeManager.swift; sourceTree = "<group>"; };
 		79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigConstants.swift; sourceTree = "<group>"; };
@@ -567,7 +567,7 @@
 		79BCBC942AAFB2B700C83F95 /* DetailsView */ = {
 			isa = PBXGroup;
 			children = (
-				797EA68D2AACF1350095A23B /* LicenseDetailsView.swift */,
+				797EA68D2AACF1350095A23B /* DetailsLicenseView.swift */,
 			);
 			path = DetailsView;
 			sourceTree = "<group>";
@@ -790,7 +790,7 @@
 				7903FE8D28C46F9100245586 /* StageTitleLabel.swift in Sources */,
 				7903FE5528C45FC000245586 /* IkaDeviceMotionPublisher.swift in Sources */,
 				7903FE8528C46F3E00245586 /* SalmonRotationCell.swift in Sources */,
-				797EA68E2AACF1350095A23B /* LicenseDetailsView.swift in Sources */,
+				797EA68E2AACF1350095A23B /* DetailsLicenseView.swift in Sources */,
 				7903FE9D28C4702100245586 /* ToolbarButtonAlignment.swift in Sources */,
 				79D3E67328C41DD900005DB5 /* HeadApparel.swift in Sources */,
 				790E2E142AA9946C00789465 /* DynamicTextStyleObserver.swift in Sources */,
@@ -964,7 +964,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3985;
+				CURRENT_PROJECT_VERSION = 3993;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -998,7 +998,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3985;
+				CURRENT_PROJECT_VERSION = 3993;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

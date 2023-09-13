@@ -227,7 +227,7 @@ struct SettingsAboutView: View {
   private var rowSourceCode: some View {
     let repoName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
     let repoURLString = Constants.Key.URL.SOURCE_CODE_REPO
-    let destination = LicenseDetailsView(
+    let destination = DetailsLicenseView(
       repoName: repoName,
       repoURLString: repoURLString)
 

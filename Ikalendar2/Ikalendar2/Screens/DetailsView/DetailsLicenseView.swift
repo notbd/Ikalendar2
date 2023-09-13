@@ -1,5 +1,5 @@
 //
-//  LicenseDetailsView.swift
+//  DetailsLicenseView.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -8,9 +8,9 @@
 import SimpleHaptics
 import SwiftUI
 
-// MARK: - LicenseDetailsView
+// MARK: - DetailsLicenseView
 
-struct LicenseDetailsView: View {
+struct DetailsLicenseView: View {
   typealias Scoped = Constants.Style.Settings.License
 
   @Environment(\.openURL) private var openURL
@@ -110,7 +110,7 @@ struct LicenseDetailsView: View {
 
 struct LicenseDetailsView_Previews: PreviewProvider {
   static var previews: some View {
-    LicenseDetailsView(
+    DetailsLicenseView(
       repoName: "SwiftyJSON",
       repoURLString: "https://github.com/SwiftyJSON/SwiftyJSON")
   }

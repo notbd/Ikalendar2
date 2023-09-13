@@ -11,46 +11,50 @@ import SwiftUI
 
 /// A mode icon overlay of the RotationsView.
 struct ModeIconStamp: View {
+  typealias Scoped = Constants.Style.Overlay.ModeIcon
+
   @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaDeviceMotionPublisher: IkaDeviceMotionPublisher
   @EnvironmentObject private var ikaInterfaceOrientationPublisher: IkaInterfaceOrientationPublisher
 
-  private var x: CGFloat { ikaDeviceMotionPublisher.dx }
-  private var y: CGFloat { ikaDeviceMotionPublisher.dy }
-  private var rotationConstant: Double { Double((pow(x, 2) + pow(y, 2)).squareRoot()) }
-  private var intensity: Double = 26
+  private var dx: CGFloat { ikaDeviceMotionPublisher.dx }
+  private var dy: CGFloat { ikaDeviceMotionPublisher.dy }
+  private var rotationConstant: Double { Double((pow(dx, 2) + pow(dy, 2)).squareRoot()) }
+  private var intensity: Double = Scoped.ROTATION_3D_INTENSITY
 
-  private var giveByAxis: (x: CGFloat, y: CGFloat) {
+  private var axisRotationWeight: (x: CGFloat, y: CGFloat) {
     switch ikaInterfaceOrientationPublisher.currentOrientation {
     case .unknown:
-      return (y, x)
+      return (dy, dx)
     case .portrait:
-      return (y, x)
+      return (dy, dx)
     case .portraitUpsideDown:
-      return (-y, -x)
+      return (-dy, -dx)
     case .landscapeLeft:
-      return (-x, y)
+      return (-dx, dy)
     case .landscapeRight:
-      return (x, -y)
+      return (dx, -dy)
     @unknown default:
-      return (y, x)
+      return (dy, dx)
     }
   }
 
   var body: some View {
     icon
-      .rotationEffect(.degrees(8))
+      .rotationEffect(.degrees(Scoped.ROTATION_2D_DEGREES))
       .rotation3DEffect(
         .degrees(rotationConstant * intensity),
         axis: (
-          x: giveByAxis.x,
-          y: giveByAxis.y,
+          x: axisRotationWeight.x,
+          y: axisRotationWeight.y,
           z: 0))
-      .offset(x: -10, y: -90)
+      .offset(
+        x: Scoped.ICON_OFFSET_X,
+        y: Scoped.ICON_OFFSET_Y)
       .animation(
         .linear,
-        value: x * y)
+        value: dx * dy)
       .animation(
         .easeOut,
         value: ikaStatus.battleModeSelection)
@@ -83,7 +87,7 @@ struct ModeIconStamp: View {
     case .battle:
       imgFiln = ikaStatus.battleModeSelection.imgFilnLarge
     case .salmon:
-      imgFiln = "mr-grizz"
+      imgFiln = Scoped.ICON_IMG_FILN_SALMON
     }
 
     return
@@ -92,7 +96,9 @@ struct ModeIconStamp: View {
         .resizable()
         .scaledToFit()
         .mask(gradientMask)
-        .frame(width: 128, height: 128)
+        .frame(
+          width: Scoped.ICON_SIZE,
+          height: Scoped.ICON_SIZE)
   }
 }
 

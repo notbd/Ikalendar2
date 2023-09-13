@@ -46,7 +46,7 @@ struct SettingsCreditsView: View {
       name: "SwiftyJSON",
       urlString: "https://github.com/SwiftyJSON/SwiftyJSON",
       destination:
-      LicenseDetailsView(
+      DetailsLicenseView(
         repoName: "SwiftyJSON",
         repoURLString: "https://github.com/SwiftyJSON/SwiftyJSON"))
   }
@@ -56,7 +56,7 @@ struct SettingsCreditsView: View {
       name: "SimpleHaptics",
       urlString: "https://github.com/notbd/SimpleHaptics",
       destination:
-      LicenseDetailsView(
+      DetailsLicenseView(
         repoName: "SimpleHaptics",
         repoURLString: "https://github.com/notbd/SimpleHaptics"))
   }

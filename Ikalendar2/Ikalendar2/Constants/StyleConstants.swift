@@ -41,6 +41,17 @@ extension Constants.Style {
       static let LOADED_FAILURE_SFSYMBOL = "exclamationmark.icloud.fill"
       static let REGULAR_SFSYMBOL = "icloud.fill"
     }
+
+    enum ModeIcon {
+      static let ROTATION_3D_INTENSITY: Double = 26
+      static let ROTATION_2D_DEGREES: Double = 8
+      static let ICON_OFFSET_X: CGFloat = -10
+      static let ICON_OFFSET_Y: CGFloat = -90
+
+      static let ICON_IMG_FILN_SALMON = "mr-grizz"
+      static let ICON_SIZE: CGFloat = 128
+
+    }
   }
 
   enum ToolbarButton {
