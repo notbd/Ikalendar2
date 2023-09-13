@@ -67,17 +67,17 @@ extension Constants.Style {
 
   enum Settings {
     enum Main {
-      static let DEFAULT_GAME_MODE_SFSYMBOL = "rectangle.topthird.inset.filled"
-      static let DEFAULT_BATTLE_MODE_SFSYMBOL = "rectangle.bottomthird.inset.filled"
+      static let DEFAULT_MODE_SHOW_NAME_THRESHOLD: CGFloat = 375
 
       static let COLOR_SCHEME_SFSYMBOL = "circle.lefthalf.fill"
       static let COLOR_SCHEME_MENU_SFSYMBOL = "chevron.up.chevron.down"
 
       static let ALT_APP_ICON_SFSYMBOL = "square.stack"
 
-      static let ADVANCED_OPTIONS_SFSYMBOL = "wand.and.stars"
+      static let ADVANCED_OPTIONS_SFSYMBOL = "wand.and.rays"
 
-      static let PREF_LANG_SFSYMBOL = "globe"
+      static let PREF_LANG_SFSYMBOL_ASIA = "globe.asia.australia.fill"
+      static let PREF_LANG_SFSYMBOL_AMERICA = "globe.americas.fill"
 
       static let ABOUT_SFSYMBOL = "house.fill"
 

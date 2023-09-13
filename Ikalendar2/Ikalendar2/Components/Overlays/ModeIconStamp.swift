@@ -13,21 +13,47 @@ import SwiftUI
 struct ModeIconStamp: View {
   @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaStatus: IkaStatus
-  @EnvironmentObject private var ikaMotionPublisher: IkaMotionPublisher
+  @EnvironmentObject private var ikaDeviceMotionPublisher: IkaDeviceMotionPublisher
+  @EnvironmentObject private var ikaInterfaceOrientationPublisher: IkaInterfaceOrientationPublisher
 
-  private var x: CGFloat { ikaMotionPublisher.dx }
-  private var y: CGFloat { ikaMotionPublisher.dy }
-  private var rot: Double { Double((pow(x, 2) + pow(y, 2)).squareRoot()) }
-  private var degrees: Double = 22
+  private var x: CGFloat { ikaDeviceMotionPublisher.dx }
+  private var y: CGFloat { ikaDeviceMotionPublisher.dy }
+  private var rotationConstant: Double { Double((pow(x, 2) + pow(y, 2)).squareRoot()) }
+  private var intensity: Double = 26
+
+  private var giveByAxis: (x: CGFloat, y: CGFloat) {
+    switch ikaInterfaceOrientationPublisher.currentOrientation {
+    case .unknown:
+      return (y, x)
+    case .portrait:
+      return (y, x)
+    case .portraitUpsideDown:
+      return (-y, -x)
+    case .landscapeLeft:
+      return (-x, y)
+    case .landscapeRight:
+      return (x, -y)
+    @unknown default:
+      return (y, x)
+    }
+  }
 
   var body: some View {
     icon
       .rotationEffect(.degrees(8))
-      .rotation3DEffect(.degrees(degrees * rot), axis: (x: y, y: x, z: 0))
+      .rotation3DEffect(
+        .degrees(rotationConstant * intensity),
+        axis: (
+          x: giveByAxis.x,
+          y: giveByAxis.y,
+          z: 0))
       .offset(x: -10, y: -90)
       .animation(
-        .easeOut(duration: Constants.Style.Global.ANIMATION_DURATION),
-        value: ikaMotionPublisher.dx * ikaMotionPublisher.dy)
+        .linear,
+        value: x * y)
+      .animation(
+        .easeOut,
+        value: ikaStatus.battleModeSelection)
   }
 
   private var gradientMask: some View {

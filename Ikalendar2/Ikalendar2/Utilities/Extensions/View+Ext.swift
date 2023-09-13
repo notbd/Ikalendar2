@@ -30,12 +30,8 @@ extension View {
     transform: (Self) -> some View)
     -> some View
   {
-    if condition {
-      transform(self)
-    }
-    else {
-      self
-    }
+    if condition { transform(self) }
+    else { self }
   }
 
   /// This function will apply a transform to our view when condition is true,
@@ -61,12 +57,8 @@ extension View {
     else elseTransform: (Self) -> some View)
     -> some View
   {
-    if condition {
-      ifTransform(self)
-    }
-    else {
-      elseTransform(self)
-    }
+    if condition { ifTransform(self) }
+    else { elseTransform(self) }
   }
 
   /// This function will apply a transform to our view if the value is non-nil.
@@ -89,12 +81,8 @@ extension View {
     transform: (Self, V) -> some View)
     -> some View
   {
-    if let value {
-      transform(self, value)
-    }
-    else {
-      self
-    }
+    if let value { transform(self, value) }
+    else { self }
   }
 
   /// This function will apply a transform to our view if the value is nil.
@@ -117,12 +105,8 @@ extension View {
     transform: (Self) -> some View)
     -> some View
   {
-    if let value {
-      self
-    }
-    else {
-      transform(self)
-    }
+    if value == nil { transform(self) }
+    else { self }
   }
 
   /// Adjusts the horizontal alignment of the view.

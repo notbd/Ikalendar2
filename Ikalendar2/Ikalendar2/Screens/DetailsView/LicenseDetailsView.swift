@@ -18,7 +18,7 @@ struct LicenseDetailsView: View {
   let repoName: String
   let repoURLString: String
 
-  @State private var licenseViewModel: OpenSourceLicense?
+  @State private var licenseViewModel: IkaOpenSourceLicense?
   @State private var ifError: Bool = false
 
   var body: some View {

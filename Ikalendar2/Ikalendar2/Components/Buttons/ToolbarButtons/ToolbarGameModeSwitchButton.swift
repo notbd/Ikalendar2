@@ -27,8 +27,8 @@ struct ToolbarGameModeSwitchButton: View {
           Label(
             gameMode.name.localizedStringKey,
             systemImage: ikaStatus.gameModeSelection == gameMode
-              ? gameMode.sfSymbolSelected
-              : gameMode.sfSymbolIdle)
+              ? gameMode.sfSymbolNameSelected
+              : gameMode.sfSymbolNameIdle)
             .tag(gameMode)
         }
       }

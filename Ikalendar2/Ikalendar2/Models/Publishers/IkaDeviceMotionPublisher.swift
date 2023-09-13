@@ -1,5 +1,5 @@
 //
-//  IkaMotionPublisher.swift
+//  IkaDeviceMotionPublisher.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -7,16 +7,16 @@
 
 import Combine
 import CoreMotion
-import SwiftUI
+import UIKit
 
-/// `IkaMotionPublisher` is responsible for broadcasting device motion updates.
+/// `IkaDeviceMotionPublisher` is responsible for broadcasting device motion updates.
 /// It captures the gravitational force changes on x, y, and z axes and computes the difference between the
 /// current value
 /// and the average of the recently stored values over a specified duration.
-final class IkaMotionPublisher: ObservableObject {
+final class IkaDeviceMotionPublisher: ObservableObject {
 
   /// The shared singleton instance
-  static let shared = IkaMotionPublisher()
+  static let shared = IkaDeviceMotionPublisher()
 
   /// An instance of `CMMotionManager` to access motion data.
   private let motionManager = CMMotionManager()

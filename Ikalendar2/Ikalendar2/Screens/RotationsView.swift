@@ -23,7 +23,8 @@ struct RotationsView: View {
   var body: some View {
     ZStack {
       content
-        .if(isHorizontalCompact) {
+//        .if(isHorizontalCompact) {
+        .if(true) {
           setCompactHoriClassToolbar(content: $0)
         }
         .navigationTitle(title)
@@ -139,8 +140,8 @@ struct ToolbarGameModePicker: View {
         Label(
           gameMode.name.localizedStringKey,
           systemImage: ikaStatus.gameModeSelection == gameMode
-            ? gameMode.sfSymbolSelected
-            : gameMode.sfSymbolIdle)
+            ? gameMode.sfSymbolNameSelected
+            : gameMode.sfSymbolNameIdle)
           .tag(gameMode)
       }
     }

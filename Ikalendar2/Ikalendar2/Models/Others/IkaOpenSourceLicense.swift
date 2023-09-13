@@ -1,5 +1,5 @@
 //
-//  OpenSourceLicense.swift
+//  IkaOpenSourceLicense.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -8,7 +8,7 @@
 import Foundation
 import RegexBuilder
 
-struct OpenSourceLicense {
+struct IkaOpenSourceLicense {
 
   let repoURL: String
   let type: String

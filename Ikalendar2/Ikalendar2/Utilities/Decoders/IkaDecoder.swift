@@ -41,7 +41,7 @@ final class IkaDecoder {
 
   /// Parse License from GitHub API.
   static func parseLicenseFromGithubAPI(from data: Data)
-    throws -> OpenSourceLicense
+    throws -> IkaOpenSourceLicense
   {
     // Will throw SwiftyJSONError if parsing fails
     let rootJSON = try JSON(data: data)
@@ -49,7 +49,7 @@ final class IkaDecoder {
     // Get the GitHub API URL string and Parse into GitHub repo URL string
     guard
       let githubAPIURLString = rootJSON["url"].string,
-      let githubRepoURLString = OpenSourceLicense.parseGithubRepoURLString(from: githubAPIURLString)
+      let githubRepoURLString = IkaOpenSourceLicense.parseGithubRepoURLString(from: githubAPIURLString)
     else { throw IkaError.serverError(.badData) }
 
     // Get license info
@@ -72,7 +72,7 @@ final class IkaDecoder {
     else { throw IkaError.serverError(.badData) }
 
     // Create and return License object
-    return OpenSourceLicense(
+    return IkaOpenSourceLicense(
       repoURL: githubRepoURLString,
       type: licenseType,
       typeDescription: licenseTypeDescription,

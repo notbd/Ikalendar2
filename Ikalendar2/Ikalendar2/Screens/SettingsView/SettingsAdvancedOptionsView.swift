@@ -57,6 +57,9 @@ struct SettingsAdvancedOptionsView: View {
         // sync rowWidth value
         rowWidth = geo.size.width
       }
+      .onChange(of: geo.size) { size in
+        rowWidth = size.width
+      }
     }
   }
 
@@ -187,8 +190,8 @@ struct BottomToolbarPositioningPreview: View {
       ForEach(GameMode.allCases) { gameMode in
         Image(
           systemName: ikaStatus.gameModeSelection == gameMode
-            ? gameMode.sfSymbolSelected
-            : gameMode.sfSymbolIdle)
+            ? gameMode.sfSymbolNameSelected
+            : gameMode.sfSymbolNameIdle)
           .tag(gameMode)
       }
     }

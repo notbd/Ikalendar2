@@ -16,47 +16,50 @@ struct SettingsMainView: View {
 
   @Environment(\.openURL) private var openURL
   @Environment(\.dismiss) private var dismiss
+  @Environment(\.locale) private var currentLocale
 
   @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
-  private var currentLanguage: String {
-    if Locale.current.identifier.starts(with: "en") { return Constants.Key.Locale.EN }
-    if Locale.current.identifier.starts(with: "ja") { return Constants.Key.Locale.JA }
-    if Locale.current.identifier.starts(with: "zh_Hans") { return Constants.Key.Locale.ZH_HANS }
-    if Locale.current.identifier.starts(with: "zh_Hant") { return Constants.Key.Locale.ZH_HANT }
-    else { return Constants.Key.Placeholder.UNKNOWN }
-  }
+  @State private var rowWidth: CGFloat = 390
 
   var body: some View {
     NavigationView {
       // not using NavigationStack for Settings as of iOS 16 because of titleDisplayMode bug
-      List {
-        Section(header: Text("Default Mode")) {
-          rowDefaultGameMode
-          rowDefaultBattleMode
-        }
+      GeometryReader { geo in
+        List {
+          Section(header: Text("Default Mode")) {
+            rowDefaultGameMode
+            rowDefaultBattleMode
+          }
 
-        Section(header: Text("Appearance")) {
-          rowColorScheme
-          rowSwitchAppIcon
-          rowAdvancedOptions
-        }
+          Section(header: Text("Appearance")) {
+            rowColorScheme
+            rowSwitchAppIcon
+            rowAdvancedOptions
+          }
 
-        Section(header: Text("Language")) {
-          rowAppLanguage
-        }
+          Section(header: Text("Language")) {
+            rowAppLanguage
+          }
 
-        Section {
-          rowAbout
-          rowCredits
+          Section {
+            rowAbout
+            rowCredits
+          }
+        }
+        .navigationTitle("Settings")
+        .navigationBarTitleDisplayMode(.large)
+        .navigationBarItems(trailing: doneButton)
+        .listStyle(.insetGrouped)
+        .onAppear {
+          rowWidth = geo.size.width
+        }
+        .onChange(of: geo.size) { size in
+          rowWidth = size.width
         }
       }
-      .navigationTitle("Settings")
-      .navigationBarTitleDisplayMode(.large)
-      .navigationBarItems(trailing: doneButton)
-      .listStyle(.insetGrouped)
     }
     .navigationViewStyle(StackNavigationViewStyle())
     .overlay(
@@ -68,12 +71,21 @@ struct SettingsMainView: View {
 
   private var rowDefaultGameMode: some View {
     HStack {
-      Label(
-        "Game",
-        systemImage: Scoped.DEFAULT_GAME_MODE_SFSYMBOL)
-        .symbolRenderingMode(.palette)
-        .foregroundStyle(.primary, Color.accentColor)
-        .layoutPriority(1)
+      Label {
+        if rowWidth >= Scoped.DEFAULT_MODE_SHOW_NAME_THRESHOLD {
+          Text("Game")
+        }
+        else {
+          Spacer()
+        }
+      } icon: {
+        Image(
+          systemName: ikaPreference.defaultGameMode == .battle
+            ? GameMode.battle.sfSymbolNameIdle
+            : GameMode.salmon.sfSymbolNameSelected)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
+      }
 
       Spacer()
 
@@ -94,11 +106,24 @@ struct SettingsMainView: View {
 
   private var rowDefaultBattleMode: some View {
     HStack {
-      Label(
-        "Battle",
-        systemImage: Scoped.DEFAULT_BATTLE_MODE_SFSYMBOL)
-        .symbolRenderingMode(.palette)
-        .foregroundStyle(.primary, Color.accentColor)
+      Label {
+        if rowWidth >= Scoped.DEFAULT_MODE_SHOW_NAME_THRESHOLD {
+          Text("Battle")
+        }
+        else {
+          Spacer()
+        }
+      } icon: {
+        Image(
+          systemName: ikaPreference.defaultGameMode == .battle
+            ? ikaPreference.defaultBattleMode.sfSymbolNameSelected
+            : ikaPreference.defaultBattleMode.sfSymbolNameIdle)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(
+            ikaPreference.defaultGameMode == .battle
+              ? Color.accentColor
+              : .secondary)
+      }
 
       Spacer()
 
@@ -162,10 +187,23 @@ struct SettingsMainView: View {
   }
 
   private var rowAdvancedOptions: some View {
-    NavigationLink(destination: SettingsAdvancedOptionsView()) {
-      Label(
-        "Advanced Options",
-        systemImage: Scoped.ADVANCED_OPTIONS_SFSYMBOL)
+    let customizations = [
+      ikaPreference.ifSwapBottomToolbarPickers,
+      ikaPreference.ifUseAltStageImages,
+    ]
+    let customizedPercentage = Double(customizations.filter { $0 }.count) / Double(customizations.count)
+
+    return NavigationLink(destination: SettingsAdvancedOptionsView()) {
+      Label {
+        Text("Advanced Options")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(
+          systemName: Scoped.ADVANCED_OPTIONS_SFSYMBOL,
+          variableValue: customizedPercentage)
+          .symbolRenderingMode(.hierarchical)
+      }
     }
   }
 
@@ -183,12 +221,17 @@ struct SettingsMainView: View {
             .foregroundColor(.primary)
         }
         icon: {
-          Image(systemName: Scoped.PREF_LANG_SFSYMBOL)
+          switch currentLocale.toIkaLocale() {
+          case .en:
+            Image(systemName: Scoped.PREF_LANG_SFSYMBOL_AMERICA)
+          default:
+            Image(systemName: Scoped.PREF_LANG_SFSYMBOL_ASIA)
+          }
         }
 
         Spacer()
 
-        Text(currentLanguage)
+        Text(currentLocale.toIkaLocale().description)
           .foregroundColor(.secondary)
 
         Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
