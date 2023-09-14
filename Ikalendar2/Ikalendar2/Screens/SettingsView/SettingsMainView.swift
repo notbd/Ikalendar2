@@ -36,7 +36,7 @@ struct SettingsMainView: View {
 
           Section(header: Text("Appearance")) {
             rowColorScheme
-            rowSwitchAppIcon
+            rowAltAppIcon
             rowAdvancedOptions
           }
 
@@ -178,11 +178,17 @@ struct SettingsMainView: View {
     }
   }
 
-  private var rowSwitchAppIcon: some View {
+  private var rowAltAppIcon: some View {
     NavigationLink(destination: SettingsAltAppIconView()) {
-      Label(
-        "App Icon",
-        systemImage: Scoped.ALT_APP_ICON_SFSYMBOL)
+      Label {
+        Text("App Icon")
+          .foregroundColor(.primary)
+      }
+      icon: {
+        Image(
+          systemName: ikaPreference.preferredAppIcon.settingsSFSymbolName)
+          .symbolRenderingMode(.hierarchical)
+      }
     }
   }
 

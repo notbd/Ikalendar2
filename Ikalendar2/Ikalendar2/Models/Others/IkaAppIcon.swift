@@ -94,6 +94,17 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     }
   }
 
+  var settingsSFSymbolName: String {
+    switch self {
+    case .modernDark:
+      return "square.3.layers.3d.top.filled"
+    case .rick:
+      return "square.3.layers.3d.bottom.filled"
+    default:
+      return "square.3.layers.3d.middle.filled"
+    }
+  }
+
   // MARK: Internal
 
   func getImageName(_ displayMode: IkaAppIcon.DisplayMode) -> String {

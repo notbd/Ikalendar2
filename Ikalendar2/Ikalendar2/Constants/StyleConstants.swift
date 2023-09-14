@@ -81,8 +81,6 @@ extension Constants.Style {
       static let COLOR_SCHEME_SFSYMBOL = "circle.lefthalf.fill"
       static let COLOR_SCHEME_MENU_SFSYMBOL = "chevron.up.chevron.down"
 
-      static let ALT_APP_ICON_SFSYMBOL = "square.stack"
-
       static let ADVANCED_OPTIONS_SFSYMBOL = "wand.and.rays"
 
       static let PREF_LANG_SFSYMBOL_ASIA = "globe.asia.australia.fill"
