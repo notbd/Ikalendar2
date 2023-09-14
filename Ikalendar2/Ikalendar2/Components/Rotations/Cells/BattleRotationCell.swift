@@ -123,13 +123,16 @@ struct BattleRotationCellPrimary: View {
           in: animationNamespaces.ruleIcon)
         .scaledToFit()
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH_RATIO)
         .background(
           GeometryReader { geo in
-            Color.clear.onAppear {
-              ruleIconHeight = geo.size.height
-            }
+            Color.clear
+              .onAppear {
+                ruleIconHeight = geo.size.height
+              }
+              .onChange(of: geo.size) { size in
+                ruleIconHeight = size.height
+              }
           })
 
       // Rule title
