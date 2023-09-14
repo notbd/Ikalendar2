@@ -8,6 +8,28 @@
 import SwiftUI
 
 extension View {
+  /// This function will transform a view by the application of a higher order function.
+  ///
+  /// ### Usage example: ###
+  /// ```
+  /// var body: some view {
+  ///   myView
+  ///     .transform { $0.padding(8) }
+  /// }
+  /// ```
+  ///
+  /// - Parameters:
+  ///   - transformation: The transform function/modifier.
+  ///
+  /// - Returns: The resulted view.
+  @ViewBuilder
+  func transform(
+    transformation: (Self) -> some View)
+    -> some View
+  {
+    transformation(self)
+  }
+
   /// This function will apply transform to our view when condition is true,
   /// otherwise it will leave the original view untouched.
   ///
@@ -22,15 +44,16 @@ extension View {
   ///
   /// - Parameters:
   ///   - condition: The condition for the transform.
-  ///   - transform: The transform function/modifier.
+  ///   - transformation: The transform function/modifier.
+  ///
   /// - Returns: The resulted view.
   @ViewBuilder
   func `if`(
     _ condition: Bool,
-    transform: (Self) -> some View)
+    transformation: (Self) -> some View)
     -> some View
   {
-    if condition { transform(self) }
+    if condition { transformation(self) }
     else { self }
   }
 
@@ -47,18 +70,19 @@ extension View {
   ///
   /// - Parameters:
   ///   - condition: The condition for the transform.
-  ///   - ifTransform: The transform to apply if the condition is true.
-  ///   - elseTransform: The condition to apply for the transform is false.
+  ///   - ifTransformation: The transform to apply if the condition is true.
+  ///   - elseTransformation: The condition to apply for the transform is false.
+  ///
   /// - Returns: The resulted view.
   @ViewBuilder
   func `if`(
     _ condition: Bool,
-    if ifTransform: (Self) -> some View,
-    else elseTransform: (Self) -> some View)
+    if ifTransformation: (Self) -> some View,
+    else elseTransformation: (Self) -> some View)
     -> some View
   {
-    if condition { ifTransform(self) }
-    else { elseTransform(self) }
+    if condition { ifTransformation(self) }
+    else { elseTransformation(self) }
   }
 
   /// This function will apply a transform to our view if the value is non-nil.
@@ -73,15 +97,16 @@ extension View {
   ///
   /// - Parameters:
   ///   - value: The optional value to evaluate.
-  ///   - transform: The transform function/modifier.
+  ///   - transformation: The transform function/modifier.
+  ///
   /// - Returns: The resulted view.
   @ViewBuilder
   func ifLet<V>(
     _ value: V?,
-    transform: (Self, V) -> some View)
+    transformation: (Self, V) -> some View)
     -> some View
   {
-    if let value { transform(self, value) }
+    if let value { transformation(self, value) }
     else { self }
   }
 
@@ -97,18 +122,22 @@ extension View {
   ///
   /// - Parameters:
   ///   - value: The optional value to evaluate.
-  ///   - transform: The transform function/modifier.
+  ///   - transformation: The transform function/modifier.
+  ///
   /// - Returns: The resulted view.
   @ViewBuilder
   func ifNil(
     _ value: (some Any)?,
-    transform: (Self) -> some View)
+    transformation: (Self) -> some View)
     -> some View
   {
-    if value == nil { transform(self) }
+    if value == nil { transformation(self) }
     else { self }
   }
 
+}
+
+extension View {
   /// Adjusts the horizontal alignment of the view.
   ///
   /// This function extends the `View` by providing a more readable way to set horizontal alignment.
@@ -116,6 +145,7 @@ extension View {
   ///
   /// - Parameters:
   ///   - alignment: The horizontal alignment type. Defaults to `.center`.
+  ///
   /// - Returns: A view that adjusts its alignment according to the specified parameter.
   @ViewBuilder
   func hAlignment(_ alignment: Alignment = .center) -> some View {
@@ -131,6 +161,7 @@ extension View {
   ///
   /// - Parameters:
   ///   - alignment: The vertical alignment type. Defaults to `.center`.
+  ///
   /// - Returns: A view that adjusts its alignment according to the specified parameter.
   @ViewBuilder
   func vAlignment(_ alignment: Alignment = .center) -> some View {

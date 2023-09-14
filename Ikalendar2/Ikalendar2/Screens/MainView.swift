@@ -13,14 +13,15 @@ import SwiftUI
 /// Will set different layout for iPhone and iPad depending on the current horizontal size.
 struct MainView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   var body: some View {
     NavigationStack {
-      if horizontalSizeClass == .compact {
-        RotationsView()
+      if isHorizontalCompact {
+        RotationsSingularView()
       }
       else {
-        RotationsView()
+        RotationsCarouselView()
       }
     }
   }

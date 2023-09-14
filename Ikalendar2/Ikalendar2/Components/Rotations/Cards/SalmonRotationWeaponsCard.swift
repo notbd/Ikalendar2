@@ -1,5 +1,5 @@
 //
-//  SalmonRotationWeaponCard.swift
+//  SalmonRotationWeaponsCard.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-// MARK: - SalmonRotationWeaponCard
+// MARK: - SalmonRotationWeaponsCard
 
 /// The card component that displays the weapon information of a salmon rotation.
-struct SalmonRotationWeaponCard: View {
+struct SalmonRotationWeaponsCard: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Weapon
 
   let weapons: [SalmonWeapon]!
@@ -53,7 +53,7 @@ struct SalmonRotationWeaponCardIcon: View {
 
 struct SalmonRotationWeaponCard_Previews: PreviewProvider {
   static var previews: some View {
-    SalmonRotationWeaponCard(weapons: [
+    SalmonRotationWeaponsCard(weapons: [
       SalmonWeapon(5030)!,
       SalmonWeapon(1020)!,
       SalmonWeapon(310)!,

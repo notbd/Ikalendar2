@@ -16,8 +16,9 @@ struct SalmonRotationStageCard: View {
   @EnvironmentObject private var ikaPreference: IkaPreference
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
+  @State private var cardWidth: CGFloat = 150
+
   let rotation: SalmonRotation
-  let cardWidth: CGFloat
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
   private var stageImageName: String { ikaPreference.ifUseAltStageImages
@@ -35,6 +36,12 @@ struct SalmonRotationStageCard: View {
         overlay,
         alignment: .bottom)
       .animation(.easeOut, value: ikaPreference.ifUseAltStageImages)
+      .background {
+        GeometryReader { geo in
+          Color.clear
+            .onAppear { cardWidth = geo.size.width }
+        }
+      }
   }
 
   private var overlay: some View {
@@ -78,7 +85,7 @@ struct SalmonRotationStageCard: View {
 struct SalmonRotationStageCard_Previews: PreviewProvider {
   static var previews: some View {
     SalmonRotationStageCard(
-      rotation: IkaMockData.getSalmonRotation(),
-      cardWidth: 390)
+      rotation: IkaMockData.getSalmonRotation())
+      .frame(width: 312)
   }
 }

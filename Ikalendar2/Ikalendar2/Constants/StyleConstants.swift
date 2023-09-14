@@ -11,7 +11,6 @@ import SwiftUI
 extension Constants.Style {
   enum Global {
     static let SHADOW_RADIUS: CGFloat = 4
-    static let ANIMATION_DURATION = 0.2
 
     static let EXTERNAL_LINK_SFSYMBOL = "link"
     static let EXTERNAL_LINK_JUMP_SFSYMBOL = "arrow.up.forward.app.fill"
@@ -50,7 +49,6 @@ extension Constants.Style {
 
       static let ICON_IMG_FILN_SALMON = "mr-grizz"
       static let ICON_SIZE: CGFloat = 128
-
     }
   }
 

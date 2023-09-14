@@ -13,10 +13,13 @@ import SwiftUI
 struct ModeIconStamp: View {
   typealias Scoped = Constants.Style.Overlay.ModeIcon
 
-  @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaDeviceMotionPublisher: IkaDeviceMotionPublisher
   @EnvironmentObject private var ikaInterfaceOrientationPublisher: IkaInterfaceOrientationPublisher
+
+  let gameModeSelection: GameMode
+  let battleModeSelection: BattleMode
+  let ifOffset: Bool
 
   private var dx: CGFloat { ikaDeviceMotionPublisher.dx }
   private var dy: CGFloat { ikaDeviceMotionPublisher.dy }
@@ -49,15 +52,15 @@ struct ModeIconStamp: View {
           x: axisRotationWeight.x,
           y: axisRotationWeight.y,
           z: 0))
-      .offset(
-        x: Scoped.ICON_OFFSET_X,
-        y: Scoped.ICON_OFFSET_Y)
+      .if(ifOffset) {
+        $0
+          .offset(
+            x: Scoped.ICON_OFFSET_X,
+            y: Scoped.ICON_OFFSET_Y)
+      }
       .animation(
         .linear,
         value: dx * dy)
-      .animation(
-        .easeOut,
-        value: ikaStatus.battleModeSelection)
   }
 
   private var gradientMask: some View {
@@ -83,9 +86,9 @@ struct ModeIconStamp: View {
 
   private var icon: some View {
     let imgFiln: String
-    switch ikaStatus.gameModeSelection {
+    switch gameModeSelection {
     case .battle:
-      imgFiln = ikaStatus.battleModeSelection.imgFilnLarge
+      imgFiln = battleModeSelection.imgFilnLarge
     case .salmon:
       imgFiln = Scoped.ICON_IMG_FILN_SALMON
     }
@@ -100,12 +103,26 @@ struct ModeIconStamp: View {
           width: Scoped.ICON_SIZE,
           height: Scoped.ICON_SIZE)
   }
+
+  // MARK: Lifecycle
+
+  init(
+    gameModeSelection: GameMode,
+    battleModeSelection: BattleMode,
+    ifOffset: Bool = false)
+  {
+    self.gameModeSelection = gameModeSelection
+    self.battleModeSelection = battleModeSelection
+    self.ifOffset = ifOffset
+  }
 }
 
 // MARK: - FlatModeIconStamp_Previews
 
 struct FlatModeIconStamp_Previews: PreviewProvider {
   static var previews: some View {
-    ModeIconStamp()
+    ModeIconStamp(
+      gameModeSelection: .battle,
+      battleModeSelection: .gachi)
   }
 }

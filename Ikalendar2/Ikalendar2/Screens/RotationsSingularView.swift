@@ -1,5 +1,5 @@
 //
-//  RotationsView.swift
+//  RotationsSingularView.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -8,10 +8,10 @@
 import SimpleHaptics
 import SwiftUI
 
-// MARK: - RotationsView
+// MARK: - RotationsSingularView
 
 /// The view that displays the content in a NavigationView.
-struct RotationsView: View {
+struct RotationsSingularView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
@@ -22,8 +22,7 @@ struct RotationsView: View {
   var body: some View {
     ZStack {
       content
-//        .if(isHorizontalCompact) {
-        .if(true) {
+        .transform {
           setCompactHoriClassToolbar(content: $0)
         }
         .navigationTitle(title)
@@ -31,7 +30,13 @@ struct RotationsView: View {
           await ikaCatalog.refresh()
         }
         .overlay(
-          ModeIconStamp(),
+          ModeIconStamp(
+            gameModeSelection: ikaStatus.gameModeSelection,
+            battleModeSelection: ikaStatus.battleModeSelection,
+            ifOffset: true)
+            .animation(
+              .easeOut,
+              value: "\(ikaStatus.gameModeSelection)-\(ikaStatus.battleModeSelection)"),
           alignment: .topTrailing)
         .overlay(
           AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
@@ -152,7 +157,7 @@ struct ToolbarGameModePicker: View {
 
 struct RotationView_Previews: PreviewProvider {
   static var previews: some View {
-    RotationsView()
+    RotationsSingularView()
       .environmentObject(IkaCatalog.shared)
   }
 }

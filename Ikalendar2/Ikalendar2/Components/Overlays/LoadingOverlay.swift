@@ -27,7 +27,7 @@ struct LoadingOverlay: View {
         .opacity(isLoading ? 1 : 0)
     }
     .animation(
-      .easeOut(duration: Constants.Style.Global.ANIMATION_DURATION),
+      .easeOut,
       value: loadStatus)
   }
 }

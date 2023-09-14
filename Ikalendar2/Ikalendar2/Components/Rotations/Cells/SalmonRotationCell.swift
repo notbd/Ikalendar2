@@ -20,10 +20,6 @@ struct SalmonRotationCell: View {
 
   private var hasStageAndWeapon: Bool { rotation.stage != nil && rotation.weapons != nil }
 
-  private var stageHeight: CGFloat {
-    rowWidth * Scoped.STAGE_HEIGHT_RATIO + Scoped.STAGE_HEIGHT_ADJUSTMENT_CONSTANT
-  }
-
   var body: some View {
     VStack(
       alignment: .leading,
@@ -47,14 +43,9 @@ struct SalmonRotationCell: View {
   }
 
   private var stageAndWeaponSection: some View {
-    HStack {
-      SalmonRotationStageCard(
-        rotation: rotation,
-        cardWidth: stageHeight * (16 / 9))
-        .frame(height: stageHeight)
-      Spacer()
-      SalmonRotationWeaponCard(weapons: rotation.weapons)
-        .frame(width: stageHeight)
+    SalmonStageAndWeaponsLayout {
+      SalmonRotationStageCard(rotation: rotation)
+      SalmonRotationWeaponsCard(weapons: rotation.weapons!)
     }
   }
 
@@ -126,6 +117,7 @@ struct SalmonRotationCellTimeTextSection: View {
       }
     }
   }
+
 }
 
 // MARK: - SalmonRotationCell_Previews
