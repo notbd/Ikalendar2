@@ -85,10 +85,9 @@ struct BattleRotationCellPrimary: View {
           .padding(.bottom, Scoped.PROGRESS_BAR_PADDING_BOTTOM)
       }
 
-      HStack(
-        alignment: .center,
-        spacing: rowWidth * Scoped.STAGE_SECTION_SPACING_RATIO)
-      {
+      // MARK: Stage Section
+
+      HStack {
         BattleRotationStageCardPrimary(
           rotation: rotation,
           stageSelection: .stageA)
@@ -221,17 +220,14 @@ struct BattleRotationCellSecondary: View {
 
       // MARK: Stage Section
 
-      HStack(
-        alignment: .center,
-        spacing: rowWidth * Scoped.STAGE_SECTION_SPACING_RATIO +
-          Scoped.STAGE_SECTION_SPACING_ADJUSTMENT_CONSTANT)
-      {
+      BattleSecondaryStagesLayout {
         BattleRotationStageCardSecondary(
           rotation: rotation,
           stageSelection: .stageA)
           .matchedGeometryEffect(
             id: rotation.id,
             in: animationNamespaces.stageA)
+
         BattleRotationStageCardSecondary(
           rotation: rotation,
           stageSelection: .stageB)

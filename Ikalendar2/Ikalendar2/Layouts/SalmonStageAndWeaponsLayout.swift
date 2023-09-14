@@ -53,27 +53,32 @@ struct SalmonStageAndWeaponsLayout: Layout {
     let stageWidth = stageHeight * (16 / 9)
     let stageCenterX = bounds.minX + stageWidth * (1 / 2)
     let stageCenterY = bounds.midY
+    let stageSizeProposal = ProposedViewSize(
+      width: stageWidth,
+      height: stageHeight)
 
-    let weaponHeight = correctHeight
-    let weaponWidth = weaponHeight
-    let weaponCenterX = bounds.maxX - weaponWidth * (1 / 2)
-    let weaponCenterY = bounds.midY
+    let weaponsHeight = correctHeight
+    let weaponsWidth = weaponsHeight
+    let weaponsCenterX = bounds.maxX - weaponsWidth * (1 / 2)
+    let weaponsCenterY = bounds.midY
+    let weaponsSizeProposal = ProposedViewSize(
+      width: weaponsWidth,
+      height: weaponsHeight)
 
-    // placing stage card
+    // placing stage card and weapon card accordingly
     subviews[0].place(
-      at: CGPoint(x: stageCenterX, y: stageCenterY),
+      at: CGPoint(
+        x: stageCenterX,
+        y: stageCenterY),
       anchor: .center,
-      proposal: ProposedViewSize(
-        width: stageWidth,
-        height: stageHeight))
+      proposal: stageSizeProposal)
 
-    // placing weapon card
     subviews[1].place(
-      at: CGPoint(x: weaponCenterX, y: weaponCenterY),
+      at: CGPoint(
+        x: weaponsCenterX,
+        y: weaponsCenterY),
       anchor: .center,
-      proposal: ProposedViewSize(
-        width: weaponWidth,
-        height: weaponHeight))
+      proposal: weaponsSizeProposal)
   }
 
   // MARK: Private
@@ -81,9 +86,11 @@ struct SalmonStageAndWeaponsLayout: Layout {
   private func getHSpacings(subviews: Subviews) -> [CGFloat] {
     subviews.indices.map { index in
       guard index < subviews.count - 1 else { return 0 }
-      return subviews[index].spacing.distance(
-        to: subviews[index + 1].spacing,
-        along: .horizontal)
+      return
+        subviews[index].spacing
+          .distance(
+            to: subviews[index + 1].spacing,
+            along: .horizontal)
     }
   }
 

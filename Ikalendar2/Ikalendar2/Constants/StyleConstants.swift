@@ -195,7 +195,6 @@ extension Constants.Style {
         enum Primary {
           static let CELL_SPACING_V: CGFloat = 8
           static let PROGRESS_BAR_PADDING_BOTTOM: CGFloat = 8
-          static let STAGE_SECTION_SPACING_RATIO: CGFloat = 0.04
           static let CELL_PADDING_TOP: CGFloat = 0
           static let CELL_PADDING_BOTTOM: CGFloat = 6
 
@@ -221,12 +220,6 @@ extension Constants.Style {
 
           static let RULE_SECTION_WIDTH_RATIO: CGFloat = 0.16
           static let RULE_SECTION_PADDING_TRAILING: CGFloat = 10
-
-          static let STAGE_SECTION_SPACING_RATIO: CGFloat = 0.04
-          static let STAGE_SECTION_SPACING_ADJUSTMENT_CONSTANT: CGFloat = -6
-
-          static let ITEM_ID_RULE_ICON = "rule-icon"
-          static let ITEM_ID_RULE_TITLE = "rule-title"
         }
       }
 
