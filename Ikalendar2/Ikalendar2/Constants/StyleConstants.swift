@@ -25,12 +25,14 @@ extension Constants.Style {
     static let COLUMN_FIXED_WIDTH: CGFloat = 390
 
     enum Column {
-      static let LIST_OFFSET_V_FACTOR_PORTRAIT: CGFloat = 0.08
-      static let LIST_OFFSET_V_FACTOR_LANDSCAPE: CGFloat = 0.1
+      static let LIST_OFFSET_V_FACTOR_PORTRAIT: CGFloat = 0.1
+      static let LIST_OFFSET_V_FACTOR_LANDSCAPE: CGFloat = 0.12
+      static let BLUR_HEIGHT_FACTOR_PORTRAIT: CGFloat = 1.15
+      static let BLUR_HEIGHT_FACTOR_LANDSCAPE: CGFloat = 1.2
       static let MODE_ICON_SIZE_FACTOR: CGFloat = 1.3
 
       static let MASK_GRADIENT_DENSITY_PORTRAIT: Int = 32
-      static let MASK_GRADIENT_DENSITY_LANDSCAPE: Int = 16
+      static let MASK_GRADIENT_DENSITY_LANDSCAPE: Int = 24
     }
   }
 
@@ -51,7 +53,7 @@ extension Constants.Style {
     }
 
     enum ModeIcon {
-      static let ROTATION_3D_INTENSITY: Double = 26
+      static let ROTATION_3D_INTENSITY: Double = 24
       static let ROTATION_2D_DEGREES: Double = 8
       static let ICON_OFFSET_X: CGFloat = -10
       static let ICON_OFFSET_Y: CGFloat = -90
@@ -257,7 +259,8 @@ extension Constants.Style {
         static let PROGRESS_FONT_SIZE: CGFloat = 16
 
         enum TimeTextSection {
-          static let SALMON_ICON_WIDTH_RATIO: CGFloat = 0.09
+          static let GOLDEN_EGG_ICON_SCALE_COMPENSATION_FACTOR: CGFloat = 1.4
+          static let SALMON_ICON_HEIGHT_RATIO: CGFloat = 0.065
           static let TIME_TEXT_SPACING: CGFloat = 4
           static let TIME_TEXT_FONT_SIZE: CGFloat = 16
           static let TIME_TEXT_SINGLE_PADDING_HORIZONTAL: CGFloat = 5

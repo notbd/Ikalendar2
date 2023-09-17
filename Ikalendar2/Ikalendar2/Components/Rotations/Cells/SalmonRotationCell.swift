@@ -78,12 +78,13 @@ struct SalmonRotationCellTimeTextSection: View {
 
   var body: some View {
     HStack {
-      Image("salmon")
+      Image(rotation.isCurrent() ? "golden-egg" : "salmon")
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-        .frame(width: rowWidth * Scoped.SALMON_ICON_WIDTH_RATIO)
+        .scaleEffect(rotation.isCurrent() ? Scoped.GOLDEN_EGG_ICON_SCALE_COMPENSATION_FACTOR : 1)
+        .frame(height: rowWidth * Scoped.SALMON_ICON_HEIGHT_RATIO)
 
       Spacer()
 

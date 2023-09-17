@@ -101,6 +101,7 @@
 		79D3E67128C41D7B00005DB5 /* SalmonApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D3E67028C41D7B00005DB5 /* SalmonApparel.swift */; };
 		79D3E67328C41DD900005DB5 /* HeadApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D3E67228C41DD900005DB5 /* HeadApparel.swift */; };
 		79DD1F3B2A5B8A800093784D /* IkaNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DD1F3A2A5B8A800093784D /* IkaNetworkManager.swift */; };
+		79E7EA982AB683C600C9C68F /* VariableBlurView in Frameworks */ = {isa = PBXBuildFile; productRef = 79E7EA972AB683C600C9C68F /* VariableBlurView */; };
 		79F90AF82AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AF72AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift */; };
 		79F90AFA2AB1112700B454B9 /* IkaLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AF92AB1112700B454B9 /* IkaLocale.swift */; };
 		79F90AFE2AB24DC000B454B9 /* RotationsCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */; };
@@ -212,6 +213,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79E7EA982AB683C600C9C68F /* VariableBlurView in Frameworks */,
 				797C0E822A9725D900DA405A /* SwiftyJSON in Frameworks */,
 				79BCBC922AAFB08C00C83F95 /* SimpleHaptics in Frameworks */,
 			);
@@ -687,6 +689,7 @@
 			packageProductDependencies = (
 				797C0E812A9725D900DA405A /* SwiftyJSON */,
 				79BCBC912AAFB08C00C83F95 /* SimpleHaptics */,
+				79E7EA972AB683C600C9C68F /* VariableBlurView */,
 			);
 			productName = Ikalendar2;
 			productReference = 79B92BB228B03B1F00544939 /* Ikalendar2.app */;
@@ -720,6 +723,7 @@
 			packageReferences = (
 				797C0E802A9725D900DA405A /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				79BCBC902AAFB08C00C83F95 /* XCRemoteSwiftPackageReference "SimpleHaptics" */,
+				79E7EA962AB683C600C9C68F /* XCRemoteSwiftPackageReference "VariableBlurView" */,
 			);
 			productRefGroup = 79B92BB328B03B1F00544939 /* Products */;
 			projectDirPath = "";
@@ -1004,7 +1008,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4382;
+				CURRENT_PROJECT_VERSION = 4413;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1038,7 +1042,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4382;
+				CURRENT_PROJECT_VERSION = 4413;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1104,6 +1108,14 @@
 				minimumVersion = 0.1.0;
 			};
 		};
+		79E7EA962AB683C600C9C68F /* XCRemoteSwiftPackageReference "VariableBlurView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aheze/VariableBlurView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1116,6 +1128,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 79BCBC902AAFB08C00C83F95 /* XCRemoteSwiftPackageReference "SimpleHaptics" */;
 			productName = SimpleHaptics;
+		};
+		79E7EA972AB683C600C9C68F /* VariableBlurView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79E7EA962AB683C600C9C68F /* XCRemoteSwiftPackageReference "VariableBlurView" */;
+			productName = VariableBlurView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
