@@ -62,6 +62,7 @@ struct SalmonRotationCell: View {
             relativeTo: .headline)
           .hAlignment(.trailing)
       })
+      .tint(.accentColor)
   }
 }
 

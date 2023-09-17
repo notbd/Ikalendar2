@@ -108,6 +108,9 @@ struct BattleRotationStageCardSecondary: View {
           size: Scoped.FONT_SIZE,
           relativeTo: .body)
     }
+    .animation(
+      Constants.Config.Animation.appDefault,
+      value: ikaPreference.ifUseAltStageImages)
   }
 }
 

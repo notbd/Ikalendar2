@@ -68,6 +68,7 @@ extension Constants.Key {
       static let CONNECTION_ERROR = "key.title.connection_error"
       static let UNKNOWN_ERROR = "key.title.unknown_error"
       static let MAX_ATTEMPTS_EXCEEDED = "key.title.max_attempts_exceeded" // not used for now
+      static let LICENSE_FETCH_ERROR = "key.title.license_fetch_error"
     }
 
     enum Message {
@@ -76,6 +77,7 @@ extension Constants.Key {
       static let CONNECTION_ERROR = "key.message.connection_error"
       static let UNKNOWN_ERROR = "key.message.unknown_error"
       static let MAX_ATTEMPTS_EXCEEDED = "key.message.max_attempts_exceeded" // not used for now
+      static let LICENSE_FETCH_ERROR = "key.message.license_fetch_error"
     }
   }
 

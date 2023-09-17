@@ -13,6 +13,9 @@ import SwiftUI
 struct DetailsLicenseView: View {
   typealias Scoped = Constants.Style.Settings.License
 
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
+
   @Environment(\.openURL) private var openURL
 
   let repoName: String
@@ -71,8 +74,9 @@ struct DetailsLicenseView: View {
 
         Text(
           !ifError
-            ? licenseViewModel?.typeDescription ?? Constants.Key.Placeholder.UNKNOWN
-            : Constants.Key.Placeholder.ERROR)
+            ? licenseViewModel?.typeDescription.localizedStringKey
+              ?? Constants.Key.Placeholder.UNKNOWN.localizedStringKey
+            : Constants.Key.Error.Title.LICENSE_FETCH_ERROR.localizedStringKey)
           .font(Scoped.LICENSE_TYPE_FONT)
           .fontWeight(.bold)
           .scaledLimitedLine()
@@ -82,21 +86,26 @@ struct DetailsLicenseView: View {
   }
 
   private var licenseContentText: some View {
-    Group {
-      if !ifError {
-        Text(
-          licenseViewModel != nil
-            ? licenseViewModel!.content
-            : Constants.Key.Placeholder.LICENSE_TEMPLATE_MIT)
-          .multilineTextAlignment(.leading)
-          .font(Scoped.LICENSE_CONTENT_FONT)
-          .drawingGroup()
-          .hAlignment(.leading)
-      }
-      else {
-        EmptyView()
-      }
+    var contentText: String {
+      if ifError { return Constants.Key.Error.Message.LICENSE_FETCH_ERROR }
+      return
+        licenseViewModel != nil
+          ? licenseViewModel!.content
+          : Constants.Key.Placeholder.LICENSE_TEMPLATE_MIT
     }
+
+    var contentFont: Font {
+      ifError || !isHorizontalCompact
+        ? Scoped.LICENSE_CONTENT_FONT_REGULAR
+        : Scoped.LICENSE_CONTENT_FONT_COMPACT
+    }
+
+    return
+      Text(contentText.localizedStringKey)
+        .multilineTextAlignment(.leading)
+        .font(contentFont)
+        .drawingGroup()
+        .hAlignment(.leading)
   }
 
   private var externalLinkButton: some View {

@@ -167,7 +167,8 @@ extension Constants.Style {
       static let LICENSE_ICON_FONT_WEIGHT: Font.Weight = .medium
       static let LICENSE_CAPTION_FONT: Font = .caption
       static let LICENSE_TYPE_FONT: Font = .title
-      static let LICENSE_CONTENT_FONT: Font = .system(size: 7.5, design: .monospaced)
+      static let LICENSE_CONTENT_FONT_COMPACT: Font = .system(size: 7.5, design: .monospaced)
+      static let LICENSE_CONTENT_FONT_REGULAR: Font = .system(.caption, design: .monospaced)
     }
   }
 

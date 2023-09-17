@@ -17,7 +17,9 @@ struct RotationsCarouselView: View {
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
-  @State private var firstItemHeight: CGFloat = .zero
+  @State private var windowWidth: CGFloat = .zero
+
+  private var isWindowWide: Bool { windowWidth >= 1024 }
 
   var body: some View {
     ZStack {
@@ -29,6 +31,17 @@ struct RotationsCarouselView: View {
           alignment: .bottomTrailing)
 
       LoadingOverlay(loadStatus: ikaCatalog.loadStatus)
+    }
+    .background {
+      GeometryReader { geo in
+        Color.clear
+          .onAppear {
+            windowWidth = geo.size.width
+          }
+          .onChange(of: geo.size) { size in
+            windowWidth = size.width
+          }
+      }
     }
   }
 
@@ -48,47 +61,53 @@ struct RotationsCarouselView: View {
   }
 
   private var rotationCarouselColumns: some View {
-    ScrollView(.horizontal) {
-      HStack(
-        alignment: .top,
-        spacing: 0)
-      {
-//        ScrollView {
-//          Spacer()
-//            .frame(width: 0, height: 0)
-//        }
-
-        if ikaPreference.defaultGameMode == .battle {
-          ForEach(BattleMode.allCases) { battleMode in
-            CarouselColumn(
-              gameMode: .battle,
-              battleMode: battleMode)
-              .frame(width: Scoped.COLUMN_FIXED_WIDTH)
-          }
-
-          CarouselColumn(gameMode: .salmon)
-            .frame(width: Scoped.COLUMN_FIXED_WIDTH)
-        }
-
-        else {
-          CarouselColumn(gameMode: .salmon)
-            .frame(width: Scoped.COLUMN_FIXED_WIDTH)
-
-          ForEach(BattleMode.allCases) { battleMode in
-            CarouselColumn(
-              gameMode: .battle,
-              battleMode: battleMode)
-              .frame(width: Scoped.COLUMN_FIXED_WIDTH)
-          }
+    HStack(
+      alignment: .top,
+      spacing: 0)
+    {
+      // avoid the scroll of the first column causing the whole navigation stack to scroll
+      if isWindowWide {
+        ScrollView {
+          Spacer()
+            .frame(width: 0, height: 0)
         }
       }
-      .animation(
-        Constants.Config.Animation.appDefault,
-        value: ikaPreference.defaultGameMode)
+
+      if ikaPreference.defaultGameMode == .battle {
+        ForEach(BattleMode.allCases) { battleMode in
+          CarouselColumn(
+            gameMode: .battle,
+            battleMode: battleMode)
+            .if(!isWindowWide) { $0.frame(width: Scoped.COLUMN_FIXED_WIDTH) }
+        }
+
+        CarouselColumn(gameMode: .salmon)
+          .if(!isWindowWide) { $0.frame(width: Scoped.COLUMN_FIXED_WIDTH) }
+      }
+
+      else {
+        CarouselColumn(gameMode: .salmon)
+          .if(!isWindowWide) { $0.frame(width: Scoped.COLUMN_FIXED_WIDTH) }
+
+        ForEach(BattleMode.allCases) { battleMode in
+          CarouselColumn(
+            gameMode: .battle,
+            battleMode: battleMode)
+            .if(!isWindowWide) { $0.frame(width: Scoped.COLUMN_FIXED_WIDTH) }
+        }
+      }
     }
+    .animation(
+      Constants.Config.Animation.appDefault,
+      value: ikaPreference.defaultGameMode)
+    .if(!isWindowWide) { wrapInHorizontalScrollView(content: $0) }
   }
 
   // MARK: Private
+
+  private func wrapInHorizontalScrollView(content: some View) -> some View {
+    ScrollView(.horizontal) { content }
+  }
 
   private func setToolbarItems(content: some View) -> some View {
     content
