@@ -22,6 +22,7 @@ struct SettingsCreditsView: View {
       Section(header: Text("Open Source Libraries")) {
         rowSwiftyJSON
         rowSimpleHaptics
+        rowVariableBlurView
       }
     }
     .navigationTitle("Credits")
@@ -59,6 +60,16 @@ struct SettingsCreditsView: View {
       DetailsLicenseView(
         repoName: "SimpleHaptics",
         repoURLString: "https://github.com/notbd/SimpleHaptics"))
+  }
+
+  private var rowVariableBlurView: some View {
+    CreditsOpenSourceLibCell(
+      name: "VariableBlurView",
+      urlString: "https://github.com/aheze/VariableBlurView/",
+      destination:
+      DetailsLicenseView(
+        repoName: "VariableBlurView",
+        repoURLString: "https://github.com/aheze/VariableBlurView/"))
   }
 }
 
