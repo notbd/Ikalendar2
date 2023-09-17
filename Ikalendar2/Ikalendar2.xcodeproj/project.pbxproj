@@ -12,7 +12,6 @@
 		7903FE3428C438B400245586 /* FontIka.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3328C438B400245586 /* FontIka.swift */; };
 		7903FE3628C438FC00245586 /* RoundedFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3528C438FC00245586 /* RoundedFont.swift */; };
 		7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3728C4395600245586 /* ScaledLimitedLine.swift */; };
-		7903FE3A28C439A600245586 /* TappableAreaFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3928C439A600245586 /* TappableAreaFrame.swift */; };
 		7903FE3F28C43A0F00245586 /* Splatfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3C28C43A0F00245586 /* Splatfont.ttf */; };
 		7903FE4028C43A0F00245586 /* Inkling_v2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3D28C43A0F00245586 /* Inkling_v2.otf */; };
 		7903FE4128C43A0F00245586 /* Splatfont2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3E28C43A0F00245586 /* Splatfont2.ttf */; };
@@ -31,8 +30,6 @@
 		7903FE6128C46A1700245586 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6028C46A1700245586 /* RootView.swift */; };
 		7903FE6328C46A3400245586 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6228C46A3400245586 /* MainView.swift */; };
 		7903FE6528C46A4D00245586 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6428C46A4D00245586 /* ErrorView.swift */; };
-		7903FE6A28C46C6B00245586 /* BattleRotationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6928C46C6B00245586 /* BattleRotationListView.swift */; };
-		7903FE6C28C46CAF00245586 /* SalmonRotationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6B28C46CAF00245586 /* SalmonRotationListView.swift */; };
 		7903FE6E28C46CD200245586 /* SettingsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6D28C46CD200245586 /* SettingsMainView.swift */; };
 		7903FE7028C46CEF00245586 /* SettingsAltAppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6F28C46CEF00245586 /* SettingsAltAppIconView.swift */; };
 		7903FE7228C46D1800245586 /* SettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE7128C46D1800245586 /* SettingsAboutView.swift */; };
@@ -59,6 +56,9 @@
 		79189B4828C95E75006E78F9 /* OffsettableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */; };
 		792E1FBD28DE89C100C3789D /* SettingsAdvancedOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */; };
 		79408C6A2AA5BAA800141E58 /* IkaAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79408C692AA5BAA800141E58 /* IkaAppIcon.swift */; };
+		7943DFBB2AB52D090047250E /* CarouselColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFBA2AB52D090047250E /* CarouselColumn.swift */; };
+		7943DFC12AB536090047250E /* BattleRotationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFC02AB536090047250E /* BattleRotationList.swift */; };
+		7943DFC32AB5398D0047250E /* SalmonRotationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFC22AB5398D0047250E /* SalmonRotationList.swift */; };
 		795A60A92A9759C9007B3861 /* AssetImageCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A60A82A9759C9007B3861 /* AssetImageCounter.swift */; };
 		795A60AB2A976745007B3861 /* SeededRandomGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
@@ -112,7 +112,6 @@
 		7903FE3328C438B400245586 /* FontIka.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontIka.swift; sourceTree = "<group>"; };
 		7903FE3528C438FC00245586 /* RoundedFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedFont.swift; sourceTree = "<group>"; };
 		7903FE3728C4395600245586 /* ScaledLimitedLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledLimitedLine.swift; sourceTree = "<group>"; };
-		7903FE3928C439A600245586 /* TappableAreaFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableAreaFrame.swift; sourceTree = "<group>"; };
 		7903FE3C28C43A0F00245586 /* Splatfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Splatfont.ttf; sourceTree = "<group>"; };
 		7903FE3D28C43A0F00245586 /* Inkling_v2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inkling_v2.otf; sourceTree = "<group>"; };
 		7903FE3E28C43A0F00245586 /* Splatfont2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Splatfont2.ttf; sourceTree = "<group>"; };
@@ -131,8 +130,6 @@
 		7903FE6028C46A1700245586 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		7903FE6228C46A3400245586 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		7903FE6428C46A4D00245586 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
-		7903FE6928C46C6B00245586 /* BattleRotationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleRotationListView.swift; sourceTree = "<group>"; };
-		7903FE6B28C46CAF00245586 /* SalmonRotationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonRotationListView.swift; sourceTree = "<group>"; };
 		7903FE6D28C46CD200245586 /* SettingsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainView.swift; sourceTree = "<group>"; };
 		7903FE6F28C46CEF00245586 /* SettingsAltAppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAltAppIconView.swift; sourceTree = "<group>"; };
 		7903FE7128C46D1800245586 /* SettingsAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAboutView.swift; sourceTree = "<group>"; };
@@ -160,6 +157,9 @@
 		79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsettableScrollView.swift; sourceTree = "<group>"; };
 		792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAdvancedOptionsView.swift; sourceTree = "<group>"; };
 		79408C692AA5BAA800141E58 /* IkaAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaAppIcon.swift; sourceTree = "<group>"; };
+		7943DFBA2AB52D090047250E /* CarouselColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselColumn.swift; sourceTree = "<group>"; };
+		7943DFC02AB536090047250E /* BattleRotationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleRotationList.swift; sourceTree = "<group>"; };
+		7943DFC22AB5398D0047250E /* SalmonRotationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonRotationList.swift; sourceTree = "<group>"; };
 		795A60A82A9759C9007B3861 /* AssetImageCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetImageCounter.swift; sourceTree = "<group>"; };
 		795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeededRandomGenerator.swift; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
@@ -242,7 +242,6 @@
 				7903FE3328C438B400245586 /* FontIka.swift */,
 				7903FE3528C438FC00245586 /* RoundedFont.swift */,
 				7903FE3728C4395600245586 /* ScaledLimitedLine.swift */,
-				7903FE3928C439A600245586 /* TappableAreaFrame.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -272,20 +271,12 @@
 		7903FE5C28C4622400245586 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				7943DFB92AB52B790047250E /* CarouselColumn */,
 				7903FE7728C46D8D00245586 /* Rotations */,
 				7903FE7828C46D9B00245586 /* Overlays */,
 				7903FE7928C46DAE00245586 /* Buttons */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		7903FE6628C46C1100245586 /* RotationListView */ = {
-			isa = PBXGroup;
-			children = (
-				7903FE6928C46C6B00245586 /* BattleRotationListView.swift */,
-				7903FE6B28C46CAF00245586 /* SalmonRotationListView.swift */,
-			);
-			path = RotationListView;
 			sourceTree = "<group>";
 		};
 		7903FE6728C46C2900245586 /* SettingsView */ = {
@@ -311,6 +302,7 @@
 		7903FE7728C46D8D00245586 /* Rotations */ = {
 			isa = PBXGroup;
 			children = (
+				79FA25A92AB5614100374F45 /* Lists */,
 				7903FE7D28C46E9100245586 /* Rows */,
 				7903FE7C28C46E8B00245586 /* Cells */,
 				7903FE7B28C46E8300245586 /* Cards */,
@@ -408,6 +400,14 @@
 				79F90AF92AB1112700B454B9 /* IkaLocale.swift */,
 			);
 			path = Others;
+			sourceTree = "<group>";
+		};
+		7943DFB92AB52B790047250E /* CarouselColumn */ = {
+			isa = PBXGroup;
+			children = (
+				7943DFBA2AB52D090047250E /* CarouselColumn.swift */,
+			);
+			path = CarouselColumn;
 			sourceTree = "<group>";
 		};
 		79802FE828C54E9D0048C478 /* Tests */ = {
@@ -572,9 +572,8 @@
 			children = (
 				7903FE6028C46A1700245586 /* RootView.swift */,
 				7903FE6228C46A3400245586 /* MainView.swift */,
-				79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */,
 				79B92BB728B03B1F00544939 /* RotationsSingularView.swift */,
-				7903FE6628C46C1100245586 /* RotationListView */,
+				79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */,
 				7903FE6428C46A4D00245586 /* ErrorView.swift */,
 				7903FE6728C46C2900245586 /* SettingsView */,
 				79BCBC942AAFB2B700C83F95 /* DetailsView */,
@@ -657,6 +656,15 @@
 				79F90AF72AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift */,
 			);
 			path = Publishers;
+			sourceTree = "<group>";
+		};
+		79FA25A92AB5614100374F45 /* Lists */ = {
+			isa = PBXGroup;
+			children = (
+				7943DFC02AB536090047250E /* BattleRotationList.swift */,
+				7943DFC22AB5398D0047250E /* SalmonRotationList.swift */,
+			);
+			path = Lists;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -789,6 +797,7 @@
 				79F90AFA2AB1112700B454B9 /* IkaLocale.swift in Sources */,
 				7903FE6528C46A4D00245586 /* ErrorView.swift in Sources */,
 				7903FE9E28C4702100245586 /* ToolbarRefreshButton.swift in Sources */,
+				7943DFBB2AB52D090047250E /* CarouselColumn.swift in Sources */,
 				7903FE3628C438FC00245586 /* RoundedFont.swift in Sources */,
 				799235AE2AB3926F0071AA72 /* BattleStagesImageAlignment.swift in Sources */,
 				79B92BB828B03B1F00544939 /* RotationsSingularView.swift in Sources */,
@@ -799,6 +808,7 @@
 				7903FE5728C460C600245586 /* TimeLength.swift in Sources */,
 				7903FE6328C46A3400245586 /* MainView.swift in Sources */,
 				79AA714B28C411EB00A91055 /* BattleRotationDict.swift in Sources */,
+				7943DFC12AB536090047250E /* BattleRotationList.swift in Sources */,
 				7903FE6128C46A1700245586 /* RootView.swift in Sources */,
 				79AA714428C408B500A91055 /* BattleRule.swift in Sources */,
 				795A60AB2A976745007B3861 /* SeededRandomGenerator.swift in Sources */,
@@ -827,13 +837,13 @@
 				790E2E142AA9946C00789465 /* DynamicTextStyleObserver.swift in Sources */,
 				7903FE3028C437F900245586 /* QuickBorder.swift in Sources */,
 				7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */,
-				7903FE3A28C439A600245586 /* TappableAreaFrame.swift in Sources */,
 				79C1485C28C42CDE00587C6E /* StyleConstants.swift in Sources */,
 				7903FE4928C45DFC00245586 /* Date+Ext.swift in Sources */,
 				7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */,
 				797EA6902AAD16620095A23B /* IkaOpenSourceLicense.swift in Sources */,
 				7903FE7028C46CEF00245586 /* SettingsAltAppIconView.swift in Sources */,
 				79AA713428C4056700A91055 /* IkaTimePublisher.swift in Sources */,
+				7943DFC32AB5398D0047250E /* SalmonRotationList.swift in Sources */,
 				7903FE4B28C45E7D00245586 /* String+Ext.swift in Sources */,
 				7903FE8B28C46F7A00245586 /* SalmonRotationWeaponsCard.swift in Sources */,
 				79A7258F2A5E9367007E9C92 /* ConfigConstants.swift in Sources */,
@@ -843,8 +853,6 @@
 				79AA715928C4160D00A91055 /* MysteryWeapon.swift in Sources */,
 				79F90AF82AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift in Sources */,
 				7903FE4728C45D8000245586 /* DateFormatter+Ext.swift in Sources */,
-				7903FE6A28C46C6B00245586 /* BattleRotationListView.swift in Sources */,
-				7903FE6C28C46CAF00245586 /* SalmonRotationListView.swift in Sources */,
 				7903FE7428C46D4100245586 /* SettingsCreditsView.swift in Sources */,
 				7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */,
 				795A60A92A9759C9007B3861 /* AssetImageCounter.swift in Sources */,
@@ -996,7 +1004,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4117;
+				CURRENT_PROJECT_VERSION = 4382;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1030,7 +1038,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4117;
+				CURRENT_PROJECT_VERSION = 4382;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

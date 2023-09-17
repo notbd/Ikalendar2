@@ -31,7 +31,21 @@ final class IkaCatalog: ObservableObject {
   }
 
   @Published private(set) var loadStatus: LoadStatus = .loading
-  @Published private(set) var loadStatusWithLoadingIgnored: LoadStatus = .loading
+  {
+    willSet {
+      switch newValue {
+      case .loading:
+        SimpleHaptics.generateTask(.light)
+      case .loaded:
+        SimpleHaptics.generateTask(.success)
+      case .error:
+        SimpleHaptics.generateTask(.error)
+      }
+    }
+  }
+
+  /// Will never be in `.loading` state after catalog is first loaded.
+  @Published private(set) var loadResultStatus: LoadStatus = .loading
 
   // MARK: Auto-Load related
 
@@ -47,6 +61,18 @@ final class IkaCatalog: ObservableObject {
   }
 
   @Published private(set) var autoLoadStatus = AutoLoadStatus.idle
+  {
+    willSet {
+      switch newValue {
+      case .autoLoading:
+        SimpleHaptics.generateTask(.selection)
+      case .autoLoaded:
+        SimpleHaptics.generateTask(.selection)
+      case .idle:
+        break
+      }
+    }
+  }
 
   private var cancellables = Set<AnyCancellable>()
 
@@ -66,7 +92,7 @@ final class IkaCatalog: ObservableObject {
   // MARK: Lifecycle
 
   private init() {
-    setUpFilteredLoadStatusSubscription()
+    setUpLoadResultStatusSubscription()
     Task {
       await loadCatalog()
       setUpAutoLoadCheckSubscription()
@@ -87,12 +113,12 @@ final class IkaCatalog: ObservableObject {
 
   // MARK: Private
 
-  private func setUpFilteredLoadStatusSubscription() {
+  private func setUpLoadResultStatusSubscription() {
     $loadStatus
-      .removeDuplicates()
       .filter { $0 != .loading }
+      .removeDuplicates()
       .sink { [weak self] newStatus in
-        self?.loadStatusWithLoadingIgnored = newStatus
+        self?.loadResultStatus = newStatus
       }
       .store(in: &cancellables)
   }
@@ -138,6 +164,7 @@ final class IkaCatalog: ObservableObject {
     let loadedBattleRotationDict = try await taskBattleRotationDict
     var loadedSalmonRotations = try await taskSalmonRotations
     let loadedSalmonRewardApparelInfo = try await taskSalmonRewardApparelInfo
+
     // add reward apparel to corresponding salmon rotation
     for (index, rotation) in loadedSalmonRotations.enumerated()
       where rotation.startTime == loadedSalmonRewardApparelInfo.availableTime
@@ -154,15 +181,12 @@ final class IkaCatalog: ObservableObject {
   {
     switch newVal {
     case .loading:
-      await SimpleHaptics.generate(.selection)
       loadStatus = .loading
     case .loaded:
       try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusLoadedDelay * 1_000_000_000))
-      await SimpleHaptics.generate(.success)
       loadStatus = .loaded
     case .error(let ikaError):
       try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusErrorDelay * 1_000_000_000))
-      await SimpleHaptics.generate(.error)
       loadStatus = .error(ikaError)
     }
   }
@@ -284,10 +308,8 @@ final class IkaCatalog: ObservableObject {
   {
     switch newVal {
     case .autoLoading:
-      await SimpleHaptics.generate(.selection)
       autoLoadStatus = .autoLoading
     case .autoLoaded(let result):
-      await SimpleHaptics.generate(.selection)
       autoLoadStatus = .autoLoaded(result)
       // automatically fall back to idle after a while
       Task {

@@ -13,22 +13,36 @@ import SwiftUI
 struct ToolbarRefreshButton: View {
   typealias Scoped = Constants.Style.ToolbarButton
 
-  let isDisabled: Bool
-  let action: () -> Void
+  @EnvironmentObject private var ikaCatalog: IkaCatalog
 
   var body: some View {
-    Button(action: action) {
-      Image(systemName: "arrow.triangle.2.circlepath")
-        .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
-        .foregroundColor(.primary)
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+    Button {
+      Task {
+        await ikaCatalog.refresh()
+      }
+    } label: {
+      icon
         .frame(
           width: Scoped.FRAME_SIDE_LEN,
           height: Scoped.FRAME_SIDE_LEN)
         .background(.thinMaterial)
         .cornerRadius(Scoped.FRAME_CORNER_RADIUS)
     }
-    .disabled(isDisabled)
+    .disabled(ikaCatalog.loadStatus == .loading)
+  }
+
+  private var icon: some View {
+    Group {
+      switch ikaCatalog.loadStatus {
+      case .loading:
+        ProgressView()
+      default:
+        Image(systemName: "arrow.triangle.2.circlepath")
+          .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
+          .foregroundColor(.primary)
+          .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+      }
+    }
   }
 }
 
@@ -36,8 +50,6 @@ struct ToolbarRefreshButton: View {
 
 struct ToolbarRefreshButton_Previews: PreviewProvider {
   static var previews: some View {
-    ToolbarRefreshButton(
-      isDisabled: false,
-      action: { })
+    ToolbarRefreshButton()
   }
 }

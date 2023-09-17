@@ -26,7 +26,7 @@ struct AutoLoadingOverlay: View {
       .opacity(autoLoadStatus == .idle ? 0 : 1)
       .padding()
       .animation(
-        .easeOut,
+        Constants.Config.Animation.appDefault,
         value: autoLoadStatus)
   }
 

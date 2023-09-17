@@ -17,9 +17,11 @@ struct ModeIconStamp: View {
   @EnvironmentObject private var ikaDeviceMotionPublisher: IkaDeviceMotionPublisher
   @EnvironmentObject private var ikaInterfaceOrientationPublisher: IkaInterfaceOrientationPublisher
 
+  let iconSize: CGFloat
   let gameModeSelection: GameMode
   let battleModeSelection: BattleMode
   let ifOffset: Bool
+  let ifAnimated: Bool
 
   private var dx: CGFloat { ikaDeviceMotionPublisher.dx }
   private var dy: CGFloat { ikaDeviceMotionPublisher.dy }
@@ -46,42 +48,24 @@ struct ModeIconStamp: View {
   var body: some View {
     icon
       .rotationEffect(.degrees(Scoped.ROTATION_2D_DEGREES))
-      .rotation3DEffect(
-        .degrees(rotationConstant * intensity),
-        axis: (
-          x: axisRotationWeight.x,
-          y: axisRotationWeight.y,
-          z: 0))
+      .if(ifAnimated) {
+        $0
+          .rotation3DEffect(
+            .degrees(rotationConstant * intensity),
+            axis: (
+              x: axisRotationWeight.x,
+              y: axisRotationWeight.y,
+              z: 0))
+          .animation(
+            .linear,
+            value: dx * dy)
+      }
       .if(ifOffset) {
         $0
           .offset(
             x: Scoped.ICON_OFFSET_X,
             y: Scoped.ICON_OFFSET_Y)
       }
-      .animation(
-        .linear,
-        value: dx * dy)
-  }
-
-  private var gradientMask: some View {
-    // mask color does not matter; only opacity matters
-    let maskColor = Color(UIColor.systemBackground)
-    return LinearGradient(
-      gradient: Gradient(colors: [
-        maskColor.opacity(1),
-        maskColor.opacity(0.95),
-        maskColor.opacity(0.9),
-        maskColor.opacity(0.85),
-        maskColor.opacity(0.8),
-        maskColor.opacity(0.6),
-        maskColor.opacity(0.5),
-        maskColor.opacity(0.2),
-        maskColor.opacity(0.08),
-        maskColor.opacity(0.02),
-        maskColor.opacity(0),
-      ]),
-      startPoint: .top,
-      endPoint: .bottom)
   }
 
   private var icon: some View {
@@ -100,20 +84,45 @@ struct ModeIconStamp: View {
         .scaledToFit()
         .mask(gradientMask)
         .frame(
-          width: Scoped.ICON_SIZE,
-          height: Scoped.ICON_SIZE)
+          width: iconSize,
+          height: iconSize)
+  }
+
+  private var gradientMask: some View {
+    // mask color does not matter as long as it's not .clear; only opacity matters
+    let maskColor = Color.primary
+    return LinearGradient(
+      gradient: Gradient(colors: [
+        maskColor.opacity(1),
+        maskColor.opacity(0.95),
+        maskColor.opacity(0.9),
+        maskColor.opacity(0.85),
+        maskColor.opacity(0.8),
+        maskColor.opacity(0.6),
+        maskColor.opacity(0.5),
+        maskColor.opacity(0.2),
+        maskColor.opacity(0.08),
+        maskColor.opacity(0.02),
+        maskColor.opacity(0),
+      ]),
+      startPoint: .top,
+      endPoint: .bottom)
   }
 
   // MARK: Lifecycle
 
   init(
+    iconSize: CGFloat = Scoped.ICON_SIZE,
     gameModeSelection: GameMode,
     battleModeSelection: BattleMode,
-    ifOffset: Bool = false)
+    ifOffset: Bool = false,
+    ifAnimated: Bool = true)
   {
+    self.iconSize = iconSize
     self.gameModeSelection = gameModeSelection
     self.battleModeSelection = battleModeSelection
     self.ifOffset = ifOffset
+    self.ifAnimated = ifAnimated
   }
 }
 

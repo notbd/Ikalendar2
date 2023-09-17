@@ -21,8 +21,17 @@ extension Constants.Style {
     }
   }
 
-  enum Frame {
-    static let MIN_TAPPABLE_AREA_SIDE: CGFloat = 44
+  enum Carousel {
+    static let COLUMN_FIXED_WIDTH: CGFloat = 390
+
+    enum Column {
+      static let LIST_OFFSET_V_FACTOR_PORTRAIT: CGFloat = 0.08
+      static let LIST_OFFSET_V_FACTOR_LANDSCAPE: CGFloat = 0.1
+      static let MODE_ICON_SIZE_FACTOR: CGFloat = 1.3
+
+      static let MASK_GRADIENT_DENSITY_PORTRAIT: Int = 32
+      static let MASK_GRADIENT_DENSITY_LANDSCAPE: Int = 16
+    }
   }
 
   enum Overlay {
@@ -64,9 +73,9 @@ extension Constants.Style {
   }
 
   enum Error {
-    static let ERROR_TEXT_PADDING_TOP_HEIGHT_RATIO: CGFloat = 0.2
-    static let ERROR_IMG_WIDTH_RATIO: CGFloat = 0.15
-    static let ERROR_IMG_PADDING_TOP_HEIGHT_RATIO: CGFloat = 0.05
+    static let ERROR_SECTION_PADDING_TOP_HEIGHT_RATIO: CGFloat = 0.22
+    static let ERROR_SECTION_SPACING_HEIGHT_RATIO: CGFloat = 0.14
+    static let ERROR_IMG_HEIGHT_RATIO: CGFloat = 0.12
 
     static let IF_USE_CUSTOM_FONT = true
     static let TITLE_CUSTOM_FONT_SIZE: CGFloat = 36

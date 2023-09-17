@@ -14,6 +14,7 @@ struct RootView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
+  @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
@@ -37,6 +38,9 @@ struct RootView: View {
               .environmentObject(ikaStatus)
               .environmentObject(ikaPreference)
               .accentColor(.orange)
+              .overlay(
+                AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
+                alignment: .bottomTrailing)
               .interactiveDismissDisabled()
           }
       } else: {
@@ -46,6 +50,9 @@ struct RootView: View {
               .environmentObject(ikaStatus)
               .environmentObject(ikaPreference)
               .accentColor(.orange)
+              .overlay(
+                AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
+                alignment: .bottomTrailing)
               .interactiveDismissDisabled()
           }
       }

@@ -19,14 +19,13 @@ struct ToolbarGameModeSwitchButton: View {
   var body: some View {
     Menu {
       Picker(
-        selection: $ikaStatus.gameModeSelection
-          .onSet { _ in SimpleHaptics.generateTask(.warning) },
+        selection: $ikaStatus.currentGameMode,
         label: Text("Game Mode"))
       {
         ForEach(GameMode.allCases) { gameMode in
           Label(
             gameMode.name.localizedStringKey,
-            systemImage: ikaStatus.gameModeSelection == gameMode
+            systemImage: ikaStatus.currentGameMode == gameMode
               ? gameMode.sfSymbolNameSelected
               : gameMode.sfSymbolNameIdle)
             .tag(gameMode)
@@ -40,10 +39,6 @@ struct ToolbarGameModeSwitchButton: View {
         .font(Scoped.SFSYMBOL_FONT_SIZE_SMALL)
         .foregroundColor(Color.primary)
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-        .tappableAreaFrame()
-    }
-    .onTapGesture {
-      SimpleHaptics.generateTask(.selection)
     }
   }
 }

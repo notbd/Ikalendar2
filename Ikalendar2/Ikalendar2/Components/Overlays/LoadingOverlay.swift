@@ -20,15 +20,13 @@ struct LoadingOverlay: View {
   }
 
   var body: some View {
-    ZStack {
-      Spacer()
-        .background(.ultraThinMaterial)
-        .edgesIgnoringSafeArea(.all)
-        .opacity(isLoading ? 1 : 0)
-    }
-    .animation(
-      .easeOut,
-      value: loadStatus)
+    Spacer()
+      .background(.ultraThinMaterial)
+      .edgesIgnoringSafeArea(.all)
+      .opacity(isLoading ? 1 : 0)
+      .animation(
+        Constants.Config.Animation.appDefault,
+        value: loadStatus)
   }
 }
 

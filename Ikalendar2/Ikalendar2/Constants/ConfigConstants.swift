@@ -6,9 +6,15 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// Constant data holding `config`s for the app.
 extension Constants.Config {
+  enum Animation {
+    static let appDefault: SwiftUI.Animation = .easeOut
+    static let spring: SwiftUI.Animation = .spring(response: 0.6, dampingFraction: 0.8)
+  }
+
   enum Catalog {
     /// Time Intervals are measured in second(s).
     static let loadStatusLoadedDelay: TimeInterval = 0.2

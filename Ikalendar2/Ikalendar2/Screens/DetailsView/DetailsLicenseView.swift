@@ -40,13 +40,16 @@ struct DetailsLicenseView: View {
           UInt64(Constants.Config.License.licenseLoadedDelay * 1_000_000_000))
         do {
           licenseViewModel = try await IkaNetworkManager.shared.fetchLicense(from: repoURLString)
+          SimpleHaptics.generateTask(.light)
         }
         catch {
           ifError = true
         }
       }
     }
-    .animation(.easeOut, value: licenseViewModel != nil)
+    .animation(
+      Constants.Config.Animation.appDefault,
+      value: licenseViewModel != nil)
   }
 
   private var licenseTypeBanner: some View {

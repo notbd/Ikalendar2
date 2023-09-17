@@ -1,5 +1,5 @@
 //
-//  BattleRotationListView.swift
+//  BattleRotationList.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -7,24 +7,30 @@
 
 import SwiftUI
 
-// MARK: - BattleRotationListView
+// MARK: - BattleRotationList
 
-/// The view that displays a list of battle rotations.
-struct BattleRotationListView: View {
+struct BattleRotationList: View {
   @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
+  let specifiedBattleMode: BattleMode?
+
   private var battleRotations: [BattleRotation] {
+    let battleMode: BattleMode
+
+    if let specifiedBattleMode { battleMode = specifiedBattleMode }
+    else { battleMode = ikaStatus.currentBattleMode }
+
     // filter: display current and future rotations only
-    ikaCatalog.battleRotationDict[ikaStatus.battleModeSelection]!.filter { !$0.isExpired() }
+    return
+      ikaCatalog.battleRotationDict[battleMode]!.filter { !$0.isExpired() }
   }
 
   var body: some View {
     GeometryReader { geo in
       List {
-        ForEach(battleRotations)
-        { rotation in
+        ForEach(battleRotations) { rotation in
           BattleRotationRow(
             rotation: rotation,
             rowWidth: geo.size.width)
@@ -34,20 +40,17 @@ struct BattleRotationListView: View {
       .listStyle(.insetGrouped)
       // map animation value to startTime to avoid animation during battle mode switch
       .animation(
-        .spring(
-          response: 0.6,
-          dampingFraction: 0.8),
+        Constants.Config.Animation.spring,
         value: battleRotations.map { $0.startTime })
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }
-}
 
-// MARK: - BattleRotationListView_Previews
+  // MARK: Lifecycle
 
-struct BattleRotationListView_Previews: PreviewProvider {
-  static var previews: some View {
-    BattleRotationListView()
-      .environmentObject(IkaCatalog.shared)
+  init(
+    specifiedBattleMode: BattleMode? = nil)
+  {
+    self.specifiedBattleMode = specifiedBattleMode
   }
 }

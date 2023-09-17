@@ -12,9 +12,6 @@ import SwiftUI
 
 /// The view that displays the content in a NavigationView.
 struct RotationsSingularView: View {
-  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
-
   @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
@@ -22,25 +19,27 @@ struct RotationsSingularView: View {
   var body: some View {
     ZStack {
       content
-        .transform {
-          setCompactHoriClassToolbar(content: $0)
-        }
-        .navigationTitle(title)
-        .refreshable {
-          await ikaCatalog.refresh()
-        }
+        .apply(setToolbarItems)
+        .navigationTitle(title.localizedStringKey)
         .overlay(
           ModeIconStamp(
-            gameModeSelection: ikaStatus.gameModeSelection,
-            battleModeSelection: ikaStatus.battleModeSelection,
+            gameModeSelection: ikaStatus.currentGameMode,
+            battleModeSelection: ikaStatus.currentBattleMode,
             ifOffset: true)
             .animation(
-              .easeOut,
-              value: "\(ikaStatus.gameModeSelection)-\(ikaStatus.battleModeSelection)"),
+              Constants.Config.Animation.appDefault,
+              value: "\(ikaStatus.currentGameMode)-\(ikaStatus.currentBattleMode)"),
+
           alignment: .topTrailing)
         .overlay(
           AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
           alignment: .bottomTrailing)
+        .refreshable {
+          // Important: As of iOS 16.4 SDK, refresh operation must be wrapped inside a Task.
+          // Failing to do so results in SwiftUI altering the view hierarchy upon pull-to-refresh, leading
+          // to unintentional destruction of views and the subsequent cancellation of the network task.
+          await Task { await ikaCatalog.refresh() }.value
+        }
 
       LoadingOverlay(loadStatus: ikaCatalog.loadStatus)
     }
@@ -48,42 +47,48 @@ struct RotationsSingularView: View {
 
   private var content: some View {
     Group {
-      switch ikaCatalog.loadStatusWithLoadingIgnored {
+      switch ikaCatalog.loadResultStatus {
       case .error(let ikaError):
         ErrorView(error: ikaError)
       default:
-        switch ikaStatus.gameModeSelection {
-        case .battle:
-          BattleRotationListView()
-        case .salmon:
-          SalmonRotationListView()
-        }
+        rotationList
       }
     }
   }
 
-  private var title: LocalizedStringKey {
-    switch ikaStatus.gameModeSelection {
+  private var rotationList: some View {
+    Group {
+      switch ikaStatus.currentGameMode {
+      case .battle:
+        BattleRotationList()
+      case .salmon:
+        SalmonRotationList()
+      }
+    }
+  }
+
+  private var title: String {
+    switch ikaStatus.currentGameMode {
     case .battle:
-      return ikaStatus.battleModeSelection.name.localizedStringKey
+      return ikaStatus.currentBattleMode.name
     case .salmon:
-      return ikaStatus.gameModeSelection.name.localizedStringKey
+      return ikaStatus.currentGameMode.name
     }
   }
 
   // MARK: Private
 
-  private func setCompactHoriClassToolbar(content: some View) -> some View {
+  private func setToolbarItems(content: some View) -> some View {
     content
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
-          ToolbarSettingsButton(action: didTapSettingsButton)
+          ToolbarSettingsButton()
         }
 
         ToolbarItemGroup(placement: .bottomBar) {
           if !ikaPreference.ifSwapBottomToolbarPickers {
             // keep order
-            if ikaStatus.gameModeSelection == .battle {
+            if ikaStatus.currentGameMode == .battle {
               ToolbarBattleModePicker()
             }
             Spacer()
@@ -93,17 +98,12 @@ struct RotationsSingularView: View {
             // swap order
             ToolbarGameModePicker()
             Spacer()
-            if ikaStatus.gameModeSelection == .battle {
+            if ikaStatus.currentGameMode == .battle {
               ToolbarBattleModePicker()
             }
           }
         }
       }
-  }
-
-  private func didTapSettingsButton() {
-    SimpleHaptics.generateTask(.medium)
-    ikaStatus.isSettingsPresented.toggle()
   }
 }
 
@@ -115,8 +115,7 @@ struct ToolbarBattleModePicker: View {
 
   var body: some View {
     Picker(
-      selection: $ikaStatus.battleModeSelection
-        .onSet { _ in SimpleHaptics.generateTask(.soft) },
+      selection: $ikaStatus.currentBattleMode,
       label: Text("Battle Mode"))
     {
       ForEach(BattleMode.allCases) { battleMode in
@@ -136,14 +135,13 @@ struct ToolbarGameModePicker: View {
 
   var body: some View {
     Picker(
-      selection: $ikaStatus.gameModeSelection
-        .onSet { _ in SimpleHaptics.generateTask(.soft) },
+      selection: $ikaStatus.currentGameMode,
       label: Text("Game Mode"))
     {
       ForEach(GameMode.allCases) { gameMode in
         Label(
           gameMode.name.localizedStringKey,
-          systemImage: ikaStatus.gameModeSelection == gameMode
+          systemImage: ikaStatus.currentGameMode == gameMode
             ? gameMode.sfSymbolNameSelected
             : gameMode.sfSymbolNameIdle)
           .tag(gameMode)

@@ -5,95 +5,101 @@
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
+import SimpleHaptics
 import SwiftUI
 
 // MARK: - RotationsCarouselView
 
 struct RotationsCarouselView: View {
+  typealias Scoped = Constants.Style.Carousel
+
+  @EnvironmentObject private var ikaCatalog: IkaCatalog
+  @EnvironmentObject private var ikaStatus: IkaStatus
+  @EnvironmentObject private var ikaPreference: IkaPreference
+
+  @State private var firstItemHeight: CGFloat = .zero
 
   var body: some View {
+    ZStack {
+      content
+        .apply(setToolbarItems)
+        .navigationTitle(Constants.Key.BundleInfo.APP_DISPLAY_NAME)
+        .overlay(
+          AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
+          alignment: .bottomTrailing)
+
+      LoadingOverlay(loadStatus: ikaCatalog.loadStatus)
+    }
+  }
+
+  private var content: some View {
+    Group {
+      switch ikaCatalog.loadResultStatus {
+      case .loading:
+        ProgressView()
+          .hAlignment(.center)
+          .vAlignment(.center)
+      case .error(let ikaError):
+        ErrorView(error: ikaError)
+      case .loaded:
+        rotationCarouselColumns
+      }
+    }
+  }
+
+  private var rotationCarouselColumns: some View {
     ScrollView(.horizontal) {
-      HStack {
-        ForEach(BattleMode.allCases) { battleMode in
-          CarouselBattleColumn(battleMode: battleMode)
-            .frame(width: 375)
-          Spacer()
+      HStack(
+        alignment: .top,
+        spacing: 0)
+      {
+//        ScrollView {
+//          Spacer()
+//            .frame(width: 0, height: 0)
+//        }
+
+        if ikaPreference.defaultGameMode == .battle {
+          ForEach(BattleMode.allCases) { battleMode in
+            CarouselColumn(
+              gameMode: .battle,
+              battleMode: battleMode)
+              .frame(width: Scoped.COLUMN_FIXED_WIDTH)
+          }
+
+          CarouselColumn(gameMode: .salmon)
+            .frame(width: Scoped.COLUMN_FIXED_WIDTH)
         }
 
-        CarouselSalmonColumn()
-          .frame(width: 375)
-      }
-    }
-    .navigationTitle(Constants.Key.BundleInfo.APP_DISPLAY_NAME)
-  }
-}
+        else {
+          CarouselColumn(gameMode: .salmon)
+            .frame(width: Scoped.COLUMN_FIXED_WIDTH)
 
-// MARK: - CarouselBattleColumn
-
-struct CarouselBattleColumn: View {
-  @EnvironmentObject private var ikaCatalog: IkaCatalog
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
-
-  let battleMode: BattleMode
-
-  private var battleRotations: [BattleRotation] {
-    ikaCatalog.battleRotationDict[battleMode]!.filter { !$0.isExpired() }
-  }
-
-  var body: some View {
-    GeometryReader { geo in
-      List {
-        ForEach(battleRotations)
-        { rotation in
-          BattleRotationRow(
-            rotation: rotation,
-            rowWidth: geo.size.width)
-            .listRowSeparator(.hidden)
+          ForEach(BattleMode.allCases) { battleMode in
+            CarouselColumn(
+              gameMode: .battle,
+              battleMode: battleMode)
+              .frame(width: Scoped.COLUMN_FIXED_WIDTH)
+          }
         }
       }
-      .listStyle(.insetGrouped)
       .animation(
-        .spring(
-          response: 0.6,
-          dampingFraction: 0.8),
-        value: battleRotations.map { $0.startTime })
-      .disabled(ikaCatalog.loadStatus != .loaded)
+        Constants.Config.Animation.appDefault,
+        value: ikaPreference.defaultGameMode)
     }
   }
-}
 
-// MARK: - CarouselSalmonColumn
+  // MARK: Private
 
-struct CarouselSalmonColumn: View {
-  @EnvironmentObject private var ikaCatalog: IkaCatalog
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
-
-  private var salmonRotations: [SalmonRotation] {
-    ikaCatalog.salmonRotations.filter { !$0.isExpired() }
-  }
-
-  var body: some View {
-    GeometryReader { geo in
-      List {
-        ForEach(
-          Array(zip(salmonRotations.indices, salmonRotations)),
-          id: \.1)
-        { index, rotation in
-          SalmonRotationRow(
-            rotation: rotation,
-            index: index,
-            rowWidth: geo.size.width)
-            .listRowSeparator(.hidden)
+  private func setToolbarItems(content: some View) -> some View {
+    content
+      .toolbar {
+        ToolbarItem(placement: .navigationBarTrailing) {
+          HStack {
+            ToolbarRefreshButton()
+            ToolbarSettingsButton()
+          }
         }
       }
-      .listStyle(.insetGrouped)
-      .animation(
-        .spring(
-          response: 0.6,
-          dampingFraction: 0.8),
-        value: salmonRotations)
-      .disabled(ikaCatalog.loadStatus != .loaded)
-    }
   }
 }
 

@@ -13,10 +13,12 @@ import SwiftUI
 struct ToolbarSettingsButton: View {
   typealias Scoped = Constants.Style.ToolbarButton
 
-  let action: () -> Void
+  @EnvironmentObject private var ikaStatus: IkaStatus
 
   var body: some View {
-    Button(action: action) {
+    Button {
+      ikaStatus.isSettingsPresented.toggle()
+    } label: {
       Image(systemName: "gear")
         .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
         .foregroundColor(.primary)
@@ -34,7 +36,6 @@ struct ToolbarSettingsButton: View {
 
 struct ToolbarSettingsButton_Previews: PreviewProvider {
   static var previews: some View {
-    ToolbarSettingsButton(
-      action: { })
+    ToolbarSettingsButton()
   }
 }

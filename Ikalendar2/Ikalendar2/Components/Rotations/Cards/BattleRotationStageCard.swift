@@ -51,7 +51,9 @@ struct BattleRotationStageCardPrimary: View {
           .padding(.leading, Scoped.LABEL_PADDING_LEADING)
           .padding([.bottom, .trailing], Scoped.LABEL_PADDING_BOTTOMTRAILING),
         alignment: .bottomTrailing)
-      .animation(.easeOut, value: ikaPreference.ifUseAltStageImages)
+      .animation(
+        Constants.Config.Animation.appDefault,
+        value: ikaPreference.ifUseAltStageImages)
   }
 }
 

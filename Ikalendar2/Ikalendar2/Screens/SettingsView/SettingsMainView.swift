@@ -18,7 +18,9 @@ struct SettingsMainView: View {
   @Environment(\.dismiss) private var dismiss
   @Environment(\.locale) private var currentLocale
 
-  @EnvironmentObject private var ikaCatalog: IkaCatalog
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
+
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
@@ -62,9 +64,6 @@ struct SettingsMainView: View {
       }
     }
     .navigationViewStyle(StackNavigationViewStyle())
-    .overlay(
-      AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
-      alignment: .bottomTrailing)
   }
 
   // MARK: - Default Mode Section
@@ -80,9 +79,7 @@ struct SettingsMainView: View {
         }
       } icon: {
         Image(
-          systemName: ikaPreference.defaultGameMode == .battle
-            ? GameMode.battle.sfSymbolNameIdle
-            : GameMode.salmon.sfSymbolNameSelected)
+          systemName: ikaPreference.defaultGameMode.sfSymbolNameSelected)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
@@ -90,8 +87,7 @@ struct SettingsMainView: View {
       Spacer()
 
       Picker(
-        selection: $ikaPreference.defaultGameMode
-          .onSet { _ in SimpleHaptics.generateTask(.selection) },
+        selection: $ikaPreference.defaultGameMode,
         label: Text("Default Game Mode"))
       {
         ForEach(GameMode.allCases) { gameMode in
@@ -115,21 +111,20 @@ struct SettingsMainView: View {
         }
       } icon: {
         Image(
-          systemName: ikaPreference.defaultGameMode == .battle
-            ? ikaPreference.defaultBattleMode.sfSymbolNameSelected
-            : ikaPreference.defaultBattleMode.sfSymbolNameIdle)
+          systemName: ikaPreference.defaultGameMode != .battle || !isHorizontalCompact
+            ? ikaPreference.defaultBattleMode.sfSymbolNameIdle
+            : ikaPreference.defaultBattleMode.sfSymbolNameSelected)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(
-            ikaPreference.defaultGameMode == .battle
-              ? Color.accentColor
-              : .secondary)
+            ikaPreference.defaultGameMode != .battle || !isHorizontalCompact
+              ? .secondary
+              : Color.accentColor)
       }
 
       Spacer()
 
       Picker(
-        selection: $ikaPreference.defaultBattleMode
-          .onSet { _ in SimpleHaptics.generateTask(.selection) },
+        selection: $ikaPreference.defaultBattleMode,
         label: Text("Default Battle Mode"))
       {
         ForEach(BattleMode.allCases) { battleMode in
@@ -139,7 +134,7 @@ struct SettingsMainView: View {
       }
       .pickerStyle(SegmentedPickerStyle())
       .fixedSize()
-      .disabled(ikaPreference.defaultGameMode != .battle)
+      .disabled(ikaPreference.defaultGameMode != .battle || !isHorizontalCompact)
     }
   }
 
@@ -155,8 +150,7 @@ struct SettingsMainView: View {
 
       Menu {
         Picker(
-          selection: $ikaPreference.preferredAppColorScheme
-            .onSet { _ in SimpleHaptics.generateTask(.selection) },
+          selection: $ikaPreference.preferredAppColorScheme,
           label: EmptyView())
         {
           ForEach(IkaColorSchemeManager.PreferredAppColorScheme.allCases) { appPreferredColorScheme in
@@ -179,14 +173,16 @@ struct SettingsMainView: View {
   }
 
   private var rowAltAppIcon: some View {
-    NavigationLink(destination: SettingsAltAppIconView()) {
+    let altAppIconStatusSFSymbolName = ikaPreference.preferredAppIcon.getSettingsSFSymbolName()
+
+    return NavigationLink(destination: SettingsAltAppIconView()) {
       Label {
         Text("App Icon")
           .foregroundColor(.primary)
       }
       icon: {
         Image(
-          systemName: ikaPreference.preferredAppIcon.settingsSFSymbolName)
+          systemName: altAppIconStatusSFSymbolName)
           .symbolRenderingMode(.hierarchical)
       }
     }
@@ -267,7 +263,7 @@ struct SettingsMainView: View {
 
   private var doneButton: some View {
     Button {
-      SimpleHaptics.generateTask(.medium)
+//      SimpleHaptics.generateTask(.medium)
       dismiss()
     } label: {
       Text("Done")

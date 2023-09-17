@@ -13,26 +13,28 @@ import SwiftUI
 struct ErrorView: View {
   typealias Scoped = Constants.Style.Error
 
+  @EnvironmentObject private var ikaCatalog: IkaCatalog
+
   let error: IkaError
 
   var body: some View {
     GeometryReader { geo in
-      List {
-        Section {
-          errorText
-            .padding(.top, geo.size.height * Scoped.ERROR_TEXT_PADDING_TOP_HEIGHT_RATIO)
-        }
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
+      ScrollView {
+        VStack {
+          Spacer()
+            .frame(height: geo.size.height * Scoped.ERROR_SECTION_PADDING_TOP_HEIGHT_RATIO)
 
-        Section {
-          errorImage
-            .frame(width: geo.size.width * Scoped.ERROR_IMG_WIDTH_RATIO)
+          errorText
             .hAlignment(.leading)
-            .padding(.top, geo.size.height * Scoped.ERROR_IMG_PADDING_TOP_HEIGHT_RATIO)
+
+          Spacer()
+            .frame(height: geo.size.height * Scoped.ERROR_SECTION_SPACING_HEIGHT_RATIO)
+
+          errorImage
+            .frame(height: geo.size.height * Scoped.ERROR_IMG_HEIGHT_RATIO)
+            .hAlignment(.leading)
         }
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
+        .padding(.horizontal)
       }
     }
   }

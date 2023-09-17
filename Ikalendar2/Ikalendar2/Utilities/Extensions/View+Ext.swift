@@ -14,7 +14,7 @@ extension View {
   /// ```
   /// var body: some view {
   ///   myView
-  ///     .transform { $0.padding(8) }
+  ///     .apply { $0.padding(8) }
   /// }
   /// ```
   ///
@@ -23,8 +23,8 @@ extension View {
   ///
   /// - Returns: The resulted view.
   @ViewBuilder
-  func transform(
-    transformation: (Self) -> some View)
+  func apply(
+    _ transformation: (Self) -> some View)
     -> some View
   {
     transformation(self)

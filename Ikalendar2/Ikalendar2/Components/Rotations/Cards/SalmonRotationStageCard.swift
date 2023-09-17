@@ -35,11 +35,14 @@ struct SalmonRotationStageCard: View {
       .overlay(
         overlay,
         alignment: .bottom)
-      .animation(.easeOut, value: ikaPreference.ifUseAltStageImages)
+      .animation(
+        Constants.Config.Animation.appDefault,
+        value: ikaPreference.ifUseAltStageImages)
       .background {
         GeometryReader { geo in
           Color.clear
             .onAppear { cardWidth = geo.size.width }
+            .onChange(of: geo.size) { size in cardWidth = size.width }
         }
       }
   }

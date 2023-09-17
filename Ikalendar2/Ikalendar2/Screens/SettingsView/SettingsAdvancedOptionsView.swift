@@ -5,6 +5,7 @@
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
+import SimpleHaptics
 import SwiftUI
 
 // MARK: - SettingsAdvancedOptionsView
@@ -35,12 +36,16 @@ struct SettingsAdvancedOptionsView: View {
 
         Section(header: stageImagesPreviewHeader) {
           battleRotationPreviewCell
-            .animation(.easeOut, value: battleRotationPreviewData)
+            .animation(
+              Constants.Config.Animation.appDefault,
+              value: battleRotationPreviewData)
         }
 
         Section {
           salmonRotationPreviewCell
-            .animation(.easeOut, value: salmonRotationPreviewData)
+            .animation(
+              Constants.Config.Animation.appDefault,
+              value: salmonRotationPreviewData)
         }
       }
       .navigationTitle("Advanced Options")
@@ -89,6 +94,7 @@ struct SettingsAdvancedOptionsView: View {
       Text("Preview:")
       Spacer()
       Button {
+        SimpleHaptics.generateTask(.selection)
         shufflePreviewData()
       } label: {
         Label(
@@ -170,7 +176,7 @@ struct BottomToolbarPositioningPreview: View {
 
   private var battleModePicker: some View {
     Picker(
-      selection: .constant(ikaStatus.battleModeSelection),
+      selection: .constant(ikaStatus.currentBattleMode),
       label: Text("Battle Mode"))
     {
       ForEach(BattleMode.allCases) { battleMode in
@@ -189,7 +195,7 @@ struct BottomToolbarPositioningPreview: View {
     {
       ForEach(GameMode.allCases) { gameMode in
         Image(
-          systemName: ikaStatus.gameModeSelection == gameMode
+          systemName: ikaStatus.currentGameMode == gameMode
             ? gameMode.sfSymbolNameSelected
             : gameMode.sfSymbolNameIdle)
           .tag(gameMode)

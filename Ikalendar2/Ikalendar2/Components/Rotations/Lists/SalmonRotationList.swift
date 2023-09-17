@@ -1,5 +1,5 @@
 //
-//  SalmonRotationListView.swift
+//  SalmonRotationList.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
@@ -7,10 +7,7 @@
 
 import SwiftUI
 
-// MARK: - SalmonRotationListView
-
-/// The view that displays a list of salmon rotations.
-struct SalmonRotationListView: View {
+struct SalmonRotationList: View {
   @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
@@ -35,19 +32,9 @@ struct SalmonRotationListView: View {
       }
       .listStyle(.insetGrouped)
       .animation(
-        .spring(
-          response: 0.6,
-          dampingFraction: 0.8),
+        Constants.Config.Animation.spring,
         value: salmonRotations)
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
-  }
-}
-
-// MARK: - SalmonRotationListView_Previews
-
-struct SalmonRotationListView_Previews: PreviewProvider {
-  static var previews: some View {
-    SalmonRotationListView()
   }
 }
