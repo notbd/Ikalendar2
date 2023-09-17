@@ -9,12 +9,10 @@
 /* Begin PBXBuildFile section */
 		7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2528C4322100245586 /* IkaDecoder.swift */; };
 		7903FE3028C437F900245586 /* QuickBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2F28C437F900245586 /* QuickBorder.swift */; };
-		7903FE3428C438B400245586 /* FontIka.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3328C438B400245586 /* FontIka.swift */; };
+		7903FE3428C438B400245586 /* IkaFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3328C438B400245586 /* IkaFont.swift */; };
 		7903FE3628C438FC00245586 /* RoundedFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3528C438FC00245586 /* RoundedFont.swift */; };
 		7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3728C4395600245586 /* ScaledLimitedLine.swift */; };
-		7903FE3F28C43A0F00245586 /* Splatfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3C28C43A0F00245586 /* Splatfont.ttf */; };
 		7903FE4028C43A0F00245586 /* Inkling_v2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3D28C43A0F00245586 /* Inkling_v2.otf */; };
-		7903FE4128C43A0F00245586 /* Splatfont2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3E28C43A0F00245586 /* Splatfont2.ttf */; };
 		7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4228C43AB800245586 /* GrizzcoWeapon.swift */; };
 		7903FE4528C45CE900245586 /* ScrollView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4428C45CE900245586 /* ScrollView+Ext.swift */; };
 		7903FE4728C45D8000245586 /* DateFormatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4628C45D8000245586 /* DateFormatter+Ext.swift */; };
@@ -61,6 +59,8 @@
 		7943DFC32AB5398D0047250E /* SalmonRotationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFC22AB5398D0047250E /* SalmonRotationList.swift */; };
 		795A60A92A9759C9007B3861 /* AssetImageCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A60A82A9759C9007B3861 /* AssetImageCounter.swift */; };
 		795A60AB2A976745007B3861 /* SeededRandomGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */; };
+		796CEF812AB7A94E006860C6 /* Splatfont1-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */; };
+		796CEF822AB7A94E006860C6 /* Splatfont2-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		797C0E822A9725D900DA405A /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 797C0E812A9725D900DA405A /* SwiftyJSON */; };
 		797EA68E2AACF1350095A23B /* DetailsLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EA68D2AACF1350095A23B /* DetailsLicenseView.swift */; };
@@ -110,12 +110,10 @@
 /* Begin PBXFileReference section */
 		7903FE2528C4322100245586 /* IkaDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaDecoder.swift; sourceTree = "<group>"; };
 		7903FE2F28C437F900245586 /* QuickBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBorder.swift; sourceTree = "<group>"; };
-		7903FE3328C438B400245586 /* FontIka.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontIka.swift; sourceTree = "<group>"; };
+		7903FE3328C438B400245586 /* IkaFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaFont.swift; sourceTree = "<group>"; };
 		7903FE3528C438FC00245586 /* RoundedFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedFont.swift; sourceTree = "<group>"; };
 		7903FE3728C4395600245586 /* ScaledLimitedLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledLimitedLine.swift; sourceTree = "<group>"; };
-		7903FE3C28C43A0F00245586 /* Splatfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Splatfont.ttf; sourceTree = "<group>"; };
 		7903FE3D28C43A0F00245586 /* Inkling_v2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inkling_v2.otf; sourceTree = "<group>"; };
-		7903FE3E28C43A0F00245586 /* Splatfont2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Splatfont2.ttf; sourceTree = "<group>"; };
 		7903FE4228C43AB800245586 /* GrizzcoWeapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrizzcoWeapon.swift; sourceTree = "<group>"; };
 		7903FE4428C45CE900245586 /* ScrollView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScrollView+Ext.swift"; sourceTree = "<group>"; };
 		7903FE4628C45D8000245586 /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
@@ -163,6 +161,8 @@
 		7943DFC22AB5398D0047250E /* SalmonRotationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonRotationList.swift; sourceTree = "<group>"; };
 		795A60A82A9759C9007B3861 /* AssetImageCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetImageCounter.swift; sourceTree = "<group>"; };
 		795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeededRandomGenerator.swift; sourceTree = "<group>"; };
+		796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Splatfont1-Regular.otf"; sourceTree = "<group>"; };
+		796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Splatfont2-Regular.otf"; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
 		797EA68D2AACF1350095A23B /* DetailsLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsLicenseView.swift; sourceTree = "<group>"; };
 		797EA68F2AAD16620095A23B /* IkaOpenSourceLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaOpenSourceLicense.swift; sourceTree = "<group>"; };
@@ -241,9 +241,9 @@
 		7903FE2128C430C700245586 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				7903FE2F28C437F900245586 /* QuickBorder.swift */,
-				7903FE3328C438B400245586 /* FontIka.swift */,
+				7903FE3328C438B400245586 /* IkaFont.swift */,
 				7903FE3528C438FC00245586 /* RoundedFont.swift */,
+				7903FE2F28C437F900245586 /* QuickBorder.swift */,
 				7903FE3728C4395600245586 /* ScaledLimitedLine.swift */,
 			);
 			path = Modifiers;
@@ -264,9 +264,9 @@
 		7903FE3B28C439D600245586 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */,
+				796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */,
 				7903FE3D28C43A0F00245586 /* Inkling_v2.otf */,
-				7903FE3C28C43A0F00245586 /* Splatfont.ttf */,
-				7903FE3E28C43A0F00245586 /* Splatfont2.ttf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -564,8 +564,8 @@
 				79C1485628C4276900587C6E /* Utilities */,
 				79AA712D28C4000400A91055 /* Models */,
 				79C1485528C426A600587C6E /* Constants */,
-				7903FE3B28C439D600245586 /* Resources */,
 				7903FE9F28C4721A00245586 /* Localizations */,
+				7903FE3B28C439D600245586 /* Resources */,
 				79C1485428C425BF00587C6E /* Preview Content */,
 			);
 			path = Ikalendar2;
@@ -741,12 +741,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7903FE3F28C43A0F00245586 /* Splatfont.ttf in Resources */,
-				7903FE4128C43A0F00245586 /* Splatfont2.ttf in Resources */,
+				796CEF822AB7A94E006860C6 /* Splatfont2-Regular.otf in Resources */,
 				7903FE4028C43A0F00245586 /* Inkling_v2.otf in Resources */,
 				7903FEA228C472E800245586 /* Localizable.strings in Resources */,
 				79B92BCD28B044B400544939 /* .swiftlint.yml in Resources */,
 				79B92BBA28B03B2200544939 /* Assets.xcassets in Resources */,
+				796CEF812AB7A94E006860C6 /* Splatfont1-Regular.otf in Resources */,
 				79B92BCB28B044A200544939 /* .swiftformat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -782,7 +782,7 @@
 			files = (
 				79DD1F3B2A5B8A800093784D /* IkaNetworkManager.swift in Sources */,
 				79C1485828C427B300587C6E /* Constants.swift in Sources */,
-				7903FE3428C438B400245586 /* FontIka.swift in Sources */,
+				7903FE3428C438B400245586 /* IkaFont.swift in Sources */,
 				79802FFA28C55B740048C478 /* IkaColorSchemeManager.swift in Sources */,
 				799235B02AB394D30071AA72 /* BattleSecondaryStagesLayout.swift in Sources */,
 				7903FE9A28C4702100245586 /* ToolbarSettingsButton.swift in Sources */,
@@ -1011,7 +1011,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4446;
+				CURRENT_PROJECT_VERSION = 4509;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1049,7 +1049,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4446;
+				CURRENT_PROJECT_VERSION = 4509;
 				DEVELOPMENT_ASSET_PATHS = "\"Ikalendar2/Preview Content\"";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

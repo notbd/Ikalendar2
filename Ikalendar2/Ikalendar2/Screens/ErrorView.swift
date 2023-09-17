@@ -40,25 +40,31 @@ struct ErrorView: View {
   }
 
   private var errorText: some View {
-    VStack(alignment: .leading) {
+    VStack(
+      alignment: .leading,
+      spacing: 0)
+    {
       Text(error.title.localizedStringKey)
         .scaledLimitedLine()
         .if(Scoped.IF_USE_CUSTOM_FONT) {
-          $0.fontIka(
-            .ika2,
-            size: Scoped.TITLE_CUSTOM_FONT_SIZE,
-            relativeTo: .largeTitle)
+          $0
+            .ikaFont(
+              .ika2,
+              size: Scoped.TITLE_CUSTOM_FONT_SIZE,
+              relativeTo: .largeTitle)
         } else: {
           $0.font(.system(.largeTitle, design: .rounded))
         }
-        .padding(.bottom, Scoped.TITLE_MESSAGE_SPACING)
+        .padding(.bottom, Scoped.TEXT_SECTION_SPACING)
 
       Text(error.message.localizedStringKey)
+        .lineSpacing(Scoped.MESSAGE_LINE_SPACING)
         .if(Scoped.IF_USE_CUSTOM_FONT) {
-          $0.fontIka(
-            .ika2,
-            size: Scoped.MESSAGE_CUSTOM_FONT_SIZE,
-            relativeTo: .body)
+          $0
+            .ikaFont(
+              .ika2,
+              size: Scoped.MESSAGE_CUSTOM_FONT_SIZE,
+              relativeTo: .body)
         } else: {
           $0.font(.system(.body, design: .rounded))
         }

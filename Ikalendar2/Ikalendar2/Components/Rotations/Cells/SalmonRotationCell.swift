@@ -56,7 +56,7 @@ struct SalmonRotationCell: View {
       label: {
         Text(ikaTimePublisher.currentTime.toTimeRemainingString(until: rotation.endTime))
           .scaledLimitedLine()
-          .fontIka(
+          .ikaFont(
             .ika2,
             size: Scoped.PROGRESS_FONT_SIZE,
             relativeTo: .headline)
@@ -84,36 +84,41 @@ struct SalmonRotationCellTimeTextSection: View {
         .resizable()
         .scaledToFit()
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-        .scaleEffect(rotation.isCurrent() ? Scoped.GOLDEN_EGG_ICON_SCALE_COMPENSATION_FACTOR : 1)
-        .frame(height: rowWidth * Scoped.SALMON_ICON_HEIGHT_RATIO)
+        .scaleEffect(
+          rotation.isCurrent()
+            ? Scoped.ICON_GOLDEN_EGG_SCALE_FACTOR
+            : Scoped.ICON_SALMON_FISH_SCALE_FACTOR)
+          .frame(height: rowWidth * Scoped.SALMON_ICON_HEIGHT_RATIO)
 
       Spacer()
 
       HStack(spacing: Scoped.TIME_TEXT_SPACING) {
         Text(rotation.startTime.toSalmonTimeString(includingDate: true))
           .scaledLimitedLine()
-          .fontIka(
+          .ikaFont(
             .ika2,
             size: Scoped.TIME_TEXT_FONT_SIZE,
             relativeTo: .headline)
-          .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_HORIZONTAL)
+          .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
+          .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
           .background(Color.tertiarySystemGroupedBackground)
           .cornerRadius(Scoped.TIME_TEXT_FRAME_CORNER_RADIUS)
 
         Text("-")
           .scaledLimitedLine()
-          .fontIka(
+          .ikaFont(
             .ika2,
             size: Scoped.TIME_TEXT_FONT_SIZE,
             relativeTo: .headline)
 
         Text(rotation.endTime.toSalmonTimeString(includingDate: true))
           .scaledLimitedLine()
-          .fontIka(
+          .ikaFont(
             .ika2,
             size: Scoped.TIME_TEXT_FONT_SIZE,
             relativeTo: .headline)
-          .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_HORIZONTAL)
+          .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
+          .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
           .background(Color.tertiarySystemGroupedBackground)
           .cornerRadius(Scoped.TIME_TEXT_FRAME_CORNER_RADIUS)
       }

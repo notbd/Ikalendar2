@@ -103,7 +103,7 @@ struct BattleRotationStageCardSecondary: View {
 
       Text(stage.name.localizedStringKey)
         .scaledLimitedLine()
-        .fontIka(
+        .ikaFont(
           .ika2,
           size: Scoped.FONT_SIZE,
           relativeTo: .body)

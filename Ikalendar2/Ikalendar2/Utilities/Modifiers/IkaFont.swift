@@ -1,11 +1,18 @@
 //
-//  FontIka.swift
+//  IkaFont.swift
 //  Ikalendar2
 //
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
+
+// MARK: - IkaFont
+
+enum IkaFont: String {
+  case ika1 = "Splatfont1-Regular"
+  case ika2 = "Splatfont2-Regular"
+}
 
 extension View {
   /// A modifier function that quickly applies a custom ika font to the view.
@@ -15,30 +22,23 @@ extension View {
   ///   - size: The size of the ika font.
   ///   - textStyle: The text style that this size is relative to.
   /// - Returns: The modified view.
-  func fontIka(
+  func ikaFont(
     _ ikaFont: IkaFont,
     size: CGFloat,
     relativeTo textStyle: Font.TextStyle)
     -> some View
   {
     modifier(
-      FontIka(
+      IkaFontTextStyle(
         ikaFont: ikaFont,
         size: size,
         textStyle: textStyle))
   }
 }
 
-// MARK: - IkaFont
+// MARK: - IkaFontTextStyle
 
-enum IkaFont: String {
-  case ika1 = "Splatfont"
-  case ika2 = "Splatfont2"
-}
-
-// MARK: - FontIka
-
-struct FontIka: ViewModifier {
+struct IkaFontTextStyle: ViewModifier {
   var ikaFont: IkaFont
   var size: CGFloat
   var textStyle: Font.TextStyle

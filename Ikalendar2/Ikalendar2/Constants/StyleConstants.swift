@@ -79,9 +79,11 @@ extension Constants.Style {
     static let ERROR_SECTION_SPACING_HEIGHT_RATIO: CGFloat = 0.14
     static let ERROR_IMG_HEIGHT_RATIO: CGFloat = 0.12
 
+    static let TEXT_SECTION_SPACING: CGFloat = 36
+    static let MESSAGE_LINE_SPACING: CGFloat = 6
+
     static let IF_USE_CUSTOM_FONT = true
     static let TITLE_CUSTOM_FONT_SIZE: CGFloat = 36
-    static let TITLE_MESSAGE_SPACING: CGFloat = 4
     static let MESSAGE_CUSTOM_FONT_SIZE: CGFloat = 19
   }
 
@@ -122,7 +124,7 @@ extension Constants.Style {
     enum Advanced {
       static let BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL = "arrow.left.arrow.right"
       static let BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION: CGFloat = 0.07
-      static let BOTTOM_TOOLBAR_PREVIEW_PADDING_HORIZONTAL: CGFloat = 14
+      static let BOTTOM_TOOLBAR_PREVIEW_PADDING_H: CGFloat = 14
       static let BOTTOM_TOOLBAR_PREVIEW_LINGER_INTERVAL: TimeInterval = 1.5
 
       static let ALT_STAGE_IMG_SFSYMBOL = "compass.drawing"
@@ -174,8 +176,9 @@ extension Constants.Style {
 
   enum Rotation {
     enum Label {
-      static let BACKGROUND_CORNER_RADIUS: CGFloat = 5
-      static let TEXT_PADDING_HORIZONTAL: CGFloat = 6
+      static let TEXT_PADDING_H: CGFloat = 5
+      static let TEXT_PADDING_V: CGFloat = 2
+      static let BACKGROUND_CORNER_RADIUS: CGFloat = 4
     }
 
     enum Header {
@@ -183,7 +186,7 @@ extension Constants.Style {
 
       static let PREFIX_FRAME_CORNER_RADIUS: CGFloat = 8
       static let PREFIX_FONT_SIZE: CGFloat = 16
-      static let PREFIX_PADDING: CGFloat = 8
+      static let PREFIX_PADDING_H: CGFloat = 8
 
       static let CONTENT_FONT_SIZE: CGFloat = 16
 
@@ -260,11 +263,13 @@ extension Constants.Style {
         static let PROGRESS_FONT_SIZE: CGFloat = 16
 
         enum TimeTextSection {
-          static let GOLDEN_EGG_ICON_SCALE_COMPENSATION_FACTOR: CGFloat = 1.4
+          static let ICON_GOLDEN_EGG_SCALE_FACTOR: CGFloat = 1.5
+          static let ICON_SALMON_FISH_SCALE_FACTOR: CGFloat = 0.9
           static let SALMON_ICON_HEIGHT_RATIO: CGFloat = 0.065
           static let TIME_TEXT_SPACING: CGFloat = 4
           static let TIME_TEXT_FONT_SIZE: CGFloat = 16
-          static let TIME_TEXT_SINGLE_PADDING_HORIZONTAL: CGFloat = 5
+          static let TIME_TEXT_SINGLE_PADDING_H: CGFloat = 6
+          static let TIME_TEXT_SINGLE_PADDING_V: CGFloat = 4
           static let TIME_TEXT_FRAME_CORNER_RADIUS: CGFloat = 6
         }
       }

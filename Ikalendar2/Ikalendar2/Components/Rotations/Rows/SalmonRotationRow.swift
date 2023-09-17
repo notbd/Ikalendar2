@@ -99,12 +99,12 @@ struct SalmonRotationHeader: View {
     HStack {
       // can force unwrap `prefixString` here because .other row type will not have header
       Text(rowType.prefixString!.localizedStringKey)
-        .fontIka(
+        .ikaFont(
           .ika1,
           size: Scoped.PREFIX_FONT_SIZE,
           relativeTo: .title2)
         .foregroundColor(Color.systemBackground)
-        .padding(.horizontal, Scoped.PREFIX_PADDING)
+        .padding(.horizontal, Scoped.PREFIX_PADDING_H)
         .background(Color.secondary)
         .cornerRadius(Scoped.PREFIX_FRAME_CORNER_RADIUS)
 
@@ -117,7 +117,7 @@ struct SalmonRotationHeader: View {
       {
         Text(ikaTimePublisher.currentTime.toTimeUntilString(until: rotation.startTime))
           .scaledLimitedLine()
-          .fontIka(
+          .ikaFont(
             .ika2,
             size: Scoped.CONTENT_FONT_SIZE,
             relativeTo: .headline)

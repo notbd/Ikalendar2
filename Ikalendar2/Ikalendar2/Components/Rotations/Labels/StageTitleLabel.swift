@@ -20,11 +20,12 @@ struct StageTitleLabel: View {
   var body: some View {
     Text(title.localizedStringKey)
       .scaledLimitedLine()
-      .fontIka(
+      .ikaFont(
         .ika2,
         size: fontSize,
         relativeTo: relTextStyle)
-      .padding(.horizontal, Scoped.TEXT_PADDING_HORIZONTAL)
+      .padding(.horizontal, Scoped.TEXT_PADDING_H)
+      .padding(.vertical, Scoped.TEXT_PADDING_V)
       .background(.ultraThinMaterial)
       .cornerRadius(Scoped.BACKGROUND_CORNER_RADIUS)
   }

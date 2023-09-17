@@ -166,7 +166,7 @@ struct BottomToolbarPositioningPreview: View {
         battleModePicker
       }
     }
-    .padding(.horizontal, Scoped.BOTTOM_TOOLBAR_PREVIEW_PADDING_HORIZONTAL)
+    .padding(.horizontal, Scoped.BOTTOM_TOOLBAR_PREVIEW_PADDING_H)
     .task {
       try? await Task.sleep(
         nanoseconds: UInt64(Scoped.BOTTOM_TOOLBAR_PREVIEW_LINGER_INTERVAL * 1_000_000_000))

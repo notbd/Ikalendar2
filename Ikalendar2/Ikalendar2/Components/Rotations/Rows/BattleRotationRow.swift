@@ -93,12 +93,12 @@ struct BattleRotationHeader: View {
       // skip if `prefixString` is nil (case .other)
       if let prefixString = rowType.prefixString {
         Text(prefixString.localizedStringKey)
-          .fontIka(
+          .ikaFont(
             .ika1,
             size: Scoped.PREFIX_FONT_SIZE,
             relativeTo: .title2)
           .foregroundColor(Color.systemBackground)
-          .padding(.horizontal, Scoped.PREFIX_PADDING)
+          .padding(.horizontal, Scoped.PREFIX_PADDING_H)
           .background(Color.secondary)
           .cornerRadius(Scoped.PREFIX_FRAME_CORNER_RADIUS)
       }
@@ -106,7 +106,7 @@ struct BattleRotationHeader: View {
       // Battle Time String
       Text("\(startTimeString) - \(endTimeString)")
         .scaledLimitedLine()
-        .fontIka(
+        .ikaFont(
           .ika2,
           size: Scoped.CONTENT_FONT_SIZE,
           relativeTo: .headline)

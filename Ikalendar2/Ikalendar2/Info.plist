@@ -4,8 +4,8 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Splatfont.ttf</string>
-		<string>Splatfont2.ttf</string>
+		<string>Splatfont1-Regular.otf</string>
+		<string>Splatfont2-Regular.otf</string>
 	</array>
 </dict>
 </plist>

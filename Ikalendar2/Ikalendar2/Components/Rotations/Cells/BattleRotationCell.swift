@@ -65,8 +65,6 @@ struct BattleRotationCellPrimary: View {
   let rowWidth: CGFloat
   let animationNamespaces: Constants.Namespace.Battle
 
-  @State private var ruleIconHeight: CGFloat = .zero // initial value does not matter
-
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   var body: some View {
@@ -124,16 +122,6 @@ struct BattleRotationCellPrimary: View {
         .scaledToFit()
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH_RATIO)
-        .background(
-          GeometryReader { geo in
-            Color.clear
-              .onAppear {
-                ruleIconHeight = geo.size.height
-              }
-              .onChange(of: geo.size) { size in
-                ruleIconHeight = size.height
-              }
-          })
 
       // Rule title
       Text(rotation.rule.name.localizedStringKey)
@@ -141,14 +129,12 @@ struct BattleRotationCellPrimary: View {
           id: rotation.id,
           in: animationNamespaces.ruleTitle)
         .scaledLimitedLine()
-        .fontIka(
+        .ikaFont(
           .ika2,
           size: isHorizontalCompact
             ? Scoped.RULE_FONT_SIZE_COMPACT
             : Scoped.RULE_FONT_SIZE_REGULAR,
           relativeTo: .title)
-
-        .frame(maxHeight: ruleIconHeight)
     }
     .frame(
       maxWidth: rowWidth * Scoped.RULE_SECTION_MAX_WIDTH_RATIO,
@@ -161,7 +147,7 @@ struct BattleRotationCellPrimary: View {
     Text(ikaTimePublisher.currentTime.toTimeRemainingString(until: rotation.endTime))
       .scaledLimitedLine()
       .foregroundColor(.secondary)
-      .fontIka(
+      .ikaFont(
         .ika2,
         size: Scoped.REMAINING_TIME_FONT_SIZE,
         relativeTo: .headline)
@@ -209,7 +195,7 @@ struct BattleRotationCellSecondary: View {
             id: rotation.id,
             in: animationNamespaces.ruleTitle)
           .scaledLimitedLine()
-          .fontIka(
+          .ikaFont(
             .ika2,
             size: Scoped.RULE_FONT_SIZE,
             relativeTo: .body)
