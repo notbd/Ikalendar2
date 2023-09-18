@@ -38,36 +38,36 @@ extension SalmonWeapon {
   var name: String {
     switch self {
     case .vanilla(let weapon):
-      return weapon.name
+      weapon.name
     case .mystery(let weapon):
-      return weapon.name
+      weapon.name
     }
   }
 
   var key: String {
     switch self {
     case .vanilla(let weapon):
-      return weapon.key
+      weapon.key
     case .mystery(let weapon):
-      return weapon.key
+      weapon.key
     }
   }
 
   var imgFiln: String {
     switch self {
     case .vanilla(let weapon):
-      return weapon.imgFiln
+      weapon.imgFiln
     case .mystery(let weapon):
-      return weapon.imgFiln
+      weapon.imgFiln
     }
   }
 
   var imgFilnSmall: String {
     switch self {
     case .vanilla(let weapon):
-      return weapon.imgFilnSmall
+      weapon.imgFilnSmall
     case .mystery(let weapon):
-      return weapon.imgFilnSmall
+      weapon.imgFilnSmall
     }
   }
 }

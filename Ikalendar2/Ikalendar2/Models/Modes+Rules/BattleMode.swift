@@ -19,9 +19,9 @@ enum BattleMode: String, Identifiable, CaseIterable, Equatable {
 extension BattleMode {
   var name: String {
     switch self {
-    case .regular: return "Regular Battle"
-    case .gachi: return "Ranked Battle"
-    case .league: return "League Battle"
+    case .regular: "Regular Battle"
+    case .gachi: "Ranked Battle"
+    case .league: "League Battle"
     }
   }
 }
@@ -29,9 +29,9 @@ extension BattleMode {
 extension BattleMode {
   var shortName: String {
     switch self {
-    case .regular: return "Regular"
-    case .gachi: return "Ranked"
-    case .league: return "League"
+    case .regular: "Regular"
+    case .gachi: "Ranked"
+    case .league: "League"
     }
   }
 }
@@ -39,17 +39,17 @@ extension BattleMode {
 extension BattleMode {
   var sfSymbolNameSelected: String {
     switch self {
-    case .regular: return "paintbrush.fill"
-    case .gachi: return "person.fill"
-    case .league: return "person.3.fill"
+    case .regular: "paintbrush.fill"
+    case .gachi: "person.fill"
+    case .league: "person.3.fill"
     }
   }
 
   var sfSymbolNameIdle: String {
     switch self {
-    case .regular: return "paintbrush"
-    case .gachi: return "person"
-    case .league: return "person.3"
+    case .regular: "paintbrush"
+    case .gachi: "person"
+    case .league: "person.3"
     }
   }
 }

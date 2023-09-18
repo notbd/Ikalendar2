@@ -26,16 +26,16 @@ enum HeadApparel: Int, Identifiable, CaseIterable, Equatable {
 extension HeadApparel {
   var name: String {
     switch self {
-    case .headlampHelmet: return "Headlamp Helmet"
-    case .dustBlocker2000: return "Dust Blocker 2000"
-    case .weldingMask: return "Welding Mask"
-    case .beekeeperHat: return "Beekeeper Hat"
-    case .octoleetGoggles: return "Octoleet Goggles"
-    case .capOfLegend: return "Cap of Legend"
-    case .oceanicHardHat: return "Oceanic Hard Hat"
-    case .workersHeadTowel: return "Worker's Head Towel"
-    case .workersCap: return "Worker's Cap"
-    case .sailorCap: return "Sailor Cap"
+    case .headlampHelmet: "Headlamp Helmet"
+    case .dustBlocker2000: "Dust Blocker 2000"
+    case .weldingMask: "Welding Mask"
+    case .beekeeperHat: "Beekeeper Hat"
+    case .octoleetGoggles: "Octoleet Goggles"
+    case .capOfLegend: "Cap of Legend"
+    case .oceanicHardHat: "Oceanic Hard Hat"
+    case .workersHeadTowel: "Worker's Head Towel"
+    case .workersCap: "Worker's Cap"
+    case .sailorCap: "Sailor Cap"
     }
   }
 }
@@ -43,16 +43,16 @@ extension HeadApparel {
 extension HeadApparel {
   var key: String {
     switch self {
-    case .headlampHelmet: return "Hed_COP100"
-    case .dustBlocker2000: return "Hed_COP101"
-    case .weldingMask: return "Hed_COP102"
-    case .beekeeperHat: return "Hed_COP103"
-    case .octoleetGoggles: return "Hed_COP104"
-    case .capOfLegend: return "Hed_COP105"
-    case .oceanicHardHat: return "Hed_COP106"
-    case .workersHeadTowel: return "Hed_COP107"
-    case .workersCap: return "Hed_COP108"
-    case .sailorCap: return "Hed_COP109"
+    case .headlampHelmet: "Hed_COP100"
+    case .dustBlocker2000: "Hed_COP101"
+    case .weldingMask: "Hed_COP102"
+    case .beekeeperHat: "Hed_COP103"
+    case .octoleetGoggles: "Hed_COP104"
+    case .capOfLegend: "Hed_COP105"
+    case .oceanicHardHat: "Hed_COP106"
+    case .workersHeadTowel: "Hed_COP107"
+    case .workersCap: "Hed_COP108"
+    case .sailorCap: "Hed_COP109"
     }
   }
 }

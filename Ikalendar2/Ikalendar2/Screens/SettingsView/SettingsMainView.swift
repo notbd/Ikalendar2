@@ -55,11 +55,8 @@ struct SettingsMainView: View {
         .navigationBarTitleDisplayMode(.large)
         .navigationBarItems(trailing: doneButton)
         .listStyle(.insetGrouped)
-        .onAppear {
-          rowWidth = geo.size.width
-        }
-        .onChange(of: geo.size) { size in
-          rowWidth = size.width
+        .onChange(of: geo.size, initial: true) { _, newVal in
+          rowWidth = newVal.width
         }
       }
     }
@@ -153,11 +150,11 @@ struct SettingsMainView: View {
           selection: $ikaPreference.preferredAppColorScheme,
           label: EmptyView())
         {
-          ForEach(IkaColorSchemeManager.PreferredAppColorScheme.allCases) { appPreferredColorScheme in
+          ForEach(IkaColorSchemeManager.PreferredColorScheme.allCases) { preferredColorScheme in
             Label(
-              appPreferredColorScheme.name.localizedStringKey,
-              systemImage: appPreferredColorScheme.sfSymbol)
-              .tag(appPreferredColorScheme)
+              preferredColorScheme.name.localizedStringKey,
+              systemImage: preferredColorScheme.sfSymbol)
+              .tag(preferredColorScheme)
           }
         }
       } label: {

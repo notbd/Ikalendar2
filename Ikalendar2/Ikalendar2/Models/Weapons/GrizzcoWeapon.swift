@@ -22,10 +22,10 @@ enum GrizzcoWeapon: Int, Identifiable, CaseIterable, Equatable {
 extension GrizzcoWeapon {
   var name: String {
     switch self {
-    case .blaster: return "Grizzco Blaster"
-    case .brella: return "Grizzco Brella"
-    case .charger: return "Grizzco Charger"
-    case .slosher: return "Grizzco Slosher"
+    case .blaster: "Grizzco Blaster"
+    case .brella: "Grizzco Brella"
+    case .charger: "Grizzco Charger"
+    case .slosher: "Grizzco Slosher"
     }
   }
 }
@@ -33,10 +33,10 @@ extension GrizzcoWeapon {
 extension GrizzcoWeapon {
   var key: String {
     switch self {
-    case .blaster: return "Wst_Shooter_BlasterCoopBurst"
-    case .brella: return "Wst_Umbrella_CoopAutoAssault"
-    case .charger: return "Wst_Charger_CoopSpark"
-    case .slosher: return "Wst_Slosher_CoopVase"
+    case .blaster: "Wst_Shooter_BlasterCoopBurst"
+    case .brella: "Wst_Umbrella_CoopAutoAssault"
+    case .charger: "Wst_Charger_CoopSpark"
+    case .slosher: "Wst_Slosher_CoopVase"
     }
   }
 }

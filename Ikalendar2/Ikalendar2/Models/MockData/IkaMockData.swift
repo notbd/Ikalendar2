@@ -50,7 +50,7 @@ struct IkaMockData {
         // Has mystery weapons
         switch mysteryWeaponType! {
         case .green:
-          /// Green question mark
+          // Green question mark
           for _ in 0 ..< 3 {
             // no duplicates
             var randomIkaWeapon = IkaWeapon.allCases.randomElement()!

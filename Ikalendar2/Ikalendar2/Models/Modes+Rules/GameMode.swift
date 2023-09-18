@@ -18,15 +18,15 @@ enum GameMode: String, Identifiable, CaseIterable, Equatable {
 extension GameMode {
   var name: String {
     switch self {
-    case .battle: return "Battle"
-    case .salmon: return "Salmon Run"
+    case .battle: "Battle"
+    case .salmon: "Salmon Run"
     }
   }
 
   var shortName: String {
     switch self {
-    case .battle: return "Battle"
-    case .salmon: return "Salmon"
+    case .battle: "Battle"
+    case .salmon: "Salmon"
     }
   }
 }
@@ -34,8 +34,8 @@ extension GameMode {
 extension GameMode {
   var sfSymbolNameIdle: String {
     switch self {
-    case .battle: return "flag"
-    case .salmon: return "lifepreserver"
+    case .battle: "flag"
+    case .salmon: "lifepreserver"
     }
   }
 }
@@ -43,8 +43,8 @@ extension GameMode {
 extension GameMode {
   var sfSymbolNameSelected: String {
     switch self {
-    case .battle: return "flag.fill"
-    case .salmon: return "lifepreserver.fill"
+    case .battle: "flag.fill"
+    case .salmon: "lifepreserver.fill"
     }
   }
 }

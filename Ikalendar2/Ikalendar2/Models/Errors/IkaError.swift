@@ -25,13 +25,13 @@ extension IkaError {
   var title: String {
     switch self {
     case .serverError:
-      return Scoped.Title.SERVER_ERROR
+      Scoped.Title.SERVER_ERROR
     case .connectionError:
-      return Scoped.Title.CONNECTION_ERROR
+      Scoped.Title.CONNECTION_ERROR
     case .unknownError:
-      return Scoped.Title.UNKNOWN_ERROR
+      Scoped.Title.UNKNOWN_ERROR
     case .maxAttemptsExceeded:
-      return Scoped.Title.MAX_ATTEMPTS_EXCEEDED
+      Scoped.Title.MAX_ATTEMPTS_EXCEEDED
     }
   }
 }
@@ -42,16 +42,16 @@ extension IkaError {
     case .serverError(let serverErrorType):
       switch serverErrorType {
       case .badResponse:
-        return Scoped.Message.SERVER_ERROR_BAD_RESPONSE
+        Scoped.Message.SERVER_ERROR_BAD_RESPONSE
       case .badData:
-        return Scoped.Message.SERVER_ERROR_BAD_DATA
+        Scoped.Message.SERVER_ERROR_BAD_DATA
       }
     case .connectionError:
-      return Scoped.Message.CONNECTION_ERROR
+      Scoped.Message.CONNECTION_ERROR
     case .unknownError:
-      return Scoped.Message.UNKNOWN_ERROR
+      Scoped.Message.UNKNOWN_ERROR
     case .maxAttemptsExceeded:
-      return Scoped.Message.MAX_ATTEMPTS_EXCEEDED
+      Scoped.Message.MAX_ATTEMPTS_EXCEEDED
     }
   }
 }

@@ -41,8 +41,9 @@ struct SalmonRotationStageCard: View {
       .background {
         GeometryReader { geo in
           Color.clear
-            .onAppear { cardWidth = geo.size.width }
-            .onChange(of: geo.size) { size in cardWidth = size.width }
+            .onChange(of: geo.size, initial: true) { _, newVal in
+              cardWidth = newVal.width
+            }
         }
       }
   }

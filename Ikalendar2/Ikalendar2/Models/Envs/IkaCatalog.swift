@@ -33,6 +33,8 @@ final class IkaCatalog: ObservableObject {
   @Published private(set) var loadStatus: LoadStatus = .loading
   {
     willSet {
+      guard newValue != loadStatus else { return }
+
       switch newValue {
       case .loading:
         SimpleHaptics.generateTask(.light)
@@ -63,6 +65,8 @@ final class IkaCatalog: ObservableObject {
   @Published private(set) var autoLoadStatus = AutoLoadStatus.idle
   {
     willSet {
+      guard newValue != autoLoadStatus else { return }
+
       switch newValue {
       case .autoLoading:
         SimpleHaptics.generateTask(.selection)

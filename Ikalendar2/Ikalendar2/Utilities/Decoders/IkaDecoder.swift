@@ -276,16 +276,17 @@ final class IkaDecoder {
     else { throw IkaError.serverError(.badData) }
 
     // Find apparel with type and id
-    var rewardApparelOptional: SalmonApparel?
-    switch apparelTypeString {
+    let rewardApparelOptional: SalmonApparel? =
+      switch apparelTypeString
+    {
     case "head":
-      rewardApparelOptional = SalmonApparel(type: .head, id: apparelIDInt)
+      SalmonApparel(type: .head, id: apparelIDInt)
     case "clothes":
-      rewardApparelOptional = SalmonApparel(type: .body, id: apparelIDInt)
+      SalmonApparel(type: .body, id: apparelIDInt)
     case "shoes":
-      rewardApparelOptional = SalmonApparel(type: .foot, id: apparelIDInt)
+      SalmonApparel(type: .foot, id: apparelIDInt)
     default:
-      rewardApparelOptional = nil
+      nil
     }
     // strip nil - throw error if invalid type or invalid id
     guard let rewardApparel = rewardApparelOptional

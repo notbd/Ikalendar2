@@ -18,6 +18,7 @@ indentation: 2
 ### RULE SWITCHES
 
 disabled_rules:
+  - void_function_in_ternary
   - vertical_whitespace
   - identifier_name
   - nesting

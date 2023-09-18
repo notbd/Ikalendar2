@@ -21,11 +21,11 @@ struct SalmonRotationRow: View {
     // expired rotations already filtered out, so index will reflect truth
     switch index {
     case 0:
-      return rotation.isCurrent() ? .first(.active) : .first(.idle)
+      rotation.isCurrent() ? .first(.active) : .first(.idle)
     case 1:
-      return .second
+      .second
     default:
-      return .other
+      .other
     }
   }
 
@@ -69,16 +69,16 @@ extension SalmonRotationRow {
       case .first(let currentStatus):
         switch currentStatus {
         case .active:
-          return Scoped.FIRST_PREFIX_STRINGS.active
+          Scoped.FIRST_PREFIX_STRINGS.active
         case .idle:
-          return Scoped.FIRST_PREFIX_STRINGS.idle
+          Scoped.FIRST_PREFIX_STRINGS.idle
         }
 
       case .second:
-        return Scoped.SECOND_PREFIX_STRING
+        Scoped.SECOND_PREFIX_STRING
 
       case .other:
-        return nil
+        nil
       }
     }
   }

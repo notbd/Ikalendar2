@@ -33,16 +33,16 @@ struct AutoLoadingOverlay: View {
   private var iconName: String {
     switch autoLoadStatus {
     case .autoLoading:
-      return Scoped.LOADING_SFSYMBOL
+      Scoped.LOADING_SFSYMBOL
     case .autoLoaded(let loadedStatus):
       switch loadedStatus {
       case .success:
-        return Scoped.LOADED_SUCCESS_SFSYMBOL
+        Scoped.LOADED_SUCCESS_SFSYMBOL
       case .failure:
-        return Scoped.LOADED_FAILURE_SFSYMBOL
+        Scoped.LOADED_FAILURE_SFSYMBOL
       }
     case .idle:
-      return Scoped.REGULAR_SFSYMBOL
+      Scoped.REGULAR_SFSYMBOL
     }
   }
 }

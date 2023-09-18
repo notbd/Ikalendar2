@@ -19,9 +19,9 @@ extension MysteryWeapon {
   var name: String {
     switch self {
     case .green:
-      return "Mystery"
+      "Mystery"
     case .gold:
-      return "Mystery Grizzco"
+      "Mystery Grizzco"
     }
   }
 }
@@ -30,9 +30,9 @@ extension MysteryWeapon {
   var key: String {
     switch self {
     case .green:
-      return "Mystery"
+      "Mystery"
     case .gold:
-      return "Mystery Grizzco"
+      "Mystery Grizzco"
     }
   }
 }

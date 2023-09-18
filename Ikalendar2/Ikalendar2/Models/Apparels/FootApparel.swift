@@ -21,11 +21,11 @@ enum FootApparel: Int, Identifiable, CaseIterable, Equatable {
 extension FootApparel {
   var name: String {
     switch self {
-    case .angryRainBoots: return "Angry Rain Boots"
-    case .nonSlipSenseis: return "Non-slip Senseis"
-    case .friendshipBracelet: return "Friendship Bracelet"
-    case .flipperFloppers: return "Flipper Floppers"
-    case .woodenSandals: return "Wooden Sandals"
+    case .angryRainBoots: "Angry Rain Boots"
+    case .nonSlipSenseis: "Non-slip Senseis"
+    case .friendshipBracelet: "Friendship Bracelet"
+    case .flipperFloppers: "Flipper Floppers"
+    case .woodenSandals: "Wooden Sandals"
     }
   }
 }
@@ -33,11 +33,11 @@ extension FootApparel {
 extension FootApparel {
   var key: String {
     switch self {
-    case .angryRainBoots: return "Shs_COP101"
-    case .nonSlipSenseis: return "Shs_COP102"
-    case .friendshipBracelet: return "Shs_COP104"
-    case .flipperFloppers: return "Shs_COP105"
-    case .woodenSandals: return "Shs_COP106"
+    case .angryRainBoots: "Shs_COP101"
+    case .nonSlipSenseis: "Shs_COP102"
+    case .friendshipBracelet: "Shs_COP104"
+    case .flipperFloppers: "Shs_COP105"
+    case .woodenSandals: "Shs_COP106"
     }
   }
 }

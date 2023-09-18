@@ -24,38 +24,22 @@ struct RootView: View {
     MainView()
       .id(refreshableMainViewID)
       .onReceive(DynamicTextStyleObserver.shared.textSizeDidChange) { refreshViews() }
-      .onAppear {
-        // Apply correct colorScheme upon launch
-        IkaColorSchemeManager.shared.handleColorSchemeChange(for: ikaPreference.preferredAppColorScheme)
+      .onChange(of: ikaPreference.preferredAppColorScheme, initial: true) { _, newVal in
+        IkaColorSchemeManager.shared.handlePreferredColorSchemeChange(for: newVal)
       }
-      .onChange(of: ikaPreference.preferredAppColorScheme) { selectedColorScheme in
-        IkaColorSchemeManager.shared.handleColorSchemeChange(for: selectedColorScheme)
-      }
-      .if(isHorizontalCompact) {
-        $0
-          .fullScreenCover(isPresented: $ikaStatus.isSettingsPresented) {
-            SettingsMainView()
-              .environmentObject(ikaStatus)
-              .environmentObject(ikaPreference)
-              .accentColor(.orange)
-              .overlay(
-                AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
-                alignment: .bottomTrailing)
-              .interactiveDismissDisabled()
-          }
-      } else: {
-        $0
-          .sheet(isPresented: $ikaStatus.isSettingsPresented) {
-            SettingsMainView()
-              .environmentObject(ikaStatus)
-              .environmentObject(ikaPreference)
-              .accentColor(.orange)
-              .overlay(
-                AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
-                alignment: .bottomTrailing)
-              .interactiveDismissDisabled()
-          }
-      }
+      .if(isHorizontalCompact) { setUpFullScreenCoverSettingsModal($0) }
+      else: { setUpSheetSettingsModal($0) }
+  }
+
+  private var settingsModal: some View {
+    SettingsMainView()
+      .environmentObject(ikaStatus)
+      .environmentObject(ikaPreference)
+      .accentColor(.orange)
+      .overlay(
+        AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
+        alignment: .bottomTrailing)
+      .interactiveDismissDisabled()
   }
 
   // MARK: Lifecycle
@@ -66,6 +50,14 @@ struct RootView: View {
   }
 
   // MARK: Private
+
+  private func setUpFullScreenCoverSettingsModal(_ content: some View) -> some View {
+    content.fullScreenCover(isPresented: $ikaStatus.isSettingsPresented) { settingsModal }
+  }
+
+  private func setUpSheetSettingsModal(_ content: some View) -> some View {
+    content.sheet(isPresented: $ikaStatus.isSettingsPresented) { settingsModal }
+  }
 
   /// Force the view(s) to refresh when the text size changes in order to reflect the new NavBar title size.
   private func refreshViews() {

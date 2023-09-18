@@ -31,17 +31,17 @@ struct ModeIconStamp: View {
   private var axisRotationWeight: (x: CGFloat, y: CGFloat) {
     switch ikaInterfaceOrientationPublisher.currentOrientation {
     case .unknown:
-      return (dy, dx)
+      (dy, dx)
     case .portrait:
-      return (dy, dx)
+      (dy, dx)
     case .portraitUpsideDown:
-      return (-dy, -dx)
+      (-dy, -dx)
     case .landscapeLeft:
-      return (-dx, dy)
+      (-dx, dy)
     case .landscapeRight:
-      return (dx, -dy)
+      (dx, -dy)
     @unknown default:
-      return (dy, dx)
+      (dy, dx)
     }
   }
 
@@ -69,12 +69,11 @@ struct ModeIconStamp: View {
   }
 
   private var icon: some View {
-    let imgFiln: String
-    switch gameModeSelection {
+    let imgFiln: String = switch gameModeSelection {
     case .battle:
-      imgFiln = battleModeSelection.imgFilnLarge
+      battleModeSelection.imgFilnLarge
     case .salmon:
-      imgFiln = Scoped.ICON_IMG_FILN_SALMON
+      Scoped.ICON_IMG_FILN_SALMON
     }
 
     return

@@ -42,15 +42,15 @@ extension SalmonStage {
   var name: String {
     switch self {
     case .spawningGrounds:
-      return "Spawning Grounds"
+      "Spawning Grounds"
     case .maroonerSBay:
-      return "Marooner's Bay"
+      "Marooner's Bay"
     case .lostOutpost:
-      return "Lost Outpost"
+      "Lost Outpost"
     case .salmonidSmokeyard:
-      return "Salmonid Smokeyard"
+      "Salmonid Smokeyard"
     case .ruinsOfArkPolaris:
-      return "Ruins of Ark Polaris"
+      "Ruins of Ark Polaris"
     }
   }
 }

@@ -17,10 +17,8 @@ struct BattleRotationList: View {
   let specifiedBattleMode: BattleMode?
 
   private var battleRotations: [BattleRotation] {
-    let battleMode: BattleMode
-
-    if let specifiedBattleMode { battleMode = specifiedBattleMode }
-    else { battleMode = ikaStatus.currentBattleMode }
+    let battleMode: BattleMode = if let specifiedBattleMode { specifiedBattleMode }
+    else { ikaStatus.currentBattleMode }
 
     // filter: display current and future rotations only
     return

@@ -62,22 +62,22 @@ struct StageTitleLabelLayout: Layout {
     var labelX: CGFloat {
       switch anchor {
       case .bottomTrailing:
-        return bounds.maxX
+        bounds.maxX
       case .bottomLeading:
-        return bounds.minX
+        bounds.minX
       default:
-        return bounds.minX
+        bounds.minX
       }
     }
 
     var labelY: CGFloat {
       switch anchor {
       case .bottomTrailing:
-        return bounds.maxY
+        bounds.maxY
       case .bottomLeading:
-        return bounds.maxY
+        bounds.maxY
       default:
-        return bounds.minY
+        bounds.minY
       }
     }
 

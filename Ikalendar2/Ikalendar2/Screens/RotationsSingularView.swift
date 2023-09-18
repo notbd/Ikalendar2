@@ -35,7 +35,7 @@ struct RotationsSingularView: View {
           AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
           alignment: .bottomTrailing)
         .refreshable {
-          // Important: As of iOS 16.4 SDK, refresh operation must be wrapped inside a Task.
+          // Important: As of iOS 17.0 SDK, refresh operation must be wrapped inside a Task.
           // Failing to do so results in SwiftUI altering the view hierarchy upon pull-to-refresh, leading
           // to unintentional destruction of views and the subsequent cancellation of the network task.
           await Task { await ikaCatalog.refresh() }.value
@@ -70,9 +70,9 @@ struct RotationsSingularView: View {
   private var title: String {
     switch ikaStatus.currentGameMode {
     case .battle:
-      return ikaStatus.currentBattleMode.name
+      ikaStatus.currentBattleMode.name
     case .salmon:
-      return ikaStatus.currentGameMode.name
+      ikaStatus.currentGameMode.name
     }
   }
 

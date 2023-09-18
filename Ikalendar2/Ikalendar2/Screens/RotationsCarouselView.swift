@@ -35,11 +35,8 @@ struct RotationsCarouselView: View {
     .background {
       GeometryReader { geo in
         Color.clear
-          .onAppear {
-            windowWidth = geo.size.width
-          }
-          .onChange(of: geo.size) { size in
-            windowWidth = size.width
+          .onChange(of: geo.size, initial: true) { _, newVal in
+            windowWidth = newVal.width
           }
       }
     }

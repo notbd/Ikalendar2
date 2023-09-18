@@ -58,12 +58,8 @@ struct SettingsAdvancedOptionsView: View {
           .presentationBackground(.ultraThinMaterial)
           .interactiveDismissDisabled()
       }
-      .onAppear {
-        // sync rowWidth value
-        rowWidth = geo.size.width
-      }
-      .onChange(of: geo.size) { size in
-        rowWidth = size.width
+      .onChange(of: geo.size, initial: true) { _, newVal in
+        rowWidth = newVal.width
       }
     }
   }
@@ -75,7 +71,7 @@ struct SettingsAdvancedOptionsView: View {
         systemImage: Scoped.BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL)
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-    .onChange(of: ikaPreference.ifSwapBottomToolbarPickers) { _ in
+    .onChange(of: ikaPreference.ifSwapBottomToolbarPickers) {
       ifBottomToolbarPreviewPresented.toggle()
     }
   }

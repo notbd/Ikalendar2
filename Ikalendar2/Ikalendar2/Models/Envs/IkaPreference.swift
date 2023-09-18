@@ -38,7 +38,7 @@ final class IkaPreference: ObservableObject {
 
   /// User preferred color scheme
   @AppStorage(Constants.Key.AppStorage.PREFERRED_APP_COLOR_SCHEME)
-  var preferredAppColorScheme: IkaColorSchemeManager.PreferredAppColorScheme = .dark
+  var preferredAppColorScheme: IkaColorSchemeManager.PreferredColorScheme = .dark
   {
     willSet {
       if newValue != preferredAppColorScheme { SimpleHaptics.generateTask(.selection) }

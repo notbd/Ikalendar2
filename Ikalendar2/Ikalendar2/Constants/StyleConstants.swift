@@ -79,7 +79,7 @@ extension Constants.Style {
     static let ERROR_SECTION_SPACING_HEIGHT_RATIO: CGFloat = 0.14
     static let ERROR_IMG_HEIGHT_RATIO: CGFloat = 0.12
 
-    static let TEXT_SECTION_SPACING: CGFloat = 36
+    static let TEXT_SECTION_SPACING: CGFloat = 40
     static let MESSAGE_LINE_SPACING: CGFloat = 6
 
     static let IF_USE_CUSTOM_FONT = true
@@ -148,7 +148,7 @@ extension Constants.Style {
       static let VIEW_ON_APP_STORE_SFSYMBOL = "doc.viewfinder.fill"
 
       static let TWITTER_ICON_NAME = "twitter_xsmall"
-      static let TWITTER_ICON_SIDE_LEN: CGFloat = 17
+      static let TWITTER_ICON_SIDE_LEN: CGFloat = 22
       static let EMAIL_SFSYMBOL = "envelope"
 
       static let SOURCE_CODE_SFSYMBOL = "chevron.left.slash.chevron.right"

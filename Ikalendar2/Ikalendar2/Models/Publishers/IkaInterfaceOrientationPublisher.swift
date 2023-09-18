@@ -72,17 +72,17 @@ extension UIInterfaceOrientation {
   var description: String {
     switch self {
     case .unknown:
-      return "Unknown"
+      "Unknown"
     case .portrait:
-      return "Portrait"
+      "Portrait"
     case .portraitUpsideDown:
-      return "PortraitUpsideDown"
+      "PortraitUpsideDown"
     case .landscapeLeft:
-      return "LandscapeLeft"
+      "LandscapeLeft"
     case .landscapeRight:
-      return "LandscapeRight"
+      "LandscapeRight"
     @unknown default:
-      return "Unknown"
+      "Unknown"
     }
   }
 }

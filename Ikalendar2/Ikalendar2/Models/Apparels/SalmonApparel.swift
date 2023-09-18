@@ -53,44 +53,44 @@ extension SalmonApparel {
   var name: String {
     switch self {
     case .head(let apparel):
-      return apparel.name
+      apparel.name
     case .body(let apparel):
-      return apparel.name
+      apparel.name
     case .foot(let apparel):
-      return apparel.name
+      apparel.name
     }
   }
 
   var key: String {
     switch self {
     case .head(let apparel):
-      return apparel.key
+      apparel.key
     case .body(let apparel):
-      return apparel.key
+      apparel.key
     case .foot(let apparel):
-      return apparel.key
+      apparel.key
     }
   }
 
   var imgFiln: String {
     switch self {
     case .head(let apparel):
-      return apparel.imgFiln
+      apparel.imgFiln
     case .body(let apparel):
-      return apparel.imgFiln
+      apparel.imgFiln
     case .foot(let apparel):
-      return apparel.imgFiln
+      apparel.imgFiln
     }
   }
 
   var imgFilnSmall: String {
     switch self {
     case .head(let apparel):
-      return apparel.imgFilnSmall
+      apparel.imgFilnSmall
     case .body(let apparel):
-      return apparel.imgFilnSmall
+      apparel.imgFilnSmall
     case .foot(let apparel):
-      return apparel.imgFilnSmall
+      apparel.imgFilnSmall
     }
   }
 }

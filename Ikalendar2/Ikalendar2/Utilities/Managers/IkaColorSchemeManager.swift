@@ -16,7 +16,7 @@ final class IkaColorSchemeManager {
 
   static let shared = IkaColorSchemeManager()
 
-  enum PreferredAppColorScheme: String, Identifiable, CaseIterable {
+  enum PreferredColorScheme: String, Identifiable, CaseIterable {
     case system
     case dark
     case light
@@ -26,22 +26,22 @@ final class IkaColorSchemeManager {
     var name: String {
       switch self {
       case .system:
-        return "Follow System"
+        "Follow System"
       case .dark:
-        return "Dark"
+        "Dark"
       case .light:
-        return "Light"
+        "Light"
       }
     }
 
     var sfSymbol: String {
       switch self {
       case .system:
-        return "macbook.and.iphone"
+        "macbook.and.iphone"
       case .dark:
-        return "moon.fill"
+        "moon.fill"
       case .light:
-        return "sun.max.fill"
+        "sun.max.fill"
       }
     }
 
@@ -65,9 +65,9 @@ final class IkaColorSchemeManager {
 
   /// Changes the app's color scheme according to the given colorScheme.
   ///
-  /// - Parameter colorScheme: The desired color scheme, which could be system, dark, or light.
+  /// - Parameter preferredColorScheme: The desired color scheme: system, dark, or light.
   /// - Note: The transition between the color schemes is animated for a smooth user experience.
-  func handleColorSchemeChange(for colorScheme: PreferredAppColorScheme) {
+  func handlePreferredColorSchemeChange(for preferredColorScheme: PreferredColorScheme) {
     guard let keyWindow else { return }
 
     UIView.transition(
@@ -75,7 +75,7 @@ final class IkaColorSchemeManager {
       duration: 0.25,
       options: .transitionCrossDissolve,
       animations: {
-        switch colorScheme {
+        switch preferredColorScheme {
         case .system:
           keyWindow.overrideUserInterfaceStyle = .unspecified
         case .dark:

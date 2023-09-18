@@ -19,45 +19,45 @@ enum IkaLocale {
   var description: String {
     switch self {
     case .en:
-      return Constants.Key.Locale.EN
+      Constants.Key.Locale.EN
     case .ja:
-      return Constants.Key.Locale.JA
+      Constants.Key.Locale.JA
     case .zhHans:
-      return Constants.Key.Locale.ZH_HANS
+      Constants.Key.Locale.ZH_HANS
     case .zhHant:
-      return Constants.Key.Locale.ZH_HANT
+      Constants.Key.Locale.ZH_HANT
     case .unknown:
-      return Constants.Key.Placeholder.UNKNOWN
+      Constants.Key.Placeholder.UNKNOWN
     }
   }
 
   var splatoon2Site: String {
     switch self {
     case .en:
-      return Constants.Key.URL.Splatoon2Site.EN
+      Constants.Key.URL.Splatoon2Site.EN
     case .ja:
-      return Constants.Key.URL.Splatoon2Site.JA
+      Constants.Key.URL.Splatoon2Site.JA
     case .zhHans:
-      return Constants.Key.URL.Splatoon2Site.ZH_HANS
+      Constants.Key.URL.Splatoon2Site.ZH_HANS
     case .zhHant:
-      return Constants.Key.URL.Splatoon2Site.ZH_HANT
+      Constants.Key.URL.Splatoon2Site.ZH_HANT
     case .unknown:
-      return Constants.Key.URL.Splatoon2Site.EN
+      Constants.Key.URL.Splatoon2Site.EN
     }
   }
 
   var nintendoSite: String {
     switch self {
     case .en:
-      return Constants.Key.URL.NintendoSite.EN
+      Constants.Key.URL.NintendoSite.EN
     case .ja:
-      return Constants.Key.URL.NintendoSite.JA
+      Constants.Key.URL.NintendoSite.JA
     case .zhHans:
-      return Constants.Key.URL.NintendoSite.ZH_HANS
+      Constants.Key.URL.NintendoSite.ZH_HANS
     case .zhHant:
-      return Constants.Key.URL.NintendoSite.ZH_HANT
+      Constants.Key.URL.NintendoSite.ZH_HANT
     case .unknown:
-      return Constants.Key.URL.NintendoSite.EN
+      Constants.Key.URL.NintendoSite.EN
     }
   }
 
