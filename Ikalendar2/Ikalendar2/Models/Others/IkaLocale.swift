@@ -30,6 +30,37 @@ enum IkaLocale {
       return Constants.Key.Placeholder.UNKNOWN
     }
   }
+
+  var splatoon2Site: String {
+    switch self {
+    case .en:
+      return Constants.Key.URL.Splatoon2Site.EN
+    case .ja:
+      return Constants.Key.URL.Splatoon2Site.JA
+    case .zhHans:
+      return Constants.Key.URL.Splatoon2Site.ZH_HANS
+    case .zhHant:
+      return Constants.Key.URL.Splatoon2Site.ZH_HANT
+    case .unknown:
+      return Constants.Key.URL.Splatoon2Site.EN
+    }
+  }
+
+  var nintendoSite: String {
+    switch self {
+    case .en:
+      return Constants.Key.URL.NintendoSite.EN
+    case .ja:
+      return Constants.Key.URL.NintendoSite.JA
+    case .zhHans:
+      return Constants.Key.URL.NintendoSite.ZH_HANS
+    case .zhHant:
+      return Constants.Key.URL.NintendoSite.ZH_HANT
+    case .unknown:
+      return Constants.Key.URL.NintendoSite.EN
+    }
+  }
+
 }
 
 extension IkaLocale {

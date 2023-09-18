@@ -227,9 +227,11 @@ struct SettingsAboutView: View {
   private var rowSourceCode: some View {
     let repoName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
     let repoURLString = Constants.Key.URL.SOURCE_CODE_REPO
-    let destination = DetailsLicenseView(
-      repoName: repoName,
-      repoURLString: repoURLString)
+    let destination =
+      DetailsLicenseView(
+        repoName: repoName,
+        repoURLString: repoURLString,
+        ifLinkable: true)
 
     return
       NavigationLink(destination: destination) {

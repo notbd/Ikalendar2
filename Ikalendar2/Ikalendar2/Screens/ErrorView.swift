@@ -25,6 +25,9 @@ struct ErrorView: View {
             .frame(height: geo.size.height * Scoped.ERROR_SECTION_PADDING_TOP_HEIGHT_RATIO)
 
           errorText
+            // Note: Text() bug as of iOS 16.4 SDK.
+            //  The following line is to prevent the text from being truncated.
+            .fixedSize(horizontal: false, vertical: true)
             .hAlignment(.leading)
 
           Spacer()
@@ -55,7 +58,9 @@ struct ErrorView: View {
         } else: {
           $0.font(.system(.largeTitle, design: .rounded))
         }
-        .padding(.bottom, Scoped.TEXT_SECTION_SPACING)
+
+      Spacer()
+        .frame(height: Scoped.TEXT_SECTION_SPACING)
 
       Text(error.message.localizedStringKey)
         .lineSpacing(Scoped.MESSAGE_LINE_SPACING)

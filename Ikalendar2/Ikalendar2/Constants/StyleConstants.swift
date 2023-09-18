@@ -157,7 +157,7 @@ extension Constants.Style {
 
     enum Credits {
       static let CELL_SPACING_V: CGFloat = 5
-      static let CONTENT_FONT_PRIMARY: Font.TextStyle = .headline
+      static let CONTENT_FONT_PRIMARY: Font.TextStyle = .callout
       static let CONTENT_FONT_SECONDARY: Font.TextStyle = .footnote
     }
 
@@ -176,8 +176,8 @@ extension Constants.Style {
 
   enum Rotation {
     enum Label {
-      static let TEXT_PADDING_H: CGFloat = 5
-      static let TEXT_PADDING_V: CGFloat = 2
+      static let TEXT_PADDING_H: CGFloat = 6
+      static let TEXT_PADDING_V: CGFloat = 3
       static let BACKGROUND_CORNER_RADIUS: CGFloat = 4
     }
 

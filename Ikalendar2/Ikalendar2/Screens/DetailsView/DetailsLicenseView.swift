@@ -20,6 +20,7 @@ struct DetailsLicenseView: View {
 
   let repoName: String
   let repoURLString: String
+  let ifLinkable: Bool
 
   @State private var licenseViewModel: IkaOpenSourceLicense?
   @State private var ifError: Bool = false
@@ -35,7 +36,9 @@ struct DetailsLicenseView: View {
     }
     .navigationTitle(repoName)
     .navigationBarTitleDisplayMode(.large)
-    .navigationBarItems(trailing: externalLinkButton)
+    .if(ifLinkable) {
+      $0.navigationBarItems(trailing: externalLinkButton)
+    }
     .onAppear {
       Task {
         try? await Task.sleep(
@@ -124,6 +127,7 @@ struct LicenseDetailsView_Previews: PreviewProvider {
   static var previews: some View {
     DetailsLicenseView(
       repoName: "SwiftyJSON",
-      repoURLString: "https://github.com/SwiftyJSON/SwiftyJSON")
+      repoURLString: "https://github.com/SwiftyJSON/SwiftyJSON",
+      ifLinkable: true)
   }
 }

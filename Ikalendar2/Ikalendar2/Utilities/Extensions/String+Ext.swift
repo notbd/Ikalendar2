@@ -64,7 +64,8 @@ extension String {
 
     let host = url.host ?? ""
     let path = url.path
-    let hostAndPath = host + path
+    var hostAndPath = host + path
+    if hostAndPath.hasSuffix("/") { hostAndPath = String(hostAndPath.dropLast()) }
 
     guard let baseURLString else { return hostAndPath }
     guard URL(string: baseURLString) != nil else { return nil }

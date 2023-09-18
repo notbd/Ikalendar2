@@ -54,9 +54,11 @@
 "Data Source" = "Data Source";
 "Open Source Libraries" = "Open Source Libraries";
 "%@ be licensed under" = "%@ is licensed under the";
-
 "Splatoon™ 2" = "Splatoon™ 2";
-"Official Website" = "Official Website";
+"Splatoon™ 2 Official Website" = "Splatoon™ 2 Official Website";
+"Nintendo® Official Website" = "Nintendo® Official Website";
+"key.disclaimer.copyright" =
+" ikalendar2 is an independent companion app for Splatoon 2 and is not affiliated with Nintendo. All item names, logos, and trademarks are the property of their respective owners.";
 
 // MARK: - Error
 

@@ -35,15 +35,13 @@ extension Constants.Key {
   }
 
   enum URL {
-    static let TWITTER_BASE = "https://twitter.com"
-    static let GITHUB_BASE = "https://github.com"
-
     static let BATTLE_ROTATIONS = "https://splatoon2.ink/data/schedules.json"
     static let SALMON_ROTATIONS = "https://splatoon2.ink/data/coop-schedules.json"
     static let SALMON_APPAREL_INFO = "https://splatoon2.ink/data/timeline.json"
 
-    static let NINTENDO_SPLATOON2_PAGE =
-      "https://www.nintendo.com/store/products/splatoon-2-switch/"
+    static let TWITTER_BASE = "https://twitter.com"
+    static let GITHUB_BASE = "https://github.com"
+
     static let DEVELOPER_TWITTER = "https://twitter.com/defnotbd"
     static let DEVELOPER_EMAIL = "mailto:defnotbd@outlook.com"
     static let APP_STORE_PAGE = "https://apps.apple.com/app/id1529193361"
@@ -53,6 +51,20 @@ extension Constants.Key {
     static let PRIVACY_POLICY = "https://github.com/notbd/Ikalendar2/wiki/Privacy-Policy"
 
     static let THE_GOOD_STUFF = "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // good stuff indeed!
+
+    enum Splatoon2Site {
+      static let EN = "https://nintendo.com/my/switch/aab6/index.html"
+      static let JA = "https://nintendo.co.jp/switch/aab6a/index.html"
+      static let ZH_HANS = "https://nintendo.tw/splatoon2/"
+      static let ZH_HANT = "https://nintendo.tw/splatoon2/"
+    }
+
+    enum NintendoSite {
+      static let EN = "https://nintendo.com/"
+      static let JA = "https://nintendo.co.jp/"
+      static let ZH_HANS = "https://nintendoswitch.com.cn/"
+      static let ZH_HANT = "https://nintendo.tw/"
+    }
   }
 
   enum Locale {
@@ -60,6 +72,10 @@ extension Constants.Key {
     static let JA = "日本語"
     static let ZH_HANS = "简体中文(beta)"
     static let ZH_HANT = "繁體中文(beta)"
+  }
+
+  enum Disclaimer {
+    static let COPYRIGHT = "key.disclaimer.copyright"
   }
 
   enum Error {

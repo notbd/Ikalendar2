@@ -263,7 +263,6 @@ struct SettingsMainView: View {
 
   private var doneButton: some View {
     Button {
-//      SimpleHaptics.generateTask(.medium)
       dismiss()
     } label: {
       Text("Done")
