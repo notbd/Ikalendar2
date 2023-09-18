@@ -212,13 +212,18 @@ extension Constants.Style {
           static let CELL_PADDING_BOTTOM: CGFloat = 6
 
           static let RULE_SECTION_SPACING: CGFloat = 8
-          static let RULE_IMG_MAX_WIDTH_RATIO: CGFloat = 0.115
-          static let RULE_FONT_SIZE_COMPACT: CGFloat = 26
-          static let RULE_FONT_SIZE_REGULAR: CGFloat = 48
-          static let RULE_SECTION_MAX_WIDTH_RATIO: CGFloat = 0.45
+          static let RULE_SECTION_PADDING_LEADING: CGFloat = 10
+
+          static let RULE_TITLE_FONT_SIZE_MAX: CGFloat = 48
+          static let RULE_TITLE_TEXT_STYLE_RELATIVE_TO: Font.TextStyle = .title
+          static let RULE_TITLE_PADDING_V: CGFloat = 4
+
+          static let RULE_SECTION_WIDTH_RATIO: CGFloat = 0.45
+          static let RULE_SECTION_HEIGHT_RATIO: CGFloat = 0.115
 
           static let REMAINING_TIME_FONT_SIZE: CGFloat = 15
-          static let REMAINING_TIME_TEXT_MAX_WIDTH_RATIO: CGFloat = 0.32
+          static let REMAINING_TIME_TEXT_STYLE_RELATIVE_TO: Font.TextStyle = .headline
+          static let REMAINING_TIME_SECTION_WIDTH_RATIO: CGFloat = 0.32
         }
 
         enum Secondary {

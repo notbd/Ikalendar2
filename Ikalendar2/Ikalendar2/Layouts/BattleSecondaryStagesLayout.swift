@@ -8,18 +8,19 @@
 import SwiftUI
 
 /// `BattleSecondaryStagesLayout` is a custom layout designed to position two stage cards
-/// horizontally within a parent view. It aims to align the images in both stage cards
-/// while accounting for variable text lengths in the titles.
+/// horizontally within a parent view. It aims to horizontally align the images of the two stage
+/// cards while accounting for variable text height in the titles.
 ///
-/// Lays out the two stage cards and horizontally with equal width. Propose the height of the
-/// minimal ideal height of the two stage cards. The cards might have different ideal heights
-/// due to the potential scaling of the title.
+/// It lays out the two stage cards horizontally with equal width and propose the height of the
+/// minimal ideal height of the two stage cards to its parent view. The two cards might have
+/// different ideal heights due to the potential scaling of the title.
 /// Since the image is set to have higher layout priority than the title, having same width
 /// for the two stage cards will ensure their images aligns correctly as well.
 ///
 /// - Precondition:
 ///   - The proposed width must already be set.
 ///   - Must have exactly two subviews: one for the stage and one for the weapons.
+///
 struct BattleSecondaryStagesLayout: Layout {
 
   // MARK: Internal

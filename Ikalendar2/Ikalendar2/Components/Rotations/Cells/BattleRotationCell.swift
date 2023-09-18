@@ -121,24 +121,28 @@ struct BattleRotationCellPrimary: View {
           in: animationNamespaces.ruleIcon)
         .scaledToFit()
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-        .frame(maxWidth: rowWidth * Scoped.RULE_IMG_MAX_WIDTH_RATIO)
+        .layoutPriority(1)
 
       // Rule title
-      Text(rotation.rule.name.localizedStringKey)
-        .matchedGeometryEffect(
-          id: rotation.id,
-          in: animationNamespaces.ruleTitle)
-        .scaledLimitedLine()
-        .ikaFont(
-          .ika2,
-          size: isHorizontalCompact
-            ? Scoped.RULE_FONT_SIZE_COMPACT
-            : Scoped.RULE_FONT_SIZE_REGULAR,
-          relativeTo: .title)
+      BattlePrimaryRuleTitleTextLayout {
+        // actual rule title
+        BattleRotationCellPrimaryRuleTitleText(battleRule: rotation.rule)
+
+        // all other possible rule titles for the layout to compute ideal size
+        ForEach(BattleRule.allCases) { rule in
+          BattleRotationCellPrimaryRuleTitleText(battleRule: rule)
+        }
+      }
+      .matchedGeometryEffect(
+        id: rotation.id,
+        in: animationNamespaces.ruleTitle)
+      .padding(.vertical, Scoped.RULE_TITLE_PADDING_V)
     }
     .frame(
-      maxWidth: rowWidth * Scoped.RULE_SECTION_MAX_WIDTH_RATIO,
+      width: rowWidth * Scoped.RULE_SECTION_WIDTH_RATIO,
+      height: rowWidth * Scoped.RULE_SECTION_HEIGHT_RATIO,
       alignment: .leading)
+    .hAlignment(.leading)
   }
 
   // MARK: Remaining Time Section
@@ -150,10 +154,27 @@ struct BattleRotationCellPrimary: View {
       .ikaFont(
         .ika2,
         size: Scoped.REMAINING_TIME_FONT_SIZE,
-        relativeTo: .headline)
+        relativeTo: Scoped.REMAINING_TIME_TEXT_STYLE_RELATIVE_TO)
       .frame(
-        maxWidth: rowWidth * Scoped.REMAINING_TIME_TEXT_MAX_WIDTH_RATIO,
+        width: rowWidth * Scoped.REMAINING_TIME_SECTION_WIDTH_RATIO,
         alignment: .trailing)
+  }
+}
+
+// MARK: - BattleRotationCellPrimaryRuleTitleText
+
+struct BattleRotationCellPrimaryRuleTitleText: View {
+  typealias Scoped = Constants.Style.Rotation.Battle.Cell.Primary
+
+  let battleRule: BattleRule
+
+  var body: some View {
+    Text(battleRule.name.localizedStringKey)
+      .scaledLimitedLine()
+      .ikaFont(
+        .ika2,
+        size: Scoped.RULE_TITLE_FONT_SIZE_MAX,
+        relativeTo: Scoped.RULE_TITLE_TEXT_STYLE_RELATIVE_TO)
   }
 }
 

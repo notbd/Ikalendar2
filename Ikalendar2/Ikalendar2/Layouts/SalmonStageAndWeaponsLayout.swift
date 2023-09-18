@@ -16,6 +16,7 @@ import SwiftUI
 /// - Precondition:
 ///   - The proposed width must already be set.
 ///   - Must have exactly two subviews: one for the stage and one for the weapons.
+///
 struct SalmonStageAndWeaponsLayout: Layout {
 
   // MARK: Internal
