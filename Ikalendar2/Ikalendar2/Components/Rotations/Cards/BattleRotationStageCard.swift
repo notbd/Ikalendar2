@@ -97,7 +97,6 @@ struct BattleRotationStageCardSecondary: View {
         .scaledToFit()
         .cornerRadius(Scoped.IMG_CORNER_RADIUS)
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-        .offset(y: Scoped.STAGE_IMG_OFFSET_Y)
         .alignmentGuide(.battleStagesImageAlignment) { $0[.bottom] }
         .layoutPriority(1)
 

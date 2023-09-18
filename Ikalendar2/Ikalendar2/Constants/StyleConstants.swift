@@ -250,9 +250,8 @@ extension Constants.Style {
         }
 
         enum Secondary {
-          static let SPACING_V: CGFloat = 8
+          static let SPACING_V: CGFloat = 6
           static let IMG_CORNER_RADIUS: CGFloat = 4
-          static let STAGE_IMG_OFFSET_Y: CGFloat = 6
           static let FONT_SIZE: CGFloat = 12
         }
       }
