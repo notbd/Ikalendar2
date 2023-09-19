@@ -148,7 +148,7 @@ struct BattleRotationCellPrimary: View {
   // MARK: Remaining Time Section
 
   private var remainingTimeSection: some View {
-    Text(ikaTimePublisher.currentTime.toTimeRemainingString(until: rotation.endTime))
+    Text(ikaTimePublisher.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
       .scaledLimitedLine()
       .foregroundColor(.secondary)
       .ikaFont(

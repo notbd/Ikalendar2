@@ -227,7 +227,7 @@ extension Constants.Style {
         }
 
         enum Secondary {
-          static let RULE_SECTION_SPACING: CGFloat = 4
+          static let RULE_SECTION_SPACING: CGFloat = 2
 
           static let RULE_IMG_MAX_WIDTH: CGFloat = 0.1
           static let RULE_IMG_PADDING: CGFloat = 5
@@ -250,7 +250,7 @@ extension Constants.Style {
         }
 
         enum Secondary {
-          static let SPACING_V: CGFloat = 6
+          static let SPACING_V: CGFloat = 4
           static let IMG_CORNER_RADIUS: CGFloat = 4
           static let FONT_SIZE: CGFloat = 12
         }

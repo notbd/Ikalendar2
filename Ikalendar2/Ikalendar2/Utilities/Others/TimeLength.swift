@@ -33,33 +33,35 @@ struct TimeLength {
   /// Generate a localized string representation for the interval.
   ///   - locale: The locale of the translation(default to .current).
   /// - Returns: The localized description String.
-  func getLocalizedStringDescription(locale: Locale = .current) -> String {
+  func getLocalizedDescriptionString(locale: Locale = .current) -> String {
     var elements: [String] = []
+
     if days > 0 {
-      elements.append(String(days) + String.localizedString(for: "days"))
+      elements.append(String(days) + String(localized: "days"))
     }
 
     if hours > 0 {
-      elements.append(String(hours) + String.localizedString(for: "hours"))
+      elements.append(String(hours) + String(localized: "hours"))
     }
 
     if minutes > 0 {
-      elements.append(String(minutes) + String.localizedString(for: "minutes"))
+      elements.append(String(minutes) + String(localized: "minutes"))
     }
+
     // Always include seconds
-    elements.append(String(seconds) + String.localizedString(for: "seconds"))
+    elements.append(String(seconds) + String(localized: "seconds"))
 
     // Japanese
     if locale.identifier.starts(with: "ja") {
       return elements.joined()
     }
 
-    // Simplified Han
+    // Simplified Chinese
     else if locale.identifier.starts(with: "zh_Hans") {
       return elements.joined()
     }
 
-    // Traditional Han
+    // Traditional Chinese
     else if locale.identifier.starts(with: "zh_Hant") {
       return elements.joined()
     }

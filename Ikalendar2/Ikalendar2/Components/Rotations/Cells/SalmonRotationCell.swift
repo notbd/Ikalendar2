@@ -54,7 +54,7 @@ struct SalmonRotationCell: View {
       value: min(ikaTimePublisher.currentTime, rotation.endTime) - rotation.startTime,
       total: rotation.endTime - rotation.startTime,
       label: {
-        Text(ikaTimePublisher.currentTime.toTimeRemainingString(until: rotation.endTime))
+        Text(ikaTimePublisher.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
           .scaledLimitedLine()
           .ikaFont(
             .ika2,

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension Date {
   /// Get the TimeInterval between two Dates.
@@ -51,13 +52,13 @@ extension Date {
     else { return timeString }
 
     guard !Calendar.current.isDateInToday(self)
-    else { return String.localizedString(for: "Today") + " " + timeString }
+    else { return String(localized: "Today") + " " + timeString }
 
     guard !Calendar.current.isDateInYesterday(self)
-    else { return String.localizedString(for: "Yesterday") + " " + timeString }
+    else { return String(localized: "Yesterday") + " " + timeString }
 
     guard !Calendar.current.isDateInTomorrow(self)
-    else { return String.localizedString(for: "Tomorrow") + " " + timeString }
+    else { return String(localized: "Tomorrow") + " " + timeString }
 
     // should not happen, but in case other than Today, Yesterday or Tomorrow
     return timeString
@@ -77,52 +78,52 @@ extension Date {
     else { return timeString }
 
     guard !Calendar.current.isDateInToday(self)
-    else { return String.localizedString(for: "Today") + " " + timeString }
+    else { return String(localized: "Today") + " " + timeString }
 
     guard !Calendar.current.isDateInYesterday(self)
-    else { return String.localizedString(for: "Yesterday") + " " + timeString }
+    else { return String(localized: "Yesterday") + " " + timeString }
 
     guard !Calendar.current.isDateInTomorrow(self)
-    else { return String.localizedString(for: "Tomorrow") + " " + timeString }
+    else { return String(localized: "Tomorrow") + " " + timeString }
 
     // other than Today, Yesterday or Tomorrow
     let dateString = Date.ikaDateFormatter.string(from: self)
     return dateString + timeString
   }
 
-  /// Convert the Date to a time remaining string.
+  /// Convert a Date to the string key for the remaining time.
   /// - Parameter deadline: The deadline to compute the remaining time from.
-  /// - Returns: The remaining time string.
-  func toTimeRemainingString(until deadline: Date) -> String {
+  /// - Returns: The string key for remaining time.
+  func toTimeRemainingStringKey(until deadline: Date) -> LocalizedStringKey {
     let remainingTime = Int(deadline - self)
     // if time has already passed
-    if remainingTime < 0 { return String.localizedString(for: "Time's Up") }
+    if remainingTime < 0 { return "Time's Up" }
     // convert time interval to TimeLength
     let days = remainingTime / (24 * 60 * 60)
     let hours = (remainingTime / (60 * 60)) % 24
     let minutes = (remainingTime / 60) % 60
     let seconds = remainingTime % 60
     let timeLength = TimeLength(days: days, hours: hours, minutes: minutes, seconds: seconds)
-    let timeLengthString = timeLength.getLocalizedStringDescription()
+    let timeLengthString = timeLength.getLocalizedDescriptionString()
 
-    return String(localized: "remaining \(timeLengthString)")
+    return "remaining \(timeLengthString)"
   }
 
-  /// Convert the Date to a time until string.
+  /// Convert a Date to the string key for the until time.
   /// - Parameter deadline: The deadline to compute the remaining time from.
-  /// - Returns: The until time string.
-  func toTimeUntilString(until deadline: Date) -> String {
+  /// - Returns: The string key for until time.
+  func toTimeUntilStringKey(until deadline: Date) -> LocalizedStringKey {
     let untilTime = Int(deadline - self)
     // if time has already passed
-    if untilTime < 0 { return String.localizedString(for: "Time's Up") }
+    if untilTime < 0 { return "Time's Up" }
     // convert time interval to TimeLength
     let days = untilTime / (24 * 60 * 60)
     let hours = (untilTime / (60 * 60)) % 24
     let minutes = (untilTime / 60) % 60
     let seconds = untilTime % 60
     let timeLength = TimeLength(days: days, hours: hours, minutes: minutes, seconds: seconds)
-    let timeLengthString = timeLength.getLocalizedStringDescription()
+    let timeLengthString = timeLength.getLocalizedDescriptionString()
 
-    return String(localized: "\(timeLengthString) until")
+    return "\(timeLengthString) until"
   }
 }

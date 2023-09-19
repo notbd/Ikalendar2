@@ -115,7 +115,7 @@ struct SalmonRotationHeader: View {
         case .first(let currentStatus) = rowType,
         currentStatus == .idle
       {
-        Text(ikaTimePublisher.currentTime.toTimeUntilString(until: rotation.startTime))
+        Text(ikaTimePublisher.currentTime.toTimeUntilStringKey(until: rotation.startTime))
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
