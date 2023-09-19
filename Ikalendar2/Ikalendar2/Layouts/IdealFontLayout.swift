@@ -5,6 +5,22 @@
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
+/// `IdealFontLayout` is a custom layout designed to optimize the display of text within a parent view.
+/// The layout computes the ideal dimensions for the text based on the provided anchor point and scales
+/// the text accordingly to have a consistent look.
+///
+/// The parent view should provide a proposed width and height. The layout scales the text to fit 
+/// within these bounds while maintaining an ideal font size that allows all possible content to be in
+/// and fit within the bounds.
+///
+/// - Important:
+///   - This layout is anchor-agnostic and can align text based on a variety of anchor points.
+///
+/// - Precondition:
+///   - The proposed width and height must already be set.
+///   - The first subview is the actual text view that is going to be displayed. The rest of the subviews
+///     are considered for computing the ideal size but will not be displayed.
+///
 import SwiftUI
 
 struct IdealFontLayout: Layout {
