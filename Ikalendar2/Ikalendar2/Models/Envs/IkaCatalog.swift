@@ -37,7 +37,10 @@ final class IkaCatalog: ObservableObject {
 
       switch newValue {
       case .loading:
-        SimpleHaptics.generateTask(.light)
+        // Note: As of iOS 17.0 SDK, `.refreshable` comes with a default haptic feedback without
+        //  providing a native option to turn it off. Thus we manually disable it here until there
+        //  is a way to disable `.refreshable` haptic feedback.
+        break
       case .loaded:
         SimpleHaptics.generateTask(.success)
       case .error:

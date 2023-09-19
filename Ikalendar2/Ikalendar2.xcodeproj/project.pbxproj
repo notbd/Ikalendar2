@@ -103,6 +103,7 @@
 		79DD1F3B2A5B8A800093784D /* IkaNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DD1F3A2A5B8A800093784D /* IkaNetworkManager.swift */; };
 		79E7EA982AB683C600C9C68F /* VariableBlurView in Frameworks */ = {isa = PBXBuildFile; productRef = 79E7EA972AB683C600C9C68F /* VariableBlurView */; };
 		79EE3AB32AB935E900409733 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79EE3AB52AB935E900409733 /* Localizable.strings */; };
+		79EE3AB82AB951E900409733 /* IdealFontLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EE3AB72AB951E900409733 /* IdealFontLayout.swift */; };
 		79F90AF82AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AF72AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift */; };
 		79F90AFA2AB1112700B454B9 /* IkaLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AF92AB1112700B454B9 /* IkaLocale.swift */; };
 		79F90AFE2AB24DC000B454B9 /* RotationsCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */; };
@@ -206,6 +207,7 @@
 		79E7EA9D2AB6E16100C9C68F /* Ikalendar2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ikalendar2.entitlements; sourceTree = "<group>"; };
 		79EE3AB42AB935E900409733 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		79EE3AB62AB935EE00409733 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		79EE3AB72AB951E900409733 /* IdealFontLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdealFontLayout.swift; sourceTree = "<group>"; };
 		79F90AF72AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaInterfaceOrientationPublisher.swift; sourceTree = "<group>"; };
 		79F90AF92AB1112700B454B9 /* IkaLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaLocale.swift; sourceTree = "<group>"; };
 		79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationsCarouselView.swift; sourceTree = "<group>"; };
@@ -424,9 +426,10 @@
 		799235A82AB2DA990071AA72 /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
+				79EE3AB72AB951E900409733 /* IdealFontLayout.swift */,
 				7933C2C32AB7BA7D0008C3C7 /* BattlePrimaryRuleTitleTextLayout.swift */,
-				7933C2C52AB7C9080008C3C7 /* StageTitleLabelLayout.swift */,
 				799235AF2AB394D30071AA72 /* BattleSecondaryStagesLayout.swift */,
+				7933C2C52AB7C9080008C3C7 /* StageTitleLabelLayout.swift */,
 				799235AA2AB2DAD60071AA72 /* SalmonStageAndWeaponsLayout.swift */,
 				799235AC2AB3922E0071AA72 /* Alignments */,
 			);
@@ -844,6 +847,7 @@
 				797EA6902AAD16620095A23B /* IkaOpenSourceLicense.swift in Sources */,
 				7903FE7028C46CEF00245586 /* SettingsAltAppIconView.swift in Sources */,
 				79AA713428C4056700A91055 /* IkaTimePublisher.swift in Sources */,
+				79EE3AB82AB951E900409733 /* IdealFontLayout.swift in Sources */,
 				7943DFC32AB5398D0047250E /* SalmonRotationList.swift in Sources */,
 				7903FE4B28C45E7D00245586 /* String+Ext.swift in Sources */,
 				7903FE8B28C46F7A00245586 /* SalmonRotationWeaponsCard.swift in Sources */,
@@ -1014,7 +1018,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4661;
+				CURRENT_PROJECT_VERSION = 4697;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1054,7 +1058,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4661;
+				CURRENT_PROJECT_VERSION = 4697;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

@@ -17,35 +17,32 @@ struct RotationsSingularView: View {
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   var body: some View {
-    // Note: iOS 17.0 SDK introduces a new bug where ZStack would interfere with the pull-to-refresh.
-    //  Putting custom overlays over the content could cause the refresh to be prematurely triggered.
-//    ZStack {
-    content
-      .apply(setToolbarItems)
-      .navigationTitle(title.localizedStringKey)
-      .overlay(
-        ModeIconStamp(
-          gameModeSelection: ikaStatus.currentGameMode,
-          battleModeSelection: ikaStatus.currentBattleMode,
-          ifOffset: true)
-          .animation(
-            Constants.Config.Animation.appDefault,
-            value: "\(ikaStatus.currentGameMode)-\(ikaStatus.currentBattleMode)"),
+    ZStack {
+      content
+        .apply(setToolbarItems)
+        .navigationTitle(title.localizedStringKey)
+        .overlay(
+          ModeIconStamp(
+            gameModeSelection: ikaStatus.currentGameMode,
+            battleModeSelection: ikaStatus.currentBattleMode,
+            ifOffset: true)
+            .animation(
+              Constants.Config.Animation.appDefault,
+              value: "\(ikaStatus.currentGameMode)-\(ikaStatus.currentBattleMode)"),
 
-        alignment: .topTrailing)
-      .overlay(
-        AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
-        alignment: .bottomTrailing)
-      .refreshable {
-        // Note: As of iOS 17.0 SDK, refresh operation must be wrapped inside a Task.
-        //  Failing to do so results in SwiftUI altering the view hierarchy upon pull-to-refresh, leading
-        //  to unintentional destruction of views and the subsequent cancellation of the network task.
-        await Task { await ikaCatalog.refresh() }.value
-      }
+          alignment: .topTrailing)
+        .overlay(
+          AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
+          alignment: .bottomTrailing)
+        .refreshable {
+          // Note: As of iOS 17.0 SDK, refresh operation must be wrapped inside a Task.
+          //  Failing to do so results in SwiftUI altering the view hierarchy upon pull-to-refresh, leading
+          //  to unintentional destruction of views and the subsequent cancellation of the network task.
+          await Task { await ikaCatalog.refresh() }.value
+        }
 
-//      LoadingOverlay(loadStatus: ikaCatalog.loadStatus)
-//        .allowsHitTesting(false)
-//    }
+      LoadingOverlay(loadStatus: ikaCatalog.loadStatus)
+    }
   }
 
   private var content: some View {

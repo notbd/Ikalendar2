@@ -20,9 +20,10 @@ struct LoadingOverlay: View {
   }
 
   var body: some View {
-    Spacer()
-      .background(.ultraThinMaterial)
+    Color.clear
       .edgesIgnoringSafeArea(.all)
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .background(.ultraThinMaterial)
       .opacity(isLoading ? 1 : 0)
       .animation(
         Constants.Config.Animation.appDefault,
