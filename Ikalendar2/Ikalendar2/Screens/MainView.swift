@@ -15,6 +15,8 @@ struct MainView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
+  @EnvironmentObject private var ikaCatalog: IkaCatalog
+
   var body: some View {
     NavigationStack {
       if isHorizontalCompact {
