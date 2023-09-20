@@ -66,9 +66,16 @@ struct SettingsAdvancedOptionsView: View {
 
   private var rowBottomToolbarPositioningSwitch: some View {
     Toggle(isOn: $ikaPreference.ifSwapBottomToolbarPickers) {
-      Label(
-        "Swap Bottom Toolbar Pickers",
-        systemImage: Scoped.BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL)
+      Label {
+        Text("Swap Bottom Toolbar Pickers")
+          .foregroundStyle(.primary)
+      }
+      icon: {
+        Image(systemName: Scoped.BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL)
+          .font(.subheadline)
+          .symbolRenderingMode(.monochrome)
+          .foregroundStyle(Color.accentColor)
+      }
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
     .onChange(of: ikaPreference.ifSwapBottomToolbarPickers) {
@@ -78,9 +85,16 @@ struct SettingsAdvancedOptionsView: View {
 
   private var rowAltStageImagesSwitch: some View {
     Toggle(isOn: $ikaPreference.ifUseAltStageImages) {
-      Label(
-        "Alternative Stage Images",
-        systemImage: Scoped.ALT_STAGE_IMG_SFSYMBOL)
+      Label {
+        Text("Alternative Stage Images")
+          .foregroundStyle(.primary)
+      }
+      icon: {
+        Image(systemName: Scoped.ALT_STAGE_IMG_SFSYMBOL)
+          .font(.subheadline)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
+      }
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
   }

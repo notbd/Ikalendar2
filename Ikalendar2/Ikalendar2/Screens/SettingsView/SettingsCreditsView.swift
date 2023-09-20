@@ -12,6 +12,8 @@ import SwiftUI
 
 /// The Credits page in App Settings.
 struct SettingsCreditsView: View {
+  typealias Scoped = Constants.Style.Settings.Credits
+
   @Environment(\.locale) private var currentLocale
 
   var body: some View {
@@ -108,7 +110,7 @@ struct SettingsCreditsView: View {
     Text(Constants.Key.Disclaimer.COPYRIGHT.localizedStringKey)
       .ikaFont(
         .ika2,
-        size: 12,
+        size: Scoped.DISCLAIMER_FONT_SIZE,
         relativeTo: .footnote)
   }
 }
@@ -118,6 +120,7 @@ struct SettingsCreditsView: View {
 struct CreditsExternalLinkCell: View {
   typealias Scoped = Constants.Style.Settings.Credits
 
+  @Environment(\.dynamicTypeSize) var dynamicTypeSize
   @Environment(\.openURL) private var openURL
 
   let name: String
@@ -132,18 +135,21 @@ struct CreditsExternalLinkCell: View {
       HStack {
         VStack(
           alignment: .leading,
-          spacing: Scoped.CELL_SPACING_V)
+          spacing: dynamicTypeSize > .small
+            ? Scoped.CELL_SPACING_V
+            : Scoped.CELL_SPACING_V_SMALL)
         {
           Text(name.localizedStringKey)
-            .foregroundColor(.primary)
-            .font(.system(Scoped.CONTENT_FONT_PRIMARY, design: .rounded).bold())
+            .foregroundStyle(Color.primary)
+            .font(Scoped.CELL_CONTENT_FONT_PRIMARY)
 
           if ifShowURL {
             Text(urlString.shortenedURL()!)
-              .foregroundColor(.secondary)
-              .font(.system(Scoped.CONTENT_FONT_SECONDARY, design: .rounded))
+              .foregroundStyle(Color.secondary)
+              .font(Scoped.CELL_CONTENT_FONT_SECONDARY)
           }
         }
+        .padding(.vertical, Scoped.CELL_PADDING_V)
 
         Spacer()
 
@@ -158,6 +164,7 @@ struct CreditsExternalLinkCell: View {
 struct CreditsOpenSourceLibCell<Destination: View>: View {
   typealias Scoped = Constants.Style.Settings.Credits
 
+  @Environment(\.dynamicTypeSize) var dynamicTypeSize
   @Environment(\.openURL) private var openURL
 
   let name: String
@@ -169,16 +176,19 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
     NavigationLink(destination: destination) {
       VStack(
         alignment: .leading,
-        spacing: Scoped.CELL_SPACING_V)
+        spacing: dynamicTypeSize > .small
+          ? Scoped.CELL_SPACING_V
+          : Scoped.CELL_SPACING_V_SMALL)
       {
         Text(name)
-          .foregroundColor(.primary)
-          .font(.system(Scoped.CONTENT_FONT_PRIMARY, design: .rounded).bold())
+          .foregroundStyle(Color.primary)
+          .font(Scoped.CELL_CONTENT_FONT_PRIMARY)
 
         Text(urlString.shortenedURL(base: Constants.Key.URL.GITHUB_BASE, newPrefix: "@")!)
-          .foregroundColor(.secondary)
-          .font(.system(Scoped.CONTENT_FONT_SECONDARY, design: .rounded))
+          .foregroundStyle(Color.secondary)
+          .font(Scoped.CELL_CONTENT_FONT_SECONDARY)
       }
+      .padding(.vertical, Scoped.CELL_PADDING_V)
     }
     .if(ifLinkable) {
       $0

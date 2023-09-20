@@ -64,11 +64,11 @@ extension Constants.Style {
   }
 
   enum ToolbarButton {
-    static let SFSYMBOL_FONT_SIZE_REG: Font = .system(size: 17, weight: .medium)
+    static let SFSYMBOL_FONT_SIZE_REG: Font = .system(.headline)
     static let SFSYMBOL_FONT_SIZE_SMALL: Font = .system(size: 15, weight: .medium)
-    static let IMG_SIDE_LEN: CGFloat = 28
+    static let IMG_SIZE: CGFloat = 28
 
-    static let FRAME_SIDE_LEN: CGFloat = 36
+    static let FRAME_SIZE: CGFloat = 36
     static let FRAME_CORNER_RADIUS: CGFloat = 5
 
     static let GAME_MODE_SWITCH_SFSYMBOL = "rectangle.fill.on.rectangle.angled.fill"
@@ -118,7 +118,7 @@ extension Constants.Style {
       static let ACTIVE_INDICATOR_SFSYMBOL = "checkmark.circle.fill"
       static let ACTIVE_INDICATOR_FONT: Font = .title
 
-      static let ROW_PADDING_V: CGFloat = 4
+      static let ROW_PADDING_V: CGFloat = 5
     }
 
     enum Advanced {
@@ -148,7 +148,8 @@ extension Constants.Style {
       static let VIEW_ON_APP_STORE_SFSYMBOL = "doc.viewfinder.fill"
 
       static let TWITTER_ICON_NAME = "twitter_xsmall"
-      static let TWITTER_ICON_SIDE_LEN: CGFloat = 22
+      static let TWITTER_ICON_SIZE_LARGE: CGFloat = 21
+      static let TWITTER_ICON_SIZE_SMALL: CGFloat = 19
       static let EMAIL_SFSYMBOL = "envelope"
 
       static let SOURCE_CODE_SFSYMBOL = "chevron.left.slash.chevron.right"
@@ -156,9 +157,12 @@ extension Constants.Style {
     }
 
     enum Credits {
-      static let CELL_SPACING_V: CGFloat = 5
-      static let CONTENT_FONT_PRIMARY: Font.TextStyle = .callout
-      static let CONTENT_FONT_SECONDARY: Font.TextStyle = .footnote
+      static let CELL_SPACING_V: CGFloat = 4
+      static let CELL_SPACING_V_SMALL: CGFloat = 6
+      static let CELL_PADDING_V: CGFloat = 1
+      static let CELL_CONTENT_FONT_PRIMARY: Font = .system(.subheadline, design: .rounded).bold()
+      static let CELL_CONTENT_FONT_SECONDARY: Font = .system(.footnote, design: .rounded)
+      static let DISCLAIMER_FONT_SIZE: CGFloat = 13
     }
 
     enum License {

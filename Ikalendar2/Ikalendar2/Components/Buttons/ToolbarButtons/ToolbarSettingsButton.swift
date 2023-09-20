@@ -24,8 +24,8 @@ struct ToolbarSettingsButton: View {
         .foregroundColor(.primary)
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .frame(
-          width: Scoped.FRAME_SIDE_LEN,
-          height: Scoped.FRAME_SIDE_LEN)
+          width: Scoped.FRAME_SIZE,
+          height: Scoped.FRAME_SIZE)
         .background(.thinMaterial)
         .cornerRadius(Scoped.FRAME_CORNER_RADIUS)
     }

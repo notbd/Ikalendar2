@@ -23,8 +23,8 @@ struct ToolbarRefreshButton: View {
     } label: {
       icon
         .frame(
-          width: Scoped.FRAME_SIDE_LEN,
-          height: Scoped.FRAME_SIDE_LEN)
+          width: Scoped.FRAME_SIZE,
+          height: Scoped.FRAME_SIZE)
         .background(.thinMaterial)
         .cornerRadius(Scoped.FRAME_CORNER_RADIUS)
     }

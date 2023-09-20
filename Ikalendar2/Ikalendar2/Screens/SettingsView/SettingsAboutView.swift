@@ -17,6 +17,7 @@ struct SettingsAboutView: View {
 
   @Environment(\.requestReview) private var requestReview
   @Environment(\.openURL) private var openURL
+  @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
   @State private var appStoreOverlayPresented = false
 
@@ -106,7 +107,6 @@ struct SettingsAboutView: View {
   // MARK: - Share Section
 
   private var rowShare: some View {
-    // NOTE: could not find error handling for invalid URL ShareLink as of iOS 16
     // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 16
     let shareURL = URL(string: Constants.Key.URL.APP_STORE_PAGE_US)!
 
@@ -114,10 +114,13 @@ struct SettingsAboutView: View {
       ShareLink(item: shareURL) {
         Label {
           Text("Share ikalendar2")
-            .foregroundColor(.primary)
+            .foregroundStyle(Color.primary)
         }
         icon: {
           Image(systemName: Scoped.SHARE_SFSYMBOL)
+            .font(.subheadline)
+            .symbolRenderingMode(.monochrome)
+            .foregroundStyle(Color.accentColor)
         }
       }
   }
@@ -131,10 +134,13 @@ struct SettingsAboutView: View {
     } label: {
       Label {
         Text("Rate ikalendar2")
-          .foregroundColor(.primary)
+          .foregroundStyle(Color.primary)
       }
       icon: {
         Image(systemName: Scoped.RATING_SFSYMBOL)
+          .font(.subheadline)
+          .symbolRenderingMode(.monochrome)
+          .foregroundStyle(Color.accentColor)
       }
     }
   }
@@ -146,10 +152,13 @@ struct SettingsAboutView: View {
     } label: {
       Label {
         Text("Leave a Review")
-          .foregroundColor(.primary)
+          .foregroundStyle(Color.primary)
       }
       icon: {
         Image(systemName: Scoped.REVIEW_SFSYMBOL)
+          .font(.subheadline)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
       }
     }
   }
@@ -161,10 +170,13 @@ struct SettingsAboutView: View {
     } label: {
       Label {
         Text("View ikalendar2 on the App Store")
-          .foregroundColor(.primary)
+          .foregroundStyle(Color.primary)
       }
       icon: {
         Image(systemName: Scoped.VIEW_ON_APP_STORE_SFSYMBOL)
+          .font(.subheadline)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
       }
     }
     .appStoreOverlay(isPresented: $appStoreOverlayPresented) {
@@ -189,14 +201,17 @@ struct SettingsAboutView: View {
         HStack {
           Label {
             Text("Developer's Twitter")
-              .foregroundColor(.primary)
+              .foregroundStyle(Color.primary)
           }
           icon: {
             Image(Scoped.TWITTER_ICON_NAME)
               .antialiased(true)
               .resizable()
               .scaledToFit()
-              .frame(width: Scoped.TWITTER_ICON_SIDE_LEN)
+              .frame(
+                width: dynamicTypeSize <= .small
+                  ? Scoped.TWITTER_ICON_SIZE_SMALL
+                  : Scoped.TWITTER_ICON_SIZE_LARGE)
           }
 
           Spacer()
@@ -214,10 +229,13 @@ struct SettingsAboutView: View {
     } label: {
       Label {
         Text("Feedback Email")
-          .foregroundColor(.primary)
+          .foregroundStyle(Color.primary)
       }
       icon: {
         Image(systemName: Scoped.EMAIL_SFSYMBOL)
+          .font(.subheadline)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
       }
     }
   }
@@ -237,10 +255,13 @@ struct SettingsAboutView: View {
       NavigationLink(destination: destination) {
         Label {
           Text("Source Code")
-            .foregroundColor(.primary)
+            .foregroundStyle(.primary)
         }
         icon: {
           Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
+            .font(.subheadline)
+            .symbolRenderingMode(.hierarchical)
+            .foregroundStyle(Color.accentColor)
         }
       }
       .swipeActions {
@@ -261,10 +282,13 @@ struct SettingsAboutView: View {
     } label: {
       Label {
         Text("Privacy Policy")
-          .foregroundColor(.primary)
+          .foregroundStyle(Color.primary)
       }
       icon: {
         Image(systemName: Scoped.PRIVACY_POLICY_SFSYMBOL)
+          .font(.subheadline)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
       }
     }
   }

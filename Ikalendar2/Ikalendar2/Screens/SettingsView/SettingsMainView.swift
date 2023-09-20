@@ -70,13 +70,14 @@ struct SettingsMainView: View {
       Label {
         if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
           Text("Game")
+            .foregroundStyle(.primary)
         }
         else {
           Spacer()
         }
       } icon: {
-        Image(
-          systemName: ikaPreference.defaultGameMode.sfSymbolNameSelected)
+        Image(systemName: ikaPreference.defaultGameMode.sfSymbolNameSelected)
+          .font(.subheadline)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
@@ -102,6 +103,7 @@ struct SettingsMainView: View {
       Label {
         if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
           Text("Battle")
+            .foregroundStyle(.primary)
         }
         else {
           Spacer()
@@ -111,6 +113,7 @@ struct SettingsMainView: View {
           systemName: ikaPreference.defaultGameMode != .battle || !isHorizontalCompact
             ? ikaPreference.defaultBattleMode.sfSymbolNameIdle
             : ikaPreference.defaultBattleMode.sfSymbolNameSelected)
+          .font(.subheadline)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(
             ikaPreference.defaultGameMode != .battle || !isHorizontalCompact
@@ -139,9 +142,16 @@ struct SettingsMainView: View {
 
   private var rowColorScheme: some View {
     HStack {
-      Label(
-        "Color Scheme",
-        systemImage: Scoped.COLOR_SCHEME_SFSYMBOL)
+      Label {
+        Text("Color Scheme")
+          .foregroundStyle(.primary)
+      }
+      icon: {
+        Image(systemName: Scoped.COLOR_SCHEME_SFSYMBOL)
+          .font(.subheadline)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
+      }
 
       Spacer()
 
@@ -175,12 +185,13 @@ struct SettingsMainView: View {
     return NavigationLink(destination: SettingsAltAppIconView()) {
       Label {
         Text("App Icon")
-          .foregroundColor(.primary)
+          .foregroundStyle(.primary)
       }
       icon: {
-        Image(
-          systemName: altAppIconStatusSFSymbolName)
+        Image(systemName: altAppIconStatusSFSymbolName)
+          .font(.subheadline)
           .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
       }
     }
   }
@@ -195,13 +206,15 @@ struct SettingsMainView: View {
     return NavigationLink(destination: SettingsAdvancedOptionsView()) {
       Label {
         Text("Advanced Options")
-          .foregroundColor(.primary)
+          .foregroundStyle(.primary)
       }
       icon: {
         Image(
           systemName: Scoped.ADVANCED_OPTIONS_SFSYMBOL,
           variableValue: customizedPercentage)
+          .font(.subheadline)
           .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
       }
     }
   }
@@ -217,15 +230,20 @@ struct SettingsMainView: View {
       HStack {
         Label {
           Text("Preferred Language")
-            .foregroundColor(.primary)
+            .foregroundStyle(Color.primary)
         }
         icon: {
-          switch currentLocale.toIkaLocale() {
-          case .en:
-            Image(systemName: Scoped.PREF_LANG_SFSYMBOL_AMERICA)
-          default:
-            Image(systemName: Scoped.PREF_LANG_SFSYMBOL_ASIA)
+          Group {
+            switch currentLocale.toIkaLocale() {
+            case .en:
+              Image(systemName: Scoped.PREF_LANG_SFSYMBOL_AMERICA)
+            default:
+              Image(systemName: Scoped.PREF_LANG_SFSYMBOL_ASIA)
+            }
           }
+          .font(.subheadline)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
         }
 
         Spacer()
@@ -242,17 +260,31 @@ struct SettingsMainView: View {
 
   private var rowAbout: some View {
     NavigationLink(destination: SettingsAboutView()) {
-      Label(
-        "About",
-        systemImage: Scoped.ABOUT_SFSYMBOL)
+      Label {
+        Text("About")
+          .foregroundStyle(.primary)
+      }
+      icon: {
+        Image(systemName: Scoped.ABOUT_SFSYMBOL)
+          .font(.subheadline)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
+      }
     }
   }
 
   private var rowCredits: some View {
     NavigationLink(destination: SettingsCreditsView()) {
-      Label(
-        "Credits",
-        systemImage: Scoped.CREDITS_SFSYMBOL)
+      Label {
+        Text("Credits")
+          .foregroundStyle(.primary)
+      }
+      icon: {
+        Image(systemName: Scoped.CREDITS_SFSYMBOL)
+          .font(.subheadline)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
+      }
     }
   }
 
@@ -263,7 +295,8 @@ struct SettingsMainView: View {
       dismiss()
     } label: {
       Text("Done")
-        .fontWeight(Scoped.DONE_BUTTON_FONT_WEIGHT)
+//        .fontWeight(Scoped.DONE_BUTTON_FONT_WEIGHT)
+        .font(.headline)
     }
   }
 }
