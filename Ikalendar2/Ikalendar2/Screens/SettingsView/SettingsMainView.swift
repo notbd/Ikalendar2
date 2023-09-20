@@ -163,13 +163,13 @@ struct SettingsMainView: View {
           ForEach(IkaColorSchemeManager.PreferredColorScheme.allCases) { preferredColorScheme in
             Label(
               preferredColorScheme.name.localizedStringKey,
-              systemImage: preferredColorScheme.sfSymbol)
+              systemImage: preferredColorScheme.sfSymbolName)
               .tag(preferredColorScheme)
           }
         }
       } label: {
         HStack {
-          Image(systemName: ikaPreference.preferredAppColorScheme.sfSymbol)
+          Image(systemName: ikaPreference.preferredAppColorScheme.sfSymbolName)
             .foregroundStyle(Color.secondary)
 
           Image(systemName: Scoped.COLOR_SCHEME_MENU_SFSYMBOL)

@@ -34,7 +34,7 @@ final class IkaColorSchemeManager {
       }
     }
 
-    var sfSymbol: String {
+    var sfSymbolName: String {
       switch self {
       case .system:
         "macbook.and.iphone"

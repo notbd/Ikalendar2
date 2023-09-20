@@ -90,7 +90,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     }
 
     var clipShape: some Shape {
-      RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+      .rect(cornerRadius: cornerRadius)
     }
   }
 

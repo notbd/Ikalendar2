@@ -79,7 +79,7 @@ struct BattleRotationCellPrimary: View {
           value: min(ikaTimePublisher.currentTime, rotation.endTime) - rotation.startTime,
           total: rotation.endTime - rotation.startTime)
           .padding(.bottom, Scoped.PROGRESS_BAR_PADDING_BOTTOM)
-          .tint(.accentColor)
+          .tint(rotation.mode.themeColor)
       }
 
       // MARK: Stage Section

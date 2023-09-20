@@ -5,6 +5,8 @@
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
+import SwiftUI
+
 // MARK: - BattleMode
 
 /// Data model for the battle modes.
@@ -17,6 +19,16 @@ enum BattleMode: String, Identifiable, CaseIterable, Equatable {
 }
 
 extension BattleMode {
+  var themeColor: Color {
+    switch self {
+    case .regular: .regularBattleTheme
+    case .gachi: .gachiBattleTheme
+    case .league: .leagueBattleTheme
+    }
+  }
+}
+
+extension BattleMode {
   var name: String {
     switch self {
     case .regular: "Regular Battle"
@@ -24,9 +36,7 @@ extension BattleMode {
     case .league: "League Battle"
     }
   }
-}
 
-extension BattleMode {
   var shortName: String {
     switch self {
     case .regular: "Regular"
