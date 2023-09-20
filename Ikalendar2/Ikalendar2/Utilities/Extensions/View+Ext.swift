@@ -91,7 +91,7 @@ extension View {
   /// ```
   /// var body: some view {
   ///   myView
-  ///     .ifLet(optionalColor) { $0.foregroundColor($1) }
+  ///     .ifLet(optionalColor) { $0.foregroundStyle($1) }
   /// }
   /// ```
   ///

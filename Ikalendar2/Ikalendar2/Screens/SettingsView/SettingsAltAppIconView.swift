@@ -57,7 +57,7 @@ struct SettingsAltAppIconRow: View {
 
         Text(ikaAppIcon.displayName.localizedStringKey)
           .font(.system(.body, design: .rounded))
-          .foregroundColor(Scoped.DISPLAY_NAME_COLOR)
+          .foregroundStyle(Scoped.DISPLAY_NAME_COLOR)
 
         Spacer()
 

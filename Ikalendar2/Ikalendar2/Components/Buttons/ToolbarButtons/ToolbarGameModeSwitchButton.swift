@@ -37,7 +37,7 @@ struct ToolbarGameModeSwitchButton: View {
         "Game Mode Switch",
         systemImage: Scoped.GAME_MODE_SWITCH_SFSYMBOL)
         .font(Scoped.SFSYMBOL_FONT_SIZE_SMALL)
-        .foregroundColor(Color.primary)
+        .foregroundStyle(Color.primary)
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
     }
   }

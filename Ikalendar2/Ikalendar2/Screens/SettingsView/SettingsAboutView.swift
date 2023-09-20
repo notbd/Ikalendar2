@@ -79,7 +79,7 @@ struct SettingsAboutView: View {
         Text(title)
           .font(Scoped.APP_ICON_TITLE_FONT)
           .fontWeight(Scoped.APP_ICON_TITLE_FONT_WEIGHT)
-          .foregroundColor(.accentColor)
+          .foregroundStyle(Color.accentColor)
       return text
     }
 
@@ -91,7 +91,7 @@ struct SettingsAboutView: View {
         Text(subtitle)
           .font(Scoped.APP_ICON_SUBTITLE_FONT)
           .fontWeight(Scoped.APP_ICON_SUBTITLE_FONT_WEIGHT)
-          .foregroundColor(.secondary)
+          .foregroundStyle(Color.secondary)
       return text
     }
 
@@ -217,7 +217,7 @@ struct SettingsAboutView: View {
           Spacer()
 
           Text(twitterHandle)
-            .foregroundColor(.secondary)
+            .foregroundStyle(Color.secondary)
         }
       }
   }

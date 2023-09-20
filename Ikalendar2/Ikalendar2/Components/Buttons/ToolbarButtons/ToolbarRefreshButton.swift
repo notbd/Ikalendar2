@@ -39,7 +39,7 @@ struct ToolbarRefreshButton: View {
       default:
         Image(systemName: "arrow.triangle.2.circlepath")
           .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
-          .foregroundColor(.primary)
+          .foregroundStyle(Color.primary)
           .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
       }
     }

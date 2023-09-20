@@ -70,7 +70,7 @@ struct DetailsLicenseView: View {
             licenseViewModel != nil
               ? String(localized: "\(licenseViewModel!.gist) be licensed under")
               : Constants.Key.Placeholder.UNKNOWN)
-            .foregroundColor(.secondary)
+            .foregroundStyle(Color.secondary)
             .font(Scoped.LICENSE_CAPTION_FONT)
             .scaledLimitedLine()
         }

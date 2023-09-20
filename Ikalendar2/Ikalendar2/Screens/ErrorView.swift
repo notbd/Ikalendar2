@@ -71,7 +71,7 @@ struct ErrorView: View {
           $0.font(.system(.body, design: .rounded))
         }
     }
-    .foregroundColor(.secondary)
+    .foregroundStyle(Color.secondary)
   }
 
   private var errorImage: some View {

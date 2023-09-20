@@ -17,7 +17,7 @@ extension Constants.Style {
     static var EXTERNAL_LINK_JUMP_ICON: some View {
       Image(systemName: EXTERNAL_LINK_JUMP_SFSYMBOL)
         .symbolRenderingMode(.hierarchical)
-        .foregroundColor(.secondary)
+        .foregroundStyle(Color.secondary)
     }
   }
 

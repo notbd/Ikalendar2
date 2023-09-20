@@ -16,7 +16,7 @@ struct AutoLoadingOverlay: View {
 
   var body: some View {
     Image(systemName: iconName)
-      .foregroundColor(.white)
+      .foregroundStyle(Color.primary)
       .font(Scoped.SFSYMBOL_FONT)
       .frame(
         width: Scoped.FRAME_SIDE,

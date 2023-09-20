@@ -39,7 +39,7 @@ struct OnboardingView: View {
               header: {
                 Image(systemName: "calendar")
                   .font(.largeTitle)
-                  .foregroundColor(Color.accentColor)
+                  .foregroundStyle(Color.accentColor)
               })
 
             BulletBlockView(
@@ -84,7 +84,7 @@ struct OnboardingView: View {
               header: {
                 Image(systemName: "guitars")
                   .font(.largeTitle)
-                  .foregroundColor(Color.accentColor)
+                  .foregroundStyle(Color.accentColor)
               })
 
             BulletBlockView(
@@ -93,7 +93,7 @@ struct OnboardingView: View {
               header: {
                 Image(systemName: "moon.stars.fill")
                   .font(.largeTitle)
-                  .foregroundColor(Color(UIColor.systemYellow))
+                  .foregroundStyle(Color.yellow)
               })
           }
           .padding(.top, geo.size.width > 320 ? 30 : 10)
@@ -107,7 +107,7 @@ struct OnboardingView: View {
               Image(systemName: "pencil.and.outline")
               Text("·")
               Text("Coded by 彼得張 / Peter Zhang")
-                .foregroundColor(.primary)
+                .foregroundStyle(Color.primary)
             }
             .font(.system(size: 10, design: .serif))
 
@@ -118,7 +118,7 @@ struct OnboardingView: View {
               presentationMode.wrappedValue.dismiss()
             } label: {
               Text("Continue")
-                .foregroundColor(.white)
+                .foregroundStyle(Color.white)
                 .font(.system(.body, design: .rounded))
                 .fontWeight(.semibold)
                 .frame(maxWidth: geo.size.width > 320 ? 360 : 240)
@@ -161,7 +161,7 @@ struct BulletBlockView<Content: View>: View {
           .fontWeight(.semibold)
           .lineLimit(1)
         Text(description)
-          .foregroundColor(.secondary)
+          .foregroundStyle(Color.secondary)
           .font(.system(.caption, design: .rounded))
           .lineLimit(3)
       }

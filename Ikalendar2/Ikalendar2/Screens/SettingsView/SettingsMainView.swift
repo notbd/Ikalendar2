@@ -170,10 +170,10 @@ struct SettingsMainView: View {
       } label: {
         HStack {
           Image(systemName: ikaPreference.preferredAppColorScheme.sfSymbol)
-            .foregroundColor(.secondary)
+            .foregroundStyle(Color.secondary)
 
           Image(systemName: Scoped.COLOR_SCHEME_MENU_SFSYMBOL)
-            .foregroundColor(.tertiaryLabel)
+            .foregroundStyle(Color.tertiaryLabel)
         }
       }
     }
@@ -249,7 +249,7 @@ struct SettingsMainView: View {
         Spacer()
 
         Text(currentLocale.toIkaLocale().description)
-          .foregroundColor(.secondary)
+          .foregroundStyle(Color.secondary)
 
         Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
       }

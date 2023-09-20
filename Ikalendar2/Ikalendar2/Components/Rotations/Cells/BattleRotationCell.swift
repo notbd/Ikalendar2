@@ -179,7 +179,7 @@ struct BattleRotationCellPrimary: View {
   private var remainingTimeSection: some View {
     Text(ikaTimePublisher.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
       .scaledLimitedLine()
-      .foregroundColor(.secondary)
+      .foregroundStyle(Color.secondary)
       .ikaFont(
         .ika2,
         size: Scoped.REMAINING_TIME_FONT_SIZE,

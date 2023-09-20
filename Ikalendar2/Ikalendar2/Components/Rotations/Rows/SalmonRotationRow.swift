@@ -103,7 +103,7 @@ struct SalmonRotationHeader: View {
           .ika1,
           size: Scoped.PREFIX_FONT_SIZE,
           relativeTo: .title2)
-        .foregroundColor(Color.systemBackground)
+        .foregroundStyle(Color.systemBackground)
         .padding(.horizontal, Scoped.PREFIX_PADDING_H)
         .background(Color.secondary)
         .cornerRadius(Scoped.PREFIX_FRAME_CORNER_RADIUS)

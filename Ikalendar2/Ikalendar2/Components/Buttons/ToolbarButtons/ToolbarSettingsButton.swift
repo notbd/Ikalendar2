@@ -21,7 +21,7 @@ struct ToolbarSettingsButton: View {
     } label: {
       Image(systemName: "gear")
         .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
-        .foregroundColor(.primary)
+        .foregroundStyle(Color.primary)
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .frame(
           width: Scoped.FRAME_SIZE,
