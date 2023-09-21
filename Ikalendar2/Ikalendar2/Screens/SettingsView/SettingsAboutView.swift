@@ -299,9 +299,7 @@ struct SettingsAboutView: View {
 
 struct SettingsAboutView_Previews: PreviewProvider {
   static var previews: some View {
-    Group {
-      SettingsAboutView()
-        .preferredColorScheme(.dark)
-    }
+    SettingsAboutView()
+      .preferredColorScheme(.dark)
   }
 }

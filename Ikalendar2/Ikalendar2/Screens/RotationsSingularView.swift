@@ -45,25 +45,23 @@ struct RotationsSingularView: View {
     }
   }
 
+  @ViewBuilder
   private var content: some View {
-    Group {
-      switch ikaCatalog.loadResultStatus {
-      case .error(let ikaError):
-        ErrorView(error: ikaError)
-      default:
-        rotationList
-      }
+    switch ikaCatalog.loadResultStatus {
+    case .error(let ikaError):
+      ErrorView(error: ikaError)
+    default:
+      rotationList
     }
   }
 
+  @ViewBuilder
   private var rotationList: some View {
-    Group {
-      switch ikaStatus.currentGameMode {
-      case .battle:
-        BattleRotationList()
-      case .salmon:
-        SalmonRotationList()
-      }
+    switch ikaStatus.currentGameMode {
+    case .battle:
+      BattleRotationList()
+    case .salmon:
+      SalmonRotationList()
     }
   }
 

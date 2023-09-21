@@ -233,17 +233,10 @@ struct SettingsMainView: View {
             .foregroundStyle(Color.primary)
         }
         icon: {
-          Group {
-            switch currentLocale.toIkaLocale() {
-            case .en:
-              Image(systemName: Scoped.PREF_LANG_SFSYMBOL_AMERICA)
-            default:
-              Image(systemName: Scoped.PREF_LANG_SFSYMBOL_ASIA)
-            }
-          }
-          .font(.subheadline)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
+          Image(systemName: currentLocale.toIkaLocale().sfSymbolName)
+            .font(.subheadline)
+            .symbolRenderingMode(.hierarchical)
+            .foregroundStyle(Color.accentColor)
         }
 
         Spacer()

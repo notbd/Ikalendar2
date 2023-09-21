@@ -42,18 +42,17 @@ struct RotationsCarouselView: View {
     }
   }
 
+  @ViewBuilder
   private var content: some View {
-    Group {
-      switch ikaCatalog.loadResultStatus {
-      case .loading:
-        ProgressView()
-          .hAlignment(.center)
-          .vAlignment(.center)
-      case .error(let ikaError):
-        ErrorView(error: ikaError)
-      case .loaded:
-        rotationCarouselColumns
-      }
+    switch ikaCatalog.loadResultStatus {
+    case .loading:
+      ProgressView()
+        .hAlignment(.center)
+        .vAlignment(.center)
+    case .error(let ikaError):
+      ErrorView(error: ikaError)
+    case .loaded:
+      rotationCarouselColumns
     }
   }
 

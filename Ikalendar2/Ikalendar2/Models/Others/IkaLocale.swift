@@ -31,6 +31,15 @@ enum IkaLocale {
     }
   }
 
+  var sfSymbolName: String {
+    switch self {
+    case .en:
+      "globe.americas.fill"
+    default:
+      "globe.asia.australia.fill"
+    }
+  }
+
   var splatoon2Site: String {
     switch self {
     case .en:

@@ -96,9 +96,6 @@ extension Constants.Style {
 
       static let ADVANCED_OPTIONS_SFSYMBOL = "wand.and.rays"
 
-      static let PREF_LANG_SFSYMBOL_ASIA = "globe.asia.australia.fill"
-      static let PREF_LANG_SFSYMBOL_AMERICA = "globe.americas.fill"
-
       static let ABOUT_SFSYMBOL = "house.fill"
 
       static let CREDITS_SFSYMBOL = "bookmark.fill"

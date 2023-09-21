@@ -44,14 +44,13 @@ struct CarouselColumn: View {
           ? Color.primary.opacity(0)
           : Color.primary }) }
 
+  @ViewBuilder
   private var rotationList: some View {
-    Group {
-      switch gameMode {
-      case .battle:
-        BattleRotationList(specifiedBattleMode: battleMode)
-      default:
-        SalmonRotationList()
-      }
+    switch gameMode {
+    case .battle:
+      BattleRotationList(specifiedBattleMode: battleMode)
+    default:
+      SalmonRotationList()
     }
   }
 

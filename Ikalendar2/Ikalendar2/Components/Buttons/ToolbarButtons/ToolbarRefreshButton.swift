@@ -31,17 +31,16 @@ struct ToolbarRefreshButton: View {
     .disabled(ikaCatalog.loadStatus == .loading)
   }
 
+  @ViewBuilder
   private var icon: some View {
-    Group {
-      switch ikaCatalog.loadStatus {
-      case .loading:
-        ProgressView()
-      default:
-        Image(systemName: "arrow.triangle.2.circlepath")
-          .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
-          .foregroundStyle(Color.primary)
-          .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-      }
+    switch ikaCatalog.loadStatus {
+    case .loading:
+      ProgressView()
+    default:
+      Image(systemName: "arrow.triangle.2.circlepath")
+        .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
+        .foregroundStyle(Color.primary)
+        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
     }
   }
 }
