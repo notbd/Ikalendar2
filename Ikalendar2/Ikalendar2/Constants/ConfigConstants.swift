@@ -10,17 +10,12 @@ import SwiftUI
 
 /// Constant data holding `config`s for the app.
 extension Constants.Config {
-  enum Animation {
-    static let appDefault: SwiftUI.Animation = .easeOut
-    static let spring: SwiftUI.Animation = .spring(response: 0.6, dampingFraction: 0.8)
-  }
-
   enum Catalog {
     /// Time Intervals are measured in second(s).
     static let loadStatusLoadedDelay: TimeInterval = 0.2
     static let loadStatusErrorDelay: TimeInterval = 1
 
-    static let autoLoadCheckInterval: TimeInterval = 4
+    static let autoLoadCheckInterval: TimeInterval = 5
     static let autoLoadAttemptInterval: TimeInterval = 2
 
     static let autoLoadBattleMaxAttempts: Int = 8
@@ -28,6 +23,11 @@ extension Constants.Config {
 
     static let activeStateCheckInterval: TimeInterval = 1
     static let autoLoadedLingerLength: TimeInterval = 2
+    static let idleAndNonIdleStatusUpdateInterval: TimeInterval = 1
+  }
+
+  enum Settings {
+    static let aboutRatingsBounceInterval: TimeInterval = 7
   }
 
   enum License {

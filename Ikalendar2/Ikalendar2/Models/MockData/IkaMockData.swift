@@ -135,8 +135,8 @@ struct IkaMockData {
   ///
   /// - Returns: The `BattleRotation` object.
   static func getBattleRotation(
-    mode: BattleMode = BattleMode.allCases.randomElement()!,
-    rule: BattleRule = BattleRule.allCases.randomElement()!,
+    preferredMode: BattleMode? = nil,
+    preferredRule: BattleRule? = nil,
     rawStartTime: Date = Date())
     -> BattleRotation
   {
@@ -163,6 +163,19 @@ struct IkaMockData {
       randomStageB = getRandomBattleStage()
     }
 
+    var mode = BattleMode.allCases.randomElement()!
+    var rule = BattleRule.allCases.randomElement()!
+
+    if let preferredMode { mode = preferredMode }
+
+    if mode == .regular { rule = .turfWar }
+    else if let preferredRule { rule = preferredRule }
+    else {
+      while rule == .turfWar {
+        rule = BattleRule.allCases.randomElement()!
+      }
+    }
+
     return BattleRotation(
       startTime: startTime,
       endTime: endTime,
@@ -185,37 +198,37 @@ struct IkaMockData {
     }
 
     battleRotationDict[.regular] = [
-      getBattleRotation(rule: .turfWar, rawStartTime: startTimeArray[0]),
-      getBattleRotation(rule: .turfWar, rawStartTime: startTimeArray[1]),
-      getBattleRotation(rule: .turfWar, rawStartTime: startTimeArray[2]),
-      getBattleRotation(rule: .turfWar, rawStartTime: startTimeArray[3]),
-      getBattleRotation(rule: .turfWar, rawStartTime: startTimeArray[4]),
-      getBattleRotation(rule: .turfWar, rawStartTime: startTimeArray[5]),
-      getBattleRotation(rule: .turfWar, rawStartTime: startTimeArray[6]),
-      getBattleRotation(rule: .turfWar, rawStartTime: startTimeArray[7]),
+      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[0]),
+      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[1]),
+      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[2]),
+      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[3]),
+      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[4]),
+      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[5]),
+      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[6]),
+      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[7]),
+      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[8]),
+      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[9]),
     ]
 
     battleRotationDict[.gachi] = [
-      getBattleRotation(rule: .towerControl, rawStartTime: startTimeArray[0]),
-      getBattleRotation(rule: .splatZones, rawStartTime: startTimeArray[1]),
-      getBattleRotation(rule: .clamBlitz, rawStartTime: startTimeArray[2]),
-      getBattleRotation(rule: .rainmaker, rawStartTime: startTimeArray[3]),
-      getBattleRotation(rule: .towerControl, rawStartTime: startTimeArray[4]),
-      getBattleRotation(rule: .splatZones, rawStartTime: startTimeArray[5]),
-      getBattleRotation(rule: .clamBlitz, rawStartTime: startTimeArray[6]),
-      getBattleRotation(rule: .rainmaker, rawStartTime: startTimeArray[7]),
+      getBattleRotation(preferredMode: .gachi, preferredRule: .towerControl, rawStartTime: startTimeArray[0]),
+      getBattleRotation(preferredMode: .gachi, preferredRule: .splatZones, rawStartTime: startTimeArray[1]),
+      getBattleRotation(preferredMode: .gachi, preferredRule: .clamBlitz, rawStartTime: startTimeArray[2]),
+      getBattleRotation(preferredMode: .gachi, preferredRule: .rainmaker, rawStartTime: startTimeArray[3]),
     ]
 
     battleRotationDict[.league] =
       [
-        getBattleRotation(rule: .rainmaker, rawStartTime: startTimeArray[0]),
-        getBattleRotation(rule: .clamBlitz, rawStartTime: startTimeArray[1]),
-        getBattleRotation(rule: .towerControl, rawStartTime: startTimeArray[2]),
-        getBattleRotation(rule: .splatZones, rawStartTime: startTimeArray[3]),
-        getBattleRotation(rule: .clamBlitz, rawStartTime: startTimeArray[4]),
-        getBattleRotation(rule: .towerControl, rawStartTime: startTimeArray[5]),
-        getBattleRotation(rule: .rainmaker, rawStartTime: startTimeArray[6]),
-        getBattleRotation(rule: .splatZones, rawStartTime: startTimeArray[7]),
+        getBattleRotation(
+          preferredMode: .league,
+          preferredRule: .towerControl,
+          rawStartTime: startTimeArray[0]),
+        getBattleRotation(
+          preferredMode: .league,
+          preferredRule: .splatZones,
+          rawStartTime: startTimeArray[1]),
+        getBattleRotation(preferredMode: .league, preferredRule: .clamBlitz, rawStartTime: startTimeArray[2]),
+        getBattleRotation(preferredMode: .league, preferredRule: .rainmaker, rawStartTime: startTimeArray[3]),
       ]
 
     return battleRotationDict

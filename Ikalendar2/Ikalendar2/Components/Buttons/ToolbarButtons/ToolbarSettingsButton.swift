@@ -15,11 +15,18 @@ struct ToolbarSettingsButton: View {
 
   @EnvironmentObject private var ikaStatus: IkaStatus
 
+  @State private var buttonPressed: Int = 0
+
   var body: some View {
     Button {
-      ikaStatus.isSettingsPresented.toggle()
+      buttonPressed += 1
+      ikaStatus.isSettingsPresented = true
     } label: {
       Image(systemName: "gear")
+        .symbolEffect(
+          .bounce.down,
+          options: .speed(1.5),
+          value: buttonPressed)
         .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
         .foregroundStyle(Color.primary)
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)

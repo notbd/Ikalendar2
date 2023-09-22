@@ -19,6 +19,8 @@ struct SettingsAboutView: View {
   @Environment(\.openURL) private var openURL
   @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
+  @EnvironmentObject private var ikaLog: IkaLog
+
   @State private var appStoreOverlayPresented = false
 
   var body: some View {
@@ -118,8 +120,8 @@ struct SettingsAboutView: View {
         }
         icon: {
           Image(systemName: Scoped.SHARE_SFSYMBOL)
-            .font(.subheadline)
-            .symbolRenderingMode(.monochrome)
+            .imageScale(.medium)
+            .symbolRenderingMode(.hierarchical)
             .foregroundStyle(Color.accentColor)
         }
       }
@@ -127,10 +129,21 @@ struct SettingsAboutView: View {
 
   // MARK: - Review Section
 
+  let ratingSFSymbolBounceTimer = Timer
+    .publish(
+      every: Constants.Config.Settings.aboutRatingsBounceInterval,
+      tolerance: 0.1,
+      on: .main,
+      in: .common)
+    .autoconnect()
+  @State private var ratingSFSymbolBounce: Int = 0
+
   private var rowRating: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
-      Task { await requestReview() }
+      requestReview()
+      ratingSFSymbolBounce += 1
+      if !ikaLog.ifHasRated { ikaLog.ifHasRated = true }
     } label: {
       Label {
         Text("Rate ikalendar2")
@@ -138,10 +151,14 @@ struct SettingsAboutView: View {
       }
       icon: {
         Image(systemName: Scoped.RATING_SFSYMBOL)
-          .font(.subheadline)
+          .symbolEffect(.bounce, value: ratingSFSymbolBounce)
+          .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
       }
+    }
+    .onReceive(ratingSFSymbolBounceTimer) { _ in
+      if !ikaLog.ifHasRated { ratingSFSymbolBounce += 1 }
     }
   }
 
@@ -156,12 +173,14 @@ struct SettingsAboutView: View {
       }
       icon: {
         Image(systemName: Scoped.REVIEW_SFSYMBOL)
-          .font(.subheadline)
+          .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
     }
   }
+
+  @State private var showAppStoreOverlayBounce: Int = 0
 
   private var rowAppStoreOverlay: some View {
     Button {
@@ -174,7 +193,8 @@ struct SettingsAboutView: View {
       }
       icon: {
         Image(systemName: Scoped.VIEW_ON_APP_STORE_SFSYMBOL)
-          .font(.subheadline)
+          .imageScale(.large)
+          .symbolEffect(.bounce, value: showAppStoreOverlayBounce)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
@@ -183,6 +203,9 @@ struct SettingsAboutView: View {
       SKOverlay.AppConfiguration(
         appIdentifier: Constants.Key.BundleInfo.APP_STORE_IDENTIFIER,
         position: .bottom)
+    }
+    .onChange(of: appStoreOverlayPresented, initial: false) { _, newVal in
+      if newVal == true { showAppStoreOverlayBounce += 1 }
     }
   }
 
@@ -233,7 +256,7 @@ struct SettingsAboutView: View {
       }
       icon: {
         Image(systemName: Scoped.EMAIL_SFSYMBOL)
-          .font(.subheadline)
+          .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
@@ -259,7 +282,7 @@ struct SettingsAboutView: View {
         }
         icon: {
           Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
-            .font(.subheadline)
+            .imageScale(.medium)
             .symbolRenderingMode(.hierarchical)
             .foregroundStyle(Color.accentColor)
         }
@@ -286,7 +309,7 @@ struct SettingsAboutView: View {
       }
       icon: {
         Image(systemName: Scoped.PRIVACY_POLICY_SFSYMBOL)
-          .font(.subheadline)
+          .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }

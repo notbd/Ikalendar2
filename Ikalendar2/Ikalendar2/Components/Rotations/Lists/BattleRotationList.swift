@@ -38,7 +38,7 @@ struct BattleRotationList: View {
       .listStyle(.insetGrouped)
       // map animation value to startTime to avoid animation during battle mode switch
       .animation(
-        Constants.Config.Animation.spring,
+        .default,
         value: battleRotations.map { $0.startTime })
       .disabled(ikaCatalog.loadStatus != .loaded)
     }

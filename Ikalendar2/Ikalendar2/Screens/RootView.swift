@@ -17,6 +17,7 @@ struct RootView: View {
   @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
+  @EnvironmentObject private var ikaLog: IkaLog
 
   @State private var refreshableMainViewID = UUID()
 
@@ -35,9 +36,10 @@ struct RootView: View {
     SettingsMainView()
       .environmentObject(ikaStatus)
       .environmentObject(ikaPreference)
+      .environmentObject(ikaLog)
       .accentColor(.orange)
       .overlay(
-        AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
+        AutoLoadingOverlay(),
         alignment: .bottomTrailing)
       .interactiveDismissDisabled()
   }

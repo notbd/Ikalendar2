@@ -65,7 +65,7 @@ final class IkaCatalog: ObservableObject {
     }
   }
 
-  @Published private(set) var autoLoadStatus = AutoLoadStatus.idle
+  @Published private(set) var autoLoadStatus: AutoLoadStatus = .idle
   {
     willSet {
       guard newValue != autoLoadStatus else { return }
@@ -80,6 +80,9 @@ final class IkaCatalog: ObservableObject {
       }
     }
   }
+
+  /// Its `.idle` state will be delayed after the `.idle` state of the `autoLoadStatus` after first auto-load.
+  @Published private(set) var autoLoadDelayedIdleStatus: AutoLoadStatus = .idle
 
   private var cancellables = Set<AnyCancellable>()
 
@@ -100,6 +103,7 @@ final class IkaCatalog: ObservableObject {
 
   private init() {
     setUpLoadResultStatusSubscription()
+    setUpAutoLoadNonIdleStatusSubscription()
     Task {
       await loadCatalog()
       setUpAutoLoadCheckSubscription()
@@ -126,6 +130,16 @@ final class IkaCatalog: ObservableObject {
       .removeDuplicates()
       .sink { [weak self] newStatus in
         self?.loadResultStatus = newStatus
+      }
+      .store(in: &cancellables)
+  }
+
+  private func setUpAutoLoadNonIdleStatusSubscription() {
+    $autoLoadStatus
+      .filter { $0 != .idle }
+      .removeDuplicates()
+      .sink { [weak self] newStatus in
+        self?.autoLoadDelayedIdleStatus = newStatus
       }
       .store(in: &cancellables)
   }
@@ -326,6 +340,8 @@ final class IkaCatalog: ObservableObject {
         }
         try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
         autoLoadStatus = .idle
+        try? await Task.sleep(nanoseconds: UInt64(Scoped.idleAndNonIdleStatusUpdateInterval * 1_000_000_000))
+        autoLoadDelayedIdleStatus = .idle
       }
     case .idle:
       autoLoadStatus = .idle

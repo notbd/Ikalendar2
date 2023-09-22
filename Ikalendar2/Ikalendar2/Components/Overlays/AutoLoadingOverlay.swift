@@ -12,10 +12,12 @@ import SwiftUI
 struct AutoLoadingOverlay: View {
   typealias Scoped = Constants.Style.Overlay.AutoLoading
 
-  var autoLoadStatus: IkaCatalog.AutoLoadStatus
+  @EnvironmentObject private var ikaCatalog: IkaCatalog
 
   var body: some View {
     Image(systemName: iconName)
+      .symbolEffect(.pulse.byLayer, isActive: ikaCatalog.autoLoadStatus == .autoLoading)
+      .contentTransition(.symbolEffect(.replace.upUp))
       .foregroundStyle(Color.primary)
       .font(Scoped.SFSYMBOL_FONT)
       .frame(
@@ -23,15 +25,15 @@ struct AutoLoadingOverlay: View {
         height: Scoped.FRAME_SIDE)
       .background(.thinMaterial)
       .cornerRadius(Scoped.FRAME_CORNER_RADIUS)
-      .opacity(autoLoadStatus == .idle ? 0 : 1)
+      .opacity(ikaCatalog.autoLoadStatus == .idle ? 0 : 1)
       .padding()
       .animation(
-        Constants.Config.Animation.appDefault,
-        value: autoLoadStatus)
+        .bouncy,
+        value: ikaCatalog.autoLoadStatus)
   }
 
   private var iconName: String {
-    switch autoLoadStatus {
+    switch ikaCatalog.autoLoadDelayedIdleStatus {
     case .autoLoading:
       Scoped.LOADING_SFSYMBOL
     case .autoLoaded(let loadedStatus):
@@ -42,7 +44,7 @@ struct AutoLoadingOverlay: View {
         Scoped.LOADED_FAILURE_SFSYMBOL
       }
     case .idle:
-      Scoped.REGULAR_SFSYMBOL
+      Scoped.LOADING_SFSYMBOL
     }
   }
 }
@@ -51,6 +53,6 @@ struct AutoLoadingOverlay: View {
 
 struct AutoLoadingOverlay_Previews: PreviewProvider {
   static var previews: some View {
-    AutoLoadingOverlay(autoLoadStatus: .autoLoading)
+    AutoLoadingOverlay()
   }
 }

@@ -27,7 +27,7 @@ struct RotationsCarouselView: View {
         .apply(setToolbarItems)
         .navigationTitle(Constants.Key.BundleInfo.APP_DISPLAY_NAME)
         .overlay(
-          AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
+          AutoLoadingOverlay(),
           alignment: .bottomTrailing)
 
       LoadingOverlay(loadStatus: ikaCatalog.loadStatus)
@@ -94,7 +94,7 @@ struct RotationsCarouselView: View {
       }
     }
     .animation(
-      Constants.Config.Animation.appDefault,
+      .default,
       value: ikaPreference.defaultGameMode)
     .if(!isWindowWide) { wrapInHorizontalScrollView(content: $0) }
   }

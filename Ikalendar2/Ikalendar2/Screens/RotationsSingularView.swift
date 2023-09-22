@@ -27,12 +27,12 @@ struct RotationsSingularView: View {
             battleModeSelection: ikaStatus.currentBattleMode,
             ifOffset: true)
             .animation(
-              Constants.Config.Animation.appDefault,
+              .default,
               value: "\(ikaStatus.currentGameMode)-\(ikaStatus.currentBattleMode)"),
 
           alignment: .topTrailing)
         .overlay(
-          AutoLoadingOverlay(autoLoadStatus: ikaCatalog.autoLoadStatus),
+          AutoLoadingOverlay(),
           alignment: .bottomTrailing)
         .refreshable {
           // Note: As of iOS 17.0 SDK, refresh operation must be wrapped inside a Task.

@@ -32,6 +32,9 @@ extension Constants.Key {
 
     static let IF_USE_ALT_STAGE_IMAGES = "pref.if_use_alt_stage_images"
     static let IF_SWAP_BOTTOM_TOOLBAR_PICKERS = "pref.if_swap_bottom_toolbar_pickers"
+
+    /// Log
+    static let IF_HAS_RATED = "pref.if_has_rated"
   }
 
   enum URL {

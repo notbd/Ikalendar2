@@ -15,6 +15,8 @@ struct ToolbarRefreshButton: View {
 
   @EnvironmentObject private var ikaCatalog: IkaCatalog
 
+  private var isRefreshing: Bool { ikaCatalog.loadStatus == .loading }
+
   var body: some View {
     Button {
       Task {
@@ -31,17 +33,18 @@ struct ToolbarRefreshButton: View {
     .disabled(ikaCatalog.loadStatus == .loading)
   }
 
-  @ViewBuilder
   private var icon: some View {
-    switch ikaCatalog.loadStatus {
-    case .loading:
-      ProgressView()
-    default:
-      Image(systemName: "arrow.triangle.2.circlepath")
-        .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
-        .foregroundStyle(Color.primary)
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-    }
+    Image(
+      systemName: isRefreshing
+        ? "antenna.radiowaves.left.and.right"
+        : "arrow.triangle.2.circlepath")
+      .contentTransition(.symbolEffect(.replace.offUp))
+      .symbolEffect(
+        .variableColor,
+        isActive: isRefreshing)
+      .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
+      .foregroundStyle(Color.primary)
+      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
   }
 }
 

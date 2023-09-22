@@ -36,7 +36,7 @@ struct SalmonRotationStageCard: View {
         overlay,
         alignment: .bottom)
       .animation(
-        Constants.Config.Animation.appDefault,
+        .default,
         value: ikaPreference.ifUseAltStageImages)
       .background {
         GeometryReader { geo in

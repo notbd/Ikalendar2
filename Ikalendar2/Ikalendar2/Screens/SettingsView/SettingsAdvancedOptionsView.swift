@@ -21,7 +21,7 @@ struct SettingsAdvancedOptionsView: View {
   @State private var battleRotationPreviewData: BattleRotation = IkaMockData.getBattleRotation()
   @State private var salmonRotationPreviewData: SalmonRotation = IkaMockData.getSalmonRotation()
 
-  @State private var rowWidth: CGFloat = 390 // initial value does not matter
+  @State private var rowWidth: CGFloat = 390
 
   var body: some View {
     GeometryReader { geo in
@@ -37,14 +37,14 @@ struct SettingsAdvancedOptionsView: View {
         Section(header: stageImagesPreviewHeader) {
           battleRotationPreviewCell
             .animation(
-              Constants.Config.Animation.appDefault,
+              .default,
               value: battleRotationPreviewData)
         }
 
         Section {
           salmonRotationPreviewCell
             .animation(
-              Constants.Config.Animation.appDefault,
+              .default,
               value: salmonRotationPreviewData)
         }
       }
@@ -72,7 +72,7 @@ struct SettingsAdvancedOptionsView: View {
       }
       icon: {
         Image(systemName: Scoped.BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL)
-          .font(.subheadline)
+          .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
       }
@@ -91,7 +91,7 @@ struct SettingsAdvancedOptionsView: View {
       }
       icon: {
         Image(systemName: Scoped.ALT_STAGE_IMG_SFSYMBOL)
-          .font(.subheadline)
+          .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }

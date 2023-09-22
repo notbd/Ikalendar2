@@ -10,9 +10,11 @@ import SwiftUI
 /// Main Application Entry.
 @main
 struct Ikalendar2App: App {
+  private var ikaPreference: IkaPreference
+  private var ikaLog: IkaLog
   private var ikaCatalog: IkaCatalog
   private var ikaStatus: IkaStatus
-  private var ikaPreference: IkaPreference
+
   private var ikaTimePublisher: IkaTimePublisher
   private var ikaDeviceMotionPublisher: IkaDeviceMotionPublisher
   private var ikaInterfaceOrientationPublisher: IkaInterfaceOrientationPublisher
@@ -20,9 +22,10 @@ struct Ikalendar2App: App {
   var body: some Scene {
     WindowGroup {
       RootView()
+        .environmentObject(ikaPreference)
+        .environmentObject(ikaLog)
         .environmentObject(ikaCatalog)
         .environmentObject(ikaStatus)
-        .environmentObject(ikaPreference)
         .environmentObject(ikaTimePublisher)
         .environmentObject(ikaDeviceMotionPublisher)
         .environmentObject(ikaInterfaceOrientationPublisher)
@@ -41,9 +44,11 @@ struct Ikalendar2App: App {
     UserDefaults.standard
       .register(defaults: [Constants.Key.AppStorage.DEFAULT_BATTLE_MODE: "gachi"])
 
+    ikaPreference = .shared
+    ikaLog = .shared
     ikaCatalog = .shared
     ikaStatus = .shared
-    ikaPreference = .shared
+
     ikaTimePublisher = .shared
     ikaDeviceMotionPublisher = .shared
     ikaInterfaceOrientationPublisher = .shared

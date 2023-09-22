@@ -77,7 +77,8 @@ struct SettingsMainView: View {
         }
       } icon: {
         Image(systemName: ikaPreference.defaultGameMode.sfSymbolNameSelected)
-          .font(.subheadline)
+          .imageScale(.medium)
+          .contentTransition(.symbolEffect(.replace.offUp))
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
@@ -110,15 +111,14 @@ struct SettingsMainView: View {
         }
       } icon: {
         Image(
-          systemName: ikaPreference.defaultGameMode != .battle || !isHorizontalCompact
-            ? ikaPreference.defaultBattleMode.sfSymbolNameIdle
-            : ikaPreference.defaultBattleMode.sfSymbolNameSelected)
-          .font(.subheadline)
+          systemName: ikaPreference.defaultBattleMode.sfSymbolNameSelected)
+          .imageScale(.medium)
+          .contentTransition(.symbolEffect(.replace.offUp))
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(
             ikaPreference.defaultGameMode != .battle || !isHorizontalCompact
               ? .secondary
-              : Color.accentColor)
+              : ikaPreference.defaultBattleMode.themeColor)
       }
 
       Spacer()
@@ -147,8 +147,9 @@ struct SettingsMainView: View {
           .foregroundStyle(.primary)
       }
       icon: {
-        Image(systemName: Scoped.COLOR_SCHEME_SFSYMBOL)
-          .font(.subheadline)
+        Image(
+          systemName: Scoped.COLOR_SCHEME_SFSYMBOL)
+          .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
@@ -180,16 +181,14 @@ struct SettingsMainView: View {
   }
 
   private var rowAltAppIcon: some View {
-    let altAppIconStatusSFSymbolName = ikaPreference.preferredAppIcon.getSettingsSFSymbolName()
-
-    return NavigationLink(destination: SettingsAltAppIconView()) {
+    NavigationLink(destination: SettingsAltAppIconView()) {
       Label {
         Text("App Icon")
           .foregroundStyle(.primary)
       }
       icon: {
-        Image(systemName: altAppIconStatusSFSymbolName)
-          .font(.subheadline)
+        Image(systemName: ikaPreference.preferredAppIcon.settingsMainSFSymbolName)
+          .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
@@ -212,7 +211,7 @@ struct SettingsMainView: View {
         Image(
           systemName: Scoped.ADVANCED_OPTIONS_SFSYMBOL,
           variableValue: customizedPercentage)
-          .font(.subheadline)
+          .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
@@ -234,7 +233,7 @@ struct SettingsMainView: View {
         }
         icon: {
           Image(systemName: currentLocale.toIkaLocale().sfSymbolName)
-            .font(.subheadline)
+            .imageScale(.medium)
             .symbolRenderingMode(.hierarchical)
             .foregroundStyle(Color.accentColor)
         }
@@ -259,7 +258,7 @@ struct SettingsMainView: View {
       }
       icon: {
         Image(systemName: Scoped.ABOUT_SFSYMBOL)
-          .font(.subheadline)
+          .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
@@ -274,7 +273,7 @@ struct SettingsMainView: View {
       }
       icon: {
         Image(systemName: Scoped.CREDITS_SFSYMBOL)
-          .font(.subheadline)
+          .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }

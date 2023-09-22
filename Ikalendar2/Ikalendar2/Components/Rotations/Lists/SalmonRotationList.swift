@@ -32,7 +32,7 @@ struct SalmonRotationList: View {
       }
       .listStyle(.insetGrouped)
       .animation(
-        Constants.Config.Animation.spring,
+        .default,
         value: salmonRotations)
       .disabled(ikaCatalog.loadStatus != .loaded)
     }

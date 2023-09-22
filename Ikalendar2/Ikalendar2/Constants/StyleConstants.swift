@@ -46,10 +46,9 @@ extension Constants.Style {
       static let FRAME_SIDE: CGFloat = 36
       static let FRAME_CORNER_RADIUS: CGFloat = 5
 
-      static let LOADING_SFSYMBOL = "icloud.and.arrow.down.fill"
+      static let LOADING_SFSYMBOL = "arrow.triangle.2.circlepath.icloud.fill"
       static let LOADED_SUCCESS_SFSYMBOL = "checkmark.icloud.fill"
       static let LOADED_FAILURE_SFSYMBOL = "exclamationmark.icloud.fill"
-      static let REGULAR_SFSYMBOL = "icloud.fill"
     }
 
     enum ModeIcon {
@@ -91,7 +90,7 @@ extension Constants.Style {
     enum Main {
       static let DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD: CGFloat = 375
 
-      static let COLOR_SCHEME_SFSYMBOL = "circle.lefthalf.fill"
+      static let COLOR_SCHEME_SFSYMBOL = "circle.lefthalf.filled"
       static let COLOR_SCHEME_MENU_SFSYMBOL = "chevron.up.chevron.down"
 
       static let ADVANCED_OPTIONS_SFSYMBOL = "wand.and.rays"
@@ -145,8 +144,8 @@ extension Constants.Style {
       static let VIEW_ON_APP_STORE_SFSYMBOL = "doc.viewfinder.fill"
 
       static let TWITTER_ICON_NAME = "twitter_xsmall"
-      static let TWITTER_ICON_SIZE_LARGE: CGFloat = 21
-      static let TWITTER_ICON_SIZE_SMALL: CGFloat = 19
+      static let TWITTER_ICON_SIZE_LARGE: CGFloat = 20
+      static let TWITTER_ICON_SIZE_SMALL: CGFloat = 18
       static let EMAIL_SFSYMBOL = "envelope"
 
       static let SOURCE_CODE_SFSYMBOL = "chevron.left.slash.chevron.right"

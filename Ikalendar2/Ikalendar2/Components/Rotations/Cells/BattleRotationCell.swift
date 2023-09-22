@@ -304,7 +304,8 @@ struct BattleRotationCell_Previews: PreviewProvider {
         Section {
           BattleRotationCellPrimary(
             rotation: IkaMockData.getBattleRotation(
-              rule: .towerControl,
+              preferredMode: .gachi,
+              preferredRule: .towerControl,
               rawStartTime: Date()),
             rowWidth: geo.size.width,
             animationNamespaces: nil)
@@ -312,7 +313,8 @@ struct BattleRotationCell_Previews: PreviewProvider {
         Section {
           BattleRotationCellSecondary(
             rotation: IkaMockData.getBattleRotation(
-              rule: .clamBlitz,
+              preferredMode: .gachi,
+              preferredRule: .clamBlitz,
               rawStartTime: Date()),
             rowWidth: geo.size.width,
             animationNamespaces: nil)
