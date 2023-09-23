@@ -34,7 +34,8 @@ extension Constants.Key {
     static let IF_SWAP_BOTTOM_TOOLBAR_PICKERS = "pref.if_swap_bottom_toolbar_pickers"
 
     /// Log
-    static let IF_HAS_RATED = "pref.if_has_rated"
+    static let IF_HAS_DISCOVERED_ALT_APP_ICON = "pref.if_has_discovered_alt_app_icon"
+    static let IF_HAS_DISCOVERED_RATING = "pref.if_has_discovered_rating"
   }
 
   enum URL {

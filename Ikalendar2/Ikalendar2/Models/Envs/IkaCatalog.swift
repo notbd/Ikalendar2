@@ -336,7 +336,7 @@ final class IkaCatalog: ObservableObject {
       Task {
         // blocked if app is in background - to make sure autoLoaded can be seen when switched back
         while UIApplication.shared.applicationState != .active {
-          try? await Task.sleep(nanoseconds: UInt64(Scoped.activeStateCheckInterval * 1_000_000_000))
+          try? await Task.sleep(nanoseconds: UInt64(Scoped.appActiveStateCheckInterval * 1_000_000_000))
         }
         try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
         autoLoadStatus = .idle

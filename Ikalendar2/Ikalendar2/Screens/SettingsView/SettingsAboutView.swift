@@ -20,6 +20,7 @@ struct SettingsAboutView: View {
   @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
   @EnvironmentObject private var ikaLog: IkaLog
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   @State private var appStoreOverlayPresented = false
 
@@ -129,21 +130,14 @@ struct SettingsAboutView: View {
 
   // MARK: - Review Section
 
-  let ratingSFSymbolBounceTimer = Timer
-    .publish(
-      every: Constants.Config.Settings.aboutRatingsBounceInterval,
-      tolerance: 0.1,
-      on: .main,
-      in: .common)
-    .autoconnect()
-  @State private var ratingSFSymbolBounce: Int = 0
+  @State private var rowRatingSfSymbolBounce: Int = 0
 
   private var rowRating: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
       requestReview()
-      ratingSFSymbolBounce += 1
-      if !ikaLog.ifHasRated { ikaLog.ifHasRated = true }
+      rowRatingSfSymbolBounce += 1
+      if !ikaLog.ifHasDiscoveredRating { ikaLog.ifHasDiscoveredRating = true }
     } label: {
       Label {
         Text("Rate ikalendar2")
@@ -151,14 +145,14 @@ struct SettingsAboutView: View {
       }
       icon: {
         Image(systemName: Scoped.RATING_SFSYMBOL)
-          .symbolEffect(.bounce, value: ratingSFSymbolBounce)
+          .symbolEffect(.bounce, value: rowRatingSfSymbolBounce)
           .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
       }
     }
-    .onReceive(ratingSFSymbolBounceTimer) { _ in
-      if !ikaLog.ifHasRated { ratingSFSymbolBounce += 1 }
+    .onReceive(ikaTimePublisher.bounceSignalPublisher) { _ in
+      if !ikaLog.ifHasDiscoveredRating { rowRatingSfSymbolBounce += 1 }
     }
   }
 

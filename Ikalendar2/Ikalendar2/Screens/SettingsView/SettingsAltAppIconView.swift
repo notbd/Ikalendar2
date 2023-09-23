@@ -11,6 +11,8 @@ import SwiftUI
 
 /// The Settings page for switching alternate App Icons.
 struct SettingsAltAppIconView: View {
+  @EnvironmentObject private var ikaLog: IkaLog
+
   var body: some View {
     List {
       Section(header: Spacer()) {
@@ -22,6 +24,9 @@ struct SettingsAltAppIconView: View {
     .navigationTitle("App Icon")
     .navigationBarTitleDisplayMode(.large)
     .listStyle(.insetGrouped)
+    .onAppear {
+      if !ikaLog.ifHasDiscoveredAltAppIcon { ikaLog.ifHasDiscoveredAltAppIcon = true }
+    }
   }
 }
 

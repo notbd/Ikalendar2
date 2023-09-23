@@ -15,12 +15,20 @@ final class IkaLog: ObservableObject {
 
   static let shared = IkaLog()
 
-  /// Default GameMode (initial value already set during App init, so init value here does not matter)
-  @AppStorage(Constants.Key.AppStorage.IF_HAS_RATED)
-  var ifHasRated: Bool = false
+  /// Record if user has tapped and discovered the rating button.
+  @AppStorage(Constants.Key.AppStorage.IF_HAS_DISCOVERED_RATING)
+  var ifHasDiscoveredRating: Bool = false
   {
     willSet {
-      if newValue { SimpleHaptics.generateTask(.selection) }
+      objectWillChange.send()
+    }
+  }
+
+  /// Record if user has tapped and discovered the alt app icon settings.
+  @AppStorage(Constants.Key.AppStorage.IF_HAS_DISCOVERED_ALT_APP_ICON)
+  var ifHasDiscoveredAltAppIcon: Bool = false
+  {
+    willSet {
       objectWillChange.send()
     }
   }

@@ -10,18 +10,20 @@ import Foundation
 import UIKit
 
 /// `IkaTimePublisher` is an observable object designed to provide time-based events to subscribers.
-/// It publishes the current time every second and provides signals for auto-loading checks based on
-/// the `autoLoadCheckInterval` value.
+/// It publishes the current time every second and publish signals with respect to their respective
+/// config value for the time interval.
 /// This behavior persists even when the app transitions to the background.
 final class IkaTimePublisher: ObservableObject {
 
   /// The shared singleton instance
   static let shared = IkaTimePublisher()
 
-  /// Represents the current time and updates every second.
+  /// Represents the current time and updates every `1` second.
   @Published private(set) var currentTime = Date()
-  /// A publisher that sends out a signal for auto-load checks every two seconds.
+  /// A publisher that sends out a signal for auto-load checks every `2` seconds.
   let autoLoadCheckPublisher = PassthroughSubject<Void, Never>()
+  /// A publisher that sends out a signal for icon bounces every `7` seconds.
+  let bounceSignalPublisher = PassthroughSubject<Void, Never>()
 
   /// Contains all the active subscriptions for this object.
   private var cancellables = Set<AnyCancellable>()
@@ -31,6 +33,7 @@ final class IkaTimePublisher: ObservableObject {
   private init() {
     startPublishingCurrentTime()
     startPublishingAutoLoadChecks()
+    startPublishingBounceSignal()
   }
 
   // MARK: Private
@@ -50,17 +53,32 @@ final class IkaTimePublisher: ObservableObject {
       .store(in: &cancellables)
   }
 
-  /// Starts the process of publishing auto-load check signals every `autoLoadCheckInterval`.
+  /// Starts the process of publishing auto-load check signals every `autoLoadCheckSignalInterval`.
   private func startPublishingAutoLoadChecks() {
     Timer
       .publish(
-        every: Constants.Config.Catalog.autoLoadCheckInterval,
+        every: Constants.Config.Timer.autoLoadCheckSignalInterval,
         tolerance: 0.1,
         on: .main,
         in: .common)
       .autoconnect()
       .sink { [weak self] _ in
         self?.autoLoadCheckPublisher.send(())
+      }
+      .store(in: &cancellables)
+  }
+
+  /// Starts the process of publishing bounce signals every `bounceSignalInterval`.
+  private func startPublishingBounceSignal() {
+    Timer
+      .publish(
+        every: Constants.Config.Timer.bounceSignalInterval,
+        tolerance: 0.1,
+        on: .main,
+        in: .common)
+      .autoconnect()
+      .sink { [weak self] _ in
+        self?.bounceSignalPublisher.send(())
       }
       .store(in: &cancellables)
   }

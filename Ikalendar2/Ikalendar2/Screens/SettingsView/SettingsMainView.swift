@@ -21,8 +21,10 @@ struct SettingsMainView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
+  @EnvironmentObject private var ikaLog: IkaLog
   @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   @State private var rowWidth: CGFloat = 390
 
@@ -180,6 +182,8 @@ struct SettingsMainView: View {
     }
   }
 
+  @State private var rowAltAppIconSfSymbolBounce: Int = 0
+
   private var rowAltAppIcon: some View {
     NavigationLink(destination: SettingsAltAppIconView()) {
       Label {
@@ -188,9 +192,13 @@ struct SettingsMainView: View {
       }
       icon: {
         Image(systemName: ikaPreference.preferredAppIcon.settingsMainSFSymbolName)
+          .symbolEffect(.bounce, value: rowAltAppIconSfSymbolBounce)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
+      }
+      .onReceive(ikaTimePublisher.bounceSignalPublisher) { _ in
+        if !ikaLog.ifHasDiscoveredAltAppIcon { rowAltAppIconSfSymbolBounce += 1 }
       }
     }
   }
