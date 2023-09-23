@@ -11,7 +11,7 @@ import SwiftUI
 
 /// A row containing all the information of a salmon rotation.
 struct SalmonRotationRow: View {
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
 
   let rotation: SalmonRotation
   let index: Int
@@ -21,7 +21,7 @@ struct SalmonRotationRow: View {
     // expired rotations already filtered out, so index will reflect truth
     switch index {
     case 0:
-      rotation.isCurrent() ? .first(.active) : .first(.idle)
+      rotation.isCurrent ? .first(.active) : .first(.idle)
     case 1:
       .second
     default:
@@ -90,7 +90,7 @@ extension SalmonRotationRow {
 struct SalmonRotationHeader: View {
   typealias Scoped = Constants.Style.Rotation.Header
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
 
   let rotation: SalmonRotation
   let rowType: SalmonRotationRow.RowType

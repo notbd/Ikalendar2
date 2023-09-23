@@ -12,23 +12,23 @@ import SwiftUI
 struct BattleRotationList: View {
   @EnvironmentObject private var ikaCatalog: IkaCatalog
   @EnvironmentObject private var ikaStatus: IkaStatus
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
 
   let specifiedBattleMode: BattleMode?
 
-  private var battleRotations: [BattleRotation] {
+  private var validBattleRotations: [BattleRotation] {
     let battleMode: BattleMode = if let specifiedBattleMode { specifiedBattleMode }
     else { ikaStatus.currentBattleMode }
 
     // filter: display current and future rotations only
     return
-      ikaCatalog.battleRotationDict[battleMode]!.filter { !$0.isExpired() }
+      ikaCatalog.battleRotationDict[battleMode]!.filter { !$0.isExpired }
   }
 
   var body: some View {
     GeometryReader { geo in
       List {
-        ForEach(battleRotations) { rotation in
+        ForEach(validBattleRotations) { rotation in
           BattleRotationRow(
             rotation: rotation,
             rowWidth: geo.size.width)
@@ -39,7 +39,7 @@ struct BattleRotationList: View {
       // map animation value to startTime to avoid animation during battle mode switch
       .animation(
         .bouncy,
-        value: battleRotations.map { $0.startTime })
+        value: validBattleRotations.map { $0.startTime })
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }

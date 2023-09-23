@@ -20,7 +20,7 @@ struct SettingsAboutView: View {
   @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
   @EnvironmentObject private var ikaLog: IkaLog
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
 
   @State private var appStoreOverlayPresented = false
 

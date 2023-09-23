@@ -11,15 +11,15 @@ import SwiftUI
 
 /// A row containing all the information of a battle rotation.
 struct BattleRotationRow: View {
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
 
   private var rowType: RowType {
-    if rotation.isCurrent() { return .now }
-    else if rotation.isNext() { return .next }
-    else { return .other }
+    if rotation.isCurrent { .now }
+    else if rotation.isNext { .next }
+    else { .other }
   }
 
   var body: some View {
@@ -65,7 +65,7 @@ extension BattleRotationRow {
 struct BattleRotationHeader: View {
   typealias Scoped = Constants.Style.Rotation.Header
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
 
   let rotation: BattleRotation
   let rowType: BattleRotationRow.RowType

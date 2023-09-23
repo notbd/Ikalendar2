@@ -9,18 +9,18 @@ import SwiftUI
 
 struct SalmonRotationList: View {
   @EnvironmentObject private var ikaCatalog: IkaCatalog
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
 
-  private var salmonRotations: [SalmonRotation] {
+  private var validSalmonRotations: [SalmonRotation] {
     // filter: display current and future rotations only
-    ikaCatalog.salmonRotations.filter { !$0.isExpired() }
+    ikaCatalog.salmonRotations.filter { !$0.isExpired }
   }
 
   var body: some View {
     GeometryReader { geo in
       List {
         ForEach(
-          Array(zip(salmonRotations.indices, salmonRotations)),
+          Array(zip(validSalmonRotations.indices, validSalmonRotations)),
           id: \.1)
         { index, rotation in
           SalmonRotationRow(
@@ -33,7 +33,7 @@ struct SalmonRotationList: View {
       .listStyle(.insetGrouped)
       .animation(
         .bouncy,
-        value: salmonRotations)
+        value: validSalmonRotations)
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }

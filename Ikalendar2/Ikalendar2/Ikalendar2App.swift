@@ -10,26 +10,26 @@ import SwiftUI
 /// Main Application Entry.
 @main
 struct Ikalendar2App: App {
-  private var ikaPreference: IkaPreference
-  private var ikaLog: IkaLog
-  private var ikaCatalog: IkaCatalog
-  private var ikaStatus: IkaStatus
+  private let ikaPreference: IkaPreference
+  private let ikaLog: IkaLog
+  private let ikaCatalog: IkaCatalog
+  private let ikaStatus: IkaStatus
 
-  private var ikaTimePublisher: IkaTimePublisher
-  private var ikaDeviceMotionPublisher: IkaDeviceMotionPublisher
-  private var ikaInterfaceOrientationPublisher: IkaInterfaceOrientationPublisher
+  private let ikaTimePublisher: IkaTimePublisher
+  private let ikaDeviceMotionPublisher: IkaDeviceMotionPublisher
+  private let ikaInterfaceOrientationPublisher: IkaInterfaceOrientationPublisher
 
   var body: some Scene {
     WindowGroup {
       RootView()
+        .accentColor(.orange)
         .environmentObject(ikaPreference)
         .environmentObject(ikaLog)
         .environmentObject(ikaCatalog)
         .environmentObject(ikaStatus)
-        .environmentObject(ikaTimePublisher)
-        .environmentObject(ikaDeviceMotionPublisher)
-        .environmentObject(ikaInterfaceOrientationPublisher)
-        .accentColor(.orange)
+        .environment(ikaTimePublisher)
+        .environment(ikaDeviceMotionPublisher)
+        .environment(ikaInterfaceOrientationPublisher)
         .onAppear {
           ikaInterfaceOrientationPublisher.setInitialOrientation()
         }

@@ -13,7 +13,7 @@ import SwiftUI
 struct SalmonRotationCell: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
 
   let rotation: SalmonRotation
   let rowWidth: CGFloat
@@ -32,7 +32,7 @@ struct SalmonRotationCell: View {
       if hasStageAndWeapon {
         stageAndWeaponSection
 
-        if rotation.isCurrent() {
+        if rotation.isCurrent {
           progressSection
         }
       }
@@ -72,20 +72,20 @@ struct SalmonRotationCell: View {
 struct SalmonRotationCellTimeTextSection: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell.TimeTextSection
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
 
   let rotation: SalmonRotation
   let rowWidth: CGFloat
 
   var body: some View {
     HStack {
-      Image(rotation.isCurrent() ? "golden-egg" : "salmon")
+      Image(rotation.isCurrent ? "golden-egg" : "salmon")
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .scaleEffect(
-          rotation.isCurrent()
+          rotation.isCurrent
             ? Scoped.ICON_GOLDEN_EGG_SCALE_FACTOR
             : Scoped.ICON_SALMON_FISH_SCALE_FACTOR)
           .frame(height: rowWidth * Scoped.SALMON_ICON_HEIGHT_RATIO)

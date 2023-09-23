@@ -11,12 +11,14 @@ import UIKit
 // MARK: - IkaInterfaceOrientationPublisher
 
 /// An ObservableObject to monitor changes in the device's interface orientation.
-final class IkaInterfaceOrientationPublisher: ObservableObject {
+///
+@Observable
+final class IkaInterfaceOrientationPublisher {
 
   static let shared = IkaInterfaceOrientationPublisher()
 
   /// The current orientation of the device.
-  @Published var currentOrientation: UIInterfaceOrientation
+  var currentOrientation: UIInterfaceOrientation
 
   // MARK: Lifecycle
 

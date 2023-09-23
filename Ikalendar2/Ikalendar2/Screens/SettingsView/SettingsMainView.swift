@@ -22,9 +22,8 @@ struct SettingsMainView: View {
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   @EnvironmentObject private var ikaLog: IkaLog
-  @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
 
   @State private var rowWidth: CGFloat = 390
 

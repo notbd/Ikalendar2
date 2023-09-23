@@ -14,8 +14,8 @@ struct ModeIconStamp: View {
   typealias Scoped = Constants.Style.Overlay.ModeIcon
 
   @EnvironmentObject private var ikaStatus: IkaStatus
-  @EnvironmentObject private var ikaDeviceMotionPublisher: IkaDeviceMotionPublisher
-  @EnvironmentObject private var ikaInterfaceOrientationPublisher: IkaInterfaceOrientationPublisher
+  @Environment(IkaDeviceMotionPublisher.self) private var ikaDeviceMotionPublisher
+  @Environment(IkaInterfaceOrientationPublisher.self) private var ikaInterfaceOrientationPublisher
 
   let iconSize: CGFloat
   let gameModeSelection: GameMode

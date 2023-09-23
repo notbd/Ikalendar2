@@ -47,7 +47,8 @@ extension BattleRotation {
 }
 
 extension BattleRotation {
-  func isNext() -> Bool {
+  /// Determines whether the rotation is coming up next.
+  var isNext: Bool {
     let twoHoursLater =
       Calendar.current.date(
         byAdding: .hour,

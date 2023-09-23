@@ -13,7 +13,7 @@ import VariableBlurView
 struct CarouselColumn: View {
   typealias Scoped = Constants.Style.Carousel.Column
 
-  @EnvironmentObject private var ikaInterfaceOrientationPublisher: IkaInterfaceOrientationPublisher
+  @Environment(IkaInterfaceOrientationPublisher.self) private var ikaInterfaceOrientationPublisher
   private var ifPortrait: Bool { ikaInterfaceOrientationPublisher.currentOrientation.isPortrait }
 
   let gameMode: GameMode

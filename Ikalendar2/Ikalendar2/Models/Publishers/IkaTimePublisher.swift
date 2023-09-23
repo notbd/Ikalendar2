@@ -7,26 +7,25 @@
 
 import Combine
 import Foundation
-import UIKit
 
 /// `IkaTimePublisher` is an observable object designed to provide time-based events to subscribers.
 /// It publishes the current time every second and publish signals with respect to their respective
 /// config value for the time interval.
 /// This behavior persists even when the app transitions to the background.
-final class IkaTimePublisher: ObservableObject {
+@Observable
+final class IkaTimePublisher {
 
-  /// The shared singleton instance
   static let shared = IkaTimePublisher()
 
-  /// Represents the current time and updates every `1` second.
-  @Published private(set) var currentTime = Date()
-  /// A publisher that sends out a signal for auto-load checks every `2` seconds.
-  let autoLoadCheckPublisher = PassthroughSubject<Void, Never>()
-  /// A publisher that sends out a signal for icon bounces every `7` seconds.
-  let bounceSignalPublisher = PassthroughSubject<Void, Never>()
+  /// Updates every `1` second.
+  private(set) var currentTime: Date = .init()
+  /// Signals auto-load checks every `2` seconds.
+  let autoLoadCheckPublisher: PassthroughSubject<Void, Never> = .init()
+  /// Signals icon bounces every `7` seconds.
+  let bounceSignalPublisher: PassthroughSubject<Void, Never> = .init()
 
   /// Contains all the active subscriptions for this object.
-  private var cancellables = Set<AnyCancellable>()
+  @ObservationIgnored private var cancellables = Set<AnyCancellable>()
 
   // MARK: Lifecycle
 

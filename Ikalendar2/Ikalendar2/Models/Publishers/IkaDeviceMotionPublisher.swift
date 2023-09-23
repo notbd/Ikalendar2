@@ -13,20 +13,21 @@ import UIKit
 /// It captures the gravitational force changes on x, y, and z axes and computes the difference between the
 /// current value
 /// and the average of the recently stored values over a specified duration.
-final class IkaDeviceMotionPublisher: ObservableObject {
+@Observable
+final class IkaDeviceMotionPublisher {
 
   /// The shared singleton instance
   static let shared = IkaDeviceMotionPublisher()
 
   /// An instance of `CMMotionManager` to access motion data.
-  private let motionManager = CMMotionManager()
+  @ObservationIgnored private let motionManager = CMMotionManager()
   /// Contains all active subscriptions, primarily for lifecycle management.
-  private var cancellables = Set<AnyCancellable>()
+  @ObservationIgnored private var cancellables = Set<AnyCancellable>()
 
   /// Arrays storing the x, y, and z gravitational force components over a duration.
-  private var xs: [CGFloat] = []
-  private var ys: [CGFloat] = []
-  private var zs: [CGFloat] = []
+  @ObservationIgnored private var xs: [CGFloat] = []
+  @ObservationIgnored private var ys: [CGFloat] = []
+  @ObservationIgnored private var zs: [CGFloat] = []
 
   /// The difference between the current gravitational force component and its average
   /// of recently stored values for x, y, and z axes.
@@ -81,9 +82,6 @@ final class IkaDeviceMotionPublisher: ObservableObject {
       dx = CGFloat(newData.x) - xs.reduce(0, +) / CGFloat(xs.count)
       dy = CGFloat(newData.y) - ys.reduce(0, +) / CGFloat(ys.count)
       dz = CGFloat(newData.z) - zs.reduce(0, +) / CGFloat(zs.count)
-
-      // Notify of changes
-      objectWillChange.send()
     }
   }
 

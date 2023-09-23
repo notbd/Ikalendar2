@@ -57,7 +57,7 @@ struct BattleRotationCellPrimary: View {
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
@@ -73,7 +73,7 @@ struct BattleRotationCellPrimary: View {
         remainingTimeSection
       }
 
-      if rotation.isCurrent()
+      if rotation.isCurrent
       {
         ProgressView(
           value: min(ikaTimePublisher.currentTime, rotation.endTime) - rotation.startTime,
