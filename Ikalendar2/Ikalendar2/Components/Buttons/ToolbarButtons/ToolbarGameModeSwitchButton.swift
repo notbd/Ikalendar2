@@ -14,9 +14,11 @@ import SwiftUI
 struct ToolbarGameModeSwitchButton: View {
   typealias Scoped = Constants.Style.ToolbarButton
 
-  @EnvironmentObject private var ikaStatus: IkaStatus
+  @Environment(IkaStatus.self) private var ikaStatus
 
   var body: some View {
+    @Bindable var ikaStatus = ikaStatus
+
     Menu {
       Picker(
         selection: $ikaStatus.currentGameMode,
@@ -48,6 +50,6 @@ struct ToolbarGameModeSwitchButton: View {
 struct ToolbarGameModeSwitchButton_Previews: PreviewProvider {
   static var previews: some View {
     ToolbarGameModeSwitchButton()
-      .environmentObject(IkaCatalog.shared)
+      .environment(IkaCatalog.shared)
   }
 }

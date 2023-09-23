@@ -5,18 +5,18 @@
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
-import Combine
+import Foundation
 import SimpleHaptics
-import SwiftUI
 
 /// An EnvObj class that is shared among all the views.
 /// Contains the app status.
 @MainActor
-final class IkaStatus: ObservableObject {
+@Observable
+final class IkaStatus {
 
   static let shared = IkaStatus()
 
-  @Published var isSettingsPresented = false
+  var isSettingsPresented = false
   {
     willSet {
       guard newValue != isSettingsPresented else { return }
@@ -24,9 +24,10 @@ final class IkaStatus: ObservableObject {
     }
   }
 
-  @Published var currentGameMode = GameMode(
-    rawValue: UserDefaults.standard.string(
-      forKey: Constants.Key.AppStorage.DEFAULT_GAME_MODE)!)!
+  var currentGameMode =
+    GameMode(
+      rawValue: UserDefaults.standard.string(
+        forKey: Constants.Key.AppStorage.DEFAULT_GAME_MODE)!)!
   {
     willSet {
       guard newValue != currentGameMode else { return }
@@ -34,9 +35,10 @@ final class IkaStatus: ObservableObject {
     }
   }
 
-  @Published var currentBattleMode = BattleMode(
-    rawValue: UserDefaults.standard.string(
-      forKey: Constants.Key.AppStorage.DEFAULT_BATTLE_MODE)!)!
+  var currentBattleMode =
+    BattleMode(
+      rawValue: UserDefaults.standard.string(
+        forKey: Constants.Key.AppStorage.DEFAULT_BATTLE_MODE)!)!
   {
     willSet {
       guard newValue != currentBattleMode else { return }

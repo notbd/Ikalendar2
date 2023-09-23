@@ -192,8 +192,8 @@ struct IkaMockData {
     var startTimeArray: [Date] = []
     for index in 0 ..< 8 {
       startTimeArray.append(Calendar.current.date(
-        byAdding: .hour,
-        value: index * 2,
+        byAdding: .second,
+        value: index * 15,
         to: Date())!)
     }
 
@@ -206,8 +206,6 @@ struct IkaMockData {
       getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[5]),
       getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[6]),
       getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[7]),
-      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[8]),
-      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[9]),
     ]
 
     battleRotationDict[.gachi] = [

@@ -10,15 +10,17 @@ import SwiftUI
 
 /// The entry view of the app.
 /// Provide an interface for some upfront View-level configurations.
+@MainActor
 struct RootView: View {
   @Environment(\.dynamicTypeSize) var dynamicTypeSize
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
+  @Environment(IkaStatus.self) private var ikaStatus
 
-  @EnvironmentObject private var ikaStatus: IkaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   @State private var mainViewID = UUID()
+
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   var body: some View {
     MainView()
@@ -53,11 +55,17 @@ struct RootView: View {
   // MARK: Private
 
   private func setUpFullScreenCoverSettingsModal(_ content: some View) -> some View {
-    content.fullScreenCover(isPresented: $ikaStatus.isSettingsPresented) { settingsModal }
+    @Bindable var ikaStatus = ikaStatus
+
+    return
+      content.fullScreenCover(isPresented: $ikaStatus.isSettingsPresented) { settingsModal }
   }
 
   private func setUpSheetSettingsModal(_ content: some View) -> some View {
-    content.sheet(isPresented: $ikaStatus.isSettingsPresented) { settingsModal }
+    @Bindable var ikaStatus = ikaStatus
+
+    return
+      content.sheet(isPresented: $ikaStatus.isSettingsPresented) { settingsModal }
   }
 
   /// Stupid workaround because as of iOS 17, dynamicTypeSize changes will not affect navigation titles,

@@ -66,18 +66,18 @@ extension Rotation {
 
 extension Rotation {
   /// Determines whether the rotation has expired based on the current time.
-  var isExpired: Bool {
-    endTime <= IkaTimePublisher.shared.currentTime
+  func isExpired(_ currentTime: Date) -> Bool {
+    endTime <= currentTime
   }
 
   /// Determines whether the rotation is currently active based on the current time.
-  var isCurrent: Bool {
-    startTime <= IkaTimePublisher.shared.currentTime &&
-      endTime > IkaTimePublisher.shared.currentTime
+  func isCurrent(_ currentTime: Date) -> Bool {
+    startTime <= currentTime &&
+      endTime > currentTime
   }
 
   /// Determines whether the rotation is scheduled for the future based on the current time.
-  var isFuture: Bool {
-    startTime > IkaTimePublisher.shared.currentTime
+  func isFuture(_ currentTime: Date) -> Bool {
+    startTime > currentTime
   }
 }

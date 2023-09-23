@@ -7,13 +7,14 @@
 
 import SwiftUI
 
+@MainActor
 struct SalmonRotationList: View {
-  @EnvironmentObject private var ikaCatalog: IkaCatalog
-  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
+  @Environment(IkaCatalog.self) private var ikaCatalog
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   private var validSalmonRotations: [SalmonRotation] {
     // filter: display current and future rotations only
-    ikaCatalog.salmonRotations.filter { !$0.isExpired }
+    ikaCatalog.salmonRotations.filter { !$0.isExpired(ikaTimePublisher.currentTime) }
   }
 
   var body: some View {

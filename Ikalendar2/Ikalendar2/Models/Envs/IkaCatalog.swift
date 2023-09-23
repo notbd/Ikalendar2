@@ -14,13 +14,14 @@ import SwiftUI
 /// An EnvObj class that is shared among all the views.
 /// Contains the rotation data and its loading status.
 @MainActor
-final class IkaCatalog: ObservableObject {
+@Observable
+final class IkaCatalog {
   typealias Scoped = Constants.Config.Catalog
 
   static let shared = IkaCatalog()
 
-  @Published private(set) var battleRotationDict = BattleRotationDict()
-  @Published private(set) var salmonRotations = [SalmonRotation]()
+  private(set) var battleRotationDict = BattleRotationDict()
+  private(set) var salmonRotations = [SalmonRotation]()
 
   // MARK: Load related
 
@@ -30,7 +31,7 @@ final class IkaCatalog: ObservableObject {
     case error(IkaError)
   }
 
-  @Published private(set) var loadStatus: LoadStatus = .loading
+  private(set) var loadStatus: LoadStatus = .loading
   {
     willSet {
       guard newValue != loadStatus else { return }
@@ -47,10 +48,17 @@ final class IkaCatalog: ObservableObject {
         SimpleHaptics.generateTask(.error)
       }
     }
+
+    didSet {
+      // broadcast change
+      loadStatusSubject.send(loadStatus)
+    }
   }
 
+  @ObservationIgnored private let loadStatusSubject: PassthroughSubject<LoadStatus, Never> = .init()
+
   /// Will never be in `.loading` state after catalog is first loaded.
-  @Published private(set) var loadResultStatus: LoadStatus = .loading
+  private(set) var loadResultStatus: LoadStatus = .loading
 
   // MARK: Auto-Load related
 
@@ -65,7 +73,7 @@ final class IkaCatalog: ObservableObject {
     }
   }
 
-  @Published private(set) var autoLoadStatus: AutoLoadStatus = .idle
+  private(set) var autoLoadStatus: AutoLoadStatus = .idle
   {
     willSet {
       guard newValue != autoLoadStatus else { return }
@@ -79,12 +87,19 @@ final class IkaCatalog: ObservableObject {
         break
       }
     }
+
+    didSet {
+      // broadcast change
+      autoLoadStatusSubject.send(autoLoadStatus)
+    }
   }
 
-  /// Its `.idle` state will be delayed after the `.idle` state of the `autoLoadStatus` after first auto-load.
-  @Published private(set) var autoLoadDelayedIdleStatus: AutoLoadStatus = .idle
+  @ObservationIgnored private let autoLoadStatusSubject: PassthroughSubject<AutoLoadStatus, Never> = .init()
 
-  private var cancellables = Set<AnyCancellable>()
+  /// Its `.idle` state will be delayed after the `.idle` state of the `autoLoadStatus` after first auto-load.
+  private(set) var autoLoadDelayedIdleStatus: AutoLoadStatus = .idle
+
+  @ObservationIgnored private var cancellables: Set<AnyCancellable> = .init()
 
   private var ifShouldAutoLoad: Bool {
     loadStatus != .loading &&
@@ -95,8 +110,8 @@ final class IkaCatalog: ObservableObject {
   private var ifShouldAutoLoadSalmon: Bool {
     guard let firstRotation = salmonRotations.first else { return true }
     return
-      firstRotation.isExpired ||
-      (firstRotation.isCurrent && firstRotation.rewardApparel == nil)
+      firstRotation.isExpired(IkaTimePublisher.shared.currentTime) ||
+      (firstRotation.isCurrent(IkaTimePublisher.shared.currentTime) && firstRotation.rewardApparel == nil)
   }
 
   // MARK: Lifecycle
@@ -125,7 +140,7 @@ final class IkaCatalog: ObservableObject {
   // MARK: Private
 
   private func setUpLoadResultStatusSubscription() {
-    $loadStatus
+    loadStatusSubject
       .filter { $0 != .loading }
       .removeDuplicates()
       .sink { [weak self] newStatus in
@@ -135,7 +150,7 @@ final class IkaCatalog: ObservableObject {
   }
 
   private func setUpAutoLoadNonIdleStatusSubscription() {
-    $autoLoadStatus
+    autoLoadStatusSubject
       .filter { $0 != .idle }
       .removeDuplicates()
       .sink { [weak self] newStatus in

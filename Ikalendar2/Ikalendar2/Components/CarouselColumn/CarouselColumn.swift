@@ -10,6 +10,7 @@ import VariableBlurView
 
 // MARK: - CarouselColumn
 
+@MainActor
 struct CarouselColumn: View {
   typealias Scoped = Constants.Style.Carousel.Column
 

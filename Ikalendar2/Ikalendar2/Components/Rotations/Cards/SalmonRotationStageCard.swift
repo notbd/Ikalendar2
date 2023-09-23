@@ -10,11 +10,12 @@ import SwiftUI
 // MARK: - SalmonRotationStageCard
 
 /// A card component that displays the stage information of a salmon rotation.
+@MainActor
 struct SalmonRotationStageCard: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Stage
 
   @EnvironmentObject private var ikaPreference: IkaPreference
-  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   @State private var cardWidth: CGFloat = 150
 
@@ -50,7 +51,7 @@ struct SalmonRotationStageCard: View {
 
   private var overlay: some View {
     HStack(alignment: .bottom) {
-      if rotation.isCurrent {
+      if rotation.isCurrent(ikaTimePublisher.currentTime) {
         stageTitleLabel
         Spacer()
         rewardApparelImg
@@ -80,7 +81,7 @@ struct SalmonRotationStageCard: View {
       .frame(width: cardWidth * Scoped.APPAREL_IMG_WIDTH_RATIO)
       .background(.ultraThinMaterial)
       .cornerRadius(Scoped.APPAREL_FRAME_CORNER_RADIUS)
-      .opacity(rotation.isCurrent && hasRewardApparel ? 1 : 0)
+      .opacity(rotation.isCurrent(ikaTimePublisher.currentTime) && hasRewardApparel ? 1 : 0)
   }
 }
 

@@ -10,11 +10,12 @@ import SwiftUI
 
 // MARK: - RotationsCarouselView
 
+@MainActor
 struct RotationsCarouselView: View {
   typealias Scoped = Constants.Style.Carousel
 
-  @EnvironmentObject private var ikaCatalog: IkaCatalog
-  @EnvironmentObject private var ikaStatus: IkaStatus
+  @Environment(IkaCatalog.self) private var ikaCatalog
+  @Environment(IkaStatus.self) private var ikaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   @State private var windowWidth: CGFloat = .zero
@@ -24,13 +25,15 @@ struct RotationsCarouselView: View {
   var body: some View {
     ZStack {
       content
-        .apply(setToolbarItems)
+        .apply {
+          setToolbarItems($0)
+        }
         .navigationTitle(Constants.Key.BundleInfo.APP_DISPLAY_NAME)
         .overlay(
           AutoLoadingOverlay(),
           alignment: .bottomTrailing)
 
-      LoadingOverlay(loadStatus: ikaCatalog.loadStatus)
+      LoadingOverlay()
     }
     .background {
       GeometryReader { geo in
@@ -96,16 +99,18 @@ struct RotationsCarouselView: View {
     .animation(
       .snappy,
       value: ikaPreference.defaultGameMode)
-    .if(!isWindowWide) { wrapInHorizontalScrollView(content: $0) }
+    .if(!isWindowWide) { wrapInHorizontalScrollView($0) }
   }
 
   // MARK: Private
 
-  private func wrapInHorizontalScrollView(content: some View) -> some View {
+  @MainActor
+  private func wrapInHorizontalScrollView(_ content: some View) -> some View {
     ScrollView(.horizontal) { content }
   }
 
-  private func setToolbarItems(content: some View) -> some View {
+  @MainActor
+  private func setToolbarItems(_ content: some View) -> some View {
     content
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {

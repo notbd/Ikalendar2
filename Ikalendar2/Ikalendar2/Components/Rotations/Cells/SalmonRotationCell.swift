@@ -10,10 +10,11 @@ import SwiftUI
 // MARK: - SalmonRotationCell
 
 /// The view for the salmon rotation info that takes the entire space in the list content.
+@MainActor
 struct SalmonRotationCell: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell
 
-  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let rotation: SalmonRotation
   let rowWidth: CGFloat
@@ -32,7 +33,7 @@ struct SalmonRotationCell: View {
       if hasStageAndWeapon {
         stageAndWeaponSection
 
-        if rotation.isCurrent {
+        if rotation.isCurrent(ikaTimePublisher.currentTime) {
           progressSection
         }
       }
@@ -69,23 +70,24 @@ struct SalmonRotationCell: View {
 // MARK: - SalmonRotationCellTimeTextSection
 
 /// A HStack component containing the time text of a salmon rotation.
+@MainActor
 struct SalmonRotationCellTimeTextSection: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell.TimeTextSection
 
-  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let rotation: SalmonRotation
   let rowWidth: CGFloat
 
   var body: some View {
     HStack {
-      Image(rotation.isCurrent ? "golden-egg" : "salmon")
+      Image(rotation.isCurrent(ikaTimePublisher.currentTime) ? "golden-egg" : "salmon")
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .scaleEffect(
-          rotation.isCurrent
+          rotation.isCurrent(ikaTimePublisher.currentTime)
             ? Scoped.ICON_GOLDEN_EGG_SCALE_FACTOR
             : Scoped.ICON_SALMON_FISH_SCALE_FACTOR)
           .frame(height: rowWidth * Scoped.SALMON_ICON_HEIGHT_RATIO)

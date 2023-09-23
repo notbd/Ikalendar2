@@ -10,10 +10,11 @@ import SwiftUI
 
 // MARK: - SettingsAdvancedOptionsView
 
+@MainActor
 struct SettingsAdvancedOptionsView: View {
   typealias Scoped = Constants.Style.Settings.Advanced
 
-  @EnvironmentObject private var ikaStatus: IkaStatus
+  @Environment(IkaStatus.self) private var ikaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   @State private var ifBottomToolbarPreviewPresented = false
@@ -36,16 +37,16 @@ struct SettingsAdvancedOptionsView: View {
 
         Section(header: stageImagesPreviewHeader) {
           battleRotationPreviewCell
-            .animation(
-              .snappy,
-              value: battleRotationPreviewData)
+//            .animation(
+//              .snappy,
+//              value: battleRotationPreviewData)
         }
 
         Section {
           salmonRotationPreviewCell
-            .animation(
-              .snappy,
-              value: salmonRotationPreviewData)
+//            .animation(
+//              .snappy,
+//              value: salmonRotationPreviewData)
         }
       }
       .navigationTitle("Advanced Options")
@@ -104,8 +105,10 @@ struct SettingsAdvancedOptionsView: View {
       Text("Preview:")
       Spacer()
       Button {
-        SimpleHaptics.generateTask(.selection)
-        shufflePreviewData()
+        withAnimation(.snappy) {
+          SimpleHaptics.generateTask(.selection)
+          shufflePreviewData()
+        }
       } label: {
         Label(
           "Shuffle",
@@ -158,7 +161,7 @@ struct BottomToolbarPositioningPreview: View {
 
   @Environment(\.dismiss) private var dismiss
 
-  @EnvironmentObject private var ikaStatus: IkaStatus
+  @Environment(IkaStatus.self) private var ikaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   var body: some View {
@@ -221,7 +224,7 @@ struct BottomToolbarPositioningPreview: View {
 struct SettingsAdvancedOptionsView_Previews: PreviewProvider {
   static var previews: some View {
     SettingsAdvancedOptionsView()
-      .environmentObject(IkaStatus())
+      .environment(IkaStatus())
       .environmentObject(IkaPreference())
   }
 }

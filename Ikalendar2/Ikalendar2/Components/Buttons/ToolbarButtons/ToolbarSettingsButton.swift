@@ -10,10 +10,12 @@ import SwiftUI
 // MARK: - ToolbarSettingsButton
 
 /// A settings button in the toolbar.
+@MainActor
 struct ToolbarSettingsButton: View {
   typealias Scoped = Constants.Style.ToolbarButton
 
-  @EnvironmentObject private var ikaStatus: IkaStatus
+  @Environment(IkaStatus.self) private var ikaStatus
+  @Environment(IkaCatalog.self) private var ikaCatalog
 
   @State private var buttonPressed: Int = 0
 

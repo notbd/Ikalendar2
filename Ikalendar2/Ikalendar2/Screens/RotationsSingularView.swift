@@ -12,8 +12,9 @@ import SwiftUI
 
 /// The view that displays the content in a NavigationView.
 struct RotationsSingularView: View {
-  @EnvironmentObject private var ikaCatalog: IkaCatalog
-  @EnvironmentObject private var ikaStatus: IkaStatus
+  @Environment(IkaCatalog.self) private var ikaCatalog
+  @Environment(IkaStatus.self) private var ikaStatus
+
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   var body: some View {
@@ -41,7 +42,7 @@ struct RotationsSingularView: View {
           await Task { await ikaCatalog.refresh() }.value
         }
 
-      LoadingOverlay(loadStatus: ikaCatalog.loadStatus)
+      LoadingOverlay()
     }
   }
 
@@ -108,10 +109,13 @@ struct RotationsSingularView: View {
 // MARK: - ToolbarBattleModePicker
 
 /// A picker component for the battle mode
+@MainActor
 struct ToolbarBattleModePicker: View {
-  @EnvironmentObject private var ikaStatus: IkaStatus
+  @Environment(IkaStatus.self) private var ikaStatus
 
   var body: some View {
+    @Bindable var ikaStatus = ikaStatus
+
     Picker(
       selection: $ikaStatus.currentBattleMode,
       label: Text("Battle Mode"))
@@ -128,10 +132,13 @@ struct ToolbarBattleModePicker: View {
 // MARK: - ToolbarGameModePicker
 
 /// A picker component for the game mode
+@MainActor
 struct ToolbarGameModePicker: View {
-  @EnvironmentObject private var ikaStatus: IkaStatus
+  @Environment(IkaStatus.self) private var ikaStatus
 
   var body: some View {
+    @Bindable var ikaStatus = ikaStatus
+
     Picker(
       selection: $ikaStatus.currentGameMode,
       label: Text("Game Mode"))
@@ -154,6 +161,6 @@ struct ToolbarGameModePicker: View {
 struct RotationView_Previews: PreviewProvider {
   static var previews: some View {
     RotationsSingularView()
-      .environmentObject(IkaCatalog.shared)
+      .environment(IkaCatalog.shared)
   }
 }

@@ -9,10 +9,11 @@ import SwiftUI
 
 // MARK: - AutoLoadingOverlay
 
+@MainActor
 struct AutoLoadingOverlay: View {
   typealias Scoped = Constants.Style.Overlay.AutoLoading
 
-  @EnvironmentObject private var ikaCatalog: IkaCatalog
+  @Environment(IkaCatalog.self) private var ikaCatalog
 
   var body: some View {
     Image(systemName: iconName)

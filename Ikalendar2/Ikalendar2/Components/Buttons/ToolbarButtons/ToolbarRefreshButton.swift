@@ -10,10 +10,11 @@ import SwiftUI
 // MARK: - ToolbarRefreshButton
 
 /// A refresh button in the toolbar.
+@MainActor
 struct ToolbarRefreshButton: View {
   typealias Scoped = Constants.Style.ToolbarButton
 
-  @EnvironmentObject private var ikaCatalog: IkaCatalog
+  @Environment(IkaCatalog.self) private var ikaCatalog
 
   private var isRefreshing: Bool { ikaCatalog.loadStatus == .loading }
 

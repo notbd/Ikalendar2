@@ -9,20 +9,21 @@ import SwiftUI
 
 // MARK: - BattleRotationList
 
+@MainActor
 struct BattleRotationList: View {
-  @EnvironmentObject private var ikaCatalog: IkaCatalog
-  @EnvironmentObject private var ikaStatus: IkaStatus
-  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
+  @Environment(IkaCatalog.self) private var ikaCatalog
+  @Environment(IkaStatus.self) private var ikaStatus
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   let specifiedBattleMode: BattleMode?
 
   private var validBattleRotations: [BattleRotation] {
-    let battleMode: BattleMode = if let specifiedBattleMode { specifiedBattleMode }
-    else { ikaStatus.currentBattleMode }
+    let battleMode: BattleMode =
+      if let specifiedBattleMode { specifiedBattleMode } else { ikaStatus.currentBattleMode }
 
     // filter: display current and future rotations only
     return
-      ikaCatalog.battleRotationDict[battleMode]!.filter { !$0.isExpired }
+      ikaCatalog.battleRotationDict[battleMode]!.filter { !$0.isExpired(ikaTimePublisher.currentTime) }
   }
 
   var body: some View {

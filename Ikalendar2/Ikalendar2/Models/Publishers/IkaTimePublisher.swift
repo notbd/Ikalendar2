@@ -12,20 +12,19 @@ import Foundation
 /// It publishes the current time every second and publish signals with respect to their respective
 /// config value for the time interval.
 /// This behavior persists even when the app transitions to the background.
-@Observable
-final class IkaTimePublisher {
+final class IkaTimePublisher: ObservableObject {
 
   static let shared = IkaTimePublisher()
 
   /// Updates every `1` second.
-  private(set) var currentTime: Date = .init()
+  @Published private(set) var currentTime: Date = .init()
   /// Signals auto-load checks every `2` seconds.
   let autoLoadCheckPublisher: PassthroughSubject<Void, Never> = .init()
   /// Signals icon bounces every `7` seconds.
   let bounceSignalPublisher: PassthroughSubject<Void, Never> = .init()
 
   /// Contains all the active subscriptions for this object.
-  @ObservationIgnored private var cancellables = Set<AnyCancellable>()
+  private var cancellables = Set<AnyCancellable>()
 
   // MARK: Lifecycle
 

@@ -21,7 +21,7 @@ struct BattleRotation: Rotation, Hashable {
 }
 
 extension BattleRotation {
-  var id: String { "\(startTime)-\(endTime)-\(mode)" }
+  var id: String { "\(mode)-\(startTime)-\(endTime)" }
 
   var description: String {
     id +
@@ -48,12 +48,12 @@ extension BattleRotation {
 
 extension BattleRotation {
   /// Determines whether the rotation is coming up next.
-  var isNext: Bool {
+  func isNext(_ currentTime: Date) -> Bool {
     let twoHoursLater =
       Calendar.current.date(
         byAdding: .hour,
         value: 2,
-        to: IkaTimePublisher.shared.currentTime)!
+        to: currentTime)!
     return startTime < twoHoursLater && twoHoursLater < endTime
   }
 }

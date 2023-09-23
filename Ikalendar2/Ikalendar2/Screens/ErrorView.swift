@@ -10,10 +10,11 @@ import SwiftUI
 // MARK: - ErrorView
 
 /// The error view showing the error if occurs.
+@MainActor
 struct ErrorView: View {
   typealias Scoped = Constants.Style.Error
 
-  @EnvironmentObject private var ikaCatalog: IkaCatalog
+  @Environment(IkaCatalog.self) private var ikaCatalog
 
   let error: IkaError
 

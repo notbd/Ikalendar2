@@ -10,6 +10,7 @@ import SwiftUI
 // MARK: - SettingsAltAppIconView
 
 /// The Settings page for switching alternate App Icons.
+@MainActor
 struct SettingsAltAppIconView: View {
   @EnvironmentObject private var ikaLog: IkaLog
 

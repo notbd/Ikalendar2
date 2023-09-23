@@ -10,6 +10,7 @@ import SwiftUI
 
 // MARK: - DetailsLicenseView
 
+@MainActor
 struct DetailsLicenseView: View {
   typealias Scoped = Constants.Style.Settings.License
 

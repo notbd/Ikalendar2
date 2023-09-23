@@ -10,8 +10,6 @@ import SwiftUI
 /// Main Application Entry.
 @main
 struct Ikalendar2App: App {
-  private let ikaPreference: IkaPreference
-  private let ikaLog: IkaLog
   private let ikaCatalog: IkaCatalog
   private let ikaStatus: IkaStatus
 
@@ -19,17 +17,20 @@ struct Ikalendar2App: App {
   private let ikaDeviceMotionPublisher: IkaDeviceMotionPublisher
   private let ikaInterfaceOrientationPublisher: IkaInterfaceOrientationPublisher
 
+  private let ikaPreference: IkaPreference
+  private let ikaLog: IkaLog
+
   var body: some Scene {
     WindowGroup {
       RootView()
         .accentColor(.orange)
-        .environmentObject(ikaPreference)
-        .environmentObject(ikaLog)
-        .environmentObject(ikaCatalog)
-        .environmentObject(ikaStatus)
-        .environment(ikaTimePublisher)
+        .environment(ikaCatalog)
+        .environment(ikaStatus)
+        .environmentObject(ikaTimePublisher)
         .environment(ikaDeviceMotionPublisher)
         .environment(ikaInterfaceOrientationPublisher)
+        .environmentObject(ikaPreference)
+        .environmentObject(ikaLog)
         .onAppear {
           ikaInterfaceOrientationPublisher.setInitialOrientation()
         }
@@ -44,13 +45,14 @@ struct Ikalendar2App: App {
     UserDefaults.standard
       .register(defaults: [Constants.Key.AppStorage.DEFAULT_BATTLE_MODE: "gachi"])
 
-    ikaPreference = .shared
-    ikaLog = .shared
     ikaCatalog = .shared
     ikaStatus = .shared
 
     ikaTimePublisher = .shared
     ikaDeviceMotionPublisher = .shared
     ikaInterfaceOrientationPublisher = .shared
+
+    ikaPreference = .shared
+    ikaLog = .shared
   }
 }

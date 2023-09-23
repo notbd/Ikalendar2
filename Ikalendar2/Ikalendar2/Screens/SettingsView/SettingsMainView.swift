@@ -11,6 +11,7 @@ import SwiftUI
 // MARK: - SettingsMainView
 
 /// The main page for App Settings.
+@MainActor
 struct SettingsMainView: View {
   typealias Scoped = Constants.Style.Settings.Main
 
@@ -23,7 +24,7 @@ struct SettingsMainView: View {
 
   @EnvironmentObject private var ikaLog: IkaLog
   @EnvironmentObject private var ikaPreference: IkaPreference
-  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   @State private var rowWidth: CGFloat = 390
 

@@ -12,6 +12,7 @@ import SwiftUI
 // MARK: - SettingsAboutView
 
 /// The About page in App Settings.
+@MainActor
 struct SettingsAboutView: View {
   typealias Scoped = Constants.Style.Settings.About
 
@@ -20,7 +21,7 @@ struct SettingsAboutView: View {
   @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
   @EnvironmentObject private var ikaLog: IkaLog
-  @Environment(IkaTimePublisher.self) private var ikaTimePublisher
+  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   @State private var appStoreOverlayPresented = false
 
