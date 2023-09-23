@@ -26,7 +26,7 @@ struct LoadingOverlay: View {
       .background(.ultraThinMaterial)
       .opacity(isLoading ? 1 : 0)
       .animation(
-        .bouncy,
+        .default,
         value: loadStatus)
   }
 }

@@ -57,7 +57,7 @@ struct ModeIconStamp: View {
               y: axisRotationWeight.y,
               z: 0))
           .animation(
-            .linear,
+            .default,
             value: dx * dy)
       }
       .if(ifOffset) {

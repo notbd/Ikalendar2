@@ -54,7 +54,7 @@ struct DetailsLicenseView: View {
       }
     }
     .animation(
-      .bouncy,
+      .default,
       value: licenseViewModel != nil)
   }
 

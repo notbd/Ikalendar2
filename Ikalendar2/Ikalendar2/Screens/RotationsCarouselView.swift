@@ -94,7 +94,7 @@ struct RotationsCarouselView: View {
       }
     }
     .animation(
-      .default,
+      .snappy,
       value: ikaPreference.defaultGameMode)
     .if(!isWindowWide) { wrapInHorizontalScrollView(content: $0) }
   }

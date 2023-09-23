@@ -27,7 +27,7 @@ struct RotationsSingularView: View {
             battleModeSelection: ikaStatus.currentBattleMode,
             ifOffset: true)
             .animation(
-              .default,
+              .snappy,
               value: "\(ikaStatus.currentGameMode)-\(ikaStatus.currentBattleMode)"),
 
           alignment: .topTrailing)

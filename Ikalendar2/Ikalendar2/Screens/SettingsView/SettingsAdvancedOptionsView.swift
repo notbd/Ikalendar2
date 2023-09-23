@@ -37,14 +37,14 @@ struct SettingsAdvancedOptionsView: View {
         Section(header: stageImagesPreviewHeader) {
           battleRotationPreviewCell
             .animation(
-              .default,
+              .snappy,
               value: battleRotationPreviewData)
         }
 
         Section {
           salmonRotationPreviewCell
             .animation(
-              .default,
+              .snappy,
               value: salmonRotationPreviewData)
         }
       }

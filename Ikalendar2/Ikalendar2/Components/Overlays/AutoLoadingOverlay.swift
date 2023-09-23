@@ -17,7 +17,7 @@ struct AutoLoadingOverlay: View {
   var body: some View {
     Image(systemName: iconName)
       .symbolEffect(.pulse.byLayer, isActive: ikaCatalog.autoLoadStatus == .autoLoading)
-      .contentTransition(.symbolEffect(.replace.upUp))
+      .contentTransition(.symbolEffect(.replace.offUp))
       .foregroundStyle(Color.primary)
       .font(Scoped.SFSYMBOL_FONT)
       .frame(
@@ -28,7 +28,7 @@ struct AutoLoadingOverlay: View {
       .opacity(ikaCatalog.autoLoadStatus == .idle ? 0 : 1)
       .padding()
       .animation(
-        .bouncy,
+        .default,
         value: ikaCatalog.autoLoadStatus)
   }
 
