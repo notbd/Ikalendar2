@@ -11,6 +11,7 @@ import SwiftUI
 /// The entry view of the app.
 /// Provide an interface for some upfront View-level configurations.
 struct RootView: View {
+  @Environment(\.dynamicTypeSize) var dynamicTypeSize
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
@@ -24,7 +25,10 @@ struct RootView: View {
   var body: some View {
     MainView()
       .id(refreshableMainViewID)
-      .onReceive(DynamicTextStyleObserver.shared.textSizeDidChange) { refreshViews() }
+      .onChange(of: dynamicTypeSize) {
+        UIFontCustomizer.customizeNavigationTitleText()
+        refreshViews()
+      }
       .onChange(of: ikaPreference.preferredAppColorScheme, initial: true) { _, newVal in
         IkaColorSchemeManager.shared.handlePreferredColorSchemeChange(for: newVal)
       }
@@ -61,7 +65,8 @@ struct RootView: View {
     content.sheet(isPresented: $ikaStatus.isSettingsPresented) { settingsModal }
   }
 
-  /// Force the view(s) to refresh when the text size changes in order to reflect the new NavBar title size.
+  /// Stupid workaround because as of iOS 17, dynamicTypeSize changes will not affect navigation titles,
+  /// therefore force refresh the root view in order to reflect the correct title size.
   private func refreshViews() {
     refreshableMainViewID = UUID()
   }

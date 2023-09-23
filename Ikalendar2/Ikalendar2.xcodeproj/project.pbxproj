@@ -48,7 +48,6 @@
 		7903FE9D28C4702100245586 /* ToolbarButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9828C4702100245586 /* ToolbarButtonAlignment.swift */; };
 		7903FE9E28C4702100245586 /* ToolbarRefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */; };
 		790E2E112AA6D3F100789465 /* NamespaceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E2E102AA6D3F100789465 /* NamespaceConstants.swift */; };
-		790E2E142AA9946C00789465 /* DynamicTextStyleObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E2E132AA9946C00789465 /* DynamicTextStyleObserver.swift */; };
 		79189B4828C95E75006E78F9 /* OffsettableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */; };
 		792E1FBD28DE89C100C3789D /* SettingsAdvancedOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */; };
 		79408C6A2AA5BAA800141E58 /* IkaAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79408C692AA5BAA800141E58 /* IkaAppIcon.swift */; };
@@ -150,7 +149,6 @@
 		7903FE9828C4702100245586 /* ToolbarButtonAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarButtonAlignment.swift; sourceTree = "<group>"; };
 		7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarRefreshButton.swift; sourceTree = "<group>"; };
 		790E2E102AA6D3F100789465 /* NamespaceConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamespaceConstants.swift; sourceTree = "<group>"; };
-		790E2E132AA9946C00789465 /* DynamicTextStyleObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTextStyleObserver.swift; sourceTree = "<group>"; };
 		79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsettableScrollView.swift; sourceTree = "<group>"; };
 		792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAdvancedOptionsView.swift; sourceTree = "<group>"; };
 		79408C692AA5BAA800141E58 /* IkaAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaAppIcon.swift; sourceTree = "<group>"; };
@@ -388,14 +386,6 @@
 			path = L10n;
 			sourceTree = "<group>";
 		};
-		790E2E122AA9945A00789465 /* Observers */ = {
-			isa = PBXGroup;
-			children = (
-				790E2E132AA9946C00789465 /* DynamicTextStyleObserver.swift */,
-			);
-			path = Observers;
-			sourceTree = "<group>";
-		};
 		79408C682AA5BA8B00141E58 /* Others */ = {
 			isa = PBXGroup;
 			children = (
@@ -620,7 +610,6 @@
 		79C1485628C4276900587C6E /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				790E2E122AA9945A00789465 /* Observers */,
 				79C718602A935EBE0042AB7D /* Managers */,
 				79C1485E28C42D6600587C6E /* Decoders */,
 				7903FE2128C430C700245586 /* Modifiers */,
@@ -833,7 +822,6 @@
 				797EA68E2AACF1350095A23B /* DetailsLicenseView.swift in Sources */,
 				7903FE9D28C4702100245586 /* ToolbarButtonAlignment.swift in Sources */,
 				79D3E67328C41DD900005DB5 /* HeadApparel.swift in Sources */,
-				790E2E142AA9946C00789465 /* DynamicTextStyleObserver.swift in Sources */,
 				7903FE3028C437F900245586 /* QuickBorder.swift in Sources */,
 				7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */,
 				79C1485C28C42CDE00587C6E /* StyleConstants.swift in Sources */,
@@ -1014,7 +1002,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4916;
+				CURRENT_PROJECT_VERSION = 4919;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1054,7 +1042,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4916;
+				CURRENT_PROJECT_VERSION = 4919;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
