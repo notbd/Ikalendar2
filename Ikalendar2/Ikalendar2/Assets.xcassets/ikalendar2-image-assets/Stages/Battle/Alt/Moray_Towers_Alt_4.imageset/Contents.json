@@ -1,15 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "Moray_Towers_Alt_4.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Moray_Towers_Alt_4@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Moray_Towers_Alt_4@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

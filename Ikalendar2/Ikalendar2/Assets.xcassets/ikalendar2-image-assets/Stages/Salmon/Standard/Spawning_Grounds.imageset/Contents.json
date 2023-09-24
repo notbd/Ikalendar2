@@ -1,15 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "Spawning_Grounds.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Spawning_Grounds@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Spawning_Grounds@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

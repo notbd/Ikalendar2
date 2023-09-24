@@ -31,18 +31,42 @@ extension BattleRotation {
 }
 
 extension BattleRotation {
-  var stageAltImageNameA: String {
+  var stageAAltImageName: String {
     let generator = SeededRandomGenerator(seed: description)
-    let numOfAltImagesA = AssetImageCounter.countImagesWithPrefix(stageA.imgFiln + "_Alt")
-    let randomChoiceA = generator.nextInt(bound: numOfAltImagesA)
-    return stageA.imgFiln + "_Alt_\(randomChoiceA)"
+
+    let generalPrefix = stageA.imgFiln + "_Alt_"
+    let ruleSpecificPrefix = stageA.imgFiln + "_Alt+\(rule.abbreviation)_"
+
+    let numOfAltImagesGeneral = AssetImageCounter.countImagesWithPrefix(generalPrefix)
+    let numOfAltImagesRuleSpecific = AssetImageCounter.countImagesWithPrefix(ruleSpecificPrefix)
+
+    let randomChoice = generator.nextInt(bound: numOfAltImagesGeneral + numOfAltImagesRuleSpecific)
+
+    return if randomChoice < numOfAltImagesGeneral {
+      "\(generalPrefix)\(randomChoice)"
+    }
+    else {
+      "\(ruleSpecificPrefix)\(randomChoice - numOfAltImagesGeneral)"
+    }
   }
 
-  var stageAltImageNameB: String {
+  var stageBAltImageName: String {
     let generator = SeededRandomGenerator(seed: description)
-    let numOfAltImagesB = AssetImageCounter.countImagesWithPrefix(stageB.imgFiln + "_Alt")
-    let randomChoiceB = generator.nextInt(bound: numOfAltImagesB)
-    return stageB.imgFiln + "_Alt_\(randomChoiceB)"
+
+    let generalPrefix = stageB.imgFiln + "_Alt_"
+    let ruleSpecificPrefix = stageB.imgFiln + "_Alt+\(rule.abbreviation)_"
+
+    let numOfAltImagesGeneral = AssetImageCounter.countImagesWithPrefix(generalPrefix)
+    let numOfAltImagesRuleSpecific = AssetImageCounter.countImagesWithPrefix(ruleSpecificPrefix)
+
+    let randomChoice = generator.nextInt(bound: numOfAltImagesGeneral + numOfAltImagesRuleSpecific)
+
+    return if randomChoice < numOfAltImagesGeneral {
+      "\(generalPrefix)\(randomChoice)"
+    }
+    else {
+      "\(ruleSpecificPrefix)\(randomChoice - numOfAltImagesGeneral)"
+    }
   }
 }
 

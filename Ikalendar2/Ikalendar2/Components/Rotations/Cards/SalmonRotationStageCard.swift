@@ -22,9 +22,15 @@ struct SalmonRotationStageCard: View {
   let rotation: SalmonRotation
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
+  private var shouldOverrideWithLarge: Bool { cardWidth >= 200 }
+
   private var stageImageName: String { ikaPreference.ifUseAltStageImages
-    ? rotation.stageAltImageName!
-    : rotation.stage!.imgFiln }
+    ? shouldOverrideWithLarge
+      ? rotation.stageAltImageNameLarge!
+      : rotation.stageAltImageName!
+    : shouldOverrideWithLarge
+      ? rotation.stage!.imgFilnLarge
+      : rotation.stage!.imgFiln }
 
   var body: some View {
     Image(stageImageName)

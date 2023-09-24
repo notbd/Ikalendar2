@@ -1,15 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "Snapper_Canal_Alt_0.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Snapper_Canal_Alt_0@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Snapper_Canal_Alt_0@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -1,15 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "Humpback_Pump_Track_Alt_2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Humpback_Pump_Track_Alt_2@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Humpback_Pump_Track_Alt_2@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -26,13 +26,13 @@ struct BattleRotationStageCardPrimary: View {
   private var stageImageName: String {
     switch (ikaPreference.ifUseAltStageImages, stageSelection) {
     case (true, .stageA):
-      rotation.stageAltImageNameA
+      rotation.stageAAltImageName
     case (true, .stageB):
-      rotation.stageAltImageNameB
+      rotation.stageBAltImageName
     case (false, .stageA):
-      rotation.stageA.imgFilnLarge
+      rotation.stageA.imgFiln
     case (false, .stageB):
-      rotation.stageB.imgFilnLarge
+      rotation.stageB.imgFiln
     }
   }
 
@@ -76,13 +76,13 @@ struct BattleRotationStageCardSecondary: View {
   private var stageImageName: String {
     switch (ikaPreference.ifUseAltStageImages, stageSelection) {
     case (true, .stageA):
-      rotation.stageAltImageNameA
+      rotation.stageAAltImageName
     case (true, .stageB):
-      rotation.stageAltImageNameB
+      rotation.stageBAltImageName
     case (false, .stageA):
-      rotation.stageA.imgFilnLarge
+      rotation.stageA.imgFiln
     case (false, .stageB):
-      rotation.stageB.imgFilnLarge
+      rotation.stageB.imgFiln
     }
   }
 

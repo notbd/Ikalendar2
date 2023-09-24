@@ -40,6 +40,16 @@ extension BattleRule {
     case .clamBlitz: "Clam Blitz"
     }
   }
+
+  var abbreviation: String {
+    switch self {
+    case .turfWar: "TW"
+    case .splatZones: "SZ"
+    case .towerControl: "TC"
+    case .rainmaker: "RM"
+    case .clamBlitz: "CB"
+    }
+  }
 }
 
 extension BattleRule {

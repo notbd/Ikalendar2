@@ -18,7 +18,7 @@ struct AssetImageCounter {
     var count = 0
 
     // List of image names with a specific prefix, assuming a known pattern in naming
-    let imageNamesWithPrefix = (0 ..< 10).map { "\(prefix)_\($0)" }
+    let imageNamesWithPrefix = (0 ..< 10).map { "\(prefix)\($0)" }
 
     // Iterate through image names to check if they are present in the Asset catalog
     for imageName in imageNamesWithPrefix

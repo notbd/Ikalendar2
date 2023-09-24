@@ -295,8 +295,7 @@ struct SettingsMainView: View {
       dismiss()
     } label: {
       Text("Done")
-//        .fontWeight(Scoped.DONE_BUTTON_FONT_WEIGHT)
-        .font(.headline)
+        .font(Scoped.DONE_BUTTON_FONT)
     }
   }
 }

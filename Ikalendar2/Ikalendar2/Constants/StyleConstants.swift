@@ -99,7 +99,7 @@ extension Constants.Style {
 
       static let CREDITS_SFSYMBOL = "bookmark.fill"
 
-      static let DONE_BUTTON_FONT_WEIGHT: Font.Weight = .semibold
+      static let DONE_BUTTON_FONT: Font = .headline
     }
 
     enum AltAppIcon {
