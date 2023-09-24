@@ -42,6 +42,7 @@ struct ToolbarRefreshButton: View {
       .contentTransition(.symbolEffect(.replace.offUp))
       .symbolEffect(
         .variableColor,
+        options: .speed(2),
         isActive: isRefreshing)
       .font(Scoped.SFSYMBOL_FONT_SIZE_REG)
       .foregroundStyle(Color.primary)

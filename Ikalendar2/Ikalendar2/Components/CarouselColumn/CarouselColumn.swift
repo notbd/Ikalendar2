@@ -68,6 +68,9 @@ struct CarouselColumn: View {
                 gradient: maskGradient,
                 startPoint: .top,
                 endPoint: .bottom))
+            .contentMargins(
+              .vertical, 20,
+              for: .scrollIndicators)
         }
 
         VariableBlurView()

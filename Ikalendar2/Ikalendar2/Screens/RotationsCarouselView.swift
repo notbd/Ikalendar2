@@ -77,25 +77,50 @@ struct RotationsCarouselView: View {
           CarouselColumn(
             gameMode: .battle,
             battleMode: battleMode)
-            .if(!isWindowWide) { $0.frame(width: Scoped.COLUMN_FIXED_WIDTH) }
+            .if(!isWindowWide) {
+              $0
+                .containerRelativeFrame(
+                  .horizontal,
+                  count: 2,
+                  spacing: 0)
+            }
         }
 
         CarouselColumn(gameMode: .salmon)
-          .if(!isWindowWide) { $0.frame(width: Scoped.COLUMN_FIXED_WIDTH) }
+          .if(!isWindowWide) {
+            $0
+              .containerRelativeFrame(
+                .horizontal,
+                count: 2,
+                spacing: 0)
+          }
       }
 
       else {
         CarouselColumn(gameMode: .salmon)
-          .if(!isWindowWide) { $0.frame(width: Scoped.COLUMN_FIXED_WIDTH) }
+          .if(!isWindowWide) {
+            $0
+              .containerRelativeFrame(
+                .horizontal,
+                count: 2,
+                spacing: 0)
+          }
 
         ForEach(BattleMode.allCases) { battleMode in
           CarouselColumn(
             gameMode: .battle,
             battleMode: battleMode)
-            .if(!isWindowWide) { $0.frame(width: Scoped.COLUMN_FIXED_WIDTH) }
+            .if(!isWindowWide) {
+              $0
+                .containerRelativeFrame(
+                  .horizontal,
+                  count: 2,
+                  spacing: 0)
+            }
         }
       }
     }
+    .scrollTargetLayout()
     .animation(
       .snappy,
       value: ikaPreference.defaultGameMode)
@@ -107,6 +132,7 @@ struct RotationsCarouselView: View {
   @MainActor
   private func wrapInHorizontalScrollView(_ content: some View) -> some View {
     ScrollView(.horizontal) { content }
+      .scrollTargetBehavior(.viewAligned)
   }
 
   @MainActor

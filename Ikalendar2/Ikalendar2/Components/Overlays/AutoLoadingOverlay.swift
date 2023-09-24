@@ -17,7 +17,10 @@ struct AutoLoadingOverlay: View {
 
   var body: some View {
     Image(systemName: iconName)
-      .symbolEffect(.pulse.byLayer, isActive: ikaCatalog.autoLoadStatus == .autoLoading)
+      .symbolEffect(
+        .pulse.byLayer,
+        options: .speed(2),
+        isActive: ikaCatalog.autoLoadStatus == .autoLoading)
       .contentTransition(.symbolEffect(.replace.offUp))
       .foregroundStyle(Color.primary)
       .font(Scoped.SFSYMBOL_FONT)
@@ -26,10 +29,11 @@ struct AutoLoadingOverlay: View {
         height: Scoped.FRAME_SIDE)
       .background(.thinMaterial)
       .cornerRadius(Scoped.FRAME_CORNER_RADIUS)
-      .opacity(ikaCatalog.autoLoadStatus == .idle ? 0 : 1)
       .padding()
+      .opacity(ikaCatalog.autoLoadStatus == .idle ? 0 : 1)
+      .transition(.asymmetric(insertion: .scale, removal: .opacity))
       .animation(
-        .default,
+        .bouncy,
         value: ikaCatalog.autoLoadStatus)
   }
 

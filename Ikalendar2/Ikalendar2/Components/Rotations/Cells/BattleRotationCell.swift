@@ -177,6 +177,8 @@ struct BattleRotationCellPrimary: View {
 
   private var remainingTimeSection: some View {
     Text(ikaTimePublisher.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
+      .contentTransition(.numericText(countsDown: true))
+      .animation(.default, value: ikaTimePublisher.currentTime)
       .scaledLimitedLine()
       .foregroundStyle(Color.secondary)
       .ikaFont(
