@@ -28,7 +28,7 @@ final class IkaPreference: ObservableObject {
 
   /// Default BattleMode (initial value already set during App init, so init value here does not matter)
   @AppStorage(Constants.Key.AppStorage.DEFAULT_BATTLE_MODE)
-  var defaultBattleMode: BattleMode = .regular
+  var defaultBattleMode: BattleMode = .league
   {
     willSet {
       if newValue != defaultBattleMode { SimpleHaptics.generateTask(.selection) }

@@ -24,10 +24,7 @@ final class IkaStatus {
     }
   }
 
-  var currentGameMode =
-    GameMode(
-      rawValue: UserDefaults.standard.string(
-        forKey: Constants.Key.AppStorage.DEFAULT_GAME_MODE)!)!
+  var currentGameMode = IkaPreference.shared.defaultGameMode
   {
     willSet {
       guard newValue != currentGameMode else { return }
@@ -35,10 +32,7 @@ final class IkaStatus {
     }
   }
 
-  var currentBattleMode =
-    BattleMode(
-      rawValue: UserDefaults.standard.string(
-        forKey: Constants.Key.AppStorage.DEFAULT_BATTLE_MODE)!)!
+  var currentBattleMode = IkaPreference.shared.defaultBattleMode
   {
     willSet {
       guard newValue != currentBattleMode else { return }

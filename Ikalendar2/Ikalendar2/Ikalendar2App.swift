@@ -40,11 +40,6 @@ struct Ikalendar2App: App {
   // MARK: Lifecycle
 
   init() {
-    UserDefaults.standard
-      .register(defaults: [Constants.Key.AppStorage.DEFAULT_GAME_MODE: "battle"])
-    UserDefaults.standard
-      .register(defaults: [Constants.Key.AppStorage.DEFAULT_BATTLE_MODE: "gachi"])
-
     ikaCatalog = .shared
     ikaStatus = .shared
 
