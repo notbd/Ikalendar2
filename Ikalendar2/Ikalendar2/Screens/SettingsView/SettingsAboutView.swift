@@ -134,14 +134,14 @@ struct SettingsAboutView: View {
 
   // MARK: - Review Section
 
-  @State private var rowRatingSfSymbolBounce: Int = 0
+  @State private var rowRatingBounceTrigger: Int = 0
 
   private var rowRating: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
       requestReview()
-      rowRatingSfSymbolBounce += 1
-      if !ikaLog.ifHasDiscoveredRating { ikaLog.ifHasDiscoveredRating = true }
+      rowRatingBounceTrigger += 1
+      if !ikaLog.hasDiscoveredRating { ikaLog.hasDiscoveredRating = true }
     } label: {
       Label {
         Text("Rate ikalendar2")
@@ -149,14 +149,14 @@ struct SettingsAboutView: View {
       }
       icon: {
         Image(systemName: Scoped.RATING_SFSYMBOL)
-          .symbolEffect(.bounce, value: rowRatingSfSymbolBounce)
+          .symbolEffect(.bounce, value: rowRatingBounceTrigger)
           .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
       }
     }
     .onReceive(ikaTimePublisher.bounceSignalPublisher) { _ in
-      if !ikaLog.ifHasDiscoveredRating { rowRatingSfSymbolBounce += 1 }
+      if !ikaLog.hasDiscoveredRating { rowRatingBounceTrigger += 1 }
     }
   }
 
@@ -178,7 +178,7 @@ struct SettingsAboutView: View {
     }
   }
 
-  @State private var showAppStoreOverlayBounce: Int = 0
+  @State private var rowAppStoreOverlayBounceCounter: Int = 0
 
   private var rowAppStoreOverlay: some View {
     Button {
@@ -192,7 +192,7 @@ struct SettingsAboutView: View {
       icon: {
         Image(systemName: Scoped.VIEW_ON_APP_STORE_SFSYMBOL)
           .imageScale(.large)
-          .symbolEffect(.bounce, value: showAppStoreOverlayBounce)
+          .symbolEffect(.bounce, value: rowAppStoreOverlayBounceCounter)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
@@ -203,7 +203,7 @@ struct SettingsAboutView: View {
         position: .bottom)
     }
     .onChange(of: appStoreOverlayPresented, initial: false) { _, newVal in
-      if newVal == true { showAppStoreOverlayBounce += 1 }
+      if newVal == true { rowAppStoreOverlayBounceCounter += 1 }
     }
   }
 
@@ -270,7 +270,7 @@ struct SettingsAboutView: View {
       DetailsLicenseView(
         repoName: repoName,
         repoURLString: repoURLString,
-        ifLinkable: true)
+        isLinkable: true)
 
     return
       NavigationLink(destination: destination) {

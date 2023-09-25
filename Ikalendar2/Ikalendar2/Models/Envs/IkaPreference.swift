@@ -56,22 +56,22 @@ final class IkaPreference: ObservableObject {
     }
   }
 
-  /// If using alt stage images
-  @AppStorage(Constants.Key.AppStorage.IF_USE_ALT_STAGE_IMAGES)
-  var ifUseAltStageImages = false
+  /// If should be using alt stage images
+  @AppStorage(Constants.Key.AppStorage.SHOULD_USE_ALT_STAGE_IMAGES)
+  var shouldUseAltStageImages = false
   {
     willSet {
-      if newValue != ifUseAltStageImages { SimpleHaptics.generateTask(.selection) }
+      if newValue != shouldUseAltStageImages { SimpleHaptics.generateTask(.selection) }
       objectWillChange.send()
     }
   }
 
   /// Bottom toolbar picker positioning
-  @AppStorage(Constants.Key.AppStorage.IF_SWAP_BOTTOM_TOOLBAR_PICKERS)
-  var ifSwapBottomToolbarPickers = false
+  @AppStorage(Constants.Key.AppStorage.SHOULD_SWAP_BOTTOM_TOOLBAR_PICKERS)
+  var shouldSwapBottomToolbarPickers = false
   {
     willSet {
-      if newValue != ifSwapBottomToolbarPickers { SimpleHaptics.generateTask(.selection) }
+      if newValue != shouldSwapBottomToolbarPickers { SimpleHaptics.generateTask(.selection) }
       objectWillChange.send()
     }
   }

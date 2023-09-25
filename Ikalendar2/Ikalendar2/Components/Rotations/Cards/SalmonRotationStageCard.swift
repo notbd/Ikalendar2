@@ -24,7 +24,7 @@ struct SalmonRotationStageCard: View {
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
   private var shouldOverrideWithLarge: Bool { cardWidth >= 200 }
 
-  private var stageImageName: String { ikaPreference.ifUseAltStageImages
+  private var stageImageName: String { ikaPreference.shouldUseAltStageImages
     ? shouldOverrideWithLarge
       ? rotation.stageAltImageNameLarge!
       : rotation.stageAltImageName!
@@ -44,7 +44,7 @@ struct SalmonRotationStageCard: View {
         alignment: .bottom)
       .animation(
         .snappy,
-        value: ikaPreference.ifUseAltStageImages)
+        value: ikaPreference.shouldUseAltStageImages)
       .background {
         GeometryReader { geo in
           Color.clear

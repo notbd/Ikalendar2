@@ -97,7 +97,7 @@ struct SalmonRotationCellTimeTextSection: View {
       Spacer()
 
       HStack(spacing: Scoped.TIME_TEXT_SPACING) {
-        Text(rotation.startTime.toSalmonTimeString(includingDate: true))
+        Text(rotation.startTime.toSalmonTimeString(includeDateIf: true))
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
@@ -115,7 +115,7 @@ struct SalmonRotationCellTimeTextSection: View {
             size: Scoped.TIME_TEXT_FONT_SIZE,
             relativeTo: .headline)
 
-        Text(rotation.endTime.toSalmonTimeString(includingDate: true))
+        Text(rotation.endTime.toSalmonTimeString(includeDateIf: true))
           .scaledLimitedLine()
           .ikaFont(
             .ika2,

@@ -17,7 +17,7 @@ struct SettingsAdvancedOptionsView: View {
   @Environment(IkaStatus.self) private var ikaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
-  @State private var ifBottomToolbarPreviewPresented = false
+  @State private var isBottomToolbarPreviewPresented = false
 
   @State private var battleRotationPreviewData: BattleRotation = IkaMockData.getBattleRotation()
   @State private var salmonRotationPreviewData: SalmonRotation = IkaMockData.getSalmonRotation()
@@ -37,22 +37,16 @@ struct SettingsAdvancedOptionsView: View {
 
         Section(header: stageImagesPreviewHeader) {
           battleRotationPreviewCell
-//            .animation(
-//              .snappy,
-//              value: battleRotationPreviewData)
         }
 
         Section {
           salmonRotationPreviewCell
-//            .animation(
-//              .snappy,
-//              value: salmonRotationPreviewData)
         }
       }
       .navigationTitle("Advanced Options")
       .navigationBarTitleDisplayMode(.large)
       .listStyle(.insetGrouped)
-      .sheet(isPresented: $ifBottomToolbarPreviewPresented) {
+      .sheet(isPresented: $isBottomToolbarPreviewPresented) {
         BottomToolbarPositioningPreview()
           .presentationDetents([.fraction(Scoped.BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION)])
           .presentationCornerRadius(0)
@@ -66,7 +60,7 @@ struct SettingsAdvancedOptionsView: View {
   }
 
   private var rowBottomToolbarPositioningSwitch: some View {
-    Toggle(isOn: $ikaPreference.ifSwapBottomToolbarPickers) {
+    Toggle(isOn: $ikaPreference.shouldSwapBottomToolbarPickers) {
       Label {
         Text("Swap Bottom Toolbar Pickers")
           .foregroundStyle(.primary)
@@ -79,13 +73,13 @@ struct SettingsAdvancedOptionsView: View {
       }
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-    .onChange(of: ikaPreference.ifSwapBottomToolbarPickers) {
-      ifBottomToolbarPreviewPresented.toggle()
+    .onChange(of: ikaPreference.shouldSwapBottomToolbarPickers) {
+      isBottomToolbarPreviewPresented.toggle()
     }
   }
 
   private var rowAltStageImagesSwitch: some View {
-    Toggle(isOn: $ikaPreference.ifUseAltStageImages) {
+    Toggle(isOn: $ikaPreference.shouldUseAltStageImages) {
       Label {
         Text("Alternative Stage Images")
           .foregroundStyle(.primary)
@@ -166,7 +160,7 @@ struct BottomToolbarPositioningPreview: View {
 
   var body: some View {
     HStack {
-      if !ikaPreference.ifSwapBottomToolbarPickers {
+      if !ikaPreference.shouldSwapBottomToolbarPickers {
         // keep order
         battleModePicker
         Spacer()

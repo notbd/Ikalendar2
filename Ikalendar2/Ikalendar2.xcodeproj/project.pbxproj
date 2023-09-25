@@ -56,6 +56,8 @@
 		7943DFC32AB5398D0047250E /* SalmonRotationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFC22AB5398D0047250E /* SalmonRotationList.swift */; };
 		795A60A92A9759C9007B3861 /* AssetImageCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A60A82A9759C9007B3861 /* AssetImageCounter.swift */; };
 		795A60AB2A976745007B3861 /* SeededRandomGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */; };
+		7966346E2AC147FC00AE82E2 /* GlobalPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7966346D2AC147FC00AE82E2 /* GlobalPosition.swift */; };
+		796634712AC1578900AE82E2 /* AltAppIconRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796634702AC1578900AE82E2 /* AltAppIconRow.swift */; };
 		796CEF812AB7A94E006860C6 /* Splatfont1-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */; };
 		796CEF822AB7A94E006860C6 /* Splatfont2-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
@@ -157,6 +159,8 @@
 		7943DFC22AB5398D0047250E /* SalmonRotationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonRotationList.swift; sourceTree = "<group>"; };
 		795A60A82A9759C9007B3861 /* AssetImageCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetImageCounter.swift; sourceTree = "<group>"; };
 		795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeededRandomGenerator.swift; sourceTree = "<group>"; };
+		7966346D2AC147FC00AE82E2 /* GlobalPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalPosition.swift; sourceTree = "<group>"; };
+		796634702AC1578900AE82E2 /* AltAppIconRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltAppIconRow.swift; sourceTree = "<group>"; };
 		796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Splatfont1-Regular.otf"; sourceTree = "<group>"; };
 		796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Splatfont2-Regular.otf"; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
@@ -244,6 +248,7 @@
 				7903FE3528C438FC00245586 /* RoundedFont.swift */,
 				7903FE2F28C437F900245586 /* QuickBorder.swift */,
 				7903FE3728C4395600245586 /* ScaledLimitedLine.swift */,
+				7966346D2AC147FC00AE82E2 /* GlobalPosition.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -275,6 +280,7 @@
 			children = (
 				7903FE7728C46D8D00245586 /* Rotations */,
 				7943DFB92AB52B790047250E /* CarouselColumn */,
+				7966346F2AC1576D00AE82E2 /* Settings */,
 				7903FE7828C46D9B00245586 /* Overlays */,
 				7903FE7928C46DAE00245586 /* Buttons */,
 			);
@@ -402,6 +408,15 @@
 				7943DFBA2AB52D090047250E /* CarouselColumn.swift */,
 			);
 			path = CarouselColumn;
+			sourceTree = "<group>";
+		};
+		7966346F2AC1576D00AE82E2 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				796634702AC1578900AE82E2 /* AltAppIconRow.swift */,
+				797EA68D2AACF1350095A23B /* DetailsLicenseView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		79802FE828C54E9D0048C478 /* Tests */ = {
@@ -572,7 +587,6 @@
 				79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */,
 				7903FE6428C46A4D00245586 /* ErrorView.swift */,
 				7903FE6728C46C2900245586 /* SettingsView */,
-				79BCBC942AAFB2B700C83F95 /* DetailsView */,
 				7903FE6828C46C3300245586 /* OnboardingView */,
 			);
 			path = Screens;
@@ -585,14 +599,6 @@
 				79B92BCC28B044B400544939 /* .swiftlint.yml */,
 			);
 			name = Configs;
-			sourceTree = "<group>";
-		};
-		79BCBC942AAFB2B700C83F95 /* DetailsView */ = {
-			isa = PBXGroup;
-			children = (
-				797EA68D2AACF1350095A23B /* DetailsLicenseView.swift */,
-			);
-			path = DetailsView;
 			sourceTree = "<group>";
 		};
 		79C1485528C426A600587C6E /* Constants */ = {
@@ -816,10 +822,12 @@
 				79AA715028C413A900A91055 /* BattleStage.swift in Sources */,
 				79AA713928C4079900A91055 /* IkaMockData.swift in Sources */,
 				79D3E67128C41D7B00005DB5 /* SalmonApparel.swift in Sources */,
+				7966346E2AC147FC00AE82E2 /* GlobalPosition.swift in Sources */,
 				7903FE8D28C46F9100245586 /* StageTitleLabel.swift in Sources */,
 				7903FE5528C45FC000245586 /* IkaDeviceMotionPublisher.swift in Sources */,
 				7903FE8528C46F3E00245586 /* SalmonRotationCell.swift in Sources */,
 				797EA68E2AACF1350095A23B /* DetailsLicenseView.swift in Sources */,
+				796634712AC1578900AE82E2 /* AltAppIconRow.swift in Sources */,
 				7903FE9D28C4702100245586 /* ToolbarButtonAlignment.swift in Sources */,
 				79D3E67328C41DD900005DB5 /* HeadApparel.swift in Sources */,
 				7903FE3028C437F900245586 /* QuickBorder.swift in Sources */,
@@ -1002,7 +1010,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5083;
+				CURRENT_PROJECT_VERSION = 5187;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1042,7 +1050,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5083;
+				CURRENT_PROJECT_VERSION = 5187;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

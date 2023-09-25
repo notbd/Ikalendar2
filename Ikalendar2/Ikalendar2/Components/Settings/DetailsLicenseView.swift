@@ -21,10 +21,10 @@ struct DetailsLicenseView: View {
 
   let repoName: String
   let repoURLString: String
-  let ifLinkable: Bool
+  let isLinkable: Bool
 
   @State private var licenseViewModel: IkaOpenSourceLicense?
-  @State private var ifError: Bool = false
+  @State private var hasErrored: Bool = false
 
   var body: some View {
     ScrollView {
@@ -33,11 +33,11 @@ struct DetailsLicenseView: View {
         licenseContentText
       }
       .padding()
-      .redacted(reason: licenseViewModel != nil || ifError ? [] : .placeholder)
+      .redacted(reason: licenseViewModel != nil || hasErrored ? [] : .placeholder)
     }
     .navigationTitle(repoName)
     .navigationBarTitleDisplayMode(.large)
-    .if(ifLinkable) {
+    .if(isLinkable) {
       $0.navigationBarItems(trailing: externalLinkButton)
     }
     .onAppear {
@@ -50,7 +50,7 @@ struct DetailsLicenseView: View {
           SimpleHaptics.generateTask(.light)
         }
         catch {
-          ifError = true
+          hasErrored = true
         }
       }
     }
@@ -61,12 +61,12 @@ struct DetailsLicenseView: View {
 
   private var licenseTypeBanner: some View {
     HStack {
-      Image(systemName: !ifError ? Scoped.LICENSE_SFSYMBOL : Scoped.ERROR_SFSYMBOL)
+      Image(systemName: !hasErrored ? Scoped.LICENSE_SFSYMBOL : Scoped.ERROR_SFSYMBOL)
         .font(Scoped.LICENSE_ICON_FONT)
         .fontWeight(Scoped.LICENSE_ICON_FONT_WEIGHT)
 
       VStack(alignment: .leading) {
-        if !ifError {
+        if !hasErrored {
           Text(
             licenseViewModel != nil
               ? String(localized: "\(licenseViewModel!.gist) be licensed under")
@@ -77,7 +77,7 @@ struct DetailsLicenseView: View {
         }
 
         Text(
-          !ifError
+          !hasErrored
             ? licenseViewModel?.typeDescription.localizedStringKey
               ?? Constants.Key.Placeholder.UNKNOWN.localizedStringKey
             : Constants.Key.Error.Title.LICENSE_FETCH_ERROR.localizedStringKey)
@@ -91,7 +91,7 @@ struct DetailsLicenseView: View {
 
   private var licenseContentText: some View {
     var contentText: String {
-      if ifError { return Constants.Key.Error.Message.LICENSE_FETCH_ERROR }
+      if hasErrored { return Constants.Key.Error.Message.LICENSE_FETCH_ERROR }
       return
         licenseViewModel != nil
           ? licenseViewModel!.content
@@ -99,7 +99,7 @@ struct DetailsLicenseView: View {
     }
 
     var contentFont: Font {
-      ifError || !isHorizontalCompact
+      hasErrored || !isHorizontalCompact
         ? Scoped.LICENSE_CONTENT_FONT_REGULAR
         : Scoped.LICENSE_CONTENT_FONT_COMPACT
     }
@@ -129,6 +129,6 @@ struct LicenseDetailsView_Previews: PreviewProvider {
     DetailsLicenseView(
       repoName: "SwiftyJSON",
       repoURLString: "https://github.com/SwiftyJSON/SwiftyJSON",
-      ifLinkable: true)
+      isLinkable: true)
   }
 }

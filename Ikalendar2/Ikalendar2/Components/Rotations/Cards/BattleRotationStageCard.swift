@@ -24,7 +24,7 @@ struct BattleRotationStageCardPrimary: View {
   }
 
   private var stageImageName: String {
-    switch (ikaPreference.ifUseAltStageImages, stageSelection) {
+    switch (ikaPreference.shouldUseAltStageImages, stageSelection) {
     case (true, .stageA):
       rotation.stageAAltImageName
     case (true, .stageB):
@@ -53,7 +53,7 @@ struct BattleRotationStageCardPrimary: View {
         alignment: .bottomTrailing)
       .animation(
         .snappy,
-        value: ikaPreference.ifUseAltStageImages)
+        value: ikaPreference.shouldUseAltStageImages)
   }
 }
 
@@ -74,7 +74,7 @@ struct BattleRotationStageCardSecondary: View {
   }
 
   private var stageImageName: String {
-    switch (ikaPreference.ifUseAltStageImages, stageSelection) {
+    switch (ikaPreference.shouldUseAltStageImages, stageSelection) {
     case (true, .stageA):
       rotation.stageAAltImageName
     case (true, .stageB):
@@ -109,7 +109,7 @@ struct BattleRotationStageCardSecondary: View {
     }
     .animation(
       .snappy,
-      value: ikaPreference.ifUseAltStageImages)
+      value: ikaPreference.shouldUseAltStageImages)
   }
 }
 

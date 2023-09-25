@@ -30,15 +30,18 @@ extension Constants.Key {
 
     static let PREFERRED_APP_ICON = "pref.preferred_app_icon"
 
-    static let IF_USE_ALT_STAGE_IMAGES = "pref.if_use_alt_stage_images"
-    static let IF_SWAP_BOTTOM_TOOLBAR_PICKERS = "pref.if_swap_bottom_toolbar_pickers"
+    static let SHOULD_USE_ALT_STAGE_IMAGES = "pref.if_should_use_alt_stage_images"
+    static let SHOULD_SWAP_BOTTOM_TOOLBAR_PICKERS = "pref.if_should_swap_bottom_toolbar_pickers"
 
     /// Log
-    static let IF_HAS_DISCOVERED_ALT_APP_ICON = "pref.if_has_discovered_alt_app_icon"
-    static let IF_HAS_DISCOVERED_RATING = "pref.if_has_discovered_rating"
+    static let HAS_DISCOVERED_RATING = "pref.if_has_discovered_rating"
+    static let HAS_DISCOVERED_ALT_APP_ICON = "pref.if_has_discovered_alt_app_icon"
+    static let HAS_DISCOVERED_EASTER_EGG = "pref.if_has_discovered_easter_egg"
   }
 
   enum URL {
+    static let GOOGLE_HOMEPAGE = "https://google.com"
+
     static let BATTLE_ROTATIONS = "https://splatoon2.ink/data/schedules.json"
     static let SALMON_ROTATIONS = "https://splatoon2.ink/data/coop-schedules.json"
     static let SALMON_APPAREL_INFO = "https://splatoon2.ink/data/timeline.json"
@@ -55,6 +58,7 @@ extension Constants.Key {
     static let PRIVACY_POLICY = "https://github.com/notbd/Ikalendar2/wiki/Privacy-Policy"
 
     static let THE_GOOD_STUFF = "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // good stuff indeed!
+    static let THE_GOOD_STUFF_CN = "https://www.bilibili.com/video/BV1GJ411x7h7"
 
     enum Splatoon2Site {
       static let EN = "https://nintendo.com/my/switch/aab6/index.html"

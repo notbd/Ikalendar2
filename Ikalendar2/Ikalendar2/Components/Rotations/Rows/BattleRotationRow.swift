@@ -72,21 +72,21 @@ struct BattleRotationHeader: View {
   let rowType: BattleRotationRow.RowType
 
   private var startTimeString: String {
-    let ifIncludeDate = Calendar.current.isDateInYesterday(rotation.startTime) ||
+    let shouldIncludeDate = Calendar.current.isDateInYesterday(rotation.startTime) ||
       Calendar.current.isDateInTomorrow(rotation.startTime)
 
-    return rotation.startTime.toBattleTimeString(includeDate: ifIncludeDate)
+    return rotation.startTime.toBattleTimeString(includeDateIf: shouldIncludeDate)
   }
 
   private var endTimeString: String {
-    let ifIncludeDate = (
+    let shouldIncludeDate = (
       Calendar.current.isDateInYesterday(rotation.startTime) &&
         Calendar.current.isDateInToday(rotation.endTime)) ||
       (
         Calendar.current.isDateInToday(rotation.startTime) &&
           Calendar.current.isDateInTomorrow(rotation.endTime))
 
-    return rotation.endTime.toBattleTimeString(includeDate: ifIncludeDate)
+    return rotation.endTime.toBattleTimeString(includeDateIf: shouldIncludeDate)
   }
 
   var body: some View {

@@ -16,8 +16,8 @@ final class IkaLog: ObservableObject {
   static let shared = IkaLog()
 
   /// Record if user has tapped and discovered the rating button.
-  @AppStorage(Constants.Key.AppStorage.IF_HAS_DISCOVERED_RATING)
-  var ifHasDiscoveredRating: Bool = false
+  @AppStorage(Constants.Key.AppStorage.HAS_DISCOVERED_RATING)
+  var hasDiscoveredRating: Bool = false
   {
     willSet {
       objectWillChange.send()
@@ -25,8 +25,17 @@ final class IkaLog: ObservableObject {
   }
 
   /// Record if user has tapped and discovered the alt app icon settings.
-  @AppStorage(Constants.Key.AppStorage.IF_HAS_DISCOVERED_ALT_APP_ICON)
-  var ifHasDiscoveredAltAppIcon: Bool = false
+  @AppStorage(Constants.Key.AppStorage.HAS_DISCOVERED_ALT_APP_ICON)
+  var hasDiscoveredAltAppIcon: Bool = false
+  {
+    willSet {
+      objectWillChange.send()
+    }
+  }
+
+  /// Record if user has tapped and discovered the alt app icon settings.
+  @AppStorage(Constants.Key.AppStorage.HAS_DISCOVERED_EASTER_EGG)
+  var hasDiscoveredEasterEgg: Bool = false
   {
     willSet {
       objectWillChange.send()

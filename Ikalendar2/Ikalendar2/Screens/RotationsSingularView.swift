@@ -26,7 +26,7 @@ struct RotationsSingularView: View {
           ModeIconStamp(
             gameModeSelection: ikaStatus.currentGameMode,
             battleModeSelection: ikaStatus.currentBattleMode,
-            ifOffset: true)
+            shouldOffset: true)
             .animation(
               .snappy,
               value: "\(ikaStatus.currentGameMode)-\(ikaStatus.currentBattleMode)"),
@@ -85,7 +85,7 @@ struct RotationsSingularView: View {
         }
 
         ToolbarItemGroup(placement: .bottomBar) {
-          if !ikaPreference.ifSwapBottomToolbarPickers {
+          if !ikaPreference.shouldSwapBottomToolbarPickers {
             // keep order
             if ikaStatus.currentGameMode == .battle {
               ToolbarBattleModePicker()

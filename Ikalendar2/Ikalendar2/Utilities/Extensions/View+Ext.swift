@@ -70,19 +70,19 @@ extension View {
   ///
   /// - Parameters:
   ///   - condition: The condition for the transform.
-  ///   - ifTransformation: The transform to apply if the condition is true.
-  ///   - elseTransformation: The condition to apply for the transform is false.
+  ///   - trueTransformation: The transform to apply if the condition is true.
+  ///   - falseTransformation: The condition to apply for the transform is false.
   ///
   /// - Returns: The resulted view.
   @ViewBuilder
   func `if`(
     _ condition: Bool,
-    if ifTransformation: (Self) -> some View,
-    else elseTransformation: (Self) -> some View)
+    if trueTransformation: (Self) -> some View,
+    else falseTransformation: (Self) -> some View)
     -> some View
   {
-    if condition { ifTransformation(self) }
-    else { elseTransformation(self) }
+    if condition { trueTransformation(self) }
+    else { falseTransformation(self) }
   }
 
   /// This function will apply a transform to our view if the value is non-nil.

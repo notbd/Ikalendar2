@@ -70,6 +70,14 @@ enum IkaLocale {
     }
   }
 
+  var easterEggURLString: String {
+    switch self {
+    case .zhHant:
+      Constants.Key.URL.THE_GOOD_STUFF_CN
+    default:
+      Constants.Key.URL.THE_GOOD_STUFF
+    }
+  }
 }
 
 extension IkaLocale {

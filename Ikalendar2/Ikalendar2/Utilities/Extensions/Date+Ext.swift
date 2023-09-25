@@ -40,15 +40,15 @@ extension Date {
 
   /// Convert the Date to a battle time string.
   /// - Parameters:
-  ///   - includingDate: If including the date in the time string (default to false).
+  ///   - shouldIncludeDate: If including the date in the time string (default to false).
   ///   parameter has changed.
   /// - Returns: The battle time string.
-  func toBattleTimeString(includeDate: Bool = false)
+  func toBattleTimeString(includeDateIf shouldIncludeDate: Bool = false)
     -> String
   {
     let timeString = Date.ikaTimeFormatter.string(from: self)
 
-    guard includeDate
+    guard shouldIncludeDate
     else { return timeString }
 
     guard !Calendar.current.isDateInToday(self)
@@ -66,15 +66,15 @@ extension Date {
 
   /// Convert the Date to a salmon time string.
   /// - Parameters:
-  ///   - includingDate: If including the date in the time string (default to false).
+  ///   - shouldIncludeDate: If including the date in the time string (default to false).
   ///   parameter has changed.
   /// - Returns: The salmon time string.
-  func toSalmonTimeString(includingDate: Bool = false)
+  func toSalmonTimeString(includeDateIf shouldIncludeDate: Bool = false)
     -> String
   {
     let timeString = Date.ikaTimeFormatter.string(from: self)
 
-    guard includingDate
+    guard shouldIncludeDate
     else { return timeString }
 
     guard !Calendar.current.isDateInToday(self)

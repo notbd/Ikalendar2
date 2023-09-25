@@ -20,6 +20,9 @@ struct MainView: View {
     NavigationStack {
       if isHorizontalCompact {
         RotationsSingularView()
+//        NavigationStack{
+//          SettingsAltAppIconView()
+//        }
       }
       else {
         RotationsCarouselView()

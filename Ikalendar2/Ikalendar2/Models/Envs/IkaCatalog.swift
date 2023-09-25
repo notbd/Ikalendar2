@@ -101,13 +101,13 @@ final class IkaCatalog {
 
   @ObservationIgnored private var cancellables: Set<AnyCancellable> = .init()
 
-  private var ifShouldAutoLoad: Bool {
+  private var shouldAutoLoad: Bool {
     loadStatus != .loading &&
       autoLoadStatus == .idle &&
       battleRotationDict.isOutdated
   }
 
-  private var ifShouldAutoLoadSalmon: Bool {
+  private var shouldAutoLoadSalmon: Bool {
     guard let firstRotation = salmonRotations.first else { return true }
     return
       firstRotation.isExpired(IkaTimePublisher.shared.currentTime) ||
@@ -168,7 +168,7 @@ final class IkaCatalog {
   }
 
   private func handleAutoLoadCheck() {
-    guard ifShouldAutoLoad else { return }
+    guard shouldAutoLoad else { return }
     Task { await autoLoadCatalog() }
   }
 
@@ -272,7 +272,7 @@ final class IkaCatalog {
       }
 
       // only auto-load SalmonRotations if needed
-      if ifShouldAutoLoadSalmon {
+      if shouldAutoLoadSalmon {
         group.addTask {
           try await self.autoLoadSalmonRotations()
         }

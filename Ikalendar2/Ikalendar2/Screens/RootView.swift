@@ -56,14 +56,12 @@ struct RootView: View {
 
   private func setUpFullScreenCoverSettingsModal(_ content: some View) -> some View {
     @Bindable var ikaStatus = ikaStatus
-
     return
       content.fullScreenCover(isPresented: $ikaStatus.isSettingsPresented) { settingsModal }
   }
 
   private func setUpSheetSettingsModal(_ content: some View) -> some View {
     @Bindable var ikaStatus = ikaStatus
-
     return
       content.sheet(isPresented: $ikaStatus.isSettingsPresented) { settingsModal }
   }

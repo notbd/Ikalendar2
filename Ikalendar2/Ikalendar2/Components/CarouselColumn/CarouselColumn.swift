@@ -15,25 +15,25 @@ struct CarouselColumn: View {
   typealias Scoped = Constants.Style.Carousel.Column
 
   @Environment(IkaInterfaceOrientationPublisher.self) private var ikaInterfaceOrientationPublisher
-  private var ifPortrait: Bool { ikaInterfaceOrientationPublisher.currentOrientation.isPortrait }
+  private var isPortrait: Bool { ikaInterfaceOrientationPublisher.currentOrientation.isPortrait }
 
   let gameMode: GameMode
   let battleMode: BattleMode
 
   private var listVOffsetFactor: CGFloat {
-    ifPortrait
+    isPortrait
       ? Scoped.LIST_OFFSET_V_FACTOR_PORTRAIT
       : Scoped.LIST_OFFSET_V_FACTOR_LANDSCAPE }
 
   private var blurHeightFactor: CGFloat {
-    ifPortrait
+    isPortrait
       ? listVOffsetFactor * Scoped.BLUR_HEIGHT_FACTOR_PORTRAIT
       : listVOffsetFactor * Scoped.BLUR_HEIGHT_FACTOR_LANDSCAPE }
 
   private var modeIconSizeFactor: CGFloat { listVOffsetFactor * Scoped.MODE_ICON_SIZE_FACTOR }
 
   private var maskGradientDensity: Int {
-    ifPortrait
+    isPortrait
       ? Scoped.MASK_GRADIENT_DENSITY_PORTRAIT
       : Scoped.MASK_GRADIENT_DENSITY_LANDSCAPE }
 

@@ -47,64 +47,64 @@ struct SettingsCreditsView: View {
     CreditsExternalLinkCell(
       name: "Splatoon2.ink",
       urlString: "https://splatoon2.ink/about",
-      ifShowURL: true)
+      shouldShowURL: true)
   }
 
   private var rowJelonzoBot: some View {
     CreditsExternalLinkCell(
       name: "JelonzoBot",
       urlString: "https://splatoon.oatmealdome.me/about",
-      ifShowURL: true)
+      shouldShowURL: true)
   }
 
   private var rowSwiftyJSON: some View {
     CreditsOpenSourceLibCell(
       name: "SwiftyJSON",
       urlString: "https://github.com/SwiftyJSON/SwiftyJSON",
-      ifLinkable: true,
+      isLinkable: true,
       destination:
       DetailsLicenseView(
         repoName: "SwiftyJSON",
         repoURLString: "https://github.com/SwiftyJSON/SwiftyJSON",
-        ifLinkable: true))
+        isLinkable: true))
   }
 
   private var rowSimpleHaptics: some View {
     CreditsOpenSourceLibCell(
       name: "SimpleHaptics",
       urlString: "https://github.com/notbd/SimpleHaptics",
-      ifLinkable: true,
+      isLinkable: true,
       destination:
       DetailsLicenseView(
         repoName: "SimpleHaptics",
         repoURLString: "https://github.com/notbd/SimpleHaptics",
-        ifLinkable: true))
+        isLinkable: true))
   }
 
   private var rowVariableBlurView: some View {
     CreditsOpenSourceLibCell(
       name: "VariableBlurView",
       urlString: "https://github.com/aheze/VariableBlurView/",
-      ifLinkable: false,
+      isLinkable: false,
       destination:
       DetailsLicenseView(
         repoName: "VariableBlurView",
         repoURLString: "https://github.com/aheze/VariableBlurView/",
-        ifLinkable: false))
+        isLinkable: false))
   }
 
   private var rowSplatoon2Site: some View {
     CreditsExternalLinkCell(
       name: "Splatoon™ 2 Official Website",
       urlString: currentLocale.toIkaLocale().splatoon2Site,
-      ifShowURL: true)
+      shouldShowURL: true)
   }
 
   private var rowNintendoSite: some View {
     CreditsExternalLinkCell(
       name: "Nintendo® Official Website",
       urlString: currentLocale.toIkaLocale().nintendoSite,
-      ifShowURL: true)
+      shouldShowURL: true)
   }
 
   private var footerDisclaimer: some View {
@@ -126,7 +126,7 @@ struct CreditsExternalLinkCell: View {
 
   let name: String
   let urlString: String
-  let ifShowURL: Bool
+  let shouldShowURL: Bool
 
   var body: some View {
     Button {
@@ -144,7 +144,7 @@ struct CreditsExternalLinkCell: View {
             .foregroundStyle(Color.primary)
             .font(Scoped.CELL_CONTENT_FONT_PRIMARY)
 
-          if ifShowURL {
+          if shouldShowURL {
             Text(urlString.shortenedURL()!)
               .foregroundStyle(Color.secondary)
               .font(Scoped.CELL_CONTENT_FONT_SECONDARY)
@@ -170,7 +170,7 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
 
   let name: String
   let urlString: String
-  let ifLinkable: Bool
+  let isLinkable: Bool
   let destination: Destination
 
   var body: some View {
@@ -191,7 +191,7 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
       }
       .padding(.vertical, Scoped.CELL_PADDING_V)
     }
-    .if(ifLinkable) {
+    .if(isLinkable) {
       $0
         .swipeActions {
           Button {

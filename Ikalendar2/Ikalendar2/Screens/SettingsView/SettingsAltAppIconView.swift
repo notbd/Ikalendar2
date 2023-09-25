@@ -5,6 +5,7 @@
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
+import SimpleHaptics
 import SwiftUI
 
 // MARK: - SettingsAltAppIconView
@@ -12,77 +13,116 @@ import SwiftUI
 /// The Settings page for switching alternate App Icons.
 @MainActor
 struct SettingsAltAppIconView: View {
-  @EnvironmentObject private var ikaLog: IkaLog
-
-  var body: some View {
-    List {
-      Section(header: Spacer()) {
-        ForEach(IkaAppIcon.allCases) { ikaAppIcon in
-          SettingsAltAppIconRow(ikaAppIcon: ikaAppIcon)
-        }
-      }
-    }
-    .navigationTitle("App Icon")
-    .navigationBarTitleDisplayMode(.large)
-    .listStyle(.insetGrouped)
-    .onAppear {
-      if !ikaLog.ifHasDiscoveredAltAppIcon { ikaLog.ifHasDiscoveredAltAppIcon = true }
-    }
-  }
-}
-
-// MARK: - SettingsAltAppIconRow
-
-struct SettingsAltAppIconRow: View {
-  typealias Scoped = Constants.Style.Settings.AltAppIcon
+  @Environment(\.colorScheme) private var colorScheme
 
   @EnvironmentObject private var ikaPreference: IkaPreference
+  @EnvironmentObject private var ikaLog: IkaLog
 
-  let ikaAppIcon: IkaAppIcon
+  @State private var doesPreferRickOnAppear: Bool = false
+  @State private var triggeredEasterEgg: Bool = false
+
+  @State private var rect: CGRect = .init()
+  @State private var easterEggBounceCounter: Int = 0
+
+  @State private var tapCount: Int = 0 // temp
+
+  @State private var displayAnimatedCopy: Bool = false
+  @State private var currentFlipAfterDelayTask: Task<Void, Never>?
+
+  private var showEasterEgg: Bool {
+    doesPreferRickOnAppear || triggeredEasterEgg
+  }
 
   var body: some View {
-    Button {
-      setAltAppIcon(ikaAppIcon)
-    }
-    label: {
-      HStack(spacing: Scoped.SPACING_H) {
-        Image(ikaAppIcon.getImageName(.small))
-          .antialiased(true)
-          .resizable()
-          .scaledToFit()
-          .frame(
-            width: IkaAppIcon.DisplayMode.small.sideLen,
-            height: IkaAppIcon.DisplayMode.small.sideLen)
-          .clipShape(
-            IkaAppIcon.DisplayMode.small.clipShape)
-          .overlay(
-            IkaAppIcon.DisplayMode.small.clipShape
-              .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
-              .opacity(Scoped.STROKE_OPACITY))
-          .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+    ZStack {
+      List {
+        if showEasterEgg {
+          Section(header: Text("Never Gonna Give You Up")) {
+            AltAppIconEasterEggRow(ikaAppIcon: .rick, buttonPressCounter: $easterEggBounceCounter)
+              .opacity(displayAnimatedCopy ? 0 : 1)
+              .background {
+                GeometryReader { geo in
+                  Color.clear
+                    .onChange(of: geo.frame(in: .global), initial: true) { _, newValue in
+                      rect = newValue
+                    }
+                }
+              }
+          }
+        }
 
-        Text(ikaAppIcon.displayName.localizedStringKey)
-          .font(.system(.body, design: .rounded))
-          .foregroundStyle(Scoped.DISPLAY_NAME_COLOR)
-
-        Spacer()
-
-        if ikaAppIcon == ikaPreference.preferredAppIcon {
-          Image(systemName: Scoped.ACTIVE_INDICATOR_SFSYMBOL)
-            .font(Scoped.ACTIVE_INDICATOR_FONT)
-            .symbolRenderingMode(.palette)
-            .foregroundStyle(Color.accentColor, Color.tertiarySystemGroupedBackground)
+        Section {
+          ForEach(IkaAppIcon.allCases.filter { !$0.isEasterEgg }) { ikaAppIcon in
+            AltAppIconRow(ikaAppIcon: ikaAppIcon)
+          }
+        } header: {
+          if showEasterEgg { EmptyView() } else { Spacer() }
         }
       }
-      .padding(.vertical, Scoped.ROW_PADDING_V)
+      .toolbar {
+        Button("Tap Me :)") {
+          SimpleHaptics.generateTask(triggeredEasterEgg ? .soft : .success)
+          withAnimation(.bouncy) {
+            triggeredEasterEgg.toggle()
+          }
+        }
+        .foregroundStyle(
+          Color.accentColor
+            .opacity(
+              ikaLog.hasDiscoveredEasterEgg
+                ? 0
+                : colorScheme == .dark
+                  ? 0.07
+                  : 0.05))
+      }
+      .navigationTitle("App Icon")
+      .navigationBarTitleDisplayMode(.large)
+      .listStyle(.insetGrouped)
+      .onAppear {
+        if !ikaLog.hasDiscoveredAltAppIcon { ikaLog.hasDiscoveredAltAppIcon = true }
+      }
+
+      // Overlay view
+      if showEasterEgg {
+        AltAppIconEasterEggRow(ikaAppIcon: .rick, buttonPressCounter: $easterEggBounceCounter)
+          .allowsHitTesting(false)
+          .frame(width: rect.width, height: rect.height)
+          .globalPosition(x: rect.midX, y: rect.midY)
+          .opacity(displayAnimatedCopy ? 1 : 0)
+      }
+    }
+    .onAppear {
+      doesPreferRickOnAppear = ikaPreference.preferredAppIcon == .rick
+    }
+    .onChange(of: easterEggBounceCounter) {
+      displayAnimatedCopy = true
+
+      // Cancel the previous task, if it exists
+      currentFlipAfterDelayTask?.cancel()
+
+      // Schedule a new task
+      currentFlipAfterDelayTask =
+        Task {
+          await flipDisplayAnimatedCopyAfterDelay()
+        }
     }
   }
 
   // MARK: Private
 
-  private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
-    guard ikaPreference.preferredAppIcon != ikaAppIcon else { return }
-    ikaPreference.preferredAppIcon = ikaAppIcon
+  private func flipDisplayAnimatedCopyAfterDelay() async {
+    try? await Task.sleep(nanoseconds: UInt64(2.1 * 1_000_000_000))
+    guard !Task.isCancelled else { return }
+    displayAnimatedCopy = false
+  }
+
+  private func checkForEasterEgg() {
+    tapCount += 1
+    if tapCount >= 1 {
+      withAnimation(.bouncy) {
+        triggeredEasterEgg = true
+      }
+    }
   }
 }
 

@@ -20,8 +20,8 @@ struct ModeIconStamp: View {
   let iconSize: CGFloat
   let gameModeSelection: GameMode
   let battleModeSelection: BattleMode
-  let ifOffset: Bool
-  let ifAnimated: Bool
+  let shouldOffset: Bool
+  let shouldAnimate: Bool
 
   private var dx: CGFloat { ikaDeviceMotionPublisher.dx }
   private var dy: CGFloat { ikaDeviceMotionPublisher.dy }
@@ -48,7 +48,7 @@ struct ModeIconStamp: View {
   var body: some View {
     icon
       .rotationEffect(.degrees(Scoped.ROTATION_2D_DEGREES))
-      .if(ifAnimated) {
+      .if(shouldAnimate) {
         $0
           .rotation3DEffect(
             .degrees(rotationConstant * intensity),
@@ -60,7 +60,7 @@ struct ModeIconStamp: View {
             .default,
             value: dx * dy)
       }
-      .if(ifOffset) {
+      .if(shouldOffset) {
         $0
           .offset(
             x: Scoped.ICON_OFFSET_X,
@@ -114,14 +114,14 @@ struct ModeIconStamp: View {
     iconSize: CGFloat = Scoped.ICON_SIZE,
     gameModeSelection: GameMode,
     battleModeSelection: BattleMode,
-    ifOffset: Bool = false,
-    ifAnimated: Bool = true)
+    shouldOffset: Bool = false,
+    shouldAnimated: Bool = true)
   {
     self.iconSize = iconSize
     self.gameModeSelection = gameModeSelection
     self.battleModeSelection = battleModeSelection
-    self.ifOffset = ifOffset
-    self.ifAnimated = ifAnimated
+    self.shouldOffset = shouldOffset
+    shouldAnimate = shouldAnimated
   }
 }
 

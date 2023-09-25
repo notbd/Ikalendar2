@@ -198,15 +198,15 @@ struct SettingsMainView: View {
           .foregroundStyle(Color.accentColor)
       }
       .onReceive(ikaTimePublisher.bounceSignalPublisher) { _ in
-        if !ikaLog.ifHasDiscoveredAltAppIcon { rowAltAppIconSfSymbolBounce += 1 }
+        if !ikaLog.hasDiscoveredAltAppIcon { rowAltAppIconSfSymbolBounce += 1 }
       }
     }
   }
 
   private var rowAdvancedOptions: some View {
     let customizations = [
-      ikaPreference.ifSwapBottomToolbarPickers,
-      ikaPreference.ifUseAltStageImages,
+      ikaPreference.shouldSwapBottomToolbarPickers,
+      ikaPreference.shouldUseAltStageImages,
     ]
     let customizedPercentage = Double(customizations.filter { $0 }.count) / Double(customizations.count)
 

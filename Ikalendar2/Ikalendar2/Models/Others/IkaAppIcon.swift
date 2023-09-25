@@ -28,6 +28,10 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     }
   }
 
+  var isEasterEgg: Bool {
+    self == .rick
+  }
+
   var iconSetName: String {
     switch self {
     case .modernDark:
