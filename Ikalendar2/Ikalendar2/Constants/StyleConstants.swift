@@ -150,6 +150,9 @@ extension Constants.Style {
 
       static let SOURCE_CODE_SFSYMBOL = "chevron.left.slash.chevron.right"
       static let PRIVACY_POLICY_SFSYMBOL = "hand.raised"
+
+      static let LITTLE_BUDDY_HEIGHT: CGFloat = 34
+      static let SLOGAN_IKALENDAR3_FONT_SIZE: CGFloat = 13
     }
 
     enum Credits {

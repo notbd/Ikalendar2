@@ -32,7 +32,7 @@ struct SettingsCreditsView: View {
 
       Section(
         header: Text("Splatoon™ 2"),
-        footer: disclaimer)
+        footer: footerDisclaimer)
       {
         rowSplatoon2Site
         rowNintendoSite
@@ -107,8 +107,8 @@ struct SettingsCreditsView: View {
       ifShowURL: true)
   }
 
-  private var disclaimer: some View {
-    Text(Constants.Key.Disclaimer.COPYRIGHT.localizedStringKey)
+  private var footerDisclaimer: some View {
+    Text(Constants.Key.Slogan.COPYRIGHT.localizedStringKey)
       .ikaFont(
         .ika2,
         size: Scoped.DISCLAIMER_FONT_SIZE,

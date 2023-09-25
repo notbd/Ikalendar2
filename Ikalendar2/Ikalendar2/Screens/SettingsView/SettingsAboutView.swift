@@ -47,7 +47,10 @@ struct SettingsAboutView: View {
         rowDeveloperEmail
       }
 
-      Section(header: Text("Others")) {
+      Section(
+        header: Text("Others"),
+        footer: footerIkalendar3)
+      {
         rowSourceCode
         rowPrivacyPolicy
       }
@@ -308,6 +311,27 @@ struct SettingsAboutView: View {
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
+    }
+  }
+
+  @ScaledMetric(relativeTo: .title) var littleBuddyHeight: CGFloat = Scoped.LITTLE_BUDDY_HEIGHT
+
+  private var footerIkalendar3: some View {
+    HStack {
+      Image(.littleBuddy)
+        .antialiased(true)
+        .resizable()
+        .scaledToFit()
+        .saturation(0.6)
+        .frame(
+          width: littleBuddyHeight,
+          height: littleBuddyHeight)
+
+      Text(Constants.Key.Slogan.IKALENDAR3.localizedStringKey)
+        .ikaFont(
+          .ika2,
+          size: Scoped.SLOGAN_IKALENDAR3_FONT_SIZE,
+          relativeTo: .footnote)
     }
   }
 

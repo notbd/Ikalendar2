@@ -78,8 +78,9 @@ extension Constants.Key {
     static let ZH_HANT = "繁體中文(beta)"
   }
 
-  enum Disclaimer {
-    static let COPYRIGHT = "key.disclaimer.copyright"
+  enum Slogan {
+    static let COPYRIGHT = "key.slogan.copyright"
+    static let IKALENDAR3 = "key.slogan.ikalendar3"
   }
 
   enum Error {

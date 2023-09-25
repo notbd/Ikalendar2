@@ -83,7 +83,7 @@ struct SalmonRotationCellTimeTextSection: View {
 
   var body: some View {
     HStack {
-      Image(rotation.isCurrent(ikaTimePublisher.currentTime) ? "golden-egg" : "salmon")
+      Image(rotation.isCurrent(ikaTimePublisher.currentTime) ? .goldenEgg : .salmon)
         .antialiased(true)
         .resizable()
         .scaledToFit()

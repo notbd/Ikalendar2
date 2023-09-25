@@ -76,11 +76,11 @@ struct ErrorView: View {
   }
 
   private var errorImage: some View {
-    Image("little-buddy")
+    Image(.juddMemCake)
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .grayscale(0.9)
+      .saturation(0.4)
   }
 }
 
