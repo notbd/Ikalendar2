@@ -25,10 +25,11 @@ struct RotationsCarouselView: View {
   var body: some View {
     ZStack {
       content
+        .navigationTitle(Constants.Key.BundleInfo.APP_DISPLAY_NAME)
+        .ignoresSafeArea(edges: .bottom)
         .apply {
           setToolbarItems($0)
         }
-        .navigationTitle(Constants.Key.BundleInfo.APP_DISPLAY_NAME)
         .overlay(
           AutoLoadingOverlay(),
           alignment: .bottomTrailing)

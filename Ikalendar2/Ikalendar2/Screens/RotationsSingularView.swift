@@ -20,8 +20,8 @@ struct RotationsSingularView: View {
   var body: some View {
     ZStack {
       content
-        .apply(setToolbarItems)
         .navigationTitle(title.localizedStringKey)
+        .apply(setToolbarItems)
         .overlay(
           ModeIconStamp(
             gameModeSelection: ikaStatus.currentGameMode,
@@ -30,7 +30,6 @@ struct RotationsSingularView: View {
             .animation(
               .snappy,
               value: "\(ikaStatus.currentGameMode)-\(ikaStatus.currentBattleMode)"),
-
           alignment: .topTrailing)
         .overlay(
           AutoLoadingOverlay(),

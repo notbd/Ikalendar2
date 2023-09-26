@@ -19,6 +19,10 @@ struct SettingsCreditsView: View {
 
   var body: some View {
     List {
+//      Section {
+//        ContributorRow()
+//      } header: { Text("Contributors") }
+
       Section {
         rowSplatoon2Ink
         rowJelonzoBot

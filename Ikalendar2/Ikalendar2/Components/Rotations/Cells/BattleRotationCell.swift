@@ -199,6 +199,9 @@ struct BattleRotationCellPrimary: View {
 struct BattleRotationCellSecondary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Cell.Secondary
 
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
+
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   let rotation: BattleRotation
@@ -243,14 +246,27 @@ struct BattleRotationCellSecondary: View {
   }
 
   private var ruleTitle: some View {
+    // actual rule title
+    Text(rotation.rule.name.localizedStringKey)
+      .scaledLimitedLine()
+      .ikaFont(
+        .ika2,
+        size: Scoped.RULE_FONT_SIZE,
+        relativeTo: .body)
+      .if(!isHorizontalCompact) { wrapInIdealFontLayout($0) }
+      .frame(height: Scoped.RULE_TITLE_HEIGHT)
+      .ifLet(animationNamespaces) {
+        $0.matchedGeometryEffect(
+          id: rotation.id,
+          in: $1.ruleTitle)
+      }
+  }
+
+  private func wrapInIdealFontLayout(_ content: some View) -> some View {
     IdealFontLayout(anchor: .center) {
       // actual rule title
-      Text(rotation.rule.name.localizedStringKey)
-        .scaledLimitedLine()
-        .ikaFont(
-          .ika2,
-          size: Scoped.RULE_FONT_SIZE,
-          relativeTo: .body)
+      content
+
       // all other possible rule titles for the layout to compute ideal size
       ForEach(BattleRule.allCases) { rule in
         Text(rule.name.localizedStringKey)
@@ -260,12 +276,6 @@ struct BattleRotationCellSecondary: View {
             size: Scoped.RULE_FONT_SIZE,
             relativeTo: .body)
       }
-    }
-    .frame(height: Scoped.RULE_TITLE_HEIGHT)
-    .ifLet(animationNamespaces) {
-      $0.matchedGeometryEffect(
-        id: rotation.id,
-        in: $1.ruleTitle)
     }
   }
 
