@@ -1,4 +1,4 @@
-# ikalendar 2
+# ikalendar2
 
 Easy access to Splatoon 2 rotation info.
 
