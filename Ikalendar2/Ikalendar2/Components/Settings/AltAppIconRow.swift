@@ -97,7 +97,9 @@ struct AltAppIconEasterEggRow: View {
       setAltAppIcon(ikaAppIcon)
     }
     label: { rowContent }
-    .task { if !ikaLog.hasDiscoveredEasterEgg { await checkIfGFWed() } }
+    .task {
+      if !ikaLog.hasDiscoveredEasterEgg { await checkIfGFWed() }
+    }
   }
 
   private var rowContent: some View {
@@ -160,7 +162,9 @@ struct AltAppIconEasterEggRow: View {
   }
 
   private func applyEasterEggAnimation(_ content: some View) -> some View {
-    content
+    let randomRotationAngel = Double((Int.random(in: 16 ... 32)) * (Bool.random() ? 1 : -1))
+
+    return content
       .keyframeAnimator(
         initialValue: AnimationValues(),
         trigger: buttonPressCounter)
@@ -173,9 +177,9 @@ struct AltAppIconEasterEggRow: View {
     } keyframes: { _ in
       KeyframeTrack(\.angle) {
         CubicKeyframe(.zero, duration: 0.58)
-        CubicKeyframe(.degrees(16), duration: 0.125)
-        CubicKeyframe(.degrees(-16), duration: 0.125)
-        CubicKeyframe(.degrees(16), duration: 0.125)
+        CubicKeyframe(.degrees(randomRotationAngel), duration: 0.125)
+        CubicKeyframe(.degrees(-randomRotationAngel), duration: 0.125)
+        CubicKeyframe(.degrees(randomRotationAngel), duration: 0.125)
         CubicKeyframe(.zero, duration: 0.125)
       }
 

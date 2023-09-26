@@ -32,28 +32,25 @@ struct SettingsAboutView: View {
       }
       .listRowBackground(Color.clear)
 
-      Section(header: Text("Share")) {
+      Section {
         rowShare
-      }
+      } header: { Text("Share") }
 
-      Section(header: Text("Review")) {
+      Section {
         rowRating
         rowLeavingReview
         rowAppStoreOverlay
-      }
+      } header: { Text("Review") }
 
-      Section(header: Text("Contact")) {
+      Section {
         rowDeveloperTwitter
         rowDeveloperEmail
-      }
+      } header: { Text("Contact") }
 
-      Section(
-        header: Text("Others"),
-        footer: footerIkalendar3)
-      {
+      Section {
         rowSourceCode
         rowPrivacyPolicy
-      }
+      } header: { Text("Others") } footer: { footerIkalendar3 }
     }
     .navigationTitle("About")
     .navigationBarTitleDisplayMode(.inline)

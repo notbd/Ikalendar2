@@ -33,20 +33,20 @@ struct SettingsMainView: View {
       // not using NavigationStack for Settings as of iOS 16 because of titleDisplayMode bug
       GeometryReader { geo in
         List {
-          Section(header: Text("Default Mode")) {
+          Section {
             rowDefaultGameMode
             rowDefaultBattleMode
-          }
+          } header: { Text("Default Mode") }
 
-          Section(header: Text("Appearance")) {
+          Section {
             rowColorScheme
             rowAltAppIcon
             rowAdvancedOptions
-          }
+          } header: { Text("Appearance") }
 
-          Section(header: Text("Language")) {
+          Section {
             rowAppLanguage
-          }
+          } header: { Text("Language") }
 
           Section {
             rowAbout

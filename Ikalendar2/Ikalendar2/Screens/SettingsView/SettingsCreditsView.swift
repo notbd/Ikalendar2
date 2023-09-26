@@ -19,24 +19,21 @@ struct SettingsCreditsView: View {
 
   var body: some View {
     List {
-      Section(header: Text("Data Source")) {
+      Section {
         rowSplatoon2Ink
         rowJelonzoBot
-      }
+      } header: { Text("Data Source") }
 
-      Section(header: Text("Open Source Libraries")) {
+      Section {
         rowSwiftyJSON
         rowSimpleHaptics
         rowVariableBlurView
-      }
+      } header: { Text("Open Source Libraries") }
 
-      Section(
-        header: Text("Splatoon™ 2"),
-        footer: footerDisclaimer)
-      {
+      Section {
         rowSplatoon2Site
         rowNintendoSite
-      }
+      } header: { Text("Splatoon™ 2") } footer: { footerDisclaimer }
     }
     .navigationTitle("Credits")
     .navigationBarTitleDisplayMode(.large)

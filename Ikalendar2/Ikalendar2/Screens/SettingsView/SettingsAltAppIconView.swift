@@ -20,51 +20,42 @@ struct SettingsAltAppIconView: View {
 
   @State private var doesPreferRickOnAppear: Bool = false
   @State private var triggeredEasterEgg: Bool = false
+  private var showEasterEgg: Bool { doesPreferRickOnAppear || triggeredEasterEgg }
 
-  @State private var rect: CGRect = .init()
+  @State private var easterEggCellRectGlobal: CGRect = .init()
   @State private var easterEggBounceCounter: Int = 0
 
-  @State private var tapCount: Int = 0 // temp
-
-  @State private var displayAnimatedCopy: Bool = false
-  @State private var currentFlipAfterDelayTask: Task<Void, Never>?
-
-  private var showEasterEgg: Bool {
-    doesPreferRickOnAppear || triggeredEasterEgg
-  }
+  @State private var shouldDisplayAnimatedCopy: Bool = false
+  @State private var currentToggleAfterDelayTask: Task<Void, Never>?
 
   var body: some View {
     ZStack {
       List {
         if showEasterEgg {
-          Section(header: Text("Never Gonna Give You Up")) {
+          Section {
             AltAppIconEasterEggRow(ikaAppIcon: .rick, buttonPressCounter: $easterEggBounceCounter)
-              .opacity(displayAnimatedCopy ? 0 : 1)
+              .opacity(shouldDisplayAnimatedCopy ? 0 : 1)
               .background {
                 GeometryReader { geo in
                   Color.clear
                     .onChange(of: geo.frame(in: .global), initial: true) { _, newValue in
-                      rect = newValue
+                      easterEggCellRectGlobal = newValue
                     }
                 }
               }
-          }
+          } header: { Text("Never Gonna Give You Up") }
         }
 
         Section {
           ForEach(IkaAppIcon.allCases.filter { !$0.isEasterEgg }) { ikaAppIcon in
             AltAppIconRow(ikaAppIcon: ikaAppIcon)
           }
-        } header: {
-          if showEasterEgg { EmptyView() } else { Spacer() }
-        }
+        } header: { if showEasterEgg { EmptyView() } else { Spacer() } }
       }
       .toolbar {
         Button("Tap Me :)") {
-          SimpleHaptics.generateTask(triggeredEasterEgg ? .soft : .success)
-          withAnimation(.bouncy) {
-            triggeredEasterEgg.toggle()
-          }
+          if !doesPreferRickOnAppear { SimpleHaptics.generateTask(.soft) }
+          withAnimation { triggeredEasterEgg.toggle() }
         }
         .foregroundStyle(
           Color.accentColor
@@ -86,43 +77,29 @@ struct SettingsAltAppIconView: View {
       if showEasterEgg {
         AltAppIconEasterEggRow(ikaAppIcon: .rick, buttonPressCounter: $easterEggBounceCounter)
           .allowsHitTesting(false)
-          .frame(width: rect.width, height: rect.height)
-          .globalPosition(x: rect.midX, y: rect.midY)
-          .opacity(displayAnimatedCopy ? 1 : 0)
+          .frame(width: easterEggCellRectGlobal.width, height: easterEggCellRectGlobal.height)
+          .globalPosition(x: easterEggCellRectGlobal.midX, y: easterEggCellRectGlobal.midY)
+          .opacity(shouldDisplayAnimatedCopy ? 1 : 0)
       }
     }
     .onAppear {
       doesPreferRickOnAppear = ikaPreference.preferredAppIcon == .rick
     }
     .onChange(of: easterEggBounceCounter) {
-      displayAnimatedCopy = true
-
+      shouldDisplayAnimatedCopy = true
       // Cancel the previous task, if it exists
-      currentFlipAfterDelayTask?.cancel()
-
+      currentToggleAfterDelayTask?.cancel()
       // Schedule a new task
-      currentFlipAfterDelayTask =
-        Task {
-          await flipDisplayAnimatedCopyAfterDelay()
-        }
+      currentToggleAfterDelayTask = Task { await toggleShouldDisplayAnimatedCopyAfterDelay() }
     }
   }
 
   // MARK: Private
 
-  private func flipDisplayAnimatedCopyAfterDelay() async {
+  private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
     try? await Task.sleep(nanoseconds: UInt64(2.1 * 1_000_000_000))
     guard !Task.isCancelled else { return }
-    displayAnimatedCopy = false
-  }
-
-  private func checkForEasterEgg() {
-    tapCount += 1
-    if tapCount >= 1 {
-      withAnimation(.bouncy) {
-        triggeredEasterEgg = true
-      }
-    }
+    shouldDisplayAnimatedCopy = false
   }
 }
 

@@ -27,17 +27,14 @@ struct SettingsAdvancedOptionsView: View {
   var body: some View {
     GeometryReader { geo in
       List {
-        Section(
-          header: Spacer(),
-          footer: Spacer())
-        {
+        Section {
           rowBottomToolbarPositioningSwitch
           rowAltStageImagesSwitch
-        }
+        } header: { Spacer() } footer: { Spacer() }
 
-        Section(header: stageImagesPreviewHeader) {
+        Section {
           battleRotationPreviewCell
-        }
+        } header: { stageImagesPreviewHeader }
 
         Section {
           salmonRotationPreviewCell
