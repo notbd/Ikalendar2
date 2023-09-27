@@ -75,7 +75,7 @@ struct OnboardingView: View {
           } label: {
             Text("Get Started")
               .foregroundStyle(Color.white)
-              .font(.headline)
+              .font(Scoped.BUTTON_FONT)
               .padding(.vertical, Scoped.BUTTON_TEXT_PADDING_V)
               .containerRelativeFrame(.horizontal, count: 4, span: 3, spacing: 0)
               .fixedSize()
