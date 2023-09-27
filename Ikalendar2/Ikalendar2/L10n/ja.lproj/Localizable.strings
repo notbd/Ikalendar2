@@ -6,6 +6,12 @@
 
 */
 
+// MARK: - Onboarding
+
+"Welcome to %@" = "ようこそ%@へ";
+"Welcome to\n%@" = "ようこそ\n%@へ";
+"Get Started" = "始める";
+
 // MARK: - Settings
 
 // Main

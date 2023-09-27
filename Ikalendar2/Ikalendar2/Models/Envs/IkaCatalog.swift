@@ -43,7 +43,7 @@ final class IkaCatalog {
         //  is a way to disable `.refreshable` haptic feedback.
         break
       case .loaded:
-        SimpleHaptics.generateTask(.success)
+        SimpleHaptics.generateTask(.medium)
       case .error:
         SimpleHaptics.generateTask(.error)
       }
@@ -119,10 +119,7 @@ final class IkaCatalog {
   private init() {
     setUpLoadResultStatusSubscription()
     setUpAutoLoadNonIdleStatusSubscription()
-    Task {
-      await loadCatalog()
-      setUpAutoLoadCheckSubscription()
-    }
+    setUpAutoLoadCheckSubscription()
   }
 
   deinit {

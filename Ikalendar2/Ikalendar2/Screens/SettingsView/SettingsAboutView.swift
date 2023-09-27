@@ -60,20 +60,22 @@ struct SettingsAboutView: View {
   // MARK: - Icon Section
 
   private var rowAppInfo: some View {
+    let appIconDisplayMode = IkaAppIcon.DisplayMode.large
+
     var appIconImage: some View {
-      Image(IkaAppIcon.defaultIcon.getImageName(.mid))
+      Image(IkaAppIcon.defaultIcon.getImageName(appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .frame(
-          width: IkaAppIcon.DisplayMode.mid.sideLen,
-          height: IkaAppIcon.DisplayMode.mid.sideLen)
+          width: appIconDisplayMode.size,
+          height: appIconDisplayMode.size)
         .clipShape(
-          IkaAppIcon.DisplayMode.mid.clipShape)
+          appIconDisplayMode.clipShape)
         .overlay(
-          IkaAppIcon.DisplayMode.mid.clipShape
-            .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
-            .opacity(Scoped.STROKE_OPACITY))
+          appIconDisplayMode.clipShape
+            .stroke(Scoped.APP_ICON_STROKE_COLOR, lineWidth: Scoped.APP_ICON_STROKE_LINE_WIDTH)
+            .opacity(Scoped.APP_ICON_STROKE_OPACITY))
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
     }
 

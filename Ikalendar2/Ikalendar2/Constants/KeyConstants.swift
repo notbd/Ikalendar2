@@ -34,6 +34,7 @@ extension Constants.Key {
     static let SHOULD_SWAP_BOTTOM_TOOLBAR_PICKERS = "pref.if_should_swap_bottom_toolbar_pickers"
 
     /// Log
+    static let HAS_FINISHED_ONBOARDING = "pref.if_has_finished_onboarding"
     static let HAS_DISCOVERED_RATING = "pref.if_has_discovered_rating"
     static let HAS_DISCOVERED_ALT_APP_ICON = "pref.if_has_discovered_alt_app_icon"
     static let HAS_DISCOVERED_EASTER_EGG = "pref.if_has_discovered_easter_egg"

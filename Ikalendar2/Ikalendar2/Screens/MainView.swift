@@ -16,13 +16,27 @@ struct MainView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
+  @Environment(IkaCatalog.self) private var ikaCatalog
+  @EnvironmentObject private var ikaLog: IkaLog
+
   var body: some View {
-    NavigationStack {
-      if isHorizontalCompact {
-        RotationsSingularView()
+    ZStack {
+      NavigationStack {
+        if isHorizontalCompact { RotationsSingularView() }
+        else { RotationsCarouselView() }
       }
-      else {
-        RotationsCarouselView()
+      .onChange(of: ikaLog.hasFinishedOnboarding, initial: true) { _, newVal in
+        if newVal {
+          Task {
+            await ikaCatalog.refresh()
+          }
+        }
+      }
+
+      if !ikaLog.hasFinishedOnboarding {
+        OnboardingView()
+          .zIndex(1)
+          .transition(.opacity.animation(.default))
       }
     }
   }

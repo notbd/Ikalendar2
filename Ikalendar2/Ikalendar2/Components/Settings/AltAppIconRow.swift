@@ -33,14 +33,14 @@ struct AltAppIconRow: View {
         .resizable()
         .scaledToFit()
         .frame(
-          width: IkaAppIcon.DisplayMode.small.sideLen,
-          height: IkaAppIcon.DisplayMode.small.sideLen)
+          width: IkaAppIcon.DisplayMode.small.size,
+          height: IkaAppIcon.DisplayMode.small.size)
         .clipShape(
           IkaAppIcon.DisplayMode.small.clipShape)
         .overlay(
           IkaAppIcon.DisplayMode.small.clipShape
-            .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
-            .opacity(Scoped.STROKE_OPACITY))
+            .stroke(Scoped.APP_ICON_STROKE_COLOR, lineWidth: Scoped.APP_ICON_STROKE_LINE_WIDTH)
+            .opacity(Scoped.APP_ICON_STROKE_OPACITY))
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
 
       Text(ikaAppIcon.displayName.localizedStringKey)
@@ -90,7 +90,7 @@ struct AltAppIconEasterEggRow: View {
       // set flag: has discovered easter egg
       if !ikaLog.hasDiscoveredEasterEgg { ikaLog.hasDiscoveredEasterEgg = true }
       // add compensatory haptics for repeated button presses
-      if ikaPreference.preferredAppIcon == .rick { SimpleHaptics.generateTask(.heavy) }
+      if ikaPreference.preferredAppIcon == .rick { SimpleHaptics.generateTask(.medium) }
       // trigger animation
       buttonPressCounter += 1
       // set app icon
@@ -109,14 +109,14 @@ struct AltAppIconEasterEggRow: View {
         .resizable()
         .scaledToFit()
         .frame(
-          width: IkaAppIcon.DisplayMode.small.sideLen,
-          height: IkaAppIcon.DisplayMode.small.sideLen)
+          width: IkaAppIcon.DisplayMode.small.size,
+          height: IkaAppIcon.DisplayMode.small.size)
         .clipShape(
           IkaAppIcon.DisplayMode.small.clipShape)
         .overlay(
           IkaAppIcon.DisplayMode.small.clipShape
-            .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
-            .opacity(Scoped.STROKE_OPACITY))
+            .stroke(Scoped.APP_ICON_STROKE_COLOR, lineWidth: Scoped.APP_ICON_STROKE_LINE_WIDTH)
+            .opacity(Scoped.APP_ICON_STROKE_OPACITY))
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .if(ikaAppIcon.isEasterEgg) {
           applyEasterEggAnimation($0)
@@ -162,11 +162,11 @@ struct AltAppIconEasterEggRow: View {
   }
 
   private func applyEasterEggAnimation(_ content: some View) -> some View {
-    let randomRotationAngel = Double((Int.random(in: 16 ... 32)) * (Bool.random() ? 1 : -1))
+    let randomRotationAngel = Double((Int.random(in: 16 ... 24)) * (Bool.random() ? 1 : -1))
 
     return content
       .keyframeAnimator(
-        initialValue: AnimationValues(),
+        initialValue: AppIconEasterEggAnimationValues(),
         trigger: buttonPressCounter)
     { content, value in
       content
@@ -215,9 +215,9 @@ struct AltAppIconEasterEggRow: View {
   }
 }
 
-// MARK: - AnimationValues
+// MARK: - AppIconEasterEggAnimationValues
 
-struct AnimationValues {
+struct AppIconEasterEggAnimationValues {
   var scale = 1.0
   var verticalStretch = 1.0
   var verticalTranslation = 0.0

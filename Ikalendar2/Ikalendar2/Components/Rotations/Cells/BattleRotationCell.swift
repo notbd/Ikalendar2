@@ -178,7 +178,7 @@ struct BattleRotationCellPrimary: View {
   private var remainingTimeSection: some View {
     Text(ikaTimePublisher.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
       .contentTransition(.numericText(countsDown: true))
-      .animation(.default, value: ikaTimePublisher.currentTime)
+      .animation(.snappy, value: ikaTimePublisher.currentTime)
       .scaledLimitedLine()
       .foregroundStyle(Color.secondary)
       .ikaFont(
@@ -262,23 +262,6 @@ struct BattleRotationCellSecondary: View {
       }
   }
 
-  private func wrapInIdealFontLayout(_ content: some View) -> some View {
-    IdealFontLayout(anchor: .center) {
-      // actual rule title
-      content
-
-      // all other possible rule titles for the layout to compute ideal size
-      ForEach(BattleRule.allCases) { rule in
-        Text(rule.name.localizedStringKey)
-          .scaledLimitedLine()
-          .ikaFont(
-            .ika2,
-            size: Scoped.RULE_FONT_SIZE,
-            relativeTo: .body)
-      }
-    }
-  }
-
   private var battleStageCardA: some View {
     BattleRotationStageCardSecondary(
       rotation: rotation,
@@ -300,6 +283,26 @@ struct BattleRotationCellSecondary: View {
           in: $1.stageB)
       }
   }
+
+  // MARK: Private
+
+  private func wrapInIdealFontLayout(_ content: some View) -> some View {
+    IdealFontLayout(anchor: .center) {
+      // actual rule title
+      content
+
+      // all other possible rule titles for the layout to compute ideal size
+      ForEach(BattleRule.allCases) { rule in
+        Text(rule.name.localizedStringKey)
+          .scaledLimitedLine()
+          .ikaFont(
+            .ika2,
+            size: Scoped.RULE_FONT_SIZE,
+            relativeTo: .body)
+      }
+    }
+  }
+
 }
 
 // MARK: - BattleRotationCell_Previews

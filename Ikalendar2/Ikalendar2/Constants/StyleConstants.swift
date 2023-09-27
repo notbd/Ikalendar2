@@ -105,9 +105,9 @@ extension Constants.Style {
     enum AltAppIcon {
       static let SPACING_H: CGFloat = 16
 
-      static let STROKE_COLOR: Color = .tertiaryLabel
-      static let STROKE_LINE_WIDTH: CGFloat = 1
-      static let STROKE_OPACITY: CGFloat = 0.4
+      static let APP_ICON_STROKE_COLOR: Color = .tertiaryLabel
+      static let APP_ICON_STROKE_LINE_WIDTH: CGFloat = 1
+      static let APP_ICON_STROKE_OPACITY: CGFloat = 0.4
 
       static let DISPLAY_NAME_COLOR: Color = .primary
 
@@ -129,9 +129,9 @@ extension Constants.Style {
     }
 
     enum About {
-      static let STROKE_COLOR: Color = .tertiaryLabel
-      static let STROKE_LINE_WIDTH: CGFloat = 1
-      static let STROKE_OPACITY: CGFloat = 0.4
+      static let APP_ICON_STROKE_COLOR: Color = .tertiaryLabel
+      static let APP_ICON_STROKE_LINE_WIDTH: CGFloat = 1
+      static let APP_ICON_STROKE_OPACITY: CGFloat = 0.4
       static let APP_ICON_TITLE_FONT: Font = .system(.title, design: .rounded)
       static let APP_ICON_TITLE_FONT_WEIGHT: Font.Weight = .bold
       static let APP_ICON_SUBTITLE_FONT: Font = .system(.subheadline, design: .monospaced)
@@ -175,6 +175,16 @@ extension Constants.Style {
       static let LICENSE_CONTENT_FONT_COMPACT: Font = .system(size: 7.5, design: .monospaced)
       static let LICENSE_CONTENT_FONT_REGULAR: Font = .system(.caption, design: .monospaced)
     }
+  }
+
+  enum Onboarding {
+    static let STROKE_COLOR: Color = .tertiaryLabel
+    static let STROKE_LINE_WIDTH: CGFloat = 1
+    static let STROKE_OPACITY: CGFloat = 0.3
+    static let TITLE_FONT: Font = .system(size: 42, design: .rounded)
+    static let TITLE_FONT_WEIGHT: Font.Weight = .heavy
+    static let BUTTON_TEXT_PADDING_V: CGFloat = 14
+    static let BUTTON_RECT_CORNER_RADIUS: CGFloat = 12
   }
 
   enum Rotation {

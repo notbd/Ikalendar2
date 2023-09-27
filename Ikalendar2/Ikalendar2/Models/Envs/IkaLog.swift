@@ -17,6 +17,15 @@ final class IkaLog: ObservableObject {
 
   /// Record if user has tapped and discovered the rating button.
   @AppStorage(Constants.Key.AppStorage.HAS_DISCOVERED_RATING)
+  var hasFinishedOnboarding: Bool = false
+  {
+    willSet {
+      objectWillChange.send()
+    }
+  }
+
+  /// Record if user has tapped and discovered the rating button.
+  @AppStorage(Constants.Key.AppStorage.HAS_DISCOVERED_RATING)
   var hasDiscoveredRating: Bool = false
   {
     willSet {

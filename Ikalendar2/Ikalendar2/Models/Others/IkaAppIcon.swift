@@ -68,15 +68,18 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
 
   enum DisplayMode {
     case original
+    case large
     case mid
     case small
 
-    var sideLen: CGFloat {
+    var size: CGFloat {
       switch self {
       case .original:
         1024
-      case .mid:
+      case .large:
         120
+      case .mid:
+        90
       case .small:
         60
       }
@@ -86,8 +89,10 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
       switch self {
       case .original:
         1024 * (14 / 60)
-      case .mid:
+      case .large:
         28
+      case .mid:
+        21
       case .small:
         14
       }
@@ -115,6 +120,8 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     switch displayMode {
     case .original:
       "ikalendar2-" + iconSetName
+    case .large:
+      "ikalendar2-" + iconSetName + "-mid"
     case .mid:
       "ikalendar2-" + iconSetName + "-mid"
     case .small:

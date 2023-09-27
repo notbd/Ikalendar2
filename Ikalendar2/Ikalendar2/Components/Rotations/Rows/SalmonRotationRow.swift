@@ -118,7 +118,7 @@ struct SalmonRotationHeader: View {
       {
         Text(ikaTimePublisher.currentTime.toTimeUntilStringKey(until: rotation.startTime))
           .contentTransition(.numericText(countsDown: true))
-          .animation(.default, value: ikaTimePublisher.currentTime)
+          .animation(.snappy, value: ikaTimePublisher.currentTime)
           .scaledLimitedLine()
           .ikaFont(
             .ika2,

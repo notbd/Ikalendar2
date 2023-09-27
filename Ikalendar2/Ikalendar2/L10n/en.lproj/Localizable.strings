@@ -6,6 +6,12 @@
 
 */
 
+// MARK: - Onboarding
+
+"Welcome to %@" = "Welcome to %@";
+"Welcome to\n%@" = "Welcome to\n%@";
+"Get Started" = "Get Started";
+
 // MARK: - Settings
 
 // Main

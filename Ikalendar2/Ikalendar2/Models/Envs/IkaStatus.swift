@@ -28,7 +28,7 @@ final class IkaStatus {
   {
     willSet {
       guard newValue != currentGameMode else { return }
-      SimpleHaptics.generateTask(.warning)
+      SimpleHaptics.generateTask(.rigid)
     }
   }
 
