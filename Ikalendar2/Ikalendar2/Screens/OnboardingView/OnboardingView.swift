@@ -16,7 +16,9 @@ struct OnboardingView: View {
   @EnvironmentObject private var ikaLog: IkaLog
 
   @State private var startAnimation: Bool = false
-  @State private var startBouncing: Bool = false
+  @State private var startPulse: Bool = false
+  @State private var triggerIconBounce: Int = 0
+  @State private var currentTriggerIconBounceAfterDelayTask: Task<Void, Never>?
 
   var body: some View {
     let appIconDisplayMode = IkaAppIcon.DisplayMode.mid
@@ -49,13 +51,30 @@ struct OnboardingView: View {
                 .opacity(Scoped.STROKE_OPACITY))
             .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
             .onTapGesture {
-              startAnimation.toggle()
+              triggerIconBounce += 1
+            }
+            .onChange(of: triggerIconBounce, initial: false) {
+              Task {
+                try? await Task.sleep(nanoseconds: UInt64(0.07 * 1_000_000_000))
+                await SimpleHaptics.generate(.light)
+              }
+              // Cancel the previous task, if it exists
+              currentTriggerIconBounceAfterDelayTask?.cancel()
+              // Schedule a new task
+              currentTriggerIconBounceAfterDelayTask = Task {
+                await toggleShouldDisplayAnimatedCopyAfterDelay()
+              }
             }
             .keyframeAnimator(
               initialValue: OnboardingObject.icon.animationValues,
               trigger: startAnimation,
               content: OnboardingObject.keyframeTransformation,
               keyframes: OnboardingObject.iconKeyframes)
+            .keyframeAnimator(
+              initialValue: OnboardingObject.iconEnd.animationValues,
+              trigger: triggerIconBounce,
+              content: OnboardingObject.keyframeTransformation,
+              keyframes: OnboardingObject.iconExtraKeyframes)
 
           Text(titleAttributedString)
             .foregroundStyle(.primary)
@@ -87,7 +106,7 @@ struct OnboardingView: View {
             trigger: startAnimation,
             content: OnboardingObject.keyframeTransformation,
             keyframes: OnboardingObject.buttonKeyframes)
-          .phaseAnimator([1, 0.95], trigger: startBouncing) { content, value in
+          .phaseAnimator([1, 0.95], trigger: startPulse) { content, value in
             content
               .scaleEffect(value)
           } animation: { phase in
@@ -106,13 +125,26 @@ struct OnboardingView: View {
         let hapticsDelay = OnboardingObject.Phase.show.duration + OnboardingObject.Phase.float.duration
         try? await Task.sleep(nanoseconds: UInt64(hapticsDelay * 1_000_000_000))
         SimpleHaptics.generateTask(.soft)
-        try? await Task.sleep(nanoseconds: 3_000_000_000)
-        repeat {
-          startBouncing.toggle()
-          try? await Task.sleep(nanoseconds: 6_000_000_000)
+        Task {
+          try? await Task.sleep(nanoseconds: UInt64(4 * 1_000_000_000))
+          if triggerIconBounce == 0 { triggerIconBounce += 1 }
         }
-        while true
+        Task {
+          repeat {
+            try? await Task.sleep(nanoseconds: UInt64(9 * 1_000_000_000))
+            startPulse.toggle()
+          }
+          while true
+        }
       }
+  }
+
+  // MARK: Private
+
+  private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
+    try? await Task.sleep(nanoseconds: UInt64(9 * 1_000_000_000))
+    guard !Task.isCancelled else { return }
+    triggerIconBounce += 1
   }
 }
 
@@ -122,6 +154,7 @@ enum OnboardingObject {
   case icon
   case title
   case button
+  case iconEnd
 
   static let duration: Double = 3
 
@@ -168,6 +201,12 @@ enum OnboardingObject {
         scale: 0.8,
         vStretch: 1,
         vTranslation: 10)
+    case .iconEnd:
+      .init(
+        opacity: 1,
+        scale: 1,
+        vStretch: 1,
+        vTranslation: 0)
     }
   }
 
@@ -253,6 +292,35 @@ enum OnboardingObject {
     }
   }
 
+  @KeyframesBuilder<OnboardingAnimationValues>
+  static func iconExtraKeyframes(start _: OnboardingAnimationValues)
+    -> some Keyframes<OnboardingAnimationValues>
+  {
+    KeyframeTrack(\.vStretch) {
+      CubicKeyframe(1.0, duration: 0.02)
+      CubicKeyframe(0.8, duration: 0.04)
+      CubicKeyframe(1.12, duration: 0.07)
+      CubicKeyframe(1.04, duration: 0.3)
+      CubicKeyframe(1.0, duration: 0.3)
+      CubicKeyframe(0.9, duration: 0.22)
+      CubicKeyframe(1.02, duration: 0.23)
+      CubicKeyframe(1.0, duration: 0.20)
+    }
+
+    KeyframeTrack(\.scale) {
+      LinearKeyframe(1.0, duration: 0.13)
+      SpringKeyframe(1.05, duration: 0.35, spring: .bouncy)
+      SpringKeyframe(1.05, duration: 0.27, spring: .smooth)
+      SpringKeyframe(1.0, spring: .bouncy(duration: 0.65, extraBounce: 0.1))
+    }
+
+    KeyframeTrack(\.vTranslation) {
+      SpringKeyframe(10.0, duration: 0.08, spring: .bouncy)
+      SpringKeyframe(-10.0, duration: 0.4, spring: .bouncy)
+      SpringKeyframe(-12.0, duration: 0.27, spring: .smooth)
+      SpringKeyframe(0.0, spring: .bouncy(duration: 0.65, extraBounce: 0.3))
+    }
+  }
 }
 
 #Preview {
