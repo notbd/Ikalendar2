@@ -54,8 +54,9 @@
 		792E1FBD28DE89C100C3789D /* SettingsAdvancedOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */; };
 		79385E242AC61C27003D6FD7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 79385E222AC61C27003D6FD7 /* README.md */; };
 		79385E252AC61C27003D6FD7 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 79385E232AC61C27003D6FD7 /* LICENSE */; };
-		79385E292AC61C72003D6FD7 /* Preview.png in Resources */ = {isa = PBXBuildFile; fileRef = 79385E272AC61C72003D6FD7 /* Preview.png */; };
+		79385E292AC61C72003D6FD7 /* MainMockup.png in Resources */ = {isa = PBXBuildFile; fileRef = 79385E272AC61C72003D6FD7 /* MainMockup.png */; };
 		79385E2A2AC61C72003D6FD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79385E282AC61C72003D6FD7 /* Assets.xcassets */; };
+		79385E302AC621F2003D6FD7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 79385E2F2AC621F2003D6FD7 /* PrivacyInfo.xcprivacy */; };
 		7939EC182AC5133900AC48C4 /* SettingsEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7939EC172AC5133900AC48C4 /* SettingsEntryView.swift */; };
 		79408C6A2AA5BAA800141E58 /* IkaAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79408C692AA5BAA800141E58 /* IkaAppIcon.swift */; };
 		7943DFBB2AB52D090047250E /* CarouselColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFBA2AB52D090047250E /* CarouselColumn.swift */; };
@@ -163,8 +164,9 @@
 		792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAdvancedOptionsView.swift; sourceTree = "<group>"; };
 		79385E222AC61C27003D6FD7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		79385E232AC61C27003D6FD7 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		79385E272AC61C72003D6FD7 /* Preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Preview.png; sourceTree = "<group>"; };
+		79385E272AC61C72003D6FD7 /* MainMockup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MainMockup.png; sourceTree = "<group>"; };
 		79385E282AC61C72003D6FD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		79385E2F2AC621F2003D6FD7 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7939EC172AC5133900AC48C4 /* SettingsEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEntryView.swift; sourceTree = "<group>"; };
 		79408C692AA5BAA800141E58 /* IkaAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaAppIcon.swift; sourceTree = "<group>"; };
 		7943DFBA2AB52D090047250E /* CarouselColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselColumn.swift; sourceTree = "<group>"; };
@@ -277,16 +279,6 @@
 				795A60AA2A976745007B3861 /* SeededRandomGenerator.swift */,
 			);
 			path = Others;
-			sourceTree = "<group>";
-		};
-		7903FE3B28C439D600245586 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */,
-				796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */,
-				7903FE3D28C43A0F00245586 /* Inkling_v2.otf */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		7903FE5C28C4622400245586 /* Components */ = {
@@ -411,10 +403,45 @@
 		79385E262AC61C72003D6FD7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				79385E282AC61C72003D6FD7 /* Assets.xcassets */,
-				79385E272AC61C72003D6FD7 /* Preview.png */,
+				79385E2C2AC61F24003D6FD7 /* RuntimeAssets */,
+				79385E2D2AC61F2C003D6FD7 /* MetaAssets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		79385E2B2AC61DBA003D6FD7 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */,
+				796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */,
+				7903FE3D28C43A0F00245586 /* Inkling_v2.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		79385E2C2AC61F24003D6FD7 /* RuntimeAssets */ = {
+			isa = PBXGroup;
+			children = (
+				79385E282AC61C72003D6FD7 /* Assets.xcassets */,
+				79385E2B2AC61DBA003D6FD7 /* Fonts */,
+			);
+			path = RuntimeAssets;
+			sourceTree = "<group>";
+		};
+		79385E2D2AC61F2C003D6FD7 /* MetaAssets */ = {
+			isa = PBXGroup;
+			children = (
+				79385E2E2AC61F4D003D6FD7 /* Screenshots */,
+			);
+			path = MetaAssets;
+			sourceTree = "<group>";
+		};
+		79385E2E2AC61F4D003D6FD7 /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				79385E272AC61C72003D6FD7 /* MainMockup.png */,
+			);
+			path = Screenshots;
 			sourceTree = "<group>";
 		};
 		79408C682AA5BA8B00141E58 /* Others */ = {
@@ -585,16 +612,16 @@
 			isa = PBXGroup;
 			children = (
 				79E7EA9D2AB6E16100C9C68F /* Ikalendar2.entitlements */,
+				79385E2F2AC621F2003D6FD7 /* PrivacyInfo.xcprivacy */,
 				79B92BC328B03BC000544939 /* Info.plist */,
 				79B92BB528B03B1F00544939 /* Ikalendar2App.swift */,
 				79B92BC628B0443C00544939 /* Screens */,
-				7903FE5C28C4622400245586 /* Components */,
 				799235A82AB2DA990071AA72 /* Layouts */,
+				7903FE5C28C4622400245586 /* Components */,
 				79C1485628C4276900587C6E /* Utilities */,
 				79AA712D28C4000400A91055 /* Models */,
 				79C1485528C426A600587C6E /* Constants */,
 				7903FE9F28C4721A00245586 /* L10n */,
-				7903FE3B28C439D600245586 /* Resources */,
 			);
 			path = Ikalendar2;
 			sourceTree = "<group>";
@@ -745,6 +772,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				796CEF822AB7A94E006860C6 /* Splatfont2-Regular.otf in Resources */,
+				79385E302AC621F2003D6FD7 /* PrivacyInfo.xcprivacy in Resources */,
 				7903FE4028C43A0F00245586 /* Inkling_v2.otf in Resources */,
 				79B92BCD28B044B400544939 /* .swiftlint.yml in Resources */,
 				79EE3AB32AB935E900409733 /* Localizable.strings in Resources */,
@@ -753,7 +781,7 @@
 				79385E252AC61C27003D6FD7 /* LICENSE in Resources */,
 				79385E242AC61C27003D6FD7 /* README.md in Resources */,
 				79B92BCB28B044A200544939 /* .swiftformat in Resources */,
-				79385E292AC61C72003D6FD7 /* Preview.png in Resources */,
+				79385E292AC61C72003D6FD7 /* MainMockup.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1030,7 +1058,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5663;
+				CURRENT_PROJECT_VERSION = 5664;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1070,7 +1098,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5663;
+				CURRENT_PROJECT_VERSION = 5664;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;

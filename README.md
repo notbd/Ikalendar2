@@ -2,7 +2,7 @@
 
 Easy access to Splatoon 2 rotation info.
 
-![Preview](./Resources/Preview.png)
+![Preview](./Resources/MetaAssets/Screenshots/MainMockup.png)
 
 ## Disclaimer
 
