@@ -215,7 +215,7 @@ struct BottomToolbarPositioningPreview: View {
 struct SettingsAdvancedOptionsView_Previews: PreviewProvider {
   static var previews: some View {
     SettingsAdvancedOptionsView()
-      .environment(IkaStatus())
-      .environmentObject(IkaPreference())
+      .environment(IkaStatus.shared)
+      .environmentObject(IkaPreference.shared)
   }
 }
