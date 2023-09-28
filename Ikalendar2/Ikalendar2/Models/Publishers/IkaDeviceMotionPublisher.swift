@@ -17,7 +17,7 @@ import UIKit
 final class IkaDeviceMotionPublisher {
 
   /// The shared singleton instance
-  static let shared = IkaDeviceMotionPublisher()
+  static let shared: IkaDeviceMotionPublisher = .init()
 
   /// An instance of `CMMotionManager` to access motion data.
   @ObservationIgnored private let motionManager = CMMotionManager()

@@ -14,9 +14,9 @@ import SwiftUI
 @MainActor
 final class IkaPreference: ObservableObject {
 
-  static let shared = IkaPreference()
+  static let shared: IkaPreference = .init()
 
-  /// Preferred Default GameMode (init value already set at App init, so init value here does not matter)
+  /// Preferred Default GameMode
   @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_GAME_MODE)
   var preferredDefaultGameMode: GameMode = .default
   {
@@ -27,7 +27,7 @@ final class IkaPreference: ObservableObject {
     }
   }
 
-  /// Preferred Default BattleMode (init value already set at App init, so init value here does not matter)
+  /// Preferred Default BattleMode
   @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_BATTLE_MODE)
   var preferredDefaultBattleMode: BattleMode = .default
   {
@@ -85,6 +85,10 @@ final class IkaPreference: ObservableObject {
       objectWillChange.send()
     }
   }
+
+  // MARK: Lifecycle
+
+  private init() { }
 
   // MARK: Internal
 

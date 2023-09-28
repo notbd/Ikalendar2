@@ -15,7 +15,7 @@ import UIKit
 @Observable
 final class IkaInterfaceOrientationPublisher {
 
-  static let shared = IkaInterfaceOrientationPublisher()
+  static let shared: IkaInterfaceOrientationPublisher = .init()
 
   /// The current orientation of the device.
   var currentOrientation: UIInterfaceOrientation

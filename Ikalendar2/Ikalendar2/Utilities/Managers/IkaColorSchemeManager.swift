@@ -14,7 +14,7 @@ import UIKit
 @MainActor
 final class IkaColorSchemeManager {
 
-  static let shared = IkaColorSchemeManager()
+  static let shared: IkaColorSchemeManager = .init()
 
   enum PreferredColorScheme: String, Identifiable, CaseIterable {
 

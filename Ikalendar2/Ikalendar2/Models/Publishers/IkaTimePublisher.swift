@@ -14,7 +14,7 @@ import Foundation
 /// This behavior persists even when the app transitions to the background.
 final class IkaTimePublisher: ObservableObject {
 
-  static let shared = IkaTimePublisher()
+  static let shared: IkaTimePublisher = .init()
 
   /// Updates every `1` second.
   @Published private(set) var currentTime: Date = .init()

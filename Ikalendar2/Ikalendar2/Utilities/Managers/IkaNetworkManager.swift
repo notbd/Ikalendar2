@@ -14,7 +14,7 @@ import Foundation
 ///
 final class IkaNetworkManager {
 
-  static let shared = IkaNetworkManager()
+  static let shared: IkaNetworkManager = .init()
 
   // MARK: Lifecycle
 

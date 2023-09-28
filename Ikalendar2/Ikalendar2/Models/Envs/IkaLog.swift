@@ -13,7 +13,7 @@ import SwiftUI
 @MainActor
 final class IkaLog: ObservableObject {
 
-  static let shared = IkaLog()
+  static let shared: IkaLog = .init()
 
   /// Record if app should display onboarding screen to the user.
   @AppStorage(Constants.Key.AppStorage.SHOULD_SHOW_ONBOARDING)
@@ -54,6 +54,10 @@ final class IkaLog: ObservableObject {
       objectWillChange.send()
     }
   }
+
+  // MARK: Lifecycle
+
+  private init() { }
 
   // MARK: Internal
 

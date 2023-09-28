@@ -18,7 +18,7 @@ import SwiftUI
 final class IkaCatalog {
   typealias Scoped = Constants.Config.Catalog
 
-  static let shared = IkaCatalog()
+  static let shared: IkaCatalog = .init()
 
   private(set) var battleRotationDict = BattleRotationDict()
   private(set) var salmonRotations = [SalmonRotation]()
