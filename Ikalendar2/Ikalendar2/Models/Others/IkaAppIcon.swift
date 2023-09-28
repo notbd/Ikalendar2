@@ -8,7 +8,8 @@
 import SwiftUI
 
 enum IkaAppIcon: String, CaseIterable, Identifiable {
-  static let defaultIcon = IkaAppIcon.modernDark
+
+  static let `default` = IkaAppIcon.modernDark
 
   case modernDark
   case modernLight
@@ -21,7 +22,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
 
   var alternateIconName: String? {
     switch self {
-    case .modernDark:
+    case .default:
       nil
     default:
       iconSetName
@@ -99,7 +100,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     }
 
     var clipShape: some Shape {
-      .rect(cornerRadius: cornerRadius)
+      .rect(cornerRadius: cornerRadius, style: .continuous)
     }
   }
 
@@ -121,9 +122,9 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     case .original:
       "ikalendar2-" + iconSetName
     case .large:
-      "ikalendar2-" + iconSetName + "-mid"
+      "ikalendar2-" + iconSetName + "-large"
     case .mid:
-      "ikalendar2-" + iconSetName + "-mid"
+      "ikalendar2-" + iconSetName + "-large"
     case .small:
       "ikalendar2-" + iconSetName + "-small"
     }

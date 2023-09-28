@@ -35,6 +35,7 @@ final class IkaCatalog {
   {
     willSet {
       guard newValue != loadStatus else { return }
+      guard !isSilentLoadingEnabled else { return }
 
       switch newValue {
       case .loading:
@@ -50,7 +51,7 @@ final class IkaCatalog {
     }
 
     didSet {
-      // broadcast change
+      // broadcast newValue via loadStatusSubject
       loadStatusSubject.send(loadStatus)
     }
   }
@@ -114,6 +115,10 @@ final class IkaCatalog {
       (firstRotation.isCurrent(IkaTimePublisher.shared.currentTime) && firstRotation.rewardApparel == nil)
   }
 
+  // MARK: - LOAD
+
+  @ObservationIgnored private var isSilentLoadingEnabled: Bool = false
+
   // MARK: Lifecycle
 
   private init() {
@@ -128,10 +133,10 @@ final class IkaCatalog {
 
   // MARK: Internal
 
-  func refresh()
+  func refresh(silently shouldEnableSilentLoading: Bool = false)
     async
   {
-    await loadCatalog()
+    await loadCatalog(shouldEnableSilentLoading)
   }
 
   // MARK: Private
@@ -169,11 +174,10 @@ final class IkaCatalog {
     Task { await autoLoadCatalog() }
   }
 
-  // MARK: - LOAD
-
-  private func loadCatalog()
+  private func loadCatalog(_ shouldEnableSilentLoading: Bool = false)
     async
   {
+    isSilentLoadingEnabled = shouldEnableSilentLoading
     await setLoadStatus(.loading)
     do {
       try await loadData()

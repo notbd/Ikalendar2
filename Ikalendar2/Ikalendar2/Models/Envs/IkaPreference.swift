@@ -76,8 +76,19 @@ final class IkaPreference: ObservableObject {
     }
   }
 
-  // MARK: Lifecycle
+  // MARK: Internal
 
-  init() { }
+  func resetPreferences() {
+    defaultGameMode = .battle
+    defaultBattleMode = .league
+    preferredAppColorScheme = .dark
+    preferredAppIcon = .modernDark
+    shouldUseAltStageImages = false
+    shouldSwapBottomToolbarPickers = false
+  }
+
+  func resetAppIcon() {
+    preferredAppIcon = .default
+  }
 
 }

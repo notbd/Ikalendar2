@@ -9,15 +9,15 @@ import SimpleHaptics
 import SwiftUI
 
 /// An EnvObj class that is shared among all the views.
-/// Contains the user action log.
+/// Contains the user action log and app state.
 @MainActor
 final class IkaLog: ObservableObject {
 
   static let shared = IkaLog()
 
-  /// Record if user has tapped and discovered the rating button.
-  @AppStorage(Constants.Key.AppStorage.HAS_DISCOVERED_RATING)
-  var hasFinishedOnboarding: Bool = false
+  /// Record if app should display onboarding screen to the user.
+  @AppStorage(Constants.Key.AppStorage.SHOULD_SHOW_ONBOARDING)
+  var shouldShowOnboarding: Bool = true
   {
     willSet {
       objectWillChange.send()
@@ -49,5 +49,13 @@ final class IkaLog: ObservableObject {
     willSet {
       objectWillChange.send()
     }
+  }
+
+  // MARK: Internal
+
+  func resetStates() {
+    hasDiscoveredRating = false
+    hasDiscoveredAltAppIcon = false
+    hasDiscoveredEasterEgg = false
   }
 }

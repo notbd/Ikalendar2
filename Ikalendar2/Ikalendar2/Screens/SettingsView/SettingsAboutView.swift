@@ -50,7 +50,11 @@ struct SettingsAboutView: View {
       Section {
         rowSourceCode
         rowPrivacyPolicy
-      } header: { Text("Others") } footer: { footerIkalendar3 }
+      } header: { Text("App") }
+
+      Section {
+        rowDebugOptions
+      } footer: { footerIkalendar3 }
     }
     .navigationTitle("About")
     .navigationBarTitleDisplayMode(.inline)
@@ -63,7 +67,7 @@ struct SettingsAboutView: View {
     let appIconDisplayMode = IkaAppIcon.DisplayMode.large
 
     var appIconImage: some View {
-      Image(IkaAppIcon.defaultIcon.getImageName(appIconDisplayMode))
+      Image(IkaAppIcon.default.getImageName(appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
@@ -313,27 +317,42 @@ struct SettingsAboutView: View {
     }
   }
 
+  private var rowDebugOptions: some View {
+    NavigationLink(destination: SettingsDebugOptionsView()) {
+      Label {
+        Text("Debug Options")
+          .foregroundStyle(Color.primary)
+      }
+      icon: {
+        Image(systemName: Scoped.DEBUG_OPTIONS_SFSYMBOL)
+          .imageScale(.medium)
+          .symbolRenderingMode(.monochrome)
+          .foregroundStyle(Color.accentColor)
+      }
+    }
+  }
+
   @ScaledMetric(relativeTo: .title) var littleBuddyHeight: CGFloat = Scoped.LITTLE_BUDDY_HEIGHT
 
   private var footerIkalendar3: some View {
-    HStack {
+    HStack(alignment: .center) {
       Image(.littleBuddy)
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .saturation(0.6)
-        .frame(
-          width: littleBuddyHeight,
-          height: littleBuddyHeight)
+        .frame(height: littleBuddyHeight)
+        .padding(.vertical)
+        .padding(.trailing, 10)
 
       Text(Constants.Key.Slogan.IKALENDAR3.localizedStringKey)
+        .scaledLimitedLine(lineLimit: 2)
         .ikaFont(
           .ika2,
           size: Scoped.SLOGAN_IKALENDAR3_FONT_SIZE,
           relativeTo: .footnote)
     }
   }
-
 }
 
 // MARK: - SettingsAboutView_Previews

@@ -114,6 +114,7 @@ struct SettingsCreditsView: View {
         .ika2,
         size: Scoped.DISCLAIMER_FONT_SIZE,
         relativeTo: .footnote)
+      .padding(.vertical)
   }
 }
 

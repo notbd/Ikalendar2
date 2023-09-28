@@ -55,9 +55,19 @@
 "Rate ikalendar2" = "Rate ikalendar2";
 "Leave a Review" = "Leave a Review";
 "View ikalendar2 on the App Store" = "View ikalendar2 on the App Store";
-"Others" = "Others";
+"App" = "App";
 "Source Code" = "Source Code";
 "Privacy Policy" = "Privacy Policy";
+"Debug Options" = "Debug Options";
+"key.slogan.ikalendar3" =
+"Looking for ikalendar for Splatoon™ 3?
+ikalendar3 is on our development roadmap. Stay tuned!";
+// Debug Panel
+"Show Onboarding Screen" = "Show Onboarding Screen";
+"Reset App States" = "Reset App States";
+"Reset App Preferences" = "Reset App Preferences";
+"Warning: Proceed with Caution" = "Warning: Proceed with Caution";
+
 // Credits
 "Data Source" = "Data Source";
 "Open Source Libraries" = "Open Source Libraries";
@@ -67,9 +77,6 @@
 "Nintendo® Official Website" = "Nintendo® Official Website";
 "key.slogan.copyright" =
 " ikalendar2 is a third-party companion app for Splatoon™ 2 and is not affiliated with Nintendo. All item names, logos, and trademarks are the property of their respective owners.";
-"key.slogan.ikalendar3" =
-"Looking for ikalendar for Splatoon™ 3?
-ikalendar3 is on our development roadmap. Stay tuned!";
 
 // MARK: - Error
 

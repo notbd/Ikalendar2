@@ -125,7 +125,6 @@ extension Constants.Style {
 
       static let ALT_STAGE_IMG_SFSYMBOL = "compass.drawing"
       static let ALT_STAGE_PREVIEW_SHUFFLE_SFSYMBOL = "arrow.triangle.2.circlepath"
-
     }
 
     enum About {
@@ -150,8 +149,9 @@ extension Constants.Style {
 
       static let SOURCE_CODE_SFSYMBOL = "chevron.left.slash.chevron.right"
       static let PRIVACY_POLICY_SFSYMBOL = "hand.raised"
+      static let DEBUG_OPTIONS_SFSYMBOL = "hammer"
 
-      static let LITTLE_BUDDY_HEIGHT: CGFloat = 34
+      static let LITTLE_BUDDY_HEIGHT: CGFloat = 36
       static let SLOGAN_IKALENDAR3_FONT_SIZE: CGFloat = 13
     }
 

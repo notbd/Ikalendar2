@@ -53,15 +53,24 @@ struct SettingsAltAppIconView: View {
         } header: { if showEasterEgg { EmptyView() } else { Spacer() } }
       }
       .toolbar {
-        Button("Tap Me :)") {
+        Button {
           if !doesPreferRickOnAppear { SimpleHaptics.generateTask(.soft) }
           withAnimation { triggeredEasterEgg.toggle() }
+        }
+        label: {
+          if ikaLog.hasDiscoveredEasterEgg {
+            Image(systemName: showEasterEgg ? "party.popper.fill" : "party.popper")
+              .transition(.symbolEffect(.automatic))
+          }
+          else {
+            Text("Tap Me :)")
+          }
         }
         .foregroundStyle(
           Color.accentColor
             .opacity(
               ikaLog.hasDiscoveredEasterEgg
-                ? 0
+                ? 1
                 : colorScheme == .dark
                   ? 0.07
                   : 0.05))

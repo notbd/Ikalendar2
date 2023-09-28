@@ -17,134 +17,146 @@ struct OnboardingView: View {
 
   @State private var startAnimation: Bool = false
   @State private var startPulse: Bool = false
-  @State private var triggerIconBounce: Int = 0
+  @State private var iconBounceCounter: Int = 0
   @State private var currentTriggerIconBounceAfterDelayTask: Task<Void, Never>?
 
   var body: some View {
+    ZStack {
+      Color.systemBackground
+        .onTapGesture { iconBounceCounter += 1 }
+        .ignoresSafeArea()
+
+      VStack(alignment: .leading) {
+        Spacer()
+        icon
+          .onTapGesture { iconBounceCounter += 1 }
+        message
+          .onTapGesture { iconBounceCounter += 1 }
+        Spacer()
+        button
+      }
+    }
+    .task {
+      try? await Task.sleep(nanoseconds: 1_000_000_000)
+      startAnimation = true
+      let hapticsDelay = OnboardingObject.Phase.show.duration + OnboardingObject.Phase.float.duration
+      try? await Task.sleep(nanoseconds: UInt64(hapticsDelay * 1_000_000_000))
+      SimpleHaptics.generateTask(.soft)
+      Task {
+        // start repeated icon bounce
+        try? await Task.sleep(nanoseconds: UInt64(3 * 1_000_000_000))
+        if iconBounceCounter == 0 { iconBounceCounter += 1 }
+      }
+      Task {
+        // repeat button pulse
+        repeat {
+          try? await Task.sleep(nanoseconds: UInt64(9 * 1_000_000_000))
+          startPulse.toggle()
+        }
+        while true
+      }
+    }
+  }
+
+  private var icon: some View {
     let appIconDisplayMode = IkaAppIcon.DisplayMode.mid
-    let appName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
-    let title = String(localized: "Welcome to\n\(appName)")
-    var titleAttributedString = AttributedString(title)
-    let appNameRange = titleAttributedString.range(of: appName)!
-    titleAttributedString[appNameRange].foregroundColor = .accentColor
 
     return
-      ZStack {
-        Color.systemBackground
-          .ignoresSafeArea()
-
-        VStack(alignment: .leading) {
-          Spacer()
-
-          Image(IkaAppIcon.defaultIcon.getImageName(appIconDisplayMode))
-            .antialiased(true)
-            .resizable()
-            .scaledToFit()
-            .frame(
-              width: appIconDisplayMode.size,
-              height: appIconDisplayMode.size)
-            .clipShape(
-              appIconDisplayMode.clipShape)
-            .overlay(
-              appIconDisplayMode.clipShape
-                .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
-                .opacity(Scoped.STROKE_OPACITY))
-            .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-            .onTapGesture {
-              triggerIconBounce += 1
-            }
-            .onChange(of: triggerIconBounce, initial: false) {
-              Task {
-                try? await Task.sleep(nanoseconds: UInt64(0.07 * 1_000_000_000))
-                await SimpleHaptics.generate(.light)
-              }
-              // Cancel the previous task, if it exists
-              currentTriggerIconBounceAfterDelayTask?.cancel()
-              // Schedule a new task
-              currentTriggerIconBounceAfterDelayTask = Task {
-                await toggleShouldDisplayAnimatedCopyAfterDelay()
-              }
-            }
-            .keyframeAnimator(
-              initialValue: OnboardingObject.icon.animationValues,
-              trigger: startAnimation,
-              content: OnboardingObject.keyframeTransformation,
-              keyframes: OnboardingObject.iconKeyframes)
-            .keyframeAnimator(
-              initialValue: OnboardingObject.iconEnd.animationValues,
-              trigger: triggerIconBounce,
-              content: OnboardingObject.keyframeTransformation,
-              keyframes: OnboardingObject.iconExtraKeyframes)
-
-          Text(titleAttributedString)
-            .foregroundStyle(.primary)
-            .font(Scoped.TITLE_FONT)
-            .fontWeight(Scoped.TITLE_FONT_WEIGHT)
-            .keyframeAnimator(
-              initialValue: OnboardingObject.title.animationValues,
-              trigger: startAnimation,
-              content: OnboardingObject.keyframeTransformation,
-              keyframes: OnboardingObject.titleKeyframes)
-
-          Spacer()
-
-          Button {
-            SimpleHaptics.generateTask(.heavy)
-            ikaLog.hasFinishedOnboarding = true
-          } label: {
-            Text("Get Started")
-              .foregroundStyle(Color.white)
-              .font(Scoped.BUTTON_FONT)
-              .padding(.vertical, Scoped.BUTTON_TEXT_PADDING_V)
-              .containerRelativeFrame(.horizontal, count: 4, span: 3, spacing: 0)
-              .fixedSize()
-              .background(Color.accentColor)
-              .clipShape(.rect(cornerRadius: Scoped.BUTTON_RECT_CORNER_RADIUS))
+      Image(IkaAppIcon.default.getImageName(appIconDisplayMode))
+        .antialiased(true)
+        .resizable()
+        .scaledToFit()
+        .frame(
+          width: appIconDisplayMode.size,
+          height: appIconDisplayMode.size)
+        .clipShape(
+          appIconDisplayMode.clipShape)
+        .overlay(
+          appIconDisplayMode.clipShape
+            .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
+            .opacity(Scoped.STROKE_OPACITY))
+        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        .onChange(of: iconBounceCounter, initial: false) {
+          Task {
+            try? await Task.sleep(nanoseconds: UInt64(0.05 * 1_000_000_000))
+            await SimpleHaptics.generate(.light)
           }
-          .keyframeAnimator(
-            initialValue: OnboardingObject.button.animationValues,
-            trigger: startAnimation,
-            content: OnboardingObject.keyframeTransformation,
-            keyframes: OnboardingObject.buttonKeyframes)
-          .phaseAnimator([1, 0.95], trigger: startPulse) { content, value in
-            content
-              .scaleEffect(value)
-          } animation: { phase in
-            switch phase {
-            case 1:
-              .bouncy(duration: 0.4, extraBounce: 0.2)
-            default:
-              .snappy(duration: 0.5)
-            }
+          // Cancel the previous task, if it exists
+          currentTriggerIconBounceAfterDelayTask?.cancel()
+          // Schedule a new task
+          currentTriggerIconBounceAfterDelayTask = Task {
+            await triggerIconBounceAfterDelay()
           }
         }
+        .keyframeAnimator(
+          initialValue: OnboardingObject.icon.animationValues,
+          trigger: startAnimation,
+          content: OnboardingObject.keyframeTransformation,
+          keyframes: OnboardingObject.iconKeyframes)
+        .keyframeAnimator(
+          initialValue: OnboardingObject.iconEnd.animationValues,
+          trigger: iconBounceCounter,
+          content: OnboardingObject.keyframeTransformation,
+          keyframes: OnboardingObject.iconExtraKeyframes)
+  }
+
+  private var message: some View {
+    let appName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
+    let message = String(localized: "Welcome to\n\(appName)")
+    var messageAttributedString = AttributedString(message)
+    let appNameRange = messageAttributedString.range(of: appName)!
+    messageAttributedString[appNameRange].foregroundColor = .accentColor
+
+    return
+      Text(messageAttributedString)
+        .foregroundStyle(.primary)
+        .font(Scoped.TITLE_FONT)
+        .fontWeight(Scoped.TITLE_FONT_WEIGHT)
+        .keyframeAnimator(
+          initialValue: OnboardingObject.title.animationValues,
+          trigger: startAnimation,
+          content: OnboardingObject.keyframeTransformation,
+          keyframes: OnboardingObject.titleKeyframes)
+  }
+
+  private var button: some View {
+    Button {
+      SimpleHaptics.generateTask(.success)
+      ikaLog.shouldShowOnboarding = false
+    } label: {
+      Text("Get Started")
+        .foregroundStyle(Color.white)
+        .font(Scoped.BUTTON_FONT)
+        .padding(.vertical, Scoped.BUTTON_TEXT_PADDING_V)
+        .containerRelativeFrame(.horizontal, count: 4, span: 3, spacing: 0)
+        .fixedSize()
+        .background(Color.accentColor)
+        .clipShape(.rect(cornerRadius: Scoped.BUTTON_RECT_CORNER_RADIUS, style: .continuous))
+    }
+    .keyframeAnimator(
+      initialValue: OnboardingObject.button.animationValues,
+      trigger: startAnimation,
+      content: OnboardingObject.keyframeTransformation,
+      keyframes: OnboardingObject.buttonKeyframes)
+    .phaseAnimator([1, 0.95], trigger: startPulse) { content, value in
+      content
+        .scaleEffect(value)
+    } animation: { phase in
+      switch phase {
+      case 1:
+        .bouncy(duration: 0.4, extraBounce: 0.2)
+      default:
+        .snappy(duration: 0.5)
       }
-      .task {
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
-        startAnimation = true
-        let hapticsDelay = OnboardingObject.Phase.show.duration + OnboardingObject.Phase.float.duration
-        try? await Task.sleep(nanoseconds: UInt64(hapticsDelay * 1_000_000_000))
-        SimpleHaptics.generateTask(.soft)
-        Task {
-          try? await Task.sleep(nanoseconds: UInt64(4 * 1_000_000_000))
-          if triggerIconBounce == 0 { triggerIconBounce += 1 }
-        }
-        Task {
-          repeat {
-            try? await Task.sleep(nanoseconds: UInt64(9 * 1_000_000_000))
-            startPulse.toggle()
-          }
-          while true
-        }
-      }
+    }
   }
 
   // MARK: Private
 
-  private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
+  private func triggerIconBounceAfterDelay() async {
     try? await Task.sleep(nanoseconds: UInt64(9 * 1_000_000_000))
     guard !Task.isCancelled else { return }
-    triggerIconBounce += 1
+    iconBounceCounter += 1
   }
 }
 
@@ -297,9 +309,9 @@ enum OnboardingObject {
     -> some Keyframes<OnboardingAnimationValues>
   {
     KeyframeTrack(\.vStretch) {
-      CubicKeyframe(1.0, duration: 0.02)
-      CubicKeyframe(0.8, duration: 0.04)
-      CubicKeyframe(1.12, duration: 0.07)
+      CubicKeyframe(1.0, duration: 0.01)
+      CubicKeyframe(0.8, duration: 0.06)
+      CubicKeyframe(1.12, duration: 0.1)
       CubicKeyframe(1.04, duration: 0.3)
       CubicKeyframe(1.0, duration: 0.3)
       CubicKeyframe(0.9, duration: 0.22)
@@ -308,15 +320,15 @@ enum OnboardingObject {
     }
 
     KeyframeTrack(\.scale) {
-      LinearKeyframe(1.0, duration: 0.13)
-      SpringKeyframe(1.05, duration: 0.35, spring: .bouncy)
+      LinearKeyframe(1.0, duration: 0.16)
+      SpringKeyframe(1.05, duration: 0.38, spring: .bouncy)
       SpringKeyframe(1.05, duration: 0.27, spring: .smooth)
       SpringKeyframe(1.0, spring: .bouncy(duration: 0.65, extraBounce: 0.1))
     }
 
     KeyframeTrack(\.vTranslation) {
-      SpringKeyframe(10.0, duration: 0.08, spring: .bouncy)
-      SpringKeyframe(-10.0, duration: 0.4, spring: .bouncy)
+      SpringKeyframe(10.0, duration: 0.11, spring: .bouncy)
+      SpringKeyframe(-10.0, duration: 0.43, spring: .bouncy)
       SpringKeyframe(-12.0, duration: 0.27, spring: .smooth)
       SpringKeyframe(0.0, spring: .bouncy(duration: 0.65, extraBounce: 0.3))
     }

@@ -55,9 +55,13 @@
 "Rate ikalendar2" = "よければ評価お願いします";
 "Leave a Review" = "レビューを投稿";
 "View ikalendar2 on the App Store" = "ikalendar2をApp Storeで表示";
-"Others" = "その他";
+"App" = "アプリケーション";
 "Source Code" = "ソースコード";
 "Privacy Policy" = "プライバシーポリシー";
+"Debug Options" = "デバッグオプション";
+"key.slogan.ikalendar3" =
+"「スプラトゥーン™3」に対応している「ikalendar」をお探しですか？
+「ikalendar3」は開発ロードマップに掲載されています。お楽しみに！";
 // Credits
 "Data Source" = "データ提供元";
 "Open Source Libraries" = "オープンソースライブラリ";
@@ -67,9 +71,11 @@
 "Nintendo® Official Website" = "任天堂ホームページ";
 "key.slogan.copyright" =
 " 「ikalendar2」 は 「スプラトゥーン™2」 の非公式のコンパニオンアプリであり、任天堂とは関連していません。すべてのアイテム名、ロゴ、および商標は、それぞれの所有者に帰属します。";
-"key.slogan.ikalendar3" =
-"「スプラトゥーン™3」に対応している「ikalendar」をお探しですか？
-「ikalendar3」は開発ロードマップに掲載されています。お楽しみに！";
+// Debug Panel
+"Show Onboarding Screen" = "オンボーディング画面を表示";
+"Reset App States" = "アプリ状態をリセット";
+"Reset App Preferences" = "アプリ設定をリセット";
+"Warning: Proceed with Caution" = "警告：慎重に操作してください";
 
 // MARK: - Error
 

@@ -18,16 +18,16 @@ struct RootView: View {
 
   @EnvironmentObject private var ikaPreference: IkaPreference
 
-  @State private var mainViewID = UUID()
+  @State private var entryViewID = UUID()
 
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   var body: some View {
-    MainView()
-      .id(mainViewID)
+    EntryView()
+      .id(entryViewID)
       .onChange(of: dynamicTypeSize) {
         UIFontCustomizer.customizeNavigationTitleText()
-        refreshMainView()
+        refreshEntryView()
       }
       .onChange(of: ikaPreference.preferredAppColorScheme, initial: true) { _, newVal in
         IkaColorSchemeManager.shared.handlePreferredColorSchemeChange(for: newVal)
@@ -37,7 +37,7 @@ struct RootView: View {
   }
 
   private var settingsModal: some View {
-    SettingsMainView()
+    SettingsEntryView()
       .accentColor(.orange)
       .overlay(
         AutoLoadingOverlay(),
@@ -68,7 +68,7 @@ struct RootView: View {
 
   /// Stupid workaround because as of iOS 17, dynamicTypeSize changes will not affect navigation titles,
   /// therefore force refresh the root view in order to reflect the correct title size.
-  private func refreshMainView() {
-    mainViewID = UUID()
+  private func refreshEntryView() {
+    entryViewID = UUID()
   }
 }

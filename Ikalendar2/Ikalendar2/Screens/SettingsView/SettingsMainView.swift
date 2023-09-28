@@ -29,40 +29,36 @@ struct SettingsMainView: View {
   @State private var rowWidth: CGFloat = 390
 
   var body: some View {
-    NavigationView {
-      // not using NavigationStack for Settings as of iOS 16 because of titleDisplayMode bug
-      GeometryReader { geo in
-        List {
-          Section {
-            rowDefaultGameMode
-            rowDefaultBattleMode
-          } header: { Text("Default Mode") }
+    GeometryReader { geo in
+      List {
+        Section {
+          rowDefaultGameMode
+          rowDefaultBattleMode
+        } header: { Text("Default Mode") }
 
-          Section {
-            rowColorScheme
-            rowAltAppIcon
-            rowAdvancedOptions
-          } header: { Text("Appearance") }
+        Section {
+          rowColorScheme
+          rowAltAppIcon
+          rowAdvancedOptions
+        } header: { Text("Appearance") }
 
-          Section {
-            rowAppLanguage
-          } header: { Text("Language") }
+        Section {
+          rowAppLanguage
+        } header: { Text("Language") }
 
-          Section {
-            rowAbout
-            rowCredits
-          }
-        }
-        .navigationTitle("Settings")
-        .navigationBarTitleDisplayMode(.large)
-        .navigationBarItems(trailing: doneButton)
-        .listStyle(.insetGrouped)
-        .onChange(of: geo.size, initial: true) { _, newVal in
-          rowWidth = newVal.width
+        Section {
+          rowAbout
+          rowCredits
         }
       }
+      .navigationTitle("Settings")
+      .navigationBarTitleDisplayMode(.large)
+      .navigationBarItems(trailing: doneButton)
+      .listStyle(.insetGrouped)
+      .onChange(of: geo.size, initial: true) { _, newVal in
+        rowWidth = newVal.width
+      }
     }
-    .navigationViewStyle(StackNavigationViewStyle())
   }
 
   // MARK: - Default Mode Section

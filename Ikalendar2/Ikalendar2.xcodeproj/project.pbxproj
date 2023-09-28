@@ -25,7 +25,7 @@
 		7903FE5728C460C600245586 /* TimeLength.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5628C460C600245586 /* TimeLength.swift */; };
 		7903FE5B28C4619C00245586 /* UIFontCustomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5A28C4619C00245586 /* UIFontCustomizer.swift */; };
 		7903FE6128C46A1700245586 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6028C46A1700245586 /* RootView.swift */; };
-		7903FE6328C46A3400245586 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6228C46A3400245586 /* MainView.swift */; };
+		7903FE6328C46A3400245586 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6228C46A3400245586 /* EntryView.swift */; };
 		7903FE6528C46A4D00245586 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6428C46A4D00245586 /* ErrorView.swift */; };
 		7903FE6E28C46CD200245586 /* SettingsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6D28C46CD200245586 /* SettingsMainView.swift */; };
 		7903FE7028C46CEF00245586 /* SettingsAltAppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6F28C46CEF00245586 /* SettingsAltAppIconView.swift */; };
@@ -51,6 +51,7 @@
 		790E2E112AA6D3F100789465 /* NamespaceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E2E102AA6D3F100789465 /* NamespaceConstants.swift */; };
 		79189B4828C95E75006E78F9 /* OffsettableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */; };
 		792E1FBD28DE89C100C3789D /* SettingsAdvancedOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */; };
+		7939EC182AC5133900AC48C4 /* SettingsEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7939EC172AC5133900AC48C4 /* SettingsEntryView.swift */; };
 		79408C6A2AA5BAA800141E58 /* IkaAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79408C692AA5BAA800141E58 /* IkaAppIcon.swift */; };
 		7943DFBB2AB52D090047250E /* CarouselColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFBA2AB52D090047250E /* CarouselColumn.swift */; };
 		7943DFC12AB536090047250E /* BattleRotationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFC02AB536090047250E /* BattleRotationList.swift */; };
@@ -108,6 +109,7 @@
 		79F90AF82AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AF72AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift */; };
 		79F90AFA2AB1112700B454B9 /* IkaLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AF92AB1112700B454B9 /* IkaLocale.swift */; };
 		79F90AFE2AB24DC000B454B9 /* RotationsCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */; };
+		79FCDF7D2AC4C8300082A4D3 /* SettingsDebugOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FCDF7C2AC4C8300082A4D3 /* SettingsDebugOptionsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,7 +131,7 @@
 		7903FE5628C460C600245586 /* TimeLength.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLength.swift; sourceTree = "<group>"; };
 		7903FE5A28C4619C00245586 /* UIFontCustomizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontCustomizer.swift; sourceTree = "<group>"; };
 		7903FE6028C46A1700245586 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
-		7903FE6228C46A3400245586 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		7903FE6228C46A3400245586 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		7903FE6428C46A4D00245586 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		7903FE6D28C46CD200245586 /* SettingsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainView.swift; sourceTree = "<group>"; };
 		7903FE6F28C46CEF00245586 /* SettingsAltAppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAltAppIconView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		790E2E102AA6D3F100789465 /* NamespaceConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamespaceConstants.swift; sourceTree = "<group>"; };
 		79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsettableScrollView.swift; sourceTree = "<group>"; };
 		792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAdvancedOptionsView.swift; sourceTree = "<group>"; };
+		7939EC172AC5133900AC48C4 /* SettingsEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEntryView.swift; sourceTree = "<group>"; };
 		79408C692AA5BAA800141E58 /* IkaAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaAppIcon.swift; sourceTree = "<group>"; };
 		7943DFBA2AB52D090047250E /* CarouselColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselColumn.swift; sourceTree = "<group>"; };
 		7943DFC02AB536090047250E /* BattleRotationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleRotationList.swift; sourceTree = "<group>"; };
@@ -213,6 +216,7 @@
 		79F90AF72AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaInterfaceOrientationPublisher.swift; sourceTree = "<group>"; };
 		79F90AF92AB1112700B454B9 /* IkaLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaLocale.swift; sourceTree = "<group>"; };
 		79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationsCarouselView.swift; sourceTree = "<group>"; };
+		79FCDF7C2AC4C8300082A4D3 /* SettingsDebugOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDebugOptionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -292,10 +296,12 @@
 		7903FE6728C46C2900245586 /* SettingsView */ = {
 			isa = PBXGroup;
 			children = (
+				7939EC172AC5133900AC48C4 /* SettingsEntryView.swift */,
 				7903FE6D28C46CD200245586 /* SettingsMainView.swift */,
 				7903FE6F28C46CEF00245586 /* SettingsAltAppIconView.swift */,
 				792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */,
 				7903FE7128C46D1800245586 /* SettingsAboutView.swift */,
+				79FCDF7C2AC4C8300082A4D3 /* SettingsDebugOptionsView.swift */,
 				7903FE7328C46D4100245586 /* SettingsCreditsView.swift */,
 			);
 			path = SettingsView;
@@ -585,7 +591,7 @@
 			isa = PBXGroup;
 			children = (
 				7903FE6028C46A1700245586 /* RootView.swift */,
-				7903FE6228C46A3400245586 /* MainView.swift */,
+				7903FE6228C46A3400245586 /* EntryView.swift */,
 				79B92BB728B03B1F00544939 /* RotationsSingularView.swift */,
 				79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */,
 				7903FE6428C46A4D00245586 /* ErrorView.swift */,
@@ -776,6 +782,7 @@
 				79C1485828C427B300587C6E /* Constants.swift in Sources */,
 				7903FE3428C438B400245586 /* IkaFont.swift in Sources */,
 				79802FFA28C55B740048C478 /* IkaColorSchemeManager.swift in Sources */,
+				79FCDF7D2AC4C8300082A4D3 /* SettingsDebugOptionsView.swift in Sources */,
 				799235B02AB394D30071AA72 /* BattleSecondaryStagesLayout.swift in Sources */,
 				7903FE9A28C4702100245586 /* ToolbarSettingsButton.swift in Sources */,
 				797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */,
@@ -803,7 +810,7 @@
 				79D3E66F28C41CCE00005DB5 /* FootApparel.swift in Sources */,
 				79AA714728C4090A00A91055 /* RotationProtocol.swift in Sources */,
 				7903FE5728C460C600245586 /* TimeLength.swift in Sources */,
-				7903FE6328C46A3400245586 /* MainView.swift in Sources */,
+				7903FE6328C46A3400245586 /* EntryView.swift in Sources */,
 				79AA714B28C411EB00A91055 /* BattleRotationDict.swift in Sources */,
 				7943DFC12AB536090047250E /* BattleRotationList.swift in Sources */,
 				7903FE6128C46A1700245586 /* RootView.swift in Sources */,
@@ -847,6 +854,7 @@
 				7903FE8B28C46F7A00245586 /* SalmonRotationWeaponsCard.swift in Sources */,
 				79A7258F2A5E9367007E9C92 /* ConfigConstants.swift in Sources */,
 				7903FE8328C46F2200245586 /* BattleRotationCell.swift in Sources */,
+				7939EC182AC5133900AC48C4 /* SettingsEntryView.swift in Sources */,
 				7903FE8928C46F6B00245586 /* SalmonRotationStageCard.swift in Sources */,
 				7992CB742ABD564F0088C974 /* IkaLog.swift in Sources */,
 				7907F62D2AC275C600B81053 /* ContributorRow.swift in Sources */,
@@ -1014,7 +1022,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5470;
+				CURRENT_PROJECT_VERSION = 5638;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1054,7 +1062,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5470;
+				CURRENT_PROJECT_VERSION = 5638;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
