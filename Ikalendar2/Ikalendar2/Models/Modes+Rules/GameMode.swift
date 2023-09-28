@@ -9,6 +9,8 @@
 
 /// Data model for the game modes.
 enum GameMode: String, Identifiable, CaseIterable, Equatable {
+  static let `default`: Self = .battle
+
   case battle
   case salmon
 

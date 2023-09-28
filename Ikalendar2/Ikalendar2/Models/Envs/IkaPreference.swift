@@ -16,43 +16,51 @@ final class IkaPreference: ObservableObject {
 
   static let shared = IkaPreference()
 
-  /// Default GameMode (initial value already set during App init, so init value here does not matter)
-  @AppStorage(Constants.Key.AppStorage.DEFAULT_GAME_MODE)
-  var defaultGameMode: GameMode = .battle
+  /// Preferred Default GameMode (init value already set at App init, so init value here does not matter)
+  @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_GAME_MODE)
+  var preferredDefaultGameMode: GameMode = .default
   {
     willSet {
-      if newValue != defaultGameMode { SimpleHaptics.generateTask(.selection) }
+      guard newValue != preferredDefaultGameMode else { return }
+      SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
   }
 
-  /// Default BattleMode (initial value already set during App init, so init value here does not matter)
-  @AppStorage(Constants.Key.AppStorage.DEFAULT_BATTLE_MODE)
-  var defaultBattleMode: BattleMode = .league
+  /// Preferred Default BattleMode (init value already set at App init, so init value here does not matter)
+  @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_BATTLE_MODE)
+  var preferredDefaultBattleMode: BattleMode = .default
   {
     willSet {
-      if newValue != defaultBattleMode { SimpleHaptics.generateTask(.selection) }
+      guard newValue != preferredDefaultBattleMode else { return }
+      SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
   }
 
-  /// User preferred color scheme
+  /// Preferred color scheme
   @AppStorage(Constants.Key.AppStorage.PREFERRED_APP_COLOR_SCHEME)
-  var preferredAppColorScheme: IkaColorSchemeManager.PreferredColorScheme = .dark
+  var preferredAppColorScheme: IkaColorSchemeManager.PreferredColorScheme = .default
   {
     willSet {
-      if newValue != preferredAppColorScheme { SimpleHaptics.generateTask(.selection) }
+      guard newValue != preferredAppColorScheme else { return }
+      SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
   }
 
-  /// User preferred app icon
+  /// Preferred app icon
   @AppStorage(Constants.Key.AppStorage.PREFERRED_APP_ICON)
-  var preferredAppIcon: IkaAppIcon = .modernDark {
-    didSet { UIApplication.shared.setAlternateIconName(preferredAppIcon.alternateIconName) }
+  var preferredAppIcon: IkaAppIcon = .default {
     willSet {
-      if newValue != preferredAppIcon { SimpleHaptics.generateTask(.success) }
+      guard newValue != preferredAppIcon else { return }
+      SimpleHaptics.generateTask(.success)
       objectWillChange.send()
+    }
+
+    didSet {
+      guard oldValue != preferredAppIcon else { return }
+      UIApplication.shared.setAlternateIconName(preferredAppIcon.alternateIconName)
     }
   }
 
@@ -61,7 +69,8 @@ final class IkaPreference: ObservableObject {
   var shouldUseAltStageImages = false
   {
     willSet {
-      if newValue != shouldUseAltStageImages { SimpleHaptics.generateTask(.selection) }
+      guard newValue != shouldUseAltStageImages else { return }
+      SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
   }
@@ -71,7 +80,8 @@ final class IkaPreference: ObservableObject {
   var shouldSwapBottomToolbarPickers = false
   {
     willSet {
-      if newValue != shouldSwapBottomToolbarPickers { SimpleHaptics.generateTask(.selection) }
+      guard newValue != shouldSwapBottomToolbarPickers else { return }
+      SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
   }
@@ -79,16 +89,16 @@ final class IkaPreference: ObservableObject {
   // MARK: Internal
 
   func resetPreferences() {
-    defaultGameMode = .battle
-    defaultBattleMode = .league
-    preferredAppColorScheme = .dark
-    preferredAppIcon = .modernDark
+    preferredDefaultGameMode = .default
+    preferredDefaultBattleMode = .default
+    preferredAppColorScheme = .default
+    preferredAppIcon = .default
     shouldUseAltStageImages = false
     shouldSwapBottomToolbarPickers = false
   }
 
-  func resetAppIcon() {
-    preferredAppIcon = .default
+  func revertEasterEggAppIcon() {
+    if preferredAppIcon.isEasterEgg { preferredAppIcon = .default }
   }
 
 }

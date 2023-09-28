@@ -20,6 +20,7 @@ final class IkaLog: ObservableObject {
   var shouldShowOnboarding: Bool = true
   {
     willSet {
+      guard newValue != shouldShowOnboarding else { return }
       objectWillChange.send()
     }
   }
@@ -29,6 +30,7 @@ final class IkaLog: ObservableObject {
   var hasDiscoveredRating: Bool = false
   {
     willSet {
+      guard newValue != hasDiscoveredRating else { return }
       objectWillChange.send()
     }
   }
@@ -38,6 +40,7 @@ final class IkaLog: ObservableObject {
   var hasDiscoveredAltAppIcon: Bool = false
   {
     willSet {
+      guard newValue != hasDiscoveredAltAppIcon else { return }
       objectWillChange.send()
     }
   }
@@ -47,6 +50,7 @@ final class IkaLog: ObservableObject {
   var hasDiscoveredEasterEgg: Bool = false
   {
     willSet {
+      guard newValue != hasDiscoveredEasterEgg else { return }
       objectWillChange.send()
     }
   }

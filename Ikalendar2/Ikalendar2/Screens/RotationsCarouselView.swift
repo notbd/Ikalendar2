@@ -73,7 +73,7 @@ struct RotationsCarouselView: View {
         }
       }
 
-      if ikaPreference.defaultGameMode == .battle {
+      if ikaPreference.preferredDefaultGameMode == .battle {
         ForEach(BattleMode.allCases) { battleMode in
           CarouselColumn(
             gameMode: .battle,
@@ -124,7 +124,7 @@ struct RotationsCarouselView: View {
     .scrollTargetLayout()
     .animation(
       .snappy,
-      value: ikaPreference.defaultGameMode)
+      value: ikaPreference.preferredDefaultGameMode)
     .if(!isWindowWide) { wrapInHorizontalScrollView($0) }
   }
 

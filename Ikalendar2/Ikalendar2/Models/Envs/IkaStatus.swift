@@ -14,9 +14,9 @@ import SimpleHaptics
 @Observable
 final class IkaStatus {
 
-  static let shared = IkaStatus()
+  static let shared: IkaStatus = .init()
 
-  var isSettingsPresented = false
+  var isSettingsPresented: Bool = false
   {
     willSet {
       guard newValue != isSettingsPresented else { return }
@@ -24,7 +24,7 @@ final class IkaStatus {
     }
   }
 
-  var currentGameMode = IkaPreference.shared.defaultGameMode
+  var currentGameMode: GameMode = IkaPreference.shared.preferredDefaultGameMode
   {
     willSet {
       guard newValue != currentGameMode else { return }
@@ -32,7 +32,7 @@ final class IkaStatus {
     }
   }
 
-  var currentBattleMode = IkaPreference.shared.defaultBattleMode
+  var currentBattleMode: BattleMode = IkaPreference.shared.preferredDefaultBattleMode
   {
     willSet {
       guard newValue != currentBattleMode else { return }

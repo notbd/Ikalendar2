@@ -17,6 +17,9 @@ final class IkaColorSchemeManager {
   static let shared = IkaColorSchemeManager()
 
   enum PreferredColorScheme: String, Identifiable, CaseIterable {
+
+    static let `default`: Self = .dark
+
     case system
     case dark
     case light

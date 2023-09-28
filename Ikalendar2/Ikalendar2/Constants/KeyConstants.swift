@@ -23,11 +23,9 @@ extension Constants.Key {
   }
 
   enum AppStorage {
-    static let DEFAULT_GAME_MODE = "pref.default.game_mode"
-    static let DEFAULT_BATTLE_MODE = "pref.default.battle_mode"
-
+    static let PREFERRED_DEFAULT_GAME_MODE = "pref.preferred_default.game_mode"
+    static let PREFERRED_DEFAULT_BATTLE_MODE = "pref.preferred_default.battle_mode"
     static let PREFERRED_APP_COLOR_SCHEME = "pref.preferred_app_color_scheme"
-
     static let PREFERRED_APP_ICON = "pref.preferred_app_icon"
 
     static let SHOULD_USE_ALT_STAGE_IMAGES = "pref.if_should_use_alt_stage_images"
@@ -58,7 +56,7 @@ extension Constants.Key {
     static let SOURCE_CODE_REPO = "https://github.com/notbd/Ikalendar2"
     static let PRIVACY_POLICY = "https://github.com/notbd/Ikalendar2/wiki/Privacy-Policy"
 
-    static let THE_GOOD_STUFF = "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // good stuff indeed!
+    static let THE_GOOD_STUFF = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&autoplay=1" // good stuff indeed!
     static let THE_GOOD_STUFF_CN = "https://www.bilibili.com/video/BV1GJ411x7h7"
 
     enum Splatoon2Site {

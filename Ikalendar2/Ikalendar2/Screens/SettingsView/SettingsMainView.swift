@@ -74,7 +74,7 @@ struct SettingsMainView: View {
           Spacer()
         }
       } icon: {
-        Image(systemName: ikaPreference.defaultGameMode.sfSymbolNameSelected)
+        Image(systemName: ikaPreference.preferredDefaultGameMode.sfSymbolNameSelected)
           .imageScale(.medium)
           .contentTransition(.symbolEffect(.replace.offUp))
           .symbolRenderingMode(.hierarchical)
@@ -84,7 +84,7 @@ struct SettingsMainView: View {
       Spacer()
 
       Picker(
-        selection: $ikaPreference.defaultGameMode,
+        selection: $ikaPreference.preferredDefaultGameMode,
         label: Text("Default Game Mode"))
       {
         ForEach(GameMode.allCases) { gameMode in
@@ -109,20 +109,20 @@ struct SettingsMainView: View {
         }
       } icon: {
         Image(
-          systemName: ikaPreference.defaultBattleMode.sfSymbolNameSelected)
+          systemName: ikaPreference.preferredDefaultBattleMode.sfSymbolNameSelected)
           .imageScale(.medium)
           .contentTransition(.symbolEffect(.replace.offUp))
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(
-            ikaPreference.defaultGameMode != .battle || !isHorizontalCompact
+            ikaPreference.preferredDefaultGameMode != .battle || !isHorizontalCompact
               ? .secondary
-              : ikaPreference.defaultBattleMode.themeColor)
+              : ikaPreference.preferredDefaultBattleMode.themeColor)
       }
 
       Spacer()
 
       Picker(
-        selection: $ikaPreference.defaultBattleMode,
+        selection: $ikaPreference.preferredDefaultBattleMode,
         label: Text("Default Battle Mode"))
       {
         ForEach(BattleMode.allCases) { battleMode in
@@ -132,7 +132,7 @@ struct SettingsMainView: View {
       }
       .pickerStyle(SegmentedPickerStyle())
       .fixedSize()
-      .disabled(ikaPreference.defaultGameMode != .battle || !isHorizontalCompact)
+      .disabled(ikaPreference.preferredDefaultGameMode != .battle || !isHorizontalCompact)
     }
   }
 

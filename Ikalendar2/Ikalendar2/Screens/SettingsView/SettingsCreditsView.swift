@@ -31,6 +31,7 @@ struct SettingsCreditsView: View {
       Section {
         rowSwiftyJSON
         rowSimpleHaptics
+        rowAlertKit
         rowVariableBlurView
       } header: { Text("Open Source Libraries") }
 
@@ -80,6 +81,18 @@ struct SettingsCreditsView: View {
         repoName: "SimpleHaptics",
         repoURLString: "https://github.com/notbd/SimpleHaptics",
         isLinkable: true))
+  }
+
+  private var rowAlertKit: some View {
+    CreditsOpenSourceLibCell(
+      name: "AlertKit",
+      urlString: "https://github.com/sparrowcode/AlertKit",
+      isLinkable: false,
+      destination:
+      DetailsLicenseView(
+        repoName: "AlertKit",
+        repoURLString: "https://github.com/sparrowcode/AlertKit",
+        isLinkable: false))
   }
 
   private var rowVariableBlurView: some View {

@@ -50,6 +50,7 @@
 		7907F62D2AC275C600B81053 /* ContributorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7907F62C2AC275C600B81053 /* ContributorRow.swift */; };
 		790E2E112AA6D3F100789465 /* NamespaceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E2E102AA6D3F100789465 /* NamespaceConstants.swift */; };
 		79189B4828C95E75006E78F9 /* OffsettableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */; };
+		79249D482AC5E116003F569E /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 79249D472AC5E116003F569E /* AlertKit */; };
 		792E1FBD28DE89C100C3789D /* SettingsAdvancedOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */; };
 		7939EC182AC5133900AC48C4 /* SettingsEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7939EC172AC5133900AC48C4 /* SettingsEntryView.swift */; };
 		79408C6A2AA5BAA800141E58 /* IkaAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79408C692AA5BAA800141E58 /* IkaAppIcon.swift */; };
@@ -224,6 +225,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79249D482AC5E116003F569E /* AlertKit in Frameworks */,
 				79E7EA982AB683C600C9C68F /* VariableBlurView in Frameworks */,
 				797C0E822A9725D900DA405A /* SwiftyJSON in Frameworks */,
 				79BCBC922AAFB08C00C83F95 /* SimpleHaptics in Frameworks */,
@@ -691,6 +693,7 @@
 				797C0E812A9725D900DA405A /* SwiftyJSON */,
 				79BCBC912AAFB08C00C83F95 /* SimpleHaptics */,
 				79E7EA972AB683C600C9C68F /* VariableBlurView */,
+				79249D472AC5E116003F569E /* AlertKit */,
 			);
 			productName = Ikalendar2;
 			productReference = 79B92BB228B03B1F00544939 /* Ikalendar2.app */;
@@ -724,6 +727,7 @@
 				797C0E802A9725D900DA405A /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				79BCBC902AAFB08C00C83F95 /* XCRemoteSwiftPackageReference "SimpleHaptics" */,
 				79E7EA962AB683C600C9C68F /* XCRemoteSwiftPackageReference "VariableBlurView" */,
+				79249D462AC5E116003F569E /* XCRemoteSwiftPackageReference "AlertKit" */,
 			);
 			productRefGroup = 79B92BB328B03B1F00544939 /* Products */;
 			projectDirPath = "";
@@ -1022,7 +1026,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5638;
+				CURRENT_PROJECT_VERSION = 5659;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1062,7 +1066,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5638;
+				CURRENT_PROJECT_VERSION = 5659;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1117,6 +1121,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		79249D462AC5E116003F569E /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparrowcode/AlertKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
 		797C0E802A9725D900DA405A /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
@@ -1144,6 +1156,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		79249D472AC5E116003F569E /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79249D462AC5E116003F569E /* XCRemoteSwiftPackageReference "AlertKit" */;
+			productName = AlertKit;
+		};
 		797C0E812A9725D900DA405A /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 797C0E802A9725D900DA405A /* XCRemoteSwiftPackageReference "SwiftyJSON" */;

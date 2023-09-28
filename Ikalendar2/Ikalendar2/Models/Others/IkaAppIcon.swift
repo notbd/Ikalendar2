@@ -9,7 +9,7 @@ import SwiftUI
 
 enum IkaAppIcon: String, CaseIterable, Identifiable {
 
-  static let `default` = IkaAppIcon.modernDark
+  static let `default`: Self = .modernDark
 
   case modernDark
   case modernLight

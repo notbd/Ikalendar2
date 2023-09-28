@@ -5,6 +5,7 @@
 //  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
 //
 
+import AlertKit
 import SimpleHaptics
 import SwiftUI
 
@@ -34,6 +35,7 @@ struct SettingsDebugOptionsView: View {
       Section {
         rowResetAppStates
         rowResetAppPreferences
+        rowResetAll
       }
     }
     .listStyle(.insetGrouped)
@@ -67,8 +69,12 @@ struct SettingsDebugOptionsView: View {
   private var rowResetAppStates: some View {
     Button {
       ikaLog.resetStates()
-      ikaPreference.resetAppIcon()
-      SimpleHaptics.generateTask(.success)
+      ikaPreference.revertEasterEggAppIcon()
+      AlertKitAPI.present(
+        title: String(localized: "States Restored"),
+        icon: .done,
+        style: .iOS17AppleMusic,
+        haptic: .success)
     } label: {
       Text("Reset App States")
         .foregroundStyle(Color.accentColor)
@@ -78,9 +84,30 @@ struct SettingsDebugOptionsView: View {
   private var rowResetAppPreferences: some View {
     Button {
       ikaPreference.resetPreferences()
-      SimpleHaptics.generateTask(.success)
+      AlertKitAPI.present(
+        title: String(localized: "Preferences Restored"),
+        icon: .done,
+        style: .iOS17AppleMusic,
+        haptic: .success)
     } label: {
       Text("Reset App Preferences")
+        .foregroundStyle(Color.accentColor)
+    }
+  }
+
+  private var rowResetAll: some View {
+    Button {
+      ikaLog.resetStates()
+      ikaPreference.resetPreferences()
+      ikaStatus.isSettingsPresented = false
+      ikaLog.shouldShowOnboarding = true
+      AlertKitAPI.present(
+        title: String(localized: "All Restored"),
+        icon: .done,
+        style: .iOS17AppleMusic,
+        haptic: .success)
+    } label: {
+      Text("Reset All")
         .foregroundStyle(Color.accentColor)
     }
   }
