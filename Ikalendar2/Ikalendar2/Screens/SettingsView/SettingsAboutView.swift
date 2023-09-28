@@ -213,7 +213,7 @@ struct SettingsAboutView: View {
   // MARK: - Contact Section
 
   private var rowDeveloperTwitter: some View {
-    let twitterURLString = Constants.Key.URL.DEVELOPER_TWITTER
+    let twitterURLString = Constants.Key.URL.TWITTER_PROFILE
     let twitterHandle = twitterURLString
       .shortenedURL(base: Constants.Key.URL.TWITTER_BASE, newPrefix: "@")!
 
@@ -224,7 +224,7 @@ struct SettingsAboutView: View {
       } label: {
         HStack {
           Label {
-            Text("Developer's Twitter")
+            Text("Twitter")
               .foregroundStyle(Color.primary)
           }
           icon: {

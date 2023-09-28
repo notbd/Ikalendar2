@@ -48,7 +48,7 @@ extension Constants.Key {
     static let TWITTER_BASE = "https://twitter.com"
     static let GITHUB_BASE = "https://github.com"
 
-    static let DEVELOPER_TWITTER = "https://twitter.com/defnotbd"
+    static let TWITTER_PROFILE = "https://twitter.com/ikalendar2"
     static let DEVELOPER_EMAIL = "mailto:defnotbd@outlook.com"
     static let APP_STORE_PAGE = "https://apps.apple.com/app/id1529193361"
     static let APP_STORE_PAGE_US = "https://apps.apple.com/us/app/ikalendar2/id1529193361"
