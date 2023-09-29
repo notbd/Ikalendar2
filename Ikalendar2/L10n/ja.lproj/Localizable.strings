@@ -62,6 +62,15 @@
 "key.slogan.ikalendar3" =
 "「スプラトゥーン™3」に対応している「ikalendar」をお探しですか？
 「ikalendar3」は開発ロードマップに掲載されています。お楽しみに！";
+// Debug Panel
+"Show Onboarding Screen" = "オンボーディング画面を表示";
+"Reset App States" = "アプリ状態をリセット";
+"Reset App Preferences" = "アプリ設定をリセット";
+"Reset All" = "すべてをリセット";
+"Warning: Proceed with Caution" = "注意：お手元の操作には慎重にしてください";
+"States Reset" = "状態がリセットされました";
+"Preferences Reset" = "設定がリセットされました";
+"All Reset" = "すべてがリセットされました";
 // Credits
 "Data Source" = "データ提供元";
 "Open Source Libraries" = "オープンソースライブラリ";
@@ -71,15 +80,6 @@
 "Nintendo® Official Website" = "任天堂ホームページ";
 "key.slogan.copyright" =
 " 「ikalendar2」 は 「スプラトゥーン™2」 の非公式のコンパニオンアプリであり、任天堂とは関連していません。すべてのアイテム名、ロゴ、および商標は、それぞれの所有者に帰属します。";
-// Debug Panel
-"Show Onboarding Screen" = "オンボーディング画面を表示";
-"Reset App States" = "アプリ状態をリセット";
-"Reset App Preferences" = "アプリ設定をリセット";
-"Reset All" = "すべてをリセット";
-"Warning: Proceed with Caution" = "注意：お手元の操作には慎重にしてください";
-"States Restored" = "状態が復元されました";
-"Preferences Restored" = "設定が復元されました";
-"All Restored" = "すべて復元されました";
 
 // MARK: - Error
 

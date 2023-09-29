@@ -68,10 +68,9 @@ ikalendar3 is on our development roadmap. Stay tuned!";
 "Reset App Preferences" = "Reset App Preferences";
 "Reset All" = "Reset All";
 "Warning: Proceed with Caution" = "Warning: Proceed with Caution";
-"States Restored" = "States Restored";
-"Preferences Restored" = "Preferences Restored";
-"All Restored" = "All Restored";
-
+"States Reset" = "States Reset";
+"Preferences Reset" = "Preferences Reset";
+"All Reset" = "All Reset";
 // Credits
 "Data Source" = "Data Source";
 "Open Source Libraries" = "Open Source Libraries";

@@ -59,7 +59,7 @@ struct SettingsDebugOptionsView: View {
     Button {
       ikaStatus.isSettingsPresented = false
       ikaLog.shouldShowOnboarding = true
-      SimpleHaptics.generateTask(.heavy)
+      SimpleHaptics.generateTask(.selection)
     } label: {
       Text("Show Onboarding Screen")
         .foregroundStyle(Color.accentColor)
@@ -71,7 +71,7 @@ struct SettingsDebugOptionsView: View {
       ikaLog.resetStates()
       ikaPreference.revertEasterEggAppIcon()
       AlertKitAPI.present(
-        title: String(localized: "States Restored"),
+        title: String(localized: "States Reset"),
         icon: .done,
         style: .iOS17AppleMusic,
         haptic: .success)
@@ -85,7 +85,7 @@ struct SettingsDebugOptionsView: View {
     Button {
       ikaPreference.resetPreferences()
       AlertKitAPI.present(
-        title: String(localized: "Preferences Restored"),
+        title: String(localized: "Preferences Reset"),
         icon: .done,
         style: .iOS17AppleMusic,
         haptic: .success)
@@ -102,7 +102,7 @@ struct SettingsDebugOptionsView: View {
       ikaStatus.isSettingsPresented = false
       ikaLog.shouldShowOnboarding = true
       AlertKitAPI.present(
-        title: String(localized: "All Restored"),
+        title: String(localized: "All Reset"),
         icon: .done,
         style: .iOS17AppleMusic,
         haptic: .success)

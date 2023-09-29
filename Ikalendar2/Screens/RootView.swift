@@ -66,7 +66,7 @@ struct RootView: View {
       content.sheet(isPresented: $ikaStatus.isSettingsPresented) { settingsModal }
   }
 
-  /// Stupid workaround because as of iOS 17, dynamicTypeSize changes will not affect navigation titles,
+  /// Stupid workaround because as of iOS 17.0, dynamicTypeSize changes will not affect navigation titles,
   /// therefore force refresh the root view in order to reflect the correct title size.
   private func refreshEntryView() {
     entryViewID = UUID()

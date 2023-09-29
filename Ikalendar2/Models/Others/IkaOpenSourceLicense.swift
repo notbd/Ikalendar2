@@ -51,7 +51,7 @@ struct IkaOpenSourceLicense {
     }
   }
 
-  //  Note: lookbehind is not supported yet as of iOS 16 SDK
+  //  Note: lookbehind is not supported yet as of iOS 17.0 SDK
 
   ///  private let infoSearchRegex = /github.com\/(\w+)\/(\w+)/
   private let infoSearchRegex = Regex {

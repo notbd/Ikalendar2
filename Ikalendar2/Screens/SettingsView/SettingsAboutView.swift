@@ -117,7 +117,7 @@ struct SettingsAboutView: View {
   // MARK: - Share Section
 
   private var rowShare: some View {
-    // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 16
+    // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 17.0
     let shareURL = URL(string: Constants.Key.URL.APP_STORE_PAGE_US)!
 
     return
