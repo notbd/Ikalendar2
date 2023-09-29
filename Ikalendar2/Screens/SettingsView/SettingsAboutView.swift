@@ -159,7 +159,13 @@ struct SettingsAboutView: View {
       }
     }
     .onReceive(ikaTimePublisher.bounceSignalPublisher) { _ in
-      if !ikaLog.hasDiscoveredRating { rowRatingBounceTrigger += 1 }
+      guard !ikaLog.hasDiscoveredRating else { return }
+      if rowRatingBounceTrigger >= 2 {
+        ikaLog.hasDiscoveredRating = true
+      }
+      else {
+        rowRatingBounceTrigger += 1
+      }
     }
   }
 

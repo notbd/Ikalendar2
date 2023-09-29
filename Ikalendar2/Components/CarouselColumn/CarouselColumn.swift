@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import VariableBlurView
 
 // MARK: - CarouselColumn
 
@@ -24,11 +23,6 @@ struct CarouselColumn: View {
     isPortrait
       ? Scoped.LIST_OFFSET_V_FACTOR_PORTRAIT
       : Scoped.LIST_OFFSET_V_FACTOR_LANDSCAPE }
-
-  private var blurHeightFactor: CGFloat {
-    isPortrait
-      ? listVOffsetFactor * Scoped.BLUR_HEIGHT_FACTOR_PORTRAIT
-      : listVOffsetFactor * Scoped.BLUR_HEIGHT_FACTOR_LANDSCAPE }
 
   private var modeIconSizeFactor: CGFloat { listVOffsetFactor * Scoped.MODE_ICON_SIZE_FACTOR }
 
@@ -72,12 +66,6 @@ struct CarouselColumn: View {
               .vertical, 20,
               for: .scrollIndicators)
         }
-
-        VariableBlurView()
-          .frame(height: geo.size.height * blurHeightFactor)
-          .vAlignment(.top)
-          .hAlignment(.center)
-          .allowsHitTesting(false)
 
         ModeIconStamp(
           iconSize: geo.size.height * modeIconSizeFactor,

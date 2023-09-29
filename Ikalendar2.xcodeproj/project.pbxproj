@@ -47,7 +47,6 @@
 		7903FE9C28C4702100245586 /* ToolbarGameModeSwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9728C4702100245586 /* ToolbarGameModeSwitchButton.swift */; };
 		7903FE9D28C4702100245586 /* ToolbarButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9828C4702100245586 /* ToolbarButtonAlignment.swift */; };
 		7903FE9E28C4702100245586 /* ToolbarRefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */; };
-		7907F62D2AC275C600B81053 /* ContributorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7907F62C2AC275C600B81053 /* ContributorRow.swift */; };
 		790E2E112AA6D3F100789465 /* NamespaceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E2E102AA6D3F100789465 /* NamespaceConstants.swift */; };
 		79189B4828C95E75006E78F9 /* OffsettableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */; };
 		79249D482AC5E116003F569E /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 79249D472AC5E116003F569E /* AlertKit */; };
@@ -108,7 +107,6 @@
 		79D3E67128C41D7B00005DB5 /* SalmonApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D3E67028C41D7B00005DB5 /* SalmonApparel.swift */; };
 		79D3E67328C41DD900005DB5 /* HeadApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D3E67228C41DD900005DB5 /* HeadApparel.swift */; };
 		79DD1F3B2A5B8A800093784D /* IkaNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DD1F3A2A5B8A800093784D /* IkaNetworkManager.swift */; };
-		79E7EA982AB683C600C9C68F /* VariableBlurView in Frameworks */ = {isa = PBXBuildFile; productRef = 79E7EA972AB683C600C9C68F /* VariableBlurView */; };
 		79EE3AB32AB935E900409733 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79EE3AB52AB935E900409733 /* Localizable.strings */; };
 		79EE3AB82AB951E900409733 /* IdealFontLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EE3AB72AB951E900409733 /* IdealFontLayout.swift */; };
 		79F90AF82AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AF72AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift */; };
@@ -158,7 +156,6 @@
 		7903FE9728C4702100245586 /* ToolbarGameModeSwitchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarGameModeSwitchButton.swift; sourceTree = "<group>"; };
 		7903FE9828C4702100245586 /* ToolbarButtonAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarButtonAlignment.swift; sourceTree = "<group>"; };
 		7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarRefreshButton.swift; sourceTree = "<group>"; };
-		7907F62C2AC275C600B81053 /* ContributorRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorRow.swift; sourceTree = "<group>"; };
 		790E2E102AA6D3F100789465 /* NamespaceConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamespaceConstants.swift; sourceTree = "<group>"; };
 		79189B4728C95E75006E78F9 /* OffsettableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsettableScrollView.swift; sourceTree = "<group>"; };
 		792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAdvancedOptionsView.swift; sourceTree = "<group>"; };
@@ -234,7 +231,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				79249D482AC5E116003F569E /* AlertKit in Frameworks */,
-				79E7EA982AB683C600C9C68F /* VariableBlurView in Frameworks */,
 				797C0E822A9725D900DA405A /* SwiftyJSON in Frameworks */,
 				79BCBC922AAFB08C00C83F95 /* SimpleHaptics in Frameworks */,
 			);
@@ -467,7 +463,6 @@
 			children = (
 				796634702AC1578900AE82E2 /* AltAppIconRow.swift */,
 				797EA68D2AACF1350095A23B /* DetailsLicenseView.swift */,
-				7907F62C2AC275C600B81053 /* ContributorRow.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -720,7 +715,6 @@
 			packageProductDependencies = (
 				797C0E812A9725D900DA405A /* SwiftyJSON */,
 				79BCBC912AAFB08C00C83F95 /* SimpleHaptics */,
-				79E7EA972AB683C600C9C68F /* VariableBlurView */,
 				79249D472AC5E116003F569E /* AlertKit */,
 			);
 			productName = Ikalendar2;
@@ -754,7 +748,6 @@
 			packageReferences = (
 				797C0E802A9725D900DA405A /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				79BCBC902AAFB08C00C83F95 /* XCRemoteSwiftPackageReference "SimpleHaptics" */,
-				79E7EA962AB683C600C9C68F /* XCRemoteSwiftPackageReference "VariableBlurView" */,
 				79249D462AC5E116003F569E /* XCRemoteSwiftPackageReference "AlertKit" */,
 			);
 			productRefGroup = 79B92BB328B03B1F00544939 /* Products */;
@@ -893,7 +886,6 @@
 				7939EC182AC5133900AC48C4 /* SettingsEntryView.swift in Sources */,
 				7903FE8928C46F6B00245586 /* SalmonRotationStageCard.swift in Sources */,
 				7992CB742ABD564F0088C974 /* IkaLog.swift in Sources */,
-				7907F62D2AC275C600B81053 /* ContributorRow.swift in Sources */,
 				7903FE7628C46D6100245586 /* OnboardingView.swift in Sources */,
 				79AA715928C4160D00A91055 /* MysteryWeapon.swift in Sources */,
 				79F90AF82AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift in Sources */,
@@ -1058,7 +1050,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5670;
+				CURRENT_PROJECT_VERSION = 5677;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1098,7 +1090,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5670;
+				CURRENT_PROJECT_VERSION = 5677;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1177,14 +1169,6 @@
 				minimumVersion = 0.1.0;
 			};
 		};
-		79E7EA962AB683C600C9C68F /* XCRemoteSwiftPackageReference "VariableBlurView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/aheze/VariableBlurView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1202,11 +1186,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 79BCBC902AAFB08C00C83F95 /* XCRemoteSwiftPackageReference "SimpleHaptics" */;
 			productName = SimpleHaptics;
-		};
-		79E7EA972AB683C600C9C68F /* VariableBlurView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79E7EA962AB683C600C9C68F /* XCRemoteSwiftPackageReference "VariableBlurView" */;
-			productName = VariableBlurView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -27,8 +27,6 @@ extension Constants.Style {
     enum Column {
       static let LIST_OFFSET_V_FACTOR_PORTRAIT: CGFloat = 0.1
       static let LIST_OFFSET_V_FACTOR_LANDSCAPE: CGFloat = 0.12
-      static let BLUR_HEIGHT_FACTOR_PORTRAIT: CGFloat = 1.15
-      static let BLUR_HEIGHT_FACTOR_LANDSCAPE: CGFloat = 1.2
       static let MODE_ICON_SIZE_FACTOR: CGFloat = 1.3
 
       static let MASK_GRADIENT_DENSITY_PORTRAIT: Int = 32

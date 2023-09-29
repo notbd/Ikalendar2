@@ -19,10 +19,6 @@ struct SettingsCreditsView: View {
 
   var body: some View {
     List {
-//      Section {
-//        ContributorRow()
-//      } header: { Text("Contributors") }
-
       Section {
         rowSplatoon2Ink
         rowJelonzoBot
@@ -32,7 +28,6 @@ struct SettingsCreditsView: View {
         rowSwiftyJSON
         rowSimpleHaptics
         rowAlertKit
-        rowVariableBlurView
       } header: { Text("Open Source Libraries") }
 
       Section {
@@ -92,18 +87,6 @@ struct SettingsCreditsView: View {
       DetailsLicenseView(
         repoName: "AlertKit",
         repoURLString: "https://github.com/sparrowcode/AlertKit",
-        isLinkable: false))
-  }
-
-  private var rowVariableBlurView: some View {
-    CreditsOpenSourceLibCell(
-      name: "VariableBlurView",
-      urlString: "https://github.com/aheze/VariableBlurView/",
-      isLinkable: false,
-      destination:
-      DetailsLicenseView(
-        repoName: "VariableBlurView",
-        repoURLString: "https://github.com/aheze/VariableBlurView/",
         isLinkable: false))
   }
 
