@@ -35,6 +35,7 @@ struct OnboardingView: View {
         Spacer()
         button
       }
+      .padding(.all)
     }
     .task {
       try? await Task.sleep(nanoseconds: 1_000_000_000)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1500"
-   version = "1.7">
+   version = "2.0">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -22,29 +22,13 @@
                </EnvironmentBuildable>
             </ActionContent>
          </ExecutionAction>
-         <ExecutionAction
-            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
-            <ActionContent
-               title = "Run SwiftLint"
-               scriptText = "if test -d &quot;/opt/homebrew/bin/&quot;; then&#10;  PATH=&quot;/opt/homebrew/bin/:${PATH}&quot;&#10;fi&#10;&#10;export PATH&#10;&#10;if which swiftlint &gt;/dev/null; then&#10;  swiftlint --version&#10;else&#10;  echo &quot;warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint&quot;&#10;fi&#10;">
-               <EnvironmentBuildable>
-                  <BuildableReference
-                     BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "79B92BB128B03B1F00544939"
-                     BuildableName = "Ikalendar2.app"
-                     BlueprintName = "Ikalendar2"
-                     ReferencedContainer = "container:Ikalendar2.xcodeproj">
-                  </BuildableReference>
-               </EnvironmentBuildable>
-            </ActionContent>
-         </ExecutionAction>
       </PreActions>
       <PostActions>
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "### Bump build number"
-               scriptText = "cd &quot;${PROJECT_DIR}&quot; ; agvtool bump&#10;">
+               scriptText = "# cd &quot;${PROJECT_DIR}&quot; ; agvtool bump&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
@@ -90,8 +74,11 @@
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "NO"
+      debugXPCServices = "NO"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES">
+      allowLocationSimulation = "NO"
+      viewDebuggingEnabled = "No"
+      queueDebuggingEnabled = "No">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference

@@ -64,23 +64,23 @@ final class IkaPreference: ObservableObject {
     }
   }
 
-  /// If should be using alt stage images
-  @AppStorage(Constants.Key.AppStorage.SHOULD_USE_ALT_STAGE_IMAGES)
-  var shouldUseAltStageImages = false
-  {
-    willSet {
-      guard newValue != shouldUseAltStageImages else { return }
-      SimpleHaptics.generateTask(.selection)
-      objectWillChange.send()
-    }
-  }
-
   /// Bottom toolbar picker positioning
   @AppStorage(Constants.Key.AppStorage.SHOULD_SWAP_BOTTOM_TOOLBAR_PICKERS)
   var shouldSwapBottomToolbarPickers = false
   {
     willSet {
       guard newValue != shouldSwapBottomToolbarPickers else { return }
+      SimpleHaptics.generateTask(.selection)
+      objectWillChange.send()
+    }
+  }
+
+  /// If should be using alt stage images
+  @AppStorage(Constants.Key.AppStorage.SHOULD_USE_ALT_STAGE_IMAGES)
+  var shouldUseAltStageImages = false
+  {
+    willSet {
+      guard newValue != shouldUseAltStageImages else { return }
       SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
@@ -97,8 +97,8 @@ final class IkaPreference: ObservableObject {
     preferredDefaultBattleMode = .default
     preferredAppColorScheme = .default
     preferredAppIcon = .default
-    shouldUseAltStageImages = false
     shouldSwapBottomToolbarPickers = false
+    shouldUseAltStageImages = false
   }
 
   func revertEasterEggAppIcon() {
