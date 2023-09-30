@@ -35,6 +35,7 @@ struct SalmonRotationCell: View {
 
         if rotation.isCurrent(ikaTimePublisher.currentTime) {
           progressSection
+            .transition(.opacity.animation(.default))
         }
       }
     }
@@ -92,6 +93,7 @@ struct SalmonRotationCellTimeTextSection: View {
           rotation.isCurrent(ikaTimePublisher.currentTime)
             ? Scoped.ICON_GOLDEN_EGG_SCALE_FACTOR
             : Scoped.ICON_SALMON_FISH_SCALE_FACTOR)
+          .animation(.default, value: rotation.isCurrent(ikaTimePublisher.currentTime))
 
       Spacer()
 

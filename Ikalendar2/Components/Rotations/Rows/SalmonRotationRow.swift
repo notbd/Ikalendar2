@@ -126,6 +126,7 @@ struct SalmonRotationHeader: View {
             relativeTo: .headline)
       }
     }
+    .animation(.default, value: rowType)
   }
 }
 
