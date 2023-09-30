@@ -208,7 +208,7 @@ extension Constants.Style {
       }
 
       enum Salmon {
-        static let FIRST_PREFIX_STRINGS = (active: "Open!", idle: "Soon:")
+        static let FIRST_PREFIX_STRINGS = (pending: "Soon:", active: "Open!")
         static let SECOND_PREFIX_STRING = "Next:"
       }
     }
@@ -274,7 +274,7 @@ extension Constants.Style {
     enum Salmon {
       enum Cell {
         static let CELL_SPACING: CGFloat = 10
-        static let CELL_PADDING_BOTTOM: CGFloat = 2
+        static let CELL_PADDING_VERTICAL: CGFloat = 6
 
         static let PROGRESS_FONT_SIZE: CGFloat = 16
 

@@ -22,7 +22,7 @@ struct SalmonRotationRow: View {
     // expired rotations already filtered out, so index will reflect truth
     switch index {
     case 0:
-      rotation.isCurrent(ikaTimePublisher.currentTime) ? .first(.active) : .first(.idle)
+      rotation.isFuture(ikaTimePublisher.currentTime) ? .first(.pending) : .first(.active)
     case 1:
       .second
     default:
@@ -56,23 +56,23 @@ extension SalmonRotationRow {
   enum RowType: Equatable {
     typealias Scoped = Constants.Style.Rotation.Header.Salmon
 
-    case first(SalmonCurrentStatus)
+    case first(SalmonFirstRotationStatus)
     case second
     case other
 
-    enum SalmonCurrentStatus {
+    enum SalmonFirstRotationStatus {
+      case pending
       case active
-      case idle
     }
 
     var prefixString: String? {
       switch self {
       case .first(let currentStatus):
         switch currentStatus {
+        case .pending:
+          Scoped.FIRST_PREFIX_STRINGS.pending
         case .active:
           Scoped.FIRST_PREFIX_STRINGS.active
-        case .idle:
-          Scoped.FIRST_PREFIX_STRINGS.idle
         }
 
       case .second:
@@ -111,10 +111,10 @@ struct SalmonRotationHeader: View {
 
       Spacer()
 
-      // Time Until String (if first rotation idle)
+      // Time Until String (if first rotation pending)
       if
         case .first(let currentStatus) = rowType,
-        currentStatus == .idle
+        currentStatus == .pending
       {
         Text(ikaTimePublisher.currentTime.toTimeUntilStringKey(until: rotation.startTime))
           .contentTransition(.numericText(countsDown: true))

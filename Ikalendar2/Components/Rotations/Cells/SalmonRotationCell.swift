@@ -38,9 +38,8 @@ struct SalmonRotationCell: View {
         }
       }
     }
-    .if(hasStageAndWeapon) {
-      $0.padding(.bottom, Scoped.CELL_PADDING_BOTTOM)
-    }
+    // Stupid workaround because SwiftUI List cell force adds vInsets for content that's too small
+    .padding(.vertical, Scoped.CELL_PADDING_VERTICAL)
   }
 
   private var stageAndWeaponSection: some View {
@@ -88,11 +87,11 @@ struct SalmonRotationCellTimeTextSection: View {
         .resizable()
         .scaledToFit()
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        .frame(height: rowWidth * Scoped.SALMON_ICON_HEIGHT_RATIO)
         .scaleEffect(
           rotation.isCurrent(ikaTimePublisher.currentTime)
             ? Scoped.ICON_GOLDEN_EGG_SCALE_FACTOR
             : Scoped.ICON_SALMON_FISH_SCALE_FACTOR)
-          .frame(height: rowWidth * Scoped.SALMON_ICON_HEIGHT_RATIO)
 
       Spacer()
 
