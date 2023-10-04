@@ -19,10 +19,10 @@ extension Color {
   static let quaternaryLabel = Color(UIColor.quaternaryLabel)
 
   static let systemBackground = Color(UIColor.systemBackground)
-  static let secondarySystemBackground = Color(UIColor.secondarySystemBackground)
-  static let tertiarySystemBackground = Color(UIColor.tertiarySystemBackground)
+  static let systemBackgroundSecondary = Color(UIColor.secondarySystemBackground)
+  static let systemBackgroundTertiary = Color(UIColor.tertiarySystemBackground)
 
   static let systemGroupedBackground = Color(UIColor.systemGroupedBackground)
-  static let secondarySystemGroupedBackground = Color(UIColor.secondarySystemGroupedBackground)
-  static let tertiarySystemGroupedBackground = Color(UIColor.tertiarySystemGroupedBackground)
+  static let systemGroupedBackgroundSecondary = Color(UIColor.secondarySystemGroupedBackground)
+  static let systemGroupedBackgroundTertiary = Color(UIColor.tertiarySystemGroupedBackground)
 }

@@ -82,7 +82,7 @@ struct SettingsAltAppIconView: View {
         if !ikaLog.hasDiscoveredAltAppIcon { ikaLog.hasDiscoveredAltAppIcon = true }
       }
 
-      // Overlay view
+      // Animated copy
       if showEasterEgg {
         AltAppIconEasterEggRow(ikaAppIcon: .rick, buttonPressCounter: $easterEggBounceCounter)
           .allowsHitTesting(false)

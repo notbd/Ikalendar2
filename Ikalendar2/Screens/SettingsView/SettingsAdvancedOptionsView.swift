@@ -15,6 +15,10 @@ struct SettingsAdvancedOptionsView: View {
   typealias Scoped = Constants.Style.Settings.Advanced
 
   @Environment(IkaStatus.self) private var ikaStatus
+
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
+
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   @State private var isBottomToolbarPreviewPresented = false
@@ -24,13 +28,27 @@ struct SettingsAdvancedOptionsView: View {
 
   @State private var rowWidth: CGFloat = 390
 
+  private var doesNeedPaddedPreview: Bool {
+    !isHorizontalCompact && rowWidth > Scoped.PREVIEW_CELL_MAX_WIDTH
+  }
+
   var body: some View {
     GeometryReader { geo in
       List {
         Section {
           rowBottomToolbarPositioningSwitch
           rowAltStageImagesSwitch
-        } header: { Spacer() } footer: { Spacer() }
+        } header: {
+          Spacer()
+        } footer: {
+          if !isHorizontalCompact {
+            Text("Certain options only apply to smaller screen widths.")
+              .font(.footnote)
+          }
+          else {
+            Spacer()
+          }
+        }
 
         Section {
           battleRotationPreviewCell
@@ -70,6 +88,7 @@ struct SettingsAdvancedOptionsView: View {
       }
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+    .disabled(!isHorizontalCompact)
     .onChange(of: ikaPreference.shouldSwapBottomToolbarPickers) {
       isBottomToolbarPreviewPresented.toggle()
     }
@@ -113,13 +132,29 @@ struct SettingsAdvancedOptionsView: View {
     BattleRotationCell(
       type: .primary,
       rotation: battleRotationPreviewData,
-      rowWidth: rowWidth)
+      rowWidth: doesNeedPaddedPreview ? Scoped.PREVIEW_CELL_MAX_WIDTH : rowWidth)
+      .if(doesNeedPaddedPreview) {
+        $0
+          .frame(maxWidth: Scoped.PREVIEW_CELL_MAX_WIDTH)
+          .padding()
+          .background(Color.systemGroupedBackground)
+          .clipShape(.rect(cornerRadius: 10, style: .continuous))
+      }
+      .hAlignment(.center)
   }
 
   private var salmonRotationPreviewCell: some View {
     SalmonRotationCell(
       rotation: salmonRotationPreviewData,
-      rowWidth: rowWidth)
+      rowWidth: doesNeedPaddedPreview ? Scoped.PREVIEW_CELL_MAX_WIDTH : rowWidth)
+      .if(doesNeedPaddedPreview) {
+        $0
+          .frame(maxWidth: Scoped.PREVIEW_CELL_MAX_WIDTH)
+          .padding()
+          .background(Color.systemGroupedBackground)
+          .clipShape(.rect(cornerRadius: 10, style: .continuous))
+      }
+      .hAlignment(.center)
   }
 
   // MARK: Private

@@ -42,6 +42,8 @@
 "Tap Me :)" = "Tap Me :)";
 // Advanced Options
 "Swap Bottom Toolbar Pickers" = "Swap Bottom Toolbar Pickers";
+"Certain options only apply to smaller screen widths." =
+"Certain options only apply to smaller screen widths.";
 "Alternative Stage Images" = "Alternative Stage Images";
 "Preview:" = "Preview:";
 "Shuffle" = "Shuffle";

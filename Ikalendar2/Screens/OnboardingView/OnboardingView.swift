@@ -13,6 +13,9 @@ import SwiftUI
 struct OnboardingView: View {
   typealias Scoped = Constants.Style.Onboarding
 
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
+
   @EnvironmentObject private var ikaLog: IkaLog
 
   @State private var startAnimation: Bool = false
@@ -35,8 +38,14 @@ struct OnboardingView: View {
         Spacer()
         button
       }
+      .containerRelativeFrame(
+        .horizontal,
+        count: isHorizontalCompact ? 4 : 2,
+        span: isHorizontalCompact ? 3 : 1,
+        spacing: 0)
       .padding(.all)
     }
+    .hAlignment(.center)
     .task {
       try? await Task.sleep(nanoseconds: 1_000_000_000)
       startAnimation = true
@@ -79,7 +88,7 @@ struct OnboardingView: View {
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .onChange(of: iconBounceCounter, initial: false) {
           Task {
-            try? await Task.sleep(nanoseconds: UInt64(0.05 * 1_000_000_000))
+            try? await Task.sleep(nanoseconds: UInt64(0.1 * 1_000_000_000))
             await SimpleHaptics.generate(.light)
           }
           // Cancel the previous task, if it exists
@@ -129,8 +138,8 @@ struct OnboardingView: View {
         .foregroundStyle(Color.white)
         .font(Scoped.BUTTON_FONT)
         .padding(.vertical, Scoped.BUTTON_TEXT_PADDING_V)
-        .containerRelativeFrame(.horizontal, count: 4, span: 3, spacing: 0)
-        .fixedSize()
+        .padding(.horizontal)
+        .hAlignment(.center)
         .background(Color.accentColor)
         .clipShape(.rect(cornerRadius: Scoped.BUTTON_RECT_CORNER_RADIUS, style: .continuous))
     }

@@ -25,40 +25,74 @@ struct SettingsAboutView: View {
 
   @State private var appStoreOverlayPresented = false
 
+  @State private var rowAppInfoRectGlobal: CGRect = .init()
+  @State private var appIconBounceCounter: Int = 0
+
+  @State private var shouldDisplayAnimatedCopy: Bool = false
+  @State private var currentToggleAfterDelayTask: Task<Void, Never>?
+
   var body: some View {
-    List {
-      Section {
-        rowAppInfo
+    ZStack {
+      List {
+        Section {
+          rowAppInfo
+            .opacity(shouldDisplayAnimatedCopy ? 0 : 1)
+            .background {
+              GeometryReader { geo in
+                Color.clear
+                  .onChange(of: geo.frame(in: .global), initial: true) { _, newValue in
+                    rowAppInfoRectGlobal = newValue
+                  }
+              }
+            }
+        }
+        .listRowBackground(Color.clear)
+
+        Section {
+          rowShare
+        } header: { Text("Share") }
+
+        Section {
+          rowRating
+          rowLeavingReview
+          rowAppStoreOverlay
+        } header: { Text("Review") }
+
+        Section {
+          rowDeveloperTwitter
+          rowDeveloperEmail
+        } header: { Text("Contact") }
+
+        Section {
+          rowSourceCode
+          rowPrivacyPolicy
+        } header: { Text("App") }
+
+        Section {
+          rowDebugOptions
+        } footer: { footerIkalendar3 }
       }
-      .listRowBackground(Color.clear)
+      .navigationTitle("About")
+      .navigationBarTitleDisplayMode(.inline)
+      .listStyle(.insetGrouped)
 
-      Section {
-        rowShare
-      } header: { Text("Share") }
-
-      Section {
-        rowRating
-        rowLeavingReview
-        rowAppStoreOverlay
-      } header: { Text("Review") }
-
-      Section {
-        rowDeveloperTwitter
-        rowDeveloperEmail
-      } header: { Text("Contact") }
-
-      Section {
-        rowSourceCode
-        rowPrivacyPolicy
-      } header: { Text("App") }
-
-      Section {
-        rowDebugOptions
-      } footer: { footerIkalendar3 }
+      // Animated copy
+      rowAppInfo
+        .frame(width: rowAppInfoRectGlobal.width, height: rowAppInfoRectGlobal.height)
+        .globalPosition(x: rowAppInfoRectGlobal.midX, y: rowAppInfoRectGlobal.midY)
+        .opacity(shouldDisplayAnimatedCopy ? 1 : 0)
     }
-    .navigationTitle("About")
-    .navigationBarTitleDisplayMode(.inline)
-    .listStyle(.insetGrouped)
+    .onChange(of: appIconBounceCounter, initial: false) {
+      Task {
+        try? await Task.sleep(nanoseconds: UInt64(0.1 * 1_000_000_000))
+        await SimpleHaptics.generate(.light)
+      }
+      shouldDisplayAnimatedCopy = true
+      // Cancel the previous task, if it exists
+      currentToggleAfterDelayTask?.cancel()
+      // Schedule a new task
+      currentToggleAfterDelayTask = Task { await toggleShouldDisplayAnimatedCopyAfterDelay() }
+    }
   }
 
   // MARK: - Icon Section
@@ -81,6 +115,12 @@ struct SettingsAboutView: View {
             .stroke(Scoped.APP_ICON_STROKE_COLOR, lineWidth: Scoped.APP_ICON_STROKE_LINE_WIDTH)
             .opacity(Scoped.APP_ICON_STROKE_OPACITY))
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        .zIndex(1)
+        .onTapGesture {
+          // trigger animation
+          appIconBounceCounter += 1
+        }
+        .apply(applyAppIconBounceAnimation)
     }
 
     var appIconTitle: some View {
@@ -118,7 +158,7 @@ struct SettingsAboutView: View {
 
   private var rowShare: some View {
     // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 17.0
-    let shareURL = URL(string: Constants.Key.URL.APP_STORE_PAGE_US)!
+    let shareURL = URL(string: Constants.Key.URL.APP_STORE_PAGE)!
 
     return
       ShareLink(item: shareURL) {
@@ -357,6 +397,77 @@ struct SettingsAboutView: View {
           .ika2,
           size: Scoped.SLOGAN_IKALENDAR3_FONT_SIZE,
           relativeTo: .footnote)
+    }
+  }
+
+  // MARK: Private
+
+  private func applyAppIconBounceAnimation(_ content: some View) -> some View {
+    content
+      .keyframeAnimator(
+        initialValue: SettingsAboutAppIconAnimationValues(),
+        trigger: appIconBounceCounter,
+        content: SettingsAboutAppIconAnimationValues.keyframeTransformation,
+        keyframes: SettingsAboutAppIconAnimationValues.appIconKeyframes)
+  }
+
+  private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
+    try? await Task.sleep(nanoseconds: UInt64(1.6 * 1_000_000_000))
+    guard !Task.isCancelled else { return }
+    shouldDisplayAnimatedCopy = false
+  }
+
+}
+
+// MARK: - SettingsAboutAppIconAnimationValues
+
+struct SettingsAboutAppIconAnimationValues {
+  var scale: Double = 1
+  var vStretch: Double = 1
+  var vTranslation: Double = 0
+
+  // MARK: Internal
+
+  @ViewBuilder
+  @Sendable
+  static func keyframeTransformation(
+    content: PlaceholderContentView<some View>,
+    values: SettingsAboutAppIconAnimationValues)
+    -> some View
+  {
+    content
+      .scaleEffect(values.scale)
+      .scaleEffect(y: values.vStretch)
+      .offset(y: values.vTranslation)
+  }
+
+  @KeyframesBuilder<SettingsAboutAppIconAnimationValues>
+  static func appIconKeyframes(start _: SettingsAboutAppIconAnimationValues)
+    -> some Keyframes<SettingsAboutAppIconAnimationValues>
+  {
+    KeyframeTrack(\.vStretch) {
+      CubicKeyframe(1.0, duration: 0.01)
+      CubicKeyframe(0.8, duration: 0.06)
+      CubicKeyframe(1.12, duration: 0.1)
+      CubicKeyframe(1.04, duration: 0.3)
+      CubicKeyframe(1.0, duration: 0.3)
+      CubicKeyframe(0.9, duration: 0.22)
+      CubicKeyframe(1.02, duration: 0.23)
+      CubicKeyframe(1.0, duration: 0.20)
+    }
+
+    KeyframeTrack(\.scale) {
+      LinearKeyframe(1.0, duration: 0.16)
+      SpringKeyframe(1.03, duration: 0.38, spring: .bouncy)
+      SpringKeyframe(1.03, duration: 0.27, spring: .smooth)
+      SpringKeyframe(1.0, spring: .bouncy(duration: 0.65, extraBounce: 0.1))
+    }
+
+    KeyframeTrack(\.vTranslation) {
+      SpringKeyframe(40.0, duration: 0.11, spring: .bouncy)
+      SpringKeyframe(-30.0, duration: 0.43, spring: .bouncy)
+      SpringKeyframe(-34.0, duration: 0.27, spring: .smooth)
+      SpringKeyframe(0.0, spring: .bouncy(duration: 0.65, extraBounce: 0.3))
     }
   }
 }

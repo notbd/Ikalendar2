@@ -18,9 +18,12 @@ struct RotationsCarouselView: View {
   @Environment(IkaStatus.self) private var ikaStatus
   @EnvironmentObject private var ikaPreference: IkaPreference
 
+  @Environment(IkaInterfaceOrientationPublisher.self) private var ikaInterfaceOrientationPublisher
+  private var isLandscape: Bool { ikaInterfaceOrientationPublisher.currentOrientation.isLandscape }
+
   @State private var windowWidth: CGFloat = .zero
 
-  private var isWindowWide: Bool { windowWidth >= 1024 }
+  private var isWindowWide: Bool { isLandscape && windowWidth >= 1024 }
 
   var body: some View {
     ZStack {
@@ -65,7 +68,8 @@ struct RotationsCarouselView: View {
       alignment: .top,
       spacing: 0)
     {
-      // avoid the scroll of the first column causing the whole navigation stack to scroll
+      // Stupid workaround to avoid the fact that scrolling of the first
+      // column will cause the whole navigation stack to scroll
       if isWindowWide {
         ScrollView {
           Spacer()

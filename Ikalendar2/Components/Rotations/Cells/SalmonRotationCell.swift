@@ -106,7 +106,7 @@ struct SalmonRotationCellTimeTextSection: View {
             relativeTo: .headline)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
           .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
-          .background(Color.tertiarySystemGroupedBackground)
+          .background(Color.systemGroupedBackgroundTertiary)
           .cornerRadius(Scoped.TIME_TEXT_FRAME_CORNER_RADIUS)
 
         Text("-")
@@ -124,7 +124,7 @@ struct SalmonRotationCellTimeTextSection: View {
             relativeTo: .headline)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
           .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
-          .background(Color.tertiarySystemGroupedBackground)
+          .background(Color.systemGroupedBackgroundTertiary)
           .cornerRadius(Scoped.TIME_TEXT_FRAME_CORNER_RADIUS)
       }
     }

@@ -53,7 +53,7 @@ struct AltAppIconRow: View {
         Image(systemName: Scoped.ACTIVE_INDICATOR_SFSYMBOL)
           .font(Scoped.ACTIVE_INDICATOR_FONT)
           .symbolRenderingMode(.palette)
-          .foregroundStyle(Color.accentColor, Color.tertiarySystemGroupedBackground)
+          .foregroundStyle(Color.accentColor, Color.systemGroupedBackgroundTertiary)
       }
     }
     .padding(.vertical, Scoped.ROW_PADDING_V)
@@ -132,7 +132,7 @@ struct AltAppIconEasterEggRow: View {
         Image(systemName: Scoped.ACTIVE_INDICATOR_SFSYMBOL)
           .font(Scoped.ACTIVE_INDICATOR_FONT)
           .symbolRenderingMode(.palette)
-          .foregroundStyle(Color.accentColor, Color.tertiarySystemGroupedBackground)
+          .foregroundStyle(Color.accentColor, Color.systemGroupedBackgroundTertiary)
       }
     }
     .padding(.vertical, Scoped.ROW_PADDING_V)
@@ -164,10 +164,11 @@ struct AltAppIconEasterEggRow: View {
   private func applyEasterEggAnimation(_ content: some View) -> some View {
     let randomRotationAngel = Double((Int.random(in: 16 ... 24)) * (Bool.random() ? 1 : -1))
 
-    return content
-      .keyframeAnimator(
-        initialValue: AppIconEasterEggAnimationValues(),
-        trigger: buttonPressCounter)
+    return
+      content
+        .keyframeAnimator(
+          initialValue: AppIconEasterEggAnimationValues(),
+          trigger: buttonPressCounter)
     { content, value in
       content
         .rotationEffect(value.angle)

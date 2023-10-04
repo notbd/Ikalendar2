@@ -13,14 +13,13 @@ import SwiftUI
 @MainActor
 struct RootView: View {
   @Environment(\.dynamicTypeSize) var dynamicTypeSize
-  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @Environment(IkaStatus.self) private var ikaStatus
-
   @EnvironmentObject private var ikaPreference: IkaPreference
 
-  @State private var entryViewID = UUID()
-
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
+
+  @State private var entryViewID = UUID()
 
   var body: some View {
     EntryView()

@@ -82,12 +82,12 @@ struct SettingsCreditsView: View {
     CreditsOpenSourceLibCell(
       name: "AlertKit",
       urlString: "https://github.com/sparrowcode/AlertKit",
-      isLinkable: false,
+      isLinkable: true,
       destination:
       DetailsLicenseView(
         repoName: "AlertKit",
         repoURLString: "https://github.com/sparrowcode/AlertKit",
-        isLinkable: false))
+        isLinkable: true))
   }
 
   private var rowSplatoon2Site: some View {

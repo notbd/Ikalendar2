@@ -34,7 +34,17 @@ struct SettingsMainView: View {
         Section {
           rowDefaultGameMode
           rowDefaultBattleMode
-        } header: { Text("Default Mode") }
+        } header: {
+          Text("Default Mode")
+        } footer: {
+          if !isHorizontalCompact {
+            Text("Certain options only apply to smaller screen widths.")
+              .font(.footnote)
+          }
+          else {
+            EmptyView()
+          }
+        }
 
         Section {
           rowColorScheme

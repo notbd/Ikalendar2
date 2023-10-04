@@ -123,6 +123,8 @@ extension Constants.Style {
 
       static let ALT_STAGE_IMG_SFSYMBOL = "compass.drawing"
       static let ALT_STAGE_PREVIEW_SHUFFLE_SFSYMBOL = "arrow.triangle.2.circlepath"
+
+      static let PREVIEW_CELL_MAX_WIDTH: CGFloat = 390
     }
 
     enum About {
