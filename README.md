@@ -1,9 +1,9 @@
 <!-- markdownlint-disable MD033 MD041 -->
 <p align="center">
   <img
-    src="./Resources/MetaAssets/AppIcons/ikalendar2-app-icon-modern-dark.png"
+    src="./Resources/MetaAssets/AppIcons/ikalendar2-app-icon-default-masked.png"
     alt="ikalendar2 logo"
-    style="width:120px; height:120px; overflow:hidden; border-radius:22.5%;"/>
+    width=120/>
 </p>
 
 <h1 align="center"/>ikalendar2</h1>

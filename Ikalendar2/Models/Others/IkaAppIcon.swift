@@ -87,16 +87,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     }
 
     var cornerRadius: CGFloat {
-      switch self {
-      case .original:
-        1024 * (14 / 60)
-      case .large:
-        28
-      case .mid:
-        21
-      case .small:
-        14
-      }
+      size * 0.2237
     }
 
     var clipShape: some Shape {
