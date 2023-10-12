@@ -56,7 +56,7 @@ ikalendar2 is licensed under the [GPL-3.0 License](./LICENSE).
 
 # Privacy
 
-ikalendar2 does not collect or upload any personal information from the user. The privacy policy can be found [here](https://github.com/notbd/Ikalendar2/wiki/Privacy-Policy).
+ikalendar2 does not collect any personal information or upload any data about the user. The privacy policy can be found [here](https://github.com/notbd/Ikalendar2/wiki/Privacy-Policy).
 
 # Disclaimer
 
