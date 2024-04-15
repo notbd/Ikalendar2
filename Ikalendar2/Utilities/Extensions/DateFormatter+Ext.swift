@@ -2,7 +2,7 @@
 //  DateFormatter+Ext.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Foundation
@@ -23,11 +23,11 @@ extension DateFormatter {
     locale = Locale.current
 
     switch ikaType {
-    case .time:
-      if locale.identifier.starts(with: "ja") {
-        // Japanese
-        dateFormat = "ah:mm"
-      }
+      case .time:
+        if locale.identifier.starts(with: "ja") {
+          // Japanese
+          dateFormat = "ah:mm"
+        }
 //      else if locale.identifier.starts(with: "zh_Hans") {
 //        // Simplified Han
 //        dateFormat = "a h:mm"
@@ -36,15 +36,15 @@ extension DateFormatter {
 //        // Traditional Han
 //        dateFormat = "a h:mm"
 //      }
-      else {
-        // default: English
-        dateFormat = "h:mm a"
-      }
-    case .date:
-      if locale.identifier.starts(with: "ja") {
-        // Japanese
-        dateFormat = "M/d(E) "
-      }
+        else {
+          // default: English
+          dateFormat = "h:mm a"
+        }
+      case .date:
+        if locale.identifier.starts(with: "ja") {
+          // Japanese
+          dateFormat = "M/d(E) "
+        }
 //      else if locale.identifier.starts(with: "zh_Hans") {
 //        // Simplified Han
 //        dateFormat = "ah:mm"
@@ -54,10 +54,10 @@ extension DateFormatter {
 //        // Traditional Han
 //        dateFormat = "ah:mm"
 //      }
-      else {
-        // default: English
-        dateFormat = "E, M/d, "
-      }
+        else {
+          // default: English
+          dateFormat = "E, M/d, "
+        }
     }
   }
 }

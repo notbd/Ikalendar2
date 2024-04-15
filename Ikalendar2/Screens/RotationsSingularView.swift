@@ -2,7 +2,7 @@
 //  RotationsSingularView.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SimpleHaptics
@@ -48,29 +48,29 @@ struct RotationsSingularView: View {
   @ViewBuilder
   private var content: some View {
     switch ikaCatalog.loadResultStatus {
-    case .error(let ikaError):
-      ErrorView(error: ikaError)
-    default:
-      rotationList
+      case .error(let ikaError):
+        ErrorView(error: ikaError)
+      default:
+        rotationList
     }
   }
 
   @ViewBuilder
   private var rotationList: some View {
     switch ikaStatus.currentGameMode {
-    case .battle:
-      BattleRotationList()
-    case .salmon:
-      SalmonRotationList()
+      case .battle:
+        BattleRotationList()
+      case .salmon:
+        SalmonRotationList()
     }
   }
 
   private var title: String {
     switch ikaStatus.currentGameMode {
-    case .battle:
-      ikaStatus.currentBattleMode.name
-    case .salmon:
-      ikaStatus.currentGameMode.name
+      case .battle:
+        ikaStatus.currentBattleMode.name
+      case .salmon:
+        ikaStatus.currentGameMode.name
     }
   }
 

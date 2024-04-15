@@ -2,7 +2,7 @@
 //  IkaLocale.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Foundation
@@ -18,64 +18,64 @@ enum IkaLocale {
 
   var description: String {
     switch self {
-    case .en:
-      Constants.Key.Locale.EN
-    case .ja:
-      Constants.Key.Locale.JA
-    case .zhHans:
-      Constants.Key.Locale.ZH_HANS
-    case .zhHant:
-      Constants.Key.Locale.ZH_HANT
-    case .unknown:
-      Constants.Key.Placeholder.UNKNOWN
+      case .en:
+        Constants.Key.Locale.EN
+      case .ja:
+        Constants.Key.Locale.JA
+      case .zhHans:
+        Constants.Key.Locale.ZH_HANS
+      case .zhHant:
+        Constants.Key.Locale.ZH_HANT
+      case .unknown:
+        Constants.Key.Placeholder.UNKNOWN
     }
   }
 
   var sfSymbolName: String {
     switch self {
-    case .en:
-      "globe.americas.fill"
-    default:
-      "globe.asia.australia.fill"
+      case .en:
+        "globe.americas.fill"
+      default:
+        "globe.asia.australia.fill"
     }
   }
 
   var splatoon2Site: String {
     switch self {
-    case .en:
-      Constants.Key.URL.Splatoon2Site.EN
-    case .ja:
-      Constants.Key.URL.Splatoon2Site.JA
-    case .zhHans:
-      Constants.Key.URL.Splatoon2Site.ZH_HANS
-    case .zhHant:
-      Constants.Key.URL.Splatoon2Site.ZH_HANT
-    case .unknown:
-      Constants.Key.URL.Splatoon2Site.EN
+      case .en:
+        Constants.Key.URL.Splatoon2Site.EN
+      case .ja:
+        Constants.Key.URL.Splatoon2Site.JA
+      case .zhHans:
+        Constants.Key.URL.Splatoon2Site.ZH_HANS
+      case .zhHant:
+        Constants.Key.URL.Splatoon2Site.ZH_HANT
+      case .unknown:
+        Constants.Key.URL.Splatoon2Site.EN
     }
   }
 
   var nintendoSite: String {
     switch self {
-    case .en:
-      Constants.Key.URL.NintendoSite.EN
-    case .ja:
-      Constants.Key.URL.NintendoSite.JA
-    case .zhHans:
-      Constants.Key.URL.NintendoSite.ZH_HANS
-    case .zhHant:
-      Constants.Key.URL.NintendoSite.ZH_HANT
-    case .unknown:
-      Constants.Key.URL.NintendoSite.EN
+      case .en:
+        Constants.Key.URL.NintendoSite.EN
+      case .ja:
+        Constants.Key.URL.NintendoSite.JA
+      case .zhHans:
+        Constants.Key.URL.NintendoSite.ZH_HANS
+      case .zhHant:
+        Constants.Key.URL.NintendoSite.ZH_HANT
+      case .unknown:
+        Constants.Key.URL.NintendoSite.EN
     }
   }
 
   var easterEggURLString: String {
     switch self {
-    case .zhHant:
-      Constants.Key.URL.THE_GOOD_STUFF_CN
-    default:
-      Constants.Key.URL.THE_GOOD_STUFF
+      case .zhHant:
+        Constants.Key.URL.THE_GOOD_STUFF_CN
+      default:
+        Constants.Key.URL.THE_GOOD_STUFF
     }
   }
 }

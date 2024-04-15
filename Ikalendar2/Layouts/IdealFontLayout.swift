@@ -2,7 +2,7 @@
 //  IdealFontLayout.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -24,7 +24,6 @@ import SwiftUI
 ///     are considered for computing the ideal size but will not be displayed.
 ///
 struct IdealFontLayout: Layout {
-
   let anchor: UnitPoint
 
   // MARK: Internal
@@ -57,39 +56,39 @@ struct IdealFontLayout: Layout {
 
     var contentX: CGFloat {
       switch anchor {
-      case .topLeading,
-           .leading,
-           .bottomLeading:
-        bounds.minX
-      case .top,
-           .center,
-           .bottom:
-        bounds.midX
-      case .topTrailing,
-           .trailing,
-           .bottomTrailing:
-        bounds.maxX
-      default:
-        bounds.midX
+        case .topLeading,
+             .leading,
+             .bottomLeading:
+          bounds.minX
+        case .top,
+             .center,
+             .bottom:
+          bounds.midX
+        case .topTrailing,
+             .trailing,
+             .bottomTrailing:
+          bounds.maxX
+        default:
+          bounds.midX
       }
     }
 
     var contentY: CGFloat {
       switch anchor {
-      case .topLeading,
-           .top,
-           .topTrailing:
-        bounds.minY
-      case .leading,
-           .center,
-           .trailing:
-        bounds.midY
-      case .bottomLeading,
-           .bottom,
-           .bottomTrailing:
-        bounds.maxY
-      default:
-        bounds.minY
+        case .topLeading,
+             .top,
+             .topTrailing:
+          bounds.minY
+        case .leading,
+             .center,
+             .trailing:
+          bounds.midY
+        case .bottomLeading,
+             .bottom,
+             .bottomTrailing:
+          bounds.maxY
+        default:
+          bounds.minY
       }
     }
 
@@ -153,5 +152,4 @@ struct IdealFontLayout: Layout {
     }
     return maxIdealSize
   }
-
 }

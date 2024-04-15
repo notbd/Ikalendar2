@@ -2,13 +2,12 @@
 //  AssetImageCounter.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import UIKit
 
-struct AssetImageCounter {
-
+enum AssetImageCounter {
   /// Returns the total number of images in the App Asset folder that have a certain prefix in their file
   /// name. Assume number of images no greater than 10.
   ///

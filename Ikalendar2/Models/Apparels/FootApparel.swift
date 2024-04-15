@@ -2,7 +2,7 @@
 //  FootApparel.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 // MARK: - FootApparel
@@ -21,11 +21,11 @@ enum FootApparel: Int, Identifiable, CaseIterable, Equatable {
 extension FootApparel {
   var name: String {
     switch self {
-    case .angryRainBoots: "Angry Rain Boots"
-    case .nonSlipSenseis: "Non-slip Senseis"
-    case .friendshipBracelet: "Friendship Bracelet"
-    case .flipperFloppers: "Flipper Floppers"
-    case .woodenSandals: "Wooden Sandals"
+      case .angryRainBoots: "Angry Rain Boots"
+      case .nonSlipSenseis: "Non-slip Senseis"
+      case .friendshipBracelet: "Friendship Bracelet"
+      case .flipperFloppers: "Flipper Floppers"
+      case .woodenSandals: "Wooden Sandals"
     }
   }
 }
@@ -33,11 +33,11 @@ extension FootApparel {
 extension FootApparel {
   var key: String {
     switch self {
-    case .angryRainBoots: "Shs_COP101"
-    case .nonSlipSenseis: "Shs_COP102"
-    case .friendshipBracelet: "Shs_COP104"
-    case .flipperFloppers: "Shs_COP105"
-    case .woodenSandals: "Shs_COP106"
+      case .angryRainBoots: "Shs_COP101"
+      case .nonSlipSenseis: "Shs_COP102"
+      case .friendshipBracelet: "Shs_COP104"
+      case .flipperFloppers: "Shs_COP105"
+      case .woodenSandals: "Shs_COP106"
     }
   }
 }

@@ -2,7 +2,7 @@
 //  GameMode.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 // MARK: - GameMode
@@ -20,15 +20,15 @@ enum GameMode: String, Identifiable, CaseIterable, Equatable {
 extension GameMode {
   var name: String {
     switch self {
-    case .battle: "Battle"
-    case .salmon: "Salmon Run"
+      case .battle: "Battle"
+      case .salmon: "Salmon Run"
     }
   }
 
   var shortName: String {
     switch self {
-    case .battle: "Battle"
-    case .salmon: "Salmon"
+      case .battle: "Battle"
+      case .salmon: "Salmon"
     }
   }
 }
@@ -36,8 +36,8 @@ extension GameMode {
 extension GameMode {
   var sfSymbolNameIdle: String {
     switch self {
-    case .battle: "flag"
-    case .salmon: "lifepreserver"
+      case .battle: "flag"
+      case .salmon: "lifepreserver"
     }
   }
 }
@@ -45,8 +45,8 @@ extension GameMode {
 extension GameMode {
   var sfSymbolNameSelected: String {
     switch self {
-    case .battle: "flag.fill"
-    case .salmon: "lifepreserver.fill"
+      case .battle: "flag.fill"
+      case .salmon: "lifepreserver.fill"
     }
   }
 }

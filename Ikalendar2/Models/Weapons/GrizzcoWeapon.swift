@@ -2,7 +2,7 @@
 //  GrizzcoWeapon.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Foundation
@@ -22,10 +22,10 @@ enum GrizzcoWeapon: Int, Identifiable, CaseIterable, Equatable {
 extension GrizzcoWeapon {
   var name: String {
     switch self {
-    case .blaster: "Grizzco Blaster"
-    case .brella: "Grizzco Brella"
-    case .charger: "Grizzco Charger"
-    case .slosher: "Grizzco Slosher"
+      case .blaster: "Grizzco Blaster"
+      case .brella: "Grizzco Brella"
+      case .charger: "Grizzco Charger"
+      case .slosher: "Grizzco Slosher"
     }
   }
 }
@@ -33,10 +33,10 @@ extension GrizzcoWeapon {
 extension GrizzcoWeapon {
   var key: String {
     switch self {
-    case .blaster: "Wst_Shooter_BlasterCoopBurst"
-    case .brella: "Wst_Umbrella_CoopAutoAssault"
-    case .charger: "Wst_Charger_CoopSpark"
-    case .slosher: "Wst_Slosher_CoopVase"
+      case .blaster: "Wst_Shooter_BlasterCoopBurst"
+      case .brella: "Wst_Umbrella_CoopAutoAssault"
+      case .charger: "Wst_Charger_CoopSpark"
+      case .slosher: "Wst_Slosher_CoopVase"
     }
   }
 }

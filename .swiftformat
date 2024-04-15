@@ -21,17 +21,17 @@
 ### FORMAT OPTIONS
 
 ## swiftVersion
---swiftversion 5.9
+--swiftversion 5.10
 
 ## fileHeader
---header "\n {file}\n Ikalendar2\n\n Copyright (c) {year} TIANWEI ZHANG. All rights reserved.\n"
+--header "\n {file}\n Ikalendar2\n\n Copyright (c) TIANWEI ZHANG. All rights reserved.\n"
 
 # blankLinesAtEndOfScope,
 # blankLinesAtStartOfScope
---typeblanklines preserve
+--typeblanklines remove
 
 # braces
---allman true
+--allman true # however I turn off rule `braces` most of the time
 
 # elseOnSameLine
 --elseposition same-line
@@ -49,8 +49,10 @@
 # indent
 --ifdef no-indent
 --indent 2
---indentcase false
+--indentcase true
 --indentstrings true
+--tabwidth 2
+--xcodeindentation disabled
 
 # modifierOrder
 --modifierorder nonisolated,static,public,private
@@ -75,7 +77,7 @@
 --trimwhitespace always
 
 # wrap
---maxwidth 110 # recommend 100 but _strictly enforce_ 110
+--maxwidth 120
 --wrapternary before-operators
 
 # wrapArguments
@@ -97,103 +99,107 @@
 
 ## Default Rules (enabled by default)
 
---rules                             \
-    andOperator,                    \
-    anyObjectProtocol,              \
-    applicationMain,                \
-#    assertionFailures,              \
-    blankLinesAroundMark,           \
-    blankLinesAtEndOfScope,         \
-    blankLinesAtStartOfScope,       \
-    blankLinesBetweenScopes,        \
-#    braces,                         \ # sometimes prefer Allman over K&R
-    conditionalAssignment,          \
-    consecutiveBlankLines,          \
-    consecutiveSpaces,              \
-    duplicateImports,               \
-    elseOnSameLine,                 \
-    emptyBraces,                    \
-    enumNamespaces,                 \
-    extensionAccessControl,         \
-    fileHeader,                     \
-    genericExtensions,              \
-    headerFileName,                 \
-    hoistAwait,                     \
-    hoistPatternLet,                \
-    hoistTry,                       \
-    indent,                         \
-#    initCoderUnavailable,           \
-    leadingDelimiters,              \
-    linebreakAtEndOfFile,           \
-    linebreaks,                     \
-    modifierOrder,                  \
-    numberFormatting,               \
-    opaqueGenericParameters,        \
-#    preferKeyPath,                  \
-    redundantBackticks,             \
-    redundantBreak,                 \
-    redundantClosure,               \
-    redundantExtensionACL,          \
-    redundantFileprivate,           \
-    redundantGet,                   \
-    redundantInit,                  \
-    redundantInternal,              \
-    redundantLet,                   \
-    redundantLetError,              \
-    redundantNilInit,               \
-    redundantObjc,                  \
-    redundantOptionalBinding,       \
-    redundantParens,                \
-    redundantPattern,               \
-    redundantRawValues,             \
-    redundantReturn,                \
-    redundantSelf,                  \
-    redundantStaticSelf,            \
-    redundantType,                  \
-    redundantVoidReturnType,        \
-    semicolons,                     \
-    sortDeclarations,               \
-    sortImports,                    \
-    sortTypealiases,                \
-    spaceAroundBraces,              \
-    spaceAroundBrackets,            \
-    spaceAroundComments,            \
-    spaceAroundGenerics,            \
-    spaceAroundOperators,           \
-    spaceAroundParens,              \
-    spaceInsideBraces,              \
-    spaceInsideBrackets,            \
-    spaceInsideComments,            \
-    spaceInsideGenerics,            \
-    spaceInsideParens,              \
-    strongOutlets,                  \
-    strongifiedSelf,                \
-    todos,                          \
-    trailingClosures,               \
-    trailingCommas,                 \
-    trailingSpace,                  \
-    typeSugar,                      \
-    unusedArguments,                \
-    void,                           \
-    wrap,                           \
-    wrapArguments,                  \
-    wrapAttributes,                 \
-    wrapMultilineStatementBraces,   \
-    wrapSingleLineComments,         \
+--rules                                             \
+    andOperator,                                    \
+    anyObjectProtocol,                              \
+    applicationMain,                                \
+#    assertionFailures,                              \
+    blankLineAfterImports,                          \
+    blankLinesAroundMark,                           \
+    blankLinesAtEndOfScope,                         \
+    blankLinesAtStartOfScope,                       \
+    blankLinesBetweenChainedFunctions,              \
+    blankLinesBetweenScopes,                        \
+#    braces,                                         \ # sometimes prefer Allman over K&R
+    conditionalAssignment,                          \
+    consecutiveBlankLines,                          \
+    consecutiveSpaces,                              \
+    duplicateImports,                               \
+    elseOnSameLine,                                 \
+    emptyBraces,                                    \
+    enumNamespaces,                                 \
+    extensionAccessControl,                         \
+    fileHeader,                                     \
+    genericExtensions,                              \
+    headerFileName,                                 \
+    hoistAwait,                                     \
+    hoistPatternLet,                                \
+    hoistTry,                                       \
+    indent,                                         \
+#    initCoderUnavailable,                           \
+    leadingDelimiters,                              \
+    linebreakAtEndOfFile,                           \
+    linebreaks,                                     \
+    modifierOrder,                                  \
+    numberFormatting,                               \
+    opaqueGenericParameters,                        \
+#    preferForLoop,                                  \
+#    preferKeyPath,                                  \
+    redundantBackticks,                             \
+    redundantBreak,                                 \
+    redundantClosure,                               \
+    redundantExtensionACL,                          \
+    redundantFileprivate,                           \
+    redundantGet,                                   \
+    redundantInit,                                  \
+    redundantInternal,                              \
+    redundantLet,                                   \
+    redundantLetError,                              \
+    redundantNilInit,                               \
+    redundantObjc,                                  \
+    redundantOptionalBinding,                       \
+    redundantParens,                                \
+    redundantPattern,                               \
+    redundantRawValues,                             \
+    redundantReturn,                                \
+    redundantSelf,                                  \
+    redundantStaticSelf,                            \
+    redundantType,                                  \
+    redundantVoidReturnType,                        \
+    semicolons,                                     \
+    sortDeclarations,                               \
+    sortImports,                                    \
+    sortTypealiases,                                \
+    spaceAroundBraces,                              \
+    spaceAroundBrackets,                            \
+    spaceAroundComments,                            \
+    spaceAroundGenerics,                            \
+    spaceAroundOperators,                           \
+    spaceAroundParens,                              \
+    spaceInsideBraces,                              \
+    spaceInsideBrackets,                            \
+    spaceInsideComments,                            \
+    spaceInsideGenerics,                            \
+    spaceInsideParens,                              \
+    strongOutlets,                                  \
+    strongifiedSelf,                                \
+    todos,                                          \
+    trailingClosures,                               \
+    trailingCommas,                                 \
+    trailingSpace,                                  \
+    typeSugar,                                      \
+    unusedArguments,                                \
+    void,                                           \
+    wrap,                                           \
+    wrapArguments,                                  \
+    wrapAttributes,                                 \
+#    wrapLoopBodies,                                 \
+    wrapMultilineStatementBraces,                   \
+    wrapSingleLineComments,                         \
     yodaConditions,
 
 ## Opt-in Rules (disabled by default)
---rules                             \
-    acronyms,                       \
-    blankLineAfterImports,          \
-    blankLinesBetweenChainedFunctions,       \
-    blankLinesBetweenImports,       \
-    blockComments,                  \
-    docComments,                    \
-    isEmpty,                        \
-    markTypes,                      \
-    organizeDeclarations,           \
-#    sortedSwitchCases,              \
-#    wrapConditionalBodies,          \
-    wrapEnumCases,                  \
+--rules                                             \
+    acronyms,                                       \
+    blankLinesBetweenImports,                       \
+    blockComments,                                  \
+    docComments,                                    \
+    isEmpty,                                        \
+    markTypes,                                      \
+#    noExplicitOwnership,                            \
+    organizeDeclarations,                           \
+#    sortSwitchCases,                                \
+#    wrapConditionalBodies,                          \
+    wrapEnumCases,                                  \
+    wrapMultilineConditionalAssignment,             \
     wrapSwitchCases,

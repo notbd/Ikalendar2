@@ -2,7 +2,7 @@
 //  HeadApparel.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 // MARK: - HeadApparel
@@ -26,16 +26,16 @@ enum HeadApparel: Int, Identifiable, CaseIterable, Equatable {
 extension HeadApparel {
   var name: String {
     switch self {
-    case .headlampHelmet: "Headlamp Helmet"
-    case .dustBlocker2000: "Dust Blocker 2000"
-    case .weldingMask: "Welding Mask"
-    case .beekeeperHat: "Beekeeper Hat"
-    case .octoleetGoggles: "Octoleet Goggles"
-    case .capOfLegend: "Cap of Legend"
-    case .oceanicHardHat: "Oceanic Hard Hat"
-    case .workersHeadTowel: "Worker's Head Towel"
-    case .workersCap: "Worker's Cap"
-    case .sailorCap: "Sailor Cap"
+      case .headlampHelmet: "Headlamp Helmet"
+      case .dustBlocker2000: "Dust Blocker 2000"
+      case .weldingMask: "Welding Mask"
+      case .beekeeperHat: "Beekeeper Hat"
+      case .octoleetGoggles: "Octoleet Goggles"
+      case .capOfLegend: "Cap of Legend"
+      case .oceanicHardHat: "Oceanic Hard Hat"
+      case .workersHeadTowel: "Worker's Head Towel"
+      case .workersCap: "Worker's Cap"
+      case .sailorCap: "Sailor Cap"
     }
   }
 }
@@ -43,16 +43,16 @@ extension HeadApparel {
 extension HeadApparel {
   var key: String {
     switch self {
-    case .headlampHelmet: "Hed_COP100"
-    case .dustBlocker2000: "Hed_COP101"
-    case .weldingMask: "Hed_COP102"
-    case .beekeeperHat: "Hed_COP103"
-    case .octoleetGoggles: "Hed_COP104"
-    case .capOfLegend: "Hed_COP105"
-    case .oceanicHardHat: "Hed_COP106"
-    case .workersHeadTowel: "Hed_COP107"
-    case .workersCap: "Hed_COP108"
-    case .sailorCap: "Hed_COP109"
+      case .headlampHelmet: "Hed_COP100"
+      case .dustBlocker2000: "Hed_COP101"
+      case .weldingMask: "Hed_COP102"
+      case .beekeeperHat: "Hed_COP103"
+      case .octoleetGoggles: "Hed_COP104"
+      case .capOfLegend: "Hed_COP105"
+      case .oceanicHardHat: "Hed_COP106"
+      case .workersHeadTowel: "Hed_COP107"
+      case .workersCap: "Hed_COP108"
+      case .sailorCap: "Hed_COP109"
     }
   }
 }

@@ -2,7 +2,7 @@
 //  ModeIconStamp.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -30,18 +30,18 @@ struct ModeIconStamp: View {
 
   private var axisRotationWeight: (x: CGFloat, y: CGFloat) {
     switch ikaInterfaceOrientationPublisher.currentOrientation {
-    case .unknown:
-      (dy, dx)
-    case .portrait:
-      (dy, dx)
-    case .portraitUpsideDown:
-      (-dy, -dx)
-    case .landscapeLeft:
-      (-dx, dy)
-    case .landscapeRight:
-      (dx, -dy)
-    @unknown default:
-      (dy, dx)
+      case .unknown:
+        (dy, dx)
+      case .portrait:
+        (dy, dx)
+      case .portraitUpsideDown:
+        (-dy, -dx)
+      case .landscapeLeft:
+        (-dx, dy)
+      case .landscapeRight:
+        (dx, -dy)
+      @unknown default:
+        (dy, dx)
     }
   }
 
@@ -69,12 +69,13 @@ struct ModeIconStamp: View {
   }
 
   private var icon: some View {
-    let imgFiln: String = switch gameModeSelection {
-    case .battle:
-      battleModeSelection.imgFilnLarge
-    case .salmon:
-      Scoped.ICON_IMG_FILN_SALMON
-    }
+    let imgFiln: String =
+      switch gameModeSelection {
+        case .battle:
+          battleModeSelection.imgFilnLarge
+        case .salmon:
+          Scoped.ICON_IMG_FILN_SALMON
+      }
 
     return
       Image(imgFiln)

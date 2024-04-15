@@ -2,7 +2,7 @@
 //  IkaDecoder.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Foundation
@@ -16,7 +16,7 @@ import SwiftyJSON
 /// are designed to be extensible, allowing for the addition of further parsing
 /// functions as needed.
 ///
-final class IkaDecoder {
+enum IkaDecoder {
   /// Parses and decodes a text string from the given raw data.
   ///
   /// This function takes `Data` as an input parameter and attempts to decode it
@@ -278,16 +278,16 @@ final class IkaDecoder {
     // Find apparel with type and id
     let rewardApparelOptional: SalmonApparel? =
       switch apparelTypeString
-    {
-    case "head":
-      SalmonApparel(type: .head, id: apparelIDInt)
-    case "clothes":
-      SalmonApparel(type: .body, id: apparelIDInt)
-    case "shoes":
-      SalmonApparel(type: .foot, id: apparelIDInt)
-    default:
-      nil
-    }
+      {
+        case "head":
+          SalmonApparel(type: .head, id: apparelIDInt)
+        case "clothes":
+          SalmonApparel(type: .body, id: apparelIDInt)
+        case "shoes":
+          SalmonApparel(type: .foot, id: apparelIDInt)
+        default:
+          nil
+      }
     // strip nil - throw error if invalid type or invalid id
     guard let rewardApparel = rewardApparelOptional
     else { throw IkaError.serverError(.badData) }

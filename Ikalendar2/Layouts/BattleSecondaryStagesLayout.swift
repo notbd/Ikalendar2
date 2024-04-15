@@ -2,7 +2,7 @@
 //  BattleSecondaryStagesLayout.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -22,7 +22,6 @@ import SwiftUI
 ///   - Must have exactly two subviews: one for the stage and one for the weapons.
 ///
 struct BattleSecondaryStagesLayout: Layout {
-
   // MARK: Internal
 
   func sizeThatFits(
@@ -116,5 +115,4 @@ struct BattleSecondaryStagesLayout: Layout {
     }
     return minIdealSize
   }
-
 }

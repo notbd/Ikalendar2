@@ -2,14 +2,13 @@
 //  IkaOpenSourceLicense.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Foundation
 import RegexBuilder
 
 struct IkaOpenSourceLicense {
-
   let repoURL: String
   let type: String
   let typeDescription: String

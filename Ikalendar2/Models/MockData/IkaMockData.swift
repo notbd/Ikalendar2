@@ -2,13 +2,13 @@
 //  IkaMockData.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Foundation
 
 /// Struct providing mock data for testing purpose.
-struct IkaMockData {
+enum IkaMockData {
   /// Generate a mock SalmonRotation data.
   /// - Parameters:
   ///   - rawStartTime: The raw start time (rotation will start at the next
@@ -49,24 +49,24 @@ struct IkaMockData {
       else {
         // Has mystery weapons
         switch mysteryWeaponType! {
-        case .green:
-          // Green question mark
-          for _ in 0 ..< 3 {
-            // no duplicates
-            var randomIkaWeapon = IkaWeapon.allCases.randomElement()!
-            while weapons!.contains(.vanilla(randomIkaWeapon)) {
-              randomIkaWeapon = IkaWeapon.allCases.randomElement()!
+          case .green:
+            // Green question mark
+            for _ in 0 ..< 3 {
+              // no duplicates
+              var randomIkaWeapon = IkaWeapon.allCases.randomElement()!
+              while weapons!.contains(.vanilla(randomIkaWeapon)) {
+                randomIkaWeapon = IkaWeapon.allCases.randomElement()!
+              }
+              weapons!.append(SalmonWeapon(randomIkaWeapon.id)!)
             }
-            weapons!.append(SalmonWeapon(randomIkaWeapon.id)!)
-          }
-          let mysteryWeapon = MysteryWeapon.green
-          weapons!.append(SalmonWeapon(mysteryWeapon.id)!)
-        case .gold:
-          // Gold question mark
-          for _ in 0 ..< 4 {
-            let mysteryWeapon = MysteryWeapon.gold
+            let mysteryWeapon = MysteryWeapon.green
             weapons!.append(SalmonWeapon(mysteryWeapon.id)!)
-          }
+          case .gold:
+            // Gold question mark
+            for _ in 0 ..< 4 {
+              let mysteryWeapon = MysteryWeapon.gold
+              weapons!.append(SalmonWeapon(mysteryWeapon.id)!)
+            }
         }
       }
     }

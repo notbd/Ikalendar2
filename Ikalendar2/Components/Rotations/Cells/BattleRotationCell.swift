@@ -2,7 +2,7 @@
 //  BattleRotationCell.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -35,16 +35,16 @@ struct BattleRotationCell: View {
 
   var body: some View {
     switch type {
-    case .primary:
-      BattleRotationCellPrimary(
-        rotation: rotation,
-        rowWidth: rowWidth,
-        animationNamespaces: animationNamespaces)
-    case .secondary:
-      BattleRotationCellSecondary(
-        rotation: rotation,
-        rowWidth: rowWidth,
-        animationNamespaces: animationNamespaces)
+      case .primary:
+        BattleRotationCellPrimary(
+          rotation: rotation,
+          rowWidth: rowWidth,
+          animationNamespaces: animationNamespaces)
+      case .secondary:
+        BattleRotationCellSecondary(
+          rotation: rotation,
+          rowWidth: rowWidth,
+          animationNamespaces: animationNamespaces)
     }
   }
 }
@@ -302,7 +302,6 @@ struct BattleRotationCellSecondary: View {
       }
     }
   }
-
 }
 
 // MARK: - BattleRotationCell_Previews

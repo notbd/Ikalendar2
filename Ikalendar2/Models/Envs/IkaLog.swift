@@ -2,7 +2,7 @@
 //  IkaLog.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SimpleHaptics
@@ -12,7 +12,6 @@ import SwiftUI
 /// Contains the user action log and app state.
 @MainActor
 final class IkaLog: ObservableObject {
-
   static let shared: IkaLog = .init()
 
   /// Record if app should display onboarding screen to the user.

@@ -2,7 +2,7 @@
 //  IkaInterfaceOrientationPublisher.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Combine
@@ -14,7 +14,6 @@ import UIKit
 ///
 @Observable
 final class IkaInterfaceOrientationPublisher {
-
   static let shared: IkaInterfaceOrientationPublisher = .init()
 
   /// The current orientation of the device.
@@ -73,18 +72,18 @@ extension UIInterfaceOrientation {
   /// A textual representation of `UIInterfaceOrientation`.
   var description: String {
     switch self {
-    case .unknown:
-      "Unknown"
-    case .portrait:
-      "Portrait"
-    case .portraitUpsideDown:
-      "PortraitUpsideDown"
-    case .landscapeLeft:
-      "LandscapeLeft"
-    case .landscapeRight:
-      "LandscapeRight"
-    @unknown default:
-      "Unknown"
+      case .unknown:
+        "Unknown"
+      case .portrait:
+        "Portrait"
+      case .portraitUpsideDown:
+        "PortraitUpsideDown"
+      case .landscapeLeft:
+        "LandscapeLeft"
+      case .landscapeRight:
+        "LandscapeRight"
+      @unknown default:
+        "Unknown"
     }
   }
 }

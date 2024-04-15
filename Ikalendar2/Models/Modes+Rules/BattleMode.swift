@@ -2,7 +2,7 @@
 //  BattleMode.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -23,9 +23,9 @@ enum BattleMode: String, Identifiable, CaseIterable, Equatable {
 extension BattleMode {
   var themeColor: Color {
     switch self {
-    case .regular: .regularBattleTheme
-    case .gachi: .gachiBattleTheme
-    case .league: .leagueBattleTheme
+      case .regular: .regularBattleTheme
+      case .gachi: .gachiBattleTheme
+      case .league: .leagueBattleTheme
     }
   }
 }
@@ -33,17 +33,17 @@ extension BattleMode {
 extension BattleMode {
   var name: String {
     switch self {
-    case .regular: "Regular Battle"
-    case .gachi: "Ranked Battle"
-    case .league: "League Battle"
+      case .regular: "Regular Battle"
+      case .gachi: "Ranked Battle"
+      case .league: "League Battle"
     }
   }
 
   var shortName: String {
     switch self {
-    case .regular: "Regular"
-    case .gachi: "Ranked"
-    case .league: "League"
+      case .regular: "Regular"
+      case .gachi: "Ranked"
+      case .league: "League"
     }
   }
 }
@@ -51,17 +51,17 @@ extension BattleMode {
 extension BattleMode {
   var sfSymbolNameSelected: String {
     switch self {
-    case .regular: "paintbrush.fill"
-    case .gachi: "person.fill"
-    case .league: "person.3.fill"
+      case .regular: "paintbrush.fill"
+      case .gachi: "person.fill"
+      case .league: "person.3.fill"
     }
   }
 
   var sfSymbolNameIdle: String {
     switch self {
-    case .regular: "paintbrush"
-    case .gachi: "person"
-    case .league: "person.3"
+      case .regular: "paintbrush"
+      case .gachi: "person"
+      case .league: "person.3"
     }
   }
 }

@@ -2,7 +2,7 @@
 //  UIFontCustomizer.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Combine
@@ -12,7 +12,6 @@ import UIKit
 
 @MainActor
 enum UIFontCustomizer {
-
   /// Customizes the appearance of navigation title text.
   /// - Note: This function sets the font of the navigation title to a rounded, bold version for large titles
   /// and a rounded, semi-bold version for regular titles.

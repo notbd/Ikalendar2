@@ -2,7 +2,7 @@
 //  SalmonRotationRow.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -21,12 +21,12 @@ struct SalmonRotationRow: View {
   private var rowType: RowType {
     // expired rotations already filtered out, so index will reflect truth
     switch index {
-    case 0:
-      rotation.isFuture(ikaTimePublisher.currentTime) ? .first(.pending) : .first(.active)
-    case 1:
-      .second
-    default:
-      .other
+      case 0:
+        rotation.isFuture(ikaTimePublisher.currentTime) ? .first(.pending) : .first(.active)
+      case 1:
+        .second
+      default:
+        .other
     }
   }
 
@@ -37,14 +37,14 @@ struct SalmonRotationRow: View {
         rowWidth: rowWidth)
     } header: {
       switch rowType {
-      case .first,
-           .second:
-        SalmonRotationHeader(
-          rotation: rotation,
-          rowType: rowType)
+        case .first,
+             .second:
+          SalmonRotationHeader(
+            rotation: rotation,
+            rowType: rowType)
 
-      case .other:
-        EmptyView()
+        case .other:
+          EmptyView()
       }
     }
   }
@@ -67,19 +67,19 @@ extension SalmonRotationRow {
 
     var prefixString: String? {
       switch self {
-      case .first(let currentStatus):
-        switch currentStatus {
-        case .pending:
-          Scoped.FIRST_PREFIX_STRINGS.pending
-        case .active:
-          Scoped.FIRST_PREFIX_STRINGS.active
-        }
+        case .first(let currentStatus):
+          switch currentStatus {
+            case .pending:
+              Scoped.FIRST_PREFIX_STRINGS.pending
+            case .active:
+              Scoped.FIRST_PREFIX_STRINGS.active
+          }
 
-      case .second:
-        Scoped.SECOND_PREFIX_STRING
+        case .second:
+          Scoped.SECOND_PREFIX_STRING
 
-      case .other:
-        nil
+        case .other:
+          nil
       }
     }
   }

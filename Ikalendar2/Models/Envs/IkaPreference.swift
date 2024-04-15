@@ -2,7 +2,7 @@
 //  IkaPreference.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Combine
@@ -13,7 +13,6 @@ import SwiftUI
 /// Contains the app preferences.
 @MainActor
 final class IkaPreference: ObservableObject {
-
   static let shared: IkaPreference = .init()
 
   /// Preferred Default GameMode
@@ -104,5 +103,4 @@ final class IkaPreference: ObservableObject {
   func revertEasterEggAppIcon() {
     if preferredAppIcon.isEasterEgg { preferredAppIcon = .default }
   }
-
 }

@@ -39,6 +39,9 @@ opt_in_rules: # some rules are only opt-in
 
 ### FORMAT OPTIONS
 
+switch_case_alignment:
+  indented_cases: true
+
 colon:
   apply_to_dictionaries: false
 
@@ -46,8 +49,8 @@ trailing_comma:
   mandatory_comma: true
 
 line_length:
-  - 110 # warning
-  - 120 # error
+  - 120 # warning
+  - 140 # error
 
 type_body_length:
   - 1400 # warning

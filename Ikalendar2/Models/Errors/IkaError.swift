@@ -2,7 +2,7 @@
 //  IkaError.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 // MARK: - IkaError
@@ -24,14 +24,14 @@ enum IkaError: Error, Equatable {
 extension IkaError {
   var title: String {
     switch self {
-    case .serverError:
-      Scoped.Title.SERVER_ERROR
-    case .connectionError:
-      Scoped.Title.CONNECTION_ERROR
-    case .unknownError:
-      Scoped.Title.UNKNOWN_ERROR
-    case .maxAttemptsExceeded:
-      Scoped.Title.MAX_ATTEMPTS_EXCEEDED
+      case .serverError:
+        Scoped.Title.SERVER_ERROR
+      case .connectionError:
+        Scoped.Title.CONNECTION_ERROR
+      case .unknownError:
+        Scoped.Title.UNKNOWN_ERROR
+      case .maxAttemptsExceeded:
+        Scoped.Title.MAX_ATTEMPTS_EXCEEDED
     }
   }
 }
@@ -39,19 +39,19 @@ extension IkaError {
 extension IkaError {
   var message: String {
     switch self {
-    case .serverError(let serverErrorType):
-      switch serverErrorType {
-      case .badResponse:
-        Scoped.Message.SERVER_ERROR_BAD_RESPONSE
-      case .badData:
-        Scoped.Message.SERVER_ERROR_BAD_DATA
-      }
-    case .connectionError:
-      Scoped.Message.CONNECTION_ERROR
-    case .unknownError:
-      Scoped.Message.UNKNOWN_ERROR
-    case .maxAttemptsExceeded:
-      Scoped.Message.MAX_ATTEMPTS_EXCEEDED
+      case .serverError(let serverErrorType):
+        switch serverErrorType {
+          case .badResponse:
+            Scoped.Message.SERVER_ERROR_BAD_RESPONSE
+          case .badData:
+            Scoped.Message.SERVER_ERROR_BAD_DATA
+        }
+      case .connectionError:
+        Scoped.Message.CONNECTION_ERROR
+      case .unknownError:
+        Scoped.Message.UNKNOWN_ERROR
+      case .maxAttemptsExceeded:
+        Scoped.Message.MAX_ATTEMPTS_EXCEEDED
     }
   }
 }

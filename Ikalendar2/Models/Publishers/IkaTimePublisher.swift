@@ -2,7 +2,7 @@
 //  IkaTimePublisher.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Combine
@@ -13,7 +13,6 @@ import Foundation
 /// config value for the time interval.
 /// This behavior persists even when the app transitions to the background.
 final class IkaTimePublisher: ObservableObject {
-
   static let shared: IkaTimePublisher = .init()
 
   /// Updates every `1` second.

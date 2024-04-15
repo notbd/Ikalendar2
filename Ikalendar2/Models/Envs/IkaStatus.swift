@@ -2,7 +2,7 @@
 //  IkaStatus.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Foundation
@@ -13,7 +13,6 @@ import SimpleHaptics
 @MainActor
 @Observable
 final class IkaStatus {
-
   static let shared: IkaStatus = .init()
 
   var isSettingsPresented: Bool = false
@@ -43,5 +42,4 @@ final class IkaStatus {
   // MARK: Lifecycle
 
   private init() { }
-
 }

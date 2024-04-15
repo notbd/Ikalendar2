@@ -2,7 +2,7 @@
 //  OnboardingView.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SimpleHaptics
@@ -153,10 +153,10 @@ struct OnboardingView: View {
         .scaleEffect(value)
     } animation: { phase in
       switch phase {
-      case 1:
-        .bouncy(duration: 0.4, extraBounce: 0.2)
-      default:
-        .snappy(duration: 0.5)
+        case 1:
+          .bouncy(duration: 0.4, extraBounce: 0.2)
+        default:
+          .snappy(duration: 0.5)
       }
     }
   }
@@ -189,46 +189,46 @@ enum OnboardingObject {
 
     var duration: Double {
       switch self {
-      case .initial:
-        0.0
-      case .show:
-        1.5
-      case .float:
-        0.5
-      case .bounceDown:
-        0.15
-      case .bounceUp:
-        1.0
+        case .initial:
+          0.0
+        case .show:
+          1.5
+        case .float:
+          0.5
+        case .bounceDown:
+          0.15
+        case .bounceUp:
+          1.0
       }
     }
   }
 
   var animationValues: OnboardingAnimationValues {
     switch self {
-    case .icon:
-      .init(
-        opacity: 0,
-        scale: 0.5,
-        vStretch: 1,
-        vTranslation: -5)
-    case .title:
-      .init(
-        opacity: 0,
-        scale: 0.5,
-        vStretch: 1,
-        vTranslation: 10)
-    case .button:
-      .init(
-        opacity: 0,
-        scale: 0.8,
-        vStretch: 1,
-        vTranslation: 10)
-    case .iconEnd:
-      .init(
-        opacity: 1,
-        scale: 1,
-        vStretch: 1,
-        vTranslation: 0)
+      case .icon:
+        .init(
+          opacity: 0,
+          scale: 0.5,
+          vStretch: 1,
+          vTranslation: -5)
+      case .title:
+        .init(
+          opacity: 0,
+          scale: 0.5,
+          vStretch: 1,
+          vTranslation: 10)
+      case .button:
+        .init(
+          opacity: 0,
+          scale: 0.8,
+          vStretch: 1,
+          vTranslation: 10)
+      case .iconEnd:
+        .init(
+          opacity: 1,
+          scale: 1,
+          vStretch: 1,
+          vTranslation: 0)
     }
   }
 

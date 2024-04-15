@@ -2,7 +2,7 @@
 //  IkaColorSchemeManager.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Foundation
@@ -13,11 +13,9 @@ import UIKit
 /// smooth transitions between these states.
 @MainActor
 final class IkaColorSchemeManager {
-
   static let shared: IkaColorSchemeManager = .init()
 
   enum PreferredColorScheme: String, Identifiable, CaseIterable {
-
     static let `default`: Self = .dark
 
     case system
@@ -28,26 +26,25 @@ final class IkaColorSchemeManager {
 
     var name: String {
       switch self {
-      case .system:
-        "Follow System"
-      case .dark:
-        "Dark"
-      case .light:
-        "Light"
+        case .system:
+          "Follow System"
+        case .dark:
+          "Dark"
+        case .light:
+          "Light"
       }
     }
 
     var sfSymbolName: String {
       switch self {
-      case .system:
-        "macbook.and.iphone"
-      case .dark:
-        "moon.fill"
-      case .light:
-        "sun.max.fill"
+        case .system:
+          "macbook.and.iphone"
+        case .dark:
+          "moon.fill"
+        case .light:
+          "sun.max.fill"
       }
     }
-
   }
 
   /// A computed property that returns the key window from the connected scenes.
@@ -79,15 +76,14 @@ final class IkaColorSchemeManager {
       options: .transitionCrossDissolve,
       animations: {
         switch preferredColorScheme {
-        case .system:
-          keyWindow.overrideUserInterfaceStyle = .unspecified
-        case .dark:
-          keyWindow.overrideUserInterfaceStyle = .dark
-        case .light:
-          keyWindow.overrideUserInterfaceStyle = .light
+          case .system:
+            keyWindow.overrideUserInterfaceStyle = .unspecified
+          case .dark:
+            keyWindow.overrideUserInterfaceStyle = .dark
+          case .light:
+            keyWindow.overrideUserInterfaceStyle = .light
         }
       },
       completion: nil)
   }
-
 }

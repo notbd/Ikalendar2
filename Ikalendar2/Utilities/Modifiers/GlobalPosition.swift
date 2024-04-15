@@ -2,7 +2,7 @@
 //  GlobalPosition.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - GlobalPosition
 
 struct GlobalPosition: ViewModifier {
-
   let x: CGFloat
   let y: CGFloat
 

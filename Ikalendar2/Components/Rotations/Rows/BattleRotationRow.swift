@@ -2,7 +2,7 @@
 //  BattleRotationRow.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -18,9 +18,9 @@ struct BattleRotationRow: View {
   let rowWidth: CGFloat
 
   private var rowType: RowType {
-    if rotation.isCurrent(ikaTimePublisher.currentTime) { return .now }
-    else if rotation.isNext(ikaTimePublisher.currentTime) { return .next }
-    else { return .other }
+    if rotation.isCurrent(ikaTimePublisher.currentTime) { .now }
+    else if rotation.isNext(ikaTimePublisher.currentTime) { .next }
+    else { .other }
   }
 
   var body: some View {
@@ -49,12 +49,12 @@ extension BattleRotationRow {
 
     var prefixString: String? {
       switch self {
-      case .now:
-        Scoped.CURRENT_PREFIX_STRING
-      case .next:
-        Scoped.NEXT_PREFIX_STRING
-      case .other:
-        nil
+        case .now:
+          Scoped.CURRENT_PREFIX_STRING
+        case .next:
+          Scoped.NEXT_PREFIX_STRING
+        case .other:
+          nil
       }
     }
   }

@@ -2,7 +2,7 @@
 //  OffsettableScrollView.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -45,13 +45,11 @@ struct OffsettableScrollView<T: View>: View {
     self.onOffsetChanged = onOffsetChanged
     self.content = content()
   }
-
 }
 
 // MARK: - OffsetPreferenceKey
 
 private struct OffsetPreferenceKey: PreferenceKey {
-
   static var defaultValue: CGPoint = .zero
 
   static func reduce(value _: inout CGPoint, nextValue _: () -> CGPoint) { }

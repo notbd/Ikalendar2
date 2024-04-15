@@ -2,7 +2,7 @@
 //  RotationsCarouselView.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SimpleHaptics
@@ -52,14 +52,14 @@ struct RotationsCarouselView: View {
   @ViewBuilder
   private var content: some View {
     switch ikaCatalog.loadResultStatus {
-    case .loading:
-      ProgressView()
-        .hAlignment(.center)
-        .vAlignment(.center)
-    case .error(let ikaError):
-      ErrorView(error: ikaError)
-    case .loaded:
-      rotationCarouselColumns
+      case .loading:
+        ProgressView()
+          .hAlignment(.center)
+          .vAlignment(.center)
+      case .error(let ikaError):
+        ErrorView(error: ikaError)
+      case .loaded:
+        rotationCarouselColumns
     }
   }
 

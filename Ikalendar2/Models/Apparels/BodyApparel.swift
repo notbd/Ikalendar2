@@ -2,7 +2,7 @@
 //  BodyApparel.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 // MARK: - BodyApparel
@@ -26,16 +26,16 @@ enum BodyApparel: Int, Identifiable, CaseIterable, Equatable {
 extension BodyApparel {
   var name: String {
     switch self {
-    case .squiddorPolo: "Squiddor Polo"
-    case .anchorLifeVest: "Anchor Life Vest"
-    case .juiceParka: "Juice Parka"
-    case .gardenGear: "Garden Gear"
-    case .crustwearXXL: "Crustwear XXL"
-    case .northCountryParka: "North-Country Parka"
-    case .recordShopLookEP: "Record Shop Look EP"
-    case .devUniform: "Dev Uniform"
-    case .officeAttire: "Office Attire"
-    case .srlCoat: "SRL Coat"
+      case .squiddorPolo: "Squiddor Polo"
+      case .anchorLifeVest: "Anchor Life Vest"
+      case .juiceParka: "Juice Parka"
+      case .gardenGear: "Garden Gear"
+      case .crustwearXXL: "Crustwear XXL"
+      case .northCountryParka: "North-Country Parka"
+      case .recordShopLookEP: "Record Shop Look EP"
+      case .devUniform: "Dev Uniform"
+      case .officeAttire: "Office Attire"
+      case .srlCoat: "SRL Coat"
     }
   }
 }
@@ -43,16 +43,16 @@ extension BodyApparel {
 extension BodyApparel {
   var key: String {
     switch self {
-    case .squiddorPolo: "Clt_COP100"
-    case .anchorLifeVest: "Clt_COP101"
-    case .juiceParka: "Clt_COP102"
-    case .gardenGear: "Clt_COP103"
-    case .crustwearXXL: "Clt_COP104"
-    case .northCountryParka: "Clt_COP105"
-    case .recordShopLookEP: "Clt_COP107"
-    case .devUniform: "Clt_COP108"
-    case .officeAttire: "Clt_COP109"
-    case .srlCoat: "Clt_COP110"
+      case .squiddorPolo: "Clt_COP100"
+      case .anchorLifeVest: "Clt_COP101"
+      case .juiceParka: "Clt_COP102"
+      case .gardenGear: "Clt_COP103"
+      case .crustwearXXL: "Clt_COP104"
+      case .northCountryParka: "Clt_COP105"
+      case .recordShopLookEP: "Clt_COP107"
+      case .devUniform: "Clt_COP108"
+      case .officeAttire: "Clt_COP109"
+      case .srlCoat: "Clt_COP110"
     }
   }
 }

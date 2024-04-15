@@ -2,7 +2,7 @@
 //  IkaDeviceMotionPublisher.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Combine
@@ -15,7 +15,6 @@ import UIKit
 /// and the average of the recently stored values over a specified duration.
 @Observable
 final class IkaDeviceMotionPublisher {
-
   /// The shared singleton instance
   static let shared: IkaDeviceMotionPublisher = .init()
 

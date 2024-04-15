@@ -2,7 +2,7 @@
 //  IkaCatalog.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Combine
@@ -38,15 +38,15 @@ final class IkaCatalog {
       guard !isSilentLoadingEnabled else { return }
 
       switch newValue {
-      case .loading:
-        // Note: As of iOS 17.0 SDK, `.refreshable` comes with a default haptic feedback without
-        //  providing a native option to turn it off. Thus we manually disable it here until there
-        //  is a way to disable `.refreshable` haptic feedback.
-        break
-      case .loaded:
-        SimpleHaptics.generateTask(.medium)
-      case .error:
-        SimpleHaptics.generateTask(.error)
+        case .loading:
+          // Note: As of iOS 17.0 SDK, `.refreshable` comes with a default haptic feedback without
+          //  providing a native option to turn it off. Thus we manually disable it here until there
+          //  is a way to disable `.refreshable` haptic feedback.
+          break
+        case .loaded:
+          SimpleHaptics.generateTask(.medium)
+        case .error:
+          SimpleHaptics.generateTask(.error)
       }
     }
 
@@ -80,12 +80,12 @@ final class IkaCatalog {
       guard newValue != autoLoadStatus else { return }
 
       switch newValue {
-      case .autoLoading:
-        SimpleHaptics.generateTask(.selection)
-      case .autoLoaded:
-        SimpleHaptics.generateTask(.selection)
-      case .idle:
-        break
+        case .autoLoading:
+          SimpleHaptics.generateTask(.selection)
+        case .autoLoaded:
+          SimpleHaptics.generateTask(.selection)
+        case .idle:
+          break
       }
     }
 
@@ -217,14 +217,14 @@ final class IkaCatalog {
     async
   {
     switch newVal {
-    case .loading:
-      loadStatus = .loading
-    case .loaded:
-      try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusLoadedDelay * 1_000_000_000))
-      loadStatus = .loaded
-    case .error(let ikaError):
-      try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusErrorDelay * 1_000_000_000))
-      loadStatus = .error(ikaError)
+      case .loading:
+        loadStatus = .loading
+      case .loaded:
+        try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusLoadedDelay * 1_000_000_000))
+        loadStatus = .loaded
+      case .error(let ikaError):
+        try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusErrorDelay * 1_000_000_000))
+        loadStatus = .error(ikaError)
     }
   }
 
@@ -344,23 +344,23 @@ final class IkaCatalog {
     async
   {
     switch newVal {
-    case .autoLoading:
-      autoLoadStatus = .autoLoading
-    case .autoLoaded(let result):
-      autoLoadStatus = .autoLoaded(result)
-      // automatically fall back to idle after a while
-      Task {
-        // blocked if app is in background - to make sure autoLoaded can be seen when switched back
-        while UIApplication.shared.applicationState != .active {
-          try? await Task.sleep(nanoseconds: UInt64(Scoped.appActiveStateCheckInterval * 1_000_000_000))
+      case .autoLoading:
+        autoLoadStatus = .autoLoading
+      case .autoLoaded(let result):
+        autoLoadStatus = .autoLoaded(result)
+        // automatically fall back to idle after a while
+        Task {
+          // blocked if app is in background - to make sure autoLoaded can be seen when switched back
+          while UIApplication.shared.applicationState != .active {
+            try? await Task.sleep(nanoseconds: UInt64(Scoped.appActiveStateCheckInterval * 1_000_000_000))
+          }
+          try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
+          autoLoadStatus = .idle
+          try? await Task.sleep(nanoseconds: UInt64(Scoped.idleAndNonIdleStatusUpdateInterval * 1_000_000_000))
+          autoLoadDelayedIdleStatus = .idle
         }
-        try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
+      case .idle:
         autoLoadStatus = .idle
-        try? await Task.sleep(nanoseconds: UInt64(Scoped.idleAndNonIdleStatusUpdateInterval * 1_000_000_000))
-        autoLoadDelayedIdleStatus = .idle
-      }
-    case .idle:
-      autoLoadStatus = .idle
     }
   }
 }

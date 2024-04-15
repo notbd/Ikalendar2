@@ -2,7 +2,7 @@
 //  SalmonWeapon.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Foundation
@@ -37,37 +37,37 @@ extension SalmonWeapon {
 extension SalmonWeapon {
   var name: String {
     switch self {
-    case .vanilla(let weapon):
-      weapon.name
-    case .mystery(let weapon):
-      weapon.name
+      case .vanilla(let weapon):
+        weapon.name
+      case .mystery(let weapon):
+        weapon.name
     }
   }
 
   var key: String {
     switch self {
-    case .vanilla(let weapon):
-      weapon.key
-    case .mystery(let weapon):
-      weapon.key
+      case .vanilla(let weapon):
+        weapon.key
+      case .mystery(let weapon):
+        weapon.key
     }
   }
 
   var imgFiln: String {
     switch self {
-    case .vanilla(let weapon):
-      weapon.imgFiln
-    case .mystery(let weapon):
-      weapon.imgFiln
+      case .vanilla(let weapon):
+        weapon.imgFiln
+      case .mystery(let weapon):
+        weapon.imgFiln
     }
   }
 
   var imgFilnSmall: String {
     switch self {
-    case .vanilla(let weapon):
-      weapon.imgFilnSmall
-    case .mystery(let weapon):
-      weapon.imgFilnSmall
+      case .vanilla(let weapon):
+        weapon.imgFilnSmall
+      case .mystery(let weapon):
+        weapon.imgFilnSmall
     }
   }
 }

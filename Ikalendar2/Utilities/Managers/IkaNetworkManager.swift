@@ -2,7 +2,7 @@
 //  IkaNetworkManager.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import Foundation
@@ -13,7 +13,6 @@ import Foundation
 /// It is intended to be used in tandem with the `IkaDecoder` utility class for decoding the fetched data.
 ///
 final class IkaNetworkManager {
-
   static let shared: IkaNetworkManager = .init()
 
   // MARK: Lifecycle

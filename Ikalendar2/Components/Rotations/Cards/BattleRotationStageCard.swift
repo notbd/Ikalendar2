@@ -2,7 +2,7 @@
 //  BattleRotationStageCard.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -25,14 +25,14 @@ struct BattleRotationStageCardPrimary: View {
 
   private var stageImageName: String {
     switch (ikaPreference.shouldUseAltStageImages, stageSelection) {
-    case (true, .stageA):
-      rotation.stageAAltImageName
-    case (true, .stageB):
-      rotation.stageBAltImageName
-    case (false, .stageA):
-      rotation.stageA.imgFiln
-    case (false, .stageB):
-      rotation.stageB.imgFiln
+      case (true, .stageA):
+        rotation.stageAAltImageName
+      case (true, .stageB):
+        rotation.stageBAltImageName
+      case (false, .stageA):
+        rotation.stageA.imgFiln
+      case (false, .stageB):
+        rotation.stageB.imgFiln
     }
   }
 
@@ -75,14 +75,14 @@ struct BattleRotationStageCardSecondary: View {
 
   private var stageImageName: String {
     switch (ikaPreference.shouldUseAltStageImages, stageSelection) {
-    case (true, .stageA):
-      rotation.stageAAltImageName
-    case (true, .stageB):
-      rotation.stageBAltImageName
-    case (false, .stageA):
-      rotation.stageA.imgFiln
-    case (false, .stageB):
-      rotation.stageB.imgFiln
+      case (true, .stageA):
+        rotation.stageAAltImageName
+      case (true, .stageB):
+        rotation.stageBAltImageName
+      case (false, .stageA):
+        rotation.stageA.imgFiln
+      case (false, .stageB):
+        rotation.stageB.imgFiln
     }
   }
 

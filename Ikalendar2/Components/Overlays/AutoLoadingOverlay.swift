@@ -2,7 +2,7 @@
 //  AutoLoadingOverlay.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -39,17 +39,17 @@ struct AutoLoadingOverlay: View {
 
   private var iconName: String {
     switch ikaCatalog.autoLoadDelayedIdleStatus {
-    case .autoLoading:
-      Scoped.LOADING_SFSYMBOL
-    case .autoLoaded(let loadedStatus):
-      switch loadedStatus {
-      case .success:
-        Scoped.LOADED_SUCCESS_SFSYMBOL
-      case .failure:
-        Scoped.LOADED_FAILURE_SFSYMBOL
-      }
-    case .idle:
-      Scoped.LOADING_SFSYMBOL
+      case .autoLoading:
+        Scoped.LOADING_SFSYMBOL
+      case .autoLoaded(let loadedStatus):
+        switch loadedStatus {
+          case .success:
+            Scoped.LOADED_SUCCESS_SFSYMBOL
+          case .failure:
+            Scoped.LOADED_FAILURE_SFSYMBOL
+        }
+      case .idle:
+        Scoped.LOADING_SFSYMBOL
     }
   }
 }

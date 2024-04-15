@@ -2,7 +2,7 @@
 //  CarouselColumn.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 import SwiftUI
@@ -42,10 +42,10 @@ struct CarouselColumn: View {
   @ViewBuilder
   private var rotationList: some View {
     switch gameMode {
-    case .battle:
-      BattleRotationList(specifiedBattleMode: battleMode)
-    default:
-      SalmonRotationList()
+      case .battle:
+        BattleRotationList(specifiedBattleMode: battleMode)
+      default:
+        SalmonRotationList()
     }
   }
 

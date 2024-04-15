@@ -2,7 +2,7 @@
 //  MysteryWeapon.swift
 //  Ikalendar2
 //
-//  Copyright (c) 2023 TIANWEI ZHANG. All rights reserved.
+//  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
 // MARK: - MysteryWeapon
@@ -18,10 +18,10 @@ enum MysteryWeapon: Int, Identifiable, CaseIterable, Equatable {
 extension MysteryWeapon {
   var name: String {
     switch self {
-    case .green:
-      "Mystery"
-    case .gold:
-      "Mystery Grizzco"
+      case .green:
+        "Mystery"
+      case .gold:
+        "Mystery Grizzco"
     }
   }
 }
@@ -29,10 +29,10 @@ extension MysteryWeapon {
 extension MysteryWeapon {
   var key: String {
     switch self {
-    case .green:
-      "Mystery"
-    case .gold:
-      "Mystery Grizzco"
+      case .green:
+        "Mystery"
+      case .gold:
+        "Mystery Grizzco"
     }
   }
 }
