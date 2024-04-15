@@ -1155,7 +1155,7 @@
 			repositoryURL = "https://github.com/sparrowcode/AlertKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.1;
+				minimumVersion = 5.1.9;
 			};
 		};
 		797469C82BCCA5DB00328027 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
@@ -1163,7 +1163,7 @@
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 5.0.2;
 			};
 		};
 		797469CB2BCCA60700328027 /* XCRemoteSwiftPackageReference "SimpleHaptics" */ = {
