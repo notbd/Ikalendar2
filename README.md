@@ -26,7 +26,7 @@ Track Splatoon 2 rotation schedules with style and ease.
 
 The latest version of ikalendar2 requires iOS and iPadOS `17.0` or later.
 
-Development requires Xcode `15.0` and Swift `5.9`.
+Development requires Xcode `15.3` and Swift `5.10`.
 
 # Installation
 
@@ -39,6 +39,7 @@ ikalendar2 is available on the App Store for free.
 ikalendar2 is made possible thanks to the following projects:
 
 <!-- markdownlint-disable-next-line MD001 -->
+
 ### Data Sources
 
 - [Splatoon2.ink](https://github.com/misenhower/splatoon2.ink)
