@@ -24,7 +24,6 @@ struct SettingsMainView: View {
 
   @EnvironmentObject private var ikaLog: IkaLog
   @EnvironmentObject private var ikaPreference: IkaPreference
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   @State private var rowWidth: CGFloat = 390
 
@@ -189,6 +188,13 @@ struct SettingsMainView: View {
   }
 
   @State private var rowAltAppIconSfSymbolBounce: Int = 0
+  private var bounceTimer = Timer
+    .publish(
+      every: Constants.Config.Timer.bounceSignalInterval,
+      tolerance: 0.1,
+      on: .main,
+      in: .common)
+    .autoconnect()
 
   private var rowAltAppIcon: some View {
     NavigationLink(destination: SettingsAltAppIconView()) {
@@ -203,7 +209,7 @@ struct SettingsMainView: View {
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
-      .onReceive(ikaTimePublisher.bounceSignalPublisher) { _ in
+      .onReceive(bounceTimer) { _ in
         if !ikaLog.hasDiscoveredAltAppIcon { rowAltAppIconSfSymbolBounce += 1 }
       }
     }
@@ -258,6 +264,7 @@ struct SettingsMainView: View {
           .foregroundStyle(Color.secondary)
 
         Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+          .foregroundStyle(Color.secondary)
       }
     }
   }

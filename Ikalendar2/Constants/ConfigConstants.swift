@@ -13,6 +13,7 @@ extension Constants.Config {
   enum Timer {
     static let autoLoadCheckSignalInterval: TimeInterval = 5
     static let bounceSignalInterval: TimeInterval = 7
+    static let pulseSignalInterval: TimeInterval = 3
   }
 
   enum Catalog {

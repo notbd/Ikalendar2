@@ -19,8 +19,6 @@ final class IkaTimePublisher: ObservableObject {
   @Published private(set) var currentTime: Date = .init()
   /// Signals auto-load checks every `2` seconds.
   let autoLoadCheckPublisher: PassthroughSubject<Void, Never> = .init()
-  /// Signals icon bounces every `7` seconds.
-  let bounceSignalPublisher: PassthroughSubject<Void, Never> = .init()
 
   /// Contains all the active subscriptions for this object.
   private var cancellables = Set<AnyCancellable>()
@@ -30,7 +28,6 @@ final class IkaTimePublisher: ObservableObject {
   private init() {
     startPublishingCurrentTime()
     startPublishingAutoLoadChecks()
-    startPublishingBounceSignal()
   }
 
   // MARK: Private
@@ -61,21 +58,6 @@ final class IkaTimePublisher: ObservableObject {
       .autoconnect()
       .sink { [weak self] _ in
         self?.autoLoadCheckPublisher.send(())
-      }
-      .store(in: &cancellables)
-  }
-
-  /// Starts the process of publishing bounce signals every `bounceSignalInterval`.
-  private func startPublishingBounceSignal() {
-    Timer
-      .publish(
-        every: Constants.Config.Timer.bounceSignalInterval,
-        tolerance: 0.1,
-        on: .main,
-        in: .common)
-      .autoconnect()
-      .sink { [weak self] _ in
-        self?.bounceSignalPublisher.send(())
       }
       .store(in: &cancellables)
   }

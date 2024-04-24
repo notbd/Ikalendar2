@@ -21,7 +21,6 @@ struct SettingsAboutView: View {
   @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
   @EnvironmentObject private var ikaLog: IkaLog
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
   @State private var appStoreOverlayPresented = false
 
@@ -178,6 +177,13 @@ struct SettingsAboutView: View {
   // MARK: - Review Section
 
   @State private var rowRatingBounceTrigger: Int = 0
+  private var bounceTimer = Timer
+    .publish(
+      every: Constants.Config.Timer.bounceSignalInterval,
+      tolerance: 0.1,
+      on: .main,
+      in: .common)
+    .autoconnect()
 
   private var rowRating: some View {
     Button {
@@ -198,8 +204,9 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.accentColor)
       }
     }
-    .onReceive(ikaTimePublisher.bounceSignalPublisher) { _ in
+    .onReceive(bounceTimer) { _ in
       guard !ikaLog.hasDiscoveredRating else { return }
+
       if rowRatingBounceTrigger >= 2 {
         ikaLog.hasDiscoveredRating = true
       }

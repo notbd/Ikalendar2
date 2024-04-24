@@ -12,11 +12,8 @@ import SwiftUI
 struct SettingsDebugOptionsView: View {
   @Environment(IkaStatus.self) private var ikaStatus
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
   @EnvironmentObject private var ikaLog: IkaLog
   @EnvironmentObject private var ikaPreference: IkaPreference
-
-  @State private var pulsingTrigger: Int = 0
 
   @ScaledMetric(relativeTo: .title) var squidBumperHeight: CGFloat = 50
 
@@ -112,6 +109,15 @@ struct SettingsDebugOptionsView: View {
     }
   }
 
+  @State private var pulsingTrigger: Int = 0
+  private var pulseTimer = Timer
+    .publish(
+      every: Constants.Config.Timer.pulseSignalInterval,
+      tolerance: 0.1,
+      on: .main,
+      in: .common)
+    .autoconnect()
+
   private var warningBanner: some View {
     let warningIcon = Image(systemName: "exclamationmark.triangle.fill")
 
@@ -125,11 +131,11 @@ struct SettingsDebugOptionsView: View {
       .phaseAnimator([false, true], trigger: pulsingTrigger)
       { content, value in
         content
-          .foregroundStyle(value ? Color.red : Color.secondaryLabel)
+          .foregroundStyle(!value ? Color.secondaryLabel : Color.red)
       } animation: { _ in
-        .spring(duration: 2.0)
+        .spring(duration: 1.2)
       }
-      .onReceive(ikaTimePublisher.bounceSignalPublisher) {
+      .onReceive(pulseTimer) { _ in
         pulsingTrigger += 1
       }
 

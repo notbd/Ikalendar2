@@ -31,6 +31,8 @@ final class IkaCatalog {
     case error(IkaError)
   }
 
+  @ObservationIgnored private var isSilentLoadingEnabled: Bool = false
+
   private(set) var loadStatus: LoadStatus = .loading
   {
     willSet {
@@ -114,10 +116,6 @@ final class IkaCatalog {
       firstRotation.isExpired(IkaTimePublisher.shared.currentTime) ||
       (firstRotation.isCurrent(IkaTimePublisher.shared.currentTime) && firstRotation.rewardApparel == nil)
   }
-
-  // MARK: - LOAD
-
-  @ObservationIgnored private var isSilentLoadingEnabled: Bool = false
 
   // MARK: Lifecycle
 

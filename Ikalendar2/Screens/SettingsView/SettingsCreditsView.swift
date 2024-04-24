@@ -153,6 +153,7 @@ struct CreditsExternalLinkCell: View {
         Spacer()
 
         Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+          .foregroundStyle(Color.secondary)
       }
     }
   }

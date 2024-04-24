@@ -118,6 +118,7 @@ struct DetailsLicenseView: View {
       openURL(url)
     } label: {
       Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+        .foregroundStyle(Color.primary)
     }
   }
 }
