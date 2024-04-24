@@ -39,7 +39,6 @@ ikalendar2 is available on the App Store for free.
 ikalendar2 is made possible thanks to the following projects:
 
 <!-- markdownlint-disable-next-line MD001 -->
-
 ### Data Sources
 
 - [Splatoon2.ink](https://github.com/misenhower/splatoon2.ink)
