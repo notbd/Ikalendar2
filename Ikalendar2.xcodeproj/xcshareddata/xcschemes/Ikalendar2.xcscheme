@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Xcode format settings"
-               scriptText = "set -e&#10;&#10;defaults write com.apple.dt.Xcode AutomaticallyCheckSpellingWhileTyping -bool YES&#10;&#10;defaults write com.apple.dt.Xcode DVTTextEditorTrimTrailingWhitespace -bool YES&#10;defaults write com.apple.dt.Xcode DVTTextEditorTrimWhitespaceOnlyLines -bool YES&#10;&#10;defaults write com.apple.dt.Xcode DVTTextIndentTabWidth -int 2&#10;defaults write com.apple.dt.Xcode DVTTextIndentWidth -int 2&#10;&#10;defaults write com.apple.dt.Xcode DVTTextPageGuideLocation -int 120&#10;&#10;#cd &quot;${PROJECT_DIR}&quot;&#10;#&#10;#xcodebuild -resolvePackageDependencies&#10;">
+               scriptText = "set -e&#10;&#10;defaults write com.apple.dt.Xcode AutomaticallyCheckSpellingWhileTyping -bool YES&#10;&#10;defaults write com.apple.dt.Xcode DVTTextEditorTrimTrailingWhitespace -bool YES&#10;defaults write com.apple.dt.Xcode DVTTextEditorTrimWhitespaceOnlyLines -bool YES&#10;&#10;defaults write com.apple.dt.Xcode DVTTextIndentTabWidth -int 2&#10;defaults write com.apple.dt.Xcode DVTTextIndentWidth -int 2&#10;&#10;defaults write com.apple.dt.Xcode DVTTextPageGuideLocation -int 120&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
@@ -27,8 +27,24 @@
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
-               title = "### Bump build number"
-               scriptText = "cd &quot;${PROJECT_DIR}&quot;&#10;agvtool bump&#10;xcodebuild -resolvePackageDependencies&#10;">
+               title = "Bump build number"
+               scriptText = "# bump build number up by 1&#10;&#10;cd &quot;${PROJECT_DIR}&quot;&#10;agvtool bump&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "79B92BB128B03B1F00544939"
+                     BuildableName = "Ikalendar2.app"
+                     BlueprintName = "Ikalendar2"
+                     ReferencedContainer = "container:Ikalendar2.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Resolve package dependencies"
+               scriptText = "# resolve package dependencies&#10;&#10;cd &quot;${PROJECT_DIR}&quot;&#10;xcodebuild -resolvePackageDependencies&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
