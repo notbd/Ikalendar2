@@ -85,11 +85,7 @@ final class IkaPreference: ObservableObject {
     }
   }
 
-  // MARK: Lifecycle
-
   private init() { }
-
-  // MARK: Internal
 
   func resetPreferences() {
     preferredDefaultGameMode = .default

@@ -161,8 +161,6 @@ struct OnboardingView: View {
     }
   }
 
-  // MARK: Private
-
   private func triggerIconBounceAfterDelay() async {
     try? await Task.sleep(nanoseconds: UInt64(9 * 1_000_000_000))
     guard !Task.isCancelled else { return }
@@ -211,18 +209,21 @@ enum OnboardingObject {
           scale: 0.5,
           vStretch: 1,
           vTranslation: -5)
+
       case .title:
         .init(
           opacity: 0,
           scale: 0.5,
           vStretch: 1,
           vTranslation: 10)
+
       case .button:
         .init(
           opacity: 0,
           scale: 0.8,
           vStretch: 1,
           vTranslation: 10)
+
       case .iconEnd:
         .init(
           opacity: 1,
@@ -231,8 +232,6 @@ enum OnboardingObject {
           vTranslation: 0)
     }
   }
-
-  // MARK: Internal
 
   struct OnboardingAnimationValues {
     var opacity: Double

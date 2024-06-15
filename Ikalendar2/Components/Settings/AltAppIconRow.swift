@@ -59,8 +59,6 @@ struct AltAppIconRow: View {
     .padding(.vertical, Scoped.ROW_PADDING_V)
   }
 
-  // MARK: Private
-
   private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
     guard ikaPreference.preferredAppIcon != ikaAppIcon else { return }
     ikaPreference.preferredAppIcon = ikaAppIcon
@@ -137,8 +135,6 @@ struct AltAppIconEasterEggRow: View {
     }
     .padding(.vertical, Scoped.ROW_PADDING_V)
   }
-
-  // MARK: Private
 
   private func jumpToURLAfterDelay() async {
     try? await Task.sleep(nanoseconds: UInt64(1.3 * 1_000_000_000))

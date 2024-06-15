@@ -23,6 +23,54 @@ final class IkaCatalog {
   private(set) var battleRotationDict = BattleRotationDict()
   private(set) var salmonRotations = [SalmonRotation]()
 
+  private init() {
+    setUpLoadResultStatusSubscription()
+    setUpAutoLoadNonIdleStatusSubscription()
+    setUpAutoLoadCheckSubscription()
+  }
+
+  deinit {
+    cancellables.removeAll()
+  }
+
+  // MARK: Exposed
+
+  func refresh(silently shouldEnableSilentLoading: Bool = false)
+    async
+  {
+    await loadCatalog(shouldEnableSilentLoading)
+  }
+
+  // MARK: Init Setup
+
+  private func setUpLoadResultStatusSubscription() {
+    loadStatusSubject
+      .filter { $0 != .loading }
+      .removeDuplicates()
+      .sink { [weak self] newStatus in
+        self?.loadResultStatus = newStatus
+      }
+      .store(in: &cancellables)
+  }
+
+  private func setUpAutoLoadNonIdleStatusSubscription() {
+    autoLoadStatusSubject
+      .filter { $0 != .idle }
+      .removeDuplicates()
+      .sink { [weak self] newStatus in
+        self?.autoLoadDelayedIdleStatus = newStatus
+      }
+      .store(in: &cancellables)
+  }
+
+  private func setUpAutoLoadCheckSubscription() {
+    IkaTimePublisher.shared.autoLoadCheckPublisher
+      .sink { [weak self] _ in
+        self?.handleAutoLoadCheck()
+      }
+      .store(in: &cancellables)
+  }
+
   // MARK: Load related
 
   enum LoadStatus: Equatable {
@@ -62,115 +110,6 @@ final class IkaCatalog {
 
   /// Will never be in `.loading` state after catalog is first loaded.
   private(set) var loadResultStatus: LoadStatus = .loading
-
-  // MARK: Auto-Load related
-
-  enum AutoLoadStatus: Equatable {
-    case autoLoading
-    case autoLoaded(AutoLoadedStatus)
-    case idle
-
-    enum AutoLoadedStatus {
-      case success
-      case failure
-    }
-  }
-
-  private(set) var autoLoadStatus: AutoLoadStatus = .idle
-  {
-    willSet {
-      guard newValue != autoLoadStatus else { return }
-
-      switch newValue {
-        case .autoLoading:
-          SimpleHaptics.generateTask(.selection)
-        case .autoLoaded:
-          SimpleHaptics.generateTask(.selection)
-        case .idle:
-          break
-      }
-    }
-
-    didSet {
-      // broadcast change
-      autoLoadStatusSubject.send(autoLoadStatus)
-    }
-  }
-
-  @ObservationIgnored private let autoLoadStatusSubject: PassthroughSubject<AutoLoadStatus, Never> = .init()
-
-  /// Its `.idle` state will be delayed after the `.idle` state of the `autoLoadStatus` after first auto-load.
-  private(set) var autoLoadDelayedIdleStatus: AutoLoadStatus = .idle
-
-  @ObservationIgnored private var cancellables: Set<AnyCancellable> = .init()
-
-  private var shouldAutoLoad: Bool {
-    loadStatus != .loading &&
-      autoLoadStatus == .idle &&
-      battleRotationDict.isOutdated
-  }
-
-  private var shouldAutoLoadSalmon: Bool {
-    guard let firstRotation = salmonRotations.first else { return true }
-    return
-      firstRotation.isExpired(IkaTimePublisher.shared.currentTime) ||
-      (firstRotation.isCurrent(IkaTimePublisher.shared.currentTime) && firstRotation.rewardApparel == nil)
-  }
-
-  // MARK: Lifecycle
-
-  private init() {
-    setUpLoadResultStatusSubscription()
-    setUpAutoLoadNonIdleStatusSubscription()
-    setUpAutoLoadCheckSubscription()
-  }
-
-  deinit {
-    cancellables.removeAll()
-  }
-
-  // MARK: Internal
-
-  func refresh(silently shouldEnableSilentLoading: Bool = false)
-    async
-  {
-    await loadCatalog(shouldEnableSilentLoading)
-  }
-
-  // MARK: Private
-
-  private func setUpLoadResultStatusSubscription() {
-    loadStatusSubject
-      .filter { $0 != .loading }
-      .removeDuplicates()
-      .sink { [weak self] newStatus in
-        self?.loadResultStatus = newStatus
-      }
-      .store(in: &cancellables)
-  }
-
-  private func setUpAutoLoadNonIdleStatusSubscription() {
-    autoLoadStatusSubject
-      .filter { $0 != .idle }
-      .removeDuplicates()
-      .sink { [weak self] newStatus in
-        self?.autoLoadDelayedIdleStatus = newStatus
-      }
-      .store(in: &cancellables)
-  }
-
-  private func setUpAutoLoadCheckSubscription() {
-    IkaTimePublisher.shared.autoLoadCheckPublisher
-      .sink { [weak self] _ in
-        self?.handleAutoLoadCheck()
-      }
-      .store(in: &cancellables)
-  }
-
-  private func handleAutoLoadCheck() {
-    guard shouldAutoLoad else { return }
-    Task { await autoLoadCatalog() }
-  }
 
   private func loadCatalog(_ shouldEnableSilentLoading: Bool = false)
     async
@@ -217,16 +156,75 @@ final class IkaCatalog {
     switch newVal {
       case .loading:
         loadStatus = .loading
+
       case .loaded:
         try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusLoadedDelay * 1_000_000_000))
         loadStatus = .loaded
+
       case .error(let ikaError):
         try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusErrorDelay * 1_000_000_000))
         loadStatus = .error(ikaError)
     }
   }
 
-  // MARK: - AUTO-LOAD
+  // MARK: Auto-Load related
+
+  enum AutoLoadStatus: Equatable {
+    case autoLoading
+    case autoLoaded(AutoLoadedStatus)
+    case idle
+
+    enum AutoLoadedStatus {
+      case success
+      case failure
+    }
+  }
+
+  private(set) var autoLoadStatus: AutoLoadStatus = .idle
+  {
+    willSet {
+      guard newValue != autoLoadStatus else { return }
+
+      switch newValue {
+        case .autoLoading:
+          SimpleHaptics.generateTask(.selection)
+        case .autoLoaded:
+          SimpleHaptics.generateTask(.selection)
+        case .idle:
+          break
+      }
+    }
+
+    didSet {
+      // broadcast change
+      autoLoadStatusSubject.send(autoLoadStatus)
+    }
+  }
+
+  @ObservationIgnored private let autoLoadStatusSubject: PassthroughSubject<AutoLoadStatus, Never> = .init()
+
+  /// Its `.idle` state will be delayed after the `.idle` state of the `autoLoadStatus` after first auto-load.
+  private(set) var autoLoadDelayedIdleStatus: AutoLoadStatus = .idle
+
+  @ObservationIgnored private var cancellables: Set<AnyCancellable> = .init()
+
+  private func handleAutoLoadCheck() {
+    guard shouldAutoLoad else { return }
+    Task { await autoLoadCatalog() }
+  }
+
+  private var shouldAutoLoad: Bool {
+    loadStatus != .loading &&
+      autoLoadStatus == .idle &&
+      battleRotationDict.isOutdated
+  }
+
+  private var shouldAutoLoadSalmon: Bool {
+    guard let firstRotation = salmonRotations.first else { return true }
+    return
+      firstRotation.isExpired(IkaTimePublisher.shared.currentTime) ||
+      (firstRotation.isCurrent(IkaTimePublisher.shared.currentTime) && firstRotation.rewardApparel == nil)
+  }
 
   private func autoLoadCatalog()
     async
@@ -344,6 +342,7 @@ final class IkaCatalog {
     switch newVal {
       case .autoLoading:
         autoLoadStatus = .autoLoading
+
       case .autoLoaded(let result):
         autoLoadStatus = .autoLoaded(result)
         // automatically fall back to idle after a while
@@ -357,6 +356,7 @@ final class IkaCatalog {
           try? await Task.sleep(nanoseconds: UInt64(Scoped.idleAndNonIdleStatusUpdateInterval * 1_000_000_000))
           autoLoadDelayedIdleStatus = .idle
         }
+
       case .idle:
         autoLoadStatus = .idle
     }

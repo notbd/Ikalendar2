@@ -54,11 +54,7 @@ final class IkaLog: ObservableObject {
     }
   }
 
-  // MARK: Lifecycle
-
   private init() { }
-
-  // MARK: Internal
 
   func resetStates() {
     hasDiscoveredRating = false

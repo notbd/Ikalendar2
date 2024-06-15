@@ -40,6 +40,7 @@ struct BattleRotationCell: View {
           rotation: rotation,
           rowWidth: rowWidth,
           animationNamespaces: animationNamespaces)
+
       case .secondary:
         BattleRotationCellSecondary(
           rotation: rotation,
@@ -283,8 +284,6 @@ struct BattleRotationCellSecondary: View {
           in: $1.stageB)
       }
   }
-
-  // MARK: Private
 
   private func wrapInIdealFontLayout(_ content: some View) -> some View {
     IdealFontLayout(anchor: .center) {

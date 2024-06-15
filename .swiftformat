@@ -57,12 +57,12 @@
 # modifierOrder
 --modifierorder nonisolated,static,public,private
 
-
-# organizeDeclarations
---beforemarks enum,typealias,let,var
---enumthreshold 20
---organizetypes class,struct,enum,extension,actor
---structthreshold 20
+# # organizeDeclarations
+# --beforemarks enum,typealias,let,var
+# --enumthreshold 20
+# --organizetypes class,struct,enum,extension,actor
+# --structthreshold 20
+# --organizationmode type
 
 # redundantExtensionACL
 --extensionacl on-declarations
@@ -114,6 +114,7 @@
     conditionalAssignment,                          \
     consecutiveBlankLines,                          \
     consecutiveSpaces,                              \
+    consistentSwitchCaseSpacing,                    \
     duplicateImports,                               \
     elseOnSameLine,                                 \
     emptyBraces,                                    \
@@ -155,6 +156,7 @@
     redundantSelf,                                  \
     redundantStaticSelf,                            \
     redundantType,                                  \
+    redundantTypedThrows,                           \
     redundantVoidReturnType,                        \
     semicolons,                                     \
     sortDeclarations,                               \
@@ -191,13 +193,14 @@
 ## Opt-in Rules (disabled by default)
 --rules                                             \
     acronyms,                                       \
+    blankLineAfterSwitchCase,                       \
     blankLinesBetweenImports,                       \
     blockComments,                                  \
     docComments,                                    \
     isEmpty,                                        \
     markTypes,                                      \
 #    noExplicitOwnership,                            \
-    organizeDeclarations,                           \
+#    organizeDeclarations,                           \
 #    sortSwitchCases,                                \
 #    wrapConditionalBodies,                          \
     wrapEnumCases,                                  \

@@ -19,8 +19,6 @@ struct SalmonRotation: Rotation {
   var rewardApparel: SalmonApparel?
   let grizzcoWeapon: GrizzcoWeapon?
 
-  // MARK: Lifecycle
-
   init(
     startTime: Date,
     endTime: Date,

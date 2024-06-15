@@ -109,8 +109,6 @@ struct ModeIconStamp: View {
       endPoint: .bottom)
   }
 
-  // MARK: Lifecycle
-
   init(
     iconSize: CGFloat = Scoped.ICON_SIZE,
     gameModeSelection: GameMode,

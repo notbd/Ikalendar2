@@ -60,8 +60,6 @@ struct IkaOpenSourceLicense {
     Capture { OneOrMore(.word) }
   }
 
-  // MARK: Internal
-
   /// Transform from
   /// `https://github.com/SwiftyJSON/SwiftyJSON`
   /// to

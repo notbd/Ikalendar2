@@ -157,8 +157,6 @@ struct SettingsAdvancedOptionsView: View {
       .hAlignment(.center)
   }
 
-  // MARK: Private
-
   private func shufflePreviewData() {
     // make sure stages are different
     var newBattleData = IkaMockData.getBattleRotation()

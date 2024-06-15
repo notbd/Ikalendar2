@@ -18,8 +18,6 @@ import SwiftUI
 ///   - Must have exactly two subviews: one for the stage and one for the weapons.
 ///
 struct SalmonStageAndWeaponsLayout: Layout {
-  // MARK: Internal
-
   func sizeThatFits(
     proposal: ProposedViewSize,
     subviews: Subviews,
@@ -80,8 +78,6 @@ struct SalmonStageAndWeaponsLayout: Layout {
       anchor: .center,
       proposal: weaponsSizeProposal)
   }
-
-  // MARK: Private
 
   private func getHSpacings(subviews: Subviews) -> [CGFloat] {
     subviews.indices.map { index in

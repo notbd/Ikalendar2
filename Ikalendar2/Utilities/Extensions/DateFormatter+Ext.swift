@@ -13,8 +13,6 @@ extension DateFormatter {
     case date
   }
 
-  // MARK: Lifecycle
-
   /// A convenience init for some custom DateFormatter types.
   /// - Parameter ikaType: The custom type of the dateFormatter.
   convenience init(ikaType: IkaDateFormatterType) {
@@ -40,6 +38,7 @@ extension DateFormatter {
           // default: English
           dateFormat = "h:mm a"
         }
+
       case .date:
         if locale.identifier.starts(with: "ja") {
           // Japanese

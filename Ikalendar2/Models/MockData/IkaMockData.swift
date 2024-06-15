@@ -61,6 +61,7 @@ enum IkaMockData {
             }
             let mysteryWeapon = MysteryWeapon.green
             weapons!.append(SalmonWeapon(mysteryWeapon.id)!)
+
           case .gold:
             // Gold question mark
             for _ in 0 ..< 4 {

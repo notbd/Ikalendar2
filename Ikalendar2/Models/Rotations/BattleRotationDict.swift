@@ -20,8 +20,6 @@ extension BattleRotationDict {
     !isEmpty && self[.gachi]!.first!.endTime < IkaTimePublisher.shared.currentTime
   }
 
-  // MARK: Lifecycle
-
   init() {
     self = [:]
     for mode in BattleMode.allCases {

@@ -57,11 +57,7 @@ final class IkaColorSchemeManager {
       .first { $0.isKeyWindow }
   }
 
-  // MARK: Lifecycle
-
   private init() { }
-
-  // MARK: Internal
 
   /// Changes the app's color scheme according to the given colorScheme.
   ///

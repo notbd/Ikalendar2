@@ -77,8 +77,6 @@ struct CarouselColumn: View {
     }
   }
 
-  // MARK: Lifecycle
-
   init(
     gameMode: GameMode,
     battleMode: BattleMode = .gachi)

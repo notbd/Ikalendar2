@@ -41,6 +41,7 @@ struct AutoLoadingOverlay: View {
     switch ikaCatalog.autoLoadDelayedIdleStatus {
       case .autoLoading:
         Scoped.LOADING_SFSYMBOL
+
       case .autoLoaded(let loadedStatus):
         switch loadedStatus {
           case .success:
@@ -48,6 +49,7 @@ struct AutoLoadingOverlay: View {
           case .failure:
             Scoped.LOADED_FAILURE_SFSYMBOL
         }
+
       case .idle:
         Scoped.LOADING_SFSYMBOL
     }

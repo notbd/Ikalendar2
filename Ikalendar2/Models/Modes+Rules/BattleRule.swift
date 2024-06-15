@@ -57,15 +57,19 @@ extension BattleRule {
     switch self {
       case .turfWar: "In a Turf War, teams have three minutes to cover the ground with ink. " +
       "The team that claims the most turf with their ink wins the battle."
+
       case .splatZones: "Plays similarly to the King of the Hill mode from other video " +
       "games. It revolves around a central \"zone\" or \"zones\", which players must attempt " +
       "to cover in ink. Whoever retains the zone for a certain amount of time wins."
+
       case .towerControl: "A player must take control of a tower located in the center of " +
       "a map and ride it towards the enemy base. " +
       "The first team to get the tower to their enemy's base wins."
+
       case .rainmaker: "A player must grab and take the Rainmaker weapon to a pedestal near " +
       "the enemy team's spawn point. The team who carries the Rainmaker furthest " +
       "towards their respective pedestal wins."
+
       case .clamBlitz: "Players pick up clams scattered around the stage and try to score " +
       "as many points as they can by throwing the clams in their respective goal."
     }

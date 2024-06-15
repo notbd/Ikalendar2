@@ -23,14 +23,10 @@ final class IkaTimePublisher: ObservableObject {
   /// Contains all the active subscriptions for this object.
   private var cancellables = Set<AnyCancellable>()
 
-  // MARK: Lifecycle
-
   private init() {
     startPublishingCurrentTime()
     startPublishingAutoLoadChecks()
   }
-
-  // MARK: Private
 
   /// Starts the process of publishing the `currentTime` property every second.
   private func startPublishingCurrentTime() {

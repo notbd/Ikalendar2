@@ -56,8 +56,10 @@ struct RotationsCarouselView: View {
         ProgressView()
           .hAlignment(.center)
           .vAlignment(.center)
+
       case .error(let ikaError):
         ErrorView(error: ikaError)
+
       case .loaded:
         rotationCarouselColumns
     }
@@ -131,8 +133,6 @@ struct RotationsCarouselView: View {
       value: ikaPreference.preferredDefaultGameMode)
     .if(!isWindowWide) { wrapInHorizontalScrollView($0) }
   }
-
-  // MARK: Private
 
   @MainActor
   private func wrapInHorizontalScrollView(_ content: some View) -> some View {
