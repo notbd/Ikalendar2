@@ -99,7 +99,7 @@ Please try again later or contact support.";
 Please try again later or contact support.";
 
 "key.message.connection_error" =
-"This device appears to be offline.
+"Unable to connect to the server.
 Please check your internet connection and try again.";
 
 "key.message.unknown_error" =
