@@ -36,8 +36,6 @@ extension Date {
   static private let ikaTimeFormatter = DateFormatter(ikaType: .time)
   static private let ikaDateFormatter = DateFormatter(ikaType: .date)
 
-  // MARK: Internal
-
   /// Convert the Date to a battle time string.
   /// - Parameters:
   ///   - shouldIncludeDate: If including the date in the time string (default to false).

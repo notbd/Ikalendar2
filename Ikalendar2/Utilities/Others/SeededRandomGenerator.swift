@@ -26,8 +26,6 @@ class SeededRandomGenerator {
   private var originalSeed: Data
   private var randomSource: GKARC4RandomSource
 
-  // MARK: Lifecycle
-
   /// Initializes the generator with an integer seed.
   init(seed: Int) {
     let seedData = Data("\(seed)".utf8)
@@ -41,8 +39,6 @@ class SeededRandomGenerator {
     originalSeed = seedData
     randomSource = GKARC4RandomSource(seed: seedData)
   }
-
-  // MARK: Internal
 
   /// Generates a random integer within the range from 0 to the specified bound (exclusive).
   /// - Parameter bound: The upper bound of the range (exclusive).

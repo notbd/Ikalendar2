@@ -34,13 +34,9 @@ final class IkaDeviceMotionPublisher {
   var dy: CGFloat = 0
   var dz: CGFloat = 0
 
-  // MARK: Lifecycle
-
   private init() {
     subscribeToAppLifecycleEvents()
   }
-
-  // MARK: Private
 
   /// Subscribes to application lifecycle events to start or stop motion updates appropriately.
   private func subscribeToAppLifecycleEvents() {

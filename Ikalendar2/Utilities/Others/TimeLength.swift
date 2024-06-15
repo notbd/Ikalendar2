@@ -14,8 +14,6 @@ struct TimeLength {
   let minutes: Int
   let seconds: Int
 
-  // MARK: Lifecycle
-
   init(
     days: Int = 0,
     hours: Int = 0,
@@ -27,8 +25,6 @@ struct TimeLength {
     self.minutes = minutes
     self.seconds = seconds
   }
-
-  // MARK: Internal
 
   /// Generate a localized string representation for the interval.
   ///   - locale: The locale of the translation(default to .current).

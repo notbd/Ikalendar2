@@ -40,8 +40,6 @@ extension Rotation {
   /// Constructs the ID by combining the Unix timestamps of the `startTime` and `endTime` properties.
   var id: String { "\(startTime)-\(endTime)" }
 
-  // MARK: Internal
-
   /// Equates two `Rotation` instances based on their `hashValue`s.
   ///
   /// - Parameters:

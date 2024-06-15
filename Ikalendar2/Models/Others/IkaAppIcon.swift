@@ -105,8 +105,6 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     }
   }
 
-  // MARK: Internal
-
   func getImageName(_ displayMode: IkaAppIcon.DisplayMode) -> String {
     switch displayMode {
       case .original:

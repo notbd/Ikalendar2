@@ -39,7 +39,5 @@ final class IkaStatus {
     }
   }
 
-  // MARK: Lifecycle
-
   private init() { }
 }

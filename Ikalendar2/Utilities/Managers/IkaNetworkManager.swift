@@ -15,11 +15,7 @@ import Foundation
 final class IkaNetworkManager {
   static let shared: IkaNetworkManager = .init()
 
-  // MARK: Lifecycle
-
   private init() { }
-
-  // MARK: Internal
 
   /// Asynchronously fetches a text file from a specified URL and returns its content as a `String`.
   /// It is intended for fetching read-only textual data like logs, licenses, configuration files, etc.

@@ -44,15 +44,6 @@ struct RootView: View {
       .interactiveDismissDisabled()
   }
 
-  // MARK: Lifecycle
-
-  init() {
-    // Initial setup of your NavigationBar styles
-    UIFontCustomizer.customizeNavigationTitleText()
-  }
-
-  // MARK: Private
-
   private func setUpFullScreenCoverSettingsModal(_ content: some View) -> some View {
     @Bindable var ikaStatus = ikaStatus
     return
@@ -69,5 +60,10 @@ struct RootView: View {
   /// therefore force refresh the root view in order to reflect the correct title size.
   private func refreshEntryView() {
     entryViewID = UUID()
+  }
+
+  init() {
+    // Initial setup of your NavigationBar styles
+    UIFontCustomizer.customizeNavigationTitleText()
   }
 }

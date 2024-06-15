@@ -32,8 +32,6 @@ struct OffsettableScrollView<T: View>: View {
       perform: onOffsetChanged)
   }
 
-  // MARK: Lifecycle
-
   init(
     axes: Axis.Set = .vertical,
     showsIndicator: Bool = true,

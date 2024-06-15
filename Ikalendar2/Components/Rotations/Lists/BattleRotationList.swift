@@ -45,8 +45,6 @@ struct BattleRotationList: View {
     }
   }
 
-  // MARK: Lifecycle
-
   init(
     specifiedBattleMode: BattleMode? = nil)
   {

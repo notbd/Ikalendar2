@@ -407,8 +407,6 @@ struct SettingsAboutView: View {
     }
   }
 
-  // MARK: Private
-
   private func applyAppIconBounceAnimation(_ content: some View) -> some View {
     content
       .keyframeAnimator(
@@ -431,8 +429,6 @@ struct SettingsAboutAppIconAnimationValues {
   var scale: Double = 1
   var vStretch: Double = 1
   var vTranslation: Double = 0
-
-  // MARK: Internal
 
   @ViewBuilder
   @Sendable

@@ -37,8 +37,6 @@ struct Ikalendar2App: App {
     }
   }
 
-  // MARK: Lifecycle
-
   init() {
     ikaCatalog = .shared
     ikaStatus = .shared

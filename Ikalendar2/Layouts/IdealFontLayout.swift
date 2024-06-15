@@ -26,8 +26,6 @@ import SwiftUI
 struct IdealFontLayout: Layout {
   let anchor: UnitPoint
 
-  // MARK: Internal
-
   func sizeThatFits(
     proposal: ProposedViewSize,
     subviews: Subviews,
@@ -117,8 +115,6 @@ struct IdealFontLayout: Layout {
       }
     }
   }
-
-  // MARK: Private
 
   private func getMinIdealSize(
     subviews: Subviews,

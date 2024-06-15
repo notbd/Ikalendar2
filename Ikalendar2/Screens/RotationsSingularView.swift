@@ -74,8 +74,6 @@ struct RotationsSingularView: View {
     }
   }
 
-  // MARK: Private
-
   private func setToolbarItems(content: some View) -> some View {
     content
       .toolbar {

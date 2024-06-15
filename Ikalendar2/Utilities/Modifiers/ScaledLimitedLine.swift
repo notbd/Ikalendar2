@@ -33,8 +33,6 @@ struct ScaledLimitedLine: ViewModifier {
   var lineLimit: Int
   var minScaleFactor: CGFloat
 
-  // MARK: Internal
-
   func body(content: Content) -> some View {
     content
       .lineLimit(lineLimit)

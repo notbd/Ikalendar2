@@ -46,10 +46,13 @@ extension IkaError {
           case .badData:
             Scoped.Message.SERVER_ERROR_BAD_DATA
         }
+
       case .connectionError:
         Scoped.Message.CONNECTION_ERROR
+
       case .unknownError:
         Scoped.Message.UNKNOWN_ERROR
+
       case .maxAttemptsExceeded:
         Scoped.Message.MAX_ATTEMPTS_EXCEEDED
     }

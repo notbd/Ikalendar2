@@ -19,8 +19,6 @@ final class IkaInterfaceOrientationPublisher {
   /// The current orientation of the device.
   var currentOrientation: UIInterfaceOrientation
 
-  // MARK: Lifecycle
-
   /// Private initializer.
   private init() {
     UIDevice.current.beginGeneratingDeviceOrientationNotifications()
@@ -42,15 +40,11 @@ final class IkaInterfaceOrientationPublisher {
     UIDevice.current.endGeneratingDeviceOrientationNotifications()
   }
 
-  // MARK: Internal
-
   /// Sets the initial orientation, typically called when the RootView appears.
   func setInitialOrientation() {
     guard currentOrientation == .unknown else { return }
     updateCurrentOrientation()
   }
-
-  // MARK: Private
 
   /// Handles the device orientation change event.
   @objc

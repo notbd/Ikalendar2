@@ -103,8 +103,6 @@ struct SettingsAltAppIconView: View {
     }
   }
 
-  // MARK: Private
-
   private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
     try? await Task.sleep(nanoseconds: UInt64(2.1 * 1_000_000_000))
     guard !Task.isCancelled else { return }
