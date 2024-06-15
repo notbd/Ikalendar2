@@ -22,13 +22,13 @@
 "Default Battle Mode" = "デフォルトバトルモード";
 "Appearance" = "外観";
 "Color Scheme" = "外観モード";
-"Follow System" = "システムと同じ";
+"Follow System" = "端末に合わせる";
 "Dark" = "ダーク";
 "Light" = "ライト";
 "App Icon" = "アプリアイコン";
-"Advanced Options" = "高度なオプション";
+"Advanced Options" = "追加オプション";
 "Language" = "言語";
-"Preferred Language" = "アプリケーション言語";
+"Preferred Language" = "アプリ言語";
 "About" = "ikalendar2について";
 "Credits" = "クレジット";
 // Alt App Icon
@@ -99,7 +99,7 @@
 再度試してみて、問題が続く場合はサポートにお問い合わせください。";
 
 "key.message.connection_error" =
-"デバイスがオフラインのようです。
+"サーバーに接続できません。
 インターネット接続を確認して、もう一度試してみてください。";
 
 "key.message.unknown_error" =
