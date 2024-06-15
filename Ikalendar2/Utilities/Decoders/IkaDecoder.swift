@@ -33,10 +33,7 @@ enum IkaDecoder {
   static func parseText(from data: Data)
     throws -> String
   {
-    guard let text = String(data: data, encoding: .utf8) else {
-      throw IkaError.serverError(.badData)
-    }
-    return text
+    return String(decoding: data, as: UTF8.self)
   }
 
   /// Parse License from GitHub API.
@@ -66,10 +63,10 @@ enum IkaDecoder {
     let sanitizedBase64Content = base64Content.replacingOccurrences(of: "\n", with: "")
 
     // Decode Base64 to Data
-    guard
-      let decodedData = Data(base64Encoded: sanitizedBase64Content),
-      let decodedString = String(data: decodedData, encoding: .utf8)
+    guard let decodedData = Data(base64Encoded: sanitizedBase64Content)
     else { throw IkaError.serverError(.badData) }
+
+    let decodedString = String(decoding: decodedData, as: UTF8.self)
 
     // Create and return License object
     return IkaOpenSourceLicense(
