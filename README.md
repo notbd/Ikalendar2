@@ -24,7 +24,7 @@ Track Splatoon 2 rotation schedules with style and ease.
 
 # GIF Demos
 
-Transition between rotations | Auto load newly available rotations
+Transition animations | Auto refresh for newly available rotations
 :-------------------------:|:-------------------------:
 ![Transition](./Resources/MetaAssets/Screenshots/gif-transition.gif) | ![Auto Refresh](./Resources/MetaAssets/Screenshots/gif-auto-refresh.gif)
 
