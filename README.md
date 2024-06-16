@@ -16,17 +16,29 @@ Track Splatoon 2 rotation schedules with style and ease.
 
 # Features
 
-- View the current and upcoming rotation info for all modes - including Salmon Run.
+- View the current and upcoming rotation info for all modes including Salmon Run.
 - Meticulously crafted **UI design** with seamless **animations**, optimized for both iOS and iPadOS.
 - Native support for both **English** and **Japanese**.
-- A variety of **customization** options & App Icons to choose from, making the app best suit your style and needs.
+- A variety of **customization** options & App Icons to choose from, suited for different styles and needs.
 - Smart and reliable **Auto-Refresh** system that always keeps the schedule up-to-date.
 
-# Requirements
+# GIF Demos
 
-The latest version of ikalendar2 requires iOS and iPadOS `17.0` or later.
+Transition between rotations | Auto load newly available rotations
+:-------------------------:|:-------------------------:
+![Transition](./Resources/MetaAssets/Screenshots/gif-transition.gif) | ![Auto Refresh](./Resources/MetaAssets/Screenshots/gif-auto-refresh.gif)
 
-Development requires Xcode `15.3` and Swift `5.10`.
+# Compatibilities & Environments
+
+iOS / iPadOS `17.0` or later is required for the latest version of ikalendar2.
+
+Compatibility with macOS running on Apple Silicon is not targeted, but beta tests on MacBook Air M1 with macOS `14.5` show no breaking issues.
+
+visionOS compatibility is not tested for.
+
+watchOS, tvOS and macOS running on Intel-based Macs are not yet supported.
+
+Development environment includes Xcode `15.4` and Swift `5.10`.
 
 # Installation
 
