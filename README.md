@@ -22,11 +22,11 @@ Track Splatoon 2 rotation schedules with style and ease.
 - A variety of **customization** options & App Icons to choose from, suited for different styles and needs.
 - Smart and reliable **Auto-Refresh** system that always keeps the schedule up-to-date.
 
-# GIF Demos
+# Installation
 
-Transition animations | Auto refresh for newly available rotations
-:-------------------------:|:-------------------------:
-![Transition](./Resources/MetaAssets/Screenshots/gif-transition.gif) | ![Auto Refresh](./Resources/MetaAssets/Screenshots/gif-auto-refresh.gif)
+ikalendar2 is available on the App Store for free.
+
+[![Download on the App Store](./Resources/MetaAssets/Badges/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg)](https://apps.apple.com/app/ikalendar2/id1529193361)
 
 # Compatibilities & Environments
 
@@ -40,11 +40,11 @@ watchOS, tvOS and macOS running on Intel-based Macs are not yet supported.
 
 Development environment includes Xcode `15.4` and Swift `5.10`.
 
-# Installation
+# GIF Demos
 
-ikalendar2 is available on the App Store for free.
-
-[![Download on the App Store](./Resources/MetaAssets/Badges/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg)](https://apps.apple.com/app/ikalendar2/id1529193361)
+Transition animations | Auto refresh for newly available rotations
+:-------------------------:|:-------------------------:
+![Transition](./Resources/MetaAssets/Screenshots/gif-transition-60fps.gif) | ![Auto Refresh](./Resources/MetaAssets/Screenshots/gif-auto-refresh-60fps.gif)
 
 # Acknowledgements
 
