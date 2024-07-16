@@ -31,4 +31,3 @@ features:
   - title: Open Source
     details: ikalendar2 is 100% open source.
 ---
-

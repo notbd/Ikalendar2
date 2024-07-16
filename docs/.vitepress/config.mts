@@ -1,9 +1,8 @@
 import { defineConfig } from 'vitepress'
-import type { DefaultTheme } from 'vitepress'
-import type { HeadConfig } from 'vitepress'
+import type { DefaultTheme, HeadConfig } from 'vitepress'
 
-const title = "ikalendar2"
-const description = "Track Splatoon 2 Rotations with Style and Ease"
+const title = 'ikalendar2'
+const description = 'Track Splatoon 2 Rotations with Style and Ease'
 const version = '2.3.2'
 const baseUrl = 'https://ikalendar.app'
 const head: HeadConfig[] = [
@@ -48,8 +47,8 @@ const Sidebar: DefaultTheme.SidebarItem[] = [
     text: 'Docs',
     items: [
       { text: 'Privacy Policy', link: '/privacy-policy' },
-    ]
-  }
+    ],
+  },
 ]
 
 const Footer: DefaultTheme.Footer = {
@@ -59,7 +58,7 @@ const Footer: DefaultTheme.Footer = {
 
 const SocialLinks: DefaultTheme.SocialLink[] = [
   { icon: 'github', link: 'https://github.com/notbd/Ikalendar2' },
-  { icon: 'twitter', link: 'https://twitter.com/ikalendar_app' }
+  { icon: 'twitter', link: 'https://twitter.com/ikalendar_app' },
 ]
 
 // https://vitepress.dev/reference/site-config
@@ -73,11 +72,10 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: '/assets/icon-squircle-128.png',
-    search: { provider: 'local', },
+    search: { provider: 'local' },
     nav: Nav,
     sidebar: Sidebar,
     footer: Footer,
     socialLinks: SocialLinks,
   },
 })
-
