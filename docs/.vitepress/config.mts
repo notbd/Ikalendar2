@@ -24,7 +24,6 @@ const Nav: DefaultTheme.NavItem[] = [
 export default defineConfig({
   lang: 'en',
   title,
-  titleTemplate: `:title · ${title}`,
   description,
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico', type: 'image/png', sizes: '128x128' }],
