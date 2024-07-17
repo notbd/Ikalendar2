@@ -18,7 +18,7 @@ const head: HeadConfig[] = [
   ['meta', { property: 'og:url', content: baseUrl }],
   ['meta', { name: 'og:title', content: title }],
   ['meta', { name: 'og:description', content: description }],
-  ['meta', { name: 'og:sitename', content: 'ikalendar2.app' }],
+  ['meta', { name: 'og:site_name', content: 'ikalendar2.app' }],
   ['meta', { property: 'og:image', content: `${baseUrl}/assets/icon-square-1024.png` }],
   ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
   ['meta', { name: 'twitter:title', content: title }],
@@ -84,6 +84,7 @@ export default defineConfig({
     resolve: {
       alias: [
         {
+          // replace the default VPHomeHero.vue with custom implementation
           find: /^.*\/VPHomeHero\.vue$/,
           replacement: fileURLToPath(
             new URL('./theme/CustomVPHomeHero.vue', import.meta.url),
