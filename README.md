@@ -64,7 +64,7 @@ ikalendar2 is made possible thanks to the following projects:
 
 # App Website
 
-[ikalendar.app](https://ikalendar.app) is the official website for ikalendar2. This site is built with VitePress and deployed on vercel.
+[ikalendar.app](https://ikalendar.app) is the official website for ikalendar2. This site is built with VitePress and deployed on Vercel.
 
 The source code for the website is located [here](https://github.com/notbd/Ikalendar2/tree/main/docs) within the `/docs` directory of the current repo.
 
