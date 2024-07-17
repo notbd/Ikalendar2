@@ -1,3 +1,4 @@
+import { URL, fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
 import type { DefaultTheme, HeadConfig } from 'vitepress'
 
@@ -31,6 +32,7 @@ const head: HeadConfig[] = [
 const Nav: DefaultTheme.NavItem[] = [
   { text: 'Home', link: '/' },
   { text: 'Privacy Policy', link: '/privacy-policy' },
+  { text: 'License', link: 'https://github.com/notbd/Ikalendar2/blob/main/LICENSE' },
   {
     text: `v${version}`,
     items: [
@@ -77,5 +79,17 @@ export default defineConfig({
     sidebar: Sidebar,
     footer: Footer,
     socialLinks: SocialLinks,
+  },
+  vite: {
+    resolve: {
+      alias: [
+        {
+          find: /^.*\/VPHomeHero\.vue$/,
+          replacement: fileURLToPath(
+            new URL('./theme/CustomVPHomeHero.vue', import.meta.url),
+          ),
+        },
+      ],
+    },
   },
 })
