@@ -2,10 +2,9 @@
 import { type Ref, inject } from 'vue'
 import type { DefaultTheme } from 'vitepress/theme'
 import { VPButton, VPImage } from 'vitepress/theme'
-import { computed } from 'vue'
-import { useData } from 'vitepress'
+import ClientAppStoreBadge from './ClientAppStoreBadge.vue'
 
-const props = defineProps<{
+defineProps<{
   name?: string
   text?: string
   tagline?: string
@@ -16,14 +15,6 @@ const props = defineProps<{
   appStoreImageLight: string
   compatibility?: string
 }>()
-
-const { isDark } = useData()
-
-const appStoreImageSrc = computed(() => {
-  return isDark.value
-    ? props.appStoreImageDark
-    : props.appStoreImageLight
-})
 
 export interface HeroAction {
   theme?: 'brand' | 'alt'
@@ -50,11 +41,16 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
         </slot>
         <slot name="home-hero-info-after" />
 
-        <!-- modifications -->
+        <!-- modifications:
+        switch the first action button to App Store badge -->
         <div v-if="actions" class="actions">
           <div class="action">
             <a :href="appStoreLink" target="_blank" rel="noopener noreferrer">
-              <img :src="appStoreImageSrc" alt="Download on the App Store">
+              <ClientAppStoreBadge
+                :light-src="appStoreImageLight"
+                :dark-src="appStoreImageDark"
+                alt="Download on the App Store"
+              />
             </a>
           </div>
           <div v-for="action in actions.slice(1)" :key="action.link" class="action">
