@@ -180,7 +180,7 @@
 }
 
 .dark {
-  --vp-c-text-1: rgba(255, 255, 245, 0.86);
+  --vp-c-text-1: rgba(240, 240, 230);
   --vp-c-text-2: rgba(235, 235, 245, 0.6);
   --vp-c-text-3: rgba(235, 235, 245, 0.38);
 }
@@ -530,8 +530,8 @@
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: -webkit-linear-gradient(
     120deg,
-    #ff8d02 30%,
-    #ffc34b
+    #ff6302 30%,
+    #ffae4b
   );
 
   --vp-home-hero-image-background-image: linear-gradient(

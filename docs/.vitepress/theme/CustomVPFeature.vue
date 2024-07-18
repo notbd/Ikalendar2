@@ -64,19 +64,23 @@ defineProps<{
   border-color: var(--vp-c-brand-1);
 }
 
+.VPFeature .icon {
+  transition: color 0.3s ease-out;
+}
+
 .VPFeature:hover .icon {
   color: var(--vp-c-brand-1);
+}
+
+.VPFeature .title {
+  background: var(--vp-home-hero-name-background);
+  -webkit-background-clip: text;
+  background-clip: text;
   transition: color 0.3s ease-out;
 }
 
 .VPFeature:hover .title {
-  background: var(--vp-home-hero-name-background);
-  -webkit-background-clip: text;
-  background-clip: text;
   color: transparent;
-  transition:
-    background 0.3s ease-out,
-    color 0.3s ease-out;
 }
 
 .box {
@@ -131,9 +135,5 @@ defineProps<{
 
 .link-text-icon {
   margin-left: 6px;
-}
-
-.VPFeature:hover > .glow {
-  color: var(--vp-c-brand-1);
 }
 </style>

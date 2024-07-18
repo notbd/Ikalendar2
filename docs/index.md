@@ -68,6 +68,16 @@ dependencies:
           url: https://github.com/sparrowcode/AlertKit
           icon: github
           description: Alerts that resemble native style from Apple Music.
+
+demo:
+  image:
+    src: /assets/demo-both.png
+    alt: ikalendar2 in action on iPhone and iPad
+  imageCompact:
+    tabletSrc: /assets/demo-tablet.png
+    tabletAlt: ikalendar2 in action on iPad
+    phoneSrc: /assets/demo-phone.png
+    phoneAlt: ikalendar2 in action on iPhone
 ---
 
 <HomeCustomBody />
