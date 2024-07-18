@@ -16,10 +16,10 @@ Track Splatoon 2 rotation schedules with style and ease.
 
 # Features
 
-- View the current and upcoming rotation info for all modes including Salmon Run.
-- Smart and robust **Auto-Refresh** system that always fetches the latest rotations for you so you don't have to.
+- View the current and upcoming rotation info for all modes in Splatoon 2.
+- Robust **Auto-Refresh** system that always fetches the latest rotations for you so you don't have to.
 - Meticulously crafted **UI design** with seamless **animations**, optimized for both iOS and iPadOS.
-- A variety of **customization** options & App Icons to choose from, suited for different styles and needs.
+- A variety of **customization options** & App Icons to choose from, suited for different styles and needs.
 - Native localization support for both **English** and **Japanese**.
 
 # Download
@@ -30,17 +30,17 @@ ikalendar2 is available on the App Store for free.
 
 # Compatibilities & Environments
 
-iOS / iPadOS `17.0` or later is required for the latest version of ikalendar2.
+- iOS / iPadOS `17.0` or later is required for the latest version of ikalendar2.
 
-Compatibility with macOS running on Apple Silicon is not targeted, but beta tests on MacBook Air M1 with macOS `14.5` show no breaking issues.
+- Compatibility with macOS running on Apple Silicon is not targeted, but beta tests on MacBook Air M1 with macOS `14.5` show no breaking issues.
 
-visionOS compatibility is not tested for.
+- visionOS compatibility is not tested for.
 
-watchOS, tvOS and macOS running on Intel-based Macs are not yet supported.
+- watchOS, tvOS, and macOS running on Intel-based Macs are not yet supported.
 
-Development environment includes Xcode `15.4` and Swift `5.10`.
+- Development environment includes Xcode `15.4` and Swift `5.10`.
 
-# GIF Demos
+# Gif Demos
 
 Transition animations | Auto refresh for newly available rotations
 :-------------------------:|:-------------------------:
@@ -62,19 +62,19 @@ ikalendar2 is made possible thanks to the following projects:
 - [SimpleHaptics](https://github.com/notbd/SimpleHaptics)
 - [AlertKit](https://github.com/sparrowcode/AlertKit)
 
-# App Website
+# Website
 
 [ikalendar.app](https://ikalendar.app) is the official website for ikalendar2. This site is built with VitePress and deployed on Vercel.
 
-The source code for the website is located [here](https://github.com/notbd/Ikalendar2/tree/main/docs) within the `/docs` directory of the current repo.
+Source code of the website is located [here](https://github.com/notbd/Ikalendar2/tree/main/docs) within the `/docs` directory under the current repo.
+
+# Privacy
+
+ikalendar2 does not collect any data about the user or upload any information. Privacy policy can be found [here](https://ikalendar.app/privacy-policy).
 
 # License
 
 ikalendar2 is licensed under the [GPL-3.0 License](./LICENSE).
-
-# Privacy
-
-ikalendar2 does not collect any personal information or upload any data about the user. The privacy policy can be found [here](https://ikalendar.app/privacy-policy).
 
 # Disclaimer
 
