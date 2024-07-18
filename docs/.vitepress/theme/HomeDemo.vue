@@ -13,20 +13,20 @@ const { frontmatter } = useData()
       v-if="frontmatter.demo.image"
       :src="frontmatter.demo.image.src"
       :alt="frontmatter.demo.image.alt"
-      hidden sm:block
+      hidden md:block
     >
     <img
       v-if="frontmatter.demo.imageCompact"
       :src="frontmatter.demo.imageCompact.tabletSrc"
       :alt="frontmatter.demo.imageCompact.tabletAlt"
-      sm:hidden
+      md:hidden
     >
     <img
       v-if="frontmatter.demo.imageCompact"
       :src="frontmatter.demo.imageCompact.phoneSrc"
       :alt="frontmatter.demo.imageCompact.phoneAlt"
       px-16
-      sm:hidden
+      md:hidden
     >
   </div>
 </template>
