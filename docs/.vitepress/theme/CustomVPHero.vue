@@ -16,7 +16,7 @@ defineProps<{
   compatibility?: string
 }>()
 
-export interface HeroAction {
+export type HeroAction = {
   theme?: 'brand' | 'alt'
   text: string
   link: string

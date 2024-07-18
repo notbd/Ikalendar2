@@ -1,6 +1,7 @@
 import { URL, fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
 import type { DefaultTheme, HeadConfig } from 'vitepress'
+import UnoCSS from 'unocss/vite'
 
 const title = 'ikalendar2'
 const description = 'Track Splatoon 2 Rotations with Style and Ease'
@@ -54,7 +55,7 @@ const Sidebar: DefaultTheme.SidebarItem[] = [
 ]
 
 const Footer: DefaultTheme.Footer = {
-  message: 'Released under the GPL-3.0 License.',
+  message: 'Disclaimer: ikalendar2 is a third-party companion app for Splatoon™ 2 and is not affiliated with Nintendo.<br>All associated item names, logos, and trademarks are the property of their respective owners.<br><br>Released under the GPL-3.0 License.',
   copyright: 'Copyright © 2020-Present TIANWEI ZHANG',
 }
 
@@ -81,6 +82,10 @@ export default defineConfig({
     socialLinks: SocialLinks,
   },
   vite: {
+    plugins: [
+      UnoCSS(),
+    ],
+
     resolve: {
       alias: [
         {

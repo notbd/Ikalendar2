@@ -35,4 +35,33 @@ features:
     details: In-App localization support is now available for both English and Japanese.
   - title: Open Source
     details: ikalendar2 is 100% open source :]
+
+dependencies:
+  message: ikalendar2 is free and open source, made possible by the following projects.
+  content:
+    - tier: Data Sources
+      size: big
+      items:
+        - name: misenhower/splatoon2.ink
+          url: https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy#data-urls
+          icon: github
+        - name: JelenzoBot
+          url: https://splatoon.oatmealdome.me/about
+    - tier: Open Source Libraries
+      size: big
+      items:
+        - name: SwiftyJSON/SwiftyJSON
+          url: https://github.com/SwiftyJSON/SwiftyJSON
+          icon: github
+          description: The better way to deal with JSON data in Swift.
+        - name: notbd/SimpleHaptics
+          url: https://github.com/notbd/SimpleHaptics
+          icon: github
+          description: Simple and easy haptics generation.
+        - name: sparrowcode/AlertKit
+          url: https://github.com/sparrowcode/AlertKit
+          icon: github
+          description: Alerts that resemble native style from Apple Music.
 ---
+
+<HomeCustomBody />

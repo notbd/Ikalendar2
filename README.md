@@ -53,7 +53,7 @@ ikalendar2 is made possible thanks to the following projects:
 <!-- markdownlint-disable-next-line MD001 -->
 ### Data Sources
 
-- [Splatoon2.ink](https://github.com/misenhower/splatoon2.ink)
+- [Splatoon2.ink](https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy#data-urls)
 - [JelonzoBot](https://splatoon.oatmealdome.me/about)
 
 ### Dependencies
