@@ -37,10 +37,10 @@ useSponsorsGrid({ el, size: props.size })
           hover:text="zinc-700 dark:zinc-700"
           transition-colors
         >
-          <div
+          <span
             :class="dependency.icon
-              ? 'i-mingcute-github-line'
-              : 'i-mingcute-link-2-line'"
+              ? 'i-tabler:brand-github'
+              : 'i-tabler:link'"
             text-xl
             mr-2
           />

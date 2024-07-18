@@ -5,7 +5,7 @@ layout: home
 hero:
   image:
     src: /assets/icon-squircle-1024.png
-    alt: ikalendar2's icon
+    alt: Demo for ikalendar2
   name: ikalendar2
   text: Track Splatoon 2 Rotations with Style and Ease
   tagline: Fast · Intuitive · Customizable
@@ -23,18 +23,24 @@ hero:
       link: https://github.com/notbd/Ikalendar2
 
 features:
-  - title: Fully SwiftUI
+  - icon: <span class="i-gravity-ui:compass"/>
+    title: Your Companion
+    details: ikalendar2 is your best companion for tracking Splatoon 2 schedules. Stay up-to-date with the latest rotations, with separate UI designs optimized for iOS and iPadOS respectively.
+  - icon: <span class="i-tabler:brand-swift"/>
+    title: Fully SwiftUI
     details: Focusing on speed and readability, ikalendar2 is built entirely with SwiftUI, leveraging the latest APIs to deliver a fast and modern app experience.
-  - title: Auto Refresh
+  - icon: <span class="i-gravity-ui:cloud-check"/>
+    title: Auto Refresh
     details: The robust auto-refresh system ensures the lastest rotation info is always ready. Never have to worry about doing it yourself!
-  - title: Animations
+  - icon: <span class="i-ic:round-animation"/>
+    title: Animations
     details: Enjoy meticulously designed, game-inspired animations and transitions throughout the app. Rotation tracking is just as fun and vibrant as the game itself!
-  - title: Extensive Customizations
+  - icon: <span class="i-gravity-ui:palette"/>
+    title: Extensive Customizations
     details: Fancy a different look for the stages? In mood for a new app icon? Make it truly yours with a variety of personalization options.
-  - title: Multi-Language Support
+  - icon: <span class="i-hugeicons:translate"/>
+    title: Multi-Language Support
     details: In-App localization support is now available for both English and Japanese.
-  - title: Open Source
-    details: ikalendar2 is 100% open source :]
 
 dependencies:
   message: ikalendar2 is free and open source, made possible by the following projects.

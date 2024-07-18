@@ -55,7 +55,7 @@ const Sidebar: DefaultTheme.SidebarItem[] = [
 ]
 
 const Footer: DefaultTheme.Footer = {
-  message: 'Disclaimer: ikalendar2 is a third-party companion app for Splatoon™ 2 and is not affiliated with Nintendo.<br>All associated item names, logos, and trademarks are the property of their respective owners.<br><br>Released under the GPL-3.0 License.',
+  message: 'ikalendar2 is a third-party companion app for Splatoon™ 2 and is not affiliated with Nintendo.<br>All associated item names, logos, and trademarks are the property of their respective owners.<br>——<br>Released under the GPL-3.0 License.',
   copyright: 'Copyright © 2020-Present TIANWEI ZHANG',
 }
 
@@ -88,11 +88,17 @@ export default defineConfig({
 
     resolve: {
       alias: [
+        // replace the default with custom implementations
         {
-          // replace the default VPHomeHero.vue with custom implementation
           find: /^.*\/VPHomeHero\.vue$/,
           replacement: fileURLToPath(
             new URL('./theme/CustomVPHomeHero.vue', import.meta.url),
+          ),
+        },
+        {
+          find: /^.*\/VPFeature\.vue$/,
+          replacement: fileURLToPath(
+            new URL('./theme/CustomVPFeature.vue', import.meta.url),
           ),
         },
       ],

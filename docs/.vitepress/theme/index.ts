@@ -6,6 +6,7 @@ import './myCustomVars.css'
 import 'virtual:uno.css'
 import HomeCustomBody from '../HomeCustomBody.vue'
 import CustomInstallRequirement from './CustomInstallRequirement.vue'
+import CustomVPLink from './CustomVPLink.vue'
 
 export default {
   extends: DefaultTheme,
@@ -17,5 +18,6 @@ export default {
   },
   enhanceApp({ app }) {
     app.component('HomeCustomBody', HomeCustomBody)
+    app.component('CustomVPLink', CustomVPLink)
   },
 } satisfies Theme
