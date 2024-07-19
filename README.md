@@ -1,4 +1,5 @@
 <!-- markdownlint-disable MD033 MD041 -->
+
 <p align="center">
   <img
     src="./Resources/MetaAssets/AppIcons/ikalendar2-app-icon-default-masked.png"
@@ -12,7 +13,7 @@
 Track Splatoon 2 rotation schedules with style and ease.
 </p>
 
-![Preview](./Resources/MetaAssets/Screenshots/MainMockup.png)
+![Preview](./Resources/MetaAssets/Screenshots/demo-universal-og.png)
 
 # Features
 
@@ -40,11 +41,48 @@ ikalendar2 is available on the App Store for free.
 
 - Development environment includes Xcode `15.4` and Swift `5.10`.
 
-# Gif Demos
+# Demo
 
-Transition animations | Auto refresh for newly available rotations
-:-------------------------:|:-------------------------:
-![Transition](./Resources/MetaAssets/Screenshots/gif-transition-60fps.gif) | ![Auto Refresh](./Resources/MetaAssets/Screenshots/gif-auto-refresh-60fps.gif)
+<!-- Have to set both `align="center"` and `style="text-align: center;"`
+since some markdown parsers don't support one or the other.  -->
+<table align="center" width="100%" style="text-align: center;">
+  <thead>
+    <tr>
+      <th align="center" width="33%" style="text-align: center;">Ranked Battle (English)</th>
+      <th align="center" width="33%" style="text-align: center;">League Battle (English)</th>
+      <th align="center" width="33%" style="text-align: center;">Salmon Run (Japanese)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center" width="33%" style="text-align: center;">No Customization</td>
+      <td align="center" width="33%" style="text-align: center;">Custom Stage Image & Bottom Toolbar</td>
+      <td align="center" width="33%" style="text-align: center;">Custom Stage Image & Bottom Toolbar</td>
+    </tr>
+    <tr>
+      <td align="center" width="33%"><img alt="Battle" src="./Resources/MetaAssets/Screenshots/demo-phone-battle.png" width="100%"></td>
+      <td align="center" width="33%"><img alt="Battle Alt" src="./Resources/MetaAssets/Screenshots/demo-phone-battle-alt.png" width="100%"></td>
+      <td align="center" width="33%"><img alt="Salmon Run" src="./Resources/MetaAssets/Screenshots/demo-phone-salmon.png" width="100%"></td>
+    </tr>
+  </tbody>
+</table>
+
+<table align="center" width="100%" style="text-align: center;">
+  <thead>
+    <tr>
+      <th align="center" width="33%" style="text-align: center;">Welcome Screen</th>
+      <th align="center" width="33%" style="text-align: center;">Transition between Rotations</th>
+      <th align="center" width="33%" style="text-align: center;">Auto Refresh for Newly Available Rotations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center" width="33%" style="text-align: center;"><img alt="Welcome Screen" src="./Resources/MetaAssets/Screenshots/gif-welcome.gif" width="100%"></td>
+      <td align="center" width="33%" style="text-align: center;"><img alt="Rotation Transition" src="./Resources/MetaAssets/Screenshots/gif-transition.gif" width="100%"></td>
+      <td align="center" width="33%" style="text-align: center;"><img alt="Auto Refresh" src="./Resources/MetaAssets/Screenshots/gif-auto-refresh.gif" width="100%"></td>
+    </tr>
+  </tbody>
+</table>
 
 # Acknowledgements
 
@@ -64,13 +102,17 @@ ikalendar2 is made possible thanks to the following projects:
 
 # Website
 
-[ikalendar.app](https://ikalendar.app) is the official website for ikalendar2. This site is built with VitePress and deployed on Vercel.
+[ikalendar.app](https://ikalendar.app) is the official website for ikalendar2. The site is built with VitePress and deployed on Vercel.
 
 Source code of the website is located [here](https://github.com/notbd/Ikalendar2/tree/main/docs) within the `/docs` directory under the current repo.
 
+# Archives
+
+Early versions of ikalendar2 was archived in a [separate repository](https://github.com/notbd/ikalendar-2-archived). The reason for a new repo at the time was due to the need for a major refactoring, as well as implementing more robust coding practices and standards.
+
 # Privacy
 
-ikalendar2 does not collect any data about the user or upload any information. Privacy policy can be found [here](https://ikalendar.app/privacy-policy).
+ikalendar2 does not collect any data about the user or upload any information. Here's the link to the [Privacy Policy](https://ikalendar.app/privacy-policy).
 
 # License
 
