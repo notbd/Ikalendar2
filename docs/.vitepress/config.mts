@@ -2,10 +2,11 @@ import { URL, fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
 import type { DefaultTheme, HeadConfig } from 'vitepress'
 import UnoCSS from 'unocss/vite'
+import { extractIosAppVersion } from './utils/extractIosAppVersion'
 
 const title = 'ikalendar2'
 const description = 'Track Splatoon 2 Rotations with Style and Ease'
-const version = '2.3.2'
+const version = extractIosAppVersion()
 const baseUrl = 'https://ikalendar.app'
 const head: HeadConfig[] = [
   ['link', { rel: 'icon', href: '/favicon.ico', type: 'image/png', sizes: '128x128' }],
