@@ -7,7 +7,7 @@ const { frontmatter } = useData()
 <template>
   <div
     flex flex-col items-center
-    mt-12 md:mt-24 gap-y-4
+    mt-16 md:mt-24 gap-y-12
   >
     <img
       v-if="frontmatter.demo.image"
@@ -17,15 +17,14 @@ const { frontmatter } = useData()
     >
     <img
       v-if="frontmatter.demo.imageCompact"
-      :src="frontmatter.demo.imageCompact.tabletSrc"
-      :alt="frontmatter.demo.imageCompact.tabletAlt"
+      :src="frontmatter.demo.imageCompact.phoneSrc"
+      :alt="frontmatter.demo.imageCompact.phoneAlt"
       md:hidden
     >
     <img
       v-if="frontmatter.demo.imageCompact"
-      :src="frontmatter.demo.imageCompact.phoneSrc"
-      :alt="frontmatter.demo.imageCompact.phoneAlt"
-      px-16
+      :src="frontmatter.demo.imageCompact.tabletSrc"
+      :alt="frontmatter.demo.imageCompact.tabletAlt"
       md:hidden
     >
   </div>
