@@ -1,11 +1,10 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
   image:
     src: /assets/icon-squircle-1024.png
-    alt: Demo for ikalendar2
+    alt: Logo for ikalendar2
   name: ikalendar2
   text: Track Splatoon 2 Rotations with Style and Ease
   tagline: Fast · Intuitive · Customizable
@@ -25,25 +24,25 @@ hero:
 features:
   - icon: <span class="i-gravity-ui:compass"/>
     title: Your Companion
-    details: ikalendar2 is your best companion for tracking Splatoon 2 schedules. Stay up-to-date with the latest rotations, with optimized UI designs targeted to iPhone and iPad respectively.
+    details: ikalendar2 is your ideal companion for tracking Splatoon 2 schedules. Stay up-to-date with the latest rotation info through a UI design optimized for iPhone and iPad respectively.
   - icon: <span class="i-tabler:brand-swift"/>
     title: Clean and Swifty
-    details: Unlike all the clutter and clumsiness from the traditional source, ikalendar2 is built entirely in SwiftUI with a clean interface, leveraging the latest APIs to deliver a fast and modern app experience.
+    details: Unlike the clutter and clumsiness from traditional sources, ikalendar2 is built entirely in SwiftUI with a clean interface, leveraging the latest APIs to deliver a fast and modern app experience.
   - icon: <span class="i-gravity-ui:cloud-check"/>
     title: Auto Refresh
-    details: The robust auto-refresh system ensures the lastest rotation info is always on display. Never have to worry again about doing it yourself!
+    details: The robust auto-refresh system always fetches the latest available data on your behalf at the appropriate time. Forget about doing it yourself!
   - icon: <span class="i-ic:round-animation"/>
     title: Animated
-    details: Find meticulously designed, game-inspired animations and transitions throughout the app. Rotation tracking is just as fun and vibrant as the game itself :]
+    details: Find meticulously designed, game-inspired animations and thoughtful details throughout the app. Rotation tracking is just as fun and vibrant as the game itself :)
   - icon: <span class="i-gravity-ui:palette"/>
-    title: Customizations
+    title: Customization
     details: Fancy a different look for the stages? In mood for a new app icon? Make ikalendar2 truly yours with a variety of personalization options.
   - icon: <span class="i-hugeicons:translate"/>
     title: Multi-Language Support
-    details: In-App localization support is now available for both English and Japanese.
+    details: In-App localization support is available for English and Japanese.
 
 dependencies:
-  message: ikalendar2 is free and open source, made possible by the following projects.
+  message: ikalendar2 is free and open source, made possible by these following projects.
   content:
     - tier: Data Sources
       size: big
@@ -71,13 +70,14 @@ dependencies:
 
 demo:
   image:
-    src: /assets/demo-universal.png
+    src: /assets/demo-universal.webp
     alt: ikalendar2 in action on iPhone and iPad
   imageCompact:
-    phoneSrc: /assets/demo-phone-duo.png
+    phoneSrc: /assets/demo-phone-duo.webp
     phoneAlt: ikalendar2 in action on iPhone
-    tabletSrc: /assets/demo-tablet.png
+    tabletSrc: /assets/demo-tablet.webp
     tabletAlt: ikalendar2 in action on iPad
 ---
 
+<!-- markdownlint-disable MD033 -->
 <HomeCustomBody />

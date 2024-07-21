@@ -7,23 +7,25 @@ import { extractIosAppVersion } from './utils/extractIosAppVersion'
 const title = 'ikalendar2'
 const description = 'Track Splatoon 2 Rotations with Style and Ease'
 const version = extractIosAppVersion()
-const baseUrl = 'https://ikalendar.app'
+const baseDomain = 'ikalendar.app'
+const baseUrl = `https://${baseDomain}`
+const authorName = 'Tianwei Zhang'
 const head: HeadConfig[] = [
   ['link', { rel: 'icon', href: '/favicon.ico', type: 'image/png', sizes: '128x128' }],
   ['link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' }],
   ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
-  ['meta', { name: 'author', content: 'Tianwei Zhang' }],
-  ['meta', { name: 'creator', content: 'Tianwei Zhang' }],
+  ['meta', { name: 'author', content: authorName }],
+  ['meta', { name: 'creator', content: authorName }],
   ['meta', { name: 'generator', content: 'VitePress' }],
   ['meta', { name: 'keywords', content: 'ikalendar, ikalendar2, splatoon, splatoon2, rotation, schedule, tracker, salmon run' }],
   ['meta', { property: 'og:type', content: 'website' }],
   ['meta', { property: 'og:url', content: baseUrl }],
-  ['meta', { name: 'og:title', content: title }],
+  ['meta', { name: 'og:title', content: `${title} · ${baseDomain}` }],
   ['meta', { name: 'og:description', content: description }],
-  ['meta', { name: 'og:site_name', content: 'ikalendar2.app' }],
+  ['meta', { name: 'og:site_name', content: baseDomain }],
   ['meta', { property: 'og:image', content: `${baseUrl}/assets/icon-square-1024.png` }],
   ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-  ['meta', { name: 'twitter:title', content: title }],
+  ['meta', { name: 'twitter:title', content: `${title} · ${baseDomain}` }],
   ['meta', { name: 'twitter:description', content: description }],
   ['meta', { name: 'twitter:creator', content: '@ikalendar_app' }],
   ['meta', { name: 'twitter:creatorId', content: '1565930842802851843' }],
