@@ -7,7 +7,7 @@
 ### Copyright (c) TIANWEI ZHANG
 ###
 
-### Supported SwiftFormat version as of last update: 0.53.7
+### Supported SwiftFormat version as of last update: 0.54.1
 
 ### FILE OPTIONS
 
@@ -15,7 +15,8 @@
   Pods,       \
   Carthage,   \
   .build,     \
-  Imports,
+  Imports,    \
+  docs,
 
 
 ### FORMAT OPTIONS
@@ -202,6 +203,7 @@
 #    noExplicitOwnership,                            \
 #    organizeDeclarations,                           \
 #    sortSwitchCases,                                \
+#    redundantProperty,                              \
 #    wrapConditionalBodies,                          \
     wrapEnumCases,                                  \
     wrapMultilineConditionalAssignment,             \

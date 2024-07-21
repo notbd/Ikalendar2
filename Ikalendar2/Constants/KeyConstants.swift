@@ -60,9 +60,10 @@ extension Constants.Key {
     static let THE_GOOD_STUFF = "https://yout-ube.com/watch?v=dQw4w9WgXcQ?autoplay=1" // good stuff indeed!
     static let THE_GOOD_STUFF_CN = "https://bilibili.com/video/BV1GJ411x7h7"
 
-    static let SPLATOON2_INK_DATA_ACCESS_POLICY = "https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy#data-urls"
+    static let SPLATOON2_INK_DATA_ACCESS_POLICY =
+      "https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy#data-urls"
     static let JELONZOBOT = "https://splatoon.oatmealdome.me/about"
-    
+
     static let GITHUB_SWIFTY_JSON = "https://github.com/SwiftyJSON/SwiftyJSON"
     static let GITHUB_SIMPLE_HAPTICS = "https://github.com/notbd/SimpleHaptics"
     static let GITHUB_ALERT_KIT = "https://github.com/sparrowcode/AlertKit"

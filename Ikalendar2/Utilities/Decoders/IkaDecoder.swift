@@ -33,7 +33,7 @@ enum IkaDecoder {
   static func parseText(from data: Data)
     throws -> String
   {
-    return String(decoding: data, as: UTF8.self)
+    String(decoding: data, as: UTF8.self)
   }
 
   /// Parse License from GitHub API.
