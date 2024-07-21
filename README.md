@@ -13,7 +13,7 @@
 Track Splatoon 2 rotation schedules with style and ease.
 </p>
 
-![Hero](./Resources/MetaAssets/Screenshots/demo-universal-og.png)
+![Hero](./Resources/MetaAssets/Demos/demo-universal-og.png)
 
 # Introduction
 
@@ -70,9 +70,9 @@ since some markdown parsers don't support one or the other.  -->
       <td align="center" width="33%" style="text-align: center;">Custom Stage Image & Bottom Toolbar</td>
     </tr>
     <tr>
-      <td align="center" width="33%"><img alt="Battle" src="./Resources/MetaAssets/Screenshots/demo-phone-battle.png" width="100%"></td>
-      <td align="center" width="33%"><img alt="Battle Alt" src="./Resources/MetaAssets/Screenshots/demo-phone-battle-alt.png" width="100%"></td>
-      <td align="center" width="33%"><img alt="Salmon Run" src="./Resources/MetaAssets/Screenshots/demo-phone-salmon.png" width="100%"></td>
+      <td align="center" width="33%"><img alt="Battle" src="./Resources/MetaAssets/Demos/demo-phone-battle.png" width="100%"></td>
+      <td align="center" width="33%"><img alt="Battle Alt" src="./Resources/MetaAssets/Demos/demo-phone-battle-alt.png" width="100%"></td>
+      <td align="center" width="33%"><img alt="Salmon Run" src="./Resources/MetaAssets/Demos/demo-phone-salmon.png" width="100%"></td>
     </tr>
   </tbody>
 </table>
@@ -87,9 +87,9 @@ since some markdown parsers don't support one or the other.  -->
   </thead>
   <tbody>
     <tr>
-      <td align="center" width="33%" style="text-align: center;"><img alt="Welcome Screen" src="./Resources/MetaAssets/Screenshots/gif-welcome.gif" width="100%"></td>
-      <td align="center" width="33%" style="text-align: center;"><img alt="Rotation Transition" src="./Resources/MetaAssets/Screenshots/gif-transition.gif" width="100%"></td>
-      <td align="center" width="33%" style="text-align: center;"><img alt="Auto Refresh" src="./Resources/MetaAssets/Screenshots/gif-auto-refresh.gif" width="100%"></td>
+      <td align="center" width="33%" style="text-align: center;"><img alt="Welcome Screen" src="./Resources/MetaAssets/Demos/gif-welcome.gif" width="100%"></td>
+      <td align="center" width="33%" style="text-align: center;"><img alt="Rotation Transition" src="./Resources/MetaAssets/Demos/gif-transition.gif" width="100%"></td>
+      <td align="center" width="33%" style="text-align: center;"><img alt="Auto Refresh" src="./Resources/MetaAssets/Demos/gif-auto-refresh.gif" width="100%"></td>
     </tr>
   </tbody>
 </table>
