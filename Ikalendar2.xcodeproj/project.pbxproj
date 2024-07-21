@@ -52,7 +52,6 @@
 		792E1FBD28DE89C100C3789D /* SettingsAdvancedOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */; };
 		79385E242AC61C27003D6FD7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 79385E222AC61C27003D6FD7 /* README.md */; };
 		79385E252AC61C27003D6FD7 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 79385E232AC61C27003D6FD7 /* LICENSE */; };
-		79385E292AC61C72003D6FD7 /* MainMockup.png in Resources */ = {isa = PBXBuildFile; fileRef = 79385E272AC61C72003D6FD7 /* MainMockup.png */; };
 		79385E302AC621F2003D6FD7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 79385E2F2AC621F2003D6FD7 /* PrivacyInfo.xcprivacy */; };
 		7939EC182AC5133900AC48C4 /* SettingsEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7939EC172AC5133900AC48C4 /* SettingsEntryView.swift */; };
 		79408C6A2AA5BAA800141E58 /* IkaAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79408C692AA5BAA800141E58 /* IkaAppIcon.swift */; };
@@ -161,7 +160,6 @@
 		792E1FBC28DE89C100C3789D /* SettingsAdvancedOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAdvancedOptionsView.swift; sourceTree = "<group>"; };
 		79385E222AC61C27003D6FD7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		79385E232AC61C27003D6FD7 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		79385E272AC61C72003D6FD7 /* MainMockup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MainMockup.png; sourceTree = "<group>"; };
 		79385E2F2AC621F2003D6FD7 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7939EC172AC5133900AC48C4 /* SettingsEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEntryView.swift; sourceTree = "<group>"; };
 		79408C692AA5BAA800141E58 /* IkaAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaAppIcon.swift; sourceTree = "<group>"; };
@@ -400,7 +398,6 @@
 			isa = PBXGroup;
 			children = (
 				79385E2C2AC61F24003D6FD7 /* RuntimeAssets */,
-				79385E2D2AC61F2C003D6FD7 /* MetaAssets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -422,22 +419,6 @@
 				79385E2B2AC61DBA003D6FD7 /* Fonts */,
 			);
 			path = RuntimeAssets;
-			sourceTree = "<group>";
-		};
-		79385E2D2AC61F2C003D6FD7 /* MetaAssets */ = {
-			isa = PBXGroup;
-			children = (
-				79385E2E2AC61F4D003D6FD7 /* Screenshots */,
-			);
-			path = MetaAssets;
-			sourceTree = "<group>";
-		};
-		79385E2E2AC61F4D003D6FD7 /* Screenshots */ = {
-			isa = PBXGroup;
-			children = (
-				79385E272AC61C72003D6FD7 /* MainMockup.png */,
-			);
-			path = Screenshots;
 			sourceTree = "<group>";
 		};
 		79408C682AA5BA8B00141E58 /* Others */ = {
@@ -775,7 +756,6 @@
 				79385E242AC61C27003D6FD7 /* README.md in Resources */,
 				79B92BCB28B044A200544939 /* .swiftformat in Resources */,
 				79BCD2342ACB75090037EAAD /* Assets.xcassets in Resources */,
-				79385E292AC61C72003D6FD7 /* MainMockup.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1052,7 +1032,7 @@
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5800;
+				CURRENT_PROJECT_VERSION = 5805;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1071,7 +1051,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.2;
+				MARKETING_VERSION = 2.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.illinois.tianwei4.ikalendar2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1094,7 +1074,7 @@
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5800;
+				CURRENT_PROJECT_VERSION = 5805;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				ENABLE_PREVIEWS = YES;
@@ -1113,7 +1093,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.2;
+				MARKETING_VERSION = 2.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.illinois.tianwei4.ikalendar2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

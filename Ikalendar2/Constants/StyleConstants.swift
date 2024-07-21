@@ -148,6 +148,7 @@ extension Constants.Style {
 
       static let SOURCE_CODE_SFSYMBOL = "chevron.left.slash.chevron.right"
       static let PRIVACY_POLICY_SFSYMBOL = "hand.raised"
+      static let APP_WEBSITE_SFSYMBOL = "globe"
       static let DEBUG_OPTIONS_SFSYMBOL = "hammer"
 
       static let LITTLE_BUDDY_HEIGHT: CGFloat = 36

@@ -63,6 +63,7 @@ struct SettingsAboutView: View {
         } header: { Text("Contact") }
 
         Section {
+          rowAppWebsite
           rowSourceCode
           rowPrivacyPolicy
         } header: { Text("App") }
@@ -317,7 +318,25 @@ struct SettingsAboutView: View {
     }
   }
 
-  // MARK: - Others Section
+  // MARK: - About App Section
+
+  private var rowAppWebsite: some View {
+    Button {
+      guard let url = URL(string: Constants.Key.URL.IKALENDAR2_WEBSITE) else { return }
+      openURL(url)
+    } label: {
+      Label {
+        Text("App Website")
+          .foregroundStyle(Color.primary)
+      }
+      icon: {
+        Image(systemName: Scoped.APP_WEBSITE_SFSYMBOL)
+          .imageScale(.medium)
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(Color.accentColor)
+      }
+    }
+  }
 
   private var rowSourceCode: some View {
     let repoName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
@@ -369,6 +388,8 @@ struct SettingsAboutView: View {
       }
     }
   }
+
+  // MARK: - Others Section
 
   private var rowDebugOptions: some View {
     NavigationLink(destination: SettingsDebugOptionsView()) {

@@ -43,50 +43,50 @@ struct SettingsCreditsView: View {
   private var rowSplatoon2Ink: some View {
     CreditsExternalLinkCell(
       name: "Splatoon2.ink",
-      urlString: "https://splatoon2.ink/about",
+      urlString: Constants.Key.URL.SPLATOON2_INK_DATA_ACCESS_POLICY,
       shouldShowURL: true)
   }
 
   private var rowJelonzoBot: some View {
     CreditsExternalLinkCell(
       name: "JelonzoBot",
-      urlString: "https://splatoon.oatmealdome.me/about",
+      urlString: Constants.Key.URL.JELONZOBOT,
       shouldShowURL: true)
   }
 
   private var rowSwiftyJSON: some View {
     CreditsOpenSourceLibCell(
       name: "SwiftyJSON",
-      urlString: "https://github.com/SwiftyJSON/SwiftyJSON",
+      urlString: Constants.Key.URL.GITHUB_SWIFTY_JSON,
       isLinkable: true,
       destination:
       DetailsLicenseView(
         repoName: "SwiftyJSON",
-        repoURLString: "https://github.com/SwiftyJSON/SwiftyJSON",
+        repoURLString: Constants.Key.URL.GITHUB_SWIFTY_JSON,
         isLinkable: true))
   }
 
   private var rowSimpleHaptics: some View {
     CreditsOpenSourceLibCell(
       name: "SimpleHaptics",
-      urlString: "https://github.com/notbd/SimpleHaptics",
+      urlString: Constants.Key.URL.GITHUB_SIMPLE_HAPTICS,
       isLinkable: true,
       destination:
       DetailsLicenseView(
         repoName: "SimpleHaptics",
-        repoURLString: "https://github.com/notbd/SimpleHaptics",
+        repoURLString: Constants.Key.URL.GITHUB_SIMPLE_HAPTICS,
         isLinkable: true))
   }
 
   private var rowAlertKit: some View {
     CreditsOpenSourceLibCell(
       name: "AlertKit",
-      urlString: "https://github.com/sparrowcode/AlertKit",
+      urlString: Constants.Key.URL.GITHUB_ALERT_KIT,
       isLinkable: true,
       destination:
       DetailsLicenseView(
         repoName: "AlertKit",
-        repoURLString: "https://github.com/sparrowcode/AlertKit",
+        repoURLString: Constants.Key.URL.GITHUB_ALERT_KIT,
         isLinkable: true))
   }
 

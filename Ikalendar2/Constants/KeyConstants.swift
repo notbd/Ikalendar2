@@ -48,16 +48,24 @@ extension Constants.Key {
     static let TWITTER_BASE = "https://twitter.com"
     static let GITHUB_BASE = "https://github.com"
 
+    static let IKALENDAR2_WEBSITE = "https://ikalendar.app"
     static let TWITTER_PROFILE = "https://twitter.com/ikalendar_app"
     static let DEVELOPER_EMAIL = "mailto:ikalendar2@tianwei.io"
     static let APP_STORE_PAGE = "https://apps.apple.com/app/id1529193361"
     static let APP_STORE_PAGE_US = "https://apps.apple.com/us/app/ikalendar2/id1529193361"
     static let APP_STORE_REVIEW = "https://apps.apple.com/app/id1529193361?action=write-review"
     static let SOURCE_CODE_REPO = "https://github.com/notbd/Ikalendar2"
-    static let PRIVACY_POLICY = "https://github.com/notbd/Ikalendar2/wiki/Privacy-Policy"
+    static let PRIVACY_POLICY = "https://ikalendar.app/privacy-policy"
 
     static let THE_GOOD_STUFF = "https://yout-ube.com/watch?v=dQw4w9WgXcQ?autoplay=1" // good stuff indeed!
     static let THE_GOOD_STUFF_CN = "https://bilibili.com/video/BV1GJ411x7h7"
+
+    static let SPLATOON2_INK_DATA_ACCESS_POLICY = "https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy#data-urls"
+    static let JELONZOBOT = "https://splatoon.oatmealdome.me/about"
+    
+    static let GITHUB_SWIFTY_JSON = "https://github.com/SwiftyJSON/SwiftyJSON"
+    static let GITHUB_SIMPLE_HAPTICS = "https://github.com/notbd/SimpleHaptics"
+    static let GITHUB_ALERT_KIT = "https://github.com/sparrowcode/AlertKit"
 
     enum Splatoon2Site {
       static let EN = "https://nintendo.com/my/switch/aab6/index.html"
