@@ -4,7 +4,8 @@
   <img
     src="./Resources/MetaAssets/AppIcons/ikalendar2-app-icon-default-masked.png"
     alt="ikalendar2 logo"
-    width=120/>
+    width=120
+    />
 </p>
 
 <h1 align="center"/>ikalendar2</h1>
@@ -12,6 +13,15 @@
 <p align="center">
 Track Splatoon 2 rotation schedules with style and ease.
 </p>
+
+<div align="center">
+  <a href="https://github.com/notbd/Ikalendar2/actions/workflows/ios-app-ci.yml">
+    <img
+      src="https://github.com/notbd/Ikalendar2/actions/workflows/ios-app-ci.yml/badge.svg"
+      alt="iOS App CI"
+      />
+  </a>
+</div>
 
 ![Hero](./Resources/MetaAssets/Demos/demo-universal-og.png)
 
