@@ -59,7 +59,7 @@ const Sidebar: DefaultTheme.SidebarItem[] = [
 
 const Footer: DefaultTheme.Footer = {
   message: 'ikalendar2 is a third-party companion app for Splatoon™ 2 and is not affiliated with Nintendo.<br>All associated item names, logos, and trademarks are the property of their respective owners.<br>——<br>Released under the GPL-3.0 License.',
-  copyright: 'Copyright © 2020-Present TIANWEI ZHANG',
+  copyright: 'Copyright © 2020-present Tianwei Zhang',
 }
 
 const SocialLinks: DefaultTheme.SocialLink[] = [
