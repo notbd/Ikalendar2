@@ -118,7 +118,7 @@ struct BattleRotationHeader: View {
 // MARK: - BattleRotationRow_Previews
 
 struct BattleRotationRow_Previews: PreviewProvider {
-  @State static var modeSelection = BattleMode.gachi
+  @State static private var modeSelection: BattleMode = .gachi
 
   static var previews: some View {
     NavigationView {

@@ -21,7 +21,7 @@ final class IkaTimePublisher: ObservableObject {
   let autoLoadCheckPublisher: PassthroughSubject<Void, Never> = .init()
 
   /// Contains all the active subscriptions for this object.
-  private var cancellables = Set<AnyCancellable>()
+  private var cancellables: Set<AnyCancellable> = .init()
 
   private init() {
     startPublishingCurrentTime()

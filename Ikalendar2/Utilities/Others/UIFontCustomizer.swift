@@ -50,6 +50,7 @@ enum UIFontCustomizer {
     let systemFont = UIFont.systemFont(ofSize: fontSize, weight: weight)
 
     guard let descriptor = systemFont.fontDescriptor.withDesign(.rounded) else { return systemFont }
+
     return UIFont(descriptor: descriptor, size: fontSize)
   }
 
@@ -62,6 +63,7 @@ enum UIFontCustomizer {
     let systemFont = UIFont.systemFont(ofSize: size, weight: weight)
 
     guard let descriptor = systemFont.fontDescriptor.withDesign(.rounded) else { return systemFont }
+
     return UIFont(descriptor: descriptor, size: size)
   }
 }

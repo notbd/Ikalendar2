@@ -164,6 +164,7 @@ struct OnboardingView: View {
   private func triggerIconBounceAfterDelay() async {
     try? await Task.sleep(nanoseconds: UInt64(9 * 1_000_000_000))
     guard !Task.isCancelled else { return }
+
     iconBounceCounter += 1
   }
 }

@@ -220,6 +220,7 @@ struct SettingsAboutView: View {
   private var rowLeavingReview: some View {
     Button {
       guard let url = URL(string: Constants.Key.URL.APP_STORE_REVIEW) else { return }
+
       openURL(url)
     } label: {
       Label {
@@ -274,6 +275,7 @@ struct SettingsAboutView: View {
     return
       Button {
         guard let url = URL(string: twitterURLString) else { return }
+
         openURL(url)
       } label: {
         HStack {
@@ -303,6 +305,7 @@ struct SettingsAboutView: View {
   private var rowDeveloperEmail: some View {
     Button {
       guard let url = URL(string: Constants.Key.URL.DEVELOPER_EMAIL) else { return }
+
       openURL(url)
     } label: {
       Label {
@@ -323,6 +326,7 @@ struct SettingsAboutView: View {
   private var rowAppWebsite: some View {
     Button {
       guard let url = URL(string: Constants.Key.URL.IKALENDAR2_WEBSITE) else { return }
+
       openURL(url)
     } label: {
       Label {
@@ -363,6 +367,7 @@ struct SettingsAboutView: View {
       .swipeActions {
         Button {
           guard let url = URL(string: repoURLString) else { return }
+
           openURL(url)
         } label: {
           Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
@@ -374,6 +379,7 @@ struct SettingsAboutView: View {
   private var rowPrivacyPolicy: some View {
     Button {
       guard let url = URL(string: Constants.Key.URL.PRIVACY_POLICY) else { return }
+
       openURL(url)
     } label: {
       Label {
@@ -440,6 +446,7 @@ struct SettingsAboutView: View {
   private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
     try? await Task.sleep(nanoseconds: UInt64(1.6 * 1_000_000_000))
     guard !Task.isCancelled else { return }
+
     shouldDisplayAnimatedCopy = false
   }
 }

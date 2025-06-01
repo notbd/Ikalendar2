@@ -33,8 +33,8 @@ extension Date {
 }
 
 extension Date {
-  static private let ikaTimeFormatter = DateFormatter(ikaType: .time)
-  static private let ikaDateFormatter = DateFormatter(ikaType: .date)
+  static private let ikaTimeFormatter: DateFormatter = .init(ikaType: .time)
+  static private let ikaDateFormatter: DateFormatter = .init(ikaType: .date)
 
   /// Convert the Date to a battle time string.
   /// - Parameters:
@@ -48,13 +48,10 @@ extension Date {
 
     guard shouldIncludeDate
     else { return timeString }
-
     guard !Calendar.current.isDateInToday(self)
     else { return String(localized: "Today") + " " + timeString }
-
     guard !Calendar.current.isDateInYesterday(self)
     else { return String(localized: "Yesterday") + " " + timeString }
-
     guard !Calendar.current.isDateInTomorrow(self)
     else { return String(localized: "Tomorrow") + " " + timeString }
 
@@ -74,13 +71,10 @@ extension Date {
 
     guard shouldIncludeDate
     else { return timeString }
-
     guard !Calendar.current.isDateInToday(self)
     else { return String(localized: "Today") + " " + timeString }
-
     guard !Calendar.current.isDateInYesterday(self)
     else { return String(localized: "Yesterday") + " " + timeString }
-
     guard !Calendar.current.isDateInTomorrow(self)
     else { return String(localized: "Tomorrow") + " " + timeString }
 

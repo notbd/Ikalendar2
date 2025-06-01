@@ -43,6 +43,7 @@ final class IkaInterfaceOrientationPublisher {
   /// Sets the initial orientation, typically called when the RootView appears.
   func setInitialOrientation() {
     guard currentOrientation == .unknown else { return }
+
     updateCurrentOrientation()
   }
 
@@ -58,6 +59,7 @@ final class IkaInterfaceOrientationPublisher {
       let windowScene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first,
       let currentWindowInterfaceOrientation = windowScene.windows.first?.windowScene?.interfaceOrientation
     else { return }
+
     currentOrientation = currentWindowInterfaceOrientation
   }
 }

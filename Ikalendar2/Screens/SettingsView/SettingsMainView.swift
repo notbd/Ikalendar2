@@ -220,7 +220,7 @@ struct SettingsMainView: View {
       ikaPreference.shouldSwapBottomToolbarPickers,
       ikaPreference.shouldUseAltStageImages,
     ]
-    let customizedPercentage = Double(customizations.filter { $0 }.count) / Double(customizations.count)
+    let customizedPercentage = Double(customizations.count(where: { $0 })) / Double(customizations.count)
 
     return NavigationLink(destination: SettingsAdvancedOptionsView()) {
       Label {
@@ -243,6 +243,7 @@ struct SettingsMainView: View {
   private var rowAppLanguage: some View {
     Button {
       guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+
       SimpleHaptics.generateTask(.selection)
       openURL(url)
     } label: {

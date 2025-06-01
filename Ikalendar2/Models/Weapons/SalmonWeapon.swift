@@ -20,15 +20,13 @@ enum SalmonWeapon: Equatable {
 extension SalmonWeapon {
   init?(_ id: Int) {
     if id >= 0 {
-      guard let weapon = IkaWeapon(rawValue: id) else {
-        return nil
-      }
+      guard let weapon = IkaWeapon(rawValue: id) else { return nil }
+
       self = .vanilla(weapon)
     }
     else {
-      guard let weapon = MysteryWeapon(rawValue: id) else {
-        return nil
-      }
+      guard let weapon = MysteryWeapon(rawValue: id) else { return nil }
+
       self = .mystery(weapon)
     }
   }

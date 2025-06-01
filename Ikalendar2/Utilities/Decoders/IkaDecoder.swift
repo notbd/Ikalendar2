@@ -33,7 +33,11 @@ enum IkaDecoder {
   static func parseText(from data: Data)
     throws -> String
   {
-    String(decoding: data, as: UTF8.self)
+    guard let str = String(data: data, encoding: .utf8) else {
+      throw IkaError.serverError(.badData)
+    }
+
+    return str
   }
 
   /// Parse License from GitHub API.
@@ -65,8 +69,9 @@ enum IkaDecoder {
     // Decode Base64 to Data
     guard let decodedData = Data(base64Encoded: sanitizedBase64Content)
     else { throw IkaError.serverError(.badData) }
-
-    let decodedString = String(decoding: decodedData, as: UTF8.self)
+    guard let decodedString = String(data: decodedData, encoding: .utf8) else {
+      throw IkaError.serverError(.badData)
+    }
 
     // Create and return License object
     return IkaOpenSourceLicense(
@@ -103,6 +108,7 @@ enum IkaDecoder {
           let startTimeDouble = rotationJSON["start_time"].double,
           let endTimeDouble = rotationJSON["end_time"].double
         else { throw IkaError.serverError(.badData) }
+
         let startTime = Date(timeIntervalSince1970: startTimeDouble)
         let endTime = Date(timeIntervalSince1970: endTimeDouble)
 
@@ -160,6 +166,7 @@ enum IkaDecoder {
         let startTimeDouble = rotationDetailsDict["start_time"].double,
         let endTimeDouble = rotationDetailsDict["end_time"].double
       else { throw IkaError.serverError(.badData) }
+
       let startTime = Date(timeIntervalSince1970: startTimeDouble)
       let endTime = Date(timeIntervalSince1970: endTimeDouble)
 
@@ -251,14 +258,17 @@ enum IkaDecoder {
     // Get available time
     guard let availableTimeDouble = rewardApparelDict["available_time"]?.double
     else { throw IkaError.serverError(.badData) }
+
     let availableTime = Date(timeIntervalSince1970: availableTimeDouble)
 
     // Get apparel detail
     guard let apparelJSON = rootDict["coop"]["reward_gear"]["gear"].dictionary
     else { throw IkaError.serverError(.badData) }
+
     // apparel type
     guard let apparelTypeString = apparelJSON["kind"]?.string
     else { throw IkaError.serverError(.badData) }
+
     // apparel id
     let apparelIDInt: Int
     // id is in `int` format

@@ -129,6 +129,7 @@ struct CreditsExternalLinkCell: View {
   var body: some View {
     Button {
       guard let url = URL(string: urlString) else { return }
+
       openURL(url)
     } label: {
       HStack {
@@ -195,6 +196,7 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
         .swipeActions {
           Button {
             guard let url = URL(string: urlString) else { return }
+
             openURL(url)
           } label: {
             Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON

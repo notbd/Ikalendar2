@@ -7,7 +7,7 @@
 ### Copyright (c) TIANWEI ZHANG
 ###
 
-### Supported SwiftFormat version as of last update: 0.54.1
+### Supported SwiftFormat version as of last update: 0.56.2
 
 ### FILE OPTIONS
 
@@ -22,7 +22,7 @@
 ### FORMAT OPTIONS
 
 ## swiftVersion
---swiftversion 5.10
+--swiftversion 6.1
 
 ## fileHeader
 --header "\n {file}\n Ikalendar2\n\n Copyright (c) TIANWEI ZHANG. All rights reserved.\n"
@@ -69,9 +69,9 @@
 --extensionacl on-declarations
 
 # redundantType
---redundanttype infer-locals-only
+--propertytypes infer-locals-only
 
-# sortedImports
+# sortImports
 --importgrouping testable-last
 
 # trailingSpace
@@ -116,12 +116,14 @@
     consecutiveBlankLines,                          \
     consecutiveSpaces,                              \
     consistentSwitchCaseSpacing,                    \
+    docCommentsBeforeModifiers,                     \
     duplicateImports,                               \
     elseOnSameLine,                                 \
     emptyBraces,                                    \
     enumNamespaces,                                 \
     extensionAccessControl,                         \
     fileHeader,                                     \
+    fileMacro,                                      \
     genericExtensions,                              \
     headerFileName,                                 \
     hoistAwait,                                     \
@@ -135,6 +137,7 @@
     modifierOrder,                                  \
     numberFormatting,                               \
     opaqueGenericParameters,                        \
+    preferCountWhere,                               \
 #    preferForLoop,                                  \
 #    preferKeyPath,                                  \
     redundantBackticks,                             \
@@ -176,6 +179,7 @@
     spaceInsideParens,                              \
     strongOutlets,                                  \
     strongifiedSelf,                                \
+    swiftTestingTestCaseNames,                      \
     todos,                                          \
     trailingClosures,                               \
     trailingCommas,                                 \
@@ -195,16 +199,25 @@
 --rules                                             \
     acronyms,                                       \
     blankLineAfterSwitchCase,                       \
+    blankLinesAfterGuardStatements,                 \
     blankLinesBetweenImports,                       \
     blockComments,                                  \
     docComments,                                    \
+    emptyExtensions,                                \
+#    environmentEntry,                               \
     isEmpty,                                        \
     markTypes,                                      \
 #    noExplicitOwnership,                            \
 #    organizeDeclarations,                           \
-#    sortSwitchCases,                                \
+#    preferSwiftTesting,                             \
+    privateStateVariables,                          \
+    propertyTypes,                                  \
+#    redundantEquatable,                             \
 #    redundantProperty,                              \
+#    sortSwitchCases,                                \
+#    unusedPrivateDeclarations,                      \
 #    wrapConditionalBodies,                          \
     wrapEnumCases,                                  \
     wrapMultilineConditionalAssignment,             \
+    wrapMultilineFunctionChains,                    \
     wrapSwitchCases,

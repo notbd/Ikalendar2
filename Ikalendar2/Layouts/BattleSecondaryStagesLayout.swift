@@ -90,8 +90,10 @@ struct BattleSecondaryStagesLayout: Layout {
   private func getHSpacings(subviews: Subviews) -> [CGFloat] {
     subviews.indices.map { index in
       guard index < subviews.count - 1 else { return 0 }
+
       return
-        subviews[index].spacing
+        subviews[index]
+          .spacing
           .distance(
             to: subviews[index + 1].spacing,
             along: .horizontal)

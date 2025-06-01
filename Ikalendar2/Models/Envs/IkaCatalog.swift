@@ -20,8 +20,8 @@ final class IkaCatalog {
 
   static let shared: IkaCatalog = .init()
 
-  private(set) var battleRotationDict = BattleRotationDict()
-  private(set) var salmonRotations = [SalmonRotation]()
+  private(set) var battleRotationDict: BattleRotationDict = .init()
+  private(set) var salmonRotations: [SalmonRotation] = .init()
 
   private init() {
     setUpLoadResultStatusSubscription()
@@ -64,7 +64,8 @@ final class IkaCatalog {
   }
 
   private func setUpAutoLoadCheckSubscription() {
-    IkaTimePublisher.shared.autoLoadCheckPublisher
+    IkaTimePublisher.shared
+      .autoLoadCheckPublisher
       .sink { [weak self] _ in
         self?.handleAutoLoadCheck()
       }
@@ -210,6 +211,7 @@ final class IkaCatalog {
 
   private func handleAutoLoadCheck() {
     guard shouldAutoLoad else { return }
+
     Task { await autoLoadCatalog() }
   }
 
@@ -221,6 +223,7 @@ final class IkaCatalog {
 
   private var shouldAutoLoadSalmon: Bool {
     guard let firstRotation = salmonRotations.first else { return true }
+
     return
       firstRotation.isExpired(IkaTimePublisher.shared.currentTime) ||
       (firstRotation.isCurrent(IkaTimePublisher.shared.currentTime) && firstRotation.rewardApparel == nil)
@@ -230,6 +233,7 @@ final class IkaCatalog {
     async
   {
     guard autoLoadStatus == .idle else { return }
+
     await setAutoLoadStatus(.autoLoading)
 
     do {

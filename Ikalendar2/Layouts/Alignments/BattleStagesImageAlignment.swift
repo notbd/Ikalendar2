@@ -14,5 +14,5 @@ extension VerticalAlignment {
     }
   }
 
-  static let battleStagesImageAlignment = VerticalAlignment(BattleStagesImageAlignment.self)
+  static let battleStagesImageAlignment: VerticalAlignment = .init(BattleStagesImageAlignment.self)
 }

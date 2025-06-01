@@ -10,19 +10,19 @@ import UIKit
 
 extension Color {
   /// Quickly get some UIColor values.
-  static let lightText = Color(UIColor.lightText)
-  static let darkText = Color(UIColor.darkText)
+  static let lightText: Color = .init(UIColor.lightText)
+  static let darkText: Color = .init(UIColor.darkText)
 
-  static let label = Color(UIColor.label)
-  static let secondaryLabel = Color(UIColor.secondaryLabel)
-  static let tertiaryLabel = Color(UIColor.tertiaryLabel)
-  static let quaternaryLabel = Color(UIColor.quaternaryLabel)
+  static let label: Color = .init(UIColor.label)
+  static let secondaryLabel: Color = .init(UIColor.secondaryLabel)
+  static let tertiaryLabel: Color = .init(UIColor.tertiaryLabel)
+  static let quaternaryLabel: Color = .init(UIColor.quaternaryLabel)
 
-  static let systemBackground = Color(UIColor.systemBackground)
-  static let systemBackgroundSecondary = Color(UIColor.secondarySystemBackground)
-  static let systemBackgroundTertiary = Color(UIColor.tertiarySystemBackground)
+  static let systemBackground: Color = .init(UIColor.systemBackground)
+  static let systemBackgroundSecondary: Color = .init(UIColor.secondarySystemBackground)
+  static let systemBackgroundTertiary: Color = .init(UIColor.tertiarySystemBackground)
 
-  static let systemGroupedBackground = Color(UIColor.systemGroupedBackground)
-  static let systemGroupedBackgroundSecondary = Color(UIColor.secondarySystemGroupedBackground)
-  static let systemGroupedBackgroundTertiary = Color(UIColor.tertiarySystemGroupedBackground)
+  static let systemGroupedBackground: Color = .init(UIColor.systemGroupedBackground)
+  static let systemGroupedBackgroundSecondary: Color = .init(UIColor.secondarySystemGroupedBackground)
+  static let systemGroupedBackgroundTertiary: Color = .init(UIColor.tertiarySystemGroupedBackground)
 }

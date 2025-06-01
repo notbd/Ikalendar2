@@ -115,6 +115,7 @@ struct DetailsLicenseView: View {
   private var externalLinkButton: some View {
     Button {
       guard let url = URL(string: repoURLString) else { return }
+
       openURL(url)
     } label: {
       Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON

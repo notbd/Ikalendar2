@@ -38,7 +38,8 @@ struct AltAppIconRow: View {
         .clipShape(
           IkaAppIcon.DisplayMode.small.clipShape)
         .overlay(
-          IkaAppIcon.DisplayMode.small.clipShape
+          IkaAppIcon.DisplayMode.small
+            .clipShape
             .stroke(Scoped.APP_ICON_STROKE_COLOR, lineWidth: Scoped.APP_ICON_STROKE_LINE_WIDTH)
             .opacity(Scoped.APP_ICON_STROKE_OPACITY))
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
@@ -61,6 +62,7 @@ struct AltAppIconRow: View {
 
   private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
     guard ikaPreference.preferredAppIcon != ikaAppIcon else { return }
+
     ikaPreference.preferredAppIcon = ikaAppIcon
   }
 }
@@ -112,7 +114,8 @@ struct AltAppIconEasterEggRow: View {
         .clipShape(
           IkaAppIcon.DisplayMode.small.clipShape)
         .overlay(
-          IkaAppIcon.DisplayMode.small.clipShape
+          IkaAppIcon.DisplayMode.small
+            .clipShape
             .stroke(Scoped.APP_ICON_STROKE_COLOR, lineWidth: Scoped.APP_ICON_STROKE_LINE_WIDTH)
             .opacity(Scoped.APP_ICON_STROKE_OPACITY))
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
@@ -142,11 +145,13 @@ struct AltAppIconEasterEggRow: View {
       ? Constants.Key.URL.THE_GOOD_STUFF_CN
       : Constants.Key.URL.THE_GOOD_STUFF
     guard let url = URL(string: goodStuffURLString) else { return }
+
     openURL(url)
   }
 
   private func checkIfGFWed() async {
     guard let googleURL = URL(string: Constants.Key.URL.GOOGLE_HOMEPAGE) else { return }
+
     do {
       let (_, response) = try await URLSession.shared.data(from: googleURL)
       if let httpResponse = response as? HTTPURLResponse {
@@ -165,49 +170,50 @@ struct AltAppIconEasterEggRow: View {
         .keyframeAnimator(
           initialValue: AppIconEasterEggAnimationValues(),
           trigger: buttonPressCounter)
-    { content, value in
-      content
-        .rotationEffect(value.angle)
-        .scaleEffect(value.scale)
-        .scaleEffect(y: value.verticalStretch)
-        .offset(y: value.verticalTranslation)
-    } keyframes: { _ in
-      KeyframeTrack(\.angle) {
-        CubicKeyframe(.zero, duration: 0.58)
-        CubicKeyframe(.degrees(randomRotationAngel), duration: 0.125)
-        CubicKeyframe(.degrees(-randomRotationAngel), duration: 0.125)
-        CubicKeyframe(.degrees(randomRotationAngel), duration: 0.125)
-        CubicKeyframe(.zero, duration: 0.125)
-      }
+        { content, value in
+          content
+            .rotationEffect(value.angle)
+            .scaleEffect(value.scale)
+            .scaleEffect(y: value.verticalStretch)
+            .offset(y: value.verticalTranslation)
+        } keyframes: { _ in
+          KeyframeTrack(\.angle) {
+            CubicKeyframe(.zero, duration: 0.58)
+            CubicKeyframe(.degrees(randomRotationAngel), duration: 0.125)
+            CubicKeyframe(.degrees(-randomRotationAngel), duration: 0.125)
+            CubicKeyframe(.degrees(randomRotationAngel), duration: 0.125)
+            CubicKeyframe(.zero, duration: 0.125)
+          }
 
-      KeyframeTrack(\.verticalStretch) {
-        CubicKeyframe(1.0, duration: 0.1)
-        CubicKeyframe(0.6, duration: 0.15)
-        CubicKeyframe(1.5, duration: 0.1)
-        CubicKeyframe(1.05, duration: 0.15)
-        CubicKeyframe(1.0, duration: 0.88)
-        CubicKeyframe(0.8, duration: 0.1)
-        CubicKeyframe(1.04, duration: 0.4)
-        CubicKeyframe(1.0, duration: 0.22)
-      }
+          KeyframeTrack(\.verticalStretch) {
+            CubicKeyframe(1.0, duration: 0.1)
+            CubicKeyframe(0.6, duration: 0.15)
+            CubicKeyframe(1.5, duration: 0.1)
+            CubicKeyframe(1.05, duration: 0.15)
+            CubicKeyframe(1.0, duration: 0.88)
+            CubicKeyframe(0.8, duration: 0.1)
+            CubicKeyframe(1.04, duration: 0.4)
+            CubicKeyframe(1.0, duration: 0.22)
+          }
 
-      KeyframeTrack(\.scale) {
-        LinearKeyframe(1.0, duration: 0.36)
-        SpringKeyframe(1.5, duration: 0.8, spring: .bouncy)
-        SpringKeyframe(1.0, spring: .bouncy)
-      }
+          KeyframeTrack(\.scale) {
+            LinearKeyframe(1.0, duration: 0.36)
+            SpringKeyframe(1.5, duration: 0.8, spring: .bouncy)
+            SpringKeyframe(1.0, spring: .bouncy)
+          }
 
-      KeyframeTrack(\.verticalTranslation) {
-        LinearKeyframe(0.0, duration: 0.1)
-        SpringKeyframe(20.0, duration: 0.15, spring: .bouncy)
-        SpringKeyframe(-60.0, duration: 1.0, spring: .bouncy)
-        SpringKeyframe(0.0, spring: .bouncy)
-      }
-    }
+          KeyframeTrack(\.verticalTranslation) {
+            LinearKeyframe(0.0, duration: 0.1)
+            SpringKeyframe(20.0, duration: 0.15, spring: .bouncy)
+            SpringKeyframe(-60.0, duration: 1.0, spring: .bouncy)
+            SpringKeyframe(0.0, spring: .bouncy)
+          }
+        }
   }
 
   private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
     guard ikaPreference.preferredAppIcon != ikaAppIcon else { return }
+
     ikaPreference.preferredAppIcon = ikaAppIcon
   }
 }
@@ -218,5 +224,5 @@ struct AppIconEasterEggAnimationValues {
   var scale = 1.0
   var verticalStretch = 1.0
   var verticalTranslation = 0.0
-  var angle = Angle.zero
+  var angle: Angle = .zero
 }

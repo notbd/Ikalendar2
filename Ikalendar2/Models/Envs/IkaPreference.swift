@@ -21,6 +21,7 @@ final class IkaPreference: ObservableObject {
   {
     willSet {
       guard newValue != preferredDefaultGameMode else { return }
+
       SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
@@ -32,6 +33,7 @@ final class IkaPreference: ObservableObject {
   {
     willSet {
       guard newValue != preferredDefaultBattleMode else { return }
+
       SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
@@ -43,6 +45,7 @@ final class IkaPreference: ObservableObject {
   {
     willSet {
       guard newValue != preferredAppColorScheme else { return }
+
       SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
@@ -53,12 +56,14 @@ final class IkaPreference: ObservableObject {
   var preferredAppIcon: IkaAppIcon = .default {
     willSet {
       guard newValue != preferredAppIcon else { return }
+
       SimpleHaptics.generateTask(.success)
       objectWillChange.send()
     }
 
     didSet {
       guard oldValue != preferredAppIcon else { return }
+
       UIApplication.shared.setAlternateIconName(preferredAppIcon.alternateIconName)
     }
   }
@@ -69,6 +74,7 @@ final class IkaPreference: ObservableObject {
   {
     willSet {
       guard newValue != shouldSwapBottomToolbarPickers else { return }
+
       SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
@@ -80,6 +86,7 @@ final class IkaPreference: ObservableObject {
   {
     willSet {
       guard newValue != shouldUseAltStageImages else { return }
+
       SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }

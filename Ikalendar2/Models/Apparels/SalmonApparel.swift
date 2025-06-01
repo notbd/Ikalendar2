@@ -36,14 +36,17 @@ enum SalmonApparel: Equatable {
     switch type {
       case .head:
         guard let apparel = HeadApparel(rawValue: id) else { return nil }
+
         self = .head(apparel)
 
       case .body:
         guard let apparel = BodyApparel(rawValue: id) else { return nil }
+
         self = .body(apparel)
 
       case .foot:
         guard let apparel = FootApparel(rawValue: id) else { return nil }
+
         self = .foot(apparel)
     }
   }

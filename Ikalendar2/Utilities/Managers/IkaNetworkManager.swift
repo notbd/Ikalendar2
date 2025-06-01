@@ -41,7 +41,6 @@ final class IkaNetworkManager {
   {
     guard let githubAPIURLString = IkaOpenSourceLicense.parseGithubAPIURLString(from: githubRepoURLString)
     else { throw IkaError.unknownError }
-
     guard let githubAPIURL = URL(string: githubAPIURLString)
     else { throw IkaError.unknownError }
 

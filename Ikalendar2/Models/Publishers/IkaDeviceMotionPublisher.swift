@@ -19,9 +19,9 @@ final class IkaDeviceMotionPublisher {
   static let shared: IkaDeviceMotionPublisher = .init()
 
   /// An instance of `CMMotionManager` to access motion data.
-  @ObservationIgnored private let motionManager = CMMotionManager()
+  @ObservationIgnored private let motionManager: CMMotionManager = .init()
   /// Contains all active subscriptions, primarily for lifecycle management.
-  @ObservationIgnored private var cancellables = Set<AnyCancellable>()
+  @ObservationIgnored private var cancellables: Set<AnyCancellable> = .init()
 
   /// Arrays storing the x, y, and z gravitational force components over a duration.
   @ObservationIgnored private var xs: [CGFloat] = []

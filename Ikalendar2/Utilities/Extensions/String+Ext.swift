@@ -49,7 +49,6 @@ extension String {
 
     guard let baseURLString else { return hostAndPath }
     guard URL(string: baseURLString) != nil else { return nil }
-
     guard hasPrefix(baseURLString) else { return nil }
 
     var result = replacingOccurrences(of: baseURLString, with: "")

@@ -19,6 +19,7 @@ final class IkaStatus {
   {
     willSet {
       guard newValue != isSettingsPresented else { return }
+
       SimpleHaptics.generateTask(.rigid)
     }
   }
@@ -27,6 +28,7 @@ final class IkaStatus {
   {
     willSet {
       guard newValue != currentGameMode else { return }
+
       SimpleHaptics.generateTask(.rigid)
     }
   }
@@ -35,6 +37,7 @@ final class IkaStatus {
   {
     willSet {
       guard newValue != currentBattleMode else { return }
+
       SimpleHaptics.generateTask(.soft)
     }
   }

@@ -19,7 +19,7 @@ struct RootView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
-  @State private var entryViewID = UUID()
+  @State private var entryViewID: UUID = .init()
 
   var body: some View {
     EntryView()

@@ -21,7 +21,8 @@ struct OffsettableScrollView<T: View>: View {
         Color.clear.preference(
           key: OffsetPreferenceKey.self,
           value: proxy.frame(
-            in: .named("ScrollViewOrigin")).origin)
+            in: .named("ScrollViewOrigin"))
+            .origin)
       }
       .frame(width: 0, height: 0)
       content
