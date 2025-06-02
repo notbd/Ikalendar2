@@ -44,7 +44,7 @@ Nintendo's official companion app makes checking rotations unnecessarily tedious
 
 I built ikalendar2 to solve this specific problem. It fetches **only the necessary data** from sources and presents the info **immediately** when you open it - no extra steps or waiting around.
 
-ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to capture some of Splatoon's visual style while keeping the interface clean and functional. I polished ikalendar2 into the perfect tool for me as a Splatoon player, and I believe it translates well to other players in the same shoes.
+ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to capture some of Splatoon's visual style while keeping the interface clean and functional. I polished ikalendar2 into the perfect tool for me as a Splatoon player myself, and I believe it translates well to other players in the same shoes.
 
 # Installation
 
@@ -54,7 +54,7 @@ ikalendar2 is available for download on the App Store for free.
 
 # Compatibilities
 
-- iOS / iPadOS `17.0` or later
+- iOS / iPadOS `17.0` or later.
 
 - macOS compatibility is not targeted, however beta test on MacBook Air M1 with macOS `15.5` shows no breaking issues.
 
@@ -119,7 +119,7 @@ ikalendar2 is made possible thanks to the following projects:
 
 # Website
 
-ikalendar2's official website is hosted at [`ikalendar.app`](https://ikalendar.app).
+ikalendar2 has a landing page hosted at [`ikalendar.app`](https://ikalendar.app).
 
 Source code of the site is located [here](https://github.com/notbd/Ikalendar2/tree/main/docs) within the `/docs` directory under current repo.
 
@@ -131,11 +131,11 @@ The UI and structure of the app has changed so much that at one point I figured 
 
 # Privacy
 
-ikalendar2 does not collect any data about the user or upload any information, as stated in the [Privacy Policy](https://ikalendar.app/privacy-policy).
+ikalendar2 does not collect any data about users or upload any information. If you are a fan of fine prints I got some for you in the [Privacy Policy](https://ikalendar.app/privacy-policy).
 
 # License
 
-ikalendar2 is licensed under the [GPL-3.0 License](./LICENSE).
+[GPL-3.0 License](./LICENSE)
 
 # Disclaimer
 
