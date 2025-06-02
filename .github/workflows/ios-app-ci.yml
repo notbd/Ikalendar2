@@ -2,7 +2,7 @@ name: iOS App CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   workflow_dispatch:
     inputs:
       reason:
@@ -19,10 +19,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # use latest Xcode 15.x.x
+      # use latest Xcode 16.x.x
       - name: Select Xcode version
         run: |
-          XCODE_VERSION=$(ls /Applications | grep "Xcode_15" | sort -V | tail -n 1)
+          XCODE_VERSION=$(ls /Applications | grep "Xcode_16" | sort -V | tail -n 1)
           sudo xcode-select -switch /Applications/$XCODE_VERSION
           echo "Selected Xcode version: $XCODE_VERSION"
 
