@@ -18,30 +18,33 @@ Track Splatoon 2 rotation schedules with style and ease.
   <a href="https://github.com/notbd/Ikalendar2/actions/workflows/ios-app-ci.yml">
     <img
       src="https://github.com/notbd/Ikalendar2/actions/workflows/ios-app-ci.yml/badge.svg"
-      alt="iOS App CI"
+      alt="CI Status for Github Actions"
       />
   </a>
 </div>
 
 ![Hero](./Resources/MetaAssets/Demos/demo-universal-og.png)
 
-# Introduction
+# Overview
 
-**ikalendar2** is an iOS / iPadOS companion app for tracking Splatoon 2 rotation schedules. It helps you stay up-to-date with the latest information effortlessly - unlike the clumsy and sluggish experience on the official app from Nintendo.
-
-A typical workflow on Nintendo's app to check rotation for a specific mode and timeslot would involve clicking through multiple unrelated screens and waiting for things to load (very slowly!) at each step. Coupled with its poor and cluttered navigation design that easily leads to misclicks and going back and forth, such a seemingly trivial task could take as long as **15-25 seconds** on average.
-
-ikalendar2, in contrast, delivers the information that matters to you **immediately** upon launch. It fetches only the necessary data from sources, processes it and presents it through a clean and streamlined interface. Additionally, ikalendar2 offers a proud collection of quality-of-life features and customization options to make your experience enjoyable and personalized.
-
-The app is entirely built in SwiftUI and utilizes some of the latest features and APIs available. It is designed to be fast, modern, user-friendly, with a touch of fun and vibrancy inspired by the game itself.
+ikalendar2 is an iOS app for tracking Splatoon 2 rotation schedules. It's an alternative to Nintendo's official companion app that cuts straight to the point and provides quick access to current rotations.
 
 # Features
 
-- Quick access to Splatoon 2 rotation schedules through a clean, modern interface optimized for both iOS and iPadOS devices.
-- Robust **auto-refresh** system ensures the latest rotation information is always available.
-- Smooth, game-inspired **animations** and thoughtful details throughout the app for a fun and pleasant experience.
-- Extensive **customization options** including alternative stage appearances, app icons, and more.
-- Native localization support for **English** and **Japanese**.
+- **Instant access** to rotation schedules with a clean interface
+- Seamless **auto-refresh** to keep rotation data always current
+- **Smooth animations** and game-inspired visual details
+- **Customization options** to suit your needs and playstyle
+- Support for **English** and **Japanese**
+- Layout optimized for both **iPhone** and **iPad**
+
+# Background
+
+Nintendo's official companion app makes checking rotations unnecessarily tedious. A typical workflow requires navigating through multiple screens, each with slow loading times and a cluttered interface that's prone to misclicks. Such a seemingly trivial task takes as long as **15-25 seconds** on average.
+
+I built ikalendar2 to solve this specific problem. It fetches **only the necessary data** from sources and presents the info **immediately** when you open it - no extra steps or waiting around.
+
+ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to capture some of Splatoon's visual style while keeping the interface clean and functional. I polished ikalendar2 into the perfect tool for me as a Splatoon player, and I believe it translates well to other players in the same shoes.
 
 # Installation
 
@@ -49,17 +52,11 @@ ikalendar2 is available for download on the App Store for free.
 
 [![Download on the App Store](./Resources/MetaAssets/Badges/download-app-store-EN-black.svg)](https://apps.apple.com/app/ikalendar2/id1529193361)
 
-# Compatibilities / Environments
+# Compatibilities
 
-- iOS / iPadOS `17.0` or later is required for the latest version of ikalendar2.
+- iOS / iPadOS `17.0` or later
 
-- Compatibility with macOS running on Apple Silicon is not targeted, but beta tests on MacBook Air M1 with macOS `14.5` show no breaking issues.
-
-- visionOS compatibility is not tested for.
-
-- watchOS, tvOS, and macOS running on Intel-based Macs are not yet supported.
-
-- Development environment includes Xcode `15.4` and Swift `5.10`.
+- macOS compatibility is not targeted, however beta test on MacBook Air M1 with macOS `15.5` shows no breaking issues.
 
 # Previews
 
@@ -122,15 +119,19 @@ ikalendar2 is made possible thanks to the following projects:
 
 # Website
 
-[ikalendar.app](https://ikalendar.app) is the official website for ikalendar2. Source code of the website is located [here](https://github.com/notbd/Ikalendar2/tree/main/docs) within the `/docs` directory under the current repo.
+ikalendar2's official website is hosted at [`ikalendar.app`](https://ikalendar.app).
+
+Source code of the site is located [here](https://github.com/notbd/Ikalendar2/tree/main/docs) within the `/docs` directory under current repo.
 
 # Archive
 
-Early versions of ikalendar2 was archived in a [separate repository](https://github.com/notbd/ikalendar-2-archived). The reason for a new repo at the time was due to the need for a major refactoring, as well as implementing more robust coding practices and standards.
+The source code for early versions of ikalendar2 was archived at a [separate repo](https://github.com/notbd/ikalendar-2-archived).
+
+The UI and structure of the app has changed so much that at one point I figured it deserved a rewrite. Around that time I also started to enforce SwiftLint and SwiftFormat to help streamline coding style and practices, so starting fresh with a new repository made a lot of sense to me.
 
 # Privacy
 
-ikalendar2 does not collect any data about the user or upload any information. Here's the link to the [Privacy Policy](https://ikalendar.app/privacy-policy).
+ikalendar2 does not collect any data about the user or upload any information, as stated in the [Privacy Policy](https://ikalendar.app/privacy-policy).
 
 # License
 
