@@ -24,22 +24,22 @@ hero:
 features:
   - icon: <span class="i-gravity-ui:compass"/>
     title: Your Companion
-    details: ikalendar2 is your ideal companion for tracking Splatoon 2 schedules. Stay up-to-date with the latest rotation info through a UI design optimized for iPhone and iPad respectively.
+    details: ikalendar2 is your ideal companion for tracking Splatoon 2 schedules. Keep yourself up-to-date with a clear glance at the latest rotation info whether you are on iPhone or iPad.
   - icon: <span class="i-tabler:brand-swift"/>
     title: Clean and Swifty
-    details: Unlike the clutter and clumsiness from traditional sources, ikalendar2 is built entirely in SwiftUI with a clean interface, leveraging the latest APIs to deliver a fast and modern app experience.
+    details: Unlike the clutter and clumsiness from traditional sources, ikalendar2 is built with a clean interface in SwiftUI, leveraging the latest APIs to deliver a fast and modern app experience.
   - icon: <span class="i-gravity-ui:cloud-check"/>
     title: Auto Refresh
-    details: The robust auto-refresh system always fetches the latest available data on your behalf at the appropriate time. Forget about doing it yourself!
+    details: The seamless auto-refresh system always fetches the latest available info on your behalf so that you will never mistime a match in the future. Peace of mind. Phew.
   - icon: <span class="i-ic:round-animation"/>
     title: Animated
-    details: Find meticulously designed, game-inspired animations and thoughtful details throughout the app. Rotation tracking is just as fun and vibrant as the game itself :)
+    details: Find game-inspired aesthetics and animations throughout the app. Rotation tracking doesn't have to be boring! :)
   - icon: <span class="i-gravity-ui:palette"/>
     title: Customization
-    details: Fancy a different look for the stages? In mood for a new app icon? Make ikalendar2 truly yours with a variety of personalization options.
+    details: Plenty of customization options let you tweak the look and layout of the app to best suit your playstyle.
   - icon: <span class="i-hugeicons:translate"/>
     title: Multi-Language Support
-    details: In-App localization support is available for English and Japanese.
+    details: App localization is available for English and Japanese.
 
 dependencies:
   message: ikalendar2 is free and open source, made possible by these following projects.
