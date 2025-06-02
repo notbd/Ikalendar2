@@ -27,7 +27,7 @@ Track Splatoon 2 rotation schedules with style and ease.
 
 # Overview
 
-ikalendar2 is an iOS app for tracking Splatoon 2 rotation schedules. It's an alternative to Nintendo's official companion app that cuts straight to the point and provides quick access to current rotations.
+ikalendar2 is an iOS app for tracking Splatoon 2 rotation schedules. It's an alternative to Nintendo's official companion app that cuts straight to the point and provides quick access to current rotation information.
 
 # Features
 
