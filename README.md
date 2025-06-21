@@ -15,10 +15,10 @@ Track Splatoon 2 rotation schedules with style and ease.
 </p>
 
 <div align="center">
-  <a href="https://github.com/notbd/Ikalendar2/actions/workflows/ios-app-ci.yml">
+  <a href="https://github.com/notbd/Ikalendar2/actions/workflows/ios-target-ci.yml">
     <img
-      src="https://github.com/notbd/Ikalendar2/actions/workflows/ios-app-ci.yml/badge.svg"
-      alt="CI Status for Github Actions"
+      src="https://github.com/notbd/Ikalendar2/actions/workflows/ios-target-ci.yml/badge.svg"
+      alt="CI Status for iOS Target"
       />
   </a>
 </div>
@@ -44,7 +44,7 @@ Nintendo's official companion app makes checking rotations unnecessarily tedious
 
 I built ikalendar2 to solve this specific problem. It fetches **only the necessary data** from sources and presents the info **immediately** when you open it - no extra steps or waiting around.
 
-ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to capture some of Splatoon's visual style while keeping the interface clean and functional. I polished ikalendar2 into the perfect tool for me as a Splatoon player myself, and I believe it translates well to other players in the same shoes.
+ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to capture some of Splatoon's visual style while keeping the interface clean and functional. The goal was to polish it into the perfect tool not just for myself, but for all other players who needed a better way to keep up with the game.
 
 # Installation
 
