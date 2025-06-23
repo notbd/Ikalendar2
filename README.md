@@ -15,10 +15,10 @@ Track Splatoon 2 rotation schedules with style and ease.
 </p>
 
 <div align="center">
-  <a href="https://github.com/notbd/Ikalendar2/actions/workflows/ios-target-ci.yml">
+  <a href="https://github.com/notbd/Ikalendar2/actions/workflows/main-integration.yml">
     <img
-      src="https://github.com/notbd/Ikalendar2/actions/workflows/ios-target-ci.yml/badge.svg"
-      alt="CI Status for iOS Target"
+      src="https://github.com/notbd/Ikalendar2/actions/workflows/main-integration.yml/badge.svg"
+      alt="Build Status for iOS Target on Main Branch"
       />
   </a>
 </div>
@@ -37,14 +37,6 @@ ikalendar2 is an iOS app for tracking Splatoon 2 rotation schedules. It's an alt
 - **Customization options** to suit your needs and playstyle
 - Support for **English** and **Japanese**
 - Layout optimized for both **iPhone** and **iPad**
-
-# Background
-
-Nintendo's official companion app makes checking rotations unnecessarily tedious. A typical workflow requires navigating through multiple screens, each with slow loading times and a cluttered interface that's prone to misclicks. Such a seemingly trivial task takes as long as **15-25 seconds** on average.
-
-I built ikalendar2 to solve this specific problem. It fetches **only the necessary data** from sources and presents the info **immediately** when you open it - no extra steps or waiting around.
-
-ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to capture some of Splatoon's visual style while keeping the interface clean and functional. The goal was to polish it into the perfect tool not just for myself, but for all other players who needed a better way to keep up with the game.
 
 # Installation
 
@@ -101,6 +93,30 @@ since some markdown parsers don't support one or the other.  -->
   </tbody>
 </table>
 
+# Background
+
+Nintendo's official companion app for Splatoon 2 makes checking rotations unnecessarily tedious. A typical workflow requires navigating through multiple screens, each with slow loading times and a cluttered, misclick-prone interface. It usually takes 15-25 seconds for such a trivial task to be done.
+
+I built ikalendar2 to solve this specific problem. It fetches **only the necessary data** from sources and presents the info **immediately** when you open it. No extra steps or waiting around.
+
+ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to capture some of Splatoon's visual style while keeping the interface clean and functional. The goal is to make it the perfect tool not just for myself, but also for all other players who need a better way to keep up with the game.
+
+# Website
+
+ikalendar2 has a landing page hosted at [`ikalendar.app`](https://ikalendar.app).
+
+[Source code of the site](https://github.com/notbd/Ikalendar2/tree/main/docs) is located within the `/docs` directory under current repo.
+
+# Archive
+
+The source code for early versions of ikalendar2 was archived at a [separate repo](https://github.com/notbd/ikalendar-2-archived).
+
+The UI and structure of the app has changed so much that at one point I figured it deserved a rewrite. Around that time I also started to enforce SwiftLint and SwiftFormat to help streamline coding style and practices, so starting fresh with a new repository made a lot of sense to me.
+
+# Privacy
+
+ikalendar2 does not collect any data about users or upload any information. If you are a fan of fine prints I got some for you in the [Privacy Policy](https://ikalendar.app/privacy-policy).
+
 # Acknowledgements
 
 ikalendar2 is made possible thanks to the following projects:
@@ -116,22 +132,6 @@ ikalendar2 is made possible thanks to the following projects:
 - [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
 - [SimpleHaptics](https://github.com/notbd/SimpleHaptics)
 - [AlertKit](https://github.com/sparrowcode/AlertKit)
-
-# Website
-
-ikalendar2 has a landing page hosted at [`ikalendar.app`](https://ikalendar.app).
-
-Source code of the site is located [here](https://github.com/notbd/Ikalendar2/tree/main/docs) within the `/docs` directory under current repo.
-
-# Archive
-
-The source code for early versions of ikalendar2 was archived at a [separate repo](https://github.com/notbd/ikalendar-2-archived).
-
-The UI and structure of the app has changed so much that at one point I figured it deserved a rewrite. Around that time I also started to enforce SwiftLint and SwiftFormat to help streamline coding style and practices, so starting fresh with a new repository made a lot of sense to me.
-
-# Privacy
-
-ikalendar2 does not collect any data about users or upload any information. If you are a fan of fine prints I got some for you in the [Privacy Policy](https://ikalendar.app/privacy-policy).
 
 # License
 
