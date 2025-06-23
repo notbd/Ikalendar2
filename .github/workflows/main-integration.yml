@@ -5,7 +5,7 @@ name: Build Status
 on:
   push:
     # This should only run on your primary integration branch
-    branches: [main]
+    branches: [main, test]
   workflow_dispatch:
     inputs:
       reason:
@@ -48,7 +48,7 @@ jobs:
           xcodebuild test \
             -project Ikalendar2.xcodeproj \
             -scheme IkalendarKit \
-            -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=latest' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=latest' \
             -enableCodeCoverage YES \
             | xcpretty && exit ${PIPESTATUS[0]}
 
