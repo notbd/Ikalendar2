@@ -23,7 +23,7 @@ extension View {
   ///
   /// - Returns: The resulted view.
   @ViewBuilder
-  func apply(
+  public func apply(
     _ transformation: (Self) -> some View)
     -> some View
   {
@@ -48,7 +48,7 @@ extension View {
   ///
   /// - Returns: The resulted view.
   @ViewBuilder
-  func `if`(
+  public func `if`(
     _ condition: Bool,
     transformation: (Self) -> some View)
     -> some View
@@ -75,7 +75,7 @@ extension View {
   ///
   /// - Returns: The resulted view.
   @ViewBuilder
-  func `if`(
+  public func `if`(
     _ condition: Bool,
     if trueTransformation: (Self) -> some View,
     else falseTransformation: (Self) -> some View)
@@ -101,7 +101,7 @@ extension View {
   ///
   /// - Returns: The resulted view.
   @ViewBuilder
-  func ifLet<V>(
+  public func ifLet<V>(
     _ value: V?,
     transformation: (Self, V) -> some View)
     -> some View
@@ -126,7 +126,7 @@ extension View {
   ///
   /// - Returns: The resulted view.
   @ViewBuilder
-  func ifNil(
+  public func ifNil(
     _ value: (some Any)?,
     transformation: (Self) -> some View)
     -> some View
@@ -147,7 +147,7 @@ extension View {
   ///
   /// - Returns: A view that adjusts its alignment according to the specified parameter.
   @ViewBuilder
-  func hAlignment(_ alignment: Alignment = .center) -> some View {
+  public func hAlignment(_ alignment: Alignment = .center) -> some View {
     frame(
       maxWidth: .infinity,
       alignment: alignment)
@@ -163,7 +163,7 @@ extension View {
   ///
   /// - Returns: A view that adjusts its alignment according to the specified parameter.
   @ViewBuilder
-  func vAlignment(_ alignment: Alignment = .center) -> some View {
+  public func vAlignment(_ alignment: Alignment = .center) -> some View {
     frame(
       maxHeight: .infinity,
       alignment: alignment)

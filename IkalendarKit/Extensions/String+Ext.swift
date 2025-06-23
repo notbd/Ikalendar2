@@ -8,7 +8,15 @@
 import SwiftUI
 
 extension String {
-  var localizedStringKey: LocalizedStringKey { LocalizedStringKey(self) }
+  /// A convenience property that converts a `String` to a `LocalizedStringKey`.
+  ///
+  /// This allows for easier localization of strings within SwiftUI views.
+  ///
+  /// - Example:
+  ///   ```
+  ///   Text("my_localization_key".localizedStringKey)
+  ///   ```
+  public var localizedStringKey: LocalizedStringKey { LocalizedStringKey(self) }
 }
 
 extension String {
@@ -35,14 +43,16 @@ extension String {
   ///
   /// - Note: If `baseURLString` is `nil`, the function will return the host + path of the original URL.
   ///
-  func shortenedURL(
+  public func shortenedURL(
     base baseURLString: String? = nil,
     newPrefix: String? = nil)
     -> String?
   {
     guard let url = URL(string: self) else { return nil }
 
-    let host = url.host ?? ""
+    // validate that this is actually a proper URL with scheme and host
+    guard url.scheme != nil, let host = url.host, !host.isEmpty else { return nil }
+
     let path = url.path
     var hostAndPath = host + path
     if hostAndPath.hasSuffix("/") { hostAndPath = String(hostAndPath.dropLast()) }

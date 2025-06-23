@@ -5,6 +5,7 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
+import IkalendarKit
 import SwiftUI
 
 // MARK: - SalmonRotationCell
@@ -98,7 +99,7 @@ struct SalmonRotationCellTimeTextSection: View {
       Spacer()
 
       HStack(spacing: Scoped.TIME_TEXT_SPACING) {
-        Text(rotation.startTime.toSalmonTimeString(includeDateIf: true))
+        Text(rotation.startTime.toSalmonTimeString(shouldIncludeDate: true))
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
@@ -116,7 +117,7 @@ struct SalmonRotationCellTimeTextSection: View {
             size: Scoped.TIME_TEXT_FONT_SIZE,
             relativeTo: .headline)
 
-        Text(rotation.endTime.toSalmonTimeString(includeDateIf: true))
+        Text(rotation.endTime.toSalmonTimeString(shouldIncludeDate: true))
           .scaledLimitedLine()
           .ikaFont(
             .ika2,

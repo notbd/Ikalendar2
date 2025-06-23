@@ -22,19 +22,19 @@ import GameplayKit
 /// generator.reset()
 /// let randomValue2 = generator.nextInt(bound: 20) // Will be the same as randomValue1
 /// ```
-class SeededRandomGenerator {
+final public class SeededRandomGenerator {
   private var originalSeed: Data
   private var randomSource: GKARC4RandomSource
 
   /// Initializes the generator with an integer seed.
-  init(seed: Int) {
+  public init(seed: Int) {
     let seedData = Data("\(seed)".utf8)
     originalSeed = seedData
     randomSource = GKARC4RandomSource(seed: seedData)
   }
 
   /// Initializes the generator with a string seed.
-  init(seed: String) {
+  public init(seed: String) {
     let seedData = Data(seed.utf8)
     originalSeed = seedData
     randomSource = GKARC4RandomSource(seed: seedData)
@@ -43,7 +43,7 @@ class SeededRandomGenerator {
   /// Generates a random integer within the range from 0 to the specified bound (exclusive).
   /// - Parameter bound: The upper bound of the range (exclusive).
   /// - Returns: A random integer within the range from 0 to the bound (exclusive).
-  func nextInt(bound: Int) -> Int {
+  public func nextInt(bound: Int) -> Int {
     let distribution = GKRandomDistribution(
       randomSource: randomSource,
       lowestValue: 0,
@@ -52,7 +52,7 @@ class SeededRandomGenerator {
   }
 
   /// Resets the generator, so that subsequent calls to `nextInt(bound:)` will repeat the same sequence.
-  func reset() {
+  public func reset() {
     randomSource = GKARC4RandomSource(seed: originalSeed)
   }
 }

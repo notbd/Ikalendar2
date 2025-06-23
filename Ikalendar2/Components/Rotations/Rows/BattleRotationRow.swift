@@ -75,7 +75,7 @@ struct BattleRotationHeader: View {
     let shouldIncludeDate = Calendar.current.isDateInYesterday(rotation.startTime) ||
       Calendar.current.isDateInTomorrow(rotation.startTime)
 
-    return rotation.startTime.toBattleTimeString(includeDateIf: shouldIncludeDate)
+    return rotation.startTime.toBattleTimeString(shouldIncludeDate: shouldIncludeDate)
   }
 
   private var endTimeString: String {
@@ -86,7 +86,7 @@ struct BattleRotationHeader: View {
         Calendar.current.isDateInToday(rotation.startTime) &&
           Calendar.current.isDateInTomorrow(rotation.endTime))
 
-    return rotation.endTime.toBattleTimeString(includeDateIf: shouldIncludeDate)
+    return rotation.endTime.toBattleTimeString(shouldIncludeDate: shouldIncludeDate)
   }
 
   var body: some View {

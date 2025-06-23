@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IkalendarKit
 
 /// Struct providing mock data for testing purpose.
 enum IkaMockData {

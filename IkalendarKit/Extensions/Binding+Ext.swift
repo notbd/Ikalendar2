@@ -16,7 +16,7 @@ extension Binding {
   ///
   /// - Parameter handler: The handler function to be called on the new value.
   /// - Returns: The original binding.
-  func onSet(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+  public func onSet(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
     Binding(
       get: { self.wrappedValue },
       set: { newValue in

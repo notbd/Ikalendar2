@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "0B44E765-7063-410F-A949-99E1BD889199",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Ikalendar2.xcodeproj",
+        "identifier" : "61BB93872E07CDD1002577EA",
+        "name" : "IkalendarKitTests"
+      }
+    }
+  ],
+  "version" : 1
+}
