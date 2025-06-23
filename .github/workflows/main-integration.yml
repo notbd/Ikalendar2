@@ -1,8 +1,11 @@
-name: iOS Target CI
+# This workflow runs only on pushes to the main branch.
+# It serves as the source of truth, creating an official, signed build archive.
+name: Build Status
 
 on:
   push:
-    branches: [main, dev, test]
+    # This should only run on your primary integration branch
+    branches: [main]
   workflow_dispatch:
     inputs:
       reason:
@@ -11,22 +14,21 @@ on:
         default: "Manual build"
 
 jobs:
-  lint_and_build_with_signing:
-    name: Lint & Build iOS App with Signing
+  build-and-archive:
+    name: Lint, Test, Build & Archive
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # use latest Xcode 16.x.x
-      - name: Select Xcode version
+      - name: Select Xcode Version
         run: |
           XCODE_VERSION=$(ls /Applications | grep "Xcode_16" | sort -V | tail -n 1)
           sudo xcode-select -switch /Applications/$XCODE_VERSION
           echo "Selected Xcode version: $XCODE_VERSION"
 
-      - name: Double Check Xcode version
+      - name: Confirm Xcode Version
         run: /usr/bin/xcodebuild -version
 
       - name: Install xcpretty
@@ -41,37 +43,37 @@ jobs:
       - name: Run SwiftLint
         run: swiftlint
 
-      - name: Install the Apple certificate and provisioning profile
+      - name: Run Unit Tests
+        run: |
+          xcodebuild test \
+            -project Ikalendar2.xcodeproj \
+            -scheme IkalendarKit \
+            -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=latest' \
+            -enableCodeCoverage YES \
+            | xcpretty && exit ${PIPESTATUS[0]}
+
+      - name: Install Apple Certificate and Profile
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
-          # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
           PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-
-          # import certificate and provisioning profile from secrets
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
           echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
-
-          # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
           security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-
-          # import certificate to keychain
           security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
-
-          # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-      - name: Build archive
+      - name: Archive Application
         run: |
           xcodebuild clean archive \
             -project Ikalendar2.xcodeproj \
@@ -82,10 +84,10 @@ jobs:
             -archivePath $RUNNER_TEMP/Ikalendar2.xcarchive \
             | xcpretty && exit ${PIPESTATUS[0]}
 
-      - name: Log build trigger
+      - name: Log Trigger Information
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "This build was manually triggered. Reason: ${{ github.event.inputs.reason }}"
+            echo "Trigger: Manual Dispatch. Reason: ${{ github.event.inputs.reason }}"
           else
-            echo "This build was automatically triggered by a push to main."
+            echo "Trigger: Push to branch '${{ github.ref_name }}'."
           fi

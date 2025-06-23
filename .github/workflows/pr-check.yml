@@ -1,0 +1,58 @@
+# This workflow runs on every pull request to provide fast feedback.
+# It ensures code quality and that all unit tests pass before merging.
+name: Pull Request Check
+
+on:
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  lint:
+    name: Lint Code
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run SwiftFormat
+        run: swiftformat --lint . --reporter github-actions-log
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Run SwiftLint
+        run: swiftlint
+
+  test:
+    name: Build and Test
+    runs-on: macos-latest
+    # This job depends on the lint job passing first
+    needs: lint
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode Version
+        run: |
+          XCODE_VERSION=$(ls /Applications | grep "Xcode_16" | sort -V | tail -n 1)
+          sudo xcode-select -switch /Applications/$XCODE_VERSION
+          echo "Selected Xcode version: $XCODE_VERSION"
+
+      - name: Confirm Xcode Version
+        run: /usr/bin/xcodebuild -version
+
+      - name: Install xcpretty
+        run: gem install xcpretty --no-document
+
+      - name: Run Unit Tests
+        run: |
+          # Test against a simulator to avoid code signing complexities on PRs.
+          # This provides faster feedback to the developer.
+          xcodebuild test \
+            -project Ikalendar2.xcodeproj \
+            -scheme IkalendarKit \
+            -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=latest' \
+            -enableCodeCoverage YES \
+            | xcpretty && exit ${PIPESTATUS[0]}
