@@ -163,7 +163,7 @@ struct AltAppIconEasterEggRow: View {
   }
 
   private func applyEasterEggAnimation(_ content: some View) -> some View {
-    let randomRotationAngel = Double((Int.random(in: 16 ... 24)) * (Bool.random() ? 1 : -1))
+    let randomRotationAngel: Double = .init((Int.random(in: 16 ... 24)) * (Bool.random() ? 1 : -1))
 
     return
       content

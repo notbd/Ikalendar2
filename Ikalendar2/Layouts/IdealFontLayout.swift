@@ -90,7 +90,7 @@ struct IdealFontLayout: Layout {
       }
     }
 
-    let contentSizeProposal = ProposedViewSize(
+    let contentSizeProposal: ProposedViewSize = .init(
       width: contentWidth,
       height: contentHeight)
 

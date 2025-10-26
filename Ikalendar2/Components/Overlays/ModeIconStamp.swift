@@ -90,7 +90,7 @@ struct ModeIconStamp: View {
 
   private var gradientMask: some View {
     // mask color does not matter as long as it's not .clear; only opacity matters
-    let maskColor = Color.primary
+    let maskColor: Color = .primary
     return LinearGradient(
       gradient: Gradient(colors: [
         maskColor.opacity(1),

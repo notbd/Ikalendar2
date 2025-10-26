@@ -60,13 +60,13 @@ enum IkaMockData {
               }
               weapons!.append(SalmonWeapon(randomIkaWeapon.id)!)
             }
-            let mysteryWeapon = MysteryWeapon.green
+            let mysteryWeapon: MysteryWeapon = .green
             weapons!.append(SalmonWeapon(mysteryWeapon.id)!)
 
           case .gold:
             // Gold question mark
             for _ in 0 ..< 4 {
-              let mysteryWeapon = MysteryWeapon.gold
+              let mysteryWeapon: MysteryWeapon = .gold
               weapons!.append(SalmonWeapon(mysteryWeapon.id)!)
             }
         }
@@ -190,7 +190,7 @@ enum IkaMockData {
   /// Generate a mock BattleRotationDict data.
   /// - Returns: The loaded BattleRotationDict.
   static func getBattleRotations() -> BattleRotationDict {
-    var battleRotationDict = BattleRotationDict()
+    var battleRotationDict: BattleRotationDict = .init()
     var startTimeArray: [Date] = []
     for index in 0 ..< 8 {
       startTimeArray.append(Calendar.current.date(

@@ -32,7 +32,7 @@ struct BattleSecondaryStagesLayout: Layout {
     guard subviews.count == 2 else { return .zero }
 
     let hSpacings = getHSpacings(subviews: subviews)
-    let subviewProposal = ProposedViewSize(
+    let subviewProposal: ProposedViewSize = .init(
       width: (proposal.width! - hSpacings[0]) * (1 / 2),
       height: proposal.height)
     let minIdealSize = getMinIdealSize(subviews: subviews, proposal: subviewProposal)
@@ -52,7 +52,7 @@ struct BattleSecondaryStagesLayout: Layout {
     guard subviews.count == 2 else { return }
 
     let hSpacings = getHSpacings(subviews: subviews)
-    let subviewProposal = ProposedViewSize(
+    let subviewProposal: ProposedViewSize = .init(
       width: (proposal.width! - hSpacings[0]) * (1 / 2),
       height: proposal.height)
     let minIdealSize = getMinIdealSize(subviews: subviews, proposal: subviewProposal)
@@ -66,7 +66,7 @@ struct BattleSecondaryStagesLayout: Layout {
     let stageBCenterX = bounds.maxX - stageWidth * (1 / 2)
     let stageBCenterY = bounds.midY
 
-    let stageSizeProposal = ProposedViewSize(
+    let stageSizeProposal: ProposedViewSize = .init(
       width: stageWidth,
       height: stageHeight)
 

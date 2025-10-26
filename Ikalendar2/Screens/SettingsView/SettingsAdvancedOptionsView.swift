@@ -159,8 +159,8 @@ struct SettingsAdvancedOptionsView: View {
 
   private func shufflePreviewData() {
     // make sure stages are different
-    var newBattleData = IkaMockData.getBattleRotation()
-    var newSalmonData = IkaMockData.getSalmonRotation()
+    var newBattleData: BattleRotation = IkaMockData.getBattleRotation()
+    var newSalmonData: SalmonRotation = IkaMockData.getSalmonRotation()
 
     while
       newBattleData.rule == battleRotationPreviewData.rule ||

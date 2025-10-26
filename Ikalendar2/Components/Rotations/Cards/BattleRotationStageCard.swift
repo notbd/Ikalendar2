@@ -124,7 +124,7 @@ enum BattleStageSelection {
 
 struct BattleRotationStageCard_Previews: PreviewProvider {
   static var previews: some View {
-    let rotation = IkaMockData.getBattleRotation()
+    let rotation: BattleRotation = IkaMockData.getBattleRotation()
     return
       Group {
         BattleRotationStageCardPrimary(

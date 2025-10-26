@@ -7,7 +7,7 @@
 ### Copyright (c) TIANWEI ZHANG
 ###
 
-### Supported SwiftFormat version as of last update: 0.56.4
+### Supported SwiftFormat version as of last update: 0.58.5
 
 ### FILE OPTIONS
 
@@ -22,7 +22,7 @@
 ### FORMAT OPTIONS
 
 ## swiftVersion
---swiftversion 6.1
+--swiftversion 6.2
 
 ## fileHeader
 --header "\n {file}\n Ikalendar2\n\n Copyright (c) TIANWEI ZHANG. All rights reserved.\n"
@@ -69,7 +69,7 @@
 --extensionacl on-declarations
 
 # redundantType
---propertytypes infer-locals-only
+--propertytypes explicit
 
 # sortImports
 --importgrouping testable-last
@@ -135,6 +135,7 @@
     linebreakAtEndOfFile,                           \
     linebreaks,                                     \
     modifierOrder,                                  \
+    modifiersOnSameLine,                            \
     numberFormatting,                               \
     opaqueGenericParameters,                        \
     preferCountWhere,                               \
@@ -155,6 +156,7 @@
     redundantOptionalBinding,                       \
     redundantParens,                                \
     redundantPattern,                               \
+    redundantPublic,                                \
     redundantRawValues,                             \
     redundantReturn,                                \
     redundantSelf,                                  \
@@ -208,14 +210,23 @@
     isEmpty,                                        \
     markTypes,                                      \
 #    noExplicitOwnership,                            \
+    noForceTryInTests,                              \
+    noForceUnwrapInTests,                           \
+    noGuardInTests,                                 \
 #    organizeDeclarations,                           \
+    preferFinalClasses,                             \
 #    preferSwiftTesting,                             \
     privateStateVariables,                          \
     propertyTypes,                                  \
+    redundantAsync,                                 \
 #    redundantEquatable,                             \
+    redundantMemberwiseInit,                        \
 #    redundantProperty,                              \
+    redundantThrows,                                \
+#    singlePropertyPerLine,                          \
 #    sortSwitchCases,                                \
 #    unusedPrivateDeclarations,                      \
+#    urlMacro,                                       \
 #    wrapConditionalBodies,                          \
     wrapEnumCases,                                  \
     wrapMultilineConditionalAssignment,             \

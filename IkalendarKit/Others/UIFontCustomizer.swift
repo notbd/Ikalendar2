@@ -20,7 +20,7 @@ public enum UIFontCustomizer {
   /// - Note: This function sets the font of the navigation title to a rounded, bold version for large titles
   /// and a rounded, semi-bold version for regular titles.
   static public func customizeNavigationTitleText() {
-    let largeTitleFont = UIFontCustomizer.customRoundedFont(for: .largeTitle, weight: .bold)
+    let largeTitleFont = customRoundedFont(for: .largeTitle, weight: .bold)
     let titleTextFont = customRoundedFont(for: .title3, weight: .semibold)
 
     UINavigationBar.appearance().largeTitleTextAttributes = [.font: largeTitleFont]
@@ -35,7 +35,7 @@ public enum UIFontCustomizer {
     let pickerSelectedFont = customRoundedFont(size: pickerFontSize, weight: .semibold)
     let pickerNormalFont = customRoundedFont(size: pickerFontSize, weight: .regular)
 
-    let segmentedControlAppearance = UISegmentedControl.appearance()
+    let segmentedControlAppearance: UISegmentedControl = .appearance()
     segmentedControlAppearance.setTitleTextAttributes(
       [NSAttributedString.Key.font: pickerSelectedFont],
       for: .selected)
@@ -51,7 +51,7 @@ public enum UIFontCustomizer {
   /// - Returns: A UIFont object that represents the rounded font.
   static public func customRoundedFont(for textStyle: UIFont.TextStyle, weight: UIFont.Weight) -> UIFont {
     let fontSize = UIFont.preferredFont(forTextStyle: textStyle).pointSize
-    let systemFont = UIFont.systemFont(ofSize: fontSize, weight: weight)
+    let systemFont: UIFont = .systemFont(ofSize: fontSize, weight: weight)
 
     guard let descriptor = systemFont.fontDescriptor.withDesign(.rounded) else { return systemFont }
 
@@ -64,7 +64,7 @@ public enum UIFontCustomizer {
   ///   - weight: The weight of the font.
   /// - Returns: A UIFont object that represents the rounded font.
   static public func customRoundedFont(size: CGFloat, weight: UIFont.Weight) -> UIFont {
-    let systemFont = UIFont.systemFont(ofSize: size, weight: weight)
+    let systemFont: UIFont = .systemFont(ofSize: size, weight: weight)
 
     guard let descriptor = systemFont.fontDescriptor.withDesign(.rounded) else { return systemFont }
 

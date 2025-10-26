@@ -119,7 +119,7 @@ struct SettingsDebugOptionsView: View {
     .autoconnect()
 
   private var warningBanner: some View {
-    let warningIcon = Image(systemName: "exclamationmark.triangle.fill")
+    let warningIcon: Image = .init(systemName: "exclamationmark.triangle.fill")
 
     let bannerText =
       HStack {

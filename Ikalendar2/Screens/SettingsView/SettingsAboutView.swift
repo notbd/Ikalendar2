@@ -158,7 +158,7 @@ struct SettingsAboutView: View {
 
   private var rowShare: some View {
     // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 17.0
-    let shareURL = URL(string: Constants.Key.URL.APP_STORE_PAGE)!
+    let shareURL: URL = .init(string: Constants.Key.URL.APP_STORE_PAGE)!
 
     return
       ShareLink(item: shareURL) {
@@ -345,8 +345,8 @@ struct SettingsAboutView: View {
   private var rowSourceCode: some View {
     let repoName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
     let repoURLString = Constants.Key.URL.SOURCE_CODE_REPO
-    let destination =
-      DetailsLicenseView(
+    let destination: DetailsLicenseView =
+      .init(
         repoName: repoName,
         repoURLString: repoURLString,
         isLinkable: true)

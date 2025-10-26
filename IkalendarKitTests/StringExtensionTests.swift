@@ -18,7 +18,7 @@ struct StringExtensionTests {
   @Suite("LocalizedStringKey Property")
   struct LocalizedStringKeyTests {
     @Test("LocalizedStringKey property returns correct type")
-    func localizedStringKeyPropertyReturnsCorrectType() async throws {
+    func localizedStringKeyPropertyReturnsCorrectType() {
       let testString = "test_key"
       let result = testString.localizedStringKey
 
@@ -29,7 +29,7 @@ struct StringExtensionTests {
     }
 
     @Test("LocalizedStringKey works with empty string")
-    func localizedStringKeyWorksWithEmptyString() async throws {
+    func localizedStringKeyWorksWithEmptyString() {
       let emptyString = ""
       let result = emptyString.localizedStringKey
 
@@ -40,7 +40,7 @@ struct StringExtensionTests {
     }
 
     @Test("LocalizedStringKey works with special characters")
-    func localizedStringKeyWorksWithSpecialCharacters() async throws {
+    func localizedStringKeyWorksWithSpecialCharacters() {
       let specialString = "test_key_with_特殊文字_and_émojis_🎮"
       let result = specialString.localizedStringKey
 
@@ -56,7 +56,7 @@ struct StringExtensionTests {
   @Suite("Shortened URL")
   struct ShortenedURLTests {
     @Test("Shortened URL without base URL returns host and path")
-    func shortenedURLWithoutBaseURLReturnsHostAndPath() async throws {
+    func shortenedURLWithoutBaseURLReturnsHostAndPath() throws {
       let urlString = "https://www.example.com/page/1/"
       let result = try #require(urlString.shortenedURL(), "Should be able to shorten valid URL")
 
@@ -64,7 +64,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL with base URL removes base correctly")
-    func shortenedURLWithBaseURLRemovesBaseCorrectly() async throws {
+    func shortenedURLWithBaseURLRemovesBaseCorrectly() throws {
       let urlString = "https://www.example.com/page/1/"
       let baseURL = "https://www.example.com/"
       let result = try #require(urlString.shortenedURL(base: baseURL), "Should be able to shorten URL with base")
@@ -73,7 +73,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL with base URL and prefix adds prefix correctly")
-    func shortenedURLWithBaseURLAndPrefixAddsPrefixCorrectly() async throws {
+    func shortenedURLWithBaseURLAndPrefixAddsPrefixCorrectly() throws {
       let urlString = "https://www.example.com/page/1/"
       let baseURL = "https://www.example.com/"
       let prefix = "Page:"
@@ -85,7 +85,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL with invalid URL returns nil")
-    func shortenedURLWithInvalidURLReturnsNil() async throws {
+    func shortenedURLWithInvalidURLReturnsNil() {
       let invalidURL = "not-a-valid-url"
       let result = invalidURL.shortenedURL()
 
@@ -93,7 +93,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL with invalid base URL returns nil")
-    func shortenedURLWithInvalidBaseURLReturnsNil() async throws {
+    func shortenedURLWithInvalidBaseURLReturnsNil() {
       let urlString = "https://www.example.com/page/1/"
       let invalidBaseURL = "not-a-valid-base-url"
       let result = urlString.shortenedURL(base: invalidBaseURL)
@@ -102,7 +102,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL when URL doesn't start with base returns nil")
-    func shortenedURLWhenURLDoesntStartWithBaseReturnsNil() async throws {
+    func shortenedURLWhenURLDoesntStartWithBaseReturnsNil() {
       let urlString = "https://www.example.com/page/1/"
       let differentBaseURL = "https://www.different.com/"
       let result = urlString.shortenedURL(base: differentBaseURL)
@@ -111,7 +111,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL handles URLs without trailing slash")
-    func shortenedURLHandlesURLsWithoutTrailingSlash() async throws {
+    func shortenedURLHandlesURLsWithoutTrailingSlash() throws {
       let urlString = "https://www.example.com/page/1"
       let result = try #require(urlString.shortenedURL(), "Should handle URLs without trailing slash")
 
@@ -119,7 +119,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL handles base URLs without trailing slash")
-    func shortenedURLHandlesBaseURLsWithoutTrailingSlash() async throws {
+    func shortenedURLHandlesBaseURLsWithoutTrailingSlash() throws {
       let urlString = "https://www.example.com/page/1/"
       let baseURL = "https://www.example.com"
       let result = try #require(urlString.shortenedURL(base: baseURL), "Should handle base URLs without trailing slash")
@@ -128,7 +128,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL handles empty path")
-    func shortenedURLHandlesEmptyPath() async throws {
+    func shortenedURLHandlesEmptyPath() throws {
       let urlString = "https://www.example.com/"
       let result = try #require(urlString.shortenedURL(), "Should handle URLs with empty path")
 
@@ -136,7 +136,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL handles empty path with base URL")
-    func shortenedURLHandlesEmptyPathWithBaseURL() async throws {
+    func shortenedURLHandlesEmptyPathWithBaseURL() throws {
       let urlString = "https://www.example.com/"
       let baseURL = "https://www.example.com/"
       let result = try #require(urlString.shortenedURL(base: baseURL), "Should handle empty path with base URL")
@@ -145,7 +145,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL with empty prefix works correctly")
-    func shortenedURLWithEmptyPrefixWorksCorrectly() async throws {
+    func shortenedURLWithEmptyPrefixWorksCorrectly() throws {
       let urlString = "https://www.example.com/page/1/"
       let baseURL = "https://www.example.com/"
       let emptyPrefix = ""
@@ -157,7 +157,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL with nil prefix works correctly")
-    func shortenedURLWithNilPrefixWorksCorrectly() async throws {
+    func shortenedURLWithNilPrefixWorksCorrectly() throws {
       let urlString = "https://www.example.com/page/1/"
       let baseURL = "https://www.example.com/"
       let result = try #require(urlString.shortenedURL(base: baseURL, newPrefix: nil), "Should work with nil prefix")
@@ -166,7 +166,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL handles complex paths correctly")
-    func shortenedURLHandlesComplexPathsCorrectly() async throws {
+    func shortenedURLHandlesComplexPathsCorrectly() throws {
       let urlString = "https://api.example.com/v1/users/123/posts/456/"
       let baseURL = "https://api.example.com/v1/"
       let prefix = "API:"
@@ -176,7 +176,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL handles URLs with query parameters")
-    func shortenedURLHandlesURLsWithQueryParameters() async throws {
+    func shortenedURLHandlesURLsWithQueryParameters() throws {
       let urlString = "https://www.example.com/search?q=test&lang=en"
       let result = try #require(urlString.shortenedURL(), "Should handle URLs with query parameters")
 
@@ -185,7 +185,7 @@ struct StringExtensionTests {
     }
 
     @Test("Shortened URL handles URLs with fragments")
-    func shortenedURLHandlesURLsWithFragments() async throws {
+    func shortenedURLHandlesURLsWithFragments() throws {
       let urlString = "https://www.example.com/page#section1"
       let result = try #require(urlString.shortenedURL(), "Should handle URLs with fragments")
 

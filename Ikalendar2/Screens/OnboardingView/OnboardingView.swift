@@ -112,8 +112,8 @@ struct OnboardingView: View {
 
   private var message: some View {
     let appName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
-    let message = String(localized: "Welcome to\n\(appName)")
-    var messageAttributedString = AttributedString(message)
+    let message: String = .init(localized: "Welcome to\n\(appName)")
+    var messageAttributedString: AttributedString = .init(message)
     let appNameRange = messageAttributedString.range(of: appName)!
     messageAttributedString[appNameRange].foregroundColor = .accentColor
 

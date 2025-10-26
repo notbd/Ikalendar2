@@ -28,14 +28,14 @@ final public class SeededRandomGenerator {
 
   /// Initializes the generator with an integer seed.
   public init(seed: Int) {
-    let seedData = Data("\(seed)".utf8)
+    let seedData: Data = .init("\(seed)".utf8)
     originalSeed = seedData
     randomSource = GKARC4RandomSource(seed: seedData)
   }
 
   /// Initializes the generator with a string seed.
   public init(seed: String) {
-    let seedData = Data(seed.utf8)
+    let seedData: Data = .init(seed.utf8)
     originalSeed = seedData
     randomSource = GKARC4RandomSource(seed: seedData)
   }
@@ -44,7 +44,7 @@ final public class SeededRandomGenerator {
   /// - Parameter bound: The upper bound of the range (exclusive).
   /// - Returns: A random integer within the range from 0 to the bound (exclusive).
   public func nextInt(bound: Int) -> Int {
-    let distribution = GKRandomDistribution(
+    let distribution: GKRandomDistribution = .init(
       randomSource: randomSource,
       lowestValue: 0,
       highestValue: bound - 1)

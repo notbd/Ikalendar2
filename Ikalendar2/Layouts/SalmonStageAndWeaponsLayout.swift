@@ -51,7 +51,7 @@ struct SalmonStageAndWeaponsLayout: Layout {
     let stageWidth = stageHeight * (16 / 9)
     let stageCenterX = bounds.minX + stageWidth * (1 / 2)
     let stageCenterY = bounds.midY
-    let stageSizeProposal = ProposedViewSize(
+    let stageSizeProposal: ProposedViewSize = .init(
       width: stageWidth,
       height: stageHeight)
 
@@ -59,7 +59,7 @@ struct SalmonStageAndWeaponsLayout: Layout {
     let weaponsWidth = weaponsHeight
     let weaponsCenterX = bounds.maxX - weaponsWidth * (1 / 2)
     let weaponsCenterY = bounds.midY
-    let weaponsSizeProposal = ProposedViewSize(
+    let weaponsSizeProposal: ProposedViewSize = .init(
       width: weaponsWidth,
       height: weaponsHeight)
 

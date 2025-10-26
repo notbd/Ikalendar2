@@ -40,7 +40,7 @@ final class IkaDeviceMotionPublisher {
 
   /// Subscribes to application lifecycle events to start or stop motion updates appropriately.
   private func subscribeToAppLifecycleEvents() {
-    let notificationCenter = NotificationCenter.default
+    let notificationCenter: NotificationCenter = .default
 
     notificationCenter.publisher(for: UIScene.didActivateNotification)
       .sink { [weak self] _ in

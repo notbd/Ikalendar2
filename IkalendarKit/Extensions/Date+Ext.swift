@@ -61,7 +61,7 @@ extension Date {
     guard shouldIncludeDate
     else { return timeString }
 
-    let calendar = Calendar.current
+    let calendar: Calendar = .current
     let reference = currentTime ?? Date()
 
     guard !calendar.isDate(self, inSameDayAs: reference)
@@ -109,7 +109,7 @@ extension Date {
     guard shouldIncludeDate
     else { return timeString }
 
-    let calendar = Calendar.current
+    let calendar: Calendar = .current
     let reference = currentTime ?? Date()
 
     guard !calendar.isDate(self, inSameDayAs: reference)
@@ -146,7 +146,7 @@ extension Date {
   ///   - deadline: The future `Date` to calculate the remaining time against.
   /// - Returns: A `LocalizedStringKey` representing the remaining time.
   public func toTimeRemainingStringKey(until deadline: Date) -> LocalizedStringKey {
-    let remainingTime = Int(deadline - self)
+    let remainingTime: Int = .init(deadline - self)
     // if time has already passed
     if remainingTime < 0 { return "Time's Up" }
     // convert time interval to TimeLength
@@ -154,7 +154,7 @@ extension Date {
     let hours = (remainingTime / (60 * 60)) % 24
     let minutes = (remainingTime / 60) % 60
     let seconds = remainingTime % 60
-    let timeLength = TimeLength(days: days, hours: hours, minutes: minutes, seconds: seconds)
+    let timeLength: TimeLength = .init(days: days, hours: hours, minutes: minutes, seconds: seconds)
     let timeLengthString = timeLength.getLocalizedDescriptionString()
 
     return "remaining \(timeLengthString)"
@@ -170,7 +170,7 @@ extension Date {
   ///   - deadline: The future `Date` to calculate the duration against.
   /// - Returns: A `LocalizedStringKey` representing the time until the deadline.
   public func toTimeUntilStringKey(until deadline: Date) -> LocalizedStringKey {
-    let untilTime = Int(deadline - self)
+    let untilTime: Int = .init(deadline - self)
     // if time has already passed
     if untilTime < 0 { return "Time's Up" }
     // convert time interval to TimeLength
@@ -178,7 +178,7 @@ extension Date {
     let hours = (untilTime / (60 * 60)) % 24
     let minutes = (untilTime / 60) % 60
     let seconds = untilTime % 60
-    let timeLength = TimeLength(days: days, hours: hours, minutes: minutes, seconds: seconds)
+    let timeLength: TimeLength = .init(days: days, hours: hours, minutes: minutes, seconds: seconds)
     let timeLengthString = timeLength.getLocalizedDescriptionString()
 
     return "\(timeLengthString) until"

@@ -91,7 +91,7 @@ enum IkaDecoder {
   static func parseBattleRotationDict(from data: Data)
     throws -> BattleRotationDict
   {
-    var battleRotationDict = BattleRotationDict()
+    var battleRotationDict: BattleRotationDict = .init()
 
     // Will throw SwiftyJSONError if parsing fails
     let rootJSON = try JSON(data: data)
@@ -109,8 +109,8 @@ enum IkaDecoder {
           let endTimeDouble = rotationJSON["end_time"].double
         else { throw IkaError.serverError(.badData) }
 
-        let startTime = Date(timeIntervalSince1970: startTimeDouble)
-        let endTime = Date(timeIntervalSince1970: endTimeDouble)
+        let startTime: Date = .init(timeIntervalSince1970: startTimeDouble)
+        let endTime: Date = .init(timeIntervalSince1970: endTimeDouble)
 
         // rotation rule and stages
         guard
@@ -167,8 +167,8 @@ enum IkaDecoder {
         let endTimeDouble = rotationDetailsDict["end_time"].double
       else { throw IkaError.serverError(.badData) }
 
-      let startTime = Date(timeIntervalSince1970: startTimeDouble)
-      let endTime = Date(timeIntervalSince1970: endTimeDouble)
+      let startTime: Date = .init(timeIntervalSince1970: startTimeDouble)
+      let endTime: Date = .init(timeIntervalSince1970: endTimeDouble)
 
       // add stage if available
       var stage: SalmonStage?
@@ -226,8 +226,8 @@ enum IkaDecoder {
         let endTimeDouble = schedulesArrayJSON[index]["end_time"].double
       {
         // SUCCESS: construct rotation using parsed data and append to array
-        let startTime = Date(timeIntervalSince1970: startTimeDouble)
-        let endTime = Date(timeIntervalSince1970: endTimeDouble)
+        let startTime: Date = .init(timeIntervalSince1970: startTimeDouble)
+        let endTime: Date = .init(timeIntervalSince1970: endTimeDouble)
         salmonRotations.append(.init(
           startTime: startTime,
           endTime: endTime))
@@ -259,7 +259,7 @@ enum IkaDecoder {
     guard let availableTimeDouble = rewardApparelDict["available_time"]?.double
     else { throw IkaError.serverError(.badData) }
 
-    let availableTime = Date(timeIntervalSince1970: availableTimeDouble)
+    let availableTime: Date = .init(timeIntervalSince1970: availableTimeDouble)
 
     // Get apparel detail
     guard let apparelJSON = rootDict["coop"]["reward_gear"]["gear"].dictionary
@@ -300,7 +300,7 @@ enum IkaDecoder {
     else { throw IkaError.serverError(.badData) }
 
     // SUCCESS: return the apparel info
-    let rewardApparelInfo = SalmonApparelInfo(apparel: rewardApparel, availableTime: availableTime)
+    let rewardApparelInfo: SalmonApparelInfo = .init(apparel: rewardApparel, availableTime: availableTime)
     return rewardApparelInfo
   }
 }
