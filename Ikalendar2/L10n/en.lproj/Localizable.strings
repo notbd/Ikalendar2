@@ -32,10 +32,9 @@
 "About" = "About";
 "Credits" = "Credits";
 // Alt App Icon
-"Modern Dark" = "Modern Dark";
-"Modern Light" = "Modern Light";
-"Mono Dark" = "Mono Dark";
-"Mono Light" = "Mono Light";
+"Default" = "Default";
+"Signature" = "Signature";
+"Outlined" = "Outlined";
 "Legacy" = "Legacy";
 "Rick" = "Rick";
 "Never Gonna Give You Up" = "Never Gonna Give You Up";

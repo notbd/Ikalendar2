@@ -8,12 +8,9 @@
 import SwiftUI
 
 enum IkaAppIcon: String, CaseIterable, Identifiable {
-  static let `default`: Self = .modernDark
-
-  case modernDark
-  case modernLight
-  case monoDark
-  case monoLight
+  case `default`
+  case signature
+  case outlined
   case legacy
   case rick
 
@@ -33,32 +30,17 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
   }
 
   var iconSetName: String {
-    switch self {
-      case .modernDark:
-        "app-icon-modern-dark"
-      case .modernLight:
-        "app-icon-modern-light"
-      case .monoDark:
-        "app-icon-mono-dark"
-      case .monoLight:
-        "app-icon-mono-light"
-      case .legacy:
-        "app-icon-legacy"
-      case .rick:
-        "app-icon-rick"
-    }
+    "ikalendar2-app-icon-" + rawValue
   }
 
   var displayName: String {
     switch self {
-      case .modernDark:
-        "Modern Dark"
-      case .modernLight:
-        "Modern Light"
-      case .monoDark:
-        "Mono Dark"
-      case .monoLight:
-        "Mono Light"
+      case .default:
+        "Default"
+      case .signature:
+        "Signature"
+      case .outlined:
+        "Outlined"
       case .legacy:
         "Legacy"
       case .rick:
@@ -67,15 +49,12 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
   }
 
   enum DisplayMode {
-    case original
     case large
     case mid
     case small
 
     var size: CGFloat {
       switch self {
-        case .original:
-          1024
         case .large:
           120
         case .mid:
@@ -84,19 +63,11 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
           60
       }
     }
-
-    var cornerRadius: CGFloat {
-      size * 0.2237
-    }
-
-    var clipShape: some Shape {
-      .rect(cornerRadius: cornerRadius, style: .continuous)
-    }
   }
 
   var settingsMainSFSymbolName: String {
     switch self {
-      case .modernDark:
+      case .default:
         "square.3.layers.3d.top.filled"
       case .rick:
         "square.3.layers.3d.bottom.filled"
@@ -107,14 +78,12 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
 
   func getImageName(_ displayMode: IkaAppIcon.DisplayMode) -> String {
     switch displayMode {
-      case .original:
-        "ikalendar2-" + iconSetName
       case .large:
-        "ikalendar2-" + iconSetName + "-large"
+        iconSetName + "-iOS-Default-256x256"
       case .mid:
-        "ikalendar2-" + iconSetName + "-large"
+        iconSetName + "-iOS-Default-256x256"
       case .small:
-        "ikalendar2-" + iconSetName + "-small"
+        iconSetName + "-iOS-Default-128x128"
     }
   }
 }

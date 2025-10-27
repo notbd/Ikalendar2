@@ -79,12 +79,6 @@ struct OnboardingView: View {
         .frame(
           width: appIconDisplayMode.size,
           height: appIconDisplayMode.size)
-        .clipShape(
-          appIconDisplayMode.clipShape)
-        .overlay(
-          appIconDisplayMode.clipShape
-            .stroke(Scoped.STROKE_COLOR, lineWidth: Scoped.STROKE_LINE_WIDTH)
-            .opacity(Scoped.STROKE_OPACITY))
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .onChange(of: iconBounceCounter, initial: false) {
           Task {

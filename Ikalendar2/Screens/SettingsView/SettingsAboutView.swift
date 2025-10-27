@@ -108,12 +108,6 @@ struct SettingsAboutView: View {
         .frame(
           width: appIconDisplayMode.size,
           height: appIconDisplayMode.size)
-        .clipShape(
-          appIconDisplayMode.clipShape)
-        .overlay(
-          appIconDisplayMode.clipShape
-            .stroke(Scoped.APP_ICON_STROKE_COLOR, lineWidth: Scoped.APP_ICON_STROKE_LINE_WIDTH)
-            .opacity(Scoped.APP_ICON_STROKE_OPACITY))
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .zIndex(1)
         .onTapGesture {

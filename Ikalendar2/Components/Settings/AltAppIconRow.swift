@@ -35,13 +35,6 @@ struct AltAppIconRow: View {
         .frame(
           width: IkaAppIcon.DisplayMode.small.size,
           height: IkaAppIcon.DisplayMode.small.size)
-        .clipShape(
-          IkaAppIcon.DisplayMode.small.clipShape)
-        .overlay(
-          IkaAppIcon.DisplayMode.small
-            .clipShape
-            .stroke(Scoped.APP_ICON_STROKE_COLOR, lineWidth: Scoped.APP_ICON_STROKE_LINE_WIDTH)
-            .opacity(Scoped.APP_ICON_STROKE_OPACITY))
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
 
       Text(ikaAppIcon.displayName.localizedStringKey)
@@ -111,13 +104,6 @@ struct AltAppIconEasterEggRow: View {
         .frame(
           width: IkaAppIcon.DisplayMode.small.size,
           height: IkaAppIcon.DisplayMode.small.size)
-        .clipShape(
-          IkaAppIcon.DisplayMode.small.clipShape)
-        .overlay(
-          IkaAppIcon.DisplayMode.small
-            .clipShape
-            .stroke(Scoped.APP_ICON_STROKE_COLOR, lineWidth: Scoped.APP_ICON_STROKE_LINE_WIDTH)
-            .opacity(Scoped.APP_ICON_STROKE_OPACITY))
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .if(ikaAppIcon.isEasterEgg) {
           applyEasterEggAnimation($0)
