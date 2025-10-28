@@ -40,6 +40,7 @@
 "Never Gonna Give You Up" = "ギブ・ユー・アップ";
 "Tap Me :)" = "タップして :)";
 // Advanced Options
+"Minimize Tab Bar" = "タブバーを最小化";
 "Swap Bottom Toolbar Pickers" = "下部工具列のピッカーを交換";
 "Certain options only apply to smaller screen widths." =
 "一部のオプションは、より狭い画面幅にのみ適用されます。";

@@ -80,6 +80,18 @@ final class IkaPreference: ObservableObject {
     }
   }
 
+  /// Whether Tab Bar should minimized
+  @AppStorage(Constants.Key.AppStorage.SHOULD_MINIMIZE_TAB_BAR)
+  var shouldMinimizeTabBar = false
+  {
+    willSet {
+      guard newValue != shouldMinimizeTabBar else { return }
+
+      SimpleHaptics.generateTask(.selection)
+      objectWillChange.send()
+    }
+  }
+
   /// Bottom toolbar picker positioning
   @AppStorage(Constants.Key.AppStorage.SHOULD_SWAP_BOTTOM_TOOLBAR_PICKERS)
   var shouldSwapBottomToolbarPickers = false
@@ -112,6 +124,7 @@ final class IkaPreference: ObservableObject {
     preferredDefaultBattleMode = .default
     preferredAppColorScheme = .default
     preferredAppIcon = .default
+    shouldMinimizeTabBar = false
     shouldSwapBottomToolbarPickers = false
     shouldUseAltStageImages = false
   }

@@ -36,7 +36,7 @@ struct SettingsAdvancedOptionsView: View {
     GeometryReader { geo in
       List {
         Section {
-          rowBottomToolbarPositioningSwitch
+          rowTabBarMinimizingSwitch
           rowAltStageImagesSwitch
         } header: {
           Spacer()
@@ -72,6 +72,26 @@ struct SettingsAdvancedOptionsView: View {
         rowWidth = newVal.width
       }
     }
+  }
+
+  private var rowTabBarMinimizingSwitch: some View {
+    Toggle(isOn: $ikaPreference.shouldMinimizeTabBar) {
+      Label {
+        Text("Minimize Tab Bar")
+          .foregroundStyle(.primary)
+      }
+      icon: {
+        Image(systemName: ikaPreference.shouldMinimizeTabBar
+          ? Scoped.TAB_BAR_MINIMIZING_ON_SFSYMBOL
+          : Scoped.TAB_BAR_MINIMIZING_OFF_SFSYMBOL)
+          .imageScale(.medium)
+          .contentTransition(.symbolEffect(.replace.byLayer))
+          .symbolRenderingMode(.monochrome)
+          .foregroundStyle(Color.accentColor)
+      }
+    }
+    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+    .disabled(!isHorizontalCompact)
   }
 
   private var rowBottomToolbarPositioningSwitch: some View {

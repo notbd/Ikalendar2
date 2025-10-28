@@ -29,6 +29,7 @@ extension Constants.Key {
     static let PREFERRED_APP_COLOR_SCHEME = "pref.preferred_app_color_scheme"
     static let PREFERRED_APP_ICON = "pref.preferred_app_icon"
 
+    static let SHOULD_MINIMIZE_TAB_BAR = "pref.if_should_minimize_tab_bar"
     static let SHOULD_SWAP_BOTTOM_TOOLBAR_PICKERS = "pref.if_should_swap_bottom_toolbar_pickers"
     static let SHOULD_USE_ALT_STAGE_IMAGES = "pref.if_should_use_alt_stage_images"
 

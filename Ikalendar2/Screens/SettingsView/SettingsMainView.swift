@@ -217,7 +217,7 @@ struct SettingsMainView: View {
 
   private var rowAdvancedOptions: some View {
     let customizations = [
-      ikaPreference.shouldSwapBottomToolbarPickers,
+      ikaPreference.shouldMinimizeTabBar,
       ikaPreference.shouldUseAltStageImages,
     ]
     let customizedPercentage = Double(customizations.count(where: { $0 })) / Double(customizations.count)

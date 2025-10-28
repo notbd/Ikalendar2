@@ -115,6 +115,9 @@ extension Constants.Style {
     }
 
     enum Advanced {
+      static let TAB_BAR_MINIMIZING_OFF_SFSYMBOL = "arrow.left.and.line.vertical.and.arrow.right"
+      static let TAB_BAR_MINIMIZING_ON_SFSYMBOL = "arrow.right.and.line.vertical.and.arrow.left"
+
       static let BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL = "arrow.left.arrow.right"
       static let BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION: CGFloat = 0.07
       static let BOTTOM_TOOLBAR_PREVIEW_PADDING_H: CGFloat = 14
