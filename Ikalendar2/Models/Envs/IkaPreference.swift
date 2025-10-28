@@ -15,6 +15,18 @@ import SwiftUI
 final class IkaPreference: ObservableObject {
   static let shared: IkaPreference = .init()
 
+  /// Preferred Default FlatMode
+  @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_FLAT_MODE)
+  var preferredDefaultFlatMode: FlatMode = .default
+  {
+    willSet {
+      guard newValue != preferredDefaultFlatMode else { return }
+
+      SimpleHaptics.generateTask(.selection)
+      objectWillChange.send()
+    }
+  }
+
   /// Preferred Default GameMode
   @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_GAME_MODE)
   var preferredDefaultGameMode: GameMode = .default
@@ -95,6 +107,7 @@ final class IkaPreference: ObservableObject {
   private init() { }
 
   func resetPreferences() {
+    preferredDefaultFlatMode = .default
     preferredDefaultGameMode = .default
     preferredDefaultBattleMode = .default
     preferredAppColorScheme = .default

@@ -21,13 +21,12 @@ struct EntryView: View {
 
   var body: some View {
     ZStack {
-      NavigationStack {
-        if isHorizontalCompact {
-          RotationsSingularView()
-        }
-        else {
-          RotationsCarouselView()
-        }
+      if isHorizontalCompact {
+//          RotationsSingularView()
+        RotationsTabsView()
+      }
+      else {
+        RotationsCarouselView()
       }
 
       if ikaLog.shouldShowOnboarding {

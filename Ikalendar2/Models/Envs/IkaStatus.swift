@@ -24,6 +24,15 @@ final class IkaStatus {
     }
   }
 
+  var currentFlatMode: FlatMode = IkaPreference.shared.preferredDefaultFlatMode
+  {
+    willSet {
+      guard newValue != currentFlatMode else { return }
+
+      SimpleHaptics.generateTask(.soft)
+    }
+  }
+
   var currentGameMode: GameMode = IkaPreference.shared.preferredDefaultGameMode
   {
     willSet {

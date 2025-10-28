@@ -98,11 +98,11 @@ struct ModeIconStamp: View {
         maskColor.opacity(0.9),
         maskColor.opacity(0.85),
         maskColor.opacity(0.8),
-        maskColor.opacity(0.6),
-        maskColor.opacity(0.5),
+        maskColor.opacity(0.7),
+        maskColor.opacity(0.4),
         maskColor.opacity(0.2),
-        maskColor.opacity(0.08),
-        maskColor.opacity(0.02),
+        maskColor.opacity(0.1),
+        maskColor.opacity(0.05),
         maskColor.opacity(0),
       ]),
       startPoint: .top,
@@ -114,13 +114,30 @@ struct ModeIconStamp: View {
     gameModeSelection: GameMode,
     battleModeSelection: BattleMode,
     shouldOffset: Bool = false,
-    shouldAnimated: Bool = true)
+    shouldAnimate: Bool = true)
   {
     self.iconSize = iconSize
     self.gameModeSelection = gameModeSelection
     self.battleModeSelection = battleModeSelection
     self.shouldOffset = shouldOffset
-    shouldAnimate = shouldAnimated
+    self.shouldAnimate = shouldAnimate
+  }
+
+  init(
+    iconSize: CGFloat = Scoped.ICON_SIZE,
+    flatModeSelection: FlatMode,
+    shouldOffset: Bool = false,
+    shouldAnimate: Bool = true)
+  {
+    self.iconSize = iconSize
+    gameModeSelection = flatModeSelection == .salmon
+      ? .salmon
+      : .battle
+    battleModeSelection = flatModeSelection == .salmon
+      ? .default
+      : BattleMode(rawValue: flatModeSelection.rawValue)!
+    self.shouldOffset = shouldOffset
+    self.shouldAnimate = shouldAnimate
   }
 }
 

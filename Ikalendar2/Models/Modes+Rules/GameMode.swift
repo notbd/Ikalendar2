@@ -34,19 +34,17 @@ extension GameMode {
 }
 
 extension GameMode {
-  var sfSymbolNameIdle: String {
-    switch self {
-      case .battle: "flag"
-      case .salmon: "lifepreserver"
-    }
-  }
-}
-
-extension GameMode {
   var sfSymbolNameSelected: String {
     switch self {
       case .battle: "flag.fill"
       case .salmon: "lifepreserver.fill"
+    }
+  }
+
+  var sfSymbolNameIdle: String {
+    switch self {
+      case .battle: "flag"
+      case .salmon: "lifepreserver"
     }
   }
 }

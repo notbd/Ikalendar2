@@ -1,41 +1,49 @@
 //
-//  BattleMode.swift
+//  FlatMode.swift
 //  Ikalendar2
 //
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
+//
+//  FlatMode.swift
+//  Ikalendar2
+//
+//  Created by Tianwei Zhang on 2025-10-27.
+//
 import SwiftUI
 
-// MARK: - BattleMode
+// MARK: - FlatMode
 
-/// Data model for the battle modes.
-enum BattleMode: String, Identifiable, CaseIterable, Equatable {
-  static let `default`: Self = .league
+enum FlatMode: String, Identifiable, CaseIterable, Equatable {
+  static let `default`: Self = .regular
 
   case regular
   case gachi
   case league
+  case salmon
 
   var id: String { rawValue }
 }
 
-extension BattleMode {
+extension FlatMode {
   var themeColor: Color {
     switch self {
       case .regular: .regularBattleTheme
       case .gachi: .gachiBattleTheme
       case .league: .leagueBattleTheme
+      case .salmon: .gachiBattleTheme
     }
   }
 }
 
-extension BattleMode {
+extension FlatMode {
   var name: String {
     switch self {
       case .regular: "Regular Battle"
       case .gachi: "Ranked Battle"
       case .league: "League Battle"
+      case .salmon: "Salmon Run"
     }
   }
 
@@ -44,16 +52,18 @@ extension BattleMode {
       case .regular: "Regular"
       case .gachi: "Ranked"
       case .league: "League"
+      case .salmon: "Salmon"
     }
   }
 }
 
-extension BattleMode {
+extension FlatMode {
   var sfSymbolNameSelected: String {
     switch self {
       case .regular: "paintbrush.fill"
       case .gachi: "person.fill"
       case .league: "person.2.fill"
+      case .salmon: "lifepreserver.fill"
     }
   }
 
@@ -62,12 +72,11 @@ extension BattleMode {
       case .regular: "paintbrush"
       case .gachi: "person"
       case .league: "person.2"
+      case .salmon: "lifepreserver"
     }
   }
 }
 
-extension BattleMode {
+extension FlatMode {
   var imgFilnSmall: String { rawValue + "_small" }
-  var imgFilnMid: String { rawValue + "_mid" }
-  var imgFilnLarge: String { rawValue + "_large" }
 }

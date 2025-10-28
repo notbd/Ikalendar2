@@ -18,30 +18,29 @@ struct RotationsSingularView: View {
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   var body: some View {
-    ZStack {
-      content
-        .navigationTitle(title.localizedStringKey)
-        .apply(setToolbarItems)
-        .overlay(
-          ModeIconStamp(
-            gameModeSelection: ikaStatus.currentGameMode,
-            battleModeSelection: ikaStatus.currentBattleMode,
-            shouldOffset: true)
-            .animation(
-              .snappy,
-              value: "\(ikaStatus.currentGameMode)-\(ikaStatus.currentBattleMode)"),
-          alignment: .topTrailing)
-        .overlay(
-          AutoLoadingOverlay(),
-          alignment: .bottomTrailing)
-        .refreshable {
-          // Note: As of iOS 17.0 SDK, refresh operation must be wrapped inside a Task.
-          //  Failing to do so results in SwiftUI altering the view hierarchy upon pull-to-refresh, leading
-          //  to unintentional destruction of views and the subsequent cancellation of the network task.
-          await Task { await ikaCatalog.refresh() }.value
-        }
+    NavigationStack {
+      ZStack {
+        content
+          .navigationTitle(title.localizedStringKey)
+          .apply(setToolbarItems)
+          .overlay(
+            ModeIconStamp(
+              gameModeSelection: ikaStatus.currentGameMode,
+              battleModeSelection: ikaStatus.currentBattleMode,
+              shouldOffset: true)
+              .animation(
+                .snappy,
+                value: "\(ikaStatus.currentGameMode)-\(ikaStatus.currentBattleMode)"),
+            alignment: .topTrailing)
+          .overlay(
+            AutoLoadingOverlay(),
+            alignment: .bottomTrailing)
+          .refreshable {
+            await ikaCatalog.refresh()
+          }
 
-      LoadingOverlay()
+        LoadingOverlay()
+      }
     }
   }
 

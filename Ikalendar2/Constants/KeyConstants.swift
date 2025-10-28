@@ -23,6 +23,7 @@ extension Constants.Key {
   }
 
   enum AppStorage {
+    static let PREFERRED_DEFAULT_FLAT_MODE = "pref.preferred_default.flat_mode"
     static let PREFERRED_DEFAULT_GAME_MODE = "pref.preferred_default.game_mode"
     static let PREFERRED_DEFAULT_BATTLE_MODE = "pref.preferred_default.battle_mode"
     static let PREFERRED_APP_COLOR_SCHEME = "pref.preferred_app_color_scheme"

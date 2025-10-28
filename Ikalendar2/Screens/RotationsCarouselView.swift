@@ -26,25 +26,27 @@ struct RotationsCarouselView: View {
   private var isWindowWide: Bool { isLandscape && windowWidth >= 1024 }
 
   var body: some View {
-    ZStack {
-      content
-        .navigationTitle(Constants.Key.BundleInfo.APP_DISPLAY_NAME)
-        .ignoresSafeArea(edges: .bottom)
-        .apply {
-          setToolbarItems($0)
-        }
-        .overlay(
-          AutoLoadingOverlay(),
-          alignment: .bottomTrailing)
-
-      LoadingOverlay()
-    }
-    .background {
-      GeometryReader { geo in
-        Color.clear
-          .onChange(of: geo.size, initial: true) { _, newVal in
-            windowWidth = newVal.width
+    NavigationStack {
+      ZStack {
+        content
+          .navigationTitle(Constants.Key.BundleInfo.APP_DISPLAY_NAME)
+          .ignoresSafeArea(edges: .bottom)
+          .apply {
+            setToolbarItems($0)
           }
+          .overlay(
+            AutoLoadingOverlay(),
+            alignment: .bottomTrailing)
+
+        LoadingOverlay()
+      }
+      .background {
+        GeometryReader { geo in
+          Color.clear
+            .onChange(of: geo.size, initial: true) { _, newVal in
+              windowWidth = newVal.width
+            }
+        }
       }
     }
   }

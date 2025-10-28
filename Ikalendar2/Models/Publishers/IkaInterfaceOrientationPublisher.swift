@@ -57,7 +57,8 @@ final class IkaInterfaceOrientationPublisher {
   private func updateCurrentOrientation() {
     guard
       let windowScene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first,
-      let currentWindowInterfaceOrientation = windowScene.windows.first?.windowScene?.interfaceOrientation
+      let currentWindowInterfaceOrientation = windowScene.windows.first?.windowScene?
+        .effectiveGeometry.interfaceOrientation
     else { return }
 
     currentOrientation = currentWindowInterfaceOrientation
