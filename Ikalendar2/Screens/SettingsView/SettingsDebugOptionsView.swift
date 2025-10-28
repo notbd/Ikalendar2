@@ -65,8 +65,9 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAppStates: some View {
     Button {
-      ikaLog.resetStates()
       ikaPreference.revertEasterEggAppIcon()
+      ikaStatus.resetStatuses(shouldExitSettings: false)
+      ikaLog.resetStates(shouldResetOnboarding: false)
       AlertKitAPI.present(
         title: String(localized: "States Reset"),
         icon: .done,
@@ -94,10 +95,9 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAll: some View {
     Button {
-      ikaLog.resetStates()
       ikaPreference.resetPreferences()
-      ikaStatus.isSettingsPresented = false
-      ikaLog.shouldShowOnboarding = true
+      ikaStatus.resetStatuses(shouldExitSettings: true)
+      ikaLog.resetStates(shouldResetOnboarding: true)
       AlertKitAPI.present(
         title: String(localized: "All Reset"),
         icon: .done,

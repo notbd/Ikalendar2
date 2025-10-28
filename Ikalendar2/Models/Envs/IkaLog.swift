@@ -60,9 +60,12 @@ final class IkaLog: ObservableObject {
 
   private init() { }
 
-  func resetStates() {
+  func resetStates(shouldResetOnboarding: Bool = false) {
     hasDiscoveredRating = false
     hasDiscoveredAltAppIcon = false
     hasDiscoveredEasterEgg = false
+    if shouldResetOnboarding {
+      shouldShowOnboarding = true
+    }
   }
 }

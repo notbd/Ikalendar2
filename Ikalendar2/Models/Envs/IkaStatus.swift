@@ -52,4 +52,13 @@ final class IkaStatus {
   }
 
   private init() { }
+
+  func resetStatuses(shouldExitSettings: Bool = false) {
+    currentFlatMode = IkaPreference.shared.preferredDefaultFlatMode
+    currentGameMode = IkaPreference.shared.preferredDefaultGameMode
+    currentBattleMode = IkaPreference.shared.preferredDefaultBattleMode
+    if shouldExitSettings {
+      isSettingsPresented = false
+    }
+  }
 }
