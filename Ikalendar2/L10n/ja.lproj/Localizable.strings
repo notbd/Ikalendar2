@@ -17,9 +17,10 @@
 // Main
 "Settings" = "設定";
 "Done" = "完了";
-"Default Mode" = "デフォルトモード";
-"Default Game Mode" = "デフォルトゲームモード";
-"Default Battle Mode" = "デフォルトバトルモード";
+"Default Mode" = "デフォルトのモード";
+"Default Tab" = "起動時のタブ";
+"Default Game Mode" = "デフォルトのゲームモード";
+"Default Battle Mode" = "デフォルトのバトルモード";
 "Appearance" = "外観";
 "Color Scheme" = "外観モード";
 "Follow System" = "端末に合わせる";

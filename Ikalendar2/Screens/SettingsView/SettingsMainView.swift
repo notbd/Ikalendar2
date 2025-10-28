@@ -31,8 +31,13 @@ struct SettingsMainView: View {
     GeometryReader { geo in
       List {
         Section {
-          rowDefaultGameMode
-          rowDefaultBattleMode
+          if isHorizontalCompact {
+            rowDefaultTab
+          }
+          else {
+            rowDefaultGameMode
+            rowDefaultBattleMode
+          }
         } header: {
           Text("Default Mode")
         } footer: {
@@ -71,6 +76,27 @@ struct SettingsMainView: View {
   }
 
   // MARK: - Default Mode Section
+
+  private var rowDefaultTab: some View {
+    Picker(
+      selection: $ikaPreference.preferredDefaultFlatMode,
+      label: Label {
+        Text("Default Tab")
+          .foregroundStyle(.primary)
+      } icon: {
+        Image(systemName: ikaPreference.preferredDefaultFlatMode.sfSymbolNameSelected)
+          .imageScale(.medium)
+          .contentTransition(.symbolEffect(.replace.offUp))
+          .symbolRenderingMode(.hierarchical)
+          .foregroundStyle(ikaPreference.preferredDefaultFlatMode.themeColor)
+      })
+    {
+      ForEach(FlatMode.allCases) { flatMode in
+        Text(flatMode.name.localizedStringKey)
+          .tag(flatMode)
+      }
+    }
+  }
 
   private var rowDefaultGameMode: some View {
     HStack {
@@ -148,41 +174,24 @@ struct SettingsMainView: View {
   // MARK: - Appearance Section
 
   private var rowColorScheme: some View {
-    HStack {
-      Label {
+    Picker(
+      selection: $ikaPreference.preferredAppColorScheme,
+      label: Label {
         Text("Color Scheme")
           .foregroundStyle(.primary)
-      }
-      icon: {
+      } icon: {
         Image(
           systemName: Scoped.COLOR_SCHEME_SFSYMBOL)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
-      }
-
-      Spacer()
-
-      Menu {
-        Picker(
-          selection: $ikaPreference.preferredAppColorScheme,
-          label: EmptyView())
-        {
-          ForEach(IkaColorSchemeManager.PreferredColorScheme.allCases) { preferredColorScheme in
-            Label(
-              preferredColorScheme.name.localizedStringKey,
-              systemImage: preferredColorScheme.sfSymbolName)
-              .tag(preferredColorScheme)
-          }
-        }
-      } label: {
-        HStack {
-          Image(systemName: ikaPreference.preferredAppColorScheme.sfSymbolName)
-            .foregroundStyle(Color.secondary)
-
-          Image(systemName: Scoped.COLOR_SCHEME_MENU_SFSYMBOL)
-            .foregroundStyle(Color.tertiaryLabel)
-        }
+      })
+    {
+      ForEach(IkaColorSchemeManager.PreferredColorScheme.allCases) { preferredColorScheme in
+        Label(
+          preferredColorScheme.name.localizedStringKey,
+          systemImage: preferredColorScheme.sfSymbolName)
+          .tag(preferredColorScheme)
       }
     }
   }
@@ -305,11 +314,11 @@ struct SettingsMainView: View {
   // MARK: - Toolbar Buttons
 
   private var doneButton: some View {
-    Button {
+    Button(
+      "Done",
+      systemImage: "checkmark")
+    {
       dismiss()
-    } label: {
-      Text("Done")
-        .font(Scoped.DONE_BUTTON_FONT)
     }
   }
 }
