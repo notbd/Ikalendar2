@@ -56,7 +56,7 @@ struct RotationsTabView: View {
       case .salmon:
         SalmonRotationList()
       default:
-        BattleRotationList()
+        BattleRotationList(specifiedBattleMode: BattleMode(rawValue: adoptedFlatMode.rawValue)!)
     }
   }
 
