@@ -39,13 +39,13 @@ extension Constants.Style {
     }
 
     enum AutoLoading {
-      static let SFSYMBOL_FONT: Font = .system(size: 20, weight: .medium)
-      static let FRAME_SIDE: CGFloat = 36
-      static let FRAME_CORNER_RADIUS: CGFloat = 5
+      static let SFSYMBOL_FONT: Font = .system(size: 24, weight: .medium)
+      static let FRAME_SIDE: CGFloat = 54
+      static let FRAME_CORNER_RADIUS: CGFloat = 14
 
-      static let LOADING_SFSYMBOL = "arrow.triangle.2.circlepath.icloud.fill"
-      static let LOADED_SUCCESS_SFSYMBOL = "checkmark.icloud.fill"
-      static let LOADED_FAILURE_SFSYMBOL = "exclamationmark.icloud.fill"
+      static let LOADING_SFSYMBOL = "arrow.trianglehead.2.clockwise.rotate.90.icloud.fill"
+      static let LOADED_SUCCESS_SFSYMBOL = "checkmark.circle.fill"
+      static let LOADED_FAILURE_SFSYMBOL = "exclamationmark.triangle.fill"
     }
 
     enum ModeIcon {

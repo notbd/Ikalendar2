@@ -18,17 +18,18 @@ struct AutoLoadingOverlay: View {
   var body: some View {
     Image(systemName: iconName)
       .symbolEffect(
-        .pulse.byLayer,
-        options: .speed(2),
+        .rotate.byLayer,
+        options: .repeat(.periodic(delay: 0.7)),
         isActive: ikaCatalog.autoLoadStatus == .autoLoading)
-      .contentTransition(.symbolEffect(.replace.offUp))
-      .foregroundStyle(Color.primary)
+      .contentTransition(.symbolEffect(.replace.byLayer))
+      .foregroundStyle(Color.secondary)
       .font(Scoped.SFSYMBOL_FONT)
       .frame(
         width: Scoped.FRAME_SIDE,
         height: Scoped.FRAME_SIDE)
-      .background(.thinMaterial)
-      .cornerRadius(Scoped.FRAME_CORNER_RADIUS)
+      .glassEffect(
+        .regular.interactive(),
+        in: .rect(cornerRadius: Scoped.FRAME_CORNER_RADIUS))
       .padding()
       .opacity(ikaCatalog.autoLoadStatus == .idle ? 0 : 1)
       .transition(.asymmetric(insertion: .scale, removal: .opacity))
