@@ -10,7 +10,7 @@ import SwiftUI
 /// Constant data holding `style` parameters for the app.
 extension Constants.Style {
   enum Global {
-    static let SHADOW_RADIUS: CGFloat = 4
+    static let SHADOW_RADIUS: CGFloat = 2
 
     static let EXTERNAL_LINK_SFSYMBOL = "link"
     static let EXTERNAL_LINK_JUMP_SFSYMBOL = "arrow.up.forward.app.fill"
@@ -306,7 +306,7 @@ extension Constants.Style {
 
           static let APPAREL_IMG_PADDING: CGFloat = 4
           static let APPAREL_IMG_WIDTH_RATIO: CGFloat = 0.16
-          static let APPAREL_FRAME_CORNER_RADIUS: CGFloat = 5
+          static let APPAREL_FRAME_CORNER_RADIUS: CGFloat = 7
         }
 
         enum Weapon {

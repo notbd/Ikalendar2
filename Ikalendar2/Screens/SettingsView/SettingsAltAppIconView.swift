@@ -53,27 +53,10 @@ struct SettingsAltAppIconView: View {
         } header: { if showEasterEgg { EmptyView() } else { Spacer() } }
       }
       .toolbar {
-        Button {
-          if !doesPreferRickOnAppear { SimpleHaptics.generateTask(.soft) }
-          withAnimation { triggeredEasterEgg.toggle() }
+        ToolbarItem(placement: .principal) {
+          easterEggTrigger
         }
-        label: {
-          if ikaLog.hasDiscoveredEasterEgg {
-            Image(systemName: showEasterEgg ? "party.popper.fill" : "party.popper")
-              .transition(.symbolEffect(.automatic))
-          }
-          else {
-            Text("Tap Me :)")
-          }
-        }
-        .foregroundStyle(
-          Color.accentColor
-            .opacity(
-              ikaLog.hasDiscoveredEasterEgg
-                ? 1
-                : colorScheme == .dark
-                  ? 0.07
-                  : 0.05))
+        .sharedBackgroundVisibility(.hidden)
       }
       .navigationTitle("App Icon")
       .navigationBarTitleDisplayMode(.large)
@@ -101,6 +84,30 @@ struct SettingsAltAppIconView: View {
       // Schedule a new task
       currentToggleAfterDelayTask = Task { await toggleShouldDisplayAnimatedCopyAfterDelay() }
     }
+  }
+
+  private var easterEggTrigger: some View {
+    Button {
+      if !doesPreferRickOnAppear { SimpleHaptics.generateTask(.soft) }
+      withAnimation { triggeredEasterEgg.toggle() }
+    }
+    label: {
+      if ikaLog.hasDiscoveredEasterEgg {
+        Image(systemName: showEasterEgg ? "party.popper.fill" : "party.popper")
+          .transition(.symbolEffect(.automatic))
+      }
+      else {
+        Text("Tap Me :)")
+      }
+    }
+    .foregroundStyle(
+      Color.accentColor
+        .opacity(
+          ikaLog.hasDiscoveredEasterEgg
+            ? 1
+            : colorScheme == .dark
+              ? 0.07
+              : 0.05))
   }
 
   private func toggleShouldDisplayAnimatedCopyAfterDelay() async {

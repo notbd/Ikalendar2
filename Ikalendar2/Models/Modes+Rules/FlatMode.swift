@@ -61,7 +61,7 @@ extension FlatMode {
   var sfSymbolNameSelected: String {
     switch self {
       case .regular: "paintbrush.fill"
-      case .gachi: "person.fill"
+      case .gachi: "trophy.fill"
       case .league: "person.2.fill"
       case .salmon: "lifepreserver.fill"
     }
@@ -70,7 +70,7 @@ extension FlatMode {
   var sfSymbolNameIdle: String {
     switch self {
       case .regular: "paintbrush"
-      case .gachi: "person"
+      case .gachi: "trophy"
       case .league: "person.2"
       case .salmon: "lifepreserver"
     }

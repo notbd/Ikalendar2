@@ -36,14 +36,14 @@ extension GameMode {
 extension GameMode {
   var sfSymbolNameSelected: String {
     switch self {
-      case .battle: "flag.fill"
+      case .battle: "flag.pattern.checkered"
       case .salmon: "lifepreserver.fill"
     }
   }
 
   var sfSymbolNameIdle: String {
     switch self {
-      case .battle: "flag"
+      case .battle: "flag.pattern.checkered"
       case .salmon: "lifepreserver"
     }
   }

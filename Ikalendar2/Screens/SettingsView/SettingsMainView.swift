@@ -67,7 +67,7 @@ struct SettingsMainView: View {
       }
       .navigationTitle("Settings")
       .navigationBarTitleDisplayMode(.large)
-      .navigationBarItems(trailing: doneButton)
+      .navigationBarItems(trailing: closeButton)
       .listStyle(.insetGrouped)
       .onChange(of: geo.size, initial: true) { _, newVal in
         rowWidth = newVal.width
@@ -313,10 +313,11 @@ struct SettingsMainView: View {
 
   // MARK: - Toolbar Buttons
 
-  private var doneButton: some View {
+  private var closeButton: some View {
     Button(
       "Done",
-      systemImage: "checkmark")
+      systemImage: "checkmark",
+      role: .close)
     {
       dismiss()
     }

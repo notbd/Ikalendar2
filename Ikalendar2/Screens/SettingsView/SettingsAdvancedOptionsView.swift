@@ -85,7 +85,7 @@ struct SettingsAdvancedOptionsView: View {
           ? Scoped.TAB_BAR_MINIMIZING_ON_SFSYMBOL
           : Scoped.TAB_BAR_MINIMIZING_OFF_SFSYMBOL)
           .imageScale(.medium)
-          .contentTransition(.symbolEffect(.replace.byLayer))
+          .contentTransition(.symbolEffect(.replace.magic(fallback: .replace.byLayer)))
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
       }
