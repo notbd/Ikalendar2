@@ -22,7 +22,7 @@ struct AutoLoadingOverlay: View {
         options: .repeat(.periodic(delay: 0.7)),
         isActive: ikaCatalog.autoLoadStatus == .autoLoading)
       .contentTransition(.symbolEffect(.replace.byLayer))
-      .foregroundStyle(Color.secondary)
+      .foregroundStyle(Color.primary)
       .font(Scoped.SFSYMBOL_FONT)
       .frame(
         width: Scoped.FRAME_SIDE,

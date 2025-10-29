@@ -100,8 +100,9 @@ struct BattleRotationHeader: View {
             relativeTo: .title2)
           .foregroundStyle(Color.systemBackground)
           .padding(.horizontal, Scoped.PREFIX_PADDING_H)
-          .background(Color.secondary)
-          .cornerRadius(Scoped.PREFIX_FRAME_CORNER_RADIUS)
+          .glassEffect(
+            .clear.tint(.secondary).interactive(),
+            in: .rect(cornerRadius: Scoped.PREFIX_FRAME_CORNER_RADIUS))
       }
 
       // Battle Time String

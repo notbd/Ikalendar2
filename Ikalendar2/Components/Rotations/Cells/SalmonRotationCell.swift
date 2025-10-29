@@ -90,6 +90,12 @@ struct SalmonRotationCellTimeTextSection: View {
         .scaledToFit()
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .frame(height: rowWidth * Scoped.SALMON_ICON_HEIGHT_RATIO)
+        .if(rotation.isCurrent(ikaTimePublisher.currentTime)) {
+          $0
+            .glassEffect(
+              .clear.interactive(),
+              in: .circle)
+        }
         .scaleEffect(
           rotation.isCurrent(ikaTimePublisher.currentTime)
             ? Scoped.ICON_GOLDEN_EGG_SCALE_FACTOR
@@ -107,8 +113,9 @@ struct SalmonRotationCellTimeTextSection: View {
             relativeTo: .headline)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
           .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
-          .background(Color.systemGroupedBackgroundTertiary)
-          .cornerRadius(Scoped.TIME_TEXT_FRAME_CORNER_RADIUS)
+          .glassEffect(
+            .clear.interactive(),
+            in: .rect(cornerRadius: Scoped.TIME_TEXT_FRAME_CORNER_RADIUS))
 
         Text("-")
           .scaledLimitedLine()
@@ -125,8 +132,9 @@ struct SalmonRotationCellTimeTextSection: View {
             relativeTo: .headline)
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
           .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
-          .background(Color.systemGroupedBackgroundTertiary)
-          .cornerRadius(Scoped.TIME_TEXT_FRAME_CORNER_RADIUS)
+          .glassEffect(
+            .clear.interactive(),
+            in: .rect(cornerRadius: Scoped.TIME_TEXT_FRAME_CORNER_RADIUS))
       }
     }
   }

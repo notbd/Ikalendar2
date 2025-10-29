@@ -44,8 +44,9 @@ struct SalmonRotationWeaponCardIcon: View {
       .scaledToFit()
       .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
       .padding(Scoped.IMG_PADDING)
-      .background(Color.systemGroupedBackgroundTertiary)
-      .cornerRadius(Scoped.FRAME_CORNER_RADIUS)
+      .glassEffect(
+        .clear.interactive(),
+        in: .rect(cornerRadius: Scoped.FRAME_CORNER_RADIUS))
   }
 }
 

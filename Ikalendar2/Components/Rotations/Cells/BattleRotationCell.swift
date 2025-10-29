@@ -85,7 +85,7 @@ struct BattleRotationCellPrimary: View {
 
       // MARK: Stage Section
 
-      HStack {
+      HStack(spacing: Scoped.STAGES_SPACING_H) {
         battleStageCardA
         battleStageCardB
       }
@@ -238,8 +238,9 @@ struct BattleRotationCellSecondary: View {
       .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
       .frame(height: rowWidth * Scoped.RULE_IMG_HEIGHT_RATIO)
       .padding(Scoped.RULE_IMG_PADDING)
-      .background(Color.systemGroupedBackgroundTertiary)
-      .cornerRadius(Scoped.RULE_IMG_FRAME_CORNER_RADIUS)
+      .glassEffect(
+        .clear.interactive(),
+        in: .rect(cornerRadius: Scoped.RULE_IMG_FRAME_CORNER_RADIUS))
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,

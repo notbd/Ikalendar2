@@ -38,6 +38,9 @@ struct SalmonRotationStageCard: View {
       .resizable()
       .scaledToFit()
       .cornerRadius(Scoped.STAGE_IMG_CORNER_RADIUS)
+      .glassEffect(
+        .clear.interactive(),
+        in: .rect(cornerRadius: Scoped.STAGE_IMG_CORNER_RADIUS))
       .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
       .overlay(
         overlay,
@@ -85,8 +88,9 @@ struct SalmonRotationStageCard: View {
       .scaledToFit()
       .padding(Scoped.APPAREL_IMG_PADDING)
       .frame(width: cardWidth * Scoped.APPAREL_IMG_WIDTH_RATIO)
-      .background(.ultraThinMaterial)
-      .cornerRadius(Scoped.APPAREL_FRAME_CORNER_RADIUS)
+      .glassEffect(
+        .clear.interactive(),
+        in: .rect(cornerRadius: Scoped.APPAREL_FRAME_CORNER_RADIUS))
       .opacity(rotation.isCurrent(ikaTimePublisher.currentTime) && hasRewardApparel ? 1 : 0)
   }
 }

@@ -42,6 +42,9 @@ struct BattleRotationStageCardPrimary: View {
       .resizable()
       .scaledToFit()
       .cornerRadius(Scoped.IMG_CORNER_RADIUS)
+      .glassEffect(
+        .clear.interactive(),
+        in: .rect(cornerRadius: Scoped.IMG_CORNER_RADIUS))
       .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
       .overlay(
         StageTitleLabel(
@@ -96,6 +99,9 @@ struct BattleRotationStageCardSecondary: View {
         .resizable()
         .scaledToFit()
         .cornerRadius(Scoped.IMG_CORNER_RADIUS)
+        .glassEffect(
+          .clear.interactive(),
+          in: .rect(cornerRadius: Scoped.IMG_CORNER_RADIUS))
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .alignmentGuide(.battleStagesImageAlignment) { $0[.bottom] }
         .layoutPriority(1)

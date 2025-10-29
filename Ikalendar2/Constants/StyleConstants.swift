@@ -195,7 +195,7 @@ extension Constants.Style {
     enum Label {
       static let TEXT_PADDING_H: CGFloat = 6
       static let TEXT_PADDING_V: CGFloat = 3
-      static let BACKGROUND_CORNER_RADIUS: CGFloat = 4
+      static let CLIP_SHAPE_CORNER_RADIUS: CGFloat = 8
     }
 
     enum Header {
@@ -224,6 +224,8 @@ extension Constants.Style {
       enum Cell {
         enum Primary {
           static let CELL_SPACING_V: CGFloat = 8
+          static let STAGES_SPACING_H: CGFloat = 10
+
           static let PROGRESS_BAR_PADDING_BOTTOM: CGFloat = 8
           static let CELL_PADDING_TOP: CGFloat = 0
           static let CELL_PADDING_BOTTOM: CGFloat = 6
@@ -260,15 +262,15 @@ extension Constants.Style {
 
       enum Card {
         enum Primary {
-          static let IMG_CORNER_RADIUS: CGFloat = 4
+          static let IMG_CORNER_RADIUS: CGFloat = 12
           static let LABEL_FONT_SIZE: CGFloat = 13
           static let LABEL_PADDING_LEADING: CGFloat = 20
-          static let LABEL_PADDING_BOTTOMTRAILING: CGFloat = 2
+          static let LABEL_PADDING_BOTTOMTRAILING: CGFloat = 2.5
         }
 
         enum Secondary {
           static let SPACING_V: CGFloat = 4
-          static let IMG_CORNER_RADIUS: CGFloat = 4
+          static let IMG_CORNER_RADIUS: CGFloat = 12
           static let FONT_SIZE: CGFloat = 12
         }
       }
@@ -284,7 +286,7 @@ extension Constants.Style {
         static let PROGRESS_FONT_SIZE: CGFloat = 16
 
         enum TimeTextSection {
-          static let ICON_GOLDEN_EGG_SCALE_FACTOR: CGFloat = 1.5
+          static let ICON_GOLDEN_EGG_SCALE_FACTOR: CGFloat = 1.1
           static let ICON_SALMON_FISH_SCALE_FACTOR: CGFloat = 0.9
           static let SALMON_ICON_HEIGHT_RATIO: CGFloat = 0.065
           static let TIME_TEXT_SPACING: CGFloat = 4
@@ -297,19 +299,19 @@ extension Constants.Style {
 
       enum Card {
         enum Stage {
-          static let STAGE_IMG_CORNER_RADIUS: CGFloat = 4
+          static let STAGE_IMG_CORNER_RADIUS: CGFloat = 12
 
           static let LABEL_FONT_SIZE: CGFloat = 13
           static let OVERLAY_PADDING: CGFloat = 4
 
-          static let APPAREL_IMG_PADDING: CGFloat = 2
+          static let APPAREL_IMG_PADDING: CGFloat = 4
           static let APPAREL_IMG_WIDTH_RATIO: CGFloat = 0.16
           static let APPAREL_FRAME_CORNER_RADIUS: CGFloat = 5
         }
 
         enum Weapon {
           static let IMG_PADDING: CGFloat = 3
-          static let FRAME_CORNER_RADIUS: CGFloat = 5
+          static let FRAME_CORNER_RADIUS: CGFloat = 12
         }
       }
     }

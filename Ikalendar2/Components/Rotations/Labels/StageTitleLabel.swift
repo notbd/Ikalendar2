@@ -27,8 +27,9 @@ struct StageTitleLabel: View {
         relativeTo: relTextStyle)
       .padding(.horizontal, Scoped.TEXT_PADDING_H)
       .padding(.vertical, Scoped.TEXT_PADDING_V)
-      .background(.ultraThinMaterial)
-      .cornerRadius(Scoped.BACKGROUND_CORNER_RADIUS)
+      .glassEffect(
+        .regular.interactive(),
+        in: .rect(cornerRadius: Scoped.CLIP_SHAPE_CORNER_RADIUS))
   }
 }
 
