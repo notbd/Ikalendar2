@@ -28,9 +28,6 @@ struct RotationsTabView: View {
               .snappy,
               value: adoptedFlatMode),
           alignment: .topTrailing)
-        .overlay(
-          AutoLoadingOverlay(),
-          alignment: .bottomTrailing)
         .refreshable {
           await ikaCatalog.refresh()
         }

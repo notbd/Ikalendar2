@@ -39,9 +39,6 @@ struct RootView: View {
   private var settingsModal: some View {
     SettingsEntryView()
       .accentColor(.orange)
-      .overlay(
-        AutoLoadingOverlay(),
-        alignment: .bottomTrailing)
       .interactiveDismissDisabled()
   }
 

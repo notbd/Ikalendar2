@@ -31,6 +31,9 @@ struct RotationsTabsView: View {
                 }
               }
           }
+          .overlay(
+            AutoLoadingOverlay(),
+            alignment: .bottom)
         }
       }
     }

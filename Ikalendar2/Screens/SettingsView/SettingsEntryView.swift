@@ -15,5 +15,8 @@ struct SettingsEntryView: View {
       SettingsMainView()
     }
     .navigationViewStyle(StackNavigationViewStyle())
+    .overlay(
+      AutoLoadingOverlay(),
+      alignment: .bottom)
   }
 }
