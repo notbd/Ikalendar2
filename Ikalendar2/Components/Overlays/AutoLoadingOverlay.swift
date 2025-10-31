@@ -37,7 +37,7 @@ struct AutoLoadingOverlay: View {
             .glassEffectID("icon", in: ns)
 
           if ikaCatalog.autoLoadDelayedIdleStatus == .autoLoading {
-            Text(Scoped.SUBTITLE)
+            Text(Scoped.SUBTITLE.localizedStringKey)
               .font(Scoped.SUBTITLE_FONT)
               .padding(.horizontal, Scoped.SUBTITLE_PADDING_H)
               .frame(height: Scoped.FRAME_SIDE)

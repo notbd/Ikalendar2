@@ -12,6 +12,10 @@
 "Welcome to\n%@" = "ようこそ\n%@へ";
 "Get Started" = "始める";
 
+// MARK: - Toasts
+
+"AutoLoading..." = "自動読み込み中...";
+
 // MARK: - Settings
 
 // Main
