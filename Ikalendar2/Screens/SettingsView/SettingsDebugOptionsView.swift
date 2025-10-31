@@ -128,12 +128,15 @@ struct SettingsDebugOptionsView: View {
         warningText
       }
       .font(.system(.body, design: .rounded, weight: .semibold))
-      .phaseAnimator([true, false], trigger: pulsingTrigger)
+      .phaseAnimator([false, true], trigger: pulsingTrigger)
       { content, value in
         content
-          .foregroundStyle(value ? Color.secondary : Color.red)
+          .foregroundStyle(value ? Color.red : Color.secondary)
       } animation: { _ in
-        .spring(duration: 1.5)
+          .spring(duration: 1.2)
+      }
+      .onAppear {
+        pulsingTrigger += 1
       }
       .onReceive(pulseTimer) { _ in
         pulsingTrigger += 1
