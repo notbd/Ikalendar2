@@ -196,10 +196,10 @@ struct SettingsMainView: View {
     }
   }
 
-  @State private var rowAltAppIconSfSymbolBounce: Int = 0
-  private var bounceTimer = Timer
+  @State private var rowAltAppIconIconAnimationTrigger: Int = 0
+  private var altAppIconNudgeTimer = Timer
     .publish(
-      every: Constants.Config.Timer.bounceSignalInterval,
+      every: Constants.Config.Timer.nudgeSignalInterval,
       tolerance: 0.1,
       on: .main,
       in: .common)
@@ -213,13 +213,13 @@ struct SettingsMainView: View {
       }
       icon: {
         Image(systemName: ikaPreference.preferredAppIcon.settingsMainSFSymbolName)
-          .symbolEffect(.bounce, value: rowAltAppIconSfSymbolBounce)
+          .symbolEffect(.wiggle, value: rowAltAppIconIconAnimationTrigger)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       }
-      .onReceive(bounceTimer) { _ in
-        if !ikaLog.hasDiscoveredAltAppIcon { rowAltAppIconSfSymbolBounce += 1 }
+      .onReceive(altAppIconNudgeTimer) { _ in
+        if !ikaLog.hasDiscoveredAltAppIcon { rowAltAppIconIconAnimationTrigger += 1 }
       }
     }
   }

@@ -5,6 +5,7 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
+import Combine
 import SimpleHaptics
 import StoreKit
 import SwiftUI
@@ -171,10 +172,10 @@ struct SettingsAboutView: View {
 
   // MARK: - Review Section
 
-  @State private var rowRatingBounceTrigger: Int = 0
-  private var bounceTimer = Timer
+  @State private var rowRatingIconAnimationTrigger: Int = 0
+  private var ratingNudgeTimer = Timer
     .publish(
-      every: Constants.Config.Timer.bounceSignalInterval,
+      every: Constants.Config.Timer.nudgeSignalInterval,
       tolerance: 0.1,
       on: .main,
       in: .common)
@@ -184,7 +185,7 @@ struct SettingsAboutView: View {
     Button {
       SimpleHaptics.generateTask(.selection)
       requestReview()
-      rowRatingBounceTrigger += 1
+      rowRatingIconAnimationTrigger += 1
       if !ikaLog.hasDiscoveredRating { ikaLog.hasDiscoveredRating = true }
     } label: {
       Label {
@@ -193,21 +194,16 @@ struct SettingsAboutView: View {
       }
       icon: {
         Image(systemName: Scoped.RATING_SFSYMBOL)
-          .symbolEffect(.bounce, value: rowRatingBounceTrigger)
+          .symbolEffect(.wiggle, value: rowRatingIconAnimationTrigger)
           .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
       }
     }
-    .onReceive(bounceTimer) { _ in
+    .onReceive(ratingNudgeTimer) { _ in
       guard !ikaLog.hasDiscoveredRating else { return }
 
-      if rowRatingBounceTrigger >= 2 {
-        ikaLog.hasDiscoveredRating = true
-      }
-      else {
-        rowRatingBounceTrigger += 1
-      }
+      rowRatingIconAnimationTrigger += 1
     }
   }
 

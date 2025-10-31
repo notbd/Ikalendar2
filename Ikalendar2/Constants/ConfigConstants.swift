@@ -12,7 +12,7 @@ import SwiftUI
 extension Constants.Config {
   enum Timer {
     static let autoLoadCheckSignalInterval: TimeInterval = 5
-    static let bounceSignalInterval: TimeInterval = 7
+    static let nudgeSignalInterval: TimeInterval = 5
     static let pulseSignalInterval: TimeInterval = 3
   }
 
