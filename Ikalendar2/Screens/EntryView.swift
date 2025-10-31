@@ -22,7 +22,6 @@ struct EntryView: View {
   var body: some View {
     ZStack {
       if isHorizontalCompact {
-//          RotationsSingularView()
         RotationsTabsView()
       }
       else {

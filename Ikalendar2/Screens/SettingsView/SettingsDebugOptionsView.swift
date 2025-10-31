@@ -36,10 +36,9 @@ struct SettingsDebugOptionsView: View {
       }
     }
     .listStyle(.insetGrouped)
-    .safeAreaInset(edge: .bottom) {
+    .safeAreaBar(edge: .bottom) {
       warningBanner
         .padding()
-        .background(.ultraThinMaterial)
     }
   }
 
@@ -120,37 +119,30 @@ struct SettingsDebugOptionsView: View {
 
   private var warningBanner: some View {
     let warningIcon: Image = .init(systemName: "exclamationmark.triangle.fill")
+    let warningMessage: LocalizedStringKey = "Warning: Proceed with Caution"
+    let warningText: Text = .init(warningMessage)
 
     let bannerText =
       HStack {
         warningIcon
-        Text("Warning: Proceed with Caution")
+        warningText
       }
       .font(.system(.body, design: .rounded, weight: .semibold))
-      .scaledLimitedLine()
-      .phaseAnimator([false, true], trigger: pulsingTrigger)
+      .phaseAnimator([true, false], trigger: pulsingTrigger)
       { content, value in
         content
-          .foregroundStyle(!value ? Color.secondaryLabel : Color.red)
+          .foregroundStyle(value ? Color.secondary : Color.red)
       } animation: { _ in
-        .spring(duration: 1.2)
+        .spring(duration: 1.5)
       }
       .onReceive(pulseTimer) { _ in
         pulsingTrigger += 1
       }
 
-    let bannerContent =
+    return
       bannerText
         .padding()
-        .hAlignment(.center)
-
-    return
-      ZStack {
-        bannerContent
-
-        bannerContent
-          .background(.ultraThinMaterial)
-          .clipShape(.rect(cornerRadius: 10, style: .continuous))
-      }
+        .padding(.horizontal)
+        .glassEffect(.regular.interactive())
   }
 }

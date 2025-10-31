@@ -40,8 +40,8 @@ struct OnboardingView: View {
       }
       .containerRelativeFrame(
         .horizontal,
-        count: isHorizontalCompact ? 4 : 2,
-        span: isHorizontalCompact ? 3 : 1,
+        count: isHorizontalCompact ? 5 : 2,
+        span: isHorizontalCompact ? 4 : 1,
         spacing: 0)
       .padding(.all)
     }
@@ -129,14 +129,13 @@ struct OnboardingView: View {
       ikaLog.shouldShowOnboarding = false
     } label: {
       Text("Get Started")
-        .foregroundStyle(Color.white)
         .font(Scoped.BUTTON_FONT)
         .padding(.vertical, Scoped.BUTTON_TEXT_PADDING_V)
         .padding(.horizontal)
         .hAlignment(.center)
-        .background(Color.accentColor)
-        .clipShape(.rect(cornerRadius: Scoped.BUTTON_RECT_CORNER_RADIUS, style: .continuous))
     }
+    .tint(.accentColor)
+    .buttonStyle(.glassProminent)
     .keyframeAnimator(
       initialValue: OnboardingObject.button.animationValues,
       trigger: startAnimation,

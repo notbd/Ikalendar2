@@ -191,8 +191,7 @@ extension Constants.Style {
     static let TITLE_FONT: Font = .system(size: 42, design: .rounded)
     static let TITLE_FONT_WEIGHT: Font.Weight = .heavy
     static let BUTTON_FONT: Font = .system(.headline, design: .rounded, weight: .semibold)
-    static let BUTTON_TEXT_PADDING_V: CGFloat = 14
-    static let BUTTON_RECT_CORNER_RADIUS: CGFloat = 12
+    static let BUTTON_TEXT_PADDING_V: CGFloat = 10
   }
 
   enum Rotation {
