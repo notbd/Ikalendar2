@@ -23,10 +23,6 @@ struct EntryView: View {
     ZStack {
       if isHorizontalCompact {
         RotationsTabsView()
-//        NavigationStack {
-        ////          SettingsAltAppIconView()
-//          SettingsMainView()
-//        }
       }
       else {
         RotationsCarouselView()

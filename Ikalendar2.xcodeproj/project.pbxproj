@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		61327AAE2EB58C360076DD3B /* BlurFade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61327AAD2EB58C320076DD3B /* BlurFade.swift */; };
+		613286FD2EB70D7E0076DD3B /* IkaInternetConnectivityPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613286FC2EB70D620076DD3B /* IkaInternetConnectivityPublisher.swift */; };
 		61526F112E07802D00375181 /* IkalendarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; };
 		61526F122E07802D00375181 /* IkalendarKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6163C16F2EB0072700E47B4C /* FlatMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6163C16E2EB0072300E47B4C /* FlatMode.swift */; };
@@ -147,6 +148,7 @@
 
 /* Begin PBXFileReference section */
 		61327AAD2EB58C320076DD3B /* BlurFade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurFade.swift; sourceTree = "<group>"; };
+		613286FC2EB70D620076DD3B /* IkaInternetConnectivityPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaInternetConnectivityPublisher.swift; sourceTree = "<group>"; };
 		61526EFE2E07802D00375181 /* IkalendarKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IkalendarKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6163C16E2EB0072300E47B4C /* FlatMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatMode.swift; sourceTree = "<group>"; };
 		61BB93882E07CDD1002577EA /* IkalendarKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IkalendarKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -686,6 +688,7 @@
 		79D983B42A5D45C500B5202F /* Publishers */ = {
 			isa = PBXGroup;
 			children = (
+				613286FC2EB70D620076DD3B /* IkaInternetConnectivityPublisher.swift */,
 				79AA713328C4056700A91055 /* IkaTimePublisher.swift */,
 				7903FE5428C45FBF00245586 /* IkaDeviceMotionPublisher.swift */,
 				79F90AF72AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift */,
@@ -990,6 +993,7 @@
 				79AA715928C4160D00A91055 /* MysteryWeapon.swift in Sources */,
 				79F90AF82AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift in Sources */,
 				7903FE7428C46D4100245586 /* SettingsCreditsView.swift in Sources */,
+				613286FD2EB70D7E0076DD3B /* IkaInternetConnectivityPublisher.swift in Sources */,
 				7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */,
 				799235AB2AB2DAD60071AA72 /* SalmonStageAndWeaponsLayout.swift in Sources */,
 				79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */,
@@ -1037,9 +1041,9 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6286;
+				CURRENT_PROJECT_VERSION = 6299;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 6286;
+				DYLIB_CURRENT_VERSION = 6299;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1078,9 +1082,9 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6286;
+				CURRENT_PROJECT_VERSION = 6299;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 6286;
+				DYLIB_CURRENT_VERSION = 6299;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1116,7 +1120,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6286;
+				CURRENT_PROJECT_VERSION = 6299;
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1135,7 +1139,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6286;
+				CURRENT_PROJECT_VERSION = 6299;
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1287,7 +1291,7 @@
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6286;
+				CURRENT_PROJECT_VERSION = 6299;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -1333,7 +1337,7 @@
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6286;
+				CURRENT_PROJECT_VERSION = 6299;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;

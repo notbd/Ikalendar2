@@ -22,6 +22,8 @@ struct SettingsAltAppIconView: View {
   @EnvironmentObject private var ikaPreference: IkaPreference
   @EnvironmentObject private var ikaLog: IkaLog
 
+  @Environment(IkaInternetConnectivityPublisher.self) var gfwMonitor
+
   @State private var doesPreferRickOnAppear: Bool = false
   @State private var triggeredEasterEgg: Bool = false
   private var showEasterEgg: Bool { doesPreferRickOnAppear || triggeredEasterEgg }
@@ -165,6 +167,7 @@ struct SettingsAltAppIconView: View {
     }
     .onAppear {
       doesPreferRickOnAppear = ikaPreference.preferredAppIcon == .rick
+      Task { await gfwMonitor.performGFWCheck() }
     }
     .onChange(of: easterEggBounceCounter) {
       shouldDisplayAnimatedCopy = true

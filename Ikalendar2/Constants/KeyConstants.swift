@@ -41,8 +41,6 @@ extension Constants.Key {
   }
 
   enum URL {
-    static let GOOGLE_HOMEPAGE = "https://google.com"
-
     static let BATTLE_ROTATIONS = "https://splatoon2.ink/data/schedules.json"
     static let SALMON_ROTATIONS = "https://splatoon2.ink/data/coop-schedules.json"
     static let SALMON_APPAREL_INFO = "https://splatoon2.ink/data/timeline.json"
@@ -59,7 +57,7 @@ extension Constants.Key {
     static let SOURCE_CODE_REPO = "https://github.com/notbd/Ikalendar2"
     static let PRIVACY_POLICY = "https://ikalendar.app/privacy-policy"
 
-    static let THE_GOOD_STUFF = "https://yout-ube.com/watch?v=dQw4w9WgXcQ?autoplay=1" // good stuff indeed!
+    static let THE_GOOD_STUFF = "https://yout-ube.com/watch?v=dQw4w9WgXcQ" // good stuff indeed!
     static let THE_GOOD_STUFF_CN = "https://bilibili.com/video/BV1GJ411x7h7"
 
     static let SPLATOON2_INK_DATA_ACCESS_POLICY =

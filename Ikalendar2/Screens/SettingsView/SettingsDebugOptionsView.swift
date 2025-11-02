@@ -15,6 +15,8 @@ struct SettingsDebugOptionsView: View {
   @EnvironmentObject private var ikaLog: IkaLog
   @EnvironmentObject private var ikaPreference: IkaPreference
 
+  @Environment(IkaInternetConnectivityPublisher.self) var gfwMonitor
+
   @ScaledMetric(relativeTo: .title) var squidBumperHeight: CGFloat = 50
 
   var body: some View {
@@ -64,6 +66,7 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAppStates: some View {
     Button {
+      gfwMonitor.resetStatus()
       ikaPreference.revertEasterEggAppIcon()
       ikaStatus.resetStatuses(shouldExitSettings: false)
       ikaLog.resetStates(shouldResetOnboarding: false)
@@ -94,6 +97,7 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAll: some View {
     Button {
+      gfwMonitor.resetStatus()
       ikaPreference.resetPreferences()
       ikaStatus.resetStatuses(shouldExitSettings: true)
       ikaLog.resetStates(shouldResetOnboarding: true)

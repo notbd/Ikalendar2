@@ -78,13 +78,13 @@ struct AltAppIconEasterEggRow: View {
   @EnvironmentObject private var ikaPreference: IkaPreference
   @EnvironmentObject private var ikaLog: IkaLog
 
+  @Environment(IkaInternetConnectivityPublisher.self) var gfwMonitor
+
   let ikaAppIcon: IkaAppIcon
   @Binding var appIconColorVariant: IkaAppIcon.ColorVariant
   var appIconDisplayMode: IkaAppIcon.DisplayMode {
     .init(color: appIconColorVariant, size: .small)
   }
-
-  @State private var isGFWed = true
 
   @Binding var buttonPressCounter: Int
 
@@ -102,9 +102,6 @@ struct AltAppIconEasterEggRow: View {
       setAltAppIcon(ikaAppIcon)
     }
     label: { rowContent }
-    .task {
-      if !ikaLog.hasDiscoveredEasterEgg { await checkIfGFWed() }
-    }
   }
 
   private var rowContent: some View {
@@ -140,25 +137,12 @@ struct AltAppIconEasterEggRow: View {
 
   private func jumpToURLAfterDelay() async {
     try? await Task.sleep(nanoseconds: UInt64(1.3 * 1_000_000_000))
-    let goodStuffURLString = isGFWed
+    let goodStuffURLString = gfwMonitor.isGFWed
       ? Constants.Key.URL.THE_GOOD_STUFF_CN
       : Constants.Key.URL.THE_GOOD_STUFF
     guard let url = URL(string: goodStuffURLString) else { return }
 
     openURL(url)
-  }
-
-  private func checkIfGFWed() async {
-    guard let googleURL = URL(string: Constants.Key.URL.GOOGLE_HOMEPAGE) else { return }
-
-    do {
-      let (_, response) = try await URLSession.shared.data(from: googleURL)
-      if let httpResponse = response as? HTTPURLResponse {
-        if 200 ... 299 ~= httpResponse.statusCode { isGFWed = false } // OK
-        else { return } // is GFW'ed
-      }
-    }
-    catch { return } // device is offline
   }
 
   private func applyEasterEggAnimation(_ content: some View) -> some View {

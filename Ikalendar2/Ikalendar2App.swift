@@ -20,6 +20,8 @@ struct Ikalendar2App: App {
   private let ikaPreference: IkaPreference
   private let ikaLog: IkaLog
 
+  @State private var ikaInternetConnectivityPublisher: IkaInternetConnectivityPublisher = .init()
+
   var body: some Scene {
     WindowGroup {
       RootView()
@@ -31,6 +33,7 @@ struct Ikalendar2App: App {
         .environment(ikaInterfaceOrientationPublisher)
         .environmentObject(ikaPreference)
         .environmentObject(ikaLog)
+        .environment(ikaInternetConnectivityPublisher)
         .onAppear {
           ikaInterfaceOrientationPublisher.setInitialOrientation()
         }
