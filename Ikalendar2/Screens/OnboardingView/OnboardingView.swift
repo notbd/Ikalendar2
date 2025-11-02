@@ -69,16 +69,17 @@ struct OnboardingView: View {
   }
 
   private var icon: some View {
-    let appIconDisplayMode = IkaAppIcon.DisplayMode.mid
+    let appIconVariant: IkaAppIcon = .default
+    let appIconDisplayMode: IkaAppIcon.DisplayMode = .init(color: .default, size: .mid)
 
     return
-      Image(IkaAppIcon.default.getImageName(appIconDisplayMode))
+      Image(appIconVariant.getImageName(appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .frame(
-          width: appIconDisplayMode.size,
-          height: appIconDisplayMode.size)
+          width: appIconDisplayMode.size.screenSize,
+          height: appIconDisplayMode.size.screenSize)
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .onChange(of: iconBounceCounter, initial: false) {
           Task {

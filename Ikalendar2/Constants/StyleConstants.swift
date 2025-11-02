@@ -104,18 +104,32 @@ extension Constants.Style {
     }
 
     enum AltAppIcon {
-      static let SPACING_H: CGFloat = 16
+      static let MODAL_DIMMING_LAYER_OPACITY: CGFloat = 0.35
 
-      static let APP_ICON_STROKE_COLOR: Color = .tertiaryLabel
-      static let APP_ICON_STROKE_LINE_WIDTH: CGFloat = 1
-      static let APP_ICON_STROKE_OPACITY: CGFloat = 0.4
+      static let SAFE_AREA_BAR_GLASS_EFFECT_SPACING: CGFloat = 8
+      static let SAFE_AREA_BAR_DEFAULT_FONT: Font = .headline
+      static let COLOR_VARIANT_PICKER_FONT: Font = .system(.title3, design: .rounded, weight: .medium)
 
-      static let DISPLAY_NAME_COLOR: Color = .primary
+      static let SLIDE_SHOW_CONTROL_BUTTON_SIZE: CGFloat = 44
+      static let SLIDE_SHOW_NEXT_BUTTON_DISABLED_OPACITY: CGFloat = 0.3
+      static let SLIDE_SHOW_PROGRESS_BAR_OPACITY: CGFloat = 0.8
+      static let SLIDE_SHOW_PROGRESS_BAR_HEIGHT: CGFloat = 1
+      static let SLIDE_SHOW_PROGRESS_BAR_PADDING_H: CGFloat = 8
 
-      static let ACTIVE_INDICATOR_SFSYMBOL = "checkmark.circle.fill"
-      static let ACTIVE_INDICATOR_FONT: Font = .title
+      static let PICKER_NAME_LABELS_WIDTH: CGFloat = 120
 
-      static let ROW_PADDING_V: CGFloat = 5
+      enum Row {
+        static let SPACING_H: CGFloat = 16
+
+        static let CROSS_FADE_ANIMATION: Animation = .spring(response: 1.4, dampingFraction: 1.0, blendDuration: 0.5)
+
+        static let DISPLAY_NAME_COLOR: Color = .primary
+
+        static let ACTIVE_INDICATOR_SFSYMBOL = "checkmark.circle.fill"
+        static let ACTIVE_INDICATOR_FONT: Font = .title
+
+        static let ROW_PADDING_V: CGFloat = 5
+      }
     }
 
     enum Advanced {

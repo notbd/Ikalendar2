@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "ikalendar2-app-icon-default-iOS-Default-256x256@1x.png",
+      "filename" : "ikalendar2-app-icon-preset-iOS-ClearDark-128x128@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ikalendar2-app-icon-default-iOS-Default-256x256@2x.png",
+      "filename" : "ikalendar2-app-icon-preset-iOS-ClearDark-128x128@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

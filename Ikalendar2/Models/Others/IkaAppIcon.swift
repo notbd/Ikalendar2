@@ -8,7 +8,9 @@
 import SwiftUI
 
 enum IkaAppIcon: String, CaseIterable, Identifiable {
-  case `default`
+  static let `default`: Self = .preset
+
+  case preset
   case signature
   case outlined
   case legacy
@@ -33,27 +35,96 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     "ikalendar2-app-icon-" + rawValue
   }
 
-  var displayName: String {
+  var displayNameLocalizedStringKey: LocalizedStringKey {
     switch self {
-      case .default:
-        "Default"
+      case .preset:
+        "IkaAppIcon.Preset"
       case .signature:
-        "Signature"
+        "IkaAppIcon.Signature"
       case .outlined:
-        "Outlined"
+        "IkaAppIcon.Outlined"
       case .legacy:
-        "Legacy"
+        "IkaAppIcon.Legacy"
       case .rick:
-        "Rick"
+        "IkaAppIcon.Rick"
     }
   }
 
-  enum DisplayMode {
+  enum ColorVariant: String, Identifiable, Equatable, CaseIterable {
+    case `default`
+    case dark
+    case clearLight
+    case clearDark
+
+    var id: String {
+      rawValue
+    }
+
+    var displayNameLocalizedStringKey: LocalizedStringKey {
+      switch self {
+        case .default:
+          "IkaAppIcon.ColorVariant.Default"
+        case .dark:
+          "IkaAppIcon.ColorVariant.Dark"
+        case .clearLight:
+          "IkaAppIcon.ColorVariant.Clear_Light"
+        case .clearDark:
+          "IkaAppIcon.ColorVariant.Clear_Dark"
+      }
+    }
+
+    var codeName: String {
+      guard !rawValue.isEmpty else { return "" }
+
+      // Capitalize first letter
+      return String(rawValue.prefix(1)).uppercased() + rawValue.dropFirst()
+    }
+
+    var index: Int {
+      ColorVariant.allCases.firstIndex(of: self)!
+    }
+
+    var sfSymbolName: String {
+      switch self {
+        case .default:
+          "sun.max"
+        case .dark:
+          "moon"
+        case .clearLight:
+          "sparkles"
+        case .clearDark:
+          "moon.stars"
+      }
+    }
+
+    var next: Self {
+      switch self {
+        case .default:
+          .dark
+        case .dark:
+          .clearLight
+        case .clearLight:
+          .clearDark
+        case .clearDark:
+          .default
+      }
+    }
+
+    init?(index: Int) {
+      guard index >= 0, index < ColorVariant.allCases.count else {
+        return nil // Index out of bounds
+      }
+
+      self = ColorVariant.allCases[index]
+    }
+  }
+
+  enum DisplaySizeVariant: Equatable {
     case large
     case mid
     case small
 
-    var size: CGFloat {
+    var screenSize: CGFloat {
       switch self {
         case .large:
           120
@@ -62,6 +133,26 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
         case .small:
           60
       }
+    }
+
+    var imageAssetSize: Int {
+      switch self {
+        case .large:
+          256
+        case .mid:
+          256
+        case .small:
+          128
+      }
+    }
+  }
+
+  struct DisplayMode: Equatable {
+    let color: ColorVariant
+    let size: DisplaySizeVariant
+
+    func getImageSuffix() -> String {
+      "-iOS-\(color.codeName)-\(size.imageAssetSize)x\(size.imageAssetSize)"
     }
   }
 
@@ -76,14 +167,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     }
   }
 
-  func getImageName(_ displayMode: IkaAppIcon.DisplayMode) -> String {
-    switch displayMode {
-      case .large:
-        iconSetName + "-iOS-Default-256x256"
-      case .mid:
-        iconSetName + "-iOS-Default-256x256"
-      case .small:
-        iconSetName + "-iOS-Default-128x128"
-    }
+  func getImageName(_ displayMode: DisplayMode) -> String {
+    iconSetName + displayMode.getImageSuffix()
   }
 }

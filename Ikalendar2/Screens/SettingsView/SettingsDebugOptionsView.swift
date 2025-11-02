@@ -133,7 +133,7 @@ struct SettingsDebugOptionsView: View {
         content
           .foregroundStyle(value ? Color.red : Color.secondary)
       } animation: { _ in
-          .spring(duration: 1.2)
+        .spring(duration: 1.2)
       }
       .onAppear {
         pulsingTrigger += 1

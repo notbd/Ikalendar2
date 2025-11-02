@@ -38,11 +38,15 @@
 "About" = "About";
 "Credits" = "Credits";
 // Alt App Icon
-"Default" = "Default";
-"Signature" = "Signature";
-"Outlined" = "Outlined";
-"Legacy" = "Legacy";
-"Rick" = "Rick";
+"IkaAppIcon.Preset" = "Preset";
+"IkaAppIcon.Signature" = "Signature";
+"IkaAppIcon.Outlined" = "Outlined";
+"IkaAppIcon.Legacy" = "Legacy";
+"IkaAppIcon.Rick" = "Rick";
+"IkaAppIcon.ColorVariant.Default" = "Default";
+"IkaAppIcon.ColorVariant.Dark" = "Dark";
+"IkaAppIcon.ColorVariant.Clear_Light" = "Clear Light";
+"IkaAppIcon.ColorVariant.Clear_Dark" = "Clear Dark";
 "Never Gonna Give You Up" = "Never Gonna Give You Up";
 "Tap Me :)" = "Tap Me :)";
 // Advanced Options

@@ -99,16 +99,18 @@ struct SettingsAboutView: View {
   // MARK: - Icon Section
 
   private var rowAppInfo: some View {
-    let appIconDisplayMode = IkaAppIcon.DisplayMode.large
+    let appIconVariant: IkaAppIcon = .default
+    let appIconDisplayMode: IkaAppIcon.DisplayMode =
+      .init(color: .default, size: .large)
 
     var appIconImage: some View {
-      Image(IkaAppIcon.default.getImageName(appIconDisplayMode))
+      Image(appIconVariant.getImageName(appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .frame(
-          width: appIconDisplayMode.size,
-          height: appIconDisplayMode.size)
+          width: appIconDisplayMode.size.screenSize,
+          height: appIconDisplayMode.size.screenSize)
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .zIndex(1)
         .onTapGesture {

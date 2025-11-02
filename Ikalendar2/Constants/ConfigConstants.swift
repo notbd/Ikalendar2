@@ -33,6 +33,11 @@ extension Constants.Config {
 
   enum Settings {
     static let aboutRatingsBounceInterval: TimeInterval = 7
+
+    enum AltAppIcon {
+      static let slideShowInterval: TimeInterval = 4
+      static let slideShowIntervalStepLength: TimeInterval = 0.01
+    }
   }
 
   enum License {

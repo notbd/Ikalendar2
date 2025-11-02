@@ -11,11 +11,15 @@ import SwiftUI
 // MARK: - AltAppIconRow
 
 struct AltAppIconRow: View {
-  typealias Scoped = Constants.Style.Settings.AltAppIcon
+  typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
 
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   let ikaAppIcon: IkaAppIcon
+  @Binding var appIconColorVariant: IkaAppIcon.ColorVariant
+  var appIconDisplayMode: IkaAppIcon.DisplayMode {
+    .init(color: appIconColorVariant, size: .small)
+  }
 
   var body: some View {
     Button {
@@ -28,16 +32,19 @@ struct AltAppIconRow: View {
 
   private var rowContent: some View {
     HStack(spacing: Scoped.SPACING_H) {
-      Image(ikaAppIcon.getImageName(.small))
+      Image(ikaAppIcon.getImageName(appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .frame(
-          width: IkaAppIcon.DisplayMode.small.size,
-          height: IkaAppIcon.DisplayMode.small.size)
+          width: appIconDisplayMode.size.screenSize,
+          height: appIconDisplayMode.size.screenSize)
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        .animation(
+          Scoped.CROSS_FADE_ANIMATION,
+          value: appIconColorVariant)
 
-      Text(ikaAppIcon.displayName.localizedStringKey)
+      Text(ikaAppIcon.displayNameLocalizedStringKey)
         .font(.system(.body, design: .rounded))
         .foregroundStyle(Scoped.DISPLAY_NAME_COLOR)
 
@@ -63,7 +70,7 @@ struct AltAppIconRow: View {
 // MARK: - AltAppIconEasterEggRow
 
 struct AltAppIconEasterEggRow: View {
-  typealias Scoped = Constants.Style.Settings.AltAppIcon
+  typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
 
   @Environment(\.openURL) private var openURL
   @Environment(\.locale) private var currentLocale
@@ -71,9 +78,14 @@ struct AltAppIconEasterEggRow: View {
   @EnvironmentObject private var ikaPreference: IkaPreference
   @EnvironmentObject private var ikaLog: IkaLog
 
+  let ikaAppIcon: IkaAppIcon
+  @Binding var appIconColorVariant: IkaAppIcon.ColorVariant
+  var appIconDisplayMode: IkaAppIcon.DisplayMode {
+    .init(color: appIconColorVariant, size: .small)
+  }
+
   @State private var isGFWed = true
 
-  let ikaAppIcon: IkaAppIcon
   @Binding var buttonPressCounter: Int
 
   var body: some View {
@@ -97,19 +109,20 @@ struct AltAppIconEasterEggRow: View {
 
   private var rowContent: some View {
     HStack(spacing: Scoped.SPACING_H) {
-      Image(ikaAppIcon.getImageName(.small))
+      Image(ikaAppIcon.getImageName(appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .frame(
-          width: IkaAppIcon.DisplayMode.small.size,
-          height: IkaAppIcon.DisplayMode.small.size)
+          width: appIconDisplayMode.size.screenSize,
+          height: appIconDisplayMode.size.screenSize)
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-        .if(ikaAppIcon.isEasterEgg) {
-          applyEasterEggAnimation($0)
-        }
+        .animation(
+          Scoped.CROSS_FADE_ANIMATION,
+          value: appIconColorVariant)
+        .apply(applyEasterEggAnimation)
 
-      Text(ikaAppIcon.displayName.localizedStringKey)
+      Text(ikaAppIcon.displayNameLocalizedStringKey)
         .font(.system(.body, design: .rounded))
         .foregroundStyle(Scoped.DISPLAY_NAME_COLOR)
 
