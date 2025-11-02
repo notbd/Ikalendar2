@@ -132,20 +132,27 @@ final class IkaCatalog {
   private func loadData()
     async throws
   {
-    async let taskBattleRotationDict = IkaNetworkManager.shared.getBattleRotationDict()
-    async let taskSalmonRotations = IkaNetworkManager.shared.getSalmonRotations()
-    async let taskSalmonRewardApparelInfo = IkaNetworkManager.shared.getSalmonRewardApparelInfo()
+    let (loadedBattleRotationDict, loadedSalmonRotations) = try await
+      AsyncUtils.withTimeout(
+        seconds: 5,
+        timeoutError: IkaError.connectionError)
+      {
+        async let taskBattleRotationDict = IkaNetworkManager.shared.getBattleRotationDict()
+        async let taskSalmonRotations = IkaNetworkManager.shared.getSalmonRotations()
+        async let taskSalmonRewardApparelInfo = IkaNetworkManager.shared.getSalmonRewardApparelInfo()
 
-    let loadedBattleRotationDict = try await taskBattleRotationDict
-    var loadedSalmonRotations = try await taskSalmonRotations
-    let loadedSalmonRewardApparelInfo = try await taskSalmonRewardApparelInfo
+        let battleRotationDict = try await taskBattleRotationDict
+        var salmonRotations = try await taskSalmonRotations
+        let rewardInfo = try await taskSalmonRewardApparelInfo
 
-    // add reward apparel to corresponding salmon rotation
-    for (index, rotation) in loadedSalmonRotations.enumerated()
-      where rotation.startTime == loadedSalmonRewardApparelInfo.availableTime
-    {
-      loadedSalmonRotations[index].rewardApparel = loadedSalmonRewardApparelInfo.apparel
-    }
+        for (index, rotation) in salmonRotations.enumerated()
+          where rotation.startTime == rewardInfo.availableTime
+        {
+          salmonRotations[index].rewardApparel = rewardInfo.apparel
+        }
+
+        return (battleRotationDict, salmonRotations)
+      }
 
     battleRotationDict = loadedBattleRotationDict
     salmonRotations = loadedSalmonRotations

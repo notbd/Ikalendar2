@@ -249,6 +249,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		613288A02EB730B90076DD3B /* Others */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Others; sourceTree = "<group>"; };
 		61526EFF2E07802D00375181 /* IkalendarKit */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IkalendarKit; sourceTree = "<group>"; };
 		6163BFFB2EAFD82800E47B4C /* TabView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TabView; sourceTree = "<group>"; };
 		61BB93892E07CDD1002577EA /* IkalendarKitTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IkalendarKitTests; sourceTree = "<group>"; };
@@ -661,6 +662,7 @@
 		79C1485628C4276900587C6E /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				613288A02EB730B90076DD3B /* Others */,
 				79C718602A935EBE0042AB7D /* Managers */,
 				79C1485E28C42D6600587C6E /* Decoders */,
 				7903FE2128C430C700245586 /* Modifiers */,
@@ -781,6 +783,7 @@
 				61526F102E07802D00375181 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				613288A02EB730B90076DD3B /* Others */,
 				6163BFFB2EAFD82800E47B4C /* TabView */,
 				61F5201E2EAF1E9E005FDCA3 /* IconComposerIcons */,
 			);
@@ -1041,9 +1044,9 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6299;
+				CURRENT_PROJECT_VERSION = 6302;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 6299;
+				DYLIB_CURRENT_VERSION = 6302;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1082,9 +1085,9 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6299;
+				CURRENT_PROJECT_VERSION = 6302;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 6299;
+				DYLIB_CURRENT_VERSION = 6302;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1120,7 +1123,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6299;
+				CURRENT_PROJECT_VERSION = 6302;
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1139,7 +1142,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6299;
+				CURRENT_PROJECT_VERSION = 6302;
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1291,7 +1294,7 @@
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6299;
+				CURRENT_PROJECT_VERSION = 6302;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -1337,7 +1340,7 @@
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6299;
+				CURRENT_PROJECT_VERSION = 6302;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
