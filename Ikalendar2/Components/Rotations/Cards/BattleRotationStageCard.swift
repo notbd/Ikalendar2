@@ -16,6 +16,11 @@ struct BattleRotationStageCardPrimary: View {
 
   @EnvironmentObject private var ikaPreference: IkaPreference
 
+  @Environment(\.colorScheme) private var colorScheme
+  private var colorSchemeAwareGlass: Glass {
+    colorScheme == .dark ? .clear : .regular
+  }
+
   let rotation: BattleRotation
   let stageSelection: BattleStageSelection
 
@@ -43,7 +48,7 @@ struct BattleRotationStageCardPrimary: View {
       .scaledToFit()
       .cornerRadius(Scoped.IMG_CORNER_RADIUS)
       .glassEffect(
-        .clear.interactive(),
+        colorSchemeAwareGlass.interactive(),
         in: .rect(cornerRadius: Scoped.IMG_CORNER_RADIUS))
       .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
       .overlay(

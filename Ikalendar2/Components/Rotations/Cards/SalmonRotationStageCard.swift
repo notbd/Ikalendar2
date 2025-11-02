@@ -19,6 +19,11 @@ struct SalmonRotationStageCard: View {
 
   @State private var cardWidth: CGFloat = 150
 
+  @Environment(\.colorScheme) private var colorScheme
+  private var colorSchemeAwareGlass: Glass {
+    colorScheme == .dark ? .clear : .regular
+  }
+
   let rotation: SalmonRotation
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
@@ -39,7 +44,7 @@ struct SalmonRotationStageCard: View {
       .scaledToFit()
       .cornerRadius(Scoped.STAGE_IMG_CORNER_RADIUS)
       .glassEffect(
-        .clear.interactive(),
+        colorSchemeAwareGlass.interactive(),
         in: .rect(cornerRadius: Scoped.STAGE_IMG_CORNER_RADIUS))
       .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
       .overlay(

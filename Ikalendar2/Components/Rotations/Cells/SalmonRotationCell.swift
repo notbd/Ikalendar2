@@ -79,6 +79,11 @@ struct SalmonRotationCellTimeTextSection: View {
 
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
+  @Environment(\.colorScheme) private var colorScheme
+  private var colorSchemeAwareGlass: Glass {
+    colorScheme == .dark ? .clear : .regular
+  }
+
   let rotation: SalmonRotation
   let rowWidth: CGFloat
 
@@ -93,7 +98,7 @@ struct SalmonRotationCellTimeTextSection: View {
         .if(rotation.isCurrent(ikaTimePublisher.currentTime)) {
           $0
             .glassEffect(
-              .clear.interactive(),
+              colorSchemeAwareGlass.interactive(),
               in: .circle)
         }
         .scaleEffect(
@@ -114,7 +119,7 @@ struct SalmonRotationCellTimeTextSection: View {
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
           .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
           .glassEffect(
-            .clear.interactive(),
+            colorSchemeAwareGlass.interactive(),
             in: .rect(cornerRadius: Scoped.TIME_TEXT_FRAME_CORNER_RADIUS))
 
         Text("-")
@@ -133,7 +138,7 @@ struct SalmonRotationCellTimeTextSection: View {
           .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
           .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
           .glassEffect(
-            .clear.interactive(),
+            colorSchemeAwareGlass.interactive(),
             in: .rect(cornerRadius: Scoped.TIME_TEXT_FRAME_CORNER_RADIUS))
       }
     }

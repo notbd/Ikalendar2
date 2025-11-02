@@ -35,6 +35,11 @@ struct SalmonRotationWeaponsCard: View {
 struct SalmonRotationWeaponCardIcon: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Weapon
 
+  @Environment(\.colorScheme) private var colorScheme
+  private var colorSchemeAwareGlass: Glass {
+    colorScheme == .dark ? .clear : .regular
+  }
+
   let weapon: SalmonWeapon
 
   var body: some View {
@@ -45,7 +50,7 @@ struct SalmonRotationWeaponCardIcon: View {
       .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
       .padding(Scoped.IMG_PADDING)
       .glassEffect(
-        .clear.interactive(),
+        colorSchemeAwareGlass.interactive(),
         in: .rect(cornerRadius: Scoped.FRAME_CORNER_RADIUS))
   }
 }

@@ -94,6 +94,11 @@ struct SalmonRotationHeader: View {
 
   @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
 
+  @Environment(\.colorScheme) private var colorScheme
+  private var colorSchemeAwareGlass: Glass {
+    colorScheme == .dark ? .clear : .regular
+  }
+
   let rotation: SalmonRotation
   let rowType: SalmonRotationRow.RowType
 
@@ -108,7 +113,7 @@ struct SalmonRotationHeader: View {
         .foregroundStyle(Color.systemBackground)
         .padding(.horizontal, Scoped.PREFIX_PADDING_H)
         .glassEffect(
-          .clear.tint(.secondary).interactive(),
+          colorSchemeAwareGlass.tint(.secondary).interactive(),
           in: .rect(cornerRadius: Scoped.PREFIX_FRAME_CORNER_RADIUS))
 
       Spacer()

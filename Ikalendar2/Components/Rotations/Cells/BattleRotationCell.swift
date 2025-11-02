@@ -204,6 +204,11 @@ struct BattleRotationCellSecondary: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
+  @Environment(\.colorScheme) private var colorScheme
+  private var colorSchemeAwareGlass: Glass {
+    colorScheme == .dark ? .clear : .regular
+  }
+
   @EnvironmentObject private var ikaPreference: IkaPreference
 
   let rotation: BattleRotation
@@ -239,7 +244,7 @@ struct BattleRotationCellSecondary: View {
       .frame(height: rowWidth * Scoped.RULE_IMG_HEIGHT_RATIO)
       .padding(Scoped.RULE_IMG_PADDING)
       .glassEffect(
-        .clear.interactive(),
+        colorSchemeAwareGlass.interactive(),
         in: .rect(cornerRadius: Scoped.RULE_IMG_FRAME_CORNER_RADIUS))
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
