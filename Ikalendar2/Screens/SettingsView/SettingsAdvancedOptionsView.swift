@@ -158,7 +158,7 @@ struct SettingsAdvancedOptionsView: View {
           .frame(maxWidth: Scoped.PREVIEW_CELL_MAX_WIDTH)
           .padding()
           .background(Color.systemGroupedBackground)
-          .clipShape(.rect(cornerRadius: 10, style: .continuous))
+          .clipShape(.rect(cornerRadius: 28, style: .continuous))
       }
       .hAlignment(.center)
   }
@@ -172,7 +172,7 @@ struct SettingsAdvancedOptionsView: View {
           .frame(maxWidth: Scoped.PREVIEW_CELL_MAX_WIDTH)
           .padding()
           .background(Color.systemGroupedBackground)
-          .clipShape(.rect(cornerRadius: 10, style: .continuous))
+          .clipShape(.rect(cornerRadius: 28, style: .continuous))
       }
       .hAlignment(.center)
   }

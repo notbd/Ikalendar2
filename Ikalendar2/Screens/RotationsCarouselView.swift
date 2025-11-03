@@ -146,11 +146,9 @@ struct RotationsCarouselView: View {
   private func setToolbarItems(_ content: some View) -> some View {
     content
       .toolbar {
-        ToolbarItem(placement: .navigationBarTrailing) {
-          HStack {
-            ToolbarRefreshButton()
-            ToolbarSettingsButton()
-          }
+        ToolbarItemGroup(placement: .topBarTrailing) {
+          ToolbarRefreshButton()
+          ToolbarSettingsButton()
         }
       }
   }

@@ -14,6 +14,7 @@ struct SettingsEntryView: View {
     NavigationView {
       SettingsMainView()
     }
+    .presentationSizing(.page)
     .navigationViewStyle(StackNavigationViewStyle())
     .overlay(
       AutoLoadingOverlay(),

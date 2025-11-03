@@ -63,17 +63,6 @@ extension Constants.Style {
     }
   }
 
-  enum ToolbarButton {
-    static let SFSYMBOL_FONT_SIZE_REG: Font = .system(.headline)
-    static let SFSYMBOL_FONT_SIZE_SMALL: Font = .system(size: 15, weight: .medium)
-    static let IMG_SIZE: CGFloat = 28
-
-    static let FRAME_SIZE: CGFloat = 36
-    static let FRAME_CORNER_RADIUS: CGFloat = 5
-
-    static let GAME_MODE_SWITCH_SFSYMBOL = "rectangle.fill.on.rectangle.angled.fill"
-  }
-
   enum Error {
     static let ERROR_SECTION_PADDING_TOP_HEIGHT_RATIO: CGFloat = 0.22
     static let ERROR_SECTION_SPACING_HEIGHT_RATIO: CGFloat = 0.14

@@ -12,17 +12,14 @@ import SwiftUI
 /// A settings button in the toolbar.
 @MainActor
 struct ToolbarSettingsButton: View {
-  typealias Scoped = Constants.Style.ToolbarButton
-
   @Environment(IkaStatus.self) private var ikaStatus
   @Environment(IkaCatalog.self) private var ikaCatalog
 
   var body: some View {
-    Button(
-      "Settings",
-      systemImage: "gear")
-    {
+    Button {
       ikaStatus.isSettingsPresented = true
+    } label: {
+      Image(systemName: "gear")
     }
   }
 }

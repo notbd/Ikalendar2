@@ -10,77 +10,75 @@ import UIKit
 
 // MARK: - IkaInterfaceOrientationPublisher
 
-/// An ObservableObject to monitor changes in the device's interface orientation.
-///
+/// An ObservableObject that publishes changes to the device's interface orientation.
 @Observable
 final class IkaInterfaceOrientationPublisher {
   static let shared: IkaInterfaceOrientationPublisher = .init()
 
-  /// The current orientation of the device.
+  /// The current orientation of the interface.
   var currentOrientation: UIInterfaceOrientation
 
   /// Private initializer.
   private init() {
     UIDevice.current.beginGeneratingDeviceOrientationNotifications()
 
-    // Cannot read initial orientation here because window is not ready yet.
-    // Needs to call setInitialOrientation() once RootView appears.
-    currentOrientation = UIInterfaceOrientation.unknown
+    // window is not available yet at init
+    currentOrientation = .unknown
 
     NotificationCenter.default.addObserver(
       self,
-      selector: #selector(orientationChanged),
+      selector: #selector(orientationChanged(_:)),
       name: UIDevice.orientationDidChangeNotification,
       object: nil)
   }
 
-  /// Removes the observer and stops generating orientation notifications.
   deinit {
     NotificationCenter.default.removeObserver(self)
     UIDevice.current.endGeneratingDeviceOrientationNotifications()
   }
 
-  /// Sets the initial orientation, typically called when the RootView appears.
+  /// Should be called once the first active scene appears.
   func setInitialOrientation() {
     guard currentOrientation == .unknown else { return }
 
     updateCurrentOrientation()
   }
 
-  /// Handles the device orientation change event.
+  /// Triggered when the device reports an orientation change.
   @objc
   private func orientationChanged(_: Notification) {
-    updateCurrentOrientation()
+    DispatchQueue.main.async {
+      self.updateCurrentOrientation()
+    }
   }
 
-  /// Updates the `currentOrientation` property with the current window's orientation.
+  /// Updates the `currentOrientation` property according to the active window scene's orientation.
   private func updateCurrentOrientation() {
     guard
-      let windowScene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first,
-      let currentWindowInterfaceOrientation = windowScene.windows.first?.windowScene?
+      let windowScene = UIApplication.shared
+        .connectedScenes
+        .compactMap({ $0 as? UIWindowScene })
+        .first,
+      let interfaceOrientation = windowScene.windows.first?.windowScene?
         .effectiveGeometry.interfaceOrientation
     else { return }
 
-    currentOrientation = currentWindowInterfaceOrientation
+    currentOrientation = interfaceOrientation
   }
 }
 
+// MARK: - UIInterfaceOrientation+Description
+
 extension UIInterfaceOrientation {
-  /// A textual representation of `UIInterfaceOrientation`.
+  /// Readable textual description of the orientation.
   var description: String {
     switch self {
-      case .unknown:
-        "Unknown"
-      case .portrait:
-        "Portrait"
-      case .portraitUpsideDown:
-        "PortraitUpsideDown"
-      case .landscapeLeft:
-        "LandscapeLeft"
-      case .landscapeRight:
-        "LandscapeRight"
-      @unknown default:
-        "Unknown"
+      case .unknown: "Unknown"
+      case .portrait: "Portrait"
+      case .portraitUpsideDown: "PortraitUpsideDown"
+      case .landscapeLeft: "LandscapeLeft"
+      case .landscapeRight: "LandscapeRight"
+      @unknown default: "Unknown"
     }
   }
 }

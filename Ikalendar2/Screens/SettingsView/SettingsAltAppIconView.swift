@@ -18,6 +18,7 @@ struct SettingsAltAppIconView: View {
   typealias ScopedStyle = Constants.Style.Settings.AltAppIcon
 
   @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
   @EnvironmentObject private var ikaPreference: IkaPreference
   @EnvironmentObject private var ikaLog: IkaLog
@@ -322,9 +323,11 @@ struct SettingsAltAppIconView: View {
         .opacity(
           ikaLog.hasDiscoveredEasterEgg
             ? 1
-            : colorScheme == .dark
+            : colorScheme == .light
               ? 0.07
-              : 0.05))
+              : horizontalSizeClass == .compact
+                ? 0.07
+                : 0.03))
   }
 
   private func toggleShouldDisplayAnimatedCopyAfterDelay() async {

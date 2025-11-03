@@ -41,7 +41,6 @@
 		7903FE9328C4701000245586 /* AutoLoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9028C4701000245586 /* AutoLoadingOverlay.swift */; };
 		7903FE9428C4701000245586 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9128C4701000245586 /* LoadingOverlay.swift */; };
 		7903FE9A28C4702100245586 /* ToolbarSettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9528C4702100245586 /* ToolbarSettingsButton.swift */; };
-		7903FE9C28C4702100245586 /* ToolbarGameModeSwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9728C4702100245586 /* ToolbarGameModeSwitchButton.swift */; };
 		7903FE9D28C4702100245586 /* ToolbarButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9828C4702100245586 /* ToolbarButtonAlignment.swift */; };
 		7903FE9E28C4702100245586 /* ToolbarRefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */; };
 		790E2E112AA6D3F100789465 /* NamespaceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E2E102AA6D3F100789465 /* NamespaceConstants.swift */; };
@@ -180,7 +179,6 @@
 		7903FE9028C4701000245586 /* AutoLoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLoadingOverlay.swift; sourceTree = "<group>"; };
 		7903FE9128C4701000245586 /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		7903FE9528C4702100245586 /* ToolbarSettingsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarSettingsButton.swift; sourceTree = "<group>"; };
-		7903FE9728C4702100245586 /* ToolbarGameModeSwitchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarGameModeSwitchButton.swift; sourceTree = "<group>"; };
 		7903FE9828C4702100245586 /* ToolbarButtonAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarButtonAlignment.swift; sourceTree = "<group>"; };
 		7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarRefreshButton.swift; sourceTree = "<group>"; };
 		790E2E102AA6D3F100789465 /* NamespaceConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamespaceConstants.swift; sourceTree = "<group>"; };
@@ -405,7 +403,6 @@
 				7903FE9828C4702100245586 /* ToolbarButtonAlignment.swift */,
 				7903FE9528C4702100245586 /* ToolbarSettingsButton.swift */,
 				7903FE9928C4702100245586 /* ToolbarRefreshButton.swift */,
-				7903FE9728C4702100245586 /* ToolbarGameModeSwitchButton.swift */,
 			);
 			path = ToolbarButtons;
 			sourceTree = "<group>";
@@ -933,7 +930,6 @@
 				7903FE7228C46D1800245586 /* SettingsAboutView.swift in Sources */,
 				61327AAE2EB58C360076DD3B /* BlurFade.swift in Sources */,
 				790E2E112AA6D3F100789465 /* NamespaceConstants.swift in Sources */,
-				7903FE9C28C4702100245586 /* ToolbarGameModeSwitchButton.swift in Sources */,
 				79408C6A2AA5BAA800141E58 /* IkaAppIcon.swift in Sources */,
 				7903FE9328C4701000245586 /* AutoLoadingOverlay.swift in Sources */,
 				792E1FBD28DE89C100C3789D /* SettingsAdvancedOptionsView.swift in Sources */,
@@ -1044,9 +1040,9 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6302;
+				CURRENT_PROJECT_VERSION = 6361;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 6302;
+				DYLIB_CURRENT_VERSION = 6361;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1085,9 +1081,9 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6302;
+				CURRENT_PROJECT_VERSION = 6361;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 6302;
+				DYLIB_CURRENT_VERSION = 6361;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1123,7 +1119,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6302;
+				CURRENT_PROJECT_VERSION = 6361;
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1142,7 +1138,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6302;
+				CURRENT_PROJECT_VERSION = 6361;
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1294,7 +1290,7 @@
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6302;
+				CURRENT_PROJECT_VERSION = 6361;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -1340,7 +1336,7 @@
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6302;
+				CURRENT_PROJECT_VERSION = 6361;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;

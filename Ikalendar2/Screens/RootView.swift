@@ -32,6 +32,9 @@ struct RootView: View {
       .onChange(of: ikaPreference.preferredAppColorScheme, initial: true) { _, newVal in
         IkaColorSchemeManager.shared.handlePreferredColorSchemeChange(for: newVal)
       }
+      .onAppear {
+        IkaInterfaceOrientationPublisher.shared.setInitialOrientation()
+      }
       .if(isHorizontalCompact) { setUpFullScreenCoverSettingsModal($0) }
       else: { setUpSheetSettingsModal($0) }
   }
@@ -54,7 +57,7 @@ struct RootView: View {
       content.sheet(isPresented: $ikaStatus.isSettingsPresented) { settingsModal }
   }
 
-  /// Stupid workaround because as of iOS 17.0, dynamicTypeSize changes will not affect navigation titles,
+  /// A workaround, because as of iOS 26.0, changes in dynamicTypeSize will not affect navigation titles,
   /// therefore force refresh the root view in order to reflect the correct title size.
   private func refreshEntryView() {
     entryViewID = UUID()

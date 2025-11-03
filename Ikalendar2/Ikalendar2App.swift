@@ -34,9 +34,6 @@ struct Ikalendar2App: App {
         .environmentObject(ikaPreference)
         .environmentObject(ikaLog)
         .environment(ikaInternetConnectivityPublisher)
-        .onAppear {
-          ikaInterfaceOrientationPublisher.setInitialOrientation()
-        }
     }
   }
 
