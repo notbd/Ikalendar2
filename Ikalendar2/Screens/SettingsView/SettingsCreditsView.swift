@@ -33,7 +33,7 @@ struct SettingsCreditsView: View {
       Section {
         rowSplatoon2Site
         rowNintendoSite
-      } header: { Text("Splatoon™ 2") } footer: { footerDisclaimer }
+      } header: { Text("Splatoon 2") } footer: { footerDisclaimer }
     }
     .navigationTitle("Credits")
     .navigationBarTitleDisplayMode(.large)
@@ -92,14 +92,14 @@ struct SettingsCreditsView: View {
 
   private var rowSplatoon2Site: some View {
     CreditsExternalLinkCell(
-      name: "Splatoon™ 2 Official Website",
+      name: "Splatoon 2 Official Website",
       urlString: currentLocale.toIkaLocale().splatoon2Site,
       shouldShowURL: true)
   }
 
   private var rowNintendoSite: some View {
     CreditsExternalLinkCell(
-      name: "Nintendo® Official Website",
+      name: "Nintendo Official Website",
       urlString: currentLocale.toIkaLocale().nintendoSite,
       shouldShowURL: true)
   }

@@ -73,7 +73,7 @@
 "Privacy Policy" = "プライバシーポリシー";
 "Debug Options" = "デバッグオプション";
 "key.slogan.ikalendar3" =
-"「スプラトゥーン™3」に対応している「ikalendar」をお探しですか？
+"「スプラトゥーン3」に対応している「ikalendar」をお探しですか？
 「ikalendar3」は開発ロードマップに掲載されています。お楽しみに！";
 // Debug Panel
 "Show Onboarding Screen" = "オンボーディング画面を表示";
@@ -88,11 +88,11 @@
 "Data Source" = "データ提供元";
 "Open Source Libraries" = "オープンソースライブラリ";
 "%@ be licensed under" = "%@が採用するオープンソースライセンスは";
-"Splatoon™ 2" = "スプラトゥーン™2";
-"Splatoon™ 2 Official Website" = "スプラトゥーン™2公式サイト";
-"Nintendo® Official Website" = "任天堂ホームページ";
+"Splatoon 2" = "スプラトゥーン2";
+"Splatoon 2 Official Website" = "スプラトゥーン2公式サイト";
+"Nintendo Official Website" = "任天堂ホームページ";
 "key.slogan.copyright" =
-" 「ikalendar2」 は 「スプラトゥーン™2」 の非公式のコンパニオンアプリであり、任天堂とは関連していません。すべての関連するアイテム名、ロゴ、および商標は、それぞれの所有者に帰属します。";
+" 「ikalendar2」 は 「スプラトゥーン2」 の非公式のコンパニオンアプリであり、任天堂とは関連していません。すべての関連するアイテム名、ロゴ、および商標は、それぞれの所有者に帰属します。";
 
 // MARK: - Error
 
