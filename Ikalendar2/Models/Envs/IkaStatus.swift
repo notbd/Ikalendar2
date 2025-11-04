@@ -15,6 +15,8 @@ import SimpleHaptics
 final class IkaStatus {
   static let shared: IkaStatus = .init()
 
+  private var isSyncing = false
+
   var isSettingsPresented: Bool = false
   {
     willSet {
@@ -27,7 +29,27 @@ final class IkaStatus {
   var currentFlatMode: FlatMode = IkaPreference.shared.preferredDefaultFlatMode
   {
     willSet {
-      guard newValue != currentFlatMode else { return }
+      guard newValue != currentFlatMode, !isSyncing else { return }
+
+      isSyncing = true
+      defer { isSyncing = false }
+
+      switch newValue {
+        case .regular:
+          currentGameMode = .battle
+          currentBattleMode = .regular
+
+        case .gachi:
+          currentGameMode = .battle
+          currentBattleMode = .gachi
+
+        case .league:
+          currentGameMode = .battle
+          currentBattleMode = .league
+
+        case .salmon:
+          currentGameMode = .salmon
+      }
 
       SimpleHaptics.generateTask(.soft)
     }
@@ -36,18 +58,37 @@ final class IkaStatus {
   var currentGameMode: GameMode = IkaPreference.shared.preferredDefaultGameMode
   {
     willSet {
-      guard newValue != currentGameMode else { return }
+      guard newValue != currentGameMode, !isSyncing else { return }
 
-      SimpleHaptics.generateTask(.rigid)
+      isSyncing = true
+      defer { isSyncing = false }
+
+      switch newValue {
+        case .battle:
+          currentFlatMode = .init(rawValue: currentBattleMode.rawValue)!
+        case .salmon:
+          currentFlatMode = .salmon
+      }
     }
   }
 
   var currentBattleMode: BattleMode = IkaPreference.shared.preferredDefaultBattleMode
   {
     willSet {
-      guard newValue != currentBattleMode else { return }
+      guard newValue != currentBattleMode, !isSyncing else { return }
 
-      SimpleHaptics.generateTask(.soft)
+      isSyncing = true
+      defer { isSyncing = false }
+
+      switch newValue {
+        case .regular:
+          currentFlatMode = .regular
+        case .gachi:
+          currentFlatMode = .gachi
+        case .league:
+          currentFlatMode = .league
+      }
+//      SimpleHaptics.generateTask(.soft)
     }
   }
 

@@ -11,7 +11,7 @@ import SwiftUI
 
 /// Data model for the battle modes.
 enum BattleMode: String, Identifiable, CaseIterable, Equatable {
-  static let `default`: Self = .league
+  static let `default`: Self = .regular
 
   case regular
   case gachi

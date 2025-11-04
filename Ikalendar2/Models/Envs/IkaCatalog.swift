@@ -90,7 +90,7 @@ final class IkaCatalog {
 
       switch newValue {
         case .loading:
-          // Note: As of iOS 17.0 SDK, `.refreshable` comes with a default haptic feedback without
+          // Note: As of iOS 26 SDK, `.refreshable` comes with a default haptic feedback without
           //  providing a native option to turn it off. Thus we manually disable it here until there
           //  is a way to disable `.refreshable` haptic feedback.
           break

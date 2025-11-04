@@ -154,7 +154,7 @@ struct SettingsAboutView: View {
   // MARK: - Share Section
 
   private var rowShare: some View {
-    // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 17.0
+    // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 26
     let shareURL: URL = .init(string: Constants.Key.URL.APP_STORE_PAGE)!
 
     return
@@ -162,8 +162,7 @@ struct SettingsAboutView: View {
         Label {
           Text("Share ikalendar2")
             .foregroundStyle(Color.primary)
-        }
-        icon: {
+        } icon: {
           Image(systemName: Scoped.SHARE_SFSYMBOL)
             .imageScale(.medium)
             .symbolRenderingMode(.hierarchical)

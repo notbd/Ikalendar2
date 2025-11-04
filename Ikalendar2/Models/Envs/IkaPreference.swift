@@ -15,12 +15,33 @@ import SwiftUI
 final class IkaPreference: ObservableObject {
   static let shared: IkaPreference = .init()
 
+  private var isSyncing = false
+
   /// Preferred Default FlatMode
   @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_FLAT_MODE)
-  var preferredDefaultFlatMode: FlatMode = .default
-  {
+  var preferredDefaultFlatMode: FlatMode = .default {
     willSet {
-      guard newValue != preferredDefaultFlatMode else { return }
+      guard newValue != preferredDefaultFlatMode, !isSyncing else { return }
+
+      isSyncing = true
+      defer { isSyncing = false }
+
+      switch newValue {
+        case .regular:
+          preferredDefaultGameMode = .battle
+          preferredDefaultBattleMode = .regular
+
+        case .gachi:
+          preferredDefaultGameMode = .battle
+          preferredDefaultBattleMode = .gachi
+
+        case .league:
+          preferredDefaultGameMode = .battle
+          preferredDefaultBattleMode = .league
+
+        case .salmon:
+          preferredDefaultGameMode = .salmon
+      }
 
       SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
@@ -29,24 +50,44 @@ final class IkaPreference: ObservableObject {
 
   /// Preferred Default GameMode
   @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_GAME_MODE)
-  var preferredDefaultGameMode: GameMode = .default
-  {
+  var preferredDefaultGameMode: GameMode = .default {
     willSet {
-      guard newValue != preferredDefaultGameMode else { return }
+      guard newValue != preferredDefaultGameMode, !isSyncing else { return }
 
-      SimpleHaptics.generateTask(.selection)
+      isSyncing = true
+      defer { isSyncing = false }
+
+      switch newValue {
+        case .battle:
+          preferredDefaultFlatMode = .init(
+            rawValue: preferredDefaultBattleMode.rawValue)!
+
+        case .salmon:
+          preferredDefaultFlatMode = .salmon
+      }
+
       objectWillChange.send()
     }
   }
 
   /// Preferred Default BattleMode
   @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_BATTLE_MODE)
-  var preferredDefaultBattleMode: BattleMode = .default
-  {
+  var preferredDefaultBattleMode: BattleMode = .default {
     willSet {
-      guard newValue != preferredDefaultBattleMode else { return }
+      guard newValue != preferredDefaultBattleMode, !isSyncing else { return }
 
-      SimpleHaptics.generateTask(.selection)
+      isSyncing = true
+      defer { isSyncing = false }
+
+      switch newValue {
+        case .regular:
+          preferredDefaultFlatMode = .regular
+        case .gachi:
+          preferredDefaultFlatMode = .gachi
+        case .league:
+          preferredDefaultFlatMode = .league
+      }
+
       objectWillChange.send()
     }
   }
