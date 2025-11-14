@@ -29,7 +29,7 @@ extension Constants.Style {
       static let MODE_ICON_SIZE_FACTOR: CGFloat = 1.3
 
       static let MASK_GRADIENT_DENSITY_PORTRAIT: Int = 32
-      static let MASK_GRADIENT_DENSITY_LANDSCAPE: Int = 24
+      static let MASK_GRADIENT_DENSITY_LANDSCAPE: Int = 30
     }
   }
 

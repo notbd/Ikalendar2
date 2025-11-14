@@ -156,15 +156,8 @@ struct SettingsAltAppIconView: View {
       modalDimmingLayer
     }
     .safeAreaBar(edge: .bottom) {
-      GlassEffectContainer(spacing: ScopedStyle.SAFE_AREA_BAR_GLASS_EFFECT_SPACING) {
-        HStack {
-          appIconSlideShowPlayPauseButton
-          activeAppIconColorVariantPicker
-          appIconSlideShowNextButton
-        }
-        .font(ScopedStyle.SAFE_AREA_BAR_DEFAULT_FONT)
-      }
-      .padding()
+      slideShowControl
+        .padding()
     }
     .onAppear {
       doesPreferRickOnAppear = ikaPreference.preferredAppIcon == .rick
@@ -190,6 +183,17 @@ struct SettingsAltAppIconView: View {
           wasSlideShowActiveBeforePickerExpanded ? startSlideShow() : { }()
         }
       }
+  }
+
+  private var slideShowControl: some View {
+    GlassEffectContainer(spacing: ScopedStyle.SAFE_AREA_BAR_GLASS_EFFECT_SPACING) {
+      HStack {
+        appIconSlideShowPlayPauseButton
+        activeAppIconColorVariantPicker
+        appIconSlideShowNextButton
+      }
+      .font(ScopedStyle.SAFE_AREA_BAR_DEFAULT_FONT)
+    }
   }
 
   private var appIconSlideShowPlayPauseButton: some View {

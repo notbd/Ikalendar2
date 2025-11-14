@@ -101,7 +101,11 @@ struct SettingsMainView: View {
   private var rowDefaultGameMode: some View {
     HStack {
       Label {
-        if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
+        if !isHorizontalCompact {
+          Text("Default Game Mode")
+            .foregroundStyle(.primary)
+        }
+        else if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
           Text("Game")
             .foregroundStyle(.primary)
         }
@@ -135,7 +139,11 @@ struct SettingsMainView: View {
   private var rowDefaultBattleMode: some View {
     HStack {
       Label {
-        if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
+        if !isHorizontalCompact {
+          Text("Default Battle Mode")
+            .foregroundStyle(.primary)
+        }
+        else if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
           Text("Battle")
             .foregroundStyle(.primary)
         }
