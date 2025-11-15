@@ -23,7 +23,7 @@ const head: HeadConfig[] = [
   ['meta', { name: 'og:title', content: `${title} · ${baseDomain}` }],
   ['meta', { name: 'og:description', content: description }],
   ['meta', { name: 'og:site_name', content: baseDomain }],
-  ['meta', { property: 'og:image', content: `${baseUrl}/assets/icon-square-1024.png` }],
+  ['meta', { property: 'og:image', content: `${baseUrl}/assets/app-icon-1024.png` }],
   ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
   ['meta', { name: 'twitter:title', content: `${title} · ${baseDomain}` }],
   ['meta', { name: 'twitter:description', content: description }],
@@ -58,7 +58,7 @@ const Sidebar: DefaultTheme.SidebarItem[] = [
 ]
 
 const Footer: DefaultTheme.Footer = {
-  message: 'ikalendar2 is a third-party companion app for Splatoon™ 2 and is not affiliated with Nintendo.<br>All associated item names, logos, and trademarks are the property of their respective owners.<br>——<br>Released under the GPL-3.0 License.',
+  message: 'ikalendar2 is a third-party companion app for Splatoon 2 and is not affiliated with Nintendo.<br>All associated item names, logos, and trademarks are the property of their respective owners.<br>——<br>Released under the GPL-3.0 License.',
   copyright: 'Copyright © 2020-present Tianwei Zhang',
 }
 
@@ -77,7 +77,7 @@ export default defineConfig({
   cleanUrls: true,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/assets/icon-squircle-128.png',
+    logo: '/assets/app-icon-128.png',
     search: { provider: 'local' },
     nav: Nav,
     sidebar: Sidebar,

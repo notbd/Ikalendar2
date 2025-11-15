@@ -3,7 +3,7 @@ layout: home
 
 hero:
   image:
-    src: /assets/icon-squircle-1024.png
+    src: /assets/app-icon-1024.png
     alt: Logo for ikalendar2
   name: ikalendar2
   text: Track Splatoon 2 Rotations with Style and Ease
@@ -11,7 +11,7 @@ hero:
   appStoreLink: https://apps.apple.com/app/id1529193361
   appStoreImageDark: /assets/download-app-store-EN-black.svg
   appStoreImageLight: /assets/download-app-store-EN-white.svg
-  compatibility: Requires iOS and iPadOS 17.0 or later.
+  compatibility: Latest version requires iOS / iPadOS 26.0 or later.
   actions:
     # first action button will be replaced by the App Store badge
     - theme: brand
@@ -39,10 +39,10 @@ features:
     details: Plenty of customization options let you tweak the look and layout of the app to best suit your playstyle.
   - icon: <span class="i-hugeicons:translate"/>
     title: Multi-Language Support
-    details: App localization is available for English and Japanese.
+    details: ikalendar2 is fully localized for English and Japanese.
 
 dependencies:
-  message: ikalendar2 is free and open source, made possible by these following projects.
+  message: ikalendar2 is free and open-sourced, made possible by these following projects.
   content:
     - tier: Data Sources
       size: big
