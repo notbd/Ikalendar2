@@ -18,6 +18,6 @@ struct SettingsEntryView: View {
     .navigationViewStyle(StackNavigationViewStyle())
     .overlay(
       AutoLoadingOverlay(),
-      alignment: .bottom)
+      alignment: .bottomTrailing)
   }
 }

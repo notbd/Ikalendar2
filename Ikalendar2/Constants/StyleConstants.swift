@@ -40,9 +40,9 @@ extension Constants.Style {
 
     enum AutoLoading {
       static let GLASS_EFFECT_CONTAINER_SPACING: CGFloat = 28
-      static let SFSYMBOL_FONT: Font = .system(size: 19)
-      static let SUBTITLE: String = "AutoLoading..."
-      static let SUBTITLE_FONT: Font = .system(size: 15, weight: .medium, design: .rounded)
+      static let SFSYMBOL_FONT: Font = .system(size: 18)
+      static let SUBTITLE: String = "Autoloading..."
+      static let SUBTITLE_FONT: Font = .system(size: 14, weight: .medium, design: .rounded)
       static let SUBTITLE_PADDING_H: CGFloat = 10
       static let FRAME_SIDE: CGFloat = 44
       static let FRAME_CORNER_RADIUS: CGFloat = 14

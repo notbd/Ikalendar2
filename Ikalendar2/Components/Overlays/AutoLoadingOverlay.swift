@@ -41,7 +41,9 @@ struct AutoLoadingOverlay: View {
               .font(Scoped.SUBTITLE_FONT)
               .padding(.horizontal, Scoped.SUBTITLE_PADDING_H)
               .frame(height: Scoped.FRAME_SIDE)
-              .glassEffect(.regular.interactive(), in: .rect(cornerRadius: Scoped.FRAME_CORNER_RADIUS))
+              .glassEffect(
+                .regular.interactive(),
+                in: .rect(cornerRadius: Scoped.FRAME_CORNER_RADIUS))
               .glassEffectID("subtitle", in: ns)
           }
         }
@@ -50,7 +52,6 @@ struct AutoLoadingOverlay: View {
       }
       .padding()
     }
-
     .opacity(ikaCatalog.autoLoadStatus == .idle ? 0 : 1)
     .transition(.scale.combined(with: .opacity))
     .animation(
