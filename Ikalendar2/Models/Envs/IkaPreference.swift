@@ -128,7 +128,6 @@ final class IkaPreference: ObservableObject {
     willSet {
       guard newValue != shouldMinimizeTabBar else { return }
 
-      SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
   }
@@ -140,7 +139,6 @@ final class IkaPreference: ObservableObject {
     willSet {
       guard newValue != shouldSwapBottomToolbarPickers else { return }
 
-      SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
   }
@@ -152,7 +150,6 @@ final class IkaPreference: ObservableObject {
     willSet {
       guard newValue != shouldUseAltStageImages else { return }
 
-      SimpleHaptics.generateTask(.selection)
       objectWillChange.send()
     }
   }
