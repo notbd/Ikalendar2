@@ -2,7 +2,7 @@
 
 <p align="center">
   <img
-    src="./Resources/MetaAssets/AppIcons/ikalendar2-app-icon-default-masked.png"
+    src="./Resources/MetaAssets/README/AppIcons/ikalendar2-app-icon-preset.png"
     alt="ikalendar2 logo"
     width=120
     />
@@ -23,32 +23,44 @@ Track Splatoon 2 rotation schedules with style and ease.
   </a>
 </div>
 
-![Hero](./Resources/MetaAssets/Demos/demo-universal-og.png)
+<div align="center">
+  <picture>
+    <source
+      srcset="./Resources/MetaAssets/README/Demos/demo-universal.webp"
+      type="image/webp">
+    <img
+      src="./Resources/MetaAssets/README/Demos/demo-universal.png"
+      alt="App Demo">
+  </picture>
+</div>
 
 # Overview
 
-ikalendar2 is an iOS app for tracking Splatoon 2 rotation schedules. It's an alternative to Nintendo's official companion app that cuts straight to the point and provides quick access to current rotation information.
+ikalendar2 is an iOS app for tracking Splatoon 2 rotation schedules. It's an alternative to Nintendo's official companion app that cuts straight to the point and provides quick access to current rotation info in the form of a modern, clutter-free interface.
 
 # Features
 
+- ***NEW***: fully updated to adopt the latest **Liquid Glass** visual style and UI elements
 - **Instant access** to rotation schedules with a clean interface
-- Seamless **auto-refresh** to keep rotation data always current
+- Seamless **auto-refresh** to keep rotation data always up-to-date
 - **Smooth animations** and game-inspired visual details
 - **Customization options** to suit your needs and playstyle
-- Support for **English** and **Japanese**
-- Layout optimized for both **iPhone** and **iPad**
+- **Localization support** for English and Japanese
+- UI Layout optimized for both **iPhone** and **iPad**
 
 # Installation
 
 ikalendar2 is available for download on the App Store for free.
 
-[![Download on the App Store](./Resources/MetaAssets/Badges/download-app-store-EN-black.svg)](https://apps.apple.com/app/ikalendar2/id1529193361)
+[![Download on the App Store](./Resources/MetaAssets/README/Badges/download-app-store-EN-black.svg)](https://apps.apple.com/app/ikalendar2/id1529193361)
 
 # Compatibilities
 
-- iOS / iPadOS `17.0` or later.
+- Latest version of ikalendar2 requires iOS / iPadOS `26.0` or later.
 
-- macOS compatibility is not targeted, however beta test on MacBook Air M1 with macOS `15.5` shows no breaking issues.
+- Previous versions compatible with OSes from iOS / iPadOS `13` to `18` are still available on the App Store for users with older devices.
+
+- Compatibility with macOS on Apple Silicon is provided through Mac Catalyst.
 
 # Previews
 
@@ -57,21 +69,22 @@ since some markdown parsers don't support one or the other.  -->
 <table align="center" width="100%" style="text-align: center;">
   <thead>
     <tr>
-      <th align="center" width="33%" style="text-align: center;">Ranked Battle (English)</th>
-      <th align="center" width="33%" style="text-align: center;">League Battle (English)</th>
+      <th align="center" width="33%" style="text-align: center;">Ranked Battle</th>
+      <th align="center" width="33%" style="text-align: center;">League Battle (Customizations)</th>
       <th align="center" width="33%" style="text-align: center;">Salmon Run (Japanese)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td align="center" width="33%" style="text-align: center;">No Customization</td>
-      <td align="center" width="33%" style="text-align: center;">Custom Stage Image & Bottom Toolbar</td>
-      <td align="center" width="33%" style="text-align: center;">Custom Stage Image & Bottom Toolbar</td>
-    </tr>
-    <tr>
-      <td align="center" width="33%"><img alt="Battle" src="./Resources/MetaAssets/Demos/demo-phone-battle.png" width="100%"></td>
-      <td align="center" width="33%"><img alt="Battle Alt" src="./Resources/MetaAssets/Demos/demo-phone-battle-alt.png" width="100%"></td>
-      <td align="center" width="33%"><img alt="Salmon Run" src="./Resources/MetaAssets/Demos/demo-phone-salmon.png" width="100%"></td>
+      <td align="center" width="33%">
+        <img alt="Ranked Battle" src="./Resources/MetaAssets/README/Demos/demo-ranked.png" width="100%">
+      </td>
+      <td align="center" width="33%">
+        <img alt="League Battle Alt" src="./Resources/MetaAssets/README/Demos/demo-league-customized.png" width="100%">
+      </td>
+      <td align="center" width="33%">
+        <img alt="Salmon Run" src="./Resources/MetaAssets/README/Demos/demo-salmon.png" width="100%">
+      </td>
     </tr>
   </tbody>
 </table>
@@ -80,15 +93,21 @@ since some markdown parsers don't support one or the other.  -->
   <thead>
     <tr>
       <th align="center" width="33%" style="text-align: center;">Welcome Screen (icon is clickable!)</th>
-      <th align="center" width="33%" style="text-align: center;">Transition between Rotations</th>
-      <th align="center" width="33%" style="text-align: center;">Auto Refresh for Newly Available Rotations</th>
+      <th align="center" width="33%" style="text-align: center;">Transition between rotations</th>
+      <th align="center" width="33%" style="text-align: center;">Auto-Refresh for newly available rotations</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td align="center" width="33%" style="text-align: center;"><img alt="Welcome Screen" src="./Resources/MetaAssets/Demos/gif-welcome.gif" width="100%"></td>
-      <td align="center" width="33%" style="text-align: center;"><img alt="Rotation Transition" src="./Resources/MetaAssets/Demos/gif-transition.gif" width="100%"></td>
-      <td align="center" width="33%" style="text-align: center;"><img alt="Auto Refresh" src="./Resources/MetaAssets/Demos/gif-auto-refresh.gif" width="100%"></td>
+      <td align="center" width="33%" style="text-align: center;">
+        <img alt="Welcome Screen" src="./Resources/MetaAssets/README/Demos/demo-welcome.gif" width="100%">
+      </td>
+      <td align="center" width="33%" style="text-align: center;">
+        <img alt="Rotation Transition" src="./Resources/MetaAssets/README/Demos/demo-transition.gif" width="100%">
+      </td>
+      <td align="center" width="33%" style="text-align: center;">
+        <img alt="Auto Refresh" src="./Resources/MetaAssets/README/Demos/demo-autoload.gif" width="100%">
+      </td>
     </tr>
   </tbody>
 </table>
@@ -99,7 +118,7 @@ Nintendo's official companion app for Splatoon 2 makes checking rotations unnece
 
 I built ikalendar2 to solve this specific problem. It fetches **only the necessary data** from sources and presents the info **immediately** when you open it. No extra steps or waiting around.
 
-ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to capture some of Splatoon's visual style while keeping the interface clean and functional. The goal is to make it the perfect tool not just for myself, but also for all other players who need a better way to keep up with the game.
+ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to capture some of Splatoon's visual style while keeping the interface clean and functional. The goal is to make it the perfect tool not just for myself but also for all other players who need a better way to keep up with the game.
 
 # Website
 
@@ -111,7 +130,7 @@ ikalendar2 has a landing page hosted at [`ikalendar.app`](https://ikalendar.app)
 
 The source code for early versions of ikalendar2 was archived at a [separate repo](https://github.com/notbd/ikalendar-2-archived).
 
-The UI and structure of the app has changed so much that at one point I figured it deserved a rewrite. Around that time I also started to enforce SwiftLint and SwiftFormat to help streamline coding style and practices, so starting fresh with a new repository made a lot of sense to me.
+The UI and structure of the app has changed so much that at one point I figured it deserved a rewrite from the ground up. Around that time I also started to enforce SwiftLint and SwiftFormat to help streamline coding style and practices so starting fresh with a new repository made a lot of sense to me.
 
 # Privacy
 
