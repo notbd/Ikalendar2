@@ -1,11 +1,9 @@
-# This workflow runs only on pushes to the main branch.
-# It serves as the source of truth, creating an official, signed build archive.
-name: Build Status
+name: Test & Build Status
 
 on:
   push:
-    # This should only run on your primary integration branch
     branches: [main]
+
   workflow_dispatch:
     inputs:
       reason:
@@ -14,8 +12,8 @@ on:
         default: "Manual build"
 
 jobs:
-  build-and-archive:
-    name: Lint, Test, Build & Archive
+  test-and-build:
+    name: Lint, Test & Build
     runs-on: macos-latest
 
     steps:
@@ -24,7 +22,7 @@ jobs:
 
       - name: Select Xcode Version
         run: |
-          XCODE_VERSION=$(ls /Applications | grep "Xcode_16" | sort -V | tail -n 1)
+          XCODE_VERSION=$(ls /Applications | grep "Xcode_26.0" | sort -V | tail -n 1)
           sudo xcode-select -switch /Applications/$XCODE_VERSION
           echo "Selected Xcode version: $XCODE_VERSION"
 
@@ -45,43 +43,22 @@ jobs:
 
       - name: Run Unit Tests
         run: |
+          set -o pipefail
           xcodebuild test \
             -project Ikalendar2.xcodeproj \
             -scheme IkalendarKit \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=latest' \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
             -enableCodeCoverage YES \
             | xcpretty && exit ${PIPESTATUS[0]}
 
-      - name: Install Apple Certificate and Profile
-        env:
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
-          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      - name: Build Application
         run: |
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-
-      - name: Archive Application
-        run: |
-          xcodebuild clean archive \
+          set -o pipefail
+          xcodebuild build \
             -project Ikalendar2.xcodeproj \
             -scheme Ikalendar2 \
-            -sdk iphoneos \
             -configuration Debug \
-            -destination generic/platform=iOS \
-            -archivePath $RUNNER_TEMP/Ikalendar2.xcarchive \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
             | xcpretty && exit ${PIPESTATUS[0]}
 
       - name: Log Trigger Information

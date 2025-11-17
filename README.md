@@ -18,7 +18,7 @@ Track Splatoon 2 rotation schedules with style and ease.
   <a href="https://github.com/notbd/Ikalendar2/actions/workflows/main-integration.yml">
     <img
       src="https://github.com/notbd/Ikalendar2/actions/workflows/main-integration.yml/badge.svg"
-      alt="Build Status for iOS Target on Main Branch"
+      alt="Test & Build Status for iOS Target on Main Branch"
       />
   </a>
 </div>
