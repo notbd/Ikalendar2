@@ -100,6 +100,7 @@ extension Constants.Style {
       static let COLOR_VARIANT_PICKER_FONT: Font = .system(.title3, design: .rounded, weight: .medium)
 
       static let SLIDE_SHOW_CONTROL_BUTTON_SIZE: CGFloat = 44
+      static let SLIDE_SHOW_CONTROL_PICKER_NAME_LABEL_PADDING_H: CGFloat = 18
       static let SLIDE_SHOW_NEXT_BUTTON_DISABLED_OPACITY: CGFloat = 0.3
       static let SLIDE_SHOW_PROGRESS_BAR_OPACITY: CGFloat = 0.8
       static let SLIDE_SHOW_PROGRESS_BAR_HEIGHT: CGFloat = 1

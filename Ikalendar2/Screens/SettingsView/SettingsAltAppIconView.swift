@@ -240,7 +240,7 @@ struct SettingsAltAppIconView: View {
           .frame(
             height: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE)
           .fixedSize()
-          .padding(.horizontal)
+          .padding(.horizontal, ScopedStyle.SLIDE_SHOW_CONTROL_PICKER_NAME_LABEL_PADDING_H)
           .contentShape(Rectangle())
           .allowsHitTesting(!isVariantPickerExpanded && variant == activeAppIconColorVariant)
           .onTapGesture {

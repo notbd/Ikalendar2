@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		61327AAE2EB58C360076DD3B /* BlurFade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61327AAD2EB58C320076DD3B /* BlurFade.swift */; };
 		613286FD2EB70D7E0076DD3B /* IkaInternetConnectivityPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613286FC2EB70D620076DD3B /* IkaInternetConnectivityPublisher.swift */; };
+		6146761C2ECACDFE00400325 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6146761B2ECACDFE00400325 /* Assets.xcassets */; };
 		61526F112E07802D00375181 /* IkalendarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; };
 		61526F122E07802D00375181 /* IkalendarKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6163C16F2EB0072700E47B4C /* FlatMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6163C16E2EB0072300E47B4C /* FlatMode.swift */; };
@@ -91,7 +92,6 @@
 		79B92BB828B03B1F00544939 /* RotationsSingularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92BB728B03B1F00544939 /* RotationsSingularView.swift */; };
 		79B92BCB28B044A200544939 /* .swiftformat in Resources */ = {isa = PBXBuildFile; fileRef = 79B92BCA28B044A200544939 /* .swiftformat */; };
 		79B92BCD28B044B400544939 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 79B92BCC28B044B400544939 /* .swiftlint.yml */; };
-		79BCD2342ACB75090037EAAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79BCD2332ACB75090037EAAD /* Assets.xcassets */; };
 		79C1485828C427B300587C6E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C1485728C427B300587C6E /* Constants.swift */; };
 		79C1485A28C42A3B00587C6E /* KeyConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C1485928C42A3B00587C6E /* KeyConstants.swift */; };
 		79C1485C28C42CDE00587C6E /* StyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C1485B28C42CDE00587C6E /* StyleConstants.swift */; };
@@ -148,6 +148,7 @@
 /* Begin PBXFileReference section */
 		61327AAD2EB58C320076DD3B /* BlurFade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurFade.swift; sourceTree = "<group>"; };
 		613286FC2EB70D620076DD3B /* IkaInternetConnectivityPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaInternetConnectivityPublisher.swift; sourceTree = "<group>"; };
+		6146761B2ECACDFE00400325 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61526EFE2E07802D00375181 /* IkalendarKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IkalendarKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6163C16E2EB0072300E47B4C /* FlatMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatMode.swift; sourceTree = "<group>"; };
 		61BB93882E07CDD1002577EA /* IkalendarKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IkalendarKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -228,7 +229,6 @@
 		79B92BC328B03BC000544939 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		79B92BCA28B044A200544939 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		79B92BCC28B044B400544939 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		79BCD2332ACB75090037EAAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		79C1485728C427B300587C6E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		79C1485928C42A3B00587C6E /* KeyConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyConstants.swift; sourceTree = "<group>"; };
 		79C1485B28C42CDE00587C6E /* StyleConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleConstants.swift; sourceTree = "<group>"; };
@@ -248,10 +248,10 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		613288A02EB730B90076DD3B /* Others */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Others; sourceTree = "<group>"; };
+		6146761D2ECACEC600400325 /* AppIcons */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppIcons; sourceTree = "<group>"; };
 		61526EFF2E07802D00375181 /* IkalendarKit */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IkalendarKit; sourceTree = "<group>"; };
 		6163BFFB2EAFD82800E47B4C /* TabView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TabView; sourceTree = "<group>"; };
 		61BB93892E07CDD1002577EA /* IkalendarKitTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IkalendarKitTests; sourceTree = "<group>"; };
-		61F5201E2EAF1E9E005FDCA3 /* IconComposerIcons */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IconComposerIcons; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -436,9 +436,9 @@
 		79385E2C2AC61F24003D6FD7 /* RuntimeAssets */ = {
 			isa = PBXGroup;
 			children = (
-				61F5201E2EAF1E9E005FDCA3 /* IconComposerIcons */,
-				79BCD2332ACB75090037EAAD /* Assets.xcassets */,
+				6146761D2ECACEC600400325 /* AppIcons */,
 				79385E2B2AC61DBA003D6FD7 /* Fonts */,
+				6146761B2ECACDFE00400325 /* Assets.xcassets */,
 			);
 			path = RuntimeAssets;
 			sourceTree = "<group>";
@@ -781,8 +781,8 @@
 			);
 			fileSystemSynchronizedGroups = (
 				613288A02EB730B90076DD3B /* Others */,
+				6146761D2ECACEC600400325 /* AppIcons */,
 				6163BFFB2EAFD82800E47B4C /* TabView */,
-				61F5201E2EAF1E9E005FDCA3 /* IconComposerIcons */,
 			);
 			name = Ikalendar2;
 			packageProductDependencies = (
@@ -864,12 +864,12 @@
 				79385E302AC621F2003D6FD7 /* PrivacyInfo.xcprivacy in Resources */,
 				7903FE4028C43A0F00245586 /* Inkling_v2.otf in Resources */,
 				79B92BCD28B044B400544939 /* .swiftlint.yml in Resources */,
+				6146761C2ECACDFE00400325 /* Assets.xcassets in Resources */,
 				79EE3AB32AB935E900409733 /* Localizable.strings in Resources */,
 				796CEF812AB7A94E006860C6 /* Splatfont1-Regular.otf in Resources */,
 				79385E252AC61C27003D6FD7 /* LICENSE in Resources */,
 				79385E242AC61C27003D6FD7 /* README.md in Resources */,
 				79B92BCB28B044A200544939 /* .swiftformat in Resources */,
-				79BCD2342ACB75090037EAAD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1040,9 +1040,9 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6395;
+				CURRENT_PROJECT_VERSION = 6415;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 6395;
+				DYLIB_CURRENT_VERSION = 6415;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1081,9 +1081,9 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6395;
+				CURRENT_PROJECT_VERSION = 6415;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 6395;
+				DYLIB_CURRENT_VERSION = 6415;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1119,7 +1119,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6395;
+				CURRENT_PROJECT_VERSION = 6415;
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1138,7 +1138,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6395;
+				CURRENT_PROJECT_VERSION = 6415;
 				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1283,14 +1283,14 @@
 		79B92BC128B03B2200544939 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "app-icon-modern-dark app-icon-modern-light app-icon-mono-dark app-icon-mono-light app-icon-legacy app-icon-rick";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "ikalendar2-app-icon-preset";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6395;
+				CURRENT_PROJECT_VERSION = 6415;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -1329,14 +1329,14 @@
 		79B92BC228B03B2200544939 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "app-icon-modern-dark app-icon-modern-light app-icon-mono-dark app-icon-mono-light app-icon-legacy app-icon-rick";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "ikalendar2-app-icon-preset";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Ikalendar2/Ikalendar2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6395;
+				CURRENT_PROJECT_VERSION = 6415;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
