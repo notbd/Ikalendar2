@@ -40,18 +40,23 @@ struct DetailsLicenseView: View {
     .if(isLinkable) {
       $0.navigationBarItems(trailing: externalLinkButton)
     }
-    .onAppear {
-      Task {
-        try? await Task.sleep(
-          nanoseconds:
-          UInt64(Constants.Config.License.licenseLoadedDelay * 1_000_000_000))
-        do {
-          licenseViewModel = try await ikaNetworkService.fetchLicense(from: repoURLString)
-          SimpleHaptics.generateTask(.light)
-        }
-        catch {
-          hasErrored = true
-        }
+    .task {
+      // .task (unlike .onAppear + Task) is cancelled when the view disappears,
+      // so a dismissed screen no longer keeps the request alive.
+      try? await Task.sleep(
+        nanoseconds:
+        UInt64(Constants.Config.License.licenseLoadedDelay * 1_000_000_000))
+      guard !Task.isCancelled else { return }
+
+      do {
+        licenseViewModel = try await ikaNetworkService.fetchLicense(from: repoURLString)
+        SimpleHaptics.generateTask(.light)
+      }
+      catch is CancellationError {
+        // view disappeared - no error state
+      }
+      catch {
+        hasErrored = true
       }
     }
     .animation(
@@ -68,9 +73,8 @@ struct DetailsLicenseView: View {
       VStack(alignment: .leading) {
         if !hasErrored {
           Text(
-            licenseViewModel != nil
-              ? String(localized: "\(licenseViewModel!.gist) be licensed under")
-              : Constants.Key.Placeholder.UNKNOWN)
+            licenseViewModel.map { String(localized: "\($0.gist) be licensed under") }
+              ?? Constants.Key.Placeholder.UNKNOWN)
             .foregroundStyle(Color.secondary)
             .font(Scoped.LICENSE_CAPTION_FONT)
             .scaledLimitedLine()
@@ -92,10 +96,7 @@ struct DetailsLicenseView: View {
   private var licenseContentText: some View {
     var contentText: String {
       if hasErrored { return Constants.Key.Error.Message.LICENSE_FETCH_ERROR }
-      return
-        licenseViewModel != nil
-          ? licenseViewModel!.content
-          : Constants.Key.Placeholder.LICENSE_TEMPLATE_MIT
+      return licenseViewModel?.content ?? Constants.Key.Placeholder.LICENSE_TEMPLATE_MIT
     }
 
     var contentFont: Font {

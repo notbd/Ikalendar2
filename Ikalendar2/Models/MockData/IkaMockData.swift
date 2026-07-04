@@ -9,6 +9,9 @@ import Foundation
 import IkalendarKit
 
 /// Struct providing mock data for testing purpose.
+/// - Note: Force-unwraps in this file are acceptable by convention: all inputs are
+///   compile-time-known values (non-empty CaseIterable enums, valid calendar math),
+///   and this type is only ever used from previews and debug tooling.
 enum IkaMockData {
   /// Generate a mock SalmonRotation data.
   /// - Parameters:
