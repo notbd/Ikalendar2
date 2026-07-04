@@ -22,7 +22,7 @@ struct IkaOpenSourceLicense: Sendable {
       return String(user)
     }
     catch {
-      return Constants.Key.Placeholder.UNKNOWN
+      return Constants.Key.Placeholder.unknown
     }
   }
 
@@ -34,7 +34,7 @@ struct IkaOpenSourceLicense: Sendable {
       return String(repo)
     }
     catch {
-      return Constants.Key.Placeholder.UNKNOWN
+      return Constants.Key.Placeholder.unknown
     }
   }
 
@@ -46,7 +46,7 @@ struct IkaOpenSourceLicense: Sendable {
       return "\(user)/\(repo)"
     }
     catch {
-      return Constants.Key.Placeholder.UNKNOWN
+      return Constants.Key.Placeholder.unknown
     }
   }
 

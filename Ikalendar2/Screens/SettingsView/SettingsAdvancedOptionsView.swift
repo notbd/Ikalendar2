@@ -28,7 +28,7 @@ struct SettingsAdvancedOptionsView: View {
   @State private var rowWidth: CGFloat = 390
 
   private var doesNeedPaddedPreview: Bool {
-    !isHorizontalCompact && rowWidth > Scoped.PREVIEW_CELL_MAX_WIDTH
+    !isHorizontalCompact && rowWidth > Scoped.previewCellMaxWidth
   }
 
   var body: some View {
@@ -62,7 +62,7 @@ struct SettingsAdvancedOptionsView: View {
       .listStyle(.insetGrouped)
       .sheet(isPresented: $isBottomToolbarPreviewPresented) {
         BottomToolbarPositioningPreview()
-          .presentationDetents([.fraction(Scoped.BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION)])
+          .presentationDetents([.fraction(Scoped.bottomToolbarPreviewSheetDetentsFraction)])
           .presentationCornerRadius(0)
           .presentationBackground(.ultraThinMaterial)
           .interactiveDismissDisabled()
@@ -82,8 +82,8 @@ struct SettingsAdvancedOptionsView: View {
       }
       icon: {
         Image(systemName: ikaPreference.shouldMinimizeTabBar
-          ? Scoped.TAB_BAR_MINIMIZING_ON_SFSYMBOL
-          : Scoped.TAB_BAR_MINIMIZING_OFF_SFSYMBOL)
+          ? Scoped.tabBarMinimizingOnSFSymbol
+          : Scoped.tabBarMinimizingOffSFSymbol)
           .imageScale(.medium)
           .contentTransition(.symbolEffect(.replace.magic(fallback: .replace.byLayer)))
           .symbolRenderingMode(.monochrome)
@@ -102,7 +102,7 @@ struct SettingsAdvancedOptionsView: View {
           .foregroundStyle(.primary)
       }
       icon: {
-        Image(systemName: Scoped.BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL)
+        Image(systemName: Scoped.bottomToolbarPickerPositioningSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
@@ -123,7 +123,7 @@ struct SettingsAdvancedOptionsView: View {
           .foregroundStyle(.primary)
       }
       icon: {
-        Image(systemName: Scoped.ALT_STAGE_IMG_SFSYMBOL)
+        Image(systemName: Scoped.altStageImgSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -144,7 +144,7 @@ struct SettingsAdvancedOptionsView: View {
       } label: {
         Label(
           "Shuffle",
-          systemImage: Scoped.ALT_STAGE_PREVIEW_SHUFFLE_SFSYMBOL)
+          systemImage: Scoped.altStagePreviewShuffleSFSymbol)
           .font(.footnote.bold())
       }
     }
@@ -154,10 +154,10 @@ struct SettingsAdvancedOptionsView: View {
     BattleRotationCell(
       type: .primary,
       rotation: battleRotationPreviewData,
-      rowWidth: doesNeedPaddedPreview ? Scoped.PREVIEW_CELL_MAX_WIDTH : rowWidth)
+      rowWidth: doesNeedPaddedPreview ? Scoped.previewCellMaxWidth : rowWidth)
       .if(doesNeedPaddedPreview) {
         $0
-          .frame(maxWidth: Scoped.PREVIEW_CELL_MAX_WIDTH)
+          .frame(maxWidth: Scoped.previewCellMaxWidth)
           .padding()
           .background(Color.systemGroupedBackground)
           .clipShape(.rect(cornerRadius: 28, style: .continuous))
@@ -168,10 +168,10 @@ struct SettingsAdvancedOptionsView: View {
   private var salmonRotationPreviewCell: some View {
     SalmonRotationCell(
       rotation: salmonRotationPreviewData,
-      rowWidth: doesNeedPaddedPreview ? Scoped.PREVIEW_CELL_MAX_WIDTH : rowWidth)
+      rowWidth: doesNeedPaddedPreview ? Scoped.previewCellMaxWidth : rowWidth)
       .if(doesNeedPaddedPreview) {
         $0
-          .frame(maxWidth: Scoped.PREVIEW_CELL_MAX_WIDTH)
+          .frame(maxWidth: Scoped.previewCellMaxWidth)
           .padding()
           .background(Color.systemGroupedBackground)
           .clipShape(.rect(cornerRadius: 28, style: .continuous))
@@ -225,10 +225,10 @@ struct BottomToolbarPositioningPreview: View {
         battleModePicker
       }
     }
-    .padding(.horizontal, Scoped.BOTTOM_TOOLBAR_PREVIEW_PADDING_H)
+    .padding(.horizontal, Scoped.bottomToolbarPreviewPaddingH)
     .task {
       try? await Task.sleep(
-        nanoseconds: UInt64(Scoped.BOTTOM_TOOLBAR_PREVIEW_LINGER_INTERVAL * 1_000_000_000))
+        nanoseconds: UInt64(Scoped.bottomToolbarPreviewLingerInterval * 1_000_000_000))
       dismiss()
     }
   }

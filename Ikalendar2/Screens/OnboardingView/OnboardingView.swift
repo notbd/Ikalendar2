@@ -80,7 +80,7 @@ struct OnboardingView: View {
         .frame(
           width: appIconDisplayMode.size.screenSize,
           height: appIconDisplayMode.size.screenSize)
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.shadowRadius)
         .onChange(of: iconBounceCounter, initial: false) {
           Task {
             try? await Task.sleep(nanoseconds: UInt64(0.1 * 1_000_000_000))
@@ -106,7 +106,7 @@ struct OnboardingView: View {
   }
 
   private var message: some View {
-    let appName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
+    let appName = Constants.Key.BundleInfo.appDisplayName
     let message: String = .init(localized: "Welcome to\n\(appName)")
     var messageAttributedString: AttributedString = .init(message)
     let appNameRange = messageAttributedString.range(of: appName)!
@@ -115,8 +115,8 @@ struct OnboardingView: View {
     return
       Text(messageAttributedString)
         .foregroundStyle(.primary)
-        .font(Scoped.TITLE_FONT)
-        .fontWeight(Scoped.TITLE_FONT_WEIGHT)
+        .font(Scoped.titleFont)
+        .fontWeight(Scoped.titleFontWeight)
         .keyframeAnimator(
           initialValue: OnboardingObject.title.animationValues,
           trigger: startAnimation,
@@ -130,8 +130,8 @@ struct OnboardingView: View {
       ikaDiscoveryLog.shouldShowOnboarding = false
     } label: {
       Text("Get Started")
-        .font(Scoped.BUTTON_FONT)
-        .padding(.vertical, Scoped.BUTTON_TEXT_PADDING_V)
+        .font(Scoped.buttonFont)
+        .padding(.vertical, Scoped.buttonTextPaddingV)
         .padding(.horizontal)
         .hAlignment(.center)
     }

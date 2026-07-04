@@ -25,11 +25,11 @@ struct StageTitleLabel: View {
         .ika2,
         size: fontSize,
         relativeTo: relTextStyle)
-      .padding(.horizontal, Scoped.TEXT_PADDING_H)
-      .padding(.vertical, Scoped.TEXT_PADDING_V)
+      .padding(.horizontal, Scoped.textPaddingH)
+      .padding(.vertical, Scoped.textPaddingV)
       .glassEffect(
         .regular.interactive(),
-        in: .rect(cornerRadius: Scoped.CLIP_SHAPE_CORNER_RADIUS))
+        in: .rect(cornerRadius: Scoped.clipShapeCornerRadius))
   }
 }
 

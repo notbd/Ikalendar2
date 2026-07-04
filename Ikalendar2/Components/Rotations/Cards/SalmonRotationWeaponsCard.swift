@@ -47,11 +47,11 @@ struct SalmonRotationWeaponCardIcon: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-      .padding(Scoped.IMG_PADDING)
+      .shadow(radius: Constants.Style.Global.shadowRadius)
+      .padding(Scoped.imgPadding)
       .glassEffect(
         colorSchemeAwareGlass.interactive(),
-        in: .rect(cornerRadius: Scoped.FRAME_CORNER_RADIUS))
+        in: .rect(cornerRadius: Scoped.frameCornerRadius))
   }
 }
 

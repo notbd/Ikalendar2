@@ -22,7 +22,7 @@ final class IkaDiscoveryLog {
     didSet {
       guard oldValue != shouldShowOnboarding else { return }
 
-      userDefaults.set(shouldShowOnboarding, forKey: Scoped.SHOULD_SHOW_ONBOARDING)
+      userDefaults.set(shouldShowOnboarding, forKey: Scoped.shouldShowOnboarding)
     }
   }
 
@@ -31,7 +31,7 @@ final class IkaDiscoveryLog {
     didSet {
       guard oldValue != hasDiscoveredRating else { return }
 
-      userDefaults.set(hasDiscoveredRating, forKey: Scoped.HAS_DISCOVERED_RATING)
+      userDefaults.set(hasDiscoveredRating, forKey: Scoped.hasDiscoveredRating)
     }
   }
 
@@ -40,7 +40,7 @@ final class IkaDiscoveryLog {
     didSet {
       guard oldValue != hasDiscoveredAltAppIcon else { return }
 
-      userDefaults.set(hasDiscoveredAltAppIcon, forKey: Scoped.HAS_DISCOVERED_ALT_APP_ICON)
+      userDefaults.set(hasDiscoveredAltAppIcon, forKey: Scoped.hasDiscoveredAltAppIcon)
     }
   }
 
@@ -49,20 +49,20 @@ final class IkaDiscoveryLog {
     didSet {
       guard oldValue != hasDiscoveredEasterEgg else { return }
 
-      userDefaults.set(hasDiscoveredEasterEgg, forKey: Scoped.HAS_DISCOVERED_EASTER_EGG)
+      userDefaults.set(hasDiscoveredEasterEgg, forKey: Scoped.hasDiscoveredEasterEgg)
     }
   }
 
   init(userDefaults: UserDefaults = .standard) {
     self.userDefaults = userDefaults
     shouldShowOnboarding = userDefaults.ikaLoadBool(
-      forKey: Scoped.SHOULD_SHOW_ONBOARDING, default: true)
+      forKey: Scoped.shouldShowOnboarding, default: true)
     hasDiscoveredRating = userDefaults.ikaLoadBool(
-      forKey: Scoped.HAS_DISCOVERED_RATING, default: false)
+      forKey: Scoped.hasDiscoveredRating, default: false)
     hasDiscoveredAltAppIcon = userDefaults.ikaLoadBool(
-      forKey: Scoped.HAS_DISCOVERED_ALT_APP_ICON, default: false)
+      forKey: Scoped.hasDiscoveredAltAppIcon, default: false)
     hasDiscoveredEasterEgg = userDefaults.ikaLoadBool(
-      forKey: Scoped.HAS_DISCOVERED_EASTER_EGG, default: false)
+      forKey: Scoped.hasDiscoveredEasterEgg, default: false)
   }
 
   func resetStates(shouldResetOnboarding: Bool = false) {

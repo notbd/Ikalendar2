@@ -174,7 +174,7 @@ struct SettingsAltAppIconView: View {
   private var modalDimmingLayer: some View {
     Color.black
       .ignoresSafeArea()
-      .opacity(!isVariantPickerExpanded ? 0 : ScopedStyle.MODAL_DIMMING_LAYER_OPACITY)
+      .opacity(!isVariantPickerExpanded ? 0 : ScopedStyle.modalDimmingLayerOpacity)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .onTapGesture {
         withAnimation(.bouncy) {
@@ -185,13 +185,13 @@ struct SettingsAltAppIconView: View {
   }
 
   private var slideShowControl: some View {
-    GlassEffectContainer(spacing: ScopedStyle.SAFE_AREA_BAR_GLASS_EFFECT_SPACING) {
+    GlassEffectContainer(spacing: ScopedStyle.safeAreaBarGlassEffectSpacing) {
       HStack {
         appIconSlideShowPlayPauseButton
         activeAppIconColorVariantPicker
         appIconSlideShowNextButton
       }
-      .font(ScopedStyle.SAFE_AREA_BAR_DEFAULT_FONT)
+      .font(ScopedStyle.safeAreaBarDefaultFont)
     }
   }
 
@@ -200,8 +200,8 @@ struct SettingsAltAppIconView: View {
       .symbolVariant(.fill)
       .contentTransition(.symbolEffect(.replace.offUp))
       .frame(
-        width: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE,
-        height: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE)
+        width: ScopedStyle.slideShowControlButtonSize,
+        height: ScopedStyle.slideShowControlButtonSize)
       .contentShape(Rectangle())
       .onTapGesture {
         SimpleHaptics.generateTask(.selection)
@@ -215,8 +215,8 @@ struct SettingsAltAppIconView: View {
   private var appIconSlideShowNextButton: some View {
     Image(systemName: "forward.end")
       .symbolVariant(.fill)
-      .opacity(!isVariantPickerExpanded ? 1 : ScopedStyle.SLIDE_SHOW_NEXT_BUTTON_DISABLED_OPACITY)
-      .frame(width: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE, height: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE)
+      .opacity(!isVariantPickerExpanded ? 1 : ScopedStyle.slideShowNextButtonDisabledOpacity)
+      .frame(width: ScopedStyle.slideShowControlButtonSize, height: ScopedStyle.slideShowControlButtonSize)
       .contentShape(Rectangle())
       .allowsHitTesting(!isVariantPickerExpanded)
       .onTapGesture {
@@ -237,9 +237,9 @@ struct SettingsAltAppIconView: View {
         Text(variant.displayNameLocalizedStringKey)
           .blurFade(isShown: !isVariantPickerExpanded && variant == activeAppIconColorVariant)
           .frame(
-            height: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE)
+            height: ScopedStyle.slideShowControlButtonSize)
           .fixedSize()
-          .padding(.horizontal, ScopedStyle.SLIDE_SHOW_CONTROL_PICKER_NAME_LABEL_PADDING_H)
+          .padding(.horizontal, ScopedStyle.slideShowControlPickerNameLabelPaddingH)
           .contentShape(Rectangle())
           .allowsHitTesting(!isVariantPickerExpanded && variant == activeAppIconColorVariant)
           .onTapGesture {
@@ -258,11 +258,11 @@ struct SettingsAltAppIconView: View {
       value: Double(slideShowProgress),
       total: Double(slideShowIntervalStepCount))
       .tint(.accentColor)
-      .opacity(ScopedStyle.SLIDE_SHOW_PROGRESS_BAR_OPACITY)
-      .frame(height: ScopedStyle.SLIDE_SHOW_PROGRESS_BAR_HEIGHT)
+      .opacity(ScopedStyle.slideShowProgressBarOpacity)
+      .frame(height: ScopedStyle.slideShowProgressBarHeight)
       .blurFade(isShown: !isVariantPickerExpanded)
       .vAlignment(.bottom)
-      .padding(.horizontal, ScopedStyle.SLIDE_SHOW_PROGRESS_BAR_PADDING_H)
+      .padding(.horizontal, ScopedStyle.slideShowProgressBarPaddingH)
       .allowsHitTesting(false)
       .clipShape(.capsule)
       .id("\(activeAppIconColorVariant)-\(isSlideShowActive)")
@@ -278,8 +278,8 @@ struct SettingsAltAppIconView: View {
             isActive: activeAppIconColorVariant == variant)
           .blurFade(isShown: isVariantPickerExpanded)
           .frame(
-            width: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE,
-            height: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE)
+            width: ScopedStyle.slideShowControlButtonSize,
+            height: ScopedStyle.slideShowControlButtonSize)
           .contentShape(Rectangle())
           .allowsHitTesting(isVariantPickerExpanded)
           .onTapGesture {
@@ -303,7 +303,7 @@ struct SettingsAltAppIconView: View {
           }
         layout { pickerIcons }
       }
-      .font(ScopedStyle.COLOR_VARIANT_PICKER_FONT)
+      .font(ScopedStyle.colorVariantPickerFont)
       .glassEffect(.regular.interactive())
   }
 

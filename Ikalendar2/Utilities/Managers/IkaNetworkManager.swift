@@ -57,7 +57,7 @@ final class IkaNetworkManager: IkaNetworkService {
   func getBattleRotationDict()
     async throws -> BattleRotationDict
   {
-    guard let url = URL(string: Constants.Key.URL.BATTLE_ROTATIONS) else { throw IkaError.unknownError }
+    guard let url = URL(string: Constants.Key.URLs.battleRotations) else { throw IkaError.unknownError }
 
     return try await fetchAndDecode(
       url: url,
@@ -74,7 +74,7 @@ final class IkaNetworkManager: IkaNetworkService {
   func getSalmonRotations()
     async throws -> [SalmonRotation]
   {
-    guard let url = URL(string: Constants.Key.URL.SALMON_ROTATIONS) else { throw IkaError.unknownError }
+    guard let url = URL(string: Constants.Key.URLs.salmonRotations) else { throw IkaError.unknownError }
 
     return try await fetchAndDecode(
       url: url,
@@ -91,7 +91,7 @@ final class IkaNetworkManager: IkaNetworkService {
   func getSalmonRewardApparelInfo()
     async throws -> SalmonApparelInfo
   {
-    guard let url = URL(string: Constants.Key.URL.SALMON_APPAREL_INFO) else { throw IkaError.unknownError }
+    guard let url = URL(string: Constants.Key.URLs.salmonApparelInfo) else { throw IkaError.unknownError }
 
     return try await fetchAndDecode(
       url: url,

@@ -24,7 +24,7 @@ struct SalmonRotationCell: View {
   var body: some View {
     VStack(
       alignment: .leading,
-      spacing: Scoped.CELL_SPACING)
+      spacing: Scoped.cellSpacing)
     {
       SalmonRotationCellTimeTextSection(
         rotation: rotation,
@@ -40,7 +40,7 @@ struct SalmonRotationCell: View {
       }
     }
     // Stupid workaround because SwiftUI List cell force adds vInsets for content that's too small
-    .padding(.vertical, Scoped.CELL_PADDING_VERTICAL)
+    .padding(.vertical, Scoped.cellPaddingVertical)
   }
 
   private var stageAndWeaponSection: some View {
@@ -61,7 +61,7 @@ struct SalmonRotationCell: View {
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.PROGRESS_FONT_SIZE,
+            size: Scoped.progressFontSize,
             relativeTo: .headline)
           .hAlignment(.trailing)
       })
@@ -91,8 +91,8 @@ struct SalmonRotationCellTimeTextSection: View {
         .antialiased(true)
         .resizable()
         .scaledToFit()
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-        .frame(height: rowWidth * Scoped.SALMON_ICON_HEIGHT_RATIO)
+        .shadow(radius: Constants.Style.Global.shadowRadius)
+        .frame(height: rowWidth * Scoped.salmonIconHeightRatio)
         .if(rotation.isCurrent(ikaClock.currentTime)) {
           $0
             .glassEffect(
@@ -101,43 +101,43 @@ struct SalmonRotationCellTimeTextSection: View {
         }
         .scaleEffect(
           rotation.isCurrent(ikaClock.currentTime)
-            ? Scoped.ICON_GOLDEN_EGG_SCALE_FACTOR
-            : Scoped.ICON_SALMON_FISH_SCALE_FACTOR)
+            ? Scoped.iconGoldenEggScaleFactor
+            : Scoped.iconSalmonFishScaleFactor)
           .animation(.default, value: rotation.isCurrent(ikaClock.currentTime))
 
       Spacer()
 
-      HStack(spacing: Scoped.TIME_TEXT_SPACING) {
+      HStack(spacing: Scoped.timeTextSpacing) {
         Text(rotation.startTime.toSalmonTimeString(shouldIncludeDate: true))
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.TIME_TEXT_FONT_SIZE,
+            size: Scoped.timeTextFontSize,
             relativeTo: .headline)
-          .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
-          .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
+          .padding(.horizontal, Scoped.timeTextSinglePaddingH)
+          .padding(.vertical, Scoped.timeTextSinglePaddingV)
           .glassEffect(
             colorSchemeAwareGlass.interactive(),
-            in: .rect(cornerRadius: Scoped.TIME_TEXT_FRAME_CORNER_RADIUS))
+            in: .rect(cornerRadius: Scoped.timeTextFrameCornerRadius))
 
         Text("-")
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.TIME_TEXT_FONT_SIZE,
+            size: Scoped.timeTextFontSize,
             relativeTo: .headline)
 
         Text(rotation.endTime.toSalmonTimeString(shouldIncludeDate: true))
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.TIME_TEXT_FONT_SIZE,
+            size: Scoped.timeTextFontSize,
             relativeTo: .headline)
-          .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
-          .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
+          .padding(.horizontal, Scoped.timeTextSinglePaddingH)
+          .padding(.vertical, Scoped.timeTextSinglePaddingV)
           .glassEffect(
             colorSchemeAwareGlass.interactive(),
-            in: .rect(cornerRadius: Scoped.TIME_TEXT_FRAME_CORNER_RADIUS))
+            in: .rect(cornerRadius: Scoped.timeTextFrameCornerRadius))
       }
     }
   }

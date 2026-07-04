@@ -28,7 +28,7 @@ struct RotationsCarouselView: View {
     NavigationStack {
       ZStack {
         content
-          .navigationTitle(Constants.Key.BundleInfo.APP_DISPLAY_NAME)
+          .navigationTitle(Constants.Key.BundleInfo.appDisplayName)
           .ignoresSafeArea(edges: .bottom)
           .apply {
             setToolbarItems($0)

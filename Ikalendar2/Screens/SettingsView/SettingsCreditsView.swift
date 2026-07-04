@@ -42,50 +42,50 @@ struct SettingsCreditsView: View {
   private var rowSplatoon2Ink: some View {
     CreditsExternalLinkCell(
       name: "Splatoon2.ink",
-      urlString: Constants.Key.URL.SPLATOON2_INK_DATA_ACCESS_POLICY,
+      urlString: Constants.Key.URLs.splatoon2InkDataAccessPolicy,
       shouldShowURL: true)
   }
 
   private var rowJelonzoBot: some View {
     CreditsExternalLinkCell(
       name: "JelonzoBot",
-      urlString: Constants.Key.URL.JELONZOBOT,
+      urlString: Constants.Key.URLs.jelonzobot,
       shouldShowURL: true)
   }
 
   private var rowSwiftyJSON: some View {
     CreditsOpenSourceLibCell(
       name: "SwiftyJSON",
-      urlString: Constants.Key.URL.GITHUB_SWIFTY_JSON,
+      urlString: Constants.Key.URLs.githubSwiftyJson,
       isLinkable: true,
       destination:
       DetailsLicenseView(
         repoName: "SwiftyJSON",
-        repoURLString: Constants.Key.URL.GITHUB_SWIFTY_JSON,
+        repoURLString: Constants.Key.URLs.githubSwiftyJson,
         isLinkable: true))
   }
 
   private var rowSimpleHaptics: some View {
     CreditsOpenSourceLibCell(
       name: "SimpleHaptics",
-      urlString: Constants.Key.URL.GITHUB_SIMPLE_HAPTICS,
+      urlString: Constants.Key.URLs.githubSimpleHaptics,
       isLinkable: true,
       destination:
       DetailsLicenseView(
         repoName: "SimpleHaptics",
-        repoURLString: Constants.Key.URL.GITHUB_SIMPLE_HAPTICS,
+        repoURLString: Constants.Key.URLs.githubSimpleHaptics,
         isLinkable: true))
   }
 
   private var rowAlertKit: some View {
     CreditsOpenSourceLibCell(
       name: "AlertKit",
-      urlString: Constants.Key.URL.GITHUB_ALERT_KIT,
+      urlString: Constants.Key.URLs.githubAlertKit,
       isLinkable: true,
       destination:
       DetailsLicenseView(
         repoName: "AlertKit",
-        repoURLString: Constants.Key.URL.GITHUB_ALERT_KIT,
+        repoURLString: Constants.Key.URLs.githubAlertKit,
         isLinkable: true))
   }
 
@@ -104,10 +104,10 @@ struct SettingsCreditsView: View {
   }
 
   private var footerDisclaimer: some View {
-    Text(Constants.Key.Slogan.COPYRIGHT.localizedStringKey)
+    Text(Constants.Key.Slogan.copyright.localizedStringKey)
       .ikaFont(
         .ika2,
-        size: Scoped.DISCLAIMER_FONT_SIZE,
+        size: Scoped.disclaimerFontSize,
         relativeTo: .footnote)
       .padding(.vertical)
   }
@@ -135,24 +135,24 @@ struct CreditsExternalLinkCell: View {
         VStack(
           alignment: .leading,
           spacing: dynamicTypeSize > .small
-            ? Scoped.CELL_SPACING_V
-            : Scoped.CELL_SPACING_V_SMALL)
+            ? Scoped.cellSpacingV
+            : Scoped.cellSpacingVSmall)
         {
           Text(name.localizedStringKey)
             .foregroundStyle(Color.primary)
-            .font(Scoped.CELL_CONTENT_FONT_PRIMARY)
+            .font(Scoped.cellContentFontPrimary)
 
           if shouldShowURL {
             Text(urlString.shortenedURL()!)
               .foregroundStyle(Color.secondary)
-              .font(Scoped.CELL_CONTENT_FONT_SECONDARY)
+              .font(Scoped.cellContentFontSecondary)
           }
         }
-        .padding(.vertical, Scoped.CELL_PADDING_V)
+        .padding(.vertical, Scoped.cellPaddingV)
 
         Spacer()
 
-        Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+        Constants.Style.Global.externalLinkJumpIcon
           .foregroundStyle(Color.secondary)
       }
     }
@@ -177,18 +177,18 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
       VStack(
         alignment: .leading,
         spacing: dynamicTypeSize > .small
-          ? Scoped.CELL_SPACING_V
-          : Scoped.CELL_SPACING_V_SMALL)
+          ? Scoped.cellSpacingV
+          : Scoped.cellSpacingVSmall)
       {
         Text(name)
           .foregroundStyle(Color.primary)
-          .font(Scoped.CELL_CONTENT_FONT_PRIMARY)
+          .font(Scoped.cellContentFontPrimary)
 
-        Text(urlString.shortenedURL(base: Constants.Key.URL.GITHUB_BASE, newPrefix: "@")!)
+        Text(urlString.shortenedURL(base: Constants.Key.URLs.githubBase, newPrefix: "@")!)
           .foregroundStyle(Color.secondary)
-          .font(Scoped.CELL_CONTENT_FONT_SECONDARY)
+          .font(Scoped.cellContentFontSecondary)
       }
-      .padding(.vertical, Scoped.CELL_PADDING_V)
+      .padding(.vertical, Scoped.cellPaddingV)
     }
     .if(isLinkable) {
       $0
@@ -198,7 +198,7 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
 
             openURL(url)
           } label: {
-            Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+            Constants.Style.Global.externalLinkJumpIcon
           }
           .tint(Color.accentColor)
         }

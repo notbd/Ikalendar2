@@ -46,18 +46,18 @@ struct BattleRotationStageCardPrimary: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .cornerRadius(Scoped.IMG_CORNER_RADIUS)
+      .cornerRadius(Scoped.imgCornerRadius)
       .glassEffect(
         colorSchemeAwareGlass.interactive(),
-        in: .rect(cornerRadius: Scoped.IMG_CORNER_RADIUS))
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        in: .rect(cornerRadius: Scoped.imgCornerRadius))
+      .shadow(radius: Constants.Style.Global.shadowRadius)
       .overlay(
         StageTitleLabel(
           title: stage.name,
-          fontSize: Scoped.LABEL_FONT_SIZE,
+          fontSize: Scoped.labelFontSize,
           relTextStyle: .body)
-          .padding(.leading, Scoped.LABEL_PADDING_LEADING)
-          .padding([.bottom, .trailing], Scoped.LABEL_PADDING_BOTTOMTRAILING),
+          .padding(.leading, Scoped.labelPaddingLeading)
+          .padding([.bottom, .trailing], Scoped.labelPaddingBottomTrailing),
         alignment: .bottomTrailing)
       .animation(
         .snappy,
@@ -97,17 +97,17 @@ struct BattleRotationStageCardSecondary: View {
   var body: some View {
     VStack(
       alignment: .trailing,
-      spacing: Scoped.SPACING_V)
+      spacing: Scoped.spacingV)
     {
       Image(stageImageName)
         .antialiased(true)
         .resizable()
         .scaledToFit()
-        .cornerRadius(Scoped.IMG_CORNER_RADIUS)
+        .cornerRadius(Scoped.imgCornerRadius)
         .glassEffect(
           .clear.interactive(),
-          in: .rect(cornerRadius: Scoped.IMG_CORNER_RADIUS))
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+          in: .rect(cornerRadius: Scoped.imgCornerRadius))
+        .shadow(radius: Constants.Style.Global.shadowRadius)
         .alignmentGuide(.battleStagesImageAlignment) { $0[.bottom] }
         .layoutPriority(1)
 
@@ -115,7 +115,7 @@ struct BattleRotationStageCardSecondary: View {
         .scaledLimitedLine()
         .ikaFont(
           .ika2,
-          size: Scoped.FONT_SIZE,
+          size: Scoped.fontSize,
           relativeTo: .body)
     }
     .animation(

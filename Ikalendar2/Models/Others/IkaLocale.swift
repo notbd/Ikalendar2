@@ -19,15 +19,15 @@ enum IkaLocale {
   var description: String {
     switch self {
       case .en:
-        Constants.Key.Locale.EN
+        Constants.Key.Locale.en
       case .ja:
-        Constants.Key.Locale.JA
+        Constants.Key.Locale.ja
       case .zhHans:
-        Constants.Key.Locale.ZH_HANS
+        Constants.Key.Locale.zhHans
       case .zhHant:
-        Constants.Key.Locale.ZH_HANT
+        Constants.Key.Locale.zhHant
       case .unknown:
-        Constants.Key.Placeholder.UNKNOWN
+        Constants.Key.Placeholder.unknown
     }
   }
 
@@ -43,39 +43,39 @@ enum IkaLocale {
   var splatoon2Site: String {
     switch self {
       case .en:
-        Constants.Key.URL.Splatoon2Site.EN
+        Constants.Key.URLs.Splatoon2Site.en
       case .ja:
-        Constants.Key.URL.Splatoon2Site.JA
+        Constants.Key.URLs.Splatoon2Site.ja
       case .zhHans:
-        Constants.Key.URL.Splatoon2Site.ZH_HANS
+        Constants.Key.URLs.Splatoon2Site.zhHans
       case .zhHant:
-        Constants.Key.URL.Splatoon2Site.ZH_HANT
+        Constants.Key.URLs.Splatoon2Site.zhHant
       case .unknown:
-        Constants.Key.URL.Splatoon2Site.EN
+        Constants.Key.URLs.Splatoon2Site.en
     }
   }
 
   var nintendoSite: String {
     switch self {
       case .en:
-        Constants.Key.URL.NintendoSite.EN
+        Constants.Key.URLs.NintendoSite.en
       case .ja:
-        Constants.Key.URL.NintendoSite.JA
+        Constants.Key.URLs.NintendoSite.ja
       case .zhHans:
-        Constants.Key.URL.NintendoSite.ZH_HANS
+        Constants.Key.URLs.NintendoSite.zhHans
       case .zhHant:
-        Constants.Key.URL.NintendoSite.ZH_HANT
+        Constants.Key.URLs.NintendoSite.zhHant
       case .unknown:
-        Constants.Key.URL.NintendoSite.EN
+        Constants.Key.URLs.NintendoSite.en
     }
   }
 
   var easterEggURLString: String {
     switch self {
       case .zhHant:
-        Constants.Key.URL.THE_GOOD_STUFF_CN
+        Constants.Key.URLs.theGoodStuffCN
       default:
-        Constants.Key.URL.THE_GOOD_STUFF
+        Constants.Key.URLs.theGoodStuff
     }
   }
 }

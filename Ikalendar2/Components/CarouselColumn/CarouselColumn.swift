@@ -20,15 +20,15 @@ struct CarouselColumn: View {
 
   private var listVOffsetFactor: CGFloat {
     isPortrait
-      ? Scoped.LIST_OFFSET_V_FACTOR_PORTRAIT
-      : Scoped.LIST_OFFSET_V_FACTOR_LANDSCAPE }
+      ? Scoped.listOffsetVFactorPortrait
+      : Scoped.listOffsetVFactorLandscape }
 
-  private var modeIconSizeFactor: CGFloat { listVOffsetFactor * Scoped.MODE_ICON_SIZE_FACTOR }
+  private var modeIconSizeFactor: CGFloat { listVOffsetFactor * Scoped.modeIconSizeFactor }
 
   private var maskGradientDensity: Int {
     isPortrait
-      ? Scoped.MASK_GRADIENT_DENSITY_PORTRAIT
-      : Scoped.MASK_GRADIENT_DENSITY_LANDSCAPE }
+      ? Scoped.maskGradientDensityPortrait
+      : Scoped.maskGradientDensityLandscape }
 
   private var maskGradient: Gradient {
     .init(

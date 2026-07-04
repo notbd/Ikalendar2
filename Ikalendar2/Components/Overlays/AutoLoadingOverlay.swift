@@ -17,7 +17,7 @@ struct AutoLoadingOverlay: View {
   @Namespace private var ns
 
   var body: some View {
-    GlassEffectContainer(spacing: Scoped.GLASS_EFFECT_CONTAINER_SPACING) {
+    GlassEffectContainer(spacing: Scoped.glassEffectContainerSpacing) {
       HStack {
         Group {
           Image(systemName: iconName)
@@ -26,23 +26,23 @@ struct AutoLoadingOverlay: View {
               options: .repeat(.periodic(delay: 0.2)),
               isActive: ikaCatalog.autoLoadStatus == .autoLoading)
             .contentTransition(.symbolEffect(.replace.magic(fallback: .replace.byLayer)))
-            .font(Scoped.SFSYMBOL_FONT)
+            .font(Scoped.sfsymbolFont)
             .frame(
-              width: Scoped.FRAME_SIDE,
-              height: Scoped.FRAME_SIDE)
+              width: Scoped.frameSide,
+              height: Scoped.frameSide)
             .glassEffect(
               .regular.interactive(),
-              in: .rect(cornerRadius: Scoped.FRAME_CORNER_RADIUS))
+              in: .rect(cornerRadius: Scoped.frameCornerRadius))
             .glassEffectID("icon", in: ns)
 
           if ikaCatalog.autoLoadDelayedIdleStatus == .autoLoading {
-            Text(Scoped.SUBTITLE.localizedStringKey)
-              .font(Scoped.SUBTITLE_FONT)
-              .padding(.horizontal, Scoped.SUBTITLE_PADDING_H)
-              .frame(height: Scoped.FRAME_SIDE)
+            Text(Scoped.subtitle.localizedStringKey)
+              .font(Scoped.subtitleFont)
+              .padding(.horizontal, Scoped.subtitlePaddingH)
+              .frame(height: Scoped.frameSide)
               .glassEffect(
                 .regular.interactive(),
-                in: .rect(cornerRadius: Scoped.FRAME_CORNER_RADIUS))
+                in: .rect(cornerRadius: Scoped.frameCornerRadius))
               .glassEffectID("subtitle", in: ns)
           }
         }
@@ -61,18 +61,18 @@ struct AutoLoadingOverlay: View {
   private var iconName: String {
     switch ikaCatalog.autoLoadDelayedIdleStatus {
       case .autoLoading:
-        Scoped.LOADING_SFSYMBOL
+        Scoped.loadingSFSymbol
 
       case .autoLoaded(let loadedStatus):
         switch loadedStatus {
           case .success:
-            Scoped.LOADED_SUCCESS_SFSYMBOL
+            Scoped.loadedSuccessSFSymbol
           case .failure:
-            Scoped.LOADED_FAILURE_SFSYMBOL
+            Scoped.loadedFailureSFSymbol
         }
 
       case .idle:
-        Scoped.LOADING_SFSYMBOL
+        Scoped.loadingSFSymbol
     }
   }
 }

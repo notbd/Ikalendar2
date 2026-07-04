@@ -106,7 +106,7 @@ struct SettingsMainView: View {
           Text("Default Game Mode")
             .foregroundStyle(.primary)
         }
-        else if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
+        else if rowWidth >= Scoped.defaultModePickerNameShowedThreshold {
           Text("Game")
             .foregroundStyle(.primary)
         }
@@ -145,7 +145,7 @@ struct SettingsMainView: View {
           Text("Default Battle Mode")
             .foregroundStyle(.primary)
         }
-        else if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
+        else if rowWidth >= Scoped.defaultModePickerNameShowedThreshold {
           Text("Battle")
             .foregroundStyle(.primary)
         }
@@ -192,7 +192,7 @@ struct SettingsMainView: View {
           .foregroundStyle(.primary)
       } icon: {
         Image(
-          systemName: Scoped.COLOR_SCHEME_SFSYMBOL)
+          systemName: Scoped.colorSchemeSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -249,7 +249,7 @@ struct SettingsMainView: View {
       }
       icon: {
         Image(
-          systemName: Scoped.ADVANCED_OPTIONS_SFSYMBOL,
+          systemName: Scoped.advancedOptionsSFSymbol,
           variableValue: customizedPercentage)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
@@ -284,7 +284,7 @@ struct SettingsMainView: View {
         Text(currentLocale.toIkaLocale().description)
           .foregroundStyle(Color.secondary)
 
-        Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+        Constants.Style.Global.externalLinkJumpIcon
           .foregroundStyle(Color.secondary)
       }
     }
@@ -299,7 +299,7 @@ struct SettingsMainView: View {
           .foregroundStyle(.primary)
       }
       icon: {
-        Image(systemName: Scoped.ABOUT_SFSYMBOL)
+        Image(systemName: Scoped.aboutSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -314,7 +314,7 @@ struct SettingsMainView: View {
           .foregroundStyle(.primary)
       }
       icon: {
-        Image(systemName: Scoped.CREDITS_SFSYMBOL)
+        Image(systemName: Scoped.creditsSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)

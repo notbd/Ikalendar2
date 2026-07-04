@@ -26,7 +26,7 @@ struct ModeIconStamp: View {
   private var dx: CGFloat { ikaDeviceMotionMonitor.dx }
   private var dy: CGFloat { ikaDeviceMotionMonitor.dy }
   private var rotationConstant: Double { Double((pow(dx, 2) + pow(dy, 2)).squareRoot()) }
-  private var intensity: Double = Scoped.ROTATION_3D_INTENSITY
+  private var intensity: Double = Scoped.rotation3dIntensity
 
   private var axisRotationWeight: (x: CGFloat, y: CGFloat) {
     switch ikaOrientationMonitor.currentOrientation {
@@ -47,7 +47,7 @@ struct ModeIconStamp: View {
 
   var body: some View {
     icon
-      .rotationEffect(.degrees(Scoped.ROTATION_2D_DEGREES))
+      .rotationEffect(.degrees(Scoped.rotation2dDegrees))
       .if(shouldAnimate) {
         $0
           .rotation3DEffect(
@@ -63,8 +63,8 @@ struct ModeIconStamp: View {
       .if(shouldOffset) {
         $0
           .offset(
-            x: Scoped.ICON_OFFSET_X,
-            y: Scoped.ICON_OFFSET_Y)
+            x: Scoped.iconOffsetX,
+            y: Scoped.iconOffsetY)
       }
   }
 
@@ -74,7 +74,7 @@ struct ModeIconStamp: View {
         case .battle:
           battleModeSelection.imgFilnLarge
         case .salmon:
-          Scoped.ICON_IMG_FILN_SALMON
+          Scoped.iconImageNameSalmon
       }
 
     return
@@ -110,7 +110,7 @@ struct ModeIconStamp: View {
   }
 
   init(
-    iconSize: CGFloat = Scoped.ICON_SIZE,
+    iconSize: CGFloat = Scoped.iconSize,
     gameModeSelection: GameMode,
     battleModeSelection: BattleMode,
     shouldOffset: Bool = false,
@@ -124,7 +124,7 @@ struct ModeIconStamp: View {
   }
 
   init(
-    iconSize: CGFloat = Scoped.ICON_SIZE,
+    iconSize: CGFloat = Scoped.iconSize,
     flatModeSelection: FlatMode,
     shouldOffset: Bool = false,
     shouldAnimate: Bool = true)

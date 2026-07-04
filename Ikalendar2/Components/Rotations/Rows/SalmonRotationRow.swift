@@ -70,13 +70,13 @@ extension SalmonRotationRow {
         case .first(let currentStatus):
           switch currentStatus {
             case .pending:
-              Scoped.FIRST_PREFIX_STRINGS.pending
+              Scoped.firstPrefixStrings.pending
             case .active:
-              Scoped.FIRST_PREFIX_STRINGS.active
+              Scoped.firstPrefixStrings.active
           }
 
         case .second:
-          Scoped.SECOND_PREFIX_STRING
+          Scoped.secondPrefixString
 
         case .other:
           nil
@@ -107,13 +107,13 @@ struct SalmonRotationHeader: View {
       Text(rowType.prefixString!.localizedStringKey)
         .ikaFont(
           .ika1,
-          size: Scoped.PREFIX_FONT_SIZE,
+          size: Scoped.prefixFontSize,
           relativeTo: .title2)
         .foregroundStyle(Color.systemBackground)
-        .padding(.horizontal, Scoped.PREFIX_PADDING_H)
+        .padding(.horizontal, Scoped.prefixPaddingH)
         .glassEffect(
           colorSchemeAwareGlass.tint(.secondary).interactive(),
-          in: .rect(cornerRadius: Scoped.PREFIX_FRAME_CORNER_RADIUS))
+          in: .rect(cornerRadius: Scoped.prefixFrameCornerRadius))
 
       Spacer()
 
@@ -128,7 +128,7 @@ struct SalmonRotationHeader: View {
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.CONTENT_FONT_SIZE,
+            size: Scoped.contentFontSize,
             relativeTo: .headline)
       }
     }

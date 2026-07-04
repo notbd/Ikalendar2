@@ -110,7 +110,7 @@ struct SettingsAboutView: View {
         .frame(
           width: appIconDisplayMode.size.screenSize,
           height: appIconDisplayMode.size.screenSize)
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.shadowRadius)
         .zIndex(1)
         .onTapGesture {
           // trigger animation
@@ -120,23 +120,23 @@ struct SettingsAboutView: View {
     }
 
     var appIconTitle: some View {
-      let title = Constants.Key.BundleInfo.APP_DISPLAY_NAME
+      let title = Constants.Key.BundleInfo.appDisplayName
       let text =
         Text(title)
-          .font(Scoped.APP_ICON_TITLE_FONT)
-          .fontWeight(Scoped.APP_ICON_TITLE_FONT_WEIGHT)
+          .font(Scoped.appIconTitleFont)
+          .fontWeight(Scoped.appIconTitleFontWeight)
           .foregroundStyle(Color.accentColor)
       return text
     }
 
     var appIconSubtitle: some View {
-      let versionNumber = Constants.Key.BundleInfo.APP_VERSION
-      let buildNumber = Constants.Key.BundleInfo.APP_BUILD
+      let versionNumber = Constants.Key.BundleInfo.appVersion
+      let buildNumber = Constants.Key.BundleInfo.appBuild
       let subtitle = "Version \(versionNumber) (\(buildNumber))"
       let text =
         Text(subtitle)
-          .font(Scoped.APP_ICON_SUBTITLE_FONT)
-          .fontWeight(Scoped.APP_ICON_SUBTITLE_FONT_WEIGHT)
+          .font(Scoped.appIconSubtitleFont)
+          .fontWeight(Scoped.appIconSubtitleFontWeight)
           .foregroundStyle(Color.secondary)
       return text
     }
@@ -154,7 +154,7 @@ struct SettingsAboutView: View {
 
   private var rowShare: some View {
     // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 26
-    let shareURL: URL = .init(string: Constants.Key.URL.APP_STORE_PAGE)!
+    let shareURL: URL = .init(string: Constants.Key.URLs.appStorePage)!
 
     return
       ShareLink(item: shareURL) {
@@ -162,7 +162,7 @@ struct SettingsAboutView: View {
           Text("Share ikalendar2")
             .foregroundStyle(Color.primary)
         } icon: {
-          Image(systemName: Scoped.SHARE_SFSYMBOL)
+          Image(systemName: Scoped.shareSFSymbol)
             .imageScale(.medium)
             .symbolRenderingMode(.hierarchical)
             .foregroundStyle(Color.accentColor)
@@ -193,7 +193,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.RATING_SFSYMBOL)
+        Image(systemName: Scoped.ratingSFSymbol)
           .symbolEffect(.wiggle, value: rowRatingIconAnimationTrigger)
           .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
@@ -209,7 +209,7 @@ struct SettingsAboutView: View {
 
   private var rowLeavingReview: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.APP_STORE_REVIEW) else { return }
+      guard let url = URL(string: Constants.Key.URLs.appStoreReview) else { return }
 
       openURL(url)
     } label: {
@@ -218,7 +218,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.REVIEW_SFSYMBOL)
+        Image(systemName: Scoped.reviewSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -238,7 +238,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.VIEW_ON_APP_STORE_SFSYMBOL)
+        Image(systemName: Scoped.viewOnAppStoreSFSymbol)
           .imageScale(.large)
           .symbolEffect(.bounce, value: rowAppStoreOverlayBounceCounter)
           .symbolRenderingMode(.hierarchical)
@@ -247,7 +247,7 @@ struct SettingsAboutView: View {
     }
     .appStoreOverlay(isPresented: $appStoreOverlayPresented) {
       SKOverlay.AppConfiguration(
-        appIdentifier: Constants.Key.BundleInfo.APP_STORE_IDENTIFIER,
+        appIdentifier: Constants.Key.BundleInfo.appStoreIdentifier,
         position: .bottom)
     }
     .onChange(of: appStoreOverlayPresented, initial: false) { _, newVal in
@@ -258,9 +258,9 @@ struct SettingsAboutView: View {
   // MARK: - Contact Section
 
   private var rowDeveloperTwitter: some View {
-    let twitterURLString = Constants.Key.URL.TWITTER_PROFILE
+    let twitterURLString = Constants.Key.URLs.twitterProfile
     let twitterHandle = twitterURLString
-      .shortenedURL(base: Constants.Key.URL.TWITTER_BASE, newPrefix: "@")!
+      .shortenedURL(base: Constants.Key.URLs.twitterBase, newPrefix: "@")!
 
     return
       Button {
@@ -274,14 +274,14 @@ struct SettingsAboutView: View {
               .foregroundStyle(Color.primary)
           }
           icon: {
-            Image(Scoped.TWITTER_ICON_NAME)
+            Image(Scoped.twitterIconName)
               .antialiased(true)
               .resizable()
               .scaledToFit()
               .frame(
                 width: dynamicTypeSize <= .small
-                  ? Scoped.TWITTER_ICON_SIZE_SMALL
-                  : Scoped.TWITTER_ICON_SIZE_LARGE)
+                  ? Scoped.twitterIconSizeSmall
+                  : Scoped.twitterIconSizeLarge)
           }
 
           Spacer()
@@ -294,7 +294,7 @@ struct SettingsAboutView: View {
 
   private var rowDeveloperEmail: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.DEVELOPER_EMAIL) else { return }
+      guard let url = URL(string: Constants.Key.URLs.developerEmail) else { return }
 
       openURL(url)
     } label: {
@@ -303,7 +303,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.EMAIL_SFSYMBOL)
+        Image(systemName: Scoped.emailSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -315,7 +315,7 @@ struct SettingsAboutView: View {
 
   private var rowAppWebsite: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.IKALENDAR2_WEBSITE) else { return }
+      guard let url = URL(string: Constants.Key.URLs.ikalendar2Website) else { return }
 
       openURL(url)
     } label: {
@@ -324,7 +324,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.APP_WEBSITE_SFSYMBOL)
+        Image(systemName: Scoped.appWebsiteSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -333,8 +333,8 @@ struct SettingsAboutView: View {
   }
 
   private var rowSourceCode: some View {
-    let repoName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
-    let repoURLString = Constants.Key.URL.SOURCE_CODE_REPO
+    let repoName = Constants.Key.BundleInfo.appDisplayName
+    let repoURLString = Constants.Key.URLs.sourceCodeRepo
     let destination: DetailsLicenseView =
       .init(
         repoName: repoName,
@@ -348,7 +348,7 @@ struct SettingsAboutView: View {
             .foregroundStyle(.primary)
         }
         icon: {
-          Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
+          Image(systemName: Scoped.sourceCodeSFSymbol)
             .imageScale(.medium)
             .symbolRenderingMode(.hierarchical)
             .foregroundStyle(Color.accentColor)
@@ -360,7 +360,7 @@ struct SettingsAboutView: View {
 
           openURL(url)
         } label: {
-          Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+          Constants.Style.Global.externalLinkJumpIcon
         }
         .tint(Color.accentColor)
       }
@@ -368,7 +368,7 @@ struct SettingsAboutView: View {
 
   private var rowPrivacyPolicy: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.PRIVACY_POLICY) else { return }
+      guard let url = URL(string: Constants.Key.URLs.privacyPolicy) else { return }
 
       openURL(url)
     } label: {
@@ -377,7 +377,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.PRIVACY_POLICY_SFSYMBOL)
+        Image(systemName: Scoped.privacyPolicySFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -394,7 +394,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.DEBUG_OPTIONS_SFSYMBOL)
+        Image(systemName: Scoped.debugOptionsSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
@@ -402,7 +402,7 @@ struct SettingsAboutView: View {
     }
   }
 
-  @ScaledMetric(relativeTo: .title) var littleBuddyHeight: CGFloat = Scoped.LITTLE_BUDDY_HEIGHT
+  @ScaledMetric(relativeTo: .title) var littleBuddyHeight: CGFloat = Scoped.littleBuddyHeight
 
   private var footerIkalendar3: some View {
     HStack(alignment: .center) {
@@ -415,11 +415,11 @@ struct SettingsAboutView: View {
         .padding(.vertical)
         .padding(.trailing, 10)
 
-      Text(Constants.Key.Slogan.IKALENDAR3.localizedStringKey)
+      Text(Constants.Key.Slogan.ikalendar3.localizedStringKey)
         .scaledLimitedLine(lineLimit: 2)
         .ikaFont(
           .ika2,
-          size: Scoped.SLOGAN_IKALENDAR3_FONT_SIZE,
+          size: Scoped.sloganIkalendar3FontSize,
           relativeTo: .footnote)
     }
   }

@@ -68,7 +68,7 @@ struct BattleRotationCellPrimary: View {
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   var body: some View {
-    VStack(spacing: Scoped.CELL_SPACING_V) {
+    VStack(spacing: Scoped.cellSpacingV) {
       HStack(alignment: .center) {
         ruleSection
         Spacer()
@@ -78,18 +78,18 @@ struct BattleRotationCellPrimary: View {
       ProgressView(
         value: min(ikaClock.currentTime, rotation.endTime) - rotation.startTime,
         total: rotation.endTime - rotation.startTime)
-        .padding(.bottom, Scoped.PROGRESS_BAR_PADDING_BOTTOM)
+        .padding(.bottom, Scoped.progressBarPaddingBottom)
         .tint(rotation.mode.themeColor)
 
       // MARK: Stage Section
 
-      HStack(spacing: Scoped.STAGES_SPACING_H) {
+      HStack(spacing: Scoped.stagesSpacingH) {
         battleStageCardA
         battleStageCardB
       }
     }
-    .padding(.top, Scoped.CELL_PADDING_TOP)
-    .padding(.bottom, Scoped.CELL_PADDING_BOTTOM)
+    .padding(.top, Scoped.cellPaddingTop)
+    .padding(.bottom, Scoped.cellPaddingBottom)
   }
 
   // MARK: Rule Section
@@ -99,7 +99,7 @@ struct BattleRotationCellPrimary: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+      .shadow(radius: Constants.Style.Global.shadowRadius)
       .layoutPriority(1)
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
@@ -115,8 +115,8 @@ struct BattleRotationCellPrimary: View {
         .scaledLimitedLine()
         .ikaFont(
           .ika2,
-          size: Scoped.RULE_TITLE_FONT_SIZE_MAX,
-          relativeTo: Scoped.RULE_TITLE_TEXT_STYLE_RELATIVE_TO)
+          size: Scoped.ruleTitleFontSizeMax,
+          relativeTo: Scoped.ruleTitleTextStyleRelativeTo)
 
       // all other possible rule titles for the layout to compute ideal size
       ForEach(BattleRule.allCases) { rule in
@@ -124,11 +124,11 @@ struct BattleRotationCellPrimary: View {
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.RULE_TITLE_FONT_SIZE_MAX,
-            relativeTo: Scoped.RULE_TITLE_TEXT_STYLE_RELATIVE_TO)
+            size: Scoped.ruleTitleFontSizeMax,
+            relativeTo: Scoped.ruleTitleTextStyleRelativeTo)
       }
     }
-    .padding(.vertical, Scoped.RULE_TITLE_PADDING_V)
+    .padding(.vertical, Scoped.ruleTitlePaddingV)
     .ifLet(animationNamespaces) {
       $0.matchedGeometryEffect(
         id: rotation.id,
@@ -161,14 +161,14 @@ struct BattleRotationCellPrimary: View {
   private var ruleSection: some View {
     HStack(
       alignment: .center,
-      spacing: Scoped.RULE_SECTION_SPACING)
+      spacing: Scoped.ruleSectionSpacing)
     {
       ruleIcon
       ruleTitle
     }
     .frame(
-      width: rowWidth * Scoped.RULE_SECTION_WIDTH_RATIO,
-      height: rowWidth * Scoped.RULE_SECTION_HEIGHT_RATIO,
+      width: rowWidth * Scoped.ruleSectionWidthRatio,
+      height: rowWidth * Scoped.ruleSectionHeightRatio,
       alignment: .leading)
     .hAlignment(.leading)
   }
@@ -183,10 +183,10 @@ struct BattleRotationCellPrimary: View {
       .foregroundStyle(Color.secondary)
       .ikaFont(
         .ika2,
-        size: Scoped.REMAINING_TIME_FONT_SIZE,
-        relativeTo: Scoped.REMAINING_TIME_TEXT_STYLE_RELATIVE_TO)
+        size: Scoped.remainingTimeFontSize,
+        relativeTo: Scoped.remainingTimeTextStyleRelativeTo)
       .frame(
-        width: rowWidth * Scoped.REMAINING_TIME_SECTION_WIDTH_RATIO,
+        width: rowWidth * Scoped.remainingTimeSectionWidthRatio,
         alignment: .trailing)
   }
 }
@@ -216,12 +216,12 @@ struct BattleRotationCellSecondary: View {
     HStack {
       // MARK: Rule section
 
-      VStack(spacing: Scoped.RULE_SECTION_SPACING) {
+      VStack(spacing: Scoped.ruleSectionSpacing) {
         ruleIcon
         ruleTitle
       }
-      .frame(width: rowWidth * Scoped.RULE_SECTION_WIDTH_RATIO)
-      .padding(.trailing, Scoped.RULE_SECTION_PADDING_TRAILING)
+      .frame(width: rowWidth * Scoped.ruleSectionWidthRatio)
+      .padding(.trailing, Scoped.ruleSectionPaddingTrailing)
 
       // MARK: Stage Section
 
@@ -237,12 +237,12 @@ struct BattleRotationCellSecondary: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-      .frame(height: rowWidth * Scoped.RULE_IMG_HEIGHT_RATIO)
-      .padding(Scoped.RULE_IMG_PADDING)
+      .shadow(radius: Constants.Style.Global.shadowRadius)
+      .frame(height: rowWidth * Scoped.ruleImgHeightRatio)
+      .padding(Scoped.ruleImgPadding)
       .glassEffect(
         colorSchemeAwareGlass.interactive(),
-        in: .rect(cornerRadius: Scoped.RULE_IMG_FRAME_CORNER_RADIUS))
+        in: .rect(cornerRadius: Scoped.ruleImgFrameCornerRadius))
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
@@ -256,10 +256,10 @@ struct BattleRotationCellSecondary: View {
       .scaledLimitedLine()
       .ikaFont(
         .ika2,
-        size: Scoped.RULE_FONT_SIZE,
+        size: Scoped.ruleFontSize,
         relativeTo: .body)
       .if(!isHorizontalCompact) { wrapInIdealFontLayout($0) }
-      .frame(height: Scoped.RULE_TITLE_HEIGHT)
+      .frame(height: Scoped.ruleTitleHeight)
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
@@ -300,7 +300,7 @@ struct BattleRotationCellSecondary: View {
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.RULE_FONT_SIZE,
+            size: Scoped.ruleFontSize,
             relativeTo: .body)
       }
     }

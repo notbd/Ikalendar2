@@ -28,7 +28,7 @@ struct DetailsLicenseView: View {
 
   var body: some View {
     ScrollView {
-      VStack(spacing: Scoped.CONTENT_SPACING_V) {
+      VStack(spacing: Scoped.contentSpacingV) {
         licenseTypeBanner
         licenseContentText
       }
@@ -66,26 +66,26 @@ struct DetailsLicenseView: View {
 
   private var licenseTypeBanner: some View {
     HStack {
-      Image(systemName: !hasErrored ? Scoped.LICENSE_SFSYMBOL : Scoped.ERROR_SFSYMBOL)
-        .font(Scoped.LICENSE_ICON_FONT)
-        .fontWeight(Scoped.LICENSE_ICON_FONT_WEIGHT)
+      Image(systemName: !hasErrored ? Scoped.licenseSFSymbol : Scoped.errorSFSymbol)
+        .font(Scoped.licenseIconFont)
+        .fontWeight(Scoped.licenseIconFontWeight)
 
       VStack(alignment: .leading) {
         if !hasErrored {
           Text(
             licenseViewModel.map { String(localized: "\($0.gist) be licensed under") }
-              ?? Constants.Key.Placeholder.UNKNOWN)
+              ?? Constants.Key.Placeholder.unknown)
             .foregroundStyle(Color.secondary)
-            .font(Scoped.LICENSE_CAPTION_FONT)
+            .font(Scoped.licenseCaptionFont)
             .scaledLimitedLine()
         }
 
         Text(
           !hasErrored
             ? licenseViewModel?.typeDescription.localizedStringKey
-              ?? Constants.Key.Placeholder.UNKNOWN.localizedStringKey
-            : Constants.Key.Error.Title.LICENSE_FETCH_ERROR.localizedStringKey)
-          .font(Scoped.LICENSE_TYPE_FONT)
+              ?? Constants.Key.Placeholder.unknown.localizedStringKey
+            : Constants.Key.Error.Title.licenseFetchError.localizedStringKey)
+          .font(Scoped.licenseTypeFont)
           .fontWeight(.bold)
           .scaledLimitedLine()
       }
@@ -95,14 +95,14 @@ struct DetailsLicenseView: View {
 
   private var licenseContentText: some View {
     var contentText: String {
-      if hasErrored { return Constants.Key.Error.Message.LICENSE_FETCH_ERROR }
-      return licenseViewModel?.content ?? Constants.Key.Placeholder.LICENSE_TEMPLATE_MIT
+      if hasErrored { return Constants.Key.Error.Message.licenseFetchError }
+      return licenseViewModel?.content ?? Constants.Key.Placeholder.licenseTemplateMit
     }
 
     var contentFont: Font {
       hasErrored || !isHorizontalCompact
-        ? Scoped.LICENSE_CONTENT_FONT_REGULAR
-        : Scoped.LICENSE_CONTENT_FONT_COMPACT
+        ? Scoped.licenseContentFontRegular
+        : Scoped.licenseContentFontCompact
     }
 
     return
@@ -119,7 +119,7 @@ struct DetailsLicenseView: View {
 
       openURL(url)
     } label: {
-      Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+      Constants.Style.Global.externalLinkJumpIcon
         .foregroundStyle(Color.primary)
     }
   }

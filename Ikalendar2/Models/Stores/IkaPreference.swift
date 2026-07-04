@@ -52,7 +52,7 @@ final class IkaPreference {
       // Persistence must NOT be gated on `isSyncing`: synced assignments still need to hit disk.
       guard oldValue != preferredDefaultFlatMode else { return }
 
-      userDefaults.set(preferredDefaultFlatMode.rawValue, forKey: Scoped.PREFERRED_DEFAULT_FLAT_MODE)
+      userDefaults.set(preferredDefaultFlatMode.rawValue, forKey: Scoped.preferredDefaultFlatMode)
     }
   }
 
@@ -76,7 +76,7 @@ final class IkaPreference {
     didSet {
       guard oldValue != preferredDefaultGameMode else { return }
 
-      userDefaults.set(preferredDefaultGameMode.rawValue, forKey: Scoped.PREFERRED_DEFAULT_GAME_MODE)
+      userDefaults.set(preferredDefaultGameMode.rawValue, forKey: Scoped.preferredDefaultGameMode)
     }
   }
 
@@ -101,7 +101,7 @@ final class IkaPreference {
     didSet {
       guard oldValue != preferredDefaultBattleMode else { return }
 
-      userDefaults.set(preferredDefaultBattleMode.rawValue, forKey: Scoped.PREFERRED_DEFAULT_BATTLE_MODE)
+      userDefaults.set(preferredDefaultBattleMode.rawValue, forKey: Scoped.preferredDefaultBattleMode)
     }
   }
 
@@ -116,7 +116,7 @@ final class IkaPreference {
     didSet {
       guard oldValue != preferredAppColorScheme else { return }
 
-      userDefaults.set(preferredAppColorScheme.rawValue, forKey: Scoped.PREFERRED_APP_COLOR_SCHEME)
+      userDefaults.set(preferredAppColorScheme.rawValue, forKey: Scoped.preferredAppColorScheme)
     }
   }
 
@@ -131,7 +131,7 @@ final class IkaPreference {
     didSet {
       guard oldValue != preferredAppIcon else { return }
 
-      userDefaults.set(preferredAppIcon.rawValue, forKey: Scoped.PREFERRED_APP_ICON)
+      userDefaults.set(preferredAppIcon.rawValue, forKey: Scoped.preferredAppIcon)
       UIApplication.shared.setAlternateIconName(preferredAppIcon.alternateIconName)
     }
   }
@@ -141,7 +141,7 @@ final class IkaPreference {
     didSet {
       guard oldValue != shouldMinimizeTabBar else { return }
 
-      userDefaults.set(shouldMinimizeTabBar, forKey: Scoped.SHOULD_MINIMIZE_TAB_BAR)
+      userDefaults.set(shouldMinimizeTabBar, forKey: Scoped.shouldMinimizeTabBar)
     }
   }
 
@@ -150,7 +150,7 @@ final class IkaPreference {
     didSet {
       guard oldValue != shouldSwapBottomToolbarPickers else { return }
 
-      userDefaults.set(shouldSwapBottomToolbarPickers, forKey: Scoped.SHOULD_SWAP_BOTTOM_TOOLBAR_PICKERS)
+      userDefaults.set(shouldSwapBottomToolbarPickers, forKey: Scoped.shouldSwapBottomToolbarPickers)
     }
   }
 
@@ -159,28 +159,28 @@ final class IkaPreference {
     didSet {
       guard oldValue != shouldUseAltStageImages else { return }
 
-      userDefaults.set(shouldUseAltStageImages, forKey: Scoped.SHOULD_USE_ALT_STAGE_IMAGES)
+      userDefaults.set(shouldUseAltStageImages, forKey: Scoped.shouldUseAltStageImages)
     }
   }
 
   init(userDefaults: UserDefaults = .standard) {
     self.userDefaults = userDefaults
     preferredDefaultFlatMode = userDefaults.ikaLoadEnum(
-      forKey: Scoped.PREFERRED_DEFAULT_FLAT_MODE, default: .default)
+      forKey: Scoped.preferredDefaultFlatMode, default: .default)
     preferredDefaultGameMode = userDefaults.ikaLoadEnum(
-      forKey: Scoped.PREFERRED_DEFAULT_GAME_MODE, default: .default)
+      forKey: Scoped.preferredDefaultGameMode, default: .default)
     preferredDefaultBattleMode = userDefaults.ikaLoadEnum(
-      forKey: Scoped.PREFERRED_DEFAULT_BATTLE_MODE, default: .default)
+      forKey: Scoped.preferredDefaultBattleMode, default: .default)
     preferredAppColorScheme = userDefaults.ikaLoadEnum(
-      forKey: Scoped.PREFERRED_APP_COLOR_SCHEME, default: .default)
+      forKey: Scoped.preferredAppColorScheme, default: .default)
     preferredAppIcon = userDefaults.ikaLoadEnum(
-      forKey: Scoped.PREFERRED_APP_ICON, default: .default)
+      forKey: Scoped.preferredAppIcon, default: .default)
     shouldMinimizeTabBar = userDefaults.ikaLoadBool(
-      forKey: Scoped.SHOULD_MINIMIZE_TAB_BAR, default: false)
+      forKey: Scoped.shouldMinimizeTabBar, default: false)
     shouldSwapBottomToolbarPickers = userDefaults.ikaLoadBool(
-      forKey: Scoped.SHOULD_SWAP_BOTTOM_TOOLBAR_PICKERS, default: false)
+      forKey: Scoped.shouldSwapBottomToolbarPickers, default: false)
     shouldUseAltStageImages = userDefaults.ikaLoadBool(
-      forKey: Scoped.SHOULD_USE_ALT_STAGE_IMAGES, default: false)
+      forKey: Scoped.shouldUseAltStageImages, default: false)
   }
 
   func resetPreferences() {

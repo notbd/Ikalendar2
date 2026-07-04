@@ -49,9 +49,9 @@ extension BattleRotationRow {
     var prefixString: String? {
       switch self {
         case .now:
-          Scoped.CURRENT_PREFIX_STRING
+          Scoped.currentPrefixString
         case .next:
-          Scoped.NEXT_PREFIX_STRING
+          Scoped.nextPrefixString
         case .other:
           nil
       }
@@ -94,19 +94,19 @@ struct BattleRotationHeader: View {
   }
 
   var body: some View {
-    HStack(spacing: Scoped.SPACING) {
+    HStack(spacing: Scoped.spacing) {
       // skip if `prefixString` is nil (case .other)
       if let prefixString = rowType.prefixString {
         Text(prefixString.localizedStringKey)
           .ikaFont(
             .ika1,
-            size: Scoped.PREFIX_FONT_SIZE,
+            size: Scoped.prefixFontSize,
             relativeTo: .title2)
           .foregroundStyle(Color.systemBackground)
-          .padding(.horizontal, Scoped.PREFIX_PADDING_H)
+          .padding(.horizontal, Scoped.prefixPaddingH)
           .glassEffect(
             colorSchemeAwareGlass.tint(.secondary).interactive(),
-            in: .rect(cornerRadius: Scoped.PREFIX_FRAME_CORNER_RADIUS))
+            in: .rect(cornerRadius: Scoped.prefixFrameCornerRadius))
       }
 
       // Battle Time String
@@ -114,7 +114,7 @@ struct BattleRotationHeader: View {
         .scaledLimitedLine()
         .ikaFont(
           .ika2,
-          size: Scoped.CONTENT_FONT_SIZE,
+          size: Scoped.contentFontSize,
           relativeTo: .headline)
     }
   }

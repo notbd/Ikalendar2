@@ -49,11 +49,11 @@ struct SalmonRotationStageCard: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .cornerRadius(Scoped.STAGE_IMG_CORNER_RADIUS)
+      .cornerRadius(Scoped.stageImgCornerRadius)
       .glassEffect(
         colorSchemeAwareGlass.interactive(),
-        in: .rect(cornerRadius: Scoped.STAGE_IMG_CORNER_RADIUS))
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        in: .rect(cornerRadius: Scoped.stageImgCornerRadius))
+      .shadow(radius: Constants.Style.Global.shadowRadius)
       .overlay(
         overlay,
         alignment: .bottom)
@@ -83,13 +83,13 @@ struct SalmonRotationStageCard: View {
         stageTitleLabel
       }
     }
-    .padding(Scoped.OVERLAY_PADDING)
+    .padding(Scoped.overlayPadding)
   }
 
   private var stageTitleLabel: some View {
     StageTitleLabel(
       title: rotation.stage?.name ?? "",
-      fontSize: Scoped.LABEL_FONT_SIZE,
+      fontSize: Scoped.labelFontSize,
       relTextStyle: .body)
   }
 
@@ -98,11 +98,11 @@ struct SalmonRotationStageCard: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .padding(Scoped.APPAREL_IMG_PADDING)
-      .frame(width: cardWidth * Scoped.APPAREL_IMG_WIDTH_RATIO)
+      .padding(Scoped.apparelImgPadding)
+      .frame(width: cardWidth * Scoped.apparelImgWidthRatio)
       .glassEffect(
         .clear.interactive(),
-        in: .rect(cornerRadius: Scoped.APPAREL_FRAME_CORNER_RADIUS))
+        in: .rect(cornerRadius: Scoped.apparelFrameCornerRadius))
       .opacity(rotation.isCurrent(ikaClock.currentTime) && hasRewardApparel ? 1 : 0)
   }
 }

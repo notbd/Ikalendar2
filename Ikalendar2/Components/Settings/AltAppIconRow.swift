@@ -31,7 +31,7 @@ struct AltAppIconRow: View {
   }
 
   private var rowContent: some View {
-    HStack(spacing: Scoped.SPACING_H) {
+    HStack(spacing: Scoped.spacingH) {
       Image(ikaAppIcon.getImageName(appIconDisplayMode))
         .antialiased(true)
         .resizable()
@@ -39,25 +39,25 @@ struct AltAppIconRow: View {
         .frame(
           width: appIconDisplayMode.size.screenSize,
           height: appIconDisplayMode.size.screenSize)
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.shadowRadius)
         .animation(
-          Scoped.CROSS_FADE_ANIMATION,
+          Scoped.crossFadeAnimation,
           value: appIconColorVariant)
 
       Text(ikaAppIcon.displayNameLocalizedStringKey)
         .font(.system(.body, design: .rounded))
-        .foregroundStyle(Scoped.DISPLAY_NAME_COLOR)
+        .foregroundStyle(Scoped.displayNameColor)
 
       Spacer()
 
       if ikaAppIcon == ikaPreference.preferredAppIcon {
-        Image(systemName: Scoped.ACTIVE_INDICATOR_SFSYMBOL)
-          .font(Scoped.ACTIVE_INDICATOR_FONT)
+        Image(systemName: Scoped.activeIndicatorSFSymbol)
+          .font(Scoped.activeIndicatorFont)
           .symbolRenderingMode(.palette)
           .foregroundStyle(Color.accentColor, Color.systemGroupedBackgroundTertiary)
       }
     }
-    .padding(.vertical, Scoped.ROW_PADDING_V)
+    .padding(.vertical, Scoped.rowPaddingV)
   }
 
   private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
@@ -105,7 +105,7 @@ struct AltAppIconEasterEggRow: View {
   }
 
   private var rowContent: some View {
-    HStack(spacing: Scoped.SPACING_H) {
+    HStack(spacing: Scoped.spacingH) {
       Image(ikaAppIcon.getImageName(appIconDisplayMode))
         .antialiased(true)
         .resizable()
@@ -113,33 +113,33 @@ struct AltAppIconEasterEggRow: View {
         .frame(
           width: appIconDisplayMode.size.screenSize,
           height: appIconDisplayMode.size.screenSize)
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.shadowRadius)
         .animation(
-          Scoped.CROSS_FADE_ANIMATION,
+          Scoped.crossFadeAnimation,
           value: appIconColorVariant)
         .apply(applyEasterEggAnimation)
 
       Text(ikaAppIcon.displayNameLocalizedStringKey)
         .font(.system(.body, design: .rounded))
-        .foregroundStyle(Scoped.DISPLAY_NAME_COLOR)
+        .foregroundStyle(Scoped.displayNameColor)
 
       Spacer()
 
       if ikaAppIcon == ikaPreference.preferredAppIcon {
-        Image(systemName: Scoped.ACTIVE_INDICATOR_SFSYMBOL)
-          .font(Scoped.ACTIVE_INDICATOR_FONT)
+        Image(systemName: Scoped.activeIndicatorSFSymbol)
+          .font(Scoped.activeIndicatorFont)
           .symbolRenderingMode(.palette)
           .foregroundStyle(Color.accentColor, Color.systemGroupedBackgroundTertiary)
       }
     }
-    .padding(.vertical, Scoped.ROW_PADDING_V)
+    .padding(.vertical, Scoped.rowPaddingV)
   }
 
   private func jumpToURLAfterDelay() async {
     try? await Task.sleep(nanoseconds: UInt64(1.3 * 1_000_000_000))
     let goodStuffURLString = connectivityChecker.isGFWed
-      ? Constants.Key.URL.THE_GOOD_STUFF_CN
-      : Constants.Key.URL.THE_GOOD_STUFF
+      ? Constants.Key.URLs.theGoodStuffCN
+      : Constants.Key.URLs.theGoodStuff
     guard let url = URL(string: goodStuffURLString) else { return }
 
     openURL(url)
