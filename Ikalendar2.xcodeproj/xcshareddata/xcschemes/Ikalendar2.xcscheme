@@ -27,22 +27,6 @@
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
-               title = "Bump build number"
-               scriptText = "# bump build number up by 1&#10;&#10;cd &quot;${PROJECT_DIR}&quot;&#10;agvtool bump&#10;">
-               <EnvironmentBuildable>
-                  <BuildableReference
-                     BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "79B92BB128B03B1F00544939"
-                     BuildableName = "Ikalendar2.app"
-                     BlueprintName = "Ikalendar2"
-                     ReferencedContainer = "container:Ikalendar2.xcodeproj">
-                  </BuildableReference>
-               </EnvironmentBuildable>
-            </ActionContent>
-         </ExecutionAction>
-         <ExecutionAction
-            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
-            <ActionContent
                title = "Resolve package dependencies"
                scriptText = "# resolve package dependencies&#10;&#10;cd &quot;${PROJECT_DIR}&quot;&#10;xcodebuild -resolvePackageDependencies&#10;">
                <EnvironmentBuildable>
@@ -99,6 +83,24 @@
       allowLocationSimulation = "NO"
       viewDebuggingEnabled = "No"
       queueDebuggingEnabled = "No">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Bump build number"
+               scriptText = "# bump build number up by 1&#10;# (Launch pre-action: bumps on Run only, so builds and test runs no longer dirty the pbxproj)&#10;&#10;cd &quot;${PROJECT_DIR}&quot;&#10;agvtool bump&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "79B92BB128B03B1F00544939"
+                     BuildableName = "Ikalendar2.app"
+                     BlueprintName = "Ikalendar2"
+                     ReferencedContainer = "container:Ikalendar2.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
