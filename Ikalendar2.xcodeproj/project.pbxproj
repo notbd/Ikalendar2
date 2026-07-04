@@ -492,8 +492,8 @@
 		79AA712D28C4000400A91055 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				79AA712E28C404E400A91055 /* Envs */,
-				79D983B42A5D45C500B5202F /* Publishers */,
+				79AA712E28C404E400A91055 /* Stores */,
+				79D983B42A5D45C500B5202F /* Monitors */,
 				79AA713A28C407DA00A91055 /* Errors */,
 				79AA713D28C4083C00A91055 /* Modes+Rules */,
 				79AA714528C408EF00A91055 /* Rotations */,
@@ -506,7 +506,7 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		79AA712E28C404E400A91055 /* Envs */ = {
+		79AA712E28C404E400A91055 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
 				79AA713128C4052300A91055 /* IkaCatalog.swift */,
@@ -514,7 +514,7 @@
 				79AA712F28C404FD00A91055 /* IkaPreference.swift */,
 				7992CB732ABD564F0088C974 /* IkaDiscoveryLog.swift */,
 			);
-			path = Envs;
+			path = Stores;
 			sourceTree = "<group>";
 		};
 		79AA713728C4077F00A91055 /* MockData */ = {
@@ -684,7 +684,7 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		79D983B42A5D45C500B5202F /* Publishers */ = {
+		79D983B42A5D45C500B5202F /* Monitors */ = {
 			isa = PBXGroup;
 			children = (
 				613286FC2EB70D620076DD3B /* IkaConnectivityChecker.swift */,
@@ -692,7 +692,7 @@
 				7903FE5428C45FBF00245586 /* IkaDeviceMotionMonitor.swift */,
 				79F90AF72AB0B99700B454B9 /* IkaOrientationMonitor.swift */,
 			);
-			path = Publishers;
+			path = Monitors;
 			sourceTree = "<group>";
 		};
 		79FA25A92AB5614100374F45 /* Lists */ = {
