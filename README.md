@@ -120,6 +120,21 @@ I built ikalendar2 to solve this specific problem. It fetches **only the necessa
 
 ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to capture some of Splatoon's visual style while keeping the interface clean and functional. The goal is to make it the perfect tool not just for myself but also for all other players who need a better way to keep up with the game.
 
+# Testing
+
+The project ships two Swift Testing bundles: `IkalendarKitTests` (framework utilities) and `Ikalendar2Tests` (decoders, model invariants, preference persistence, and the catalog loading state machine).
+
+Run everything from Xcode by selecting the `Ikalendar2` scheme and pressing `Cmd+U`, or from the command line:
+
+```bash
+xcodebuild test \
+  -project Ikalendar2.xcodeproj \
+  -scheme Ikalendar2 \
+  -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest'
+```
+
+To run a single suite, append e.g. `-only-testing:Ikalendar2Tests/IkaDecoderTests`.
+
 # Website
 
 ikalendar2 has a landing page hosted at [`ikalendar.app`](https://ikalendar.app).
