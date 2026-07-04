@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 // MARK: - IkaDecoder
 
@@ -202,6 +203,7 @@ enum IkaDecoder {
       return try JSONDecoder().decode(T.self, from: data)
     }
     catch {
+      Logger.decode.error("failed to decode \(T.self, privacy: .public): \(error, privacy: .public)")
       throw IkaError.serverError(.badData)
     }
   }

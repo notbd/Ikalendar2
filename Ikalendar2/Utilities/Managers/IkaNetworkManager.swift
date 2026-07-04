@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 import SwiftUI
 
 // MARK: - IkaNetworkService
@@ -31,7 +32,16 @@ extension EnvironmentValues {
 /// It is intended to be used in tandem with the `IkaDecoder` utility class for decoding the fetched data.
 ///
 final class IkaNetworkManager: IkaNetworkService {
-  init() { }
+  /// Dedicated session with explicit timeouts: a hanging server should fail an
+  /// auto-load attempt within seconds, not URLSession's 60s default.
+  private let session: URLSession
+
+  init() {
+    let config: URLSessionConfiguration = .default
+    config.timeoutIntervalForRequest = 10
+    config.timeoutIntervalForResource = 30
+    session = URLSession(configuration: config)
+  }
 
   @concurrent
   func fetchLicense(from githubRepoURLString: String)
@@ -132,7 +142,7 @@ final class IkaNetworkManager: IkaNetworkService {
     let (data, response): (Data, URLResponse)
 
     do {
-      (data, response) = try await URLSession.shared.data(from: url)
+      (data, response) = try await session.data(from: url)
     }
     catch is CancellationError {
       // Task cancellation is not a connection failure - propagate as-is
@@ -144,6 +154,7 @@ final class IkaNetworkManager: IkaNetworkService {
     }
     catch {
       // ERROR: URLSession data task fails
+      Logger.network.error("request to \(url, privacy: .public) failed: \(error, privacy: .public)")
       throw IkaError.connectionError
     }
 
@@ -152,6 +163,8 @@ final class IkaNetworkManager: IkaNetworkService {
       [200, 304].contains(httpResponse.statusCode)
     else {
       // ERROR: not an HTTP response or bad status code
+      let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
+      Logger.network.error("unexpected response from \(url, privacy: .public): status \(statusCode)")
       throw IkaError.serverError(.badResponse)
     }
 

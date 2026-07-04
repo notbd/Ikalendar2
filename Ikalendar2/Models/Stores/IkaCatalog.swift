@@ -5,6 +5,7 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
+import OSLog
 import SimpleHaptics
 import SwiftUI
 
@@ -121,6 +122,7 @@ final class IkaCatalog {
       await setLoadStatus(.error(error))
     }
     catch {
+      Logger.store.error("catalog load failed with unexpected error: \(error, privacy: .public)")
       await setLoadStatus(.error(.unknownError))
     }
   }
@@ -259,6 +261,7 @@ final class IkaCatalog {
 
     // unknown error
     catch {
+      Logger.store.error("catalog auto-load failed with unexpected error: \(error, privacy: .public)")
       await setLoadStatus(.error(.unknownError))
       await setAutoLoadStatus(.autoLoaded(.failure))
     }

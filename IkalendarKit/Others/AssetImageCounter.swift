@@ -5,6 +5,7 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
+import os
 import UIKit
 
 /// A utility for counting images in the asset catalog that follow a specific naming convention.
@@ -12,6 +13,11 @@ import UIKit
 /// This enum provides a static method to count images, which is useful for dynamically
 /// determining the number of available assets, such as alternative app icons or image sets.
 public enum AssetImageCounter {
+  /// Memoized counts: the asset catalog cannot change at runtime, and callers sit on
+  /// per-second refresh paths (rotation cards re-evaluate alt-image names every tick).
+  /// OSAllocatedUnfairLock keeps the cache safe from any isolation domain (iOS 17+).
+  static private let countCache: OSAllocatedUnfairLock<[String: Int]> = .init(initialState: [:])
+
   /// Counts the number of images in the asset catalog that start with a given prefix,
   /// followed by a number.
   ///
@@ -24,6 +30,8 @@ public enum AssetImageCounter {
   /// - Parameter prefix: The prefix to search for.
   /// - Returns: The number of images found with the specified prefix.
   static public func countImagesWithPrefix(_ prefix: String) -> Int {
+    if let cached = countCache.withLock({ $0[prefix] }) { return cached }
+
     var count = 0
 
     // List of image names with a specific prefix, assuming a known pattern in naming
@@ -36,6 +44,8 @@ public enum AssetImageCounter {
       count += 1
     }
 
-    return count
+    let finalCount = count
+    countCache.withLock { $0[prefix] = finalCount }
+    return finalCount
   }
 }
