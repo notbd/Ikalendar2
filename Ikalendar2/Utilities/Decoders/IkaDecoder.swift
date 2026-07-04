@@ -6,30 +6,20 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-/// `IkaDecoder` is a utility class designed to handle the parsing and decoding
-/// of various data types from raw API response data.
+// MARK: - IkaDecoder
+
+/// `IkaDecoder` is a utility for parsing raw API response data into domain models.
 ///
-/// This class provides a collection of static methods aimed at decoding different
-/// kinds of data, such as text, JSON objects and binary data. The methods
-/// are designed to be extensible, allowing for the addition of further parsing
-/// functions as needed.
-///
+/// Each parser decodes into private Codable DTOs mirroring the wire format, then
+/// maps and validates into domain types. Every decoding or validation failure is
+/// surfaced uniformly as `IkaError.serverError(.badData)`.
 enum IkaDecoder {
   /// Parses and decodes a text string from the given raw data.
   ///
-  /// This function takes `Data` as an input parameter and attempts to decode it
-  /// into a `String` using UTF-8 encoding. If the decoding process fails, it throws
-  /// a custom error of type `IkaError.serverError(.badData)`.
-  ///
   /// - Parameter data: The raw data to decode.
-  ///
   /// - Returns: A decoded string if the decoding process is successful.
-  ///
-  /// - Throws:
-  ///   - `IkaError.serverError(.badData)`: If the decoding process fails.
-  ///
+  /// - Throws: `IkaError.serverError(.badData)`: if the data is not valid UTF-8.
   static func parseText(from data: Data)
     throws -> String
   {
@@ -40,40 +30,32 @@ enum IkaDecoder {
     return str
   }
 
-  /// Parse License from GitHub API.
+  /// Parse License from the GitHub API response.
+  ///
+  /// - Throws: `IkaError.serverError(.badData)`: if the payload is malformed, the
+  ///   url is not a GitHub API repos url, or the content is not valid base64 UTF-8.
   static func parseLicenseFromGithubAPI(from data: Data)
     throws -> IkaOpenSourceLicense
   {
-    // Will throw SwiftyJSONError if parsing fails
-    let rootJSON = try JSON(data: data)
+    let dto = try decodeDTO(GithubLicenseDTO.self, from: data)
 
-    // Get the GitHub API URL string and Parse into GitHub repo URL string
     guard
-      let githubAPIURLString = rootJSON["url"].string,
-      let githubRepoURLString = IkaOpenSourceLicense.parseGithubRepoURLString(from: githubAPIURLString)
+      let licenseInfo = dto.license,
+      let licenseType = licenseInfo.spdxID,
+      let licenseTypeDescription = licenseInfo.name,
+      let githubAPIURLString = dto.url,
+      let githubRepoURLString = IkaOpenSourceLicense.parseGithubRepoURLString(from: githubAPIURLString),
+      let base64Content = dto.content
     else { throw IkaError.serverError(.badData) }
 
-    // Get license info
-    guard
-      let licenseType = rootJSON["license"]["spdx_id"].string,
-      let licenseTypeDescription = rootJSON["license"]["name"].string
-    else { throw IkaError.serverError(.badData) }
-
-    // Access 'content' key to get the Base64 encoded string
-    guard let base64Content = rootJSON["content"].string
-    else { throw IkaError.serverError(.badData) }
-
-    // GitHub adds a new newline character at the end - remove it
+    // GitHub inserts newline characters into the base64 payload - strip them
     let sanitizedBase64Content = base64Content.replacingOccurrences(of: "\n", with: "")
 
-    // Decode Base64 to Data
-    guard let decodedData = Data(base64Encoded: sanitizedBase64Content)
+    guard
+      let decodedData = Data(base64Encoded: sanitizedBase64Content),
+      let decodedString = String(data: decodedData, encoding: .utf8)
     else { throw IkaError.serverError(.badData) }
-    guard let decodedString = String(data: decodedData, encoding: .utf8) else {
-      throw IkaError.serverError(.badData)
-    }
 
-    // Create and return License object
     return IkaOpenSourceLicense(
       repoURL: githubRepoURLString,
       type: licenseType,
@@ -82,227 +64,298 @@ enum IkaDecoder {
   }
 
   /// Decode the data into a battle rotation dictionary.
-  /// - Parameter data: The data to parse from.
-  /// - Throws:
-  ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
-  ///   - `IkaError.badData`: if JSON is of unsupported format.
-  /// - Returns: The parsed dictionary (will NOT be empty).
   ///
+  /// - Throws: `IkaError.serverError(.badData)`: if the payload is malformed, any
+  ///   battle mode is missing or empty, or a rule/stage name is unrecognized.
+  /// - Returns: The parsed dictionary (will NOT be empty).
   static func parseBattleRotationDict(from data: Data)
     throws -> BattleRotationDict
   {
+    let dto = try decodeDTO(BattleSchedulesDTO.self, from: data)
+
     var battleRotationDict: BattleRotationDict = .init()
 
-    // Will throw SwiftyJSONError if parsing fails
-    let rootJSON = try JSON(data: data)
-
-    // Repeat for all battle modes
     for battleMode in BattleMode.allCases {
-      // Access rotation array
-      guard let rotationArrayJSON = rootJSON[battleMode.rawValue].array
+      guard let rotationDTOs = dto.rotations(for: battleMode), !rotationDTOs.isEmpty
       else { throw IkaError.serverError(.badData) }
 
-      for rotationJSON in rotationArrayJSON {
-        // rotation time
+      battleRotationDict[battleMode] = try rotationDTOs.map { rotationDTO in
         guard
-          let startTimeDouble = rotationJSON["start_time"].double,
-          let endTimeDouble = rotationJSON["end_time"].double
+          let rule = BattleRule(rawValue: rotationDTO.rule.name),
+          let stageA = BattleStage(rawValue: rotationDTO.stageA.name),
+          let stageB = BattleStage(rawValue: rotationDTO.stageB.name)
         else { throw IkaError.serverError(.badData) }
 
-        let startTime: Date = .init(timeIntervalSince1970: startTimeDouble)
-        let endTime: Date = .init(timeIntervalSince1970: endTimeDouble)
-
-        // rotation rule and stages
-        guard
-          let ruleNameString = rotationJSON["rule"]["name"].string,
-          let stageANameString = rotationJSON["stage_a"]["name"].string,
-          let stageBNameString = rotationJSON["stage_b"]["name"].string,
-          let rule = BattleRule(rawValue: ruleNameString),
-          let stageA = BattleStage(rawValue: stageANameString),
-          let stageB = BattleStage(rawValue: stageBNameString)
-        else { throw IkaError.serverError(.badData) }
-
-        // SUCCESS: construct rotation using parsed data and append to array in dict
-        battleRotationDict[battleMode, default: []].append(
-          BattleRotation(
-            startTime: startTime,
-            endTime: endTime,
-            mode: battleMode,
-            rule: rule,
-            stageA: stageA,
-            stageB: stageB))
+        return BattleRotation(
+          startTime: Date(timeIntervalSince1970: rotationDTO.startTime),
+          endTime: Date(timeIntervalSince1970: rotationDTO.endTime),
+          mode: battleMode,
+          rule: rule,
+          stageA: stageA,
+          stageB: stageB)
       }
-
-      // Ensure the result array is not empty
-      if (battleRotationDict[battleMode] ?? []).isEmpty { throw IkaError.serverError(.badData) }
     }
 
-    // return the parsed dict
     return battleRotationDict
   }
 
   /// Parse the data into a salmon rotation array.
-  /// - Parameter data: The data to parse from.
-  /// - Throws:
-  ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
-  ///   - `IkaError.badData`: if JSON is of unsupported format.
-  /// - Returns: The parsed array (will NOT be empty).
   ///
+  /// Detailed rotations come from `details`; any extra entries in `schedules`
+  /// become time-only rotations. Unknown stage names degrade to a nil stage;
+  /// invalid weapon ids are an error.
+  ///
+  /// - Throws: `IkaError.serverError(.badData)`: if the payload is malformed,
+  ///   `details` is missing/empty, or a weapon id is invalid.
+  /// - Returns: The parsed array (will NOT be empty).
   static func parseSalmonRotations(from data: Data)
     throws -> [SalmonRotation]
   {
-    var salmonRotations: [SalmonRotation] = []
+    let dto = try decodeDTO(SalmonSchedulesDTO.self, from: data)
 
-    // Will throw SwiftyJSONError if parsing fails
-    let rootDict = try JSON(data: data)
-
-    // Access the `details` array for detailed rotations
-    guard let detailsArray = rootDict["details"].array
+    guard let detailDTOs = dto.details, !detailDTOs.isEmpty
     else { throw IkaError.serverError(.badData) }
 
-    for rotationDetailsDict in detailsArray {
-      // rotation time
-      guard
-        let startTimeDouble = rotationDetailsDict["start_time"].double,
-        let endTimeDouble = rotationDetailsDict["end_time"].double
-      else { throw IkaError.serverError(.badData) }
-
-      let startTime: Date = .init(timeIntervalSince1970: startTimeDouble)
-      let endTime: Date = .init(timeIntervalSince1970: endTimeDouble)
-
-      // add stage if available
-      var stage: SalmonStage?
-      if let stageNameString = rotationDetailsDict["stage"]["name"].string {
-        stage = SalmonStage(name: stageNameString)
-      }
-
-      // add weapons if available
-      var weapons: [SalmonWeapon] = []
-      if let weaponsArray = rotationDetailsDict["weapons"].array {
-        for weaponDict in weaponsArray {
-          // id is in `string` format
-          if
-            let weaponIDString = weaponDict["id"].string,
-            let weaponIDInt = Int(weaponIDString),
-            let weapon = SalmonWeapon(weaponIDInt)
-          {
-            weapons.append(weapon)
-          }
-
-          // id is in `number` format
-          else if
-            let weaponIDInt = weaponDict["id"].int,
-            let weapon = SalmonWeapon(weaponIDInt)
-          {
-            weapons.append(weapon)
-          }
-
-          // bad id
+    var salmonRotations = try detailDTOs.map { detailDTO in
+      let weapons: [SalmonWeapon]? = try detailDTO.weapons.flatMap { weaponDTOs in
+        let parsed = try weaponDTOs.map { weaponDTO in
+          guard let weapon = SalmonWeapon(weaponDTO.id.value)
           else { throw IkaError.serverError(.badData) }
+
+          return weapon
         }
+        return parsed.isEmpty ? nil : parsed
       }
 
-      // SUCCESS: construct rotation using parsed data and append to array
-      salmonRotations.append(.init(
-        startTime: startTime,
-        endTime: endTime,
-        stage: stage,
-        weapons: weapons.isEmpty ? nil : weapons))
+      return SalmonRotation(
+        startTime: Date(timeIntervalSince1970: detailDTO.startTime),
+        endTime: Date(timeIntervalSince1970: detailDTO.endTime),
+        stage: detailDTO.stage.flatMap { SalmonStage(name: $0.name) },
+        weapons: weapons)
     }
 
-    // Check for at least one detailed rotation
-    if salmonRotations.isEmpty { throw IkaError.serverError(.badData) }
-
-    // Access the `schedules` array for non-detailed rotations
-    guard let schedulesArrayJSON = rootDict["schedules"].array
-    else { return salmonRotations }
-
+    // Append any schedules beyond the detailed window as time-only rotations.
     // Guard against `schedules` being shorter than `details`: constructing a Range
     // with lowerBound > upperBound traps at runtime.
-    guard schedulesArrayJSON.count > salmonRotations.count
-    else { return salmonRotations }
+    if
+      let scheduleDTOs = dto.schedules,
+      scheduleDTOs.count > salmonRotations.count
+    {
+      for scheduleDTO in scheduleDTOs[salmonRotations.count...] {
+        // skip entries with missing times instead of failing the whole parse
+        guard
+          let startTime = scheduleDTO.startTime,
+          let endTime = scheduleDTO.endTime
+        else { continue }
 
-    for index in salmonRotations.count ..< schedulesArrayJSON.count {
-      if
-        let startTimeDouble = schedulesArrayJSON[index]["start_time"].double,
-        let endTimeDouble = schedulesArrayJSON[index]["end_time"].double
-      {
-        // SUCCESS: construct rotation using parsed data and append to array
-        let startTime: Date = .init(timeIntervalSince1970: startTimeDouble)
-        let endTime: Date = .init(timeIntervalSince1970: endTimeDouble)
-        salmonRotations.append(.init(
-          startTime: startTime,
-          endTime: endTime))
+        salmonRotations.append(SalmonRotation(
+          startTime: Date(timeIntervalSince1970: startTime),
+          endTime: Date(timeIntervalSince1970: endTime)))
       }
     }
 
-    // Return the rotation array
     return salmonRotations
   }
 
-  /// Parse the data into a info wrapper containing salmon run reward apparel and its available time.
-  /// - Parameter data: The data to parse from.
-  /// - Throws:
-  ///   - `SwiftyJSONError`: if failed to parse data into a SwiftyJSON instance.
-  ///   - `IkaError.badData`: if JSON is of unsupported format.
-  /// - Returns: The parsed SalmonApparel info.
+  /// Parse the data into an info wrapper containing the salmon run reward apparel
+  /// and its available time.
   ///
+  /// - Throws: `IkaError.serverError(.badData)`: if the payload is malformed, the
+  ///   gear kind is unknown, or the id is invalid for that kind.
   static func parseSalmonRewardApparelInfo(from data: Data)
     throws -> SalmonApparelInfo
   {
-    // Will throw SwiftyJSONError if parsing fails
-    let rootDict = try JSON(data: data)
+    let dto = try decodeDTO(SalmonTimelineDTO.self, from: data)
 
-    // Access the reward apparel dict
-    guard let rewardApparelDict = rootDict["coop"]["reward_gear"].dictionary
+    guard
+      let rewardGear = dto.coop?.rewardGear,
+      let availableTimeDouble = rewardGear.availableTime,
+      let gear = rewardGear.gear
     else { throw IkaError.serverError(.badData) }
 
-    // Get available time
-    guard let availableTimeDouble = rewardApparelDict["available_time"]?.double
-    else { throw IkaError.serverError(.badData) }
+    let apparelIDInt = gear.id.value
 
-    let availableTime: Date = .init(timeIntervalSince1970: availableTimeDouble)
-
-    // Get apparel detail
-    guard let apparelJSON = rootDict["coop"]["reward_gear"]["gear"].dictionary
-    else { throw IkaError.serverError(.badData) }
-
-    // apparel type
-    guard let apparelTypeString = apparelJSON["kind"]?.string
-    else { throw IkaError.serverError(.badData) }
-
-    // apparel id
-    let apparelIDInt: Int
-    // id is in `int` format
-    if let value = apparelJSON["id"]?.int { apparelIDInt = value }
-    // id is in `string` format
-    else if
-      let apparelIDString = apparelJSON["id"]?.string,
-      let value = Int(apparelIDString)
-    {
-      apparelIDInt = value
-    }
-    else { throw IkaError.serverError(.badData) }
-
-    // Find apparel with type and id
-    let rewardApparelOptional: SalmonApparel? =
-      switch apparelTypeString
-      {
-        case "head":
-          SalmonApparel(type: .head, id: apparelIDInt)
-        case "clothes":
-          SalmonApparel(type: .body, id: apparelIDInt)
-        case "shoes":
-          SalmonApparel(type: .foot, id: apparelIDInt)
-        default:
-          nil
+    let rewardApparel: SalmonApparel? =
+      switch gear.kind {
+        case "head": SalmonApparel(type: .head, id: apparelIDInt)
+        case "clothes": SalmonApparel(type: .body, id: apparelIDInt)
+        case "shoes": SalmonApparel(type: .foot, id: apparelIDInt)
+        default: nil
       }
-    // strip nil - throw error if invalid type or invalid id
-    guard let rewardApparel = rewardApparelOptional
+
+    guard let rewardApparel
     else { throw IkaError.serverError(.badData) }
 
-    // SUCCESS: return the apparel info
-    let rewardApparelInfo: SalmonApparelInfo = .init(apparel: rewardApparel, availableTime: availableTime)
-    return rewardApparelInfo
+    return SalmonApparelInfo(
+      apparel: rewardApparel,
+      availableTime: Date(timeIntervalSince1970: availableTimeDouble))
+  }
+
+  // MARK: - Shared decoding
+
+  /// Decodes a DTO, mapping every `DecodingError` (malformed JSON, missing keys,
+  /// type mismatches) uniformly to `IkaError.serverError(.badData)`.
+  static private func decodeDTO<T: Decodable>(_: T.Type, from data: Data)
+    throws -> T
+  {
+    do {
+      return try JSONDecoder().decode(T.self, from: data)
+    }
+    catch {
+      throw IkaError.serverError(.badData)
+    }
+  }
+}
+
+// MARK: - FlexibleIntID
+
+/// An id the API serves as either a JSON number or a numeric string.
+private struct FlexibleIntID: Decodable {
+  let value: Int
+
+  init(from decoder: any Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    if let intValue = try? container.decode(Int.self) {
+      value = intValue
+    }
+    else if
+      let stringValue = try? container.decode(String.self),
+      let intValue = Int(stringValue)
+    {
+      value = intValue
+    }
+    else {
+      throw DecodingError.dataCorruptedError(
+        in: container,
+        debugDescription: "id is neither an integer nor a numeric string")
+    }
+  }
+}
+
+// MARK: - NamedEntityDTO
+
+private struct NamedEntityDTO: Decodable {
+  let name: String
+}
+
+// MARK: - BattleSchedulesDTO
+
+private struct BattleSchedulesDTO: Decodable {
+  let regular: [BattleRotationDTO]?
+  let gachi: [BattleRotationDTO]?
+  let league: [BattleRotationDTO]?
+
+  func rotations(for mode: BattleMode) -> [BattleRotationDTO]? {
+    switch mode {
+      case .regular: regular
+      case .gachi: gachi
+      case .league: league
+    }
+  }
+}
+
+// MARK: - BattleRotationDTO
+
+private struct BattleRotationDTO: Decodable {
+  let startTime: Double
+  let endTime: Double
+  let rule: NamedEntityDTO
+  let stageA: NamedEntityDTO
+  let stageB: NamedEntityDTO
+
+  enum CodingKeys: String, CodingKey {
+    case startTime = "start_time"
+    case endTime = "end_time"
+    case rule
+    case stageA = "stage_a"
+    case stageB = "stage_b"
+  }
+}
+
+// MARK: - SalmonSchedulesDTO
+
+private struct SalmonSchedulesDTO: Decodable {
+  let details: [SalmonDetailDTO]?
+  let schedules: [SalmonScheduleDTO]?
+}
+
+// MARK: - SalmonDetailDTO
+
+private struct SalmonDetailDTO: Decodable {
+  let startTime: Double
+  let endTime: Double
+  let stage: NamedEntityDTO?
+  let weapons: [SalmonWeaponDTO]?
+
+  enum CodingKeys: String, CodingKey {
+    case startTime = "start_time"
+    case endTime = "end_time"
+    case stage
+    case weapons
+  }
+}
+
+// MARK: - SalmonWeaponDTO
+
+private struct SalmonWeaponDTO: Decodable {
+  let id: FlexibleIntID
+}
+
+// MARK: - SalmonScheduleDTO
+
+private struct SalmonScheduleDTO: Decodable {
+  let startTime: Double?
+  let endTime: Double?
+
+  enum CodingKeys: String, CodingKey {
+    case startTime = "start_time"
+    case endTime = "end_time"
+  }
+}
+
+// MARK: - SalmonTimelineDTO
+
+private struct SalmonTimelineDTO: Decodable {
+  let coop: CoopDTO?
+
+  struct CoopDTO: Decodable {
+    let rewardGear: RewardGearDTO?
+
+    enum CodingKeys: String, CodingKey {
+      case rewardGear = "reward_gear"
+    }
+  }
+
+  struct RewardGearDTO: Decodable {
+    let availableTime: Double?
+    let gear: GearDTO?
+
+    enum CodingKeys: String, CodingKey {
+      case availableTime = "available_time"
+      case gear
+    }
+  }
+
+  struct GearDTO: Decodable {
+    let kind: String
+    let id: FlexibleIntID
+  }
+}
+
+// MARK: - GithubLicenseDTO
+
+private struct GithubLicenseDTO: Decodable {
+  let url: String?
+  let license: LicenseInfoDTO?
+  let content: String?
+
+  struct LicenseInfoDTO: Decodable {
+    let spdxID: String?
+    let name: String?
+
+    enum CodingKeys: String, CodingKey {
+      case spdxID = "spdx_id"
+      case name
+    }
   }
 }

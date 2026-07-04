@@ -101,8 +101,8 @@ enum Fixtures {
     }
     """
 
-  /// start_time is an object - SwiftyJSON would happily coerce a NUMERIC STRING,
-  /// so the wrong-type probe must be structurally incompatible.
+  /// start_time is an object - a structurally incompatible probe (historically kept
+  /// non-string because the pre-Codable parser coerced numeric strings).
   static let battleRotationsWrongTimeType = """
     {
       "regular": [

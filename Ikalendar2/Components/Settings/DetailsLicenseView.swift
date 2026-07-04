@@ -130,8 +130,8 @@ struct DetailsLicenseView: View {
 struct LicenseDetailsView_Previews: PreviewProvider {
   static var previews: some View {
     DetailsLicenseView(
-      repoName: "SwiftyJSON",
-      repoURLString: "https://github.com/SwiftyJSON/SwiftyJSON",
+      repoName: "SimpleHaptics",
+      repoURLString: "https://github.com/notbd/SimpleHaptics",
       isLinkable: true)
   }
 }

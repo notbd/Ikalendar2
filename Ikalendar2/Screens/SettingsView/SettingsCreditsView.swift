@@ -24,7 +24,6 @@ struct SettingsCreditsView: View {
       } header: { Text("Data Source") }
 
       Section {
-        rowSwiftyJSON
         rowSimpleHaptics
         rowAlertKit
       } header: { Text("Open Source Libraries") }
@@ -51,18 +50,6 @@ struct SettingsCreditsView: View {
       name: "JelonzoBot",
       urlString: Constants.Key.URLs.jelonzobot,
       shouldShowURL: true)
-  }
-
-  private var rowSwiftyJSON: some View {
-    CreditsOpenSourceLibCell(
-      name: "SwiftyJSON",
-      urlString: Constants.Key.URLs.githubSwiftyJson,
-      isLinkable: true,
-      destination:
-      DetailsLicenseView(
-        repoName: "SwiftyJSON",
-        repoURLString: Constants.Key.URLs.githubSwiftyJson,
-        isLinkable: true))
   }
 
   private var rowSimpleHaptics: some View {

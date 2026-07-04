@@ -163,7 +163,6 @@ ikalendar2 is made possible thanks to the following projects:
 
 ### Dependencies
 
-- [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
 - [SimpleHaptics](https://github.com/notbd/SimpleHaptics)
 - [AlertKit](https://github.com/sparrowcode/AlertKit)
 

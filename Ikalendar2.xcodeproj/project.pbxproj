@@ -60,7 +60,6 @@
 		796CEF812AB7A94E006860C6 /* Splatfont1-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */; };
 		796CEF822AB7A94E006860C6 /* Splatfont2-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */; };
 		797469C72BCCA5C100328027 /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 797469C62BCCA5C100328027 /* AlertKit */; };
-		797469CA2BCCA5DB00328027 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 797469C92BCCA5DB00328027 /* SwiftyJSON */; };
 		797469CD2BCCA60700328027 /* SimpleHaptics in Frameworks */ = {isa = PBXBuildFile; productRef = 797469CC2BCCA60700328027 /* SimpleHaptics */; };
 		797BDCB028C41BD900A13F34 /* BodyApparel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797BDCAF28C41BD900A13F34 /* BodyApparel.swift */; };
 		797EA68E2AACF1350095A23B /* DetailsLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EA68D2AACF1350095A23B /* DetailsLicenseView.swift */; };
@@ -284,7 +283,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				797469CA2BCCA5DB00328027 /* SwiftyJSON in Frameworks */,
 				61526F112E07802D00375181 /* IkalendarKit.framework in Frameworks */,
 				797469C72BCCA5C100328027 /* AlertKit in Frameworks */,
 				797469CD2BCCA60700328027 /* SimpleHaptics in Frameworks */,
@@ -807,7 +805,6 @@
 			name = Ikalendar2;
 			packageProductDependencies = (
 				797469C62BCCA5C100328027 /* AlertKit */,
-				797469C92BCCA5DB00328027 /* SwiftyJSON */,
 				797469CC2BCCA60700328027 /* SimpleHaptics */,
 			);
 			productName = Ikalendar2;
@@ -874,7 +871,6 @@
 			mainGroup = 79B92BA928B03B1F00544939;
 			packageReferences = (
 				797469C52BCCA5C100328027 /* XCRemoteSwiftPackageReference "AlertKit" */,
-				797469C82BCCA5DB00328027 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				797469CB2BCCA60700328027 /* XCRemoteSwiftPackageReference "SimpleHaptics" */,
 			);
 			productRefGroup = 79B92BB328B03B1F00544939 /* Products */;
@@ -1547,14 +1543,6 @@
 				minimumVersion = 5.1.9;
 			};
 		};
-		797469C82BCCA5DB00328027 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.2;
-			};
-		};
 		797469CB2BCCA60700328027 /* XCRemoteSwiftPackageReference "SimpleHaptics" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/notbd/SimpleHaptics";
@@ -1570,11 +1558,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 797469C52BCCA5C100328027 /* XCRemoteSwiftPackageReference "AlertKit" */;
 			productName = AlertKit;
-		};
-		797469C92BCCA5DB00328027 /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 797469C82BCCA5DB00328027 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
 		};
 		797469CC2BCCA60700328027 /* SimpleHaptics */ = {
 			isa = XCSwiftPackageProductDependency;
