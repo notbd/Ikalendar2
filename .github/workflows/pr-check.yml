@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [main, dev]
 
+env:
+  # Pinned tool versions: runner-preinstalled formatters drift across images and
+  # rule behavior changes between releases (e.g. swiftTestingTestCaseNames in 0.60+).
+  SWIFTFORMAT_VERSION: "0.61.1"
+  SWIFTLINT_VERSION: "0.63.3"
+
 jobs:
   lint:
     name: Lint Code
@@ -15,11 +21,22 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Install SwiftFormat (pinned)
+        run: |
+          curl -sSL -o /tmp/swiftformat.zip "https://github.com/nicklockwood/SwiftFormat/releases/download/${SWIFTFORMAT_VERSION}/swiftformat.zip"
+          unzip -o /tmp/swiftformat.zip -d /tmp/swiftformat
+          sudo install /tmp/swiftformat/swiftformat /usr/local/bin/swiftformat
+          swiftformat --version
+
       - name: Run SwiftFormat
         run: swiftformat --lint . --reporter github-actions-log
 
-      - name: Install SwiftLint
-        run: brew install swiftlint
+      - name: Install SwiftLint (pinned)
+        run: |
+          curl -sSL -o /tmp/swiftlint.zip "https://github.com/realm/SwiftLint/releases/download/${SWIFTLINT_VERSION}/portable_swiftlint.zip"
+          unzip -o /tmp/swiftlint.zip -d /tmp/swiftlint
+          sudo install /tmp/swiftlint/swiftlint /usr/local/bin/swiftlint
+          swiftlint version
 
       - name: Run SwiftLint
         run: swiftlint
@@ -46,11 +63,21 @@ jobs:
       - name: Install xcpretty
         run: gem install xcpretty --no-document
 
+      - name: Cache Swift Packages
+        uses: actions/cache@v4
+        with:
+          path: SourcePackages
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
       - name: Run Unit Tests
         run: |
+          set -o pipefail
           xcodebuild test \
             -project Ikalendar2.xcodeproj \
             -scheme Ikalendar2 \
             -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
+            -clonedSourcePackagesDirPath SourcePackages \
             -enableCodeCoverage YES \
             | xcpretty && exit ${PIPESTATUS[0]}
