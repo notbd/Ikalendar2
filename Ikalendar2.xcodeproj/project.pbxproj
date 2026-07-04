@@ -14,6 +14,7 @@
 		61526F122E07802D00375181 /* IkalendarKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6163C16F2EB0072700E47B4C /* FlatMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6163C16E2EB0072300E47B4C /* FlatMode.swift */; };
 		61BB938C2E07CDD1002577EA /* IkalendarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; };
+		61C4A00C2EF1CD00002577EA /* IkalendarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; };
 		7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2528C4322100245586 /* IkaDecoder.swift */; };
 		7903FE3028C437F900245586 /* QuickBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2F28C437F900245586 /* QuickBorder.swift */; };
 		7903FE3428C438B400245586 /* IkaFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3328C438B400245586 /* IkaFont.swift */; };
@@ -129,6 +130,13 @@
 			remoteGlobalIDString = 79B92BB128B03B1F00544939;
 			remoteInfo = Ikalendar2;
 		};
+		61C4A0072EF1CD00002577EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79B92BAA28B03B1F00544939 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 79B92BB128B03B1F00544939;
+			remoteInfo = Ikalendar2;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -152,6 +160,7 @@
 		61526EFE2E07802D00375181 /* IkalendarKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IkalendarKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6163C16E2EB0072300E47B4C /* FlatMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatMode.swift; sourceTree = "<group>"; };
 		61BB93882E07CDD1002577EA /* IkalendarKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IkalendarKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		61C4A0022EF1CD00002577EA /* Ikalendar2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Ikalendar2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7903FE2528C4322100245586 /* IkaDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaDecoder.swift; sourceTree = "<group>"; };
 		7903FE2F28C437F900245586 /* QuickBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBorder.swift; sourceTree = "<group>"; };
 		7903FE3328C438B400245586 /* IkaFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaFont.swift; sourceTree = "<group>"; };
@@ -252,6 +261,7 @@
 		61526EFF2E07802D00375181 /* IkalendarKit */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IkalendarKit; sourceTree = "<group>"; };
 		6163BFFB2EAFD82800E47B4C /* TabView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TabView; sourceTree = "<group>"; };
 		61BB93892E07CDD1002577EA /* IkalendarKitTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IkalendarKitTests; sourceTree = "<group>"; };
+		61C4A0032EF1CD00002577EA /* Ikalendar2Tests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Ikalendar2Tests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +288,14 @@
 				61526F112E07802D00375181 /* IkalendarKit.framework in Frameworks */,
 				797469C72BCCA5C100328027 /* AlertKit in Frameworks */,
 				797469CD2BCCA60700328027 /* SimpleHaptics in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61C4A0052EF1CD00002577EA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61C4A00C2EF1CD00002577EA /* IkalendarKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +615,7 @@
 				79B92BCC28B044B400544939 /* .swiftlint.yml */,
 				61526EFF2E07802D00375181 /* IkalendarKit */,
 				61BB93892E07CDD1002577EA /* IkalendarKitTests */,
+				61C4A0032EF1CD00002577EA /* Ikalendar2Tests */,
 				79B92BB328B03B1F00544939 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -607,6 +626,7 @@
 				79B92BB228B03B1F00544939 /* Ikalendar2.app */,
 				61526EFE2E07802D00375181 /* IkalendarKit.framework */,
 				61BB93882E07CDD1002577EA /* IkalendarKitTests.xctest */,
+				61C4A0022EF1CD00002577EA /* Ikalendar2Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -794,6 +814,29 @@
 			productReference = 79B92BB228B03B1F00544939 /* Ikalendar2.app */;
 			productType = "com.apple.product-type.application";
 		};
+		61C4A0012EF1CD00002577EA /* Ikalendar2Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61C4A00B2EF1CD00002577EA /* Build configuration list for PBXNativeTarget "Ikalendar2Tests" */;
+			buildPhases = (
+				61C4A0042EF1CD00002577EA /* Sources */,
+				61C4A0052EF1CD00002577EA /* Frameworks */,
+				61C4A0062EF1CD00002577EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				61C4A0082EF1CD00002577EA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				61C4A0032EF1CD00002577EA /* Ikalendar2Tests */,
+			);
+			name = Ikalendar2Tests;
+			packageProductDependencies = (
+			);
+			productName = Ikalendar2Tests;
+			productReference = 61C4A0022EF1CD00002577EA /* Ikalendar2Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -809,6 +852,10 @@
 					};
 					61BB93872E07CDD1002577EA = {
 						CreatedOnToolsVersion = 16.4;
+					};
+					61C4A0012EF1CD00002577EA = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 79B92BB128B03B1F00544939;
 					};
 					79B92BB128B03B1F00544939 = {
 						CreatedOnToolsVersion = 14.0;
@@ -837,6 +884,7 @@
 				79B92BB128B03B1F00544939 /* Ikalendar2 */,
 				61526EFD2E07802D00375181 /* IkalendarKit */,
 				61BB93872E07CDD1002577EA /* IkalendarKitTests */,
+				61C4A0012EF1CD00002577EA /* Ikalendar2Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -870,6 +918,13 @@
 				79385E252AC61C27003D6FD7 /* LICENSE in Resources */,
 				79385E242AC61C27003D6FD7 /* README.md in Resources */,
 				79B92BCB28B044A200544939 /* .swiftformat in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		61C4A0062EF1CD00002577EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1001,6 +1056,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		61C4A0042EF1CD00002577EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1018,6 +1080,11 @@
 			isa = PBXTargetDependency;
 			target = 79B92BB128B03B1F00544939 /* Ikalendar2 */;
 			targetProxy = 61BB939C2E07CE23002577EA /* PBXContainerItemProxy */;
+		};
+		61C4A0082EF1CD00002577EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 79B92BB128B03B1F00544939 /* Ikalendar2 */;
+			targetProxy = 61C4A0072EF1CD00002577EA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1378,6 +1445,49 @@
 			};
 			name = Release;
 		};
+		61C4A0092EF1CD00002577EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6417;
+				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.tianwei.Ikalendar2Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ikalendar2.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Ikalendar2";
+			};
+			name = Debug;
+		};
+		61C4A00A2EF1CD00002577EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6417;
+				DEVELOPMENT_TEAM = 4BQ4DS4G2A;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.tianwei.Ikalendar2Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ikalendar2.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Ikalendar2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1413,6 +1523,15 @@
 			buildConfigurations = (
 				79B92BC128B03B2200544939 /* Debug */,
 				79B92BC228B03B2200544939 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		61C4A00B2EF1CD00002577EA /* Build configuration list for PBXNativeTarget "Ikalendar2Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61C4A0092EF1CD00002577EA /* Debug */,
+				61C4A00A2EF1CD00002577EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
