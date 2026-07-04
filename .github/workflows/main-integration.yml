@@ -46,7 +46,7 @@ jobs:
           set -o pipefail
           xcodebuild test \
             -project Ikalendar2.xcodeproj \
-            -scheme IkalendarKit \
+            -scheme Ikalendar2 \
             -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
             -enableCodeCoverage YES \
             | xcpretty && exit ${PIPESTATUS[0]}
