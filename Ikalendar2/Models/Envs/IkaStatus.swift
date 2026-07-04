@@ -8,14 +8,13 @@
 import Foundation
 import SimpleHaptics
 
-/// An EnvObj class that is shared among all the views.
-/// Contains the app status.
+/// An observable data store shared across views, holding the in-session app status
+/// (current mode selection and settings presentation).
 @MainActor
 @Observable
 final class IkaStatus {
-  static let shared: IkaStatus = .init()
-
-  private var isSyncing = false
+  @ObservationIgnored private let ikaPreference: IkaPreference
+  @ObservationIgnored private var isSyncing = false
 
   var isSettingsPresented: Bool = false
   {
@@ -26,7 +25,7 @@ final class IkaStatus {
     }
   }
 
-  var currentFlatMode: FlatMode = IkaPreference.shared.preferredDefaultFlatMode
+  var currentFlatMode: FlatMode
   {
     willSet {
       guard newValue != currentFlatMode, !isSyncing else { return }
@@ -55,7 +54,7 @@ final class IkaStatus {
     }
   }
 
-  var currentGameMode: GameMode = IkaPreference.shared.preferredDefaultGameMode
+  var currentGameMode: GameMode
   {
     willSet {
       guard newValue != currentGameMode, !isSyncing else { return }
@@ -65,14 +64,14 @@ final class IkaStatus {
 
       switch newValue {
         case .battle:
-          currentFlatMode = .init(rawValue: currentBattleMode.rawValue)!
+          currentFlatMode = .init(rawValue: currentBattleMode.rawValue) ?? .default
         case .salmon:
           currentFlatMode = .salmon
       }
     }
   }
 
-  var currentBattleMode: BattleMode = IkaPreference.shared.preferredDefaultBattleMode
+  var currentBattleMode: BattleMode
   {
     willSet {
       guard newValue != currentBattleMode, !isSyncing else { return }
@@ -91,12 +90,19 @@ final class IkaStatus {
     }
   }
 
-  private init() { }
+  init(ikaPreference: IkaPreference) {
+    self.ikaPreference = ikaPreference
+    // Direct init assignments skip willSet/didSet: no sync cascade, no launch haptics -
+    // same as the previous stored-property-default behavior.
+    currentFlatMode = ikaPreference.preferredDefaultFlatMode
+    currentGameMode = ikaPreference.preferredDefaultGameMode
+    currentBattleMode = ikaPreference.preferredDefaultBattleMode
+  }
 
   func resetStatuses(shouldExitSettings: Bool = false) {
-    currentFlatMode = IkaPreference.shared.preferredDefaultFlatMode
-    currentGameMode = IkaPreference.shared.preferredDefaultGameMode
-    currentBattleMode = IkaPreference.shared.preferredDefaultBattleMode
+    currentFlatMode = ikaPreference.preferredDefaultFlatMode
+    currentGameMode = ikaPreference.preferredDefaultGameMode
+    currentBattleMode = ikaPreference.preferredDefaultBattleMode
     if shouldExitSettings {
       isSettingsPresented = false
     }

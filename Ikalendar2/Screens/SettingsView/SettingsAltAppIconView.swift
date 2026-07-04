@@ -20,10 +20,10 @@ struct SettingsAltAppIconView: View {
   @Environment(\.colorScheme) private var colorScheme
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
-  @EnvironmentObject private var ikaLog: IkaLog
+  @Environment(IkaPreference.self) private var ikaPreference
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
-  @Environment(IkaInternetConnectivityPublisher.self) var gfwMonitor
+  @Environment(IkaConnectivityChecker.self) var connectivityChecker
 
   @State private var doesPreferRickOnAppear: Bool = false
   @State private var triggeredEasterEgg: Bool = false
@@ -130,7 +130,7 @@ struct SettingsAltAppIconView: View {
       .navigationBarTitleDisplayMode(.large)
       .listStyle(.insetGrouped)
       .onAppear {
-        if !ikaLog.hasDiscoveredAltAppIcon { ikaLog.hasDiscoveredAltAppIcon = true }
+        if !ikaDiscoveryLog.hasDiscoveredAltAppIcon { ikaDiscoveryLog.hasDiscoveredAltAppIcon = true }
         startSlideShow()
       }
       .onChange(of: slideShowProgress) { oldVal, _ in
@@ -161,7 +161,7 @@ struct SettingsAltAppIconView: View {
     }
     .onAppear {
       doesPreferRickOnAppear = ikaPreference.preferredAppIcon == .rick
-      Task { await gfwMonitor.performGFWCheck() }
+      Task { await connectivityChecker.performGFWCheck() }
     }
     .onChange(of: easterEggBounceCounter) {
       shouldDisplayAnimatedCopy = true
@@ -314,7 +314,7 @@ struct SettingsAltAppIconView: View {
       withAnimation { triggeredEasterEgg.toggle() }
     }
     label: {
-      if ikaLog.hasDiscoveredEasterEgg {
+      if ikaDiscoveryLog.hasDiscoveredEasterEgg {
         Image(systemName: showEasterEgg ? "party.popper.fill" : "party.popper")
           .transition(.symbolEffect(.automatic))
       }
@@ -325,7 +325,7 @@ struct SettingsAltAppIconView: View {
     .foregroundStyle(
       Color.accentColor
         .opacity(
-          ikaLog.hasDiscoveredEasterEgg
+          ikaDiscoveryLog.hasDiscoveredEasterEgg
             ? 1
             : colorScheme == .light
               ? 0.07

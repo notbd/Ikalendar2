@@ -12,10 +12,10 @@ import SwiftUI
 struct SettingsDebugOptionsView: View {
   @Environment(IkaStatus.self) private var ikaStatus
 
-  @EnvironmentObject private var ikaLog: IkaLog
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
+  @Environment(IkaPreference.self) private var ikaPreference
 
-  @Environment(IkaInternetConnectivityPublisher.self) var gfwMonitor
+  @Environment(IkaConnectivityChecker.self) var connectivityChecker
 
   @ScaledMetric(relativeTo: .title) var squidBumperHeight: CGFloat = 50
 
@@ -56,7 +56,7 @@ struct SettingsDebugOptionsView: View {
   private var rowShowOnboarding: some View {
     Button {
       ikaStatus.isSettingsPresented = false
-      ikaLog.shouldShowOnboarding = true
+      ikaDiscoveryLog.shouldShowOnboarding = true
       SimpleHaptics.generateTask(.selection)
     } label: {
       Text("Show Onboarding Screen")
@@ -66,10 +66,10 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAppStates: some View {
     Button {
-      gfwMonitor.resetStatus()
+      connectivityChecker.resetStatus()
       ikaPreference.revertEasterEggAppIcon()
       ikaStatus.resetStatuses(shouldExitSettings: false)
-      ikaLog.resetStates(shouldResetOnboarding: false)
+      ikaDiscoveryLog.resetStates(shouldResetOnboarding: false)
       AlertKitAPI.present(
         title: String(localized: "States Reset"),
         icon: .done,
@@ -97,10 +97,10 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAll: some View {
     Button {
-      gfwMonitor.resetStatus()
+      connectivityChecker.resetStatus()
       ikaPreference.resetPreferences()
       ikaStatus.resetStatuses(shouldExitSettings: true)
-      ikaLog.resetStates(shouldResetOnboarding: true)
+      ikaDiscoveryLog.resetStates(shouldResetOnboarding: true)
       AlertKitAPI.present(
         title: String(localized: "All Reset"),
         icon: .done,

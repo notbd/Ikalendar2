@@ -13,7 +13,7 @@ import SwiftUI
 struct AltAppIconRow: View {
   typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   let ikaAppIcon: IkaAppIcon
   @Binding var appIconColorVariant: IkaAppIcon.ColorVariant
@@ -75,10 +75,10 @@ struct AltAppIconEasterEggRow: View {
   @Environment(\.openURL) private var openURL
   @Environment(\.locale) private var currentLocale
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
-  @EnvironmentObject private var ikaLog: IkaLog
+  @Environment(IkaPreference.self) private var ikaPreference
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
-  @Environment(IkaInternetConnectivityPublisher.self) var gfwMonitor
+  @Environment(IkaConnectivityChecker.self) var connectivityChecker
 
   let ikaAppIcon: IkaAppIcon
   @Binding var appIconColorVariant: IkaAppIcon.ColorVariant
@@ -91,9 +91,9 @@ struct AltAppIconEasterEggRow: View {
   var body: some View {
     Button {
       // jump to the good stuff
-      if !ikaLog.hasDiscoveredEasterEgg { Task { await jumpToURLAfterDelay() } }
+      if !ikaDiscoveryLog.hasDiscoveredEasterEgg { Task { await jumpToURLAfterDelay() } }
       // set flag: has discovered easter egg
-      if !ikaLog.hasDiscoveredEasterEgg { ikaLog.hasDiscoveredEasterEgg = true }
+      if !ikaDiscoveryLog.hasDiscoveredEasterEgg { ikaDiscoveryLog.hasDiscoveredEasterEgg = true }
       // add compensatory haptics for repeated button presses
       if ikaPreference.preferredAppIcon == .rick { SimpleHaptics.generateTask(.medium) }
       // trigger animation
@@ -137,7 +137,7 @@ struct AltAppIconEasterEggRow: View {
 
   private func jumpToURLAfterDelay() async {
     try? await Task.sleep(nanoseconds: UInt64(1.3 * 1_000_000_000))
-    let goodStuffURLString = gfwMonitor.isGFWed
+    let goodStuffURLString = connectivityChecker.isGFWed
       ? Constants.Key.URL.THE_GOOD_STUFF_CN
       : Constants.Key.URL.THE_GOOD_STUFF
     guard let url = URL(string: goodStuffURLString) else { return }

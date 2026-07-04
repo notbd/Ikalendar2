@@ -11,7 +11,7 @@ struct RotationsTabsView: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   var body: some View {
     @Bindable var ikaStatus = ikaStatus

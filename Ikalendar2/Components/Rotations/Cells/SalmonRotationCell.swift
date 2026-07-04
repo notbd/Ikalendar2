@@ -15,7 +15,7 @@ import SwiftUI
 struct SalmonRotationCell: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: SalmonRotation
   let rowWidth: CGFloat
@@ -34,7 +34,7 @@ struct SalmonRotationCell: View {
       if hasStageAndWeapon {
         stageAndWeaponSection
 
-        if rotation.isCurrent(ikaTimePublisher.currentTime) {
+        if rotation.isCurrent(ikaClock.currentTime) {
           progressSection
             .transition(.opacity.animation(.default))
         }
@@ -53,12 +53,12 @@ struct SalmonRotationCell: View {
 
   private var progressSection: some View {
     ProgressView(
-      value: min(ikaTimePublisher.currentTime, rotation.endTime) - rotation.startTime,
+      value: min(ikaClock.currentTime, rotation.endTime) - rotation.startTime,
       total: rotation.endTime - rotation.startTime,
       label: {
-        Text(ikaTimePublisher.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
+        Text(ikaClock.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
           .contentTransition(.numericText(countsDown: true))
-          .animation(.snappy, value: ikaTimePublisher.currentTime)
+          .animation(.snappy, value: ikaClock.currentTime)
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
@@ -77,7 +77,7 @@ struct SalmonRotationCell: View {
 struct SalmonRotationCellTimeTextSection: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell.TimeTextSection
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   @Environment(\.colorScheme) private var colorScheme
   private var colorSchemeAwareGlass: Glass {
@@ -89,23 +89,23 @@ struct SalmonRotationCellTimeTextSection: View {
 
   var body: some View {
     HStack {
-      Image(rotation.isCurrent(ikaTimePublisher.currentTime) ? .goldenEgg : .salmon)
+      Image(rotation.isCurrent(ikaClock.currentTime) ? .goldenEgg : .salmon)
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
         .frame(height: rowWidth * Scoped.SALMON_ICON_HEIGHT_RATIO)
-        .if(rotation.isCurrent(ikaTimePublisher.currentTime)) {
+        .if(rotation.isCurrent(ikaClock.currentTime)) {
           $0
             .glassEffect(
               colorSchemeAwareGlass.interactive(),
               in: .circle)
         }
         .scaleEffect(
-          rotation.isCurrent(ikaTimePublisher.currentTime)
+          rotation.isCurrent(ikaClock.currentTime)
             ? Scoped.ICON_GOLDEN_EGG_SCALE_FACTOR
             : Scoped.ICON_SALMON_FISH_SCALE_FACTOR)
-          .animation(.default, value: rotation.isCurrent(ikaTimePublisher.currentTime))
+          .animation(.default, value: rotation.isCurrent(ikaClock.currentTime))
 
       Spacer()
 

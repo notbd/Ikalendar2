@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsEntryView: View {
-  @EnvironmentObject private var ikaLog: IkaLog
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
   var body: some View {
     NavigationView {

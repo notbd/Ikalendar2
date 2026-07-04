@@ -61,7 +61,7 @@ struct BattleRotationCellPrimary: View {
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
@@ -78,7 +78,7 @@ struct BattleRotationCellPrimary: View {
       }
 
       ProgressView(
-        value: min(ikaTimePublisher.currentTime, rotation.endTime) - rotation.startTime,
+        value: min(ikaClock.currentTime, rotation.endTime) - rotation.startTime,
         total: rotation.endTime - rotation.startTime)
         .padding(.bottom, Scoped.PROGRESS_BAR_PADDING_BOTTOM)
         .tint(rotation.mode.themeColor)
@@ -178,9 +178,9 @@ struct BattleRotationCellPrimary: View {
   // MARK: Remaining Time Section
 
   private var remainingTimeSection: some View {
-    Text(ikaTimePublisher.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
+    Text(ikaClock.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
       .contentTransition(.numericText(countsDown: true))
-      .animation(.snappy, value: ikaTimePublisher.currentTime)
+      .animation(.snappy, value: ikaClock.currentTime)
       .scaledLimitedLine()
       .foregroundStyle(Color.secondary)
       .ikaFont(
@@ -209,7 +209,7 @@ struct BattleRotationCellSecondary: View {
     colorScheme == .dark ? .clear : .regular
   }
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   let rotation: BattleRotation
   let rowWidth: CGFloat

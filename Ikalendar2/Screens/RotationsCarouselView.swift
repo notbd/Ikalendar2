@@ -16,10 +16,10 @@ struct RotationsCarouselView: View {
 
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
-  @Environment(IkaInterfaceOrientationPublisher.self) private var ikaInterfaceOrientationPublisher
-  private var isLandscape: Bool { ikaInterfaceOrientationPublisher.currentOrientation.isLandscape }
+  @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor
+  private var isLandscape: Bool { ikaOrientationMonitor.currentOrientation.isLandscape }
 
   @State private var windowWidth: CGFloat = .zero
 

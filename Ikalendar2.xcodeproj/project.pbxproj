@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		61327AAE2EB58C360076DD3B /* BlurFade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61327AAD2EB58C320076DD3B /* BlurFade.swift */; };
-		613286FD2EB70D7E0076DD3B /* IkaInternetConnectivityPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613286FC2EB70D620076DD3B /* IkaInternetConnectivityPublisher.swift */; };
+		613286FD2EB70D7E0076DD3B /* IkaConnectivityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613286FC2EB70D620076DD3B /* IkaConnectivityChecker.swift */; };
 		6146761C2ECACDFE00400325 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6146761B2ECACDFE00400325 /* Assets.xcassets */; };
 		61526F112E07802D00375181 /* IkalendarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; };
 		61526F122E07802D00375181 /* IkalendarKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -21,7 +21,7 @@
 		7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3728C4395600245586 /* ScaledLimitedLine.swift */; };
 		7903FE4028C43A0F00245586 /* Inkling_v2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7903FE3D28C43A0F00245586 /* Inkling_v2.otf */; };
 		7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4228C43AB800245586 /* GrizzcoWeapon.swift */; };
-		7903FE5528C45FC000245586 /* IkaDeviceMotionPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5428C45FBF00245586 /* IkaDeviceMotionPublisher.swift */; };
+		7903FE5528C45FC000245586 /* IkaDeviceMotionMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE5428C45FBF00245586 /* IkaDeviceMotionMonitor.swift */; };
 		7903FE6128C46A1700245586 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6028C46A1700245586 /* RootView.swift */; };
 		7903FE6328C46A3400245586 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6228C46A3400245586 /* EntryView.swift */; };
 		7903FE6528C46A4D00245586 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE6428C46A4D00245586 /* ErrorView.swift */; };
@@ -68,11 +68,11 @@
 		799235AB2AB2DAD60071AA72 /* SalmonStageAndWeaponsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799235AA2AB2DAD60071AA72 /* SalmonStageAndWeaponsLayout.swift */; };
 		799235AE2AB3926F0071AA72 /* BattleStagesImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799235AD2AB3926F0071AA72 /* BattleStagesImageAlignment.swift */; };
 		799235B02AB394D30071AA72 /* BattleSecondaryStagesLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799235AF2AB394D30071AA72 /* BattleSecondaryStagesLayout.swift */; };
-		7992CB742ABD564F0088C974 /* IkaLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7992CB732ABD564F0088C974 /* IkaLog.swift */; };
+		7992CB742ABD564F0088C974 /* IkaDiscoveryLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7992CB732ABD564F0088C974 /* IkaDiscoveryLog.swift */; };
 		79A7258F2A5E9367007E9C92 /* ConfigConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
 		79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713128C4052300A91055 /* IkaCatalog.swift */; };
-		79AA713428C4056700A91055 /* IkaTimePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713328C4056700A91055 /* IkaTimePublisher.swift */; };
+		79AA713428C4056700A91055 /* IkaClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713328C4056700A91055 /* IkaClock.swift */; };
 		79AA713628C4070700A91055 /* IkaStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713528C4070700A91055 /* IkaStatus.swift */; };
 		79AA713928C4079900A91055 /* IkaMockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713828C4079900A91055 /* IkaMockData.swift */; };
 		79AA713C28C407F500A91055 /* IkaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713B28C407F500A91055 /* IkaError.swift */; };
@@ -101,7 +101,7 @@
 		79DD1F3B2A5B8A800093784D /* IkaNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DD1F3A2A5B8A800093784D /* IkaNetworkManager.swift */; };
 		79EE3AB32AB935E900409733 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79EE3AB52AB935E900409733 /* Localizable.strings */; };
 		79EE3AB82AB951E900409733 /* IdealFontLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EE3AB72AB951E900409733 /* IdealFontLayout.swift */; };
-		79F90AF82AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AF72AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift */; };
+		79F90AF82AB0B99700B454B9 /* IkaOrientationMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AF72AB0B99700B454B9 /* IkaOrientationMonitor.swift */; };
 		79F90AFA2AB1112700B454B9 /* IkaLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AF92AB1112700B454B9 /* IkaLocale.swift */; };
 		79F90AFE2AB24DC000B454B9 /* RotationsCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */; };
 		79FCDF7D2AC4C8300082A4D3 /* SettingsDebugOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FCDF7C2AC4C8300082A4D3 /* SettingsDebugOptionsView.swift */; };
@@ -147,7 +147,7 @@
 
 /* Begin PBXFileReference section */
 		61327AAD2EB58C320076DD3B /* BlurFade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurFade.swift; sourceTree = "<group>"; };
-		613286FC2EB70D620076DD3B /* IkaInternetConnectivityPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaInternetConnectivityPublisher.swift; sourceTree = "<group>"; };
+		613286FC2EB70D620076DD3B /* IkaConnectivityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaConnectivityChecker.swift; sourceTree = "<group>"; };
 		6146761B2ECACDFE00400325 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61526EFE2E07802D00375181 /* IkalendarKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IkalendarKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6163C16E2EB0072300E47B4C /* FlatMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatMode.swift; sourceTree = "<group>"; };
@@ -159,7 +159,7 @@
 		7903FE3728C4395600245586 /* ScaledLimitedLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledLimitedLine.swift; sourceTree = "<group>"; };
 		7903FE3D28C43A0F00245586 /* Inkling_v2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inkling_v2.otf; sourceTree = "<group>"; };
 		7903FE4228C43AB800245586 /* GrizzcoWeapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrizzcoWeapon.swift; sourceTree = "<group>"; };
-		7903FE5428C45FBF00245586 /* IkaDeviceMotionPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaDeviceMotionPublisher.swift; sourceTree = "<group>"; };
+		7903FE5428C45FBF00245586 /* IkaDeviceMotionMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaDeviceMotionMonitor.swift; sourceTree = "<group>"; };
 		7903FE6028C46A1700245586 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		7903FE6228C46A3400245586 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		7903FE6428C46A4D00245586 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -203,11 +203,11 @@
 		799235AA2AB2DAD60071AA72 /* SalmonStageAndWeaponsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonStageAndWeaponsLayout.swift; sourceTree = "<group>"; };
 		799235AD2AB3926F0071AA72 /* BattleStagesImageAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleStagesImageAlignment.swift; sourceTree = "<group>"; };
 		799235AF2AB394D30071AA72 /* BattleSecondaryStagesLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSecondaryStagesLayout.swift; sourceTree = "<group>"; };
-		7992CB732ABD564F0088C974 /* IkaLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaLog.swift; sourceTree = "<group>"; };
+		7992CB732ABD564F0088C974 /* IkaDiscoveryLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaDiscoveryLog.swift; sourceTree = "<group>"; };
 		79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigConstants.swift; sourceTree = "<group>"; };
 		79AA712F28C404FD00A91055 /* IkaPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreference.swift; sourceTree = "<group>"; };
 		79AA713128C4052300A91055 /* IkaCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaCatalog.swift; sourceTree = "<group>"; };
-		79AA713328C4056700A91055 /* IkaTimePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaTimePublisher.swift; sourceTree = "<group>"; };
+		79AA713328C4056700A91055 /* IkaClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaClock.swift; sourceTree = "<group>"; };
 		79AA713528C4070700A91055 /* IkaStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaStatus.swift; sourceTree = "<group>"; };
 		79AA713828C4079900A91055 /* IkaMockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaMockData.swift; sourceTree = "<group>"; };
 		79AA713B28C407F500A91055 /* IkaError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaError.swift; sourceTree = "<group>"; };
@@ -240,7 +240,7 @@
 		79EE3AB42AB935E900409733 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		79EE3AB62AB935EE00409733 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		79EE3AB72AB951E900409733 /* IdealFontLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdealFontLayout.swift; sourceTree = "<group>"; };
-		79F90AF72AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaInterfaceOrientationPublisher.swift; sourceTree = "<group>"; };
+		79F90AF72AB0B99700B454B9 /* IkaOrientationMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaOrientationMonitor.swift; sourceTree = "<group>"; };
 		79F90AF92AB1112700B454B9 /* IkaLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaLocale.swift; sourceTree = "<group>"; };
 		79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationsCarouselView.swift; sourceTree = "<group>"; };
 		79FCDF7C2AC4C8300082A4D3 /* SettingsDebugOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDebugOptionsView.swift; sourceTree = "<group>"; };
@@ -512,7 +512,7 @@
 				79AA713128C4052300A91055 /* IkaCatalog.swift */,
 				79AA713528C4070700A91055 /* IkaStatus.swift */,
 				79AA712F28C404FD00A91055 /* IkaPreference.swift */,
-				7992CB732ABD564F0088C974 /* IkaLog.swift */,
+				7992CB732ABD564F0088C974 /* IkaDiscoveryLog.swift */,
 			);
 			path = Envs;
 			sourceTree = "<group>";
@@ -687,10 +687,10 @@
 		79D983B42A5D45C500B5202F /* Publishers */ = {
 			isa = PBXGroup;
 			children = (
-				613286FC2EB70D620076DD3B /* IkaInternetConnectivityPublisher.swift */,
-				79AA713328C4056700A91055 /* IkaTimePublisher.swift */,
-				7903FE5428C45FBF00245586 /* IkaDeviceMotionPublisher.swift */,
-				79F90AF72AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift */,
+				613286FC2EB70D620076DD3B /* IkaConnectivityChecker.swift */,
+				79AA713328C4056700A91055 /* IkaClock.swift */,
+				7903FE5428C45FBF00245586 /* IkaDeviceMotionMonitor.swift */,
+				79F90AF72AB0B99700B454B9 /* IkaOrientationMonitor.swift */,
 			);
 			path = Publishers;
 			sourceTree = "<group>";
@@ -966,7 +966,7 @@
 				79D3E67128C41D7B00005DB5 /* SalmonApparel.swift in Sources */,
 				7966346E2AC147FC00AE82E2 /* GlobalPosition.swift in Sources */,
 				7903FE8D28C46F9100245586 /* StageTitleLabel.swift in Sources */,
-				7903FE5528C45FC000245586 /* IkaDeviceMotionPublisher.swift in Sources */,
+				7903FE5528C45FC000245586 /* IkaDeviceMotionMonitor.swift in Sources */,
 				7903FE8528C46F3E00245586 /* SalmonRotationCell.swift in Sources */,
 				797EA68E2AACF1350095A23B /* DetailsLicenseView.swift in Sources */,
 				796634712AC1578900AE82E2 /* AltAppIconRow.swift in Sources */,
@@ -978,7 +978,7 @@
 				7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */,
 				797EA6902AAD16620095A23B /* IkaOpenSourceLicense.swift in Sources */,
 				7903FE7028C46CEF00245586 /* SettingsAltAppIconView.swift in Sources */,
-				79AA713428C4056700A91055 /* IkaTimePublisher.swift in Sources */,
+				79AA713428C4056700A91055 /* IkaClock.swift in Sources */,
 				79EE3AB82AB951E900409733 /* IdealFontLayout.swift in Sources */,
 				7943DFC32AB5398D0047250E /* SalmonRotationList.swift in Sources */,
 				7903FE8B28C46F7A00245586 /* SalmonRotationWeaponsCard.swift in Sources */,
@@ -987,12 +987,12 @@
 				6163C16F2EB0072700E47B4C /* FlatMode.swift in Sources */,
 				7939EC182AC5133900AC48C4 /* SettingsEntryView.swift in Sources */,
 				7903FE8928C46F6B00245586 /* SalmonRotationStageCard.swift in Sources */,
-				7992CB742ABD564F0088C974 /* IkaLog.swift in Sources */,
+				7992CB742ABD564F0088C974 /* IkaDiscoveryLog.swift in Sources */,
 				7903FE7628C46D6100245586 /* OnboardingView.swift in Sources */,
 				79AA715928C4160D00A91055 /* MysteryWeapon.swift in Sources */,
-				79F90AF82AB0B99700B454B9 /* IkaInterfaceOrientationPublisher.swift in Sources */,
+				79F90AF82AB0B99700B454B9 /* IkaOrientationMonitor.swift in Sources */,
 				7903FE7428C46D4100245586 /* SettingsCreditsView.swift in Sources */,
-				613286FD2EB70D7E0076DD3B /* IkaInternetConnectivityPublisher.swift in Sources */,
+				613286FD2EB70D7E0076DD3B /* IkaConnectivityChecker.swift in Sources */,
 				7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */,
 				799235AB2AB2DAD60071AA72 /* SalmonStageAndWeaponsLayout.swift in Sources */,
 				79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */,

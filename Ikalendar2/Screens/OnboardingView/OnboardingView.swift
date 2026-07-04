@@ -16,7 +16,7 @@ struct OnboardingView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
-  @EnvironmentObject private var ikaLog: IkaLog
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
   @State private var startAnimation: Bool = false
   @State private var startPulse: Bool = false
@@ -127,7 +127,7 @@ struct OnboardingView: View {
   private var button: some View {
     Button {
       SimpleHaptics.generateTask(.success)
-      ikaLog.shouldShowOnboarding = false
+      ikaDiscoveryLog.shouldShowOnboarding = false
     } label: {
       Text("Get Started")
         .font(Scoped.BUTTON_FONT)

@@ -1,5 +1,5 @@
 //
-//  IkaInternetConnectivityPublisher.swift
+//  IkaConnectivityChecker.swift
 //  Ikalendar2
 //
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
@@ -7,8 +7,11 @@
 
 import Foundation
 
+/// An observable on-demand checker for restricted network environments (GFW).
+/// `isGFWed` flips to true (and stays true) once all test domains are unreachable.
+@MainActor
 @Observable
-final class IkaInternetConnectivityPublisher {
+final class IkaConnectivityChecker {
   var isGFWed: Bool = false
   private(set) var checkInProgress: Bool = false
 
@@ -30,7 +33,6 @@ final class IkaInternetConnectivityPublisher {
     session = URLSession(configuration: config)
   }
 
-  @MainActor
   func performGFWCheck() async {
     guard !checkInProgress else { return }
 
@@ -39,7 +41,7 @@ final class IkaInternetConnectivityPublisher {
     var failedChecksCount: Int = 0
     let totalChecks = testDomains.count
 
-    await withTaskGroup(of: Bool.self) { group in
+    await withTaskGroup(of: Bool.self) { [session] group in
       for domain in testDomains {
         group.addTask {
           guard let url = URL(string: "https://\(domain)") else {
@@ -48,7 +50,7 @@ final class IkaInternetConnectivityPublisher {
           }
 
           do {
-            _ = try await self.session.data(for: URLRequest(url: url))
+            _ = try await session.data(for: URLRequest(url: url))
             // For GFW specifically, simply getting *any* HTTP response usually means
             // it isn't GFW-blocked at the network level.
             return true

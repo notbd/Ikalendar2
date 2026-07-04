@@ -19,7 +19,7 @@ struct SettingsAdvancedOptionsView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   @State private var isBottomToolbarPreviewPresented = false
 
@@ -75,7 +75,8 @@ struct SettingsAdvancedOptionsView: View {
   }
 
   private var rowTabBarMinimizingSwitch: some View {
-    Toggle(isOn: $ikaPreference.shouldMinimizeTabBar) {
+    @Bindable var ikaPreference = ikaPreference
+    return Toggle(isOn: $ikaPreference.shouldMinimizeTabBar) {
       Label {
         Text("Minimize Tab Bar")
           .foregroundStyle(.primary)
@@ -95,7 +96,8 @@ struct SettingsAdvancedOptionsView: View {
   }
 
   private var rowBottomToolbarPositioningSwitch: some View {
-    Toggle(isOn: $ikaPreference.shouldSwapBottomToolbarPickers) {
+    @Bindable var ikaPreference = ikaPreference
+    return Toggle(isOn: $ikaPreference.shouldSwapBottomToolbarPickers) {
       Label {
         Text("Swap Bottom Toolbar Pickers")
           .foregroundStyle(.primary)
@@ -115,7 +117,8 @@ struct SettingsAdvancedOptionsView: View {
   }
 
   private var rowAltStageImagesSwitch: some View {
-    Toggle(isOn: $ikaPreference.shouldUseAltStageImages) {
+    @Bindable var ikaPreference = ikaPreference
+    return Toggle(isOn: $ikaPreference.shouldUseAltStageImages) {
       Label {
         Text("Alternative Stage Images")
           .foregroundStyle(.primary)
@@ -206,7 +209,7 @@ struct BottomToolbarPositioningPreview: View {
   @Environment(\.dismiss) private var dismiss
 
   @Environment(IkaStatus.self) private var ikaStatus
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   var body: some View {
     HStack {
@@ -267,8 +270,9 @@ struct BottomToolbarPositioningPreview: View {
 
 struct SettingsAdvancedOptionsView_Previews: PreviewProvider {
   static var previews: some View {
-    SettingsAdvancedOptionsView()
-      .environment(IkaStatus.shared)
-      .environmentObject(IkaPreference.shared)
+    let ikaPreference: IkaPreference = .init()
+    return SettingsAdvancedOptionsView()
+      .environment(IkaStatus(ikaPreference: ikaPreference))
+      .environment(ikaPreference)
   }
 }

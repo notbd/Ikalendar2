@@ -15,7 +15,7 @@ struct RotationsSingularView: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   var body: some View {
     NavigationStack {
@@ -157,6 +157,8 @@ struct ToolbarGameModePicker: View {
 struct RotationView_Previews: PreviewProvider {
   static var previews: some View {
     RotationsSingularView()
-      .environment(IkaCatalog.shared)
+      .environment(IkaCatalog(
+        ikaNetworkService: IkaNetworkManager(),
+        ikaClock: IkaClock()))
   }
 }

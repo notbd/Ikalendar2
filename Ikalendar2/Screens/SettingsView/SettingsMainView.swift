@@ -22,8 +22,8 @@ struct SettingsMainView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
-  @EnvironmentObject private var ikaLog: IkaLog
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
+  @Environment(IkaPreference.self) private var ikaPreference
 
   @State private var rowWidth: CGFloat = 390
 
@@ -78,7 +78,8 @@ struct SettingsMainView: View {
   // MARK: - Default Mode Section
 
   private var rowDefaultTab: some View {
-    Picker(
+    @Bindable var ikaPreference = ikaPreference
+    return Picker(
       selection: $ikaPreference.preferredDefaultFlatMode,
       label: Label {
         Text("Default Tab")
@@ -99,7 +100,8 @@ struct SettingsMainView: View {
   }
 
   private var rowDefaultGameMode: some View {
-    HStack {
+    @Bindable var ikaPreference = ikaPreference
+    return HStack {
       Label {
         if !isHorizontalCompact {
           Text("Default Game Mode")
@@ -137,7 +139,8 @@ struct SettingsMainView: View {
   }
 
   private var rowDefaultBattleMode: some View {
-    HStack {
+    @Bindable var ikaPreference = ikaPreference
+    return HStack {
       Label {
         if !isHorizontalCompact {
           Text("Default Battle Mode")
@@ -182,7 +185,8 @@ struct SettingsMainView: View {
   // MARK: - Appearance Section
 
   private var rowColorScheme: some View {
-    Picker(
+    @Bindable var ikaPreference = ikaPreference
+    return Picker(
       selection: $ikaPreference.preferredAppColorScheme,
       label: Label {
         Text("Color Scheme")
@@ -227,7 +231,7 @@ struct SettingsMainView: View {
           .foregroundStyle(Color.accentColor)
       }
       .onReceive(altAppIconNudgeTimer) { _ in
-        if !ikaLog.hasDiscoveredAltAppIcon { rowAltAppIconIconAnimationTrigger += 1 }
+        if !ikaDiscoveryLog.hasDiscoveredAltAppIcon { rowAltAppIconIconAnimationTrigger += 1 }
       }
     }
   }

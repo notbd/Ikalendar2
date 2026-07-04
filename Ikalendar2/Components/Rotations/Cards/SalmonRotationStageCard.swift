@@ -14,8 +14,8 @@ import SwiftUI
 struct SalmonRotationStageCard: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Stage
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaPreference.self) private var ikaPreference
+  @Environment(IkaClock.self) private var ikaClock
 
   @State private var cardWidth: CGFloat = 150
 
@@ -73,7 +73,7 @@ struct SalmonRotationStageCard: View {
 
   private var overlay: some View {
     HStack(alignment: .bottom) {
-      if rotation.isCurrent(ikaTimePublisher.currentTime) {
+      if rotation.isCurrent(ikaClock.currentTime) {
         stageTitleLabel
         Spacer()
         rewardApparelImg
@@ -104,7 +104,7 @@ struct SalmonRotationStageCard: View {
       .glassEffect(
         .clear.interactive(),
         in: .rect(cornerRadius: Scoped.APPAREL_FRAME_CORNER_RADIUS))
-      .opacity(rotation.isCurrent(ikaTimePublisher.currentTime) && hasRewardApparel ? 1 : 0)
+      .opacity(rotation.isCurrent(ikaClock.currentTime) && hasRewardApparel ? 1 : 0)
   }
 }
 

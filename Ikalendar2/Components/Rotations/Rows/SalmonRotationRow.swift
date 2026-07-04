@@ -13,7 +13,7 @@ import SwiftUI
 /// A row containing all the information of a salmon rotation.
 @MainActor
 struct SalmonRotationRow: View {
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: SalmonRotation
   let index: Int
@@ -23,7 +23,7 @@ struct SalmonRotationRow: View {
     // expired rotations already filtered out, so index will reflect truth
     switch index {
       case 0:
-        rotation.isFuture(ikaTimePublisher.currentTime) ? .first(.pending) : .first(.active)
+        rotation.isFuture(ikaClock.currentTime) ? .first(.pending) : .first(.active)
       case 1:
         .second
       default:
@@ -92,7 +92,7 @@ extension SalmonRotationRow {
 struct SalmonRotationHeader: View {
   typealias Scoped = Constants.Style.Rotation.Header
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   @Environment(\.colorScheme) private var colorScheme
   private var colorSchemeAwareGlass: Glass {
@@ -123,9 +123,9 @@ struct SalmonRotationHeader: View {
         case .first(let currentStatus) = rowType,
         currentStatus == .pending
       {
-        Text(ikaTimePublisher.currentTime.toTimeUntilStringKey(until: rotation.startTime))
+        Text(ikaClock.currentTime.toTimeUntilStringKey(until: rotation.startTime))
           .contentTransition(.numericText(countsDown: true))
-          .animation(.snappy, value: ikaTimePublisher.currentTime)
+          .animation(.snappy, value: ikaClock.currentTime)
           .scaledLimitedLine()
           .ikaFont(
             .ika2,

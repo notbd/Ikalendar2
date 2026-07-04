@@ -8,13 +8,11 @@
 import Foundation
 import UIKit
 
-/// `IkaColorSchemeManager` is a singleton class responsible for managing the color scheme of the application.
-/// It provides an interface to switch between different color modes (light, dark, or system) and ensures
-/// smooth transitions between these states.
+/// `IkaColorSchemeManager` is a stateless utility responsible for managing the color scheme of the
+/// application. It provides an interface to switch between different color modes (light, dark, or
+/// system) and ensures smooth transitions between these states.
 @MainActor
-final class IkaColorSchemeManager {
-  static let shared: IkaColorSchemeManager = .init()
-
+enum IkaColorSchemeManager {
   enum PreferredColorScheme: String, Identifiable, CaseIterable {
     static let `default`: Self = .dark
 
@@ -48,7 +46,7 @@ final class IkaColorSchemeManager {
   }
 
   /// A computed property that returns the key window from the connected scenes.
-  private var keyWindow: UIWindow? {
+  static private var keyWindow: UIWindow? {
     UIApplication
       .shared
       .connectedScenes
@@ -57,13 +55,11 @@ final class IkaColorSchemeManager {
       .first { $0.isKeyWindow }
   }
 
-  private init() { }
-
   /// Changes the app's color scheme according to the given colorScheme.
   ///
   /// - Parameter preferredColorScheme: The desired color scheme: system, dark, or light.
   /// - Note: The transition between the color schemes is animated for a smooth user experience.
-  func handlePreferredColorSchemeChange(for preferredColorScheme: PreferredColorScheme) {
+  static func handlePreferredColorSchemeChange(for preferredColorScheme: PreferredColorScheme) {
     guard let keyWindow else { return }
 
     UIView.transition(

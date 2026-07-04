@@ -13,7 +13,7 @@ import SwiftUI
 struct BattleRotationList: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   let specifiedBattleMode: BattleMode?
 
@@ -23,7 +23,7 @@ struct BattleRotationList: View {
 
     // filter: display current and future rotations only
     return
-      ikaCatalog.battleRotationDict[battleMode]!.filter { !$0.isExpired(ikaTimePublisher.currentTime) }
+      ikaCatalog.battleRotationDict[battleMode]!.filter { !$0.isExpired(ikaClock.currentTime) }
   }
 
   var body: some View {

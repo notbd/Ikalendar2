@@ -5,21 +5,23 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-import Combine
 import SimpleHaptics
 import SwiftUI
 
-/// An EnvObj class that is shared among all the views.
-/// Contains the app preferences.
-@MainActor
-final class IkaPreference: ObservableObject {
-  static let shared: IkaPreference = .init()
+// MARK: - IkaPreference
 
-  private var isSyncing = false
+/// An observable data store shared across views, holding the app preferences.
+/// Values persist to `UserDefaults` under the same keys previously used by `@AppStorage`.
+@MainActor
+@Observable
+final class IkaPreference {
+  typealias Scoped = Constants.Key.AppStorage
+
+  @ObservationIgnored private let userDefaults: UserDefaults
+  @ObservationIgnored private var isSyncing = false
 
   /// Preferred Default FlatMode
-  @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_FLAT_MODE)
-  var preferredDefaultFlatMode: FlatMode = .default {
+  var preferredDefaultFlatMode: FlatMode {
     willSet {
       guard newValue != preferredDefaultFlatMode, !isSyncing else { return }
 
@@ -44,13 +46,18 @@ final class IkaPreference: ObservableObject {
       }
 
       SimpleHaptics.generateTask(.selection)
-      objectWillChange.send()
+    }
+
+    didSet {
+      // Persistence must NOT be gated on `isSyncing`: synced assignments still need to hit disk.
+      guard oldValue != preferredDefaultFlatMode else { return }
+
+      userDefaults.set(preferredDefaultFlatMode.rawValue, forKey: Scoped.PREFERRED_DEFAULT_FLAT_MODE)
     }
   }
 
   /// Preferred Default GameMode
-  @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_GAME_MODE)
-  var preferredDefaultGameMode: GameMode = .default {
+  var preferredDefaultGameMode: GameMode {
     willSet {
       guard newValue != preferredDefaultGameMode, !isSyncing else { return }
 
@@ -59,20 +66,22 @@ final class IkaPreference: ObservableObject {
 
       switch newValue {
         case .battle:
-          preferredDefaultFlatMode = .init(
-            rawValue: preferredDefaultBattleMode.rawValue)!
+          preferredDefaultFlatMode = .init(rawValue: preferredDefaultBattleMode.rawValue) ?? .default
 
         case .salmon:
           preferredDefaultFlatMode = .salmon
       }
+    }
 
-      objectWillChange.send()
+    didSet {
+      guard oldValue != preferredDefaultGameMode else { return }
+
+      userDefaults.set(preferredDefaultGameMode.rawValue, forKey: Scoped.PREFERRED_DEFAULT_GAME_MODE)
     }
   }
 
   /// Preferred Default BattleMode
-  @AppStorage(Constants.Key.AppStorage.PREFERRED_DEFAULT_BATTLE_MODE)
-  var preferredDefaultBattleMode: BattleMode = .default {
+  var preferredDefaultBattleMode: BattleMode {
     willSet {
       guard newValue != preferredDefaultBattleMode, !isSyncing else { return }
 
@@ -87,74 +96,92 @@ final class IkaPreference: ObservableObject {
         case .league:
           preferredDefaultFlatMode = .league
       }
+    }
 
-      objectWillChange.send()
+    didSet {
+      guard oldValue != preferredDefaultBattleMode else { return }
+
+      userDefaults.set(preferredDefaultBattleMode.rawValue, forKey: Scoped.PREFERRED_DEFAULT_BATTLE_MODE)
     }
   }
 
   /// Preferred color scheme
-  @AppStorage(Constants.Key.AppStorage.PREFERRED_APP_COLOR_SCHEME)
-  var preferredAppColorScheme: IkaColorSchemeManager.PreferredColorScheme = .default
-  {
+  var preferredAppColorScheme: IkaColorSchemeManager.PreferredColorScheme {
     willSet {
       guard newValue != preferredAppColorScheme else { return }
 
       SimpleHaptics.generateTask(.selection)
-      objectWillChange.send()
+    }
+
+    didSet {
+      guard oldValue != preferredAppColorScheme else { return }
+
+      userDefaults.set(preferredAppColorScheme.rawValue, forKey: Scoped.PREFERRED_APP_COLOR_SCHEME)
     }
   }
 
   /// Preferred app icon
-  @AppStorage(Constants.Key.AppStorage.PREFERRED_APP_ICON)
-  var preferredAppIcon: IkaAppIcon = .default {
+  var preferredAppIcon: IkaAppIcon {
     willSet {
       guard newValue != preferredAppIcon else { return }
 
       SimpleHaptics.generateTask(.success)
-      objectWillChange.send()
     }
 
     didSet {
       guard oldValue != preferredAppIcon else { return }
 
+      userDefaults.set(preferredAppIcon.rawValue, forKey: Scoped.PREFERRED_APP_ICON)
       UIApplication.shared.setAlternateIconName(preferredAppIcon.alternateIconName)
     }
   }
 
   /// Whether Tab Bar should minimized
-  @AppStorage(Constants.Key.AppStorage.SHOULD_MINIMIZE_TAB_BAR)
-  var shouldMinimizeTabBar = false
-  {
-    willSet {
-      guard newValue != shouldMinimizeTabBar else { return }
+  var shouldMinimizeTabBar: Bool {
+    didSet {
+      guard oldValue != shouldMinimizeTabBar else { return }
 
-      objectWillChange.send()
+      userDefaults.set(shouldMinimizeTabBar, forKey: Scoped.SHOULD_MINIMIZE_TAB_BAR)
     }
   }
 
   /// Bottom toolbar picker positioning
-  @AppStorage(Constants.Key.AppStorage.SHOULD_SWAP_BOTTOM_TOOLBAR_PICKERS)
-  var shouldSwapBottomToolbarPickers = false
-  {
-    willSet {
-      guard newValue != shouldSwapBottomToolbarPickers else { return }
+  var shouldSwapBottomToolbarPickers: Bool {
+    didSet {
+      guard oldValue != shouldSwapBottomToolbarPickers else { return }
 
-      objectWillChange.send()
+      userDefaults.set(shouldSwapBottomToolbarPickers, forKey: Scoped.SHOULD_SWAP_BOTTOM_TOOLBAR_PICKERS)
     }
   }
 
   /// If should be using alt stage images
-  @AppStorage(Constants.Key.AppStorage.SHOULD_USE_ALT_STAGE_IMAGES)
-  var shouldUseAltStageImages = false
-  {
-    willSet {
-      guard newValue != shouldUseAltStageImages else { return }
+  var shouldUseAltStageImages: Bool {
+    didSet {
+      guard oldValue != shouldUseAltStageImages else { return }
 
-      objectWillChange.send()
+      userDefaults.set(shouldUseAltStageImages, forKey: Scoped.SHOULD_USE_ALT_STAGE_IMAGES)
     }
   }
 
-  private init() { }
+  init(userDefaults: UserDefaults = .standard) {
+    self.userDefaults = userDefaults
+    preferredDefaultFlatMode = userDefaults.ikaLoadEnum(
+      forKey: Scoped.PREFERRED_DEFAULT_FLAT_MODE, default: .default)
+    preferredDefaultGameMode = userDefaults.ikaLoadEnum(
+      forKey: Scoped.PREFERRED_DEFAULT_GAME_MODE, default: .default)
+    preferredDefaultBattleMode = userDefaults.ikaLoadEnum(
+      forKey: Scoped.PREFERRED_DEFAULT_BATTLE_MODE, default: .default)
+    preferredAppColorScheme = userDefaults.ikaLoadEnum(
+      forKey: Scoped.PREFERRED_APP_COLOR_SCHEME, default: .default)
+    preferredAppIcon = userDefaults.ikaLoadEnum(
+      forKey: Scoped.PREFERRED_APP_ICON, default: .default)
+    shouldMinimizeTabBar = userDefaults.ikaLoadBool(
+      forKey: Scoped.SHOULD_MINIMIZE_TAB_BAR, default: false)
+    shouldSwapBottomToolbarPickers = userDefaults.ikaLoadBool(
+      forKey: Scoped.SHOULD_SWAP_BOTTOM_TOOLBAR_PICKERS, default: false)
+    shouldUseAltStageImages = userDefaults.ikaLoadBool(
+      forKey: Scoped.SHOULD_USE_ALT_STAGE_IMAGES, default: false)
+  }
 
   func resetPreferences() {
     preferredDefaultFlatMode = .default
@@ -169,5 +196,23 @@ final class IkaPreference: ObservableObject {
 
   func revertEasterEggAppIcon() {
     if preferredAppIcon.isEasterEgg { preferredAppIcon = .default }
+  }
+}
+
+// MARK: - UserDefaults + Typed Loading
+
+extension UserDefaults {
+  /// Reads a String-raw-representable value, preserving the on-disk encoding `@AppStorage` used.
+  func ikaLoadEnum<T: RawRepresentable>(forKey key: String, default defaultValue: T) -> T
+    where T.RawValue == String
+  {
+    string(forKey: key).flatMap(T.init(rawValue:)) ?? defaultValue
+  }
+
+  /// Reads a Bool with an explicit fallback.
+  /// - Important: `bool(forKey:)` returns `false` for missing keys, which would silently break
+  ///   preferences whose default is `true` (e.g. onboarding). Always check key presence first.
+  func ikaLoadBool(forKey key: String, default defaultValue: Bool) -> Bool {
+    object(forKey: key) as? Bool ?? defaultValue
   }
 }

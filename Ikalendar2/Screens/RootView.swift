@@ -15,7 +15,8 @@ import SwiftUI
 struct RootView: View {
   @Environment(\.dynamicTypeSize) var dynamicTypeSize
   @Environment(IkaStatus.self) private var ikaStatus
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
+  @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
@@ -30,10 +31,10 @@ struct RootView: View {
         refreshEntryView()
       }
       .onChange(of: ikaPreference.preferredAppColorScheme, initial: true) { _, newVal in
-        IkaColorSchemeManager.shared.handlePreferredColorSchemeChange(for: newVal)
+        IkaColorSchemeManager.handlePreferredColorSchemeChange(for: newVal)
       }
       .onAppear {
-        IkaInterfaceOrientationPublisher.shared.setInitialOrientation()
+        ikaOrientationMonitor.setInitialOrientation()
       }
       .if(isHorizontalCompact) { setUpFullScreenCoverSettingsModal($0) }
       else: { setUpSheetSettingsModal($0) }

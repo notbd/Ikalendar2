@@ -1,25 +1,23 @@
 //
-//  IkaInterfaceOrientationPublisher.swift
+//  IkaOrientationMonitor.swift
 //  Ikalendar2
 //
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-import Combine
 import UIKit
 
-// MARK: - IkaInterfaceOrientationPublisher
+// MARK: - IkaOrientationMonitor
 
-/// An observable object that publishes changes to the device's interface orientation.
+/// An observable monitor that publishes changes to the device's interface orientation.
+/// App-lifetime object: its notification observation lives for the process duration.
+@MainActor
 @Observable
-final class IkaInterfaceOrientationPublisher {
-  static let shared: IkaInterfaceOrientationPublisher = .init()
-
+final class IkaOrientationMonitor {
   /// The current orientation of the interface.
   var currentOrientation: UIInterfaceOrientation
 
-  /// Private initializer.
-  private init() {
+  init() {
     UIDevice.current.beginGeneratingDeviceOrientationNotifications()
 
     // window is not available yet at init
@@ -32,11 +30,6 @@ final class IkaInterfaceOrientationPublisher {
       object: nil)
   }
 
-  deinit {
-    NotificationCenter.default.removeObserver(self)
-    UIDevice.current.endGeneratingDeviceOrientationNotifications()
-  }
-
   /// Should be called once the first active scene appears.
   func setInitialOrientation() {
     guard currentOrientation == .unknown else { return }
@@ -47,9 +40,10 @@ final class IkaInterfaceOrientationPublisher {
   /// Triggered when the device reports an orientation change.
   @objc
   private func orientationChanged(_: Notification) {
-    DispatchQueue.main.async {
-      self.updateCurrentOrientation()
-    }
+    // Defer the read to the next main-actor turn: when this notification fires,
+    // the window scene's `effectiveGeometry` has not been updated yet.
+    // Synchronous reads observe the STALE orientation (iPadOS lag, fixed in 00fe4e4).
+    Task { self.updateCurrentOrientation() }
   }
 
   /// Updates the `currentOrientation` property according to the active window scene's orientation.

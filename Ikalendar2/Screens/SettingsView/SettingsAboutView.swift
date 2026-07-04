@@ -21,7 +21,7 @@ struct SettingsAboutView: View {
   @Environment(\.openURL) private var openURL
   @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
-  @EnvironmentObject private var ikaLog: IkaLog
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
   @State private var appStoreOverlayPresented = false
 
@@ -187,7 +187,7 @@ struct SettingsAboutView: View {
       SimpleHaptics.generateTask(.selection)
       requestReview()
       rowRatingIconAnimationTrigger += 1
-      if !ikaLog.hasDiscoveredRating { ikaLog.hasDiscoveredRating = true }
+      if !ikaDiscoveryLog.hasDiscoveredRating { ikaDiscoveryLog.hasDiscoveredRating = true }
     } label: {
       Label {
         Text("Rate ikalendar2")
@@ -202,7 +202,7 @@ struct SettingsAboutView: View {
       }
     }
     .onReceive(ratingNudgeTimer) { _ in
-      guard !ikaLog.hasDiscoveredRating else { return }
+      guard !ikaDiscoveryLog.hasDiscoveredRating else { return }
 
       rowRatingIconAnimationTrigger += 1
     }

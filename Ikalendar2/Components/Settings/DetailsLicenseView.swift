@@ -18,6 +18,7 @@ struct DetailsLicenseView: View {
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   @Environment(\.openURL) private var openURL
+  @Environment(\.ikaNetworkService) private var ikaNetworkService
 
   let repoName: String
   let repoURLString: String
@@ -46,7 +47,7 @@ struct DetailsLicenseView: View {
           nanoseconds:
           UInt64(Constants.Config.License.licenseLoadedDelay * 1_000_000_000))
         do {
-          licenseViewModel = try await IkaNetworkManager.shared.fetchLicense(from: repoURLString)
+          licenseViewModel = try await ikaNetworkService.fetchLicense(from: repoURLString)
           SimpleHaptics.generateTask(.light)
         }
         catch {

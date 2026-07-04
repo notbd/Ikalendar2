@@ -14,7 +14,7 @@ import SwiftUI
 struct BattleRotationStageCardPrimary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Card.Primary
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   @Environment(\.colorScheme) private var colorScheme
   private var colorSchemeAwareGlass: Glass {
@@ -72,7 +72,7 @@ struct BattleRotationStageCardPrimary: View {
 struct BattleRotationStageCardSecondary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Card.Secondary
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   let rotation: BattleRotation
   let stageSelection: BattleStageSelection

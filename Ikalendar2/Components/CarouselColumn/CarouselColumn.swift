@@ -13,8 +13,8 @@ import SwiftUI
 struct CarouselColumn: View {
   typealias Scoped = Constants.Style.Carousel.Column
 
-  @Environment(IkaInterfaceOrientationPublisher.self) private var ikaInterfaceOrientationPublisher
-  private var isPortrait: Bool { ikaInterfaceOrientationPublisher.currentOrientation.isPortrait }
+  @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor
+  private var isPortrait: Bool { ikaOrientationMonitor.currentOrientation.isPortrait }
 
   let gameMode: GameMode
   let battleMode: BattleMode

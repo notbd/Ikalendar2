@@ -6,35 +6,32 @@
 //
 
 import Foundation
+import SwiftUI
 
-/// `IkaNetworkManager` is a singleton class that serves as the networking layer of the application.
+// MARK: - IkaNetworkService
+
+/// Abstraction over the networking layer, enabling mock injection in tests.
+protocol IkaNetworkService: Sendable {
+  func fetchLicense(from githubRepoURLString: String) async throws -> IkaOpenSourceLicense
+  func getBattleRotationDict() async throws -> BattleRotationDict
+  func getSalmonRotations() async throws -> [SalmonRotation]
+  func getSalmonRewardApparelInfo() async throws -> SalmonApparelInfo
+}
+
+extension EnvironmentValues {
+  /// The app-wide networking service. Overridden at the App root; default suits previews.
+  @Entry var ikaNetworkService: any IkaNetworkService = IkaNetworkManager()
+}
+
+// MARK: - IkaNetworkManager
+
+/// `IkaNetworkManager` serves as the networking layer of the application.
 /// It is designed to handle asynchronous data fetching and decoding tasks in a unified manner.
 /// The class is architected to be easily extendable for supporting various types of data and sources.
 /// It is intended to be used in tandem with the `IkaDecoder` utility class for decoding the fetched data.
 ///
-final class IkaNetworkManager {
-  static let shared: IkaNetworkManager = .init()
-
-  private init() { }
-
-  /// Asynchronously fetches a text file from a specified URL and returns its content as a `String`.
-  /// It is intended for fetching read-only textual data like logs, licenses, configuration files, etc.
-  ///
-  /// - Parameter urlString: The URL String pointing to the text file.
-  ///
-  /// - Returns: A `String` containing the text file content.
-  ///
-  /// - Throws: `IkaError` if there's any error during fetching or decoding.
-  ///
-  func fetchTextFile(from urlString: String)
-    async throws -> String
-  {
-    guard let url = URL(string: urlString) else { throw IkaError.unknownError }
-
-    return try await fetchAndDecode(
-      url: url,
-      decodeUsing: IkaDecoder.parseText)
-  }
+final class IkaNetworkManager: IkaNetworkService {
+  init() { }
 
   func fetchLicense(from githubRepoURLString: String)
     async throws -> IkaOpenSourceLicense

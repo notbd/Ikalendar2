@@ -14,8 +14,8 @@ struct ModeIconStamp: View {
   typealias Scoped = Constants.Style.Overlay.ModeIcon
 
   @Environment(IkaStatus.self) private var ikaStatus
-  @Environment(IkaDeviceMotionPublisher.self) private var ikaDeviceMotionPublisher
-  @Environment(IkaInterfaceOrientationPublisher.self) private var ikaInterfaceOrientationPublisher
+  @Environment(IkaDeviceMotionMonitor.self) private var ikaDeviceMotionMonitor
+  @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor
 
   let iconSize: CGFloat
   let gameModeSelection: GameMode
@@ -23,13 +23,13 @@ struct ModeIconStamp: View {
   let shouldOffset: Bool
   let shouldAnimate: Bool
 
-  private var dx: CGFloat { ikaDeviceMotionPublisher.dx }
-  private var dy: CGFloat { ikaDeviceMotionPublisher.dy }
+  private var dx: CGFloat { ikaDeviceMotionMonitor.dx }
+  private var dy: CGFloat { ikaDeviceMotionMonitor.dy }
   private var rotationConstant: Double { Double((pow(dx, 2) + pow(dy, 2)).squareRoot()) }
   private var intensity: Double = Scoped.ROTATION_3D_INTENSITY
 
   private var axisRotationWeight: (x: CGFloat, y: CGFloat) {
-    switch ikaInterfaceOrientationPublisher.currentOrientation {
+    switch ikaOrientationMonitor.currentOrientation {
       case .unknown:
         (dy, dx)
       case .portrait:
