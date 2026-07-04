@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - BattleRotationRow
 
 /// A row containing all the information of a battle rotation.
-@MainActor
 struct BattleRotationRow: View {
   @Environment(IkaClock.self) private var ikaClock
 

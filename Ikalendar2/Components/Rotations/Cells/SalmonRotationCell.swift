@@ -11,7 +11,6 @@ import SwiftUI
 // MARK: - SalmonRotationCell
 
 /// The view for the salmon rotation info that takes the entire space in the list content.
-@MainActor
 struct SalmonRotationCell: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell
 
@@ -73,7 +72,6 @@ struct SalmonRotationCell: View {
 // MARK: - SalmonRotationCellTimeTextSection
 
 /// A HStack component containing the time text of a salmon rotation.
-@MainActor
 struct SalmonRotationCellTimeTextSection: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell.TimeTextSection
 

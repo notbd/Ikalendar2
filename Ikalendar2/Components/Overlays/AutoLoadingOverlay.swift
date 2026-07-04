@@ -9,7 +9,6 @@ import SwiftUI
 
 // MARK: - AutoLoadingOverlay
 
-@MainActor
 struct AutoLoadingOverlay: View {
   typealias Scoped = Constants.Style.Overlay.AutoLoading
 

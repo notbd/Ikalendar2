@@ -11,7 +11,6 @@ import SwiftUI
 // MARK: - SettingsMainView
 
 /// The main page for App Settings.
-@MainActor
 struct SettingsMainView: View {
   typealias Scoped = Constants.Style.Settings.Main
 

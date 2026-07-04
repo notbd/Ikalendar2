@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - SalmonRotationStageCard
 
 /// A card component that displays the stage information of a salmon rotation.
-@MainActor
 struct SalmonRotationStageCard: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Stage
 

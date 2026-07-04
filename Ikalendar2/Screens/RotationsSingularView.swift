@@ -105,7 +105,6 @@ struct RotationsSingularView: View {
 // MARK: - ToolbarBattleModePicker
 
 /// A picker component for the battle mode
-@MainActor
 struct ToolbarBattleModePicker: View {
   @Environment(IkaStatus.self) private var ikaStatus
 
@@ -128,7 +127,6 @@ struct ToolbarBattleModePicker: View {
 // MARK: - ToolbarGameModePicker
 
 /// A picker component for the game mode
-@MainActor
 struct ToolbarGameModePicker: View {
   @Environment(IkaStatus.self) private var ikaStatus
 

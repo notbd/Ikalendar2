@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - ErrorView
 
 /// The error view showing the error if occurs.
-@MainActor
 struct ErrorView: View {
   typealias Scoped = Constants.Style.Error
 

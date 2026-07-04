@@ -10,7 +10,6 @@ import SwiftUI
 
 // MARK: - SettingsAdvancedOptionsView
 
-@MainActor
 struct SettingsAdvancedOptionsView: View {
   typealias Scoped = Constants.Style.Settings.Advanced
 

@@ -12,7 +12,6 @@ import SwiftUI
 // MARK: - SettingsAltAppIconView
 
 /// The Settings page for switching alternate App Icons.
-@MainActor
 struct SettingsAltAppIconView: View {
   typealias ScopedConfig = Constants.Config.Settings.AltAppIcon
   typealias ScopedStyle = Constants.Style.Settings.AltAppIcon

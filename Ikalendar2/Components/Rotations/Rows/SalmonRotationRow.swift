@@ -11,7 +11,6 @@ import SwiftUI
 // MARK: - SalmonRotationRow
 
 /// A row containing all the information of a salmon rotation.
-@MainActor
 struct SalmonRotationRow: View {
   @Environment(IkaClock.self) private var ikaClock
 

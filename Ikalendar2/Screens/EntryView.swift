@@ -11,7 +11,6 @@ import SwiftUI
 
 /// The main entry view of the app.
 /// Will set different layout for iPhone and iPad depending on the current horizontal size.
-@MainActor
 struct EntryView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }

@@ -10,7 +10,6 @@ import SwiftUI
 
 // MARK: - BattleRotationCell
 
-@MainActor
 struct BattleRotationCell: View {
   enum CellType {
     case primary
@@ -55,7 +54,6 @@ struct BattleRotationCell: View {
 
 /// The primary version of a cell component for the battle rotation that takes
 /// all the space in the list content.
-@MainActor
 struct BattleRotationCellPrimary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Cell.Primary
 
@@ -197,7 +195,6 @@ struct BattleRotationCellPrimary: View {
 
 /// The secondary version of a cell component for the battle rotation
 /// that takes all the space in a list unit.
-@MainActor
 struct BattleRotationCellSecondary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Cell.Secondary
 

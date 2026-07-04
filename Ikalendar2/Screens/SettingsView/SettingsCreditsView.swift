@@ -11,7 +11,6 @@ import SwiftUI
 // MARK: - SettingsCreditsView
 
 /// The Credits page in App Settings.
-@MainActor
 struct SettingsCreditsView: View {
   typealias Scoped = Constants.Style.Settings.Credits
 

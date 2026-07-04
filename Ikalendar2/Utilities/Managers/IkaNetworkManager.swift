@@ -33,6 +33,7 @@ extension EnvironmentValues {
 final class IkaNetworkManager: IkaNetworkService {
   init() { }
 
+  @concurrent
   func fetchLicense(from githubRepoURLString: String)
     async throws -> IkaOpenSourceLicense
   {
@@ -43,7 +44,7 @@ final class IkaNetworkManager: IkaNetworkService {
 
     return try await fetchAndDecode(
       url: githubAPIURL,
-      decodeUsing: IkaDecoder.parseLicenseFromGithubAPI)
+      decodeUsing: { try IkaDecoder.parseLicenseFromGithubAPI(from: $0) })
   }
 
   /// Asynchronously fetches the battle rotation dictionary from the `splatoon2.ink` API.
@@ -52,6 +53,7 @@ final class IkaNetworkManager: IkaNetworkService {
   ///
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
   ///
+  @concurrent
   func getBattleRotationDict()
     async throws -> BattleRotationDict
   {
@@ -59,7 +61,7 @@ final class IkaNetworkManager: IkaNetworkService {
 
     return try await fetchAndDecode(
       url: url,
-      decodeUsing: IkaDecoder.parseBattleRotationDict)
+      decodeUsing: { try IkaDecoder.parseBattleRotationDict(from: $0) })
   }
 
   /// Asynchronously fetches the salmon rotation array from the `splatoon2.ink` API.
@@ -68,6 +70,7 @@ final class IkaNetworkManager: IkaNetworkService {
   ///
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
   ///
+  @concurrent
   func getSalmonRotations()
     async throws -> [SalmonRotation]
   {
@@ -75,7 +78,7 @@ final class IkaNetworkManager: IkaNetworkService {
 
     return try await fetchAndDecode(
       url: url,
-      decodeUsing: IkaDecoder.parseSalmonRotations)
+      decodeUsing: { try IkaDecoder.parseSalmonRotations(from: $0) })
   }
 
   /// Asynchronously fetches the reward apparel info from the `splatoon2.ink` API.
@@ -84,6 +87,7 @@ final class IkaNetworkManager: IkaNetworkService {
   ///
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
   ///
+  @concurrent
   func getSalmonRewardApparelInfo()
     async throws -> SalmonApparelInfo
   {
@@ -91,7 +95,7 @@ final class IkaNetworkManager: IkaNetworkService {
 
     return try await fetchAndDecode(
       url: url,
-      decodeUsing: IkaDecoder.parseSalmonRewardApparelInfo)
+      decodeUsing: { try IkaDecoder.parseSalmonRewardApparelInfo(from: $0) })
   }
 
   /// Asynchronously fetches and decodes data from a specified URL.
@@ -119,9 +123,10 @@ final class IkaNetworkManager: IkaNetworkService {
   ///                                           or the status code is neither 200 nor 304.
   ///   - `IkaError.serverError(.badData)`: If the decoding process fails.
   ///
+  @concurrent
   func fetchAndDecode<T>(
     url: URL,
-    decodeUsing decoder: (Data) throws -> T)
+    decodeUsing decoder: @Sendable (Data) throws -> T)
     async throws -> T
   {
     let (data, response): (Data, URLResponse)

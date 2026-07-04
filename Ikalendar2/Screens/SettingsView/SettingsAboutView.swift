@@ -13,7 +13,6 @@ import SwiftUI
 // MARK: - SettingsAboutView
 
 /// The About page in App Settings.
-@MainActor
 struct SettingsAboutView: View {
   typealias Scoped = Constants.Style.Settings.About
 

@@ -8,7 +8,7 @@
 import Foundation
 import RegexBuilder
 
-struct IkaOpenSourceLicense {
+struct IkaOpenSourceLicense: Sendable {
   let repoURL: String
   let type: String
   let typeDescription: String
@@ -52,12 +52,15 @@ struct IkaOpenSourceLicense {
 
   //  Note: lookbehind is not supported yet as of iOS 17.0 SDK
 
-  ///  private let infoSearchRegex = /github.com\/(\w+)\/(\w+)/
-  private let infoSearchRegex = Regex {
-    "github.com/"
-    Capture { OneOrMore(.word) }
-    "/"
-    Capture { OneOrMore(.word) }
+  ///  equivalent to /github.com\/(\w+)\/(\w+)/
+  /// - Note: computed (not stored) so the struct stays Sendable - `Regex` is not Sendable.
+  private var infoSearchRegex: Regex<(Substring, Substring, Substring)> {
+    Regex {
+      "github.com/"
+      Capture { OneOrMore(.word) }
+      "/"
+      Capture { OneOrMore(.word) }
+    }
   }
 
   /// Transform from

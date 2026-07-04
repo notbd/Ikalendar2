@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@MainActor
 struct SalmonRotationList: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaClock.self) private var ikaClock

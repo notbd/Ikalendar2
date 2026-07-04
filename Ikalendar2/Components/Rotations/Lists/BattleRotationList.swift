@@ -9,7 +9,6 @@ import SwiftUI
 
 // MARK: - BattleRotationList
 
-@MainActor
 struct BattleRotationList: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus

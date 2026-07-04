@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - LoadingOverlay
 
 /// An overlay indicating the loading status of the app.
-@MainActor
 struct LoadingOverlay: View {
   typealias Scoped = Constants.Style.Overlay.Loading
 

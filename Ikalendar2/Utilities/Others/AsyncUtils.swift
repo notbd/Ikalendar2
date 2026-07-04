@@ -8,7 +8,7 @@
 import Foundation
 
 enum AsyncUtils {
-  static func withTimeout<T>(
+  static func withTimeout<T: Sendable>(
     seconds: TimeInterval,
     timeoutError: Error,
     operation: @escaping @Sendable () async throws -> T) async throws

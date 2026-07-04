@@ -10,7 +10,6 @@ import SwiftUI
 
 // MARK: - RotationsCarouselView
 
-@MainActor
 struct RotationsCarouselView: View {
   typealias Scoped = Constants.Style.Carousel
 
@@ -136,13 +135,11 @@ struct RotationsCarouselView: View {
     .if(!isWindowWide) { wrapInHorizontalScrollView($0) }
   }
 
-  @MainActor
   private func wrapInHorizontalScrollView(_ content: some View) -> some View {
     ScrollView(.horizontal) { content }
       .scrollTargetBehavior(.viewAligned)
   }
 
-  @MainActor
   private func setToolbarItems(_ content: some View) -> some View {
     content
       .toolbar {

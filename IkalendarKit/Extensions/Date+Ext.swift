@@ -37,6 +37,8 @@ extension Date {
 }
 
 extension Date {
+  // Configured once at init and only read afterwards; DateFormatter is Sendable
+  // (and thread-safe for formatting) as of the iOS 26 SDK.
   static private let ikaTimeFormatter: DateFormatter = .init(ikaType: .time)
   static private let ikaDateFormatter: DateFormatter = .init(ikaType: .date)
 

@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - ToolbarRefreshButton
 
 /// A refresh button in the toolbar.
-@MainActor
 struct ToolbarRefreshButton: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
 
