@@ -77,10 +77,6 @@ struct AutoLoadingOverlay: View {
   }
 }
 
-// MARK: - AutoLoadingOverlay_Previews
-
-struct AutoLoadingOverlay_Previews: PreviewProvider {
-  static var previews: some View {
-    AutoLoadingOverlay()
-  }
+#Preview {
+  AutoLoadingOverlay()
 }

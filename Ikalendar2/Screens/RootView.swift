@@ -40,7 +40,7 @@ struct RootView: View {
 
   private var settingsModal: some View {
     SettingsEntryView()
-      .accentColor(.orange)
+      .tint(.orange)
       .interactiveDismissDisabled()
   }
 

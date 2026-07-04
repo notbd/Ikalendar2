@@ -38,7 +38,9 @@ struct DetailsLicenseView: View {
     .navigationTitle(repoName)
     .navigationBarTitleDisplayMode(.large)
     .if(isLinkable) {
-      $0.navigationBarItems(trailing: externalLinkButton)
+      $0.toolbar {
+        ToolbarItem(placement: .topBarTrailing) { externalLinkButton }
+      }
     }
     .task {
       // .task (unlike .onAppear + Task) is cancelled when the view disappears,
@@ -125,13 +127,9 @@ struct DetailsLicenseView: View {
   }
 }
 
-// MARK: - LicenseDetailsView_Previews
-
-struct LicenseDetailsView_Previews: PreviewProvider {
-  static var previews: some View {
-    DetailsLicenseView(
-      repoName: "SimpleHaptics",
-      repoURLString: "https://github.com/notbd/SimpleHaptics",
-      isLinkable: true)
-  }
+#Preview {
+  DetailsLicenseView(
+    repoName: "SimpleHaptics",
+    repoURLString: "https://github.com/notbd/SimpleHaptics",
+    isLinkable: true)
 }

@@ -136,13 +136,9 @@ struct SalmonRotationHeader: View {
   }
 }
 
-// MARK: - SalmonRotationRow_Previews
-
-struct SalmonRotationRow_Previews: PreviewProvider {
-  static var previews: some View {
-    SalmonRotationRow(
-      rotation: IkaMockData.getSalmonRotation(),
-      index: 0,
-      rowWidth: 390)
-  }
+#Preview {
+  SalmonRotationRow(
+    rotation: IkaMockData.getSalmonRotation(),
+    index: 0,
+    rowWidth: 390)
 }

@@ -55,15 +55,11 @@ struct SalmonRotationWeaponCardIcon: View {
   }
 }
 
-// MARK: - SalmonRotationWeaponCard_Previews
-
-struct SalmonRotationWeaponCard_Previews: PreviewProvider {
-  static var previews: some View {
-    SalmonRotationWeaponsCard(weapons: [
-      SalmonWeapon(5030)!,
-      SalmonWeapon(1020)!,
-      SalmonWeapon(310)!,
-      SalmonWeapon(-1)!,
-    ])
-  }
+#Preview {
+  SalmonRotationWeaponsCard(weapons: [
+    SalmonWeapon(5030)!,
+    SalmonWeapon(1020)!,
+    SalmonWeapon(310)!,
+    SalmonWeapon(-1)!,
+  ])
 }

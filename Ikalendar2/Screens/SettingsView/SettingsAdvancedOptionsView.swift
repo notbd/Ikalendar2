@@ -90,7 +90,8 @@ struct SettingsAdvancedOptionsView: View {
           .foregroundStyle(Color.accentColor)
       }
     }
-    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+    .toggleStyle(.switch)
+    .tint(.accentColor)
     .disabled(!isHorizontalCompact)
   }
 
@@ -108,7 +109,8 @@ struct SettingsAdvancedOptionsView: View {
           .foregroundStyle(Color.accentColor)
       }
     }
-    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+    .toggleStyle(.switch)
+    .tint(.accentColor)
     .disabled(!isHorizontalCompact)
     .onChange(of: ikaPreference.shouldSwapBottomToolbarPickers) {
       isBottomToolbarPreviewPresented.toggle()
@@ -129,7 +131,8 @@ struct SettingsAdvancedOptionsView: View {
           .foregroundStyle(Color.accentColor)
       }
     }
-    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+    .toggleStyle(.switch)
+    .tint(.accentColor)
   }
 
   private var stageImagesPreviewHeader: some View {
@@ -243,7 +246,7 @@ struct BottomToolbarPositioningPreview: View {
           .tag(battleMode)
       }
     }
-    .pickerStyle(SegmentedPickerStyle())
+    .pickerStyle(.segmented)
     .fixedSize()
   }
 
@@ -260,18 +263,14 @@ struct BottomToolbarPositioningPreview: View {
           .tag(gameMode)
       }
     }
-    .pickerStyle(SegmentedPickerStyle())
+    .pickerStyle(.segmented)
     .fixedSize()
   }
 }
 
-// MARK: - SettingsAdvancedOptionsView_Previews
-
-struct SettingsAdvancedOptionsView_Previews: PreviewProvider {
-  static var previews: some View {
-    let ikaPreference: IkaPreference = .init()
-    return SettingsAdvancedOptionsView()
-      .environment(IkaStatus(ikaPreference: ikaPreference))
-      .environment(ikaPreference)
-  }
+#Preview {
+  let ikaPreference: IkaPreference = .init()
+  return SettingsAdvancedOptionsView()
+    .environment(IkaStatus(ikaPreference: ikaPreference))
+    .environment(ikaPreference)
 }

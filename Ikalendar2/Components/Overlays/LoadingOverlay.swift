@@ -31,10 +31,6 @@ struct LoadingOverlay: View {
   }
 }
 
-// MARK: - LoadingOverlay_Previews
-
-struct LoadingOverlay_Previews: PreviewProvider {
-  static var previews: some View {
-    LoadingOverlay()
-  }
+#Preview {
+  LoadingOverlay()
 }

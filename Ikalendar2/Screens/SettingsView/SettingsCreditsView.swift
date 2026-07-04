@@ -193,10 +193,6 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
   }
 }
 
-// MARK: - SettingsCreditsView_Previews
-
-struct SettingsCreditsView_Previews: PreviewProvider {
-  static var previews: some View {
-    SettingsCreditsView()
-  }
+#Preview {
+  SettingsCreditsView()
 }

@@ -151,10 +151,6 @@ struct RotationsCarouselView: View {
   }
 }
 
-// MARK: - RotationsCarouselView_Previews
-
-struct RotationsCarouselView_Previews: PreviewProvider {
-  static var previews: some View {
-    RotationsCarouselView()
-  }
+#Preview {
+  RotationsCarouselView()
 }

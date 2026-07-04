@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: - RotationsTabView
 
-/// The view that displays the content in a NavigationView.
+/// The view that displays the content in a navigation stack.
 struct RotationsTabView: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
 

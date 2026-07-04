@@ -36,7 +36,7 @@ struct Ikalendar2App: App {
   var body: some Scene {
     WindowGroup {
       RootView()
-        .accentColor(.orange)
+        .tint(.orange)
         .environment(ikaCatalog)
         .environment(ikaStatus)
         .environment(ikaClock)

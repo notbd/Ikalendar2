@@ -141,12 +141,8 @@ struct ModeIconStamp: View {
   }
 }
 
-// MARK: - FlatModeIconStamp_Previews
-
-struct FlatModeIconStamp_Previews: PreviewProvider {
-  static var previews: some View {
-    ModeIconStamp(
-      gameModeSelection: .battle,
-      battleModeSelection: .gachi)
-  }
+#Preview {
+  ModeIconStamp(
+    gameModeSelection: .battle,
+    battleModeSelection: .gachi)
 }

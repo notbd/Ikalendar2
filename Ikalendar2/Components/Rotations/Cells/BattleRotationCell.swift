@@ -307,37 +307,33 @@ struct BattleRotationCellSecondary: View {
   }
 }
 
-// MARK: - BattleRotationCell_Previews
+#Preview {
+  @Namespace var ruleIcon
+  @Namespace var ruleTitle
+  @Namespace var stageA
+  @Namespace var stageB
 
-struct BattleRotationCell_Previews: PreviewProvider {
-  static var previews: some View {
-    @Namespace var ruleIcon
-    @Namespace var ruleTitle
-    @Namespace var stageA
-    @Namespace var stageB
-
-    GeometryReader { geo in
-      List {
-        Section {
-          BattleRotationCellPrimary(
-            rotation: IkaMockData.getBattleRotation(
-              preferredMode: .gachi,
-              preferredRule: .towerControl,
-              rawStartTime: Date()),
-            rowWidth: geo.size.width,
-            animationNamespaces: nil)
-        }
-        Section {
-          BattleRotationCellSecondary(
-            rotation: IkaMockData.getBattleRotation(
-              preferredMode: .gachi,
-              preferredRule: .clamBlitz,
-              rawStartTime: Date()),
-            rowWidth: geo.size.width,
-            animationNamespaces: nil)
-        }
+  GeometryReader { geo in
+    List {
+      Section {
+        BattleRotationCellPrimary(
+          rotation: IkaMockData.getBattleRotation(
+            preferredMode: .gachi,
+            preferredRule: .towerControl,
+            rawStartTime: Date()),
+          rowWidth: geo.size.width,
+          animationNamespaces: nil)
       }
-      .listStyle(InsetGroupedListStyle())
+      Section {
+        BattleRotationCellSecondary(
+          rotation: IkaMockData.getBattleRotation(
+            preferredMode: .gachi,
+            preferredRule: .clamBlitz,
+            rawStartTime: Date()),
+          rowWidth: geo.size.width,
+          animationNamespaces: nil)
+      }
     }
+    .listStyle(.insetGrouped)
   }
 }

@@ -23,10 +23,6 @@ struct ToolbarSettingsButton: View {
   }
 }
 
-// MARK: - ToolbarSettingsButton_Previews
-
-struct ToolbarSettingsButton_Previews: PreviewProvider {
-  static var previews: some View {
-    ToolbarSettingsButton()
-  }
+#Preview {
+  ToolbarSettingsButton()
 }

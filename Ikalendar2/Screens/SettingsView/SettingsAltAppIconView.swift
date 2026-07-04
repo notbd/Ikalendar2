@@ -341,10 +341,6 @@ struct SettingsAltAppIconView: View {
   }
 }
 
-// MARK: - SettingsAppIconView_Previews
-
-struct SettingsAppIconView_Previews: PreviewProvider {
-  static var previews: some View {
-    SettingsAltAppIconView()
-  }
+#Preview {
+  SettingsAltAppIconView()
 }

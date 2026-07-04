@@ -492,11 +492,7 @@ struct SettingsAboutAppIconAnimationValues {
   }
 }
 
-// MARK: - SettingsAboutView_Previews
-
-struct SettingsAboutView_Previews: PreviewProvider {
-  static var previews: some View {
-    SettingsAboutView()
-      .preferredColorScheme(.dark)
-  }
+#Preview {
+  SettingsAboutView()
+    .preferredColorScheme(.dark)
 }

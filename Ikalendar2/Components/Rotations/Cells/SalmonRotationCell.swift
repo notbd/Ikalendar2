@@ -143,12 +143,8 @@ struct SalmonRotationCellTimeTextSection: View {
   }
 }
 
-// MARK: - SalmonRotationCell_Previews
-
-struct SalmonRotationCell_Previews: PreviewProvider {
-  static var previews: some View {
-    SalmonRotationCell(
-      rotation: IkaMockData.getSalmonRotation(),
-      rowWidth: 390)
-  }
+#Preview {
+  SalmonRotationCell(
+    rotation: IkaMockData.getSalmonRotation(),
+    rowWidth: 390)
 }

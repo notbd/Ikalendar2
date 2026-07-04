@@ -66,7 +66,9 @@ struct SettingsMainView: View {
       }
       .navigationTitle("Settings")
       .navigationBarTitleDisplayMode(.large)
-      .navigationBarItems(trailing: closeButton)
+      .toolbar {
+        ToolbarItem(placement: .topBarTrailing) { closeButton }
+      }
       .listStyle(.insetGrouped)
       .onChange(of: geo.size, initial: true) { _, newVal in
         rowWidth = newVal.width
@@ -132,7 +134,7 @@ struct SettingsMainView: View {
             .tag(gameMode)
         }
       }
-      .pickerStyle(SegmentedPickerStyle())
+      .pickerStyle(.segmented)
       .fixedSize()
     }
   }
@@ -175,7 +177,7 @@ struct SettingsMainView: View {
             .tag(battleMode)
         }
       }
-      .pickerStyle(SegmentedPickerStyle())
+      .pickerStyle(.segmented)
       .fixedSize()
       .disabled(ikaPreference.preferredDefaultGameMode != .battle || !isHorizontalCompact)
     }
@@ -335,10 +337,6 @@ struct SettingsMainView: View {
   }
 }
 
-// MARK: - SettingsMainView_Previews
-
-struct SettingsMainView_Previews: PreviewProvider {
-  static var previews: some View {
-    SettingsMainView()
-  }
+#Preview {
+  SettingsMainView()
 }

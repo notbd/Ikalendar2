@@ -39,10 +39,6 @@ struct EntryView: View {
   }
 }
 
-// MARK: - MainView_Previews
-
-struct MainView_Previews: PreviewProvider {
-  static var previews: some View {
-    EntryView()
-  }
+#Preview {
+  EntryView()
 }

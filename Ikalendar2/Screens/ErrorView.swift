@@ -83,10 +83,6 @@ struct ErrorView: View {
   }
 }
 
-// MARK: - ErrorView_Previews
-
-struct ErrorView_Previews: PreviewProvider {
-  static var previews: some View {
-    ErrorView(error: .serverError(.badData))
-  }
+#Preview {
+  ErrorView(error: .serverError(.badData))
 }

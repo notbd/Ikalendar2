@@ -33,13 +33,9 @@ struct StageTitleLabel: View {
   }
 }
 
-// MARK: - StageTitleLabel_Previews
-
-struct StageTitleLabel_Previews: PreviewProvider {
-  static var previews: some View {
-    StageTitleLabel(
-      title: BattleStage.humpbackPumpTrack.name,
-      fontSize: 12,
-      relTextStyle: .body)
-  }
+#Preview {
+  StageTitleLabel(
+    title: BattleStage.humpbackPumpTrack.name,
+    fontSize: 12,
+    relTextStyle: .body)
 }

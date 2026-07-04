@@ -46,7 +46,7 @@ struct BattleRotationStageCardPrimary: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .cornerRadius(Scoped.imgCornerRadius)
+      .clipShape(.rect(cornerRadius: Scoped.imgCornerRadius))
       .glassEffect(
         colorSchemeAwareGlass.interactive(),
         in: .rect(cornerRadius: Scoped.imgCornerRadius))
@@ -103,7 +103,7 @@ struct BattleRotationStageCardSecondary: View {
         .antialiased(true)
         .resizable()
         .scaledToFit()
-        .cornerRadius(Scoped.imgCornerRadius)
+        .clipShape(.rect(cornerRadius: Scoped.imgCornerRadius))
         .glassEffect(
           .clear.interactive(),
           in: .rect(cornerRadius: Scoped.imgCornerRadius))
@@ -133,19 +133,14 @@ enum BattleStageSelection {
 
 // MARK: - BattleRotationStageCard_Previews
 
-struct BattleRotationStageCard_Previews: PreviewProvider {
-  static var previews: some View {
-    let rotation: BattleRotation = IkaMockData.getBattleRotation()
-    return
-      Group {
-        BattleRotationStageCardPrimary(
-          rotation: rotation,
-          stageSelection: .stageA)
-          .previewLayout(.fixed(width: 320, height: 200))
-        BattleRotationStageCardPrimary(
-          rotation: rotation,
-          stageSelection: .stageB)
-          .previewLayout(.fixed(width: 300, height: 240))
-      }
-  }
+#Preview("Stage A", traits: .fixedLayout(width: 320, height: 200)) {
+  BattleRotationStageCardPrimary(
+    rotation: IkaMockData.getBattleRotation(),
+    stageSelection: .stageA)
+}
+
+#Preview("Stage B", traits: .fixedLayout(width: 300, height: 240)) {
+  BattleRotationStageCardPrimary(
+    rotation: IkaMockData.getBattleRotation(),
+    stageSelection: .stageB)
 }

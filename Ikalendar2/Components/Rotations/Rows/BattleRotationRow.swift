@@ -120,35 +120,31 @@ struct BattleRotationHeader: View {
   }
 }
 
-// MARK: - BattleRotationRow_Previews
+#Preview {
+  @Previewable @State var modeSelection: BattleMode = .gachi
 
-struct BattleRotationRow_Previews: PreviewProvider {
-  @State static private var modeSelection: BattleMode = .gachi
-
-  static var previews: some View {
-    NavigationView {
-      GeometryReader { geo in
-        List {
-          Section {
-            Picker("Mode", selection: $modeSelection) {
-              ForEach(BattleMode.allCases) { battleMode in
-                Text(battleMode.shortName)
-                  .tag(battleMode)
-              }
+  NavigationStack {
+    GeometryReader { geo in
+      List {
+        Section {
+          Picker("Mode", selection: $modeSelection) {
+            ForEach(BattleMode.allCases) { battleMode in
+              Text(battleMode.shortName)
+                .tag(battleMode)
             }
-            .pickerStyle(SegmentedPickerStyle())
           }
-
-          ForEach(0 ..< IkaMockData.getBattleRotations()[modeSelection]!.count, id: \.self)
-          { index in
-            BattleRotationRow(
-              rotation: IkaMockData.getBattleRotations()[modeSelection]![index],
-              rowWidth: geo.size.width)
-          }
+          .pickerStyle(.segmented)
         }
-        .listStyle(InsetGroupedListStyle())
-        .navigationTitle(modeSelection.name)
+
+        ForEach(0 ..< IkaMockData.getBattleRotations()[modeSelection]!.count, id: \.self)
+        { index in
+          BattleRotationRow(
+            rotation: IkaMockData.getBattleRotations()[modeSelection]![index],
+            rowWidth: geo.size.width)
+        }
       }
+      .listStyle(.insetGrouped)
+      .navigationTitle(modeSelection.name)
     }
   }
 }

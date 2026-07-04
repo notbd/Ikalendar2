@@ -11,11 +11,12 @@ struct SettingsEntryView: View {
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
   var body: some View {
-    NavigationView {
+    // NavigationStack replaces the deprecated NavigationView; stack behavior
+    // (previously forced via StackNavigationViewStyle) is its native semantics.
+    NavigationStack {
       SettingsMainView()
     }
     .presentationSizing(.page)
-    .navigationViewStyle(StackNavigationViewStyle())
     .overlay(
       AutoLoadingOverlay(),
       alignment: .bottomTrailing)

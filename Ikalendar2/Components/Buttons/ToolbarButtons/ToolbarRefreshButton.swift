@@ -33,10 +33,6 @@ struct ToolbarRefreshButton: View {
   }
 }
 
-// MARK: - ToolbarRefreshButton_Previews
-
-struct ToolbarRefreshButton_Previews: PreviewProvider {
-  static var previews: some View {
-    ToolbarRefreshButton()
-  }
+#Preview {
+  ToolbarRefreshButton()
 }

@@ -49,7 +49,7 @@ struct SalmonRotationStageCard: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .cornerRadius(Scoped.stageImgCornerRadius)
+      .clipShape(.rect(cornerRadius: Scoped.stageImgCornerRadius))
       .glassEffect(
         colorSchemeAwareGlass.interactive(),
         in: .rect(cornerRadius: Scoped.stageImgCornerRadius))
@@ -107,12 +107,8 @@ struct SalmonRotationStageCard: View {
   }
 }
 
-// MARK: - SalmonRotationStageCard_Previews
-
-struct SalmonRotationStageCard_Previews: PreviewProvider {
-  static var previews: some View {
-    SalmonRotationStageCard(
-      rotation: IkaMockData.getSalmonRotation())
-      .frame(width: 312)
-  }
+#Preview {
+  SalmonRotationStageCard(
+    rotation: IkaMockData.getSalmonRotation())
+    .frame(width: 312)
 }
