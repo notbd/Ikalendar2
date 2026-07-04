@@ -17,8 +17,8 @@ struct StringExtensionTests {
 
   @Suite("LocalizedStringKey Property")
   struct LocalizedStringKeyTests {
-    @Test("LocalizedStringKey property returns correct type")
-    func localizedStringKeyPropertyReturnsCorrectType() {
+    @Test
+    func `LocalizedStringKey property returns correct type`() {
       let testString = "test_key"
       let result = testString.localizedStringKey
 
@@ -28,8 +28,8 @@ struct StringExtensionTests {
       #expect(type(of: result) == LocalizedStringKey.self, "Result should be LocalizedStringKey type")
     }
 
-    @Test("LocalizedStringKey works with empty string")
-    func localizedStringKeyWorksWithEmptyString() {
+    @Test
+    func `LocalizedStringKey works with empty string`() {
       let emptyString = ""
       let result = emptyString.localizedStringKey
 
@@ -39,8 +39,8 @@ struct StringExtensionTests {
       #expect(type(of: result) == LocalizedStringKey.self, "Should handle empty strings gracefully")
     }
 
-    @Test("LocalizedStringKey works with special characters")
-    func localizedStringKeyWorksWithSpecialCharacters() {
+    @Test
+    func `LocalizedStringKey works with special characters`() {
       let specialString = "test_key_with_特殊文字_and_émojis_🎮"
       let result = specialString.localizedStringKey
 
@@ -55,16 +55,16 @@ struct StringExtensionTests {
 
   @Suite("Shortened URL")
   struct ShortenedURLTests {
-    @Test("Shortened URL without base URL returns host and path")
-    func shortenedURLWithoutBaseURLReturnsHostAndPath() throws {
+    @Test
+    func `Shortened URL without base URL returns host and path`() throws {
       let urlString = "https://www.example.com/page/1/"
       let result = try #require(urlString.shortenedURL(), "Should be able to shorten valid URL")
 
       #expect(result == "www.example.com/page/1", "Should return host + path without trailing slash")
     }
 
-    @Test("Shortened URL with base URL removes base correctly")
-    func shortenedURLWithBaseURLRemovesBaseCorrectly() throws {
+    @Test
+    func `Shortened URL with base URL removes base correctly`() throws {
       let urlString = "https://www.example.com/page/1/"
       let baseURL = "https://www.example.com/"
       let result = try #require(urlString.shortenedURL(base: baseURL), "Should be able to shorten URL with base")
@@ -72,8 +72,8 @@ struct StringExtensionTests {
       #expect(result == "page/1", "Should remove base URL and trailing slash")
     }
 
-    @Test("Shortened URL with base URL and prefix adds prefix correctly")
-    func shortenedURLWithBaseURLAndPrefixAddsPrefixCorrectly() throws {
+    @Test
+    func `Shortened URL with base URL and prefix adds prefix correctly`() throws {
       let urlString = "https://www.example.com/page/1/"
       let baseURL = "https://www.example.com/"
       let prefix = "Page:"
@@ -84,16 +84,16 @@ struct StringExtensionTests {
       #expect(result == "Page:page/1", "Should remove base URL and add prefix")
     }
 
-    @Test("Shortened URL with invalid URL returns nil")
-    func shortenedURLWithInvalidURLReturnsNil() {
+    @Test
+    func `Shortened URL with invalid URL returns nil`() {
       let invalidURL = "not-a-valid-url"
       let result = invalidURL.shortenedURL()
 
       #expect(result == nil, "Should return nil for invalid URLs")
     }
 
-    @Test("Shortened URL with invalid base URL returns nil")
-    func shortenedURLWithInvalidBaseURLReturnsNil() {
+    @Test
+    func `Shortened URL with invalid base URL returns nil`() {
       let urlString = "https://www.example.com/page/1/"
       let invalidBaseURL = "not-a-valid-base-url"
       let result = urlString.shortenedURL(base: invalidBaseURL)
@@ -101,8 +101,8 @@ struct StringExtensionTests {
       #expect(result == nil, "Should return nil for invalid base URLs")
     }
 
-    @Test("Shortened URL when URL doesn't start with base returns nil")
-    func shortenedURLWhenURLDoesntStartWithBaseReturnsNil() {
+    @Test
+    func `Shortened URL when URL doesn't start with base returns nil`() {
       let urlString = "https://www.example.com/page/1/"
       let differentBaseURL = "https://www.different.com/"
       let result = urlString.shortenedURL(base: differentBaseURL)
@@ -110,16 +110,16 @@ struct StringExtensionTests {
       #expect(result == nil, "Should return nil when URL doesn't start with base")
     }
 
-    @Test("Shortened URL handles URLs without trailing slash")
-    func shortenedURLHandlesURLsWithoutTrailingSlash() throws {
+    @Test
+    func `Shortened URL handles URLs without trailing slash`() throws {
       let urlString = "https://www.example.com/page/1"
       let result = try #require(urlString.shortenedURL(), "Should handle URLs without trailing slash")
 
       #expect(result == "www.example.com/page/1", "Should handle URLs without trailing slash")
     }
 
-    @Test("Shortened URL handles base URLs without trailing slash")
-    func shortenedURLHandlesBaseURLsWithoutTrailingSlash() throws {
+    @Test
+    func `Shortened URL handles base URLs without trailing slash`() throws {
       let urlString = "https://www.example.com/page/1/"
       let baseURL = "https://www.example.com"
       let result = try #require(urlString.shortenedURL(base: baseURL), "Should handle base URLs without trailing slash")
@@ -127,16 +127,16 @@ struct StringExtensionTests {
       #expect(result == "page/1", "Should remove leading slash from result")
     }
 
-    @Test("Shortened URL handles empty path")
-    func shortenedURLHandlesEmptyPath() throws {
+    @Test
+    func `Shortened URL handles empty path`() throws {
       let urlString = "https://www.example.com/"
       let result = try #require(urlString.shortenedURL(), "Should handle URLs with empty path")
 
       #expect(result == "www.example.com", "Should handle URLs with empty path")
     }
 
-    @Test("Shortened URL handles empty path with base URL")
-    func shortenedURLHandlesEmptyPathWithBaseURL() throws {
+    @Test
+    func `Shortened URL handles empty path with base URL`() throws {
       let urlString = "https://www.example.com/"
       let baseURL = "https://www.example.com/"
       let result = try #require(urlString.shortenedURL(base: baseURL), "Should handle empty path with base URL")
@@ -144,8 +144,8 @@ struct StringExtensionTests {
       #expect(result == "", "Should return empty string when base URL matches entire URL")
     }
 
-    @Test("Shortened URL with empty prefix works correctly")
-    func shortenedURLWithEmptyPrefixWorksCorrectly() throws {
+    @Test
+    func `Shortened URL with empty prefix works correctly`() throws {
       let urlString = "https://www.example.com/page/1/"
       let baseURL = "https://www.example.com/"
       let emptyPrefix = ""
@@ -156,8 +156,8 @@ struct StringExtensionTests {
       #expect(result == "page/1", "Should work correctly with empty prefix")
     }
 
-    @Test("Shortened URL with nil prefix works correctly")
-    func shortenedURLWithNilPrefixWorksCorrectly() throws {
+    @Test
+    func `Shortened URL with nil prefix works correctly`() throws {
       let urlString = "https://www.example.com/page/1/"
       let baseURL = "https://www.example.com/"
       let result = try #require(urlString.shortenedURL(base: baseURL, newPrefix: nil), "Should work with nil prefix")
@@ -165,8 +165,8 @@ struct StringExtensionTests {
       #expect(result == "page/1", "Should work correctly with nil prefix")
     }
 
-    @Test("Shortened URL handles complex paths correctly")
-    func shortenedURLHandlesComplexPathsCorrectly() throws {
+    @Test
+    func `Shortened URL handles complex paths correctly`() throws {
       let urlString = "https://api.example.com/v1/users/123/posts/456/"
       let baseURL = "https://api.example.com/v1/"
       let prefix = "API:"
@@ -175,8 +175,8 @@ struct StringExtensionTests {
       #expect(result == "API:users/123/posts/456", "Should handle complex paths correctly")
     }
 
-    @Test("Shortened URL handles URLs with query parameters")
-    func shortenedURLHandlesURLsWithQueryParameters() throws {
+    @Test
+    func `Shortened URL handles URLs with query parameters`() throws {
       let urlString = "https://www.example.com/search?q=test&lang=en"
       let result = try #require(urlString.shortenedURL(), "Should handle URLs with query parameters")
 
@@ -184,8 +184,8 @@ struct StringExtensionTests {
       #expect(result == "www.example.com/search", "Should handle URLs with query parameters")
     }
 
-    @Test("Shortened URL handles URLs with fragments")
-    func shortenedURLHandlesURLsWithFragments() throws {
+    @Test
+    func `Shortened URL handles URLs with fragments`() throws {
       let urlString = "https://www.example.com/page#section1"
       let result = try #require(urlString.shortenedURL(), "Should handle URLs with fragments")
 
