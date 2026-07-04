@@ -35,9 +35,9 @@ struct BattleRotationStageCardPrimary: View {
       case (true, .stageB):
         rotation.stageBAltImageName
       case (false, .stageA):
-        rotation.stageA.imgFiln
+        rotation.stageA.imageName
       case (false, .stageB):
-        rotation.stageB.imgFiln
+        rotation.stageB.imageName
     }
   }
 
@@ -88,9 +88,9 @@ struct BattleRotationStageCardSecondary: View {
       case (true, .stageB):
         rotation.stageBAltImageName
       case (false, .stageA):
-        rotation.stageA.imgFiln
+        rotation.stageA.imageName
       case (false, .stageB):
-        rotation.stageB.imgFiln
+        rotation.stageB.imageName
     }
   }
 

@@ -69,16 +69,16 @@ struct ModeIconStamp: View {
   }
 
   private var icon: some View {
-    let imgFiln: String =
+    let imageName: String =
       switch gameModeSelection {
         case .battle:
-          battleModeSelection.imgFilnLarge
+          battleModeSelection.imageNameLarge
         case .salmon:
           Scoped.iconImageNameSalmon
       }
 
     return
-      Image(imgFiln)
+      Image(imageName)
         .antialiased(true)
         .resizable()
         .scaledToFit()

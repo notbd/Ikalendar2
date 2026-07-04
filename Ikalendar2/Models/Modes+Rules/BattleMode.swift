@@ -67,7 +67,7 @@ extension BattleMode {
 }
 
 extension BattleMode {
-  var imgFilnSmall: String { rawValue + "_small" }
-  var imgFilnMid: String { rawValue + "_mid" }
-  var imgFilnLarge: String { rawValue + "_large" }
+  var imageNameSmall: String { rawValue + "_small" }
+  var imageNameMid: String { rawValue + "_mid" }
+  var imageNameLarge: String { rawValue + "_large" }
 }

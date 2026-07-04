@@ -43,7 +43,7 @@ struct SalmonRotationWeaponCardIcon: View {
   let weapon: SalmonWeapon
 
   var body: some View {
-    Image(weapon.imgFiln)
+    Image(weapon.imageName)
       .antialiased(true)
       .resizable()
       .scaledToFit()

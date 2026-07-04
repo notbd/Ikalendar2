@@ -35,8 +35,8 @@ extension BattleRotation {
   var stageAAltImageName: String {
     let generator: SeededRandomGenerator = .init(seed: description)
 
-    let generalPrefix = stageA.imgFiln + "_Alt_"
-    let ruleSpecificPrefix = stageA.imgFiln + "_Alt+\(rule.abbreviation)_"
+    let generalPrefix = stageA.imageName + "_Alt_"
+    let ruleSpecificPrefix = stageA.imageName + "_Alt+\(rule.abbreviation)_"
 
     let numOfAltImagesGeneral: Int = AssetImageCounter.countImagesWithPrefix(generalPrefix)
     let numOfAltImagesRuleSpecific: Int = AssetImageCounter.countImagesWithPrefix(ruleSpecificPrefix)
@@ -54,8 +54,8 @@ extension BattleRotation {
   var stageBAltImageName: String {
     let generator: SeededRandomGenerator = .init(seed: description)
 
-    let generalPrefix = stageB.imgFiln + "_Alt_"
-    let ruleSpecificPrefix = stageB.imgFiln + "_Alt+\(rule.abbreviation)_"
+    let generalPrefix = stageB.imageName + "_Alt_"
+    let ruleSpecificPrefix = stageB.imageName + "_Alt+\(rule.abbreviation)_"
 
     let numOfAltImagesGeneral: Int = AssetImageCounter.countImagesWithPrefix(generalPrefix)
     let numOfAltImagesRuleSpecific: Int = AssetImageCounter.countImagesWithPrefix(ruleSpecificPrefix)

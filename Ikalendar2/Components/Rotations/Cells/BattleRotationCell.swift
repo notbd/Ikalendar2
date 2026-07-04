@@ -95,7 +95,7 @@ struct BattleRotationCellPrimary: View {
   // MARK: Rule Section
 
   private var ruleIcon: some View {
-    Image(rotation.rule.imgFilnMid)
+    Image(rotation.rule.imageNameMid)
       .antialiased(true)
       .resizable()
       .scaledToFit()
@@ -233,7 +233,7 @@ struct BattleRotationCellSecondary: View {
   }
 
   private var ruleIcon: some View {
-    Image(rotation.rule.imgFilnMid)
+    Image(rotation.rule.imageNameMid)
       .antialiased(true)
       .resizable()
       .scaledToFit()

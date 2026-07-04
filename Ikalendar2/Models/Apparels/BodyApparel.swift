@@ -58,11 +58,11 @@ extension BodyApparel {
 }
 
 extension BodyApparel {
-  var imgFiln: String {
+  var imageName: String {
     let prefix = "S2_Gear_Clothing_"
     let content = name.replacingOccurrences(of: " ", with: "_")
     return prefix + content
   }
 
-  var imgFilnSmall: String { key }
+  var imageNameSmall: String { key }
 }

@@ -72,5 +72,5 @@ extension FlatMode {
 }
 
 extension FlatMode {
-  var imgFilnSmall: String { rawValue + "_small" }
+  var imageNameSmall: String { rawValue + "_small" }
 }

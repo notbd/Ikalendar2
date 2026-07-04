@@ -51,21 +51,21 @@ extension SalmonWeapon {
     }
   }
 
-  var imgFiln: String {
+  var imageName: String {
     switch self {
       case .vanilla(let weapon):
-        weapon.imgFiln
+        weapon.imageName
       case .mystery(let weapon):
-        weapon.imgFiln
+        weapon.imageName
     }
   }
 
-  var imgFilnSmall: String {
+  var imageNameSmall: String {
     switch self {
       case .vanilla(let weapon):
-        weapon.imgFilnSmall
+        weapon.imageNameSmall
       case .mystery(let weapon):
-        weapon.imgFilnSmall
+        weapon.imageNameSmall
     }
   }
 }

@@ -37,11 +37,11 @@ struct SalmonRotationStageCard: View {
 
     return ikaPreference.shouldUseAltStageImages
       ? shouldOverrideWithLarge
-        ? rotation.stageAltImageNameLarge ?? stage.imgFilnLarge
-        : rotation.stageAltImageName ?? stage.imgFiln
+        ? rotation.stageAltImageNameLarge ?? stage.imageNameLarge
+        : rotation.stageAltImageName ?? stage.imageName
       : shouldOverrideWithLarge
-        ? stage.imgFilnLarge
-        : stage.imgFiln
+        ? stage.imageNameLarge
+        : stage.imageName
   }
 
   var body: some View {
@@ -94,7 +94,7 @@ struct SalmonRotationStageCard: View {
   }
 
   private var rewardApparelImg: some View {
-    Image(rotation.rewardApparel?.imgFiln ?? "salmon")
+    Image(rotation.rewardApparel?.imageName ?? "salmon")
       .antialiased(true)
       .resizable()
       .scaledToFit()

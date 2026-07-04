@@ -89,6 +89,6 @@ extension BattleRule {
 }
 
 extension BattleRule {
-  var imgFilnMid: String { key + "_mid" }
-  var imgFilnLarge: String { key + "_large" }
+  var imageNameMid: String { key + "_mid" }
+  var imageNameLarge: String { key + "_large" }
 }
