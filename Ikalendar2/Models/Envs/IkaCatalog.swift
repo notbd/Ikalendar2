@@ -121,6 +121,10 @@ final class IkaCatalog {
       try await loadData()
       await setLoadStatus(.loaded)
     }
+    catch is CancellationError {
+      // Task was cancelled (e.g. owning view disappeared) - no error UI
+      return
+    }
     catch let error as IkaError {
       await setLoadStatus(.error(error))
     }
@@ -225,7 +229,7 @@ final class IkaCatalog {
   private var shouldAutoLoad: Bool {
     loadStatus != .loading &&
       autoLoadStatus == .idle &&
-      battleRotationDict.isOutdated
+      battleRotationDict.isOutdated(IkaTimePublisher.shared.currentTime)
   }
 
   private var shouldAutoLoadSalmon: Bool {

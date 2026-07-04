@@ -16,7 +16,19 @@ final class IkaInternetConnectivityPublisher {
     "www.google.com",
     "www.facebook.com",
   ]
-  private let timeoutInterval: TimeInterval = 4.0
+  static private let timeoutInterval: TimeInterval = 4.0
+
+  /// Reused across checks: creating a URLSession per call leaks the session
+  /// (it is never invalidated). Consider `.ephemeral` in the future to keep
+  /// GFW probes free of local cache interference.
+  @ObservationIgnored private let session: URLSession
+
+  init() {
+    let config: URLSessionConfiguration = .default
+    config.timeoutIntervalForRequest = Self.timeoutInterval
+    config.timeoutIntervalForResource = Self.timeoutInterval
+    session = URLSession(configuration: config)
+  }
 
   @MainActor
   func performGFWCheck() async {
@@ -27,11 +39,6 @@ final class IkaInternetConnectivityPublisher {
     var failedChecksCount: Int = 0
     let totalChecks = testDomains.count
 
-    let config: URLSessionConfiguration = .default
-    config.timeoutIntervalForRequest = timeoutInterval
-    config.timeoutIntervalForResource = timeoutInterval
-    let session: URLSession = .init(configuration: config)
-
     await withTaskGroup(of: Bool.self) { group in
       for domain in testDomains {
         group.addTask {
@@ -41,7 +48,7 @@ final class IkaInternetConnectivityPublisher {
           }
 
           do {
-            _ = try await session.data(for: URLRequest(url: url))
+            _ = try await self.session.data(for: URLRequest(url: url))
             // For GFW specifically, simply getting *any* HTTP response usually means
             // it isn't GFW-blocked at the network level.
             return true

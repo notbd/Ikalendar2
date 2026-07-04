@@ -88,7 +88,6 @@ final class IkaStatus {
         case .league:
           currentFlatMode = .league
       }
-//      SimpleHaptics.generateTask(.soft)
     }
   }
 

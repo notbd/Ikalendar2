@@ -123,7 +123,7 @@ enum IkaDecoder {
         else { throw IkaError.serverError(.badData) }
 
         // SUCCESS: construct rotation using parsed data and append to array in dict
-        battleRotationDict[battleMode]!.append(
+        battleRotationDict[battleMode, default: []].append(
           BattleRotation(
             startTime: startTime,
             endTime: endTime,
@@ -134,7 +134,7 @@ enum IkaDecoder {
       }
 
       // Ensure the result array is not empty
-      if battleRotationDict[battleMode]!.isEmpty { throw IkaError.serverError(.badData) }
+      if (battleRotationDict[battleMode] ?? []).isEmpty { throw IkaError.serverError(.badData) }
     }
 
     // return the parsed dict
@@ -177,7 +177,7 @@ enum IkaDecoder {
       }
 
       // add weapons if available
-      var weapons: [SalmonWeapon]? = []
+      var weapons: [SalmonWeapon] = []
       if let weaponsArray = rotationDetailsDict["weapons"].array {
         for weaponDict in weaponsArray {
           // id is in `string` format
@@ -186,7 +186,7 @@ enum IkaDecoder {
             let weaponIDInt = Int(weaponIDString),
             let weapon = SalmonWeapon(weaponIDInt)
           {
-            weapons?.append(weapon)
+            weapons.append(weapon)
           }
 
           // id is in `number` format
@@ -194,7 +194,7 @@ enum IkaDecoder {
             let weaponIDInt = weaponDict["id"].int,
             let weapon = SalmonWeapon(weaponIDInt)
           {
-            weapons?.append(weapon)
+            weapons.append(weapon)
           }
 
           // bad id
@@ -202,15 +202,12 @@ enum IkaDecoder {
         }
       }
 
-      // set to nil if empty
-      if weapons!.isEmpty { weapons = nil }
-
       // SUCCESS: construct rotation using parsed data and append to array
       salmonRotations.append(.init(
         startTime: startTime,
         endTime: endTime,
         stage: stage,
-        weapons: weapons))
+        weapons: weapons.isEmpty ? nil : weapons))
     }
 
     // Check for at least one detailed rotation
@@ -218,6 +215,11 @@ enum IkaDecoder {
 
     // Access the `schedules` array for non-detailed rotations
     guard let schedulesArrayJSON = rootDict["schedules"].array
+    else { return salmonRotations }
+
+    // Guard against `schedules` being shorter than `details`: constructing a Range
+    // with lowerBound > upperBound traps at runtime.
+    guard schedulesArrayJSON.count > salmonRotations.count
     else { return salmonRotations }
 
     for index in salmonRotations.count ..< schedulesArrayJSON.count {

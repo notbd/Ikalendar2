@@ -28,17 +28,17 @@ struct BattleSecondaryStagesLayout: Layout {
     cache _: inout ())
     -> CGSize
   {
-    guard proposal.width != nil else { return .zero }
+    guard let proposalWidth = proposal.width else { return .zero }
     guard subviews.count == 2 else { return .zero }
 
     let hSpacings = getHSpacings(subviews: subviews)
     let subviewProposal: ProposedViewSize = .init(
-      width: (proposal.width! - hSpacings[0]) * (1 / 2),
+      width: (proposalWidth - hSpacings[0]) * (1 / 2),
       height: proposal.height)
     let minIdealSize = getMinIdealSize(subviews: subviews, proposal: subviewProposal)
 
     return CGSize(
-      width: proposal.width!,
+      width: proposalWidth,
       height: minIdealSize.height)
   }
 
@@ -48,12 +48,12 @@ struct BattleSecondaryStagesLayout: Layout {
     subviews: Subviews,
     cache _: inout ())
   {
-    guard proposal.width != nil else { return }
+    guard let proposalWidth = proposal.width else { return }
     guard subviews.count == 2 else { return }
 
     let hSpacings = getHSpacings(subviews: subviews)
     let subviewProposal: ProposedViewSize = .init(
-      width: (proposal.width! - hSpacings[0]) * (1 / 2),
+      width: (proposalWidth - hSpacings[0]) * (1 / 2),
       height: proposal.height)
     let minIdealSize = getMinIdealSize(subviews: subviews, proposal: subviewProposal)
 

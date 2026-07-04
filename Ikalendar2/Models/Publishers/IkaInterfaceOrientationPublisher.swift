@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - IkaInterfaceOrientationPublisher
 
-/// An ObservableObject that publishes changes to the device's interface orientation.
+/// An observable object that publishes changes to the device's interface orientation.
 @Observable
 final class IkaInterfaceOrientationPublisher {
   static let shared: IkaInterfaceOrientationPublisher = .init()

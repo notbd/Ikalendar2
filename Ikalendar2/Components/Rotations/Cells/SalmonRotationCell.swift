@@ -47,7 +47,7 @@ struct SalmonRotationCell: View {
   private var stageAndWeaponSection: some View {
     SalmonStageAndWeaponsLayout {
       SalmonRotationStageCard(rotation: rotation)
-      SalmonRotationWeaponsCard(weapons: rotation.weapons!)
+      SalmonRotationWeaponsCard(weapons: rotation.weapons ?? [])
     }
   }
 

@@ -24,14 +24,14 @@ struct SalmonStageAndWeaponsLayout: Layout {
     cache _: inout ())
     -> CGSize
   {
-    guard proposal.width != nil else { return .zero }
+    guard let proposalWidth = proposal.width else { return .zero }
     guard subviews.count == 2 else { return .zero }
 
     let hSpacings = getHSpacings(subviews: subviews)
-    let correctHeight = (proposal.width! - hSpacings[0]) * (9 / (16 + 9))
+    let correctHeight = (proposalWidth - hSpacings[0]) * (9 / (16 + 9))
 
     return CGSize(
-      width: proposal.width!,
+      width: proposalWidth,
       height: correctHeight)
   }
 
@@ -41,11 +41,11 @@ struct SalmonStageAndWeaponsLayout: Layout {
     subviews: Subviews,
     cache _: inout ())
   {
-    guard proposal.width != nil else { return }
+    guard let proposalWidth = proposal.width else { return }
     guard subviews.count == 2 else { return }
 
     let hSpacings = getHSpacings(subviews: subviews)
-    let correctHeight = (proposal.width! - hSpacings[0]) * (9 / (16 + 9))
+    let correctHeight = (proposalWidth - hSpacings[0]) * (9 / (16 + 9))
 
     let stageHeight = correctHeight
     let stageWidth = stageHeight * (16 / 9)

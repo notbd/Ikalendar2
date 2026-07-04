@@ -29,13 +29,21 @@ struct SalmonRotationStageCard: View {
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
   private var shouldOverrideWithLarge: Bool { cardWidth >= 200 }
 
-  private var stageImageName: String { ikaPreference.shouldUseAltStageImages
-    ? shouldOverrideWithLarge
-      ? rotation.stageAltImageNameLarge!
-      : rotation.stageAltImageName!
-    : shouldOverrideWithLarge
-      ? rotation.stage!.imgFilnLarge
-      : rotation.stage!.imgFiln }
+  private var stageImageName: String {
+    // Caller (SalmonRotationCell) only renders this card when rotation.stage != nil.
+    guard let stage = rotation.stage else {
+      assertionFailure("SalmonRotationStageCard requires rotation.stage != nil (guarded by caller)")
+      return ""
+    }
+
+    return ikaPreference.shouldUseAltStageImages
+      ? shouldOverrideWithLarge
+        ? rotation.stageAltImageNameLarge ?? stage.imgFilnLarge
+        : rotation.stageAltImageName ?? stage.imgFiln
+      : shouldOverrideWithLarge
+        ? stage.imgFilnLarge
+        : stage.imgFiln
+  }
 
   var body: some View {
     Image(stageImageName)
@@ -81,7 +89,7 @@ struct SalmonRotationStageCard: View {
 
   private var stageTitleLabel: some View {
     StageTitleLabel(
-      title: rotation.stage!.name,
+      title: rotation.stage?.name ?? "",
       fontSize: Scoped.LABEL_FONT_SIZE,
       relTextStyle: .body)
   }

@@ -5,12 +5,6 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-//
-//  FlatMode.swift
-//  Ikalendar2
-//
-//  Created by Tianwei Zhang on 2025-10-27.
-//
 import SwiftUI
 
 // MARK: - FlatMode

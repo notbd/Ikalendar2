@@ -132,6 +132,14 @@ final class IkaNetworkManager {
     do {
       (data, response) = try await URLSession.shared.data(from: url)
     }
+    catch is CancellationError {
+      // Task cancellation is not a connection failure - propagate as-is
+      throw CancellationError()
+    }
+    catch let urlError as URLError where urlError.code == .cancelled {
+      // URLSession reports cancellation as URLError.cancelled
+      throw CancellationError()
+    }
     catch {
       // ERROR: URLSession data task fails
       throw IkaError.connectionError

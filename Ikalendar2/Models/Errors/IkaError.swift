@@ -15,10 +15,6 @@ enum IkaError: Error, Equatable {
   case connectionError
   case unknownError
   case maxAttemptsExceeded
-
-  static func == (lhs: IkaError, rhs: IkaError) -> Bool {
-    lhs.message == rhs.message
-  }
 }
 
 extension IkaError {
@@ -62,7 +58,7 @@ extension IkaError {
 // MARK: - IkaServerErrorType
 
 /// A sub-type for IkaError.serverError
-enum IkaServerErrorType: String {
+enum IkaServerErrorType: String, Equatable {
   typealias Scoped = Constants.Key.Error
 
   case badResponse
