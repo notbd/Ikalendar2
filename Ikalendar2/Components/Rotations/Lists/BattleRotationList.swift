@@ -9,6 +9,8 @@ import SwiftUI
 
 // MARK: - BattleRotationList
 
+/// The battle rotation list for one mode: current rotation featured on top,
+/// upcoming ones below.
 struct BattleRotationList: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus

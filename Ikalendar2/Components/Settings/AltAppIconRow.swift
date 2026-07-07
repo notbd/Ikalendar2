@@ -10,6 +10,7 @@ import SwiftUI
 
 // MARK: - AltAppIconRow
 
+/// One selectable app icon row: preview image, name, and active checkmark.
 struct AltAppIconRow: View {
   typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
 
@@ -69,6 +70,7 @@ struct AltAppIconRow: View {
 
 // MARK: - AltAppIconEasterEggRow
 
+/// The Rick row. Selecting it jumps to the good stuff on first discovery.
 struct AltAppIconEasterEggRow: View {
   typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
 
@@ -90,15 +92,12 @@ struct AltAppIconEasterEggRow: View {
 
   var body: some View {
     Button {
-      // jump to the good stuff
+      // jump to the good stuff (first discovery only)
       if !ikaDiscoveryLog.hasDiscoveredEasterEgg { Task { await jumpToURLAfterDelay() } }
-      // set flag: has discovered easter egg
       if !ikaDiscoveryLog.hasDiscoveredEasterEgg { ikaDiscoveryLog.hasDiscoveredEasterEgg = true }
-      // add compensatory haptics for repeated button presses
+      // compensatory haptics for repeated presses
       if ikaPreference.preferredAppIcon == .rick { SimpleHaptics.generateTask(.medium) }
-      // trigger animation
       buttonPressCounter += 1
-      // set app icon
       setAltAppIcon(ikaAppIcon)
     }
     label: { rowContent }
@@ -117,9 +116,8 @@ struct AltAppIconEasterEggRow: View {
         .animation(
           Scoped.crossFadeAnimation,
           value: appIconColorVariant)
-        // Inlined (not a `some View` helper): keyframeAnimator's content closure
-        // captures PlaceholderContentView<Self>.Type, and an opaque-generic Self
-        // trips a non-Sendable metatype warning. On a concrete chain it is fine.
+        // Inlined on the concrete view: wrapping this in a `some View` helper
+        // trips a non-Sendable metatype warning from the content closure.
         .keyframeAnimator(
           initialValue: AppIconEasterEggAnimationValues(),
           trigger: buttonPressCounter)
@@ -169,6 +167,7 @@ struct AltAppIconEasterEggRow: View {
 
 // MARK: - AppIconEasterEggAnimationValues
 
+/// Animatable values for the easter-egg icon jump.
 struct AppIconEasterEggAnimationValues {
   var scale = 1.0
   var verticalStretch = 1.0

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The root of the settings modal, hosting the whole settings navigation stack.
 struct SettingsEntryView: View {
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 

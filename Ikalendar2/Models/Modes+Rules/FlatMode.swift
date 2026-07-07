@@ -9,6 +9,8 @@ import SwiftUI
 
 // MARK: - FlatMode
 
+/// A flattened union of all game and battle modes, so the tab bar and
+/// default-mode picker can treat them as one list.
 enum FlatMode: String, Identifiable, CaseIterable, Equatable {
   static let `default`: Self = .regular
 

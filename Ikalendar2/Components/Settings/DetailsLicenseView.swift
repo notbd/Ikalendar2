@@ -10,6 +10,8 @@ import SwiftUI
 
 // MARK: - DetailsLicenseView
 
+/// Fetches and shows the license of an open source library, with a placeholder
+/// while loading and a fallback message if the fetch fails.
 struct DetailsLicenseView: View {
   typealias Scoped = Constants.Style.Settings.License
 

@@ -10,6 +10,7 @@ import SwiftUI
 
 // MARK: - OnboardingView
 
+/// The first-launch welcome screen, dismissed for good by the Get Started button.
 struct OnboardingView: View {
   typealias Scoped = Constants.Style.Onboarding
 
@@ -78,8 +79,7 @@ struct OnboardingView: View {
 
       if iconBounceCounter == 0 { iconBounceCounter += 1 }
     }
-    // Button pulse loop. Runs as a child of the view's lifetime - the previous
-    // detached Task kept pulsing forever after onboarding was dismissed.
+    // Button pulse loop; ends with the view.
     .task {
       try? await Task.sleep(for: .seconds(Timing.entranceDelay + Timing.entranceDuration))
       while !Task.isCancelled {
@@ -89,9 +89,7 @@ struct OnboardingView: View {
         startPulse.toggle()
       }
     }
-    // Auto-bounce scheduler: every bounce (tap or automatic) restarts the
-    // countdown; replacing the task via id: subsumes the old manual
-    // cancel-and-reschedule bookkeeping.
+    // Auto-bounce scheduler: every bounce (tap or automatic) restarts the countdown.
     .task(id: iconBounceCounter) {
       guard iconBounceCounter > 0 else { return }
 
@@ -189,6 +187,7 @@ struct OnboardingView: View {
 
 // MARK: - OnboardingObject
 
+/// The animatable pieces of the onboarding screen, with their entrance keyframes.
 enum OnboardingObject {
   case icon
   case title

@@ -126,6 +126,7 @@ struct BattleRotationStageCardSecondary: View {
 
 // MARK: - BattleStageSelection
 
+/// Which of a battle rotation's two stages a card should show.
 enum BattleStageSelection {
   case stageA
   case stageB

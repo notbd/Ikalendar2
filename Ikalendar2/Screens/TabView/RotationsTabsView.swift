@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The iPhone layout: one tab per mode along the bottom bar.
 struct RotationsTabsView: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus

@@ -40,10 +40,8 @@ struct SettingsAltAppIconView: View {
 
   // MARK: Slide Show State Machine
 
-  /// The slideshow's exhaustive set of states. Modeling the picker-expanded case
-  /// with its resume intent keeps every pause/resume rule in one place - the old
-  /// four-flag version resumed on dimming-layer taps but silently stayed paused
-  /// when a variant was picked, and left stale resume flags behind.
+  /// The slideshow's states. The picker-expanded case carries its resume intent,
+  /// so every pause/resume rule lives in one place.
   private enum SlideShowPhase: Equatable {
     case playing
     case paused

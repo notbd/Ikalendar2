@@ -51,8 +51,7 @@ final class IkaCatalog {
   // MARK: Init Setup
 
   private func startAutoLoadChecks() {
-    // [weak self] with per-iteration re-acquire: a strong capture would keep the object
-    // (and its checking loop) alive forever, defeating deinit for preview/test instances.
+    // Weak self is re-acquired each lap so short-lived instances can deinit.
     autoLoadCheckTask = Task { [weak self] in
       while !Task.isCancelled {
         try? await Task.sleep(for: .seconds(Constants.Config.Timer.autoLoadCheckSignalInterval))
@@ -94,8 +93,8 @@ final class IkaCatalog {
     }
 
     didSet {
-      // Derive loadResultStatus inline (was a Combine filter + removeDuplicates chain).
-      // The dedupe check is load-bearing: duplicate emissions caused UI glitches (see fbc49af).
+      // Keep loadResultStatus at the last non-loading status. The dedupe check
+      // matters: duplicate updates used to cause UI glitches.
       if loadStatus != .loading, loadResultStatus != loadStatus {
         loadResultStatus = loadStatus
       }
@@ -202,7 +201,7 @@ final class IkaCatalog {
     }
 
     didSet {
-      // Derive autoLoadDelayedIdleStatus inline (was a Combine filter + removeDuplicates chain).
+      // Same idea as loadResultStatus: track the last non-idle status, deduped.
       if autoLoadStatus != .idle, autoLoadDelayedIdleStatus != autoLoadStatus {
         autoLoadDelayedIdleStatus = autoLoadStatus
       }

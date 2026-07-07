@@ -93,10 +93,9 @@ struct SettingsAboutView: View {
         await SimpleHaptics.generate(.light)
       }
     }
-    // While bouncing, the icon escapes its list cell's clip bounds, so an unclipped
-    // copy is overlaid at the same position and the original hidden. Re-triggering
-    // (id:) restarts the linger window - this replaces the old manual
-    // cancel-and-reschedule task bookkeeping.
+    // While bouncing, the icon escapes its list cell's clip bounds - so hide the
+    // original and overlay an unclipped copy at the same spot. Re-triggering
+    // restarts the linger window.
     .task(id: appIconBounceCounter) {
       guard appIconBounceCounter > 0 else { return }
 
@@ -126,12 +125,10 @@ struct SettingsAboutView: View {
         .shadow(radius: Constants.Style.Global.shadowRadius)
         .zIndex(1)
         .onTapGesture {
-          // trigger animation
           appIconBounceCounter += 1
         }
-        // Inlined (not a `some View` helper): keyframeAnimator's content closure
-        // captures PlaceholderContentView<Self>.Type, and an opaque-generic Self
-        // trips a non-Sendable metatype warning. On a concrete chain it is fine.
+        // Inlined on the concrete view: wrapping this in a `some View` helper
+        // trips a non-Sendable metatype warning from the content closure.
         .keyframeAnimator(
           initialValue: SettingsAboutAppIconAnimationValues(),
           trigger: appIconBounceCounter)
@@ -439,6 +436,7 @@ struct SettingsAboutView: View {
 
 // MARK: - SettingsAboutAppIconAnimationValues
 
+/// Animatable values for the about-page app icon bounce.
 struct SettingsAboutAppIconAnimationValues {
   var scale: Double = 1
   var vStretch: Double = 1

@@ -48,12 +48,9 @@ struct PreviewNetworkService: IkaNetworkService {
 
 extension View {
   /// Injects the complete app environment, preloaded with mock data - the preview
-  /// counterpart of the App composition root.
-  ///
-  /// Every view that reads `@Environment(SomeStore.self)` crashes the preview host
-  /// unless that store is injected; apply this to any preview whose view hierarchy
-  /// can reach one. Preferences use a throwaway UserDefaults suite so previews
-  /// never pollute the real app's stored settings.
+  /// counterpart of the App composition root. Apply to any preview whose views
+  /// read environment stores (they crash the preview host otherwise).
+  /// Preferences land in a throwaway UserDefaults suite, not the real one.
   @MainActor
   func ikaPreviewEnvironment() -> some View {
     let previewDefaults = UserDefaults(suiteName: "ikalendar2-preview") ?? .standard

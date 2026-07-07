@@ -10,6 +10,8 @@ import SwiftUI
 
 // MARK: - BattleRotationCell
 
+/// Switches a battle rotation between its featured (primary) and compact
+/// (secondary) look, owning the namespaces that animate elements between the two.
 struct BattleRotationCell: View {
   enum CellType {
     case primary
@@ -57,11 +59,9 @@ struct BattleRotationCell: View {
 struct BattleRotationCellPrimary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Cell.Primary
 
-  // Matched-geometry rule: within each cell's namespaces, the SECONDARY variant is
-  // the geometry source and the primary variant matches it (`isSource: false`).
-  // During the secondary->primary hero transition both variants briefly coexist;
-  // keeping a single source per group avoids SwiftUI's "multiple inserted views
-  // have isSource: true" undefined behavior (seen at rotation boundaries).
+  // Matched-geometry rule: the secondary variant is the geometry source and the
+  // primary matches it (isSource: false). The two briefly coexist during the hero
+  // transition, and more than one source per group is undefined behavior.
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 

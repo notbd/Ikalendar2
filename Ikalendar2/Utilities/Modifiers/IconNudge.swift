@@ -11,11 +11,8 @@ import SwiftUI
 
 /// Periodically wiggles a symbol to hint at an undiscovered, tappable row.
 ///
-/// The cadence is tied to the view's identity rather than its value: parent
-/// re-renders no longer reset the rhythm (the old stored-property Timer did,
-/// making nudges fire on an inconsistent schedule). The loop starts one full
-/// interval after appearing and ends as soon as `isActive` flips off - i.e.
-/// once the user has discovered the feature.
+/// The cadence is tied to the view's identity, so parent re-renders don't reset
+/// the rhythm. Starts one full interval after appearing; stops once discovered.
 struct IconNudge: ViewModifier {
   let isActive: Bool
   let interval: TimeInterval

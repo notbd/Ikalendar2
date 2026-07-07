@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The selectable app icons, including a certain easter egg.
 enum IkaAppIcon: String, CaseIterable, Identifiable {
   static let `default`: Self = .preset
 

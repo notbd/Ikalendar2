@@ -27,9 +27,8 @@ final class IkaClock {
   }
 
   private func startTicking() {
-    // Deadline-based loop: faithful to Timer.publish(every:) wall-clock cadence (no phase drift).
-    // [weak self] with per-iteration re-acquire: a strong capture would keep the object (and its
-    // ticking) alive forever, defeating deinit for preview/test instances.
+    // Deadline-based so ticks don't drift; weak self is re-acquired each lap
+    // so short-lived instances (previews, tests) can actually deinit.
     tickTask = Task { [weak self] in
       var nextTick: ContinuousClock.Instant = .now
       while !Task.isCancelled {

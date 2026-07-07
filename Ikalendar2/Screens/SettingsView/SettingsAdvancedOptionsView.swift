@@ -10,6 +10,7 @@ import SwiftUI
 
 // MARK: - SettingsAdvancedOptionsView
 
+/// The Settings page for the more niche toggles, with live preview cells.
 struct SettingsAdvancedOptionsView: View {
   typealias Scoped = Constants.Style.Settings.Advanced
 
@@ -202,6 +203,7 @@ struct SettingsAdvancedOptionsView: View {
 
 // MARK: - BottomToolbarPositioningPreview
 
+/// A short-lived sheet that demos the bottom toolbar picker order after a swap.
 struct BottomToolbarPositioningPreview: View {
   typealias Scoped = Constants.Style.Settings.Advanced
 

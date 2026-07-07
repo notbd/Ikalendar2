@@ -9,6 +9,7 @@ import AlertKit
 import SimpleHaptics
 import SwiftUI
 
+/// The Settings page for debug actions: replay onboarding, reset states and preferences.
 struct SettingsDebugOptionsView: View {
   @Environment(IkaStatus.self) private var ikaStatus
 

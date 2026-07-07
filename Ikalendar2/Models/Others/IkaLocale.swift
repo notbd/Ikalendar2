@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - IkaLocale
 
+/// The locales the app knows about, with matching display names and official site links.
 enum IkaLocale {
   case en
   case ja

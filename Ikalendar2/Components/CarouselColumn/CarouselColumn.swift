@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - CarouselColumn
 
+/// One mode's rotation list inside the iPad carousel, stamped with its mode icon.
 struct CarouselColumn: View {
   typealias Scoped = Constants.Style.Carousel.Column
 

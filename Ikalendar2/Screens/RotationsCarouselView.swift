@@ -10,6 +10,7 @@ import SwiftUI
 
 // MARK: - RotationsCarouselView
 
+/// The iPad layout: every mode side by side in a scrolling carousel.
 struct RotationsCarouselView: View {
   typealias Scoped = Constants.Style.Carousel
 

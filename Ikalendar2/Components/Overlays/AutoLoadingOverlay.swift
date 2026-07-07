@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - AutoLoadingOverlay
 
+/// The little toast that reports auto-load activity and its outcome.
 struct AutoLoadingOverlay: View {
   typealias Scoped = Constants.Style.Overlay.AutoLoading
 

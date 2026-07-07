@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Small async helpers that don't belong anywhere else.
 enum AsyncUtils {
   static func withTimeout<T: Sendable>(
     seconds: TimeInterval,

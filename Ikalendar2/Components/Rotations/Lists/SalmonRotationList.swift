@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The salmon rotation list: the open/soonest shift first, later ones below.
 struct SalmonRotationList: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaClock.self) private var ikaClock

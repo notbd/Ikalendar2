@@ -9,6 +9,8 @@ import SwiftUI
 
 // MARK: - GlobalPosition
 
+/// Positions a view at a fixed point in the global coordinate space.
+/// Used to overlay an unclipped copy exactly on top of a list cell.
 struct GlobalPosition: ViewModifier {
   let x: CGFloat
   let y: CGFloat

@@ -8,6 +8,7 @@
 import Foundation
 import RegexBuilder
 
+/// License info of an open source library, as fetched from the GitHub API.
 struct IkaOpenSourceLicense {
   let repoURL: String
   let type: String
