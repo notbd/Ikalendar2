@@ -172,20 +172,14 @@ struct SettingsAboutView: View {
 
   // MARK: - Review Section
 
-  @State private var rowRatingIconAnimationTrigger: Int = 0
-  private var ratingNudgeTimer = Timer
-    .publish(
-      every: Constants.Config.Timer.nudgeSignalInterval,
-      tolerance: 0.1,
-      on: .main,
-      in: .common)
-    .autoconnect()
+  /// Fires the wiggle once as immediate tap feedback (the periodic hint is iconNudge's job).
+  @State private var ratingTapFeedbackTrigger: Int = 0
 
   private var rowRating: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
       requestReview()
-      rowRatingIconAnimationTrigger += 1
+      ratingTapFeedbackTrigger += 1
       if !ikaDiscoveryLog.hasDiscoveredRating { ikaDiscoveryLog.hasDiscoveredRating = true }
     } label: {
       Label {
@@ -194,16 +188,12 @@ struct SettingsAboutView: View {
       }
       icon: {
         Image(systemName: Scoped.ratingSFSymbol)
-          .symbolEffect(.wiggle, value: rowRatingIconAnimationTrigger)
+          .symbolEffect(.wiggle, value: ratingTapFeedbackTrigger)
+          .iconNudge(isActive: !ikaDiscoveryLog.hasDiscoveredRating)
           .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
       }
-    }
-    .onReceive(ratingNudgeTimer) { _ in
-      guard !ikaDiscoveryLog.hasDiscoveredRating else { return }
-
-      rowRatingIconAnimationTrigger += 1
     }
   }
 

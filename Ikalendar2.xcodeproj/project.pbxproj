@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		61327AAE2EB58C360076DD3B /* BlurFade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61327AAD2EB58C320076DD3B /* BlurFade.swift */; };
+		61C4A00F2EF1CD00002577EA /* IconNudge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C4A0102EF1CD00002577EA /* IconNudge.swift */; };
 		613286FD2EB70D7E0076DD3B /* IkaConnectivityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613286FC2EB70D620076DD3B /* IkaConnectivityChecker.swift */; };
 		6146761C2ECACDFE00400325 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6146761B2ECACDFE00400325 /* Assets.xcassets */; };
 		61526F112E07802D00375181 /* IkalendarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; };
@@ -154,6 +155,7 @@
 
 /* Begin PBXFileReference section */
 		61327AAD2EB58C320076DD3B /* BlurFade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurFade.swift; sourceTree = "<group>"; };
+		61C4A0102EF1CD00002577EA /* IconNudge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconNudge.swift; sourceTree = "<group>"; };
 		613286FC2EB70D620076DD3B /* IkaConnectivityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaConnectivityChecker.swift; sourceTree = "<group>"; };
 		6146761B2ECACDFE00400325 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61526EFE2E07802D00375181 /* IkalendarKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IkalendarKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				61327AAD2EB58C320076DD3B /* BlurFade.swift */,
+				61C4A0102EF1CD00002577EA /* IconNudge.swift */,
 				7903FE3328C438B400245586 /* IkaFont.swift */,
 				7903FE3528C438FC00245586 /* RoundedFont.swift */,
 				7903FE2F28C437F900245586 /* QuickBorder.swift */,
@@ -980,6 +983,7 @@
 				7903FE6E28C46CD200245586 /* SettingsMainView.swift in Sources */,
 				7903FE7228C46D1800245586 /* SettingsAboutView.swift in Sources */,
 				61327AAE2EB58C360076DD3B /* BlurFade.swift in Sources */,
+				61C4A00F2EF1CD00002577EA /* IconNudge.swift in Sources */,
 				790E2E112AA6D3F100789465 /* NamespaceConstants.swift in Sources */,
 				79408C6A2AA5BAA800141E58 /* IkaAppIcon.swift in Sources */,
 				7903FE9328C4701000245586 /* AutoLoadingOverlay.swift in Sources */,

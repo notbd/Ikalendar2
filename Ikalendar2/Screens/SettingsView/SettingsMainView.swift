@@ -209,15 +209,6 @@ struct SettingsMainView: View {
     }
   }
 
-  @State private var rowAltAppIconIconAnimationTrigger: Int = 0
-  private var altAppIconNudgeTimer = Timer
-    .publish(
-      every: Constants.Config.Timer.nudgeSignalInterval,
-      tolerance: 0.1,
-      on: .main,
-      in: .common)
-    .autoconnect()
-
   private var rowAltAppIcon: some View {
     NavigationLink(destination: SettingsAltAppIconView()) {
       Label {
@@ -226,13 +217,10 @@ struct SettingsMainView: View {
       }
       icon: {
         Image(systemName: ikaPreference.preferredAppIcon.settingsMainSFSymbolName)
-          .symbolEffect(.wiggle, value: rowAltAppIconIconAnimationTrigger)
+          .iconNudge(isActive: !ikaDiscoveryLog.hasDiscoveredAltAppIcon)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
-      }
-      .onReceive(altAppIconNudgeTimer) { _ in
-        if !ikaDiscoveryLog.hasDiscoveredAltAppIcon { rowAltAppIconIconAnimationTrigger += 1 }
       }
     }
   }
