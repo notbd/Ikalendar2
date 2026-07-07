@@ -28,7 +28,11 @@ struct SettingsAboutView: View {
   @State private var appIconBounceCounter: Int = 0
 
   @State private var shouldDisplayAnimatedCopy: Bool = false
-  @State private var currentToggleAfterDelayTask: Task<Void, Never>?
+
+  /// How long the unclipped overlay copy stays after a bounce (covers the longest keyframe track).
+  static private let animatedCopyLinger: TimeInterval = 1.6
+  /// Small lag so the bounce haptic lands on the squash, not the tap.
+  static private let bounceHapticDelay: TimeInterval = 0.1
 
   var body: some View {
     ZStack {
@@ -83,15 +87,24 @@ struct SettingsAboutView: View {
         .opacity(shouldDisplayAnimatedCopy ? 1 : 0)
     }
     .onChange(of: appIconBounceCounter, initial: false) {
+      // Short-lived by design: delays the haptic onto the squash frame.
       Task {
-        try? await Task.sleep(nanoseconds: UInt64(0.1 * 1_000_000_000))
+        try? await Task.sleep(for: .seconds(Self.bounceHapticDelay))
         await SimpleHaptics.generate(.light)
       }
+    }
+    // While bouncing, the icon escapes its list cell's clip bounds, so an unclipped
+    // copy is overlaid at the same position and the original hidden. Re-triggering
+    // (id:) restarts the linger window - this replaces the old manual
+    // cancel-and-reschedule task bookkeeping.
+    .task(id: appIconBounceCounter) {
+      guard appIconBounceCounter > 0 else { return }
+
       shouldDisplayAnimatedCopy = true
-      // Cancel the previous task, if it exists
-      currentToggleAfterDelayTask?.cancel()
-      // Schedule a new task
-      currentToggleAfterDelayTask = Task { await toggleShouldDisplayAnimatedCopyAfterDelay() }
+      try? await Task.sleep(for: .seconds(Self.animatedCopyLinger))
+      guard !Task.isCancelled else { return }
+
+      shouldDisplayAnimatedCopy = false
     }
   }
 
@@ -414,20 +427,22 @@ struct SettingsAboutView: View {
     }
   }
 
+  /// Note: keyframeAnimator's content closure trips a '(some View).Type' non-Sendable
+  /// capture warning in generic contexts - an SDK-level artifact not fixable at the
+  /// call site (inline closures and explicit generics were both tried).
   private func applyAppIconBounceAnimation(_ content: some View) -> some View {
     content
       .keyframeAnimator(
         initialValue: SettingsAboutAppIconAnimationValues(),
-        trigger: appIconBounceCounter,
-        content: SettingsAboutAppIconAnimationValues.keyframeTransformation,
-        keyframes: SettingsAboutAppIconAnimationValues.appIconKeyframes)
-  }
-
-  private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
-    try? await Task.sleep(nanoseconds: UInt64(1.6 * 1_000_000_000))
-    guard !Task.isCancelled else { return }
-
-    shouldDisplayAnimatedCopy = false
+        trigger: appIconBounceCounter)
+      { content, values in
+        content
+          .scaleEffect(values.scale)
+          .scaleEffect(y: values.vStretch)
+          .offset(y: values.vTranslation)
+      } keyframes: { _ in
+        SettingsAboutAppIconAnimationValues.appIconKeyframes()
+      }
   }
 }
 
@@ -438,21 +453,9 @@ struct SettingsAboutAppIconAnimationValues {
   var vStretch: Double = 1
   var vTranslation: Double = 0
 
-  @ViewBuilder
-  @Sendable
-  static func keyframeTransformation(
-    content: PlaceholderContentView<some View>,
-    values: SettingsAboutAppIconAnimationValues)
-    -> some View
-  {
-    content
-      .scaleEffect(values.scale)
-      .scaleEffect(y: values.vStretch)
-      .offset(y: values.vTranslation)
-  }
-
+  /// Tap bounce: classic squash-and-stretch - dip, big hop with overshoot, settle.
   @KeyframesBuilder<SettingsAboutAppIconAnimationValues>
-  static func appIconKeyframes(start _: SettingsAboutAppIconAnimationValues)
+  static func appIconKeyframes()
     -> some Keyframes<SettingsAboutAppIconAnimationValues>
   {
     KeyframeTrack(\.vStretch) {

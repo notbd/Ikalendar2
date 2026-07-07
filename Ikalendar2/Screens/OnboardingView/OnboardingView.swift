@@ -18,10 +18,26 @@ struct OnboardingView: View {
 
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
+  /// Choreography timing, relative to view appearance unless noted.
+  private enum Timing {
+    /// Beat of stillness before the entrance sequence begins.
+    static let entranceDelay: TimeInterval = 1
+    /// Entrance runs show + float before the icon lands (haptic moment).
+    static let entranceDuration: TimeInterval =
+      OnboardingObject.Phase.show.duration + OnboardingObject.Phase.float.duration
+    /// First automatic icon bounce, relative to the landing haptic.
+    static let firstAutoBounceDelay: TimeInterval = 3
+    /// Idle interval between subsequent auto-bounces; a tap restarts the countdown.
+    static let autoBounceInterval: TimeInterval = 9
+    /// Button pulse period (first pulse waits out the entrance first).
+    static let buttonPulseInterval: TimeInterval = 9
+    /// Small lag so the bounce haptic lands on the squash, not the tap.
+    static let bounceHapticDelay: TimeInterval = 0.1
+  }
+
   @State private var startAnimation: Bool = false
   @State private var startPulse: Bool = false
   @State private var iconBounceCounter: Int = 0
-  @State private var currentTriggerIconBounceAfterDelayTask: Task<Void, Never>?
 
   var body: some View {
     ZStack {
@@ -46,25 +62,43 @@ struct OnboardingView: View {
       .padding(.all)
     }
     .hAlignment(.center)
+    // Entrance sequence: pause, run the keyframe entrance, then a landing haptic
+    // and (if the user hasn't tapped yet) the first attention bounce.
     .task {
-      try? await Task.sleep(nanoseconds: 1_000_000_000)
+      try? await Task.sleep(for: .seconds(Timing.entranceDelay))
       startAnimation = true
-      let hapticsDelay = OnboardingObject.Phase.show.duration + OnboardingObject.Phase.float.duration
-      try? await Task.sleep(nanoseconds: UInt64(hapticsDelay * 1_000_000_000))
+
+      try? await Task.sleep(for: .seconds(Timing.entranceDuration))
+      guard !Task.isCancelled else { return }
+
       SimpleHaptics.generateTask(.soft)
-      Task {
-        // start repeated icon bounce
-        try? await Task.sleep(nanoseconds: UInt64(3 * 1_000_000_000))
-        if iconBounceCounter == 0 { iconBounceCounter += 1 }
+
+      try? await Task.sleep(for: .seconds(Timing.firstAutoBounceDelay))
+      guard !Task.isCancelled else { return }
+
+      if iconBounceCounter == 0 { iconBounceCounter += 1 }
+    }
+    // Button pulse loop. Runs as a child of the view's lifetime - the previous
+    // detached Task kept pulsing forever after onboarding was dismissed.
+    .task {
+      try? await Task.sleep(for: .seconds(Timing.entranceDelay + Timing.entranceDuration))
+      while !Task.isCancelled {
+        try? await Task.sleep(for: .seconds(Timing.buttonPulseInterval))
+        guard !Task.isCancelled else { return }
+
+        startPulse.toggle()
       }
-      Task {
-        // repeat button pulse
-        repeat {
-          try? await Task.sleep(nanoseconds: UInt64(9 * 1_000_000_000))
-          startPulse.toggle()
-        }
-        while true
-      }
+    }
+    // Auto-bounce scheduler: every bounce (tap or automatic) restarts the
+    // countdown; replacing the task via id: subsumes the old manual
+    // cancel-and-reschedule bookkeeping.
+    .task(id: iconBounceCounter) {
+      guard iconBounceCounter > 0 else { return }
+
+      try? await Task.sleep(for: .seconds(Timing.autoBounceInterval))
+      guard !Task.isCancelled else { return }
+
+      iconBounceCounter += 1
     }
   }
 
@@ -82,15 +116,10 @@ struct OnboardingView: View {
           height: appIconDisplayMode.size.screenSize)
         .shadow(radius: Constants.Style.Global.shadowRadius)
         .onChange(of: iconBounceCounter, initial: false) {
+          // Short-lived by design: delays the haptic onto the squash frame.
           Task {
-            try? await Task.sleep(nanoseconds: UInt64(0.1 * 1_000_000_000))
+            try? await Task.sleep(for: .seconds(Timing.bounceHapticDelay))
             await SimpleHaptics.generate(.light)
-          }
-          // Cancel the previous task, if it exists
-          currentTriggerIconBounceAfterDelayTask?.cancel()
-          // Schedule a new task
-          currentTriggerIconBounceAfterDelayTask = Task {
-            await triggerIconBounceAfterDelay()
           }
         }
         .keyframeAnimator(
@@ -153,13 +182,6 @@ struct OnboardingView: View {
           .snappy(duration: 0.5)
       }
     }
-  }
-
-  private func triggerIconBounceAfterDelay() async {
-    try? await Task.sleep(nanoseconds: UInt64(9 * 1_000_000_000))
-    guard !Task.isCancelled else { return }
-
-    iconBounceCounter += 1
   }
 }
 
@@ -249,6 +271,7 @@ enum OnboardingObject {
       .offset(y: values.vTranslation)
   }
 
+  /// Entrance: fade/scale in during `.show`, hold through `.float`, then spring up to the resting slot.
   @KeyframesBuilder<OnboardingAnimationValues>
   static func iconKeyframes(_: OnboardingAnimationValues)
     -> some Keyframes<OnboardingAnimationValues>
@@ -269,6 +292,7 @@ enum OnboardingObject {
     }
   }
 
+  /// Entrance: mirrors the icon, offset so the title trails it upward.
   @KeyframesBuilder<OnboardingAnimationValues>
   static func titleKeyframes(_: OnboardingAnimationValues)
     -> some Keyframes<OnboardingAnimationValues>
@@ -288,6 +312,7 @@ enum OnboardingObject {
     }
   }
 
+  /// Entrance: stays hidden through show+float, then springs in as the icon lands.
   @KeyframesBuilder<OnboardingAnimationValues>
   static func buttonKeyframes(start: OnboardingAnimationValues)
     -> some Keyframes<OnboardingAnimationValues>
@@ -308,6 +333,7 @@ enum OnboardingObject {
     }
   }
 
+  /// Tap/idle bounce: classic squash-and-stretch - dip, hop with overshoot, settle.
   @KeyframesBuilder<OnboardingAnimationValues>
   static func iconExtraKeyframes(start _: OnboardingAnimationValues)
     -> some Keyframes<OnboardingAnimationValues>
