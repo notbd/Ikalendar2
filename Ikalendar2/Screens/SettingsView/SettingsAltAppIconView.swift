@@ -351,7 +351,7 @@ struct SettingsAltAppIconView: View {
   }
 
   private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
-    try? await Task.sleep(nanoseconds: UInt64(2.1 * 1_000_000_000))
+    try? await Task.sleep(for: .seconds(ScopedConfig.animatedCopyLingerLength))
     guard !Task.isCancelled else { return }
 
     shouldDisplayAnimatedCopy = false

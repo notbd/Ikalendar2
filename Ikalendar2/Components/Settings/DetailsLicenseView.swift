@@ -47,9 +47,7 @@ struct DetailsLicenseView: View {
     .task {
       // .task (unlike .onAppear + Task) is cancelled when the view disappears,
       // so a dismissed screen no longer keeps the request alive.
-      try? await Task.sleep(
-        nanoseconds:
-        UInt64(Constants.Config.License.licenseLoadedDelay * 1_000_000_000))
+      try? await Task.sleep(for: .seconds(Constants.Config.License.licenseLoadedDelay))
       guard !Task.isCancelled else { return }
 
       do {

@@ -18,6 +18,8 @@ extension Constants.Config {
 
   enum Catalog {
     /// Time Intervals are measured in second(s).
+    static let loadTimeout: TimeInterval = 5
+
     static let loadStatusLoadedDelay: TimeInterval = 0.2
     static let loadStatusErrorDelay: TimeInterval = 1
 
@@ -35,6 +37,9 @@ extension Constants.Config {
     enum AltAppIcon {
       static let slideShowInterval: TimeInterval = 4
       static let slideShowIntervalStepLength: TimeInterval = 0.01
+
+      static let animatedCopyLingerLength: TimeInterval = 2.1
+      static let easterEggJumpDelay: TimeInterval = 1.3
     }
   }
 

@@ -149,7 +149,7 @@ struct AltAppIconEasterEggRow: View {
   }
 
   private func jumpToURLAfterDelay() async {
-    try? await Task.sleep(nanoseconds: UInt64(1.3 * 1_000_000_000))
+    try? await Task.sleep(for: .seconds(Constants.Config.Settings.AltAppIcon.easterEggJumpDelay))
     let goodStuffURLString = connectivityChecker.isGFWed
       ? Constants.Key.URLs.theGoodStuffCN
       : Constants.Key.URLs.theGoodStuff

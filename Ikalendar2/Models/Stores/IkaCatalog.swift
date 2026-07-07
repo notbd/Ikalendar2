@@ -131,7 +131,7 @@ final class IkaCatalog {
   {
     let (loadedBattleRotationDict, loadedSalmonRotations) = try await
       AsyncUtils.withTimeout(
-        seconds: 5,
+        seconds: Scoped.loadTimeout,
         timeoutError: IkaError.connectionError)
       { [ikaNetworkService] in
         async let taskBattleRotationDict = ikaNetworkService.getBattleRotationDict()
@@ -163,11 +163,11 @@ final class IkaCatalog {
         loadStatus = .loading
 
       case .loaded:
-        try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusLoadedDelay * 1_000_000_000))
+        try? await Task.sleep(for: .seconds(Scoped.loadStatusLoadedDelay))
         loadStatus = .loaded
 
       case .error(let ikaError):
-        try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusErrorDelay * 1_000_000_000))
+        try? await Task.sleep(for: .seconds(Scoped.loadStatusErrorDelay))
         loadStatus = .error(ikaError)
     }
   }
@@ -304,8 +304,7 @@ final class IkaCatalog {
       }
 
       // wait and retry
-      try await Task.sleep(
-        nanoseconds: UInt64(Constants.Config.Catalog.autoLoadAttemptInterval * 1_000_000_000))
+      try await Task.sleep(for: .seconds(Scoped.autoLoadAttemptInterval))
     }
 
     // timeout - fail and throw timeout error
@@ -335,8 +334,7 @@ final class IkaCatalog {
       }
 
       // wait and retry
-      try await Task.sleep(
-        nanoseconds: UInt64(Constants.Config.Catalog.autoLoadAttemptInterval * 1_000_000_000))
+      try await Task.sleep(for: .seconds(Scoped.autoLoadAttemptInterval))
     }
 
     // timeout - fail and throw timeout error
@@ -356,11 +354,11 @@ final class IkaCatalog {
         Task {
           // blocked if app is in background - to make sure autoLoaded can be seen when switched back
           while UIApplication.shared.applicationState != .active {
-            try? await Task.sleep(nanoseconds: UInt64(Scoped.appActiveStateCheckInterval * 1_000_000_000))
+            try? await Task.sleep(for: .seconds(Scoped.appActiveStateCheckInterval))
           }
-          try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
+          try? await Task.sleep(for: .seconds(Scoped.autoLoadedLingerLength))
           autoLoadStatus = .idle
-          try? await Task.sleep(nanoseconds: UInt64(Scoped.idleAndNonIdleStatusUpdateInterval * 1_000_000_000))
+          try? await Task.sleep(for: .seconds(Scoped.idleAndNonIdleStatusUpdateInterval))
           autoLoadDelayedIdleStatus = .idle
         }
 

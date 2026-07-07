@@ -229,8 +229,7 @@ struct BottomToolbarPositioningPreview: View {
     }
     .padding(.horizontal, Scoped.bottomToolbarPreviewPaddingH)
     .task {
-      try? await Task.sleep(
-        nanoseconds: UInt64(Scoped.bottomToolbarPreviewLingerInterval * 1_000_000_000))
+      try? await Task.sleep(for: .seconds(Scoped.bottomToolbarPreviewLingerInterval))
       dismiss()
     }
   }
