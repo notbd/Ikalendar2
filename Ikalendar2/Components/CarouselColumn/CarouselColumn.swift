@@ -84,3 +84,9 @@ struct CarouselColumn: View {
     self.battleMode = battleMode
   }
 }
+
+#Preview(traits: .landscapeLeft) {
+  // One iPad carousel column; landscape mirrors its real habitat.
+  CarouselColumn(gameMode: .battle, battleMode: .gachi)
+    .ikaPreviewEnvironment()
+}

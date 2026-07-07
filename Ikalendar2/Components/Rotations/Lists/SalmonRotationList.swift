@@ -38,3 +38,8 @@ struct SalmonRotationList: View {
     }
   }
 }
+
+#Preview {
+  SalmonRotationList()
+    .ikaPreviewEnvironment()
+}

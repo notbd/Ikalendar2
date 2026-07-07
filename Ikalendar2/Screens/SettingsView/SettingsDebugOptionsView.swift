@@ -153,3 +153,10 @@ struct SettingsDebugOptionsView: View {
         .glassEffect(.regular.interactive())
   }
 }
+
+#Preview {
+  NavigationStack {
+    SettingsDebugOptionsView()
+  }
+  .ikaPreviewEnvironment()
+}

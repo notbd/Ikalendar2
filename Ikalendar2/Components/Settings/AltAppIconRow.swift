@@ -209,3 +209,31 @@ struct AppIconEasterEggAnimationValues {
   var verticalTranslation = 0.0
   var angle: Angle = .zero
 }
+
+#Preview("Rows") {
+  @Previewable @State var colorVariant: IkaAppIcon.ColorVariant = .default
+
+  List {
+    Section {
+      ForEach(IkaAppIcon.allCases.filter { !$0.isEasterEgg }) { icon in
+        AltAppIconRow(ikaAppIcon: icon, appIconColorVariant: $colorVariant)
+      }
+    }
+  }
+  .listStyle(.insetGrouped)
+  .ikaPreviewEnvironment()
+}
+
+#Preview("Easter Egg Row") {
+  @Previewable @State var colorVariant: IkaAppIcon.ColorVariant = .default
+  @Previewable @State var bounceCounter: Int = 0
+
+  List {
+    AltAppIconEasterEggRow(
+      ikaAppIcon: .rick,
+      appIconColorVariant: $colorVariant,
+      buttonPressCounter: $bounceCounter)
+  }
+  .listStyle(.insetGrouped)
+  .ikaPreviewEnvironment()
+}

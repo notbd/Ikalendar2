@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: - IdealFontLayout
+
 /// `IdealFontLayout` is a custom layout designed to optimize the display of text within a parent view.
 /// The layout computes the ideal dimensions for the text based on the provided anchor point and scales
 /// the text accordingly to have a consistent look.
@@ -149,3 +151,20 @@ struct IdealFontLayout: Layout {
     return maxIdealSize
   }
 }
+
+#if DEBUG
+#Preview {
+  // All candidates get the smallest ideal font so the anchored first (visible) one
+  // never truncates; resize the window to watch it adapt.
+  IdealFontLayout(anchor: .leading) {
+    ForEach(BattleRule.allCases) { rule in
+      Text(rule.name)
+        .lineLimit(1)
+        .font(.title2)
+        .minimumScaleFactor(0.3)
+    }
+  }
+  .frame(width: 160)
+  .border(.orange)
+}
+#endif

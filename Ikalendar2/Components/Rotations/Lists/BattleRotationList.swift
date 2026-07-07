@@ -50,3 +50,9 @@ struct BattleRotationList: View {
     self.specifiedBattleMode = specifiedBattleMode
   }
 }
+
+#Preview {
+  // Renders straight from the preloaded preview catalog - the app's main surface.
+  BattleRotationList(specifiedBattleMode: .gachi)
+    .ikaPreviewEnvironment()
+}

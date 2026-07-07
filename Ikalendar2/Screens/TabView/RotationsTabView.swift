@@ -61,3 +61,13 @@ struct RotationsTabView: View {
     adoptedFlatMode.name
   }
 }
+
+#Preview("Battle Tab") {
+  RotationsTabView(adoptedFlatMode: .gachi)
+    .ikaPreviewEnvironment()
+}
+
+#Preview("Salmon Tab") {
+  RotationsTabView(adoptedFlatMode: .salmon)
+    .ikaPreviewEnvironment()
+}
