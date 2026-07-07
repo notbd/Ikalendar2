@@ -40,7 +40,9 @@ struct RootView: View {
 
   private var settingsModal: some View {
     SettingsEntryView()
-      .tint(.orange)
+      // .accentColor on purpose - see the note in Ikalendar2App. Sheets/covers
+      // do not inherit the root accent, so the modal re-applies it.
+      .accentColor(.orange)
       .interactiveDismissDisabled()
   }
 

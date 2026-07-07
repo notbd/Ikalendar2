@@ -90,8 +90,7 @@ struct SettingsAdvancedOptionsView: View {
           .foregroundStyle(Color.accentColor)
       }
     }
-    .toggleStyle(.switch)
-    .tint(.accentColor)
+    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
     .disabled(!isHorizontalCompact)
   }
 
@@ -109,8 +108,7 @@ struct SettingsAdvancedOptionsView: View {
           .foregroundStyle(Color.accentColor)
       }
     }
-    .toggleStyle(.switch)
-    .tint(.accentColor)
+    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
     .disabled(!isHorizontalCompact)
     .onChange(of: ikaPreference.shouldSwapBottomToolbarPickers) {
       isBottomToolbarPreviewPresented.toggle()
@@ -131,8 +129,7 @@ struct SettingsAdvancedOptionsView: View {
           .foregroundStyle(Color.accentColor)
       }
     }
-    .toggleStyle(.switch)
-    .tint(.accentColor)
+    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
   }
 
   private var stageImagesPreviewHeader: some View {

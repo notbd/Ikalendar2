@@ -36,7 +36,11 @@ struct Ikalendar2App: App {
   var body: some Scene {
     WindowGroup {
       RootView()
-        .tint(.orange)
+        // Deliberately .accentColor, NOT .tint: .accentColor(_:) also sets the
+        // environment accent so every `Color.accentColor` reference in the app
+        // resolves to the brand orange. .tint(_:) does not, and swapping it in
+        // turns those references system-blue. (Deprecated, kept intentionally.)
+        .accentColor(.orange)
         .environment(ikaCatalog)
         .environment(ikaStatus)
         .environment(ikaClock)
