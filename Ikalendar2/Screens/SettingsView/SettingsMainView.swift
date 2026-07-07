@@ -197,7 +197,7 @@ struct SettingsMainView: View {
           .foregroundStyle(Color.accentColor)
       })
     {
-      ForEach(IkaColorSchemeManager.PreferredColorScheme.allCases) { preferredColorScheme in
+      ForEach(IkaPreferredColorScheme.allCases) { preferredColorScheme in
         Label(
           preferredColorScheme.name.localizedStringKey,
           systemImage: preferredColorScheme.sfSymbolName)

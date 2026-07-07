@@ -18,6 +18,14 @@ struct BattleRotationCell: View {
     case secondary
   }
 
+  /// The matched-geometry namespaces shared between the primary and secondary looks.
+  struct AnimationNamespaces {
+    let ruleIcon: Namespace.ID
+    let ruleTitle: Namespace.ID
+    let stageA: Namespace.ID
+    let stageB: Namespace.ID
+  }
+
   let type: CellType
   let rotation: BattleRotation
   let rowWidth: CGFloat
@@ -27,7 +35,7 @@ struct BattleRotationCell: View {
   @Namespace var stageA
   @Namespace var stageB
 
-  var animationNamespaces: Constants.Namespace.Battle {
+  var animationNamespaces: AnimationNamespaces {
     .init(
       ruleIcon: ruleIcon,
       ruleTitle: ruleTitle,
@@ -69,7 +77,7 @@ struct BattleRotationCellPrimary: View {
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
-  let animationNamespaces: Constants.Namespace.Battle?
+  let animationNamespaces: BattleRotationCell.AnimationNamespaces?
 
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
@@ -215,7 +223,7 @@ struct BattleRotationCellSecondary: View {
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
-  let animationNamespaces: Constants.Namespace.Battle?
+  let animationNamespaces: BattleRotationCell.AnimationNamespaces?
 
   var body: some View {
     HStack {
