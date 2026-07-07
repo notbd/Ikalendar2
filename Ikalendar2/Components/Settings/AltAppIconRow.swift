@@ -117,7 +117,22 @@ struct AltAppIconEasterEggRow: View {
         .animation(
           Scoped.crossFadeAnimation,
           value: appIconColorVariant)
-        .apply(applyEasterEggAnimation)
+        // Inlined (not a `some View` helper): keyframeAnimator's content closure
+        // captures PlaceholderContentView<Self>.Type, and an opaque-generic Self
+        // trips a non-Sendable metatype warning. On a concrete chain it is fine.
+        .keyframeAnimator(
+          initialValue: AppIconEasterEggAnimationValues(),
+          trigger: buttonPressCounter)
+        { content, value in
+          content
+            .rotationEffect(value.angle)
+            .scaleEffect(value.scale)
+            .scaleEffect(y: value.verticalStretch)
+            .offset(y: value.verticalTranslation)
+        } keyframes: { _ in
+          AppIconEasterEggAnimationValues.easterEggKeyframes(
+            rotationAngle: .init((Int.random(in: 16 ... 24)) * (Bool.random() ? 1 : -1)))
+        }
 
       Text(ikaAppIcon.displayNameLocalizedStringKey)
         .font(.system(.body, design: .rounded))
@@ -145,55 +160,6 @@ struct AltAppIconEasterEggRow: View {
     openURL(url)
   }
 
-  private func applyEasterEggAnimation(_ content: some View) -> some View {
-    let randomRotationAngel: Double = .init((Int.random(in: 16 ... 24)) * (Bool.random() ? 1 : -1))
-
-    return
-      content
-        .keyframeAnimator(
-          initialValue: AppIconEasterEggAnimationValues(),
-          trigger: buttonPressCounter)
-        { content, value in
-          content
-            .rotationEffect(value.angle)
-            .scaleEffect(value.scale)
-            .scaleEffect(y: value.verticalStretch)
-            .offset(y: value.verticalTranslation)
-        } keyframes: { _ in
-          KeyframeTrack(\.angle) {
-            CubicKeyframe(.zero, duration: 0.58)
-            CubicKeyframe(.degrees(randomRotationAngel), duration: 0.125)
-            CubicKeyframe(.degrees(-randomRotationAngel), duration: 0.125)
-            CubicKeyframe(.degrees(randomRotationAngel), duration: 0.125)
-            CubicKeyframe(.zero, duration: 0.125)
-          }
-
-          KeyframeTrack(\.verticalStretch) {
-            CubicKeyframe(1.0, duration: 0.1)
-            CubicKeyframe(0.6, duration: 0.15)
-            CubicKeyframe(1.5, duration: 0.1)
-            CubicKeyframe(1.05, duration: 0.15)
-            CubicKeyframe(1.0, duration: 0.88)
-            CubicKeyframe(0.8, duration: 0.1)
-            CubicKeyframe(1.04, duration: 0.4)
-            CubicKeyframe(1.0, duration: 0.22)
-          }
-
-          KeyframeTrack(\.scale) {
-            LinearKeyframe(1.0, duration: 0.36)
-            SpringKeyframe(1.5, duration: 0.8, spring: .bouncy)
-            SpringKeyframe(1.0, spring: .bouncy)
-          }
-
-          KeyframeTrack(\.verticalTranslation) {
-            LinearKeyframe(0.0, duration: 0.1)
-            SpringKeyframe(20.0, duration: 0.15, spring: .bouncy)
-            SpringKeyframe(-60.0, duration: 1.0, spring: .bouncy)
-            SpringKeyframe(0.0, spring: .bouncy)
-          }
-        }
-  }
-
   private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
     guard ikaPreference.preferredAppIcon != ikaAppIcon else { return }
 
@@ -208,6 +174,44 @@ struct AppIconEasterEggAnimationValues {
   var verticalStretch = 1.0
   var verticalTranslation = 0.0
   var angle: Angle = .zero
+
+  /// Easter-egg jump: shake by +-`rotationAngle`, squash, leap with overshoot, settle.
+  @KeyframesBuilder<AppIconEasterEggAnimationValues>
+  static func easterEggKeyframes(rotationAngle: Double)
+    -> some Keyframes<AppIconEasterEggAnimationValues>
+  {
+    KeyframeTrack(\.angle) {
+      CubicKeyframe(.zero, duration: 0.58)
+      CubicKeyframe(.degrees(rotationAngle), duration: 0.125)
+      CubicKeyframe(.degrees(-rotationAngle), duration: 0.125)
+      CubicKeyframe(.degrees(rotationAngle), duration: 0.125)
+      CubicKeyframe(.zero, duration: 0.125)
+    }
+
+    KeyframeTrack(\.verticalStretch) {
+      CubicKeyframe(1.0, duration: 0.1)
+      CubicKeyframe(0.6, duration: 0.15)
+      CubicKeyframe(1.5, duration: 0.1)
+      CubicKeyframe(1.05, duration: 0.15)
+      CubicKeyframe(1.0, duration: 0.88)
+      CubicKeyframe(0.8, duration: 0.1)
+      CubicKeyframe(1.04, duration: 0.4)
+      CubicKeyframe(1.0, duration: 0.22)
+    }
+
+    KeyframeTrack(\.scale) {
+      LinearKeyframe(1.0, duration: 0.36)
+      SpringKeyframe(1.5, duration: 0.8, spring: .bouncy)
+      SpringKeyframe(1.0, spring: .bouncy)
+    }
+
+    KeyframeTrack(\.verticalTranslation) {
+      LinearKeyframe(0.0, duration: 0.1)
+      SpringKeyframe(20.0, duration: 0.15, spring: .bouncy)
+      SpringKeyframe(-60.0, duration: 1.0, spring: .bouncy)
+      SpringKeyframe(0.0, spring: .bouncy)
+    }
+  }
 }
 
 #Preview("Rows") {

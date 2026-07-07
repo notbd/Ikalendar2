@@ -129,7 +129,20 @@ struct SettingsAboutView: View {
           // trigger animation
           appIconBounceCounter += 1
         }
-        .apply(applyAppIconBounceAnimation)
+        // Inlined (not a `some View` helper): keyframeAnimator's content closure
+        // captures PlaceholderContentView<Self>.Type, and an opaque-generic Self
+        // trips a non-Sendable metatype warning. On a concrete chain it is fine.
+        .keyframeAnimator(
+          initialValue: SettingsAboutAppIconAnimationValues(),
+          trigger: appIconBounceCounter)
+        { content, values in
+          content
+            .scaleEffect(values.scale)
+            .scaleEffect(y: values.vStretch)
+            .offset(y: values.vTranslation)
+        } keyframes: { _ in
+          SettingsAboutAppIconAnimationValues.appIconKeyframes()
+        }
     }
 
     var appIconTitle: some View {
@@ -425,24 +438,6 @@ struct SettingsAboutView: View {
           size: Scoped.sloganIkalendar3FontSize,
           relativeTo: .footnote)
     }
-  }
-
-  /// Note: keyframeAnimator's content closure trips a '(some View).Type' non-Sendable
-  /// capture warning in generic contexts - an SDK-level artifact not fixable at the
-  /// call site (inline closures and explicit generics were both tried).
-  private func applyAppIconBounceAnimation(_ content: some View) -> some View {
-    content
-      .keyframeAnimator(
-        initialValue: SettingsAboutAppIconAnimationValues(),
-        trigger: appIconBounceCounter)
-      { content, values in
-        content
-          .scaleEffect(values.scale)
-          .scaleEffect(y: values.vStretch)
-          .offset(y: values.vTranslation)
-      } keyframes: { _ in
-        SettingsAboutAppIconAnimationValues.appIconKeyframes()
-      }
   }
 }
 
