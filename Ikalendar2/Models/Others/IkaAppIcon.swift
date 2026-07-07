@@ -152,7 +152,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     let color: ColorVariant
     let size: DisplaySizeVariant
 
-    func getImageSuffix() -> String {
+    var imageSuffix: String {
       "-iOS-\(color.codeName)-\(size.imageAssetSize)x\(size.imageAssetSize)"
     }
   }
@@ -168,7 +168,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     }
   }
 
-  func getImageName(_ displayMode: DisplayMode) -> String {
-    iconSetName + displayMode.getImageSuffix()
+  func imageName(for displayMode: DisplayMode) -> String {
+    iconSetName + displayMode.imageSuffix
   }
 }

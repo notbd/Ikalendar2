@@ -48,11 +48,11 @@ public struct TimeLength {
   ///
   /// - Parameter locale: The locale to use for localization. Defaults to `Locale.current`.
   /// - Returns: A localized string describing the time length (e.g., "1d 2h 3m 4s").
-  public func getLocalizedDescriptionString(locale: Locale = .current) -> String {
+  public func localizedDescription(locale: Locale = .current) -> String {
     var elements: [String] = []
 
     // Determine the appropriate suffixes based on locale
-    let (daysSuffix, hoursSuffix, minutesSuffix, secondsSuffix) = getLocalizedSuffixes(for: locale)
+    let (daysSuffix, hoursSuffix, minutesSuffix, secondsSuffix) = localizedSuffixes(for: locale)
 
     if days > 0 {
       elements.append(String(days) + daysSuffix)
@@ -70,12 +70,12 @@ public struct TimeLength {
     elements.append(String(seconds) + secondsSuffix)
 
     // Determine separator based on locale
-    let separator = getSeparator(for: locale)
+    let separator = separator(for: locale)
     return elements.joined(separator: separator)
   }
 
   /// Returns locale-specific suffixes for time units.
-  private func getLocalizedSuffixes(for locale: Locale)
+  private func localizedSuffixes(for locale: Locale)
     -> (days: String, hours: String, minutes: String, seconds: String)
   {
     if locale.identifier.starts(with: "ja") {
@@ -100,7 +100,7 @@ public struct TimeLength {
   }
 
   /// Returns the appropriate separator for joining time components based on locale.
-  private func getSeparator(for locale: Locale) -> String {
+  private func separator(for locale: Locale) -> String {
     if
       locale.identifier.starts(with: "ja") ||
       locale.identifier.starts(with: "zh-Hans") ||

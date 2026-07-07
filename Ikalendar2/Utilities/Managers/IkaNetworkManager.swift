@@ -14,9 +14,9 @@ import SwiftUI
 /// Abstraction over the networking layer, enabling mock injection in tests.
 protocol IkaNetworkService: Sendable {
   func fetchLicense(from githubRepoURLString: String) async throws -> IkaOpenSourceLicense
-  func getBattleRotationDict() async throws -> BattleRotationDict
-  func getSalmonRotations() async throws -> [SalmonRotation]
-  func getSalmonRewardApparelInfo() async throws -> SalmonApparelInfo
+  func fetchBattleRotationDict() async throws -> BattleRotationDict
+  func fetchSalmonRotations() async throws -> [SalmonRotation]
+  func fetchSalmonRewardApparelInfo() async throws -> SalmonApparelInfo
 }
 
 extension EnvironmentValues {
@@ -64,7 +64,7 @@ final class IkaNetworkManager: IkaNetworkService {
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
   ///
   @concurrent
-  func getBattleRotationDict()
+  func fetchBattleRotationDict()
     async throws -> BattleRotationDict
   {
     guard let url = URL(string: Constants.Key.URLs.battleRotations) else { throw IkaError.unknownError }
@@ -81,7 +81,7 @@ final class IkaNetworkManager: IkaNetworkService {
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
   ///
   @concurrent
-  func getSalmonRotations()
+  func fetchSalmonRotations()
     async throws -> [SalmonRotation]
   {
     guard let url = URL(string: Constants.Key.URLs.salmonRotations) else { throw IkaError.unknownError }
@@ -98,7 +98,7 @@ final class IkaNetworkManager: IkaNetworkService {
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
   ///
   @concurrent
-  func getSalmonRewardApparelInfo()
+  func fetchSalmonRewardApparelInfo()
     async throws -> SalmonApparelInfo
   {
     guard let url = URL(string: Constants.Key.URLs.salmonApparelInfo) else { throw IkaError.unknownError }

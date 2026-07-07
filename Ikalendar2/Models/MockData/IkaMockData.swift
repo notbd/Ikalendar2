@@ -20,7 +20,7 @@ enum IkaMockData {
   ///   - hasStageAndWeapons: If the rotation has stage and weapon information.
   ///   - mysteryWeaponType: The type of mystery weapon for the rotation. (nil, green, gold)
   /// - Returns: The SalmonRotation data.
-  static func getSalmonRotation(
+  static func makeSalmonRotation(
     rawStartTime: Date = Date(),
     hasStageAndWeapons: Bool = true,
     mysteryWeaponType: MysteryWeapon? = nil)
@@ -93,7 +93,7 @@ enum IkaMockData {
 
   /// Generate a mock SalmonRotation array data.
   /// - Returns: The loaded SalmonRotation array.
-  static func getSalmonRotations() -> [SalmonRotation] {
+  static func makeSalmonRotations() -> [SalmonRotation] {
     var salmonRotations: [SalmonRotation] = []
     var startTimeArray: [Date] = []
     for index in 0 ..< 5 {
@@ -104,25 +104,25 @@ enum IkaMockData {
     }
 
     salmonRotations.append(
-      getSalmonRotation(
+      makeSalmonRotation(
         rawStartTime: startTimeArray[0],
         hasStageAndWeapons: true,
         mysteryWeaponType: nil))
     salmonRotations.append(
-      getSalmonRotation(
+      makeSalmonRotation(
         rawStartTime: startTimeArray[1],
         hasStageAndWeapons: true,
         mysteryWeaponType: .green))
     salmonRotations.append(
-      getSalmonRotation(
+      makeSalmonRotation(
         rawStartTime: startTimeArray[2],
         hasStageAndWeapons: false))
     salmonRotations.append(
-      getSalmonRotation(
+      makeSalmonRotation(
         rawStartTime: startTimeArray[3],
         hasStageAndWeapons: false))
     salmonRotations.append(
-      getSalmonRotation(
+      makeSalmonRotation(
         rawStartTime: startTimeArray[4],
         hasStageAndWeapons: false))
 
@@ -139,7 +139,7 @@ enum IkaMockData {
   ///                   the previous rounded hour.
   ///
   /// - Returns: The `BattleRotation` object.
-  static func getBattleRotation(
+  static func makeBattleRotation(
     preferredMode: BattleMode? = nil,
     preferredRule: BattleRule? = nil,
     rawStartTime: Date = Date())
@@ -152,7 +152,7 @@ enum IkaMockData {
         value: 2,
         to: startTime)!
 
-    func getRandomBattleStage() -> BattleStage {
+    func makeRandomBattleStage() -> BattleStage {
       var stage = BattleStage.allCases.randomElement()!
       while stage == .shiftyStation {
         // exclude shifty station
@@ -161,11 +161,11 @@ enum IkaMockData {
       return stage
     }
 
-    let randomStageA = getRandomBattleStage()
-    var randomStageB = getRandomBattleStage()
+    let randomStageA = makeRandomBattleStage()
+    var randomStageB = makeRandomBattleStage()
     while randomStageB == randomStageA {
       // avoid duplicate
-      randomStageB = getRandomBattleStage()
+      randomStageB = makeRandomBattleStage()
     }
 
     var mode = BattleMode.allCases.randomElement()!
@@ -192,7 +192,7 @@ enum IkaMockData {
 
   /// Generate a mock BattleRotationDict data.
   /// - Returns: The loaded BattleRotationDict.
-  static func getBattleRotations() -> BattleRotationDict {
+  static func makeBattleRotations() -> BattleRotationDict {
     var battleRotationDict: BattleRotationDict = .init()
     var startTimeArray: [Date] = []
     for index in 0 ..< 8 {
@@ -203,35 +203,35 @@ enum IkaMockData {
     }
 
     battleRotationDict[.regular] = [
-      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[0]),
-      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[1]),
-      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[2]),
-      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[3]),
-      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[4]),
-      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[5]),
-      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[6]),
-      getBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[7]),
+      makeBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[0]),
+      makeBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[1]),
+      makeBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[2]),
+      makeBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[3]),
+      makeBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[4]),
+      makeBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[5]),
+      makeBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[6]),
+      makeBattleRotation(preferredMode: .regular, preferredRule: .turfWar, rawStartTime: startTimeArray[7]),
     ]
 
     battleRotationDict[.gachi] = [
-      getBattleRotation(preferredMode: .gachi, preferredRule: .towerControl, rawStartTime: startTimeArray[0]),
-      getBattleRotation(preferredMode: .gachi, preferredRule: .splatZones, rawStartTime: startTimeArray[1]),
-      getBattleRotation(preferredMode: .gachi, preferredRule: .clamBlitz, rawStartTime: startTimeArray[2]),
-      getBattleRotation(preferredMode: .gachi, preferredRule: .rainmaker, rawStartTime: startTimeArray[3]),
+      makeBattleRotation(preferredMode: .gachi, preferredRule: .towerControl, rawStartTime: startTimeArray[0]),
+      makeBattleRotation(preferredMode: .gachi, preferredRule: .splatZones, rawStartTime: startTimeArray[1]),
+      makeBattleRotation(preferredMode: .gachi, preferredRule: .clamBlitz, rawStartTime: startTimeArray[2]),
+      makeBattleRotation(preferredMode: .gachi, preferredRule: .rainmaker, rawStartTime: startTimeArray[3]),
     ]
 
     battleRotationDict[.league] =
       [
-        getBattleRotation(
+        makeBattleRotation(
           preferredMode: .league,
           preferredRule: .towerControl,
           rawStartTime: startTimeArray[0]),
-        getBattleRotation(
+        makeBattleRotation(
           preferredMode: .league,
           preferredRule: .splatZones,
           rawStartTime: startTimeArray[1]),
-        getBattleRotation(preferredMode: .league, preferredRule: .clamBlitz, rawStartTime: startTimeArray[2]),
-        getBattleRotation(preferredMode: .league, preferredRule: .rainmaker, rawStartTime: startTimeArray[3]),
+        makeBattleRotation(preferredMode: .league, preferredRule: .clamBlitz, rawStartTime: startTimeArray[2]),
+        makeBattleRotation(preferredMode: .league, preferredRule: .rainmaker, rawStartTime: startTimeArray[3]),
       ]
 
     return battleRotationDict

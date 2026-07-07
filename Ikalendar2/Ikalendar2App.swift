@@ -80,15 +80,15 @@ private struct InertNetworkService: IkaNetworkService {
     throw IkaError.connectionError
   }
 
-  func getBattleRotationDict() async throws -> BattleRotationDict {
+  func fetchBattleRotationDict() async throws -> BattleRotationDict {
     throw IkaError.connectionError
   }
 
-  func getSalmonRotations() async throws -> [SalmonRotation] {
+  func fetchSalmonRotations() async throws -> [SalmonRotation] {
     throw IkaError.connectionError
   }
 
-  func getSalmonRewardApparelInfo() async throws -> SalmonApparelInfo {
+  func fetchSalmonRewardApparelInfo() async throws -> SalmonApparelInfo {
     throw IkaError.connectionError
   }
 }

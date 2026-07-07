@@ -115,7 +115,7 @@ struct SettingsAboutView: View {
       .init(color: .default, size: .large)
 
     var appIconImage: some View {
-      Image(appIconVariant.getImageName(appIconDisplayMode))
+      Image(appIconVariant.imageName(for: appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()

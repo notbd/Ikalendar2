@@ -135,7 +135,7 @@ struct SalmonRotationCellTimeTextSection: View {
 #Preview("Current (with reward gear)") {
   List {
     SalmonRotationCell(
-      rotation: IkaMockData.getSalmonRotation(rawStartTime: Date()),
+      rotation: IkaMockData.makeSalmonRotation(rawStartTime: Date()),
       rowWidth: 390)
   }
   .listStyle(.insetGrouped)
@@ -145,7 +145,7 @@ struct SalmonRotationCellTimeTextSection: View {
 #Preview("Future (time only)") {
   List {
     SalmonRotationCell(
-      rotation: IkaMockData.getSalmonRotation(
+      rotation: IkaMockData.makeSalmonRotation(
         rawStartTime: Date().addingTimeInterval(48 * 3600),
         hasStageAndWeapons: false),
       rowWidth: 390)

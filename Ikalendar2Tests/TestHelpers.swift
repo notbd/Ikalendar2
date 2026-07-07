@@ -93,15 +93,15 @@ struct MockIkaNetworkService: IkaNetworkService {
     IkaOpenSourceLicense(repoURL: "", type: "", typeDescription: "", content: "")
   }
 
-  func getBattleRotationDict() async throws -> BattleRotationDict {
+  func fetchBattleRotationDict() async throws -> BattleRotationDict {
     try await battleRotationDictHandler()
   }
 
-  func getSalmonRotations() async throws -> [SalmonRotation] {
+  func fetchSalmonRotations() async throws -> [SalmonRotation] {
     try await salmonRotationsHandler()
   }
 
-  func getSalmonRewardApparelInfo() async throws -> SalmonApparelInfo {
+  func fetchSalmonRewardApparelInfo() async throws -> SalmonApparelInfo {
     try await salmonRewardApparelInfoHandler()
   }
 

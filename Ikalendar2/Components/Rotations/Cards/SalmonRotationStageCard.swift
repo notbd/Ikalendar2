@@ -102,7 +102,7 @@ struct SalmonRotationStageCard: View {
 
 #Preview {
   SalmonRotationStageCard(
-    rotation: IkaMockData.getSalmonRotation(rawStartTime: Date()))
+    rotation: IkaMockData.makeSalmonRotation(rawStartTime: Date()))
     .frame(width: 312)
     .ikaPreviewEnvironment()
 }

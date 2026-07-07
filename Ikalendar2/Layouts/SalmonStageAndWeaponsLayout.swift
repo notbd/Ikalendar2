@@ -27,7 +27,7 @@ struct SalmonStageAndWeaponsLayout: Layout {
     guard let proposalWidth = proposal.width else { return .zero }
     guard subviews.count == 2 else { return .zero }
 
-    let hSpacings = getHSpacings(subviews: subviews)
+    let hSpacings = horizontalSpacings(subviews: subviews)
     let correctHeight = (proposalWidth - hSpacings[0]) * (9 / (16 + 9))
 
     return CGSize(
@@ -44,7 +44,7 @@ struct SalmonStageAndWeaponsLayout: Layout {
     guard let proposalWidth = proposal.width else { return }
     guard subviews.count == 2 else { return }
 
-    let hSpacings = getHSpacings(subviews: subviews)
+    let hSpacings = horizontalSpacings(subviews: subviews)
     let correctHeight = (proposalWidth - hSpacings[0]) * (9 / (16 + 9))
 
     let stageHeight = correctHeight
@@ -79,7 +79,7 @@ struct SalmonStageAndWeaponsLayout: Layout {
       proposal: weaponsSizeProposal)
   }
 
-  private func getHSpacings(subviews: Subviews) -> [CGFloat] {
+  private func horizontalSpacings(subviews: Subviews) -> [CGFloat] {
     subviews.indices.map { index in
       guard index < subviews.count - 1 else { return 0 }
 

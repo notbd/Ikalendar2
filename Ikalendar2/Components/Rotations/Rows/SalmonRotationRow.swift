@@ -134,11 +134,11 @@ struct SalmonRotationHeader: View {
 #Preview {
   List {
     SalmonRotationRow(
-      rotation: IkaMockData.getSalmonRotation(rawStartTime: Date()),
+      rotation: IkaMockData.makeSalmonRotation(rawStartTime: Date()),
       index: 0,
       rowWidth: 390)
     SalmonRotationRow(
-      rotation: IkaMockData.getSalmonRotation(
+      rotation: IkaMockData.makeSalmonRotation(
         rawStartTime: Date().addingTimeInterval(42 * 3600)),
       index: 1,
       rowWidth: 390)

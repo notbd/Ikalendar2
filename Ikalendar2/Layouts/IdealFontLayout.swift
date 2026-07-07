@@ -34,8 +34,8 @@ struct IdealFontLayout: Layout {
     cache _: inout ())
     -> CGSize
   {
-    let minIdealSize = getMinIdealSize(subviews: subviews, proposal: proposal)
-    let maxIdealSize = getMaxIdealSize(subviews: subviews, proposal: proposal)
+    let minIdealSize = minIdealSize(subviews: subviews, proposal: proposal)
+    let maxIdealSize = maxIdealSize(subviews: subviews, proposal: proposal)
 
     return CGSize(
       width: maxIdealSize.width,
@@ -48,8 +48,8 @@ struct IdealFontLayout: Layout {
     subviews: Subviews,
     cache _: inout ())
   {
-    let minIdealSize = getMinIdealSize(subviews: subviews, proposal: proposal)
-    let maxIdealSize = getMaxIdealSize(subviews: subviews, proposal: proposal)
+    let minIdealSize = minIdealSize(subviews: subviews, proposal: proposal)
+    let maxIdealSize = maxIdealSize(subviews: subviews, proposal: proposal)
 
     let contentWidth = maxIdealSize.width
     let contentHeight = minIdealSize.height
@@ -118,7 +118,7 @@ struct IdealFontLayout: Layout {
     }
   }
 
-  private func getMinIdealSize(
+  private func minIdealSize(
     subviews: Subviews,
     proposal: ProposedViewSize)
     -> CGSize
@@ -135,7 +135,7 @@ struct IdealFontLayout: Layout {
     }
   }
 
-  private func getMaxIdealSize(
+  private func maxIdealSize(
     subviews: Subviews,
     proposal: ProposedViewSize)
     -> CGSize

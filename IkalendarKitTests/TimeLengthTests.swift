@@ -75,7 +75,7 @@ struct TimeLengthTests {
     @Test
     func `Description with all components present`() {
       let timeLength: TimeLength = .init(days: 1, hours: 2, minutes: 3, seconds: 4)
-      let description = timeLength.getLocalizedDescriptionString()
+      let description = timeLength.localizedDescription()
 
       #expect(!description.isEmpty, "Description should not be empty")
       // Should contain all components
@@ -88,7 +88,7 @@ struct TimeLengthTests {
     @Test
     func `Description with only seconds`() {
       let timeLength: TimeLength = .init(seconds: 30)
-      let description = timeLength.getLocalizedDescriptionString()
+      let description = timeLength.localizedDescription()
 
       #expect(!description.isEmpty, "Description should not be empty")
       #expect(description.contains("30"), "Should contain seconds value")
@@ -97,7 +97,7 @@ struct TimeLengthTests {
     @Test
     func `Description with zero seconds shows seconds`() {
       let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 0)
-      let description = timeLength.getLocalizedDescriptionString()
+      let description = timeLength.localizedDescription()
 
       #expect(description.contains("0"), "Should always include seconds, even when zero")
     }
@@ -105,7 +105,7 @@ struct TimeLengthTests {
     @Test
     func `Description excludes zero components except seconds`() {
       let timeLength: TimeLength = .init(days: 0, hours: 0, minutes: 0, seconds: 45)
-      let description = timeLength.getLocalizedDescriptionString()
+      let description = timeLength.localizedDescription()
 
       // Should only show seconds since other components are zero
       #expect(description.contains("45"), "Should show seconds value")
@@ -122,7 +122,7 @@ struct TimeLengthTests {
     func `English locale uses spaces between components`() {
       let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
       let englishLocale: Locale = .init(identifier: "en_US")
-      let description = timeLength.getLocalizedDescriptionString(locale: englishLocale)
+      let description = timeLength.localizedDescription(locale: englishLocale)
 
       #expect(description.contains(" "), "English format should contain spaces")
     }
@@ -131,7 +131,7 @@ struct TimeLengthTests {
     func `Japanese locale joins components without spaces`() {
       let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
       let japaneseLocale: Locale = .init(identifier: "ja_JP")
-      let description = timeLength.getLocalizedDescriptionString(locale: japaneseLocale)
+      let description = timeLength.localizedDescription(locale: japaneseLocale)
 
       // Japanese format should not have spaces between components
       let hasSpaces = description.contains(" ")
@@ -142,7 +142,7 @@ struct TimeLengthTests {
     func `Simplified Chinese locale joins components without spaces`() {
       let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
       let chineseSimplifiedLocale: Locale = .init(identifier: "zh_Hans")
-      let description = timeLength.getLocalizedDescriptionString(locale: chineseSimplifiedLocale)
+      let description = timeLength.localizedDescription(locale: chineseSimplifiedLocale)
 
       // Chinese format should not have spaces between components
       let hasSpaces = description.contains(" ")
@@ -153,7 +153,7 @@ struct TimeLengthTests {
     func `Traditional Chinese locale joins components without spaces`() {
       let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
       let chineseTraditionalLocale: Locale = .init(identifier: "zh_Hant")
-      let description = timeLength.getLocalizedDescriptionString(locale: chineseTraditionalLocale)
+      let description = timeLength.localizedDescription(locale: chineseTraditionalLocale)
 
       // Chinese format should not have spaces between components
       let hasSpaces = description.contains(" ")
@@ -164,7 +164,7 @@ struct TimeLengthTests {
     func `Unknown locale defaults to English format`() {
       let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
       let unknownLocale: Locale = .init(identifier: "xx_XX")
-      let description = timeLength.getLocalizedDescriptionString(locale: unknownLocale)
+      let description = timeLength.localizedDescription(locale: unknownLocale)
 
       #expect(description.contains(" "), "Unknown locale should default to English format with spaces")
     }
@@ -173,8 +173,8 @@ struct TimeLengthTests {
     func `Different locales produce different output formats`() {
       let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
 
-      let englishDescription = timeLength.getLocalizedDescriptionString(locale: Locale(identifier: "en_US"))
-      let japaneseDescription = timeLength.getLocalizedDescriptionString(locale: Locale(identifier: "ja_JP"))
+      let englishDescription = timeLength.localizedDescription(locale: Locale(identifier: "en_US"))
+      let japaneseDescription = timeLength.localizedDescription(locale: Locale(identifier: "ja_JP"))
 
       #expect(englishDescription != japaneseDescription, "Different locales should produce different formats")
     }
@@ -187,7 +187,7 @@ struct TimeLengthTests {
     @Test
     func `Large values handled correctly`() {
       let timeLength: TimeLength = .init(days: 999, hours: 23, minutes: 59, seconds: 59)
-      let description = timeLength.getLocalizedDescriptionString()
+      let description = timeLength.localizedDescription()
 
       #expect(!description.isEmpty, "Should handle large values")
       #expect(description.contains("999"), "Should contain large days value")
@@ -198,7 +198,7 @@ struct TimeLengthTests {
     @Test
     func `Negative values handled correctly`() {
       let timeLength: TimeLength = .init(days: -1, hours: -2, minutes: -30, seconds: -45)
-      let description = timeLength.getLocalizedDescriptionString()
+      let description = timeLength.localizedDescription()
 
       #expect(!description.isEmpty, "Should handle negative values")
       // The description should include the negative values
@@ -208,7 +208,7 @@ struct TimeLengthTests {
     @Test
     func `Zero time length shows only seconds`() {
       let timeLength: TimeLength = .init()
-      let description = timeLength.getLocalizedDescriptionString()
+      let description = timeLength.localizedDescription()
 
       #expect(!description.isEmpty, "Description should not be empty for zero time")
       #expect(description.contains("0"), "Should show zero seconds")
@@ -221,10 +221,10 @@ struct TimeLengthTests {
       let minuteOnly: TimeLength = .init(minutes: 45)
       let secondOnly: TimeLength = .init(seconds: 30)
 
-      let dayDescription = dayOnly.getLocalizedDescriptionString()
-      let hourDescription = hourOnly.getLocalizedDescriptionString()
-      let minuteDescription = minuteOnly.getLocalizedDescriptionString()
-      let secondDescription = secondOnly.getLocalizedDescriptionString()
+      let dayDescription = dayOnly.localizedDescription()
+      let hourDescription = hourOnly.localizedDescription()
+      let minuteDescription = minuteOnly.localizedDescription()
+      let secondDescription = secondOnly.localizedDescription()
 
       #expect(dayDescription.contains("5"), "Day-only should work")
       #expect(hourDescription.contains("3"), "Hour-only should work")
@@ -247,8 +247,8 @@ struct TimeLengthTests {
       let timeLength1: TimeLength = .init(days: 1, hours: 2, minutes: 3, seconds: 4)
       let timeLength2: TimeLength = .init(days: 1, hours: 2, minutes: 3, seconds: 4)
 
-      let description1 = timeLength1.getLocalizedDescriptionString()
-      let description2 = timeLength2.getLocalizedDescriptionString()
+      let description1 = timeLength1.localizedDescription()
+      let description2 = timeLength2.localizedDescription()
 
       #expect(description1 == description2, "Same values should produce identical descriptions")
     }
@@ -257,9 +257,9 @@ struct TimeLengthTests {
     func `Multiple calls produce consistent results`() {
       let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
 
-      let description1 = timeLength.getLocalizedDescriptionString()
-      let description2 = timeLength.getLocalizedDescriptionString()
-      let description3 = timeLength.getLocalizedDescriptionString()
+      let description1 = timeLength.localizedDescription()
+      let description2 = timeLength.localizedDescription()
+      let description3 = timeLength.localizedDescription()
 
       #expect(description1 == description2, "Multiple calls should be consistent")
       #expect(description2 == description3, "Multiple calls should be consistent")
@@ -269,8 +269,8 @@ struct TimeLengthTests {
     func `Current locale default works correctly`() {
       let timeLength: TimeLength = .init(hours: 2, minutes: 15, seconds: 30)
 
-      let defaultDescription = timeLength.getLocalizedDescriptionString()
-      let explicitCurrentDescription = timeLength.getLocalizedDescriptionString(locale: .current)
+      let defaultDescription = timeLength.localizedDescription()
+      let explicitCurrentDescription = timeLength.localizedDescription(locale: .current)
 
       #expect(defaultDescription == explicitCurrentDescription, "Default locale should match explicit current locale")
     }

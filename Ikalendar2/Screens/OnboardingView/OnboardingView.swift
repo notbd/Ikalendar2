@@ -105,7 +105,7 @@ struct OnboardingView: View {
     let appIconDisplayMode: IkaAppIcon.DisplayMode = .init(color: .default, size: .mid)
 
     return
-      Image(appIconVariant.getImageName(appIconDisplayMode))
+      Image(appIconVariant.imageName(for: appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()

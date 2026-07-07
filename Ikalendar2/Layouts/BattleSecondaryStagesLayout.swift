@@ -31,11 +31,11 @@ struct BattleSecondaryStagesLayout: Layout {
     guard let proposalWidth = proposal.width else { return .zero }
     guard subviews.count == 2 else { return .zero }
 
-    let hSpacings = getHSpacings(subviews: subviews)
+    let hSpacings = horizontalSpacings(subviews: subviews)
     let subviewProposal: ProposedViewSize = .init(
       width: (proposalWidth - hSpacings[0]) * (1 / 2),
       height: proposal.height)
-    let minIdealSize = getMinIdealSize(subviews: subviews, proposal: subviewProposal)
+    let minIdealSize = minIdealSize(subviews: subviews, proposal: subviewProposal)
 
     return CGSize(
       width: proposalWidth,
@@ -51,11 +51,11 @@ struct BattleSecondaryStagesLayout: Layout {
     guard let proposalWidth = proposal.width else { return }
     guard subviews.count == 2 else { return }
 
-    let hSpacings = getHSpacings(subviews: subviews)
+    let hSpacings = horizontalSpacings(subviews: subviews)
     let subviewProposal: ProposedViewSize = .init(
       width: (proposalWidth - hSpacings[0]) * (1 / 2),
       height: proposal.height)
-    let minIdealSize = getMinIdealSize(subviews: subviews, proposal: subviewProposal)
+    let minIdealSize = minIdealSize(subviews: subviews, proposal: subviewProposal)
 
     let stageWidth = minIdealSize.width
     let stageHeight = minIdealSize.height
@@ -87,7 +87,7 @@ struct BattleSecondaryStagesLayout: Layout {
       proposal: stageSizeProposal)
   }
 
-  private func getHSpacings(subviews: Subviews) -> [CGFloat] {
+  private func horizontalSpacings(subviews: Subviews) -> [CGFloat] {
     subviews.indices.map { index in
       guard index < subviews.count - 1 else { return 0 }
 
@@ -100,7 +100,7 @@ struct BattleSecondaryStagesLayout: Layout {
     }
   }
 
-  private func getMinIdealSize(subviews: Subviews, proposal: ProposedViewSize) -> CGSize {
+  private func minIdealSize(subviews: Subviews, proposal: ProposedViewSize) -> CGSize {
     let subviewSizes = subviews.map { $0.sizeThatFits(proposal) }
     return subviewSizes.reduce(
       CGSize(

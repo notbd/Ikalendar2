@@ -23,8 +23,8 @@ struct SettingsAdvancedOptionsView: View {
 
   @State private var isBottomToolbarPreviewPresented = false
 
-  @State private var battleRotationPreviewData: BattleRotation = IkaMockData.getBattleRotation()
-  @State private var salmonRotationPreviewData: SalmonRotation = IkaMockData.getSalmonRotation()
+  @State private var battleRotationPreviewData: BattleRotation = IkaMockData.makeBattleRotation()
+  @State private var salmonRotationPreviewData: SalmonRotation = IkaMockData.makeSalmonRotation()
 
   @State private var rowWidth: CGFloat = 390
 
@@ -182,18 +182,18 @@ struct SettingsAdvancedOptionsView: View {
 
   private func shufflePreviewData() {
     // make sure stages are different
-    var newBattleData: BattleRotation = IkaMockData.getBattleRotation()
-    var newSalmonData: SalmonRotation = IkaMockData.getSalmonRotation()
+    var newBattleData: BattleRotation = IkaMockData.makeBattleRotation()
+    var newSalmonData: SalmonRotation = IkaMockData.makeSalmonRotation()
 
     while
       newBattleData.rule == battleRotationPreviewData.rule ||
       newBattleData.stageA == battleRotationPreviewData.stageA ||
       newBattleData.stageB == battleRotationPreviewData.stageB
     {
-      newBattleData = IkaMockData.getBattleRotation()
+      newBattleData = IkaMockData.makeBattleRotation()
     }
     while newSalmonData.stage == salmonRotationPreviewData.stage {
-      newSalmonData = IkaMockData.getSalmonRotation()
+      newSalmonData = IkaMockData.makeSalmonRotation()
     }
 
     battleRotationPreviewData = newBattleData

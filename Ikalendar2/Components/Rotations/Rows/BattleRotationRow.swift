@@ -131,7 +131,7 @@ struct BattleRotationHeader: View {
           .pickerStyle(.segmented)
         }
 
-        ForEach(IkaMockData.getBattleRotations()[modeSelection] ?? []) { rotation in
+        ForEach(IkaMockData.makeBattleRotations()[modeSelection] ?? []) { rotation in
           BattleRotationRow(
             rotation: rotation,
             rowWidth: geo.size.width)

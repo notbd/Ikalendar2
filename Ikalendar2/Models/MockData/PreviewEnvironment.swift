@@ -17,17 +17,17 @@ import SwiftUI
 struct PreviewNetworkService: IkaNetworkService {
   var latency: Duration = .milliseconds(300)
 
-  func getBattleRotationDict() async throws -> BattleRotationDict {
+  func fetchBattleRotationDict() async throws -> BattleRotationDict {
     try? await Task.sleep(for: latency)
-    return IkaMockData.getBattleRotations()
+    return IkaMockData.makeBattleRotations()
   }
 
-  func getSalmonRotations() async throws -> [SalmonRotation] {
+  func fetchSalmonRotations() async throws -> [SalmonRotation] {
     try? await Task.sleep(for: latency)
-    return IkaMockData.getSalmonRotations()
+    return IkaMockData.makeSalmonRotations()
   }
 
-  func getSalmonRewardApparelInfo() async throws -> SalmonApparelInfo {
+  func fetchSalmonRewardApparelInfo() async throws -> SalmonApparelInfo {
     try? await Task.sleep(for: latency)
     // availableTime deliberately matches no mock rotation: apparel attachment is
     // already covered by unit tests, and previews render the general case.

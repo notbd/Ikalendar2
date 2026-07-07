@@ -134,9 +134,9 @@ final class IkaCatalog {
         seconds: Scoped.loadTimeout,
         timeoutError: IkaError.connectionError)
       { [ikaNetworkService] in
-        async let taskBattleRotationDict = ikaNetworkService.getBattleRotationDict()
-        async let taskSalmonRotations = ikaNetworkService.getSalmonRotations()
-        async let taskSalmonRewardApparelInfo = ikaNetworkService.getSalmonRewardApparelInfo()
+        async let taskBattleRotationDict = ikaNetworkService.fetchBattleRotationDict()
+        async let taskSalmonRotations = ikaNetworkService.fetchSalmonRotations()
+        async let taskSalmonRewardApparelInfo = ikaNetworkService.fetchSalmonRewardApparelInfo()
 
         let battleRotationDict = try await taskBattleRotationDict
         var salmonRotations = try await taskSalmonRotations
@@ -295,7 +295,7 @@ final class IkaCatalog {
     while autoLoadAttempts < Scoped.autoLoadBattleMaxAttempts {
       // new attempt
       autoLoadAttempts += 1
-      let loadedBattleRotationDict = try await ikaNetworkService.getBattleRotationDict()
+      let loadedBattleRotationDict = try await ikaNetworkService.fetchBattleRotationDict()
 
       // found updates from server - success and return
       if loadedBattleRotationDict != battleRotationDict {
@@ -319,8 +319,8 @@ final class IkaCatalog {
     while autoLoadAttempts < Scoped.autoLoadSalmonMaxAttempts {
       // new attempt
       autoLoadAttempts += 1
-      var loadedSalmonRotations = try await ikaNetworkService.getSalmonRotations()
-      let loadedSalmonRewardApparelInfo = try await ikaNetworkService.getSalmonRewardApparelInfo()
+      var loadedSalmonRotations = try await ikaNetworkService.fetchSalmonRotations()
+      let loadedSalmonRewardApparelInfo = try await ikaNetworkService.fetchSalmonRewardApparelInfo()
       for (index, rotation) in loadedSalmonRotations.enumerated()
         where rotation.startTime == loadedSalmonRewardApparelInfo.availableTime
       {
@@ -382,8 +382,8 @@ extension IkaCatalog {
     -> IkaCatalog
   {
     let catalog: IkaCatalog = .init(ikaNetworkService: ikaNetworkService, ikaClock: ikaClock)
-    catalog.battleRotationDict = IkaMockData.getBattleRotations()
-    catalog.salmonRotations = IkaMockData.getSalmonRotations()
+    catalog.battleRotationDict = IkaMockData.makeBattleRotations()
+    catalog.salmonRotations = IkaMockData.makeSalmonRotations()
     catalog.loadStatus = .loaded
     return catalog
   }

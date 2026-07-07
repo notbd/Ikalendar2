@@ -323,7 +323,7 @@ struct BattleRotationCellSecondary: View {
     List {
       Section("Primary (featured)") {
         BattleRotationCellPrimary(
-          rotation: IkaMockData.getBattleRotation(
+          rotation: IkaMockData.makeBattleRotation(
             preferredMode: .gachi,
             preferredRule: .towerControl,
             rawStartTime: Date()),
@@ -332,7 +332,7 @@ struct BattleRotationCellSecondary: View {
       }
       Section("Secondary (compact)") {
         BattleRotationCellSecondary(
-          rotation: IkaMockData.getBattleRotation(
+          rotation: IkaMockData.makeBattleRotation(
             preferredMode: .league,
             preferredRule: .clamBlitz,
             rawStartTime: Date()),

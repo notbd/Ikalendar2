@@ -157,7 +157,7 @@ extension Date {
     let minutes = (remainingTime / 60) % 60
     let seconds = remainingTime % 60
     let timeLength: TimeLength = .init(days: days, hours: hours, minutes: minutes, seconds: seconds)
-    let timeLengthString = timeLength.getLocalizedDescriptionString()
+    let timeLengthString = timeLength.localizedDescription()
 
     return "remaining \(timeLengthString)"
   }
@@ -181,7 +181,7 @@ extension Date {
     let minutes = (untilTime / 60) % 60
     let seconds = untilTime % 60
     let timeLength: TimeLength = .init(days: days, hours: hours, minutes: minutes, seconds: seconds)
-    let timeLengthString = timeLength.getLocalizedDescriptionString()
+    let timeLengthString = timeLength.localizedDescription()
 
     return "\(timeLengthString) until"
   }

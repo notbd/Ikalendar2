@@ -33,7 +33,7 @@ struct AltAppIconRow: View {
 
   private var rowContent: some View {
     HStack(spacing: Scoped.spacingH) {
-      Image(ikaAppIcon.getImageName(appIconDisplayMode))
+      Image(ikaAppIcon.imageName(for: appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
@@ -105,7 +105,7 @@ struct AltAppIconEasterEggRow: View {
 
   private var rowContent: some View {
     HStack(spacing: Scoped.spacingH) {
-      Image(ikaAppIcon.getImageName(appIconDisplayMode))
+      Image(ikaAppIcon.imageName(for: appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
