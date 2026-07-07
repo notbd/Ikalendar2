@@ -5,7 +5,6 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-import Combine
 import SimpleHaptics
 import SwiftUI
 
@@ -34,60 +33,66 @@ struct SettingsAltAppIconView: View {
   @State private var shouldDisplayAnimatedCopy: Bool = false
   @State private var currentToggleAfterDelayTask: Task<Void, Never>?
 
-  @State private var isVariantPickerExpanded: Bool = false
   @State private var activeAppIconColorVariant: IkaAppIcon.ColorVariant = .default
   var activeAppIconDisplayMode: IkaAppIcon.DisplayMode {
     .init(color: activeAppIconColorVariant, size: .small)
   }
 
-  @State private var slideShowTimerCancellable: AnyCancellable?
-  @State private var isSlideShowActive: Bool = false
-  @State private var wasSlideShowActiveBeforePickerExpanded: Bool = false
-  @State private var slideShowProgress: Int = 0
-  var slideShowIntervalStepCount: Int {
-    Int(floor(ScopedConfig.slideShowInterval / ScopedConfig.slideShowIntervalStepLength))
-  }
+  // MARK: Slide Show State Machine
 
-  private var slideShowTimerPublisher: AnyPublisher<Date, Never> {
-    Timer.publish(
-      every: ScopedConfig.slideShowIntervalStepLength,
-      tolerance: ScopedConfig.slideShowIntervalStepLength / 10,
-      on: .main,
-      in: .common)
-      .autoconnect()
-      .eraseToAnyPublisher()
-  }
+  /// The slideshow's exhaustive set of states. Modeling the picker-expanded case
+  /// with its resume intent keeps every pause/resume rule in one place - the old
+  /// four-flag version resumed on dimming-layer taps but silently stayed paused
+  /// when a variant was picked, and left stale resume flags behind.
+  private enum SlideShowPhase: Equatable {
+    case playing
+    case paused
+    /// Variant picker is open; playback resumes on collapse iff it was playing before.
+    case pickerExpanded(wasPlaying: Bool)
 
-  private func startSlideShow() {
-    guard !isSlideShowActive else { return }
+    var isPlaying: Bool { self == .playing }
 
-    slideShowTimerCancellable =
-      slideShowTimerPublisher
-        .sink { _ in
-          withAnimation(.snappy) {
-            slideShowProgress = (slideShowProgress + 1) % slideShowIntervalStepCount
-          }
-        }
-    isSlideShowActive = true
-
-    withAnimation(.bouncy) {
-      isVariantPickerExpanded = false
+    var isPickerExpanded: Bool {
+      if case .pickerExpanded = self { return true }
+      return false
     }
   }
 
-  private func stopSlideShow() {
-    slideShowTimerCancellable?.cancel()
-    slideShowTimerCancellable = nil
-    resetSlideShowProgress()
-    isSlideShowActive = false
+  @State private var slideShowPhase: SlideShowPhase = .paused
+  @State private var slideShowProgress: Int = 0
+
+  private var slideShowStepCount: Int {
+    Int(floor(ScopedConfig.slideShowInterval / ScopedConfig.slideShowIntervalStepLength))
   }
 
-  private func toggleSlideShow() {
-    isSlideShowActive ? stopSlideShow() : startSlideShow()
+  // MARK: Slide Show Transitions
+
+  /// Play/pause button. Pausing resets progress (a fresh cycle starts on resume).
+  private func togglePlayback() {
+    switch slideShowPhase {
+      case .playing:
+        slideShowPhase = .paused
+        slideShowProgress = 0
+
+      case .paused:
+        slideShowPhase = .playing
+
+      case .pickerExpanded:
+        break // the control is hit-disabled while the picker is open
+    }
   }
 
-  private func resetSlideShowProgress() {
+  /// Opens the variant picker, remembering whether to resume on collapse.
+  private func expandPicker() {
+    slideShowPhase = .pickerExpanded(wasPlaying: slideShowPhase.isPlaying)
     slideShowProgress = 0
+  }
+
+  /// Collapses the picker (dimming-layer tap or variant selection), restoring playback.
+  private func collapsePicker() {
+    if case .pickerExpanded(let wasPlaying) = slideShowPhase {
+      slideShowPhase = wasPlaying ? .playing : .paused
+    }
   }
 
   var body: some View {
@@ -130,10 +135,26 @@ struct SettingsAltAppIconView: View {
       .listStyle(.insetGrouped)
       .onAppear {
         if !ikaDiscoveryLog.hasDiscoveredAltAppIcon { ikaDiscoveryLog.hasDiscoveredAltAppIcon = true }
-        startSlideShow()
+        slideShowPhase = .playing
+      }
+      // Step ticker: runs only while playing, cancels itself on pause/expand/disappear.
+      .task(id: slideShowPhase.isPlaying) {
+        guard slideShowPhase.isPlaying else { return }
+
+        while !Task.isCancelled {
+          try? await Task.sleep(
+            for: .seconds(ScopedConfig.slideShowIntervalStepLength),
+            tolerance: .seconds(ScopedConfig.slideShowIntervalStepLength / 10))
+          guard !Task.isCancelled else { return }
+
+          withAnimation(.snappy) {
+            slideShowProgress = (slideShowProgress + 1) % slideShowStepCount
+          }
+        }
       }
       .onChange(of: slideShowProgress) { oldVal, _ in
-        if oldVal == slideShowIntervalStepCount - 1 {
+        // A wrap-around (last step -> 0) completes one interval: advance the variant.
+        if oldVal == slideShowStepCount - 1 {
           withAnimation(.bouncy) {
             activeAppIconColorVariant = activeAppIconColorVariant.next
           }
@@ -174,12 +195,11 @@ struct SettingsAltAppIconView: View {
   private var modalDimmingLayer: some View {
     Color.black
       .ignoresSafeArea()
-      .opacity(!isVariantPickerExpanded ? 0 : ScopedStyle.modalDimmingLayerOpacity)
+      .opacity(!slideShowPhase.isPickerExpanded ? 0 : ScopedStyle.modalDimmingLayerOpacity)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .onTapGesture {
         withAnimation(.bouncy) {
-          isVariantPickerExpanded.toggle()
-          wasSlideShowActiveBeforePickerExpanded ? startSlideShow() : { }()
+          collapsePicker()
         }
       }
   }
@@ -196,57 +216,57 @@ struct SettingsAltAppIconView: View {
   }
 
   private var appIconSlideShowPlayPauseButton: some View {
-    Image(systemName: isSlideShowActive ? "pause" : "play")
+    Image(systemName: slideShowPhase.isPlaying ? "pause" : "play")
       .symbolVariant(.fill)
       .contentTransition(.symbolEffect(.replace.offUp))
+      .opacity(!slideShowPhase.isPickerExpanded ? 1 : ScopedStyle.slideShowNextButtonDisabledOpacity)
       .frame(
         width: ScopedStyle.slideShowControlButtonSize,
         height: ScopedStyle.slideShowControlButtonSize)
       .contentShape(Rectangle())
+      .allowsHitTesting(!slideShowPhase.isPickerExpanded)
       .onTapGesture {
         SimpleHaptics.generateTask(.selection)
         withAnimation(.bouncy) {
-          toggleSlideShow()
+          togglePlayback()
         }
       }
-      .glassEffect(.regular.interactive())
+      .glassEffect(!slideShowPhase.isPickerExpanded ? .regular.interactive() : .regular)
   }
 
   private var appIconSlideShowNextButton: some View {
     Image(systemName: "forward.end")
       .symbolVariant(.fill)
-      .opacity(!isVariantPickerExpanded ? 1 : ScopedStyle.slideShowNextButtonDisabledOpacity)
+      .opacity(!slideShowPhase.isPickerExpanded ? 1 : ScopedStyle.slideShowNextButtonDisabledOpacity)
       .frame(width: ScopedStyle.slideShowControlButtonSize, height: ScopedStyle.slideShowControlButtonSize)
       .contentShape(Rectangle())
-      .allowsHitTesting(!isVariantPickerExpanded)
+      .allowsHitTesting(!slideShowPhase.isPickerExpanded)
       .onTapGesture {
         SimpleHaptics.generateTask(.selection)
         // -> outside of closure because of icon animation collision
         activeAppIconColorVariant = activeAppIconColorVariant.next
 
         withAnimation(.snappy) {
-          resetSlideShowProgress()
+          slideShowProgress = 0
         }
       }
-      .glassEffect(!isVariantPickerExpanded ? .regular.interactive() : .regular)
+      .glassEffect(!slideShowPhase.isPickerExpanded ? .regular.interactive() : .regular)
   }
 
   private var pickerNameLabels: some View {
     ZStack {
       ForEach(IkaAppIcon.ColorVariant.allCases) { variant in
         Text(variant.displayNameLocalizedStringKey)
-          .blurFade(isShown: !isVariantPickerExpanded && variant == activeAppIconColorVariant)
+          .blurFade(isShown: !slideShowPhase.isPickerExpanded && variant == activeAppIconColorVariant)
           .frame(
             height: ScopedStyle.slideShowControlButtonSize)
           .fixedSize()
           .padding(.horizontal, ScopedStyle.slideShowControlPickerNameLabelPaddingH)
           .contentShape(Rectangle())
-          .allowsHitTesting(!isVariantPickerExpanded && variant == activeAppIconColorVariant)
+          .allowsHitTesting(!slideShowPhase.isPickerExpanded && variant == activeAppIconColorVariant)
           .onTapGesture {
             withAnimation(.bouncy) {
-              isVariantPickerExpanded.toggle()
-              wasSlideShowActiveBeforePickerExpanded = isSlideShowActive
-              stopSlideShow()
+              expandPicker()
             }
           }
       }
@@ -256,16 +276,17 @@ struct SettingsAltAppIconView: View {
   private var progressBar: some View {
     ProgressView(
       value: Double(slideShowProgress),
-      total: Double(slideShowIntervalStepCount))
+      total: Double(slideShowStepCount))
       .tint(.accentColor)
       .opacity(ScopedStyle.slideShowProgressBarOpacity)
       .frame(height: ScopedStyle.slideShowProgressBarHeight)
-      .blurFade(isShown: !isVariantPickerExpanded)
+      .blurFade(isShown: !slideShowPhase.isPickerExpanded)
       .vAlignment(.bottom)
       .padding(.horizontal, ScopedStyle.slideShowProgressBarPaddingH)
       .allowsHitTesting(false)
       .clipShape(.capsule)
-      .id("\(activeAppIconColorVariant)-\(isSlideShowActive)")
+      // identity reset: skip the fill-drain animation when the variant or phase jumps
+      .id("\(activeAppIconColorVariant)-\(slideShowPhase.isPlaying)")
   }
 
   private var pickerIcons: some View {
@@ -276,17 +297,17 @@ struct SettingsAltAppIconView: View {
             .bounce.down.byLayer,
             options: .nonRepeating,
             isActive: activeAppIconColorVariant == variant)
-          .blurFade(isShown: isVariantPickerExpanded)
+          .blurFade(isShown: slideShowPhase.isPickerExpanded)
           .frame(
             width: ScopedStyle.slideShowControlButtonSize,
             height: ScopedStyle.slideShowControlButtonSize)
           .contentShape(Rectangle())
-          .allowsHitTesting(isVariantPickerExpanded)
+          .allowsHitTesting(slideShowPhase.isPickerExpanded)
           .onTapGesture {
             SimpleHaptics.generateTask(.selection)
             withAnimation(.bouncy) {
               activeAppIconColorVariant = variant
-              isVariantPickerExpanded.toggle()
+              collapsePicker()
             }
           }
       }
@@ -294,7 +315,7 @@ struct SettingsAltAppIconView: View {
   }
 
   private var activeAppIconColorVariantPicker: some View {
-    let layout = isVariantPickerExpanded ? AnyLayout(HStackLayout()) : AnyLayout(ZStackLayout())
+    let layout = slideShowPhase.isPickerExpanded ? AnyLayout(HStackLayout()) : AnyLayout(ZStackLayout())
     return
       ZStack {
         pickerNameLabels
