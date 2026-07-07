@@ -363,5 +363,8 @@ struct SettingsAltAppIconView: View {
 }
 
 #Preview {
-  SettingsAltAppIconView()
+  NavigationStack {
+    SettingsAltAppIconView()
+  }
+  .ikaPreviewEnvironment()
 }

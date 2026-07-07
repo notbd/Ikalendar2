@@ -22,3 +22,8 @@ struct SettingsEntryView: View {
       alignment: .bottomTrailing)
   }
 }
+
+#Preview {
+  SettingsEntryView()
+    .ikaPreviewEnvironment()
+}

@@ -145,4 +145,5 @@ struct ModeIconStamp: View {
   ModeIconStamp(
     gameModeSelection: .battle,
     battleModeSelection: .gachi)
+    .ikaPreviewEnvironment()
 }

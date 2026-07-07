@@ -76,6 +76,7 @@
 		79AA713428C4056700A91055 /* IkaClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713328C4056700A91055 /* IkaClock.swift */; };
 		79AA713628C4070700A91055 /* IkaStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713528C4070700A91055 /* IkaStatus.swift */; };
 		79AA713928C4079900A91055 /* IkaMockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713828C4079900A91055 /* IkaMockData.swift */; };
+		61C4A0112EF1CD00002577EA /* PreviewEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C4A0122EF1CD00002577EA /* PreviewEnvironment.swift */; };
 		79AA713C28C407F500A91055 /* IkaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713B28C407F500A91055 /* IkaError.swift */; };
 		79AA713F28C4085600A91055 /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713E28C4085600A91055 /* GameMode.swift */; };
 		79AA714128C4087300A91055 /* BattleMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA714028C4087300A91055 /* BattleMode.swift */; };
@@ -220,6 +221,7 @@
 		79AA713328C4056700A91055 /* IkaClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaClock.swift; sourceTree = "<group>"; };
 		79AA713528C4070700A91055 /* IkaStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaStatus.swift; sourceTree = "<group>"; };
 		79AA713828C4079900A91055 /* IkaMockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaMockData.swift; sourceTree = "<group>"; };
+		61C4A0122EF1CD00002577EA /* PreviewEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewEnvironment.swift; sourceTree = "<group>"; };
 		79AA713B28C407F500A91055 /* IkaError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaError.swift; sourceTree = "<group>"; };
 		79AA713E28C4085600A91055 /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
 		79AA714028C4087300A91055 /* BattleMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleMode.swift; sourceTree = "<group>"; };
@@ -540,6 +542,7 @@
 			isa = PBXGroup;
 			children = (
 				79AA713828C4079900A91055 /* IkaMockData.swift */,
+				61C4A0122EF1CD00002577EA /* PreviewEnvironment.swift */,
 			);
 			path = MockData;
 			sourceTree = "<group>";
@@ -1018,6 +1021,7 @@
 				79C1485A28C42A3B00587C6E /* KeyConstants.swift in Sources */,
 				79AA715028C413A900A91055 /* BattleStage.swift in Sources */,
 				79AA713928C4079900A91055 /* IkaMockData.swift in Sources */,
+				61C4A0112EF1CD00002577EA /* PreviewEnvironment.swift in Sources */,
 				79D3E67128C41D7B00005DB5 /* SalmonApparel.swift in Sources */,
 				7966346E2AC147FC00AE82E2 /* GlobalPosition.swift in Sources */,
 				7903FE8D28C46F9100245586 /* StageTitleLabel.swift in Sources */,

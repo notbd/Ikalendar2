@@ -370,3 +370,25 @@ final class IkaCatalog {
     }
   }
 }
+
+// MARK: - Preview Support
+
+#if DEBUG
+extension IkaCatalog {
+  /// A catalog preloaded with mock rotations in the `.loaded` state, so previews
+  /// render real content without waiting on a refresh pass. Defined in this file
+  /// because preloading writes through `private(set)` properties.
+  @MainActor
+  static func preview(
+    ikaNetworkService: any IkaNetworkService,
+    ikaClock: IkaClock)
+    -> IkaCatalog
+  {
+    let catalog: IkaCatalog = .init(ikaNetworkService: ikaNetworkService, ikaClock: ikaClock)
+    catalog.battleRotationDict = IkaMockData.getBattleRotations()
+    catalog.salmonRotations = IkaMockData.getSalmonRotations()
+    catalog.loadStatus = .loaded
+    return catalog
+  }
+}
+#endif

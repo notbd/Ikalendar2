@@ -128,8 +128,12 @@ struct DetailsLicenseView: View {
 }
 
 #Preview {
-  DetailsLicenseView(
-    repoName: "SimpleHaptics",
-    repoURLString: "https://github.com/notbd/SimpleHaptics",
-    isLinkable: true)
+  // PreviewNetworkService serves a canned MIT license - no real GitHub request.
+  NavigationStack {
+    DetailsLicenseView(
+      repoName: "SimpleHaptics",
+      repoURLString: "https://github.com/notbd/SimpleHaptics",
+      isLinkable: true)
+  }
+  .ikaPreviewEnvironment()
 }

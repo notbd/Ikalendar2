@@ -143,8 +143,24 @@ struct SalmonRotationCellTimeTextSection: View {
   }
 }
 
-#Preview {
-  SalmonRotationCell(
-    rotation: IkaMockData.getSalmonRotation(),
-    rowWidth: 390)
+#Preview("Current (with reward gear)") {
+  List {
+    SalmonRotationCell(
+      rotation: IkaMockData.getSalmonRotation(rawStartTime: Date()),
+      rowWidth: 390)
+  }
+  .listStyle(.insetGrouped)
+  .ikaPreviewEnvironment()
+}
+
+#Preview("Future (time only)") {
+  List {
+    SalmonRotationCell(
+      rotation: IkaMockData.getSalmonRotation(
+        rawStartTime: Date().addingTimeInterval(48 * 3600),
+        hasStageAndWeapons: false),
+      rowWidth: 390)
+  }
+  .listStyle(.insetGrouped)
+  .ikaPreviewEnvironment()
 }

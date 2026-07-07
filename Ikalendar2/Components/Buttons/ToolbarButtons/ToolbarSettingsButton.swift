@@ -25,4 +25,5 @@ struct ToolbarSettingsButton: View {
 
 #Preview {
   ToolbarSettingsButton()
+    .ikaPreviewEnvironment()
 }

@@ -35,4 +35,5 @@ struct ToolbarRefreshButton: View {
 
 #Preview {
   ToolbarRefreshButton()
+    .ikaPreviewEnvironment()
 }

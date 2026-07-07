@@ -34,8 +34,15 @@ struct StageTitleLabel: View {
 }
 
 #Preview {
-  StageTitleLabel(
-    title: BattleStage.humpbackPumpTrack.name,
-    fontSize: 12,
-    relTextStyle: .body)
+  VStack(spacing: 8) {
+    // longest and shortest stage names: exercises the scaled-line-limit behavior
+    StageTitleLabel(
+      title: BattleStage.humpbackPumpTrack.name,
+      fontSize: 12,
+      relTextStyle: .body)
+    StageTitleLabel(
+      title: BattleStage.theReef.name,
+      fontSize: 12,
+      relTextStyle: .body)
+  }
 }

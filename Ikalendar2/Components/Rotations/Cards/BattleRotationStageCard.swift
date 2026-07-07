@@ -133,14 +133,16 @@ enum BattleStageSelection {
 
 // MARK: - BattleRotationStageCard_Previews
 
-#Preview("Stage A", traits: .fixedLayout(width: 320, height: 200)) {
+#Preview("Primary / Stage A", traits: .fixedLayout(width: 320, height: 200)) {
   BattleRotationStageCardPrimary(
     rotation: IkaMockData.getBattleRotation(),
     stageSelection: .stageA)
+    .ikaPreviewEnvironment()
 }
 
-#Preview("Stage B", traits: .fixedLayout(width: 300, height: 240)) {
-  BattleRotationStageCardPrimary(
+#Preview("Secondary / Stage B", traits: .fixedLayout(width: 300, height: 240)) {
+  BattleRotationStageCardSecondary(
     rotation: IkaMockData.getBattleRotation(),
     stageSelection: .stageB)
+    .ikaPreviewEnvironment()
 }

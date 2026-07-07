@@ -326,5 +326,8 @@ struct SettingsMainView: View {
 }
 
 #Preview {
-  SettingsMainView()
+  NavigationStack {
+    SettingsMainView()
+  }
+  .ikaPreviewEnvironment()
 }

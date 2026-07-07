@@ -136,10 +136,9 @@ struct BattleRotationHeader: View {
           .pickerStyle(.segmented)
         }
 
-        ForEach(0 ..< IkaMockData.getBattleRotations()[modeSelection]!.count, id: \.self)
-        { index in
+        ForEach(IkaMockData.getBattleRotations()[modeSelection] ?? []) { rotation in
           BattleRotationRow(
-            rotation: IkaMockData.getBattleRotations()[modeSelection]![index],
+            rotation: rotation,
             rowWidth: geo.size.width)
         }
       }
@@ -147,4 +146,5 @@ struct BattleRotationHeader: View {
       .navigationTitle(modeSelection.name)
     }
   }
+  .ikaPreviewEnvironment()
 }

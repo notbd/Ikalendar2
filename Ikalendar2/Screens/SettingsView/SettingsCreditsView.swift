@@ -145,7 +145,7 @@ struct CreditsExternalLinkCell: View {
             .font(Scoped.cellContentFontPrimary)
 
           if shouldShowURL {
-            Text(urlString.shortenedURL()!)
+            Text(urlString.shortenedURL() ?? urlString)
               .foregroundStyle(Color.secondary)
               .font(Scoped.cellContentFontSecondary)
           }
@@ -186,7 +186,7 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
           .foregroundStyle(Color.primary)
           .font(Scoped.cellContentFontPrimary)
 
-        Text(urlString.shortenedURL(base: Constants.Key.URLs.githubBase, newPrefix: "@")!)
+        Text(urlString.shortenedURL(base: Constants.Key.URLs.githubBase, newPrefix: "@") ?? urlString)
           .foregroundStyle(Color.secondary)
           .font(Scoped.cellContentFontSecondary)
       }
@@ -209,5 +209,8 @@ struct CreditsOpenSourceLibCell<Destination: View>: View {
 }
 
 #Preview {
-  SettingsCreditsView()
+  NavigationStack {
+    SettingsCreditsView()
+  }
+  .ikaPreviewEnvironment()
 }

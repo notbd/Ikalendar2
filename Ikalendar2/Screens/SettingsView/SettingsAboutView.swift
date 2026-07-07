@@ -485,7 +485,18 @@ struct SettingsAboutAppIconAnimationValues {
   }
 }
 
-#Preview {
-  SettingsAboutView()
-    .preferredColorScheme(.dark)
+#Preview("Dark") {
+  NavigationStack {
+    SettingsAboutView()
+  }
+  .ikaPreviewEnvironment()
+  .preferredColorScheme(.dark)
+}
+
+#Preview("Light") {
+  NavigationStack {
+    SettingsAboutView()
+  }
+  .ikaPreviewEnvironment()
+  .preferredColorScheme(.light)
 }

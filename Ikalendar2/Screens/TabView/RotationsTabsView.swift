@@ -71,3 +71,8 @@ struct RotationsTabsView: View {
     }
   }
 }
+
+#Preview {
+  RotationsTabsView()
+    .ikaPreviewEnvironment()
+}

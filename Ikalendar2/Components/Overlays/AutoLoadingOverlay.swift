@@ -79,4 +79,5 @@ struct AutoLoadingOverlay: View {
 
 #Preview {
   AutoLoadingOverlay()
+    .ikaPreviewEnvironment()
 }

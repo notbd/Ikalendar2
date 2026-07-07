@@ -317,10 +317,10 @@ struct BattleRotationCellSecondary: View {
   }
 }
 
-#Preview {
+#Preview("Primary + Secondary") {
   GeometryReader { geo in
     List {
-      Section {
+      Section("Primary (featured)") {
         BattleRotationCellPrimary(
           rotation: IkaMockData.getBattleRotation(
             preferredMode: .gachi,
@@ -329,10 +329,10 @@ struct BattleRotationCellSecondary: View {
           rowWidth: geo.size.width,
           animationNamespaces: nil)
       }
-      Section {
+      Section("Secondary (compact)") {
         BattleRotationCellSecondary(
           rotation: IkaMockData.getBattleRotation(
-            preferredMode: .gachi,
+            preferredMode: .league,
             preferredRule: .clamBlitz,
             rawStartTime: Date()),
           rowWidth: geo.size.width,
@@ -341,4 +341,5 @@ struct BattleRotationCellSecondary: View {
     }
     .listStyle(.insetGrouped)
   }
+  .ikaPreviewEnvironment()
 }

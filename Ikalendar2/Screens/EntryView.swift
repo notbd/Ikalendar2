@@ -41,4 +41,5 @@ struct EntryView: View {
 
 #Preview {
   EntryView()
+    .ikaPreviewEnvironment()
 }

@@ -69,3 +69,8 @@ struct RootView: View {
     UIFontCustomizer.customizeNavigationTitleText()
   }
 }
+
+#Preview {
+  RootView()
+    .ikaPreviewEnvironment()
+}

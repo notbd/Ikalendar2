@@ -153,4 +153,5 @@ struct RotationsCarouselView: View {
 
 #Preview {
   RotationsCarouselView()
+    .ikaPreviewEnvironment()
 }

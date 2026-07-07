@@ -137,8 +137,17 @@ struct SalmonRotationHeader: View {
 }
 
 #Preview {
-  SalmonRotationRow(
-    rotation: IkaMockData.getSalmonRotation(),
-    index: 0,
-    rowWidth: 390)
+  List {
+    SalmonRotationRow(
+      rotation: IkaMockData.getSalmonRotation(rawStartTime: Date()),
+      index: 0,
+      rowWidth: 390)
+    SalmonRotationRow(
+      rotation: IkaMockData.getSalmonRotation(
+        rawStartTime: Date().addingTimeInterval(42 * 3600)),
+      index: 1,
+      rowWidth: 390)
+  }
+  .listStyle(.insetGrouped)
+  .ikaPreviewEnvironment()
 }

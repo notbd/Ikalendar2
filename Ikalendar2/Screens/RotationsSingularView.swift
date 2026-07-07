@@ -152,7 +152,5 @@ struct ToolbarGameModePicker: View {
 
 #Preview {
   RotationsSingularView()
-    .environment(IkaCatalog(
-      ikaNetworkService: IkaNetworkManager(),
-      ikaClock: IkaClock()))
+    .ikaPreviewEnvironment()
 }

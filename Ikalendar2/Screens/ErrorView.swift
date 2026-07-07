@@ -83,6 +83,12 @@ struct ErrorView: View {
   }
 }
 
-#Preview {
+#Preview("Server Error") {
   ErrorView(error: .serverError(.badData))
+    .ikaPreviewEnvironment()
+}
+
+#Preview("Connection Error") {
+  ErrorView(error: .connectionError)
+    .ikaPreviewEnvironment()
 }

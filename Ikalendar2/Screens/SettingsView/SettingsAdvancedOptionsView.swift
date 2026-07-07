@@ -266,8 +266,8 @@ struct BottomToolbarPositioningPreview: View {
 }
 
 #Preview {
-  let ikaPreference: IkaPreference = .init()
-  return SettingsAdvancedOptionsView()
-    .environment(IkaStatus(ikaPreference: ikaPreference))
-    .environment(ikaPreference)
+  NavigationStack {
+    SettingsAdvancedOptionsView()
+  }
+  .ikaPreviewEnvironment()
 }

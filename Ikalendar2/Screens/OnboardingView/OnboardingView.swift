@@ -138,8 +138,10 @@ struct OnboardingView: View {
     let appName = Constants.Key.BundleInfo.appDisplayName
     let message: String = .init(localized: "Welcome to\n\(appName)")
     var messageAttributedString: AttributedString = .init(message)
-    let appNameRange = messageAttributedString.range(of: appName)!
-    messageAttributedString[appNameRange].foregroundColor = .accentColor
+    // Highlight the app name; skip gracefully if a localization ever drops it.
+    if let appNameRange = messageAttributedString.range(of: appName) {
+      messageAttributedString[appNameRange].foregroundColor = .accentColor
+    }
 
     return
       Text(messageAttributedString)
@@ -367,4 +369,5 @@ enum OnboardingObject {
 
 #Preview {
   OnboardingView()
+    .ikaPreviewEnvironment()
 }

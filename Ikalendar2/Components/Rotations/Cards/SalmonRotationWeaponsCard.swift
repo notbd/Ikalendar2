@@ -56,10 +56,12 @@ struct SalmonRotationWeaponCardIcon: View {
 }
 
 #Preview {
+  // Enum-case construction: no fail-able-initializer force unwraps in previews.
   SalmonRotationWeaponsCard(weapons: [
-    SalmonWeapon(5030)!,
-    SalmonWeapon(1020)!,
-    SalmonWeapon(310)!,
-    SalmonWeapon(-1)!,
+    .vanilla(.explosher),
+    .vanilla(.dynamoRoller),
+    .vanilla(.tentaBrella),
+    .mystery(.green),
   ])
+  .frame(width: 200, height: 200)
 }
