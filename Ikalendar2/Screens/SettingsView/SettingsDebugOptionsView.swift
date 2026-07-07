@@ -71,11 +71,7 @@ struct SettingsDebugOptionsView: View {
       ikaPreference.revertEasterEggAppIcon()
       ikaStatus.resetStatuses(shouldExitSettings: false)
       ikaDiscoveryLog.resetStates(shouldResetOnboarding: false)
-      AlertKitAPI.present(
-        title: String(localized: "States Reset"),
-        icon: .done,
-        style: .iOS17AppleMusic,
-        haptic: .success)
+      presentResetDoneAlert(titled: String(localized: "States Reset"))
     } label: {
       Text("Reset App States")
         .foregroundStyle(Color.accentColor)
@@ -85,11 +81,7 @@ struct SettingsDebugOptionsView: View {
   private var rowResetAppPreferences: some View {
     Button {
       ikaPreference.resetPreferences()
-      AlertKitAPI.present(
-        title: String(localized: "Preferences Reset"),
-        icon: .done,
-        style: .iOS17AppleMusic,
-        haptic: .success)
+      presentResetDoneAlert(titled: String(localized: "Preferences Reset"))
     } label: {
       Text("Reset App Preferences")
         .foregroundStyle(Color.accentColor)
@@ -102,15 +94,20 @@ struct SettingsDebugOptionsView: View {
       ikaPreference.resetPreferences()
       ikaStatus.resetStatuses(shouldExitSettings: true)
       ikaDiscoveryLog.resetStates(shouldResetOnboarding: true)
-      AlertKitAPI.present(
-        title: String(localized: "All Reset"),
-        icon: .done,
-        style: .iOS17AppleMusic,
-        haptic: .success)
+      presentResetDoneAlert(titled: String(localized: "All Reset"))
     } label: {
       Text("Reset All")
         .foregroundStyle(Color.accentColor)
     }
+  }
+
+  /// The shared confirmation toast for the reset rows above.
+  private func presentResetDoneAlert(titled title: String) {
+    AlertKitAPI.present(
+      title: title,
+      icon: .done,
+      style: .iOS17AppleMusic,
+      haptic: .success)
   }
 
   @State private var pulsingTrigger: Int = 0

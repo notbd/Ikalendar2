@@ -67,11 +67,6 @@ struct BattleRotationHeader: View {
 
   @Environment(IkaClock.self) private var ikaClock
 
-  @Environment(\.colorScheme) private var colorScheme
-  private var colorSchemeAwareGlass: Glass {
-    colorScheme == .dark ? .clear : .regular
-  }
-
   let rotation: BattleRotation
   let rowType: BattleRotationRow.RowType
 
@@ -104,8 +99,8 @@ struct BattleRotationHeader: View {
             relativeTo: .title2)
           .foregroundStyle(Color.systemBackground)
           .padding(.horizontal, Scoped.prefixPaddingH)
-          .glassEffect(
-            colorSchemeAwareGlass.tint(.secondary).interactive(),
+          .adaptiveGlassEffect(
+            tint: .secondary,
             in: .rect(cornerRadius: Scoped.prefixFrameCornerRadius))
       }
 
