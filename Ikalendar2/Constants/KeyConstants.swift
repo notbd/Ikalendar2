@@ -64,6 +64,7 @@ extension Constants.Key {
       "https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy#data-urls"
     static let jelonzobot = "https://splatoon.oatmealdome.me/about"
 
+    static let githubSwiftyJson = "https://github.com/SwiftyJSON/SwiftyJSON"
     static let githubSimpleHaptics = "https://github.com/notbd/SimpleHaptics"
     static let githubAlertKit = "https://github.com/sparrowcode/AlertKit"
 
