@@ -102,7 +102,7 @@ struct BattleSecondaryStagesLayout: Layout {
 
   private func getMinIdealSize(subviews: Subviews, proposal: ProposedViewSize) -> CGSize {
     let subviewSizes = subviews.map { $0.sizeThatFits(proposal) }
-    let minIdealSize: CGSize = subviewSizes.reduce(
+    return subviewSizes.reduce(
       CGSize(
         width: CGFloat.infinity,
         height: CGFloat.infinity))
@@ -111,6 +111,5 @@ struct BattleSecondaryStagesLayout: Layout {
         width: min(currentMin.width, nextSize.width),
         height: min(currentMin.height, nextSize.height))
     }
-    return minIdealSize
   }
 }

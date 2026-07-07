@@ -124,7 +124,7 @@ struct IdealFontLayout: Layout {
     -> CGSize
   {
     let subviewSizes = subviews.map { $0.sizeThatFits(proposal) }
-    let minIdealSize: CGSize = subviewSizes.reduce(
+    return subviewSizes.reduce(
       CGSize(
         width: CGFloat.infinity,
         height: CGFloat.infinity))
@@ -133,7 +133,6 @@ struct IdealFontLayout: Layout {
         width: min(currentMin.width, nextSize.width),
         height: min(currentMin.height, nextSize.height))
     }
-    return minIdealSize
   }
 
   private func getMaxIdealSize(
@@ -142,13 +141,12 @@ struct IdealFontLayout: Layout {
     -> CGSize
   {
     let subviewSizes = subviews.map { $0.sizeThatFits(proposal) }
-    let maxIdealSize: CGSize = subviewSizes.reduce(.zero)
+    return subviewSizes.reduce(.zero)
     { currentMax, nextSize in
       CGSize(
         width: max(currentMax.width, nextSize.width),
         height: max(currentMax.height, nextSize.height))
     }
-    return maxIdealSize
   }
 }
 

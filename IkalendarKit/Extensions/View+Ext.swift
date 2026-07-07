@@ -22,7 +22,6 @@ extension View {
   ///   - transformation: The transform function/modifier.
   ///
   /// - Returns: The resulted view.
-  @ViewBuilder
   public func apply(
     _ transformation: (Self) -> some View)
     -> some View
@@ -146,7 +145,6 @@ extension View {
   ///   - alignment: The horizontal alignment type. Defaults to `.center`.
   ///
   /// - Returns: A view that adjusts its alignment according to the specified parameter.
-  @ViewBuilder
   public func hAlignment(_ alignment: Alignment = .center) -> some View {
     frame(
       maxWidth: .infinity,
@@ -162,7 +160,6 @@ extension View {
   ///   - alignment: The vertical alignment type. Defaults to `.center`.
   ///
   /// - Returns: A view that adjusts its alignment according to the specified parameter.
-  @ViewBuilder
   public func vAlignment(_ alignment: Alignment = .center) -> some View {
     frame(
       maxHeight: .infinity,

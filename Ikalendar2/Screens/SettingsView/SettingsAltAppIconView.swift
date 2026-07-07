@@ -290,27 +290,25 @@ struct SettingsAltAppIconView: View {
   }
 
   private var pickerIcons: some View {
-    Group {
-      ForEach(IkaAppIcon.ColorVariant.allCases) { variant in
-        Image(systemName: variant.sfSymbolName)
-          .symbolEffect(
-            .bounce.down.byLayer,
-            options: .nonRepeating,
-            isActive: activeAppIconColorVariant == variant)
-          .blurFade(isShown: slideShowPhase.isPickerExpanded)
-          .frame(
-            width: ScopedStyle.slideShowControlButtonSize,
-            height: ScopedStyle.slideShowControlButtonSize)
-          .contentShape(Rectangle())
-          .allowsHitTesting(slideShowPhase.isPickerExpanded)
-          .onTapGesture {
-            SimpleHaptics.generateTask(.selection)
-            withAnimation(.bouncy) {
-              activeAppIconColorVariant = variant
-              collapsePicker()
-            }
+    ForEach(IkaAppIcon.ColorVariant.allCases) { variant in
+      Image(systemName: variant.sfSymbolName)
+        .symbolEffect(
+          .bounce.down.byLayer,
+          options: .nonRepeating,
+          isActive: activeAppIconColorVariant == variant)
+        .blurFade(isShown: slideShowPhase.isPickerExpanded)
+        .frame(
+          width: ScopedStyle.slideShowControlButtonSize,
+          height: ScopedStyle.slideShowControlButtonSize)
+        .contentShape(Rectangle())
+        .allowsHitTesting(slideShowPhase.isPickerExpanded)
+        .onTapGesture {
+          SimpleHaptics.generateTask(.selection)
+          withAnimation(.bouncy) {
+            activeAppIconColorVariant = variant
+            collapsePicker()
           }
-      }
+        }
     }
   }
 

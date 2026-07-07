@@ -210,7 +210,7 @@ extension IkaWeapon {
 extension IkaWeapon {
   var imageName: String {
     let prefix = "S2_Weapon_Main_"
-    let content = name.replacingOccurrences(of: " ", with: "_")
+    let content = name.replacing(" ", with: "_")
     return prefix + content
   }
 

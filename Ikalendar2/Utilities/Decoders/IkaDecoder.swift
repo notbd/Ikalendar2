@@ -50,7 +50,7 @@ enum IkaDecoder {
     else { throw IkaError.serverError(.badData) }
 
     // GitHub inserts newline characters into the base64 payload - strip them
-    let sanitizedBase64Content = base64Content.replacingOccurrences(of: "\n", with: "")
+    let sanitizedBase64Content = base64Content.replacing("\n", with: "")
 
     guard
       let decodedData = Data(base64Encoded: sanitizedBase64Content),

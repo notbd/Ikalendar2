@@ -7,7 +7,7 @@
 ### Copyright (c) TIANWEI ZHANG
 ###
 
-### Supported SwiftFormat version as of last update: 0.58.5
+### Supported SwiftFormat version as of last update: 0.62.1
 
 ### FILE OPTIONS
 
@@ -144,6 +144,7 @@
     redundantBackticks,                             \
     redundantBreak,                                 \
     redundantClosure,                               \
+    redundantEmptyView,                             \
     redundantExtensionACL,                          \
     redundantFileprivate,                           \
     redundantGet,                                   \
@@ -161,10 +162,15 @@
     redundantReturn,                                \
     redundantSelf,                                  \
     redundantStaticSelf,                            \
+    redundantSwiftTestingSuite,                     \
+    redundantSwiftUIGroup,                          \
     redundantType,                                  \
     redundantTypedThrows,                           \
+    redundantVariable,                              \
+    redundantViewBuilder,                           \
     redundantVoidReturnType,                        \
     semicolons,                                     \
+    simplifyGenericConstraints,                     \
     sortDeclarations,                               \
     sortImports,                                    \
     sortTypealiases,                                \
@@ -192,8 +198,12 @@
     wrap,                                           \
     wrapArguments,                                  \
     wrapAttributes,                                 \
+#    wrapFunctionBodies,                             \ # prefer keeping trivial one-line bodies inline
+#    wrapIfExpressionBodies,                         \
+#    wrapIfStatementBodies,                          \
 #    wrapLoopBodies,                                 \
     wrapMultilineStatementBraces,                   \
+#    wrapPropertyBodies,                             \ # prefer keeping trivial one-line bodies inline
     wrapSingleLineComments,                         \
     yodaConditions,
 
@@ -214,21 +224,30 @@
     noForceUnwrapInTests,                           \
     noGuardInTests,                                 \
 #    organizeDeclarations,                           \
+    preferContains,                                 \
+#    preferExplicitFalse,                            \ # prefer `!` prefix negation
     preferFinalClasses,                             \
+    preferFirstWhere,                               \
+    preferFlatMap,                                  \
+    preferMinOverSorted,                            \
 #    preferSwiftTesting,                             \
+    preferSwiftStringAPI,                           \
     privateStateVariables,                          \
     propertyTypes,                                  \
     redundantAsync,                                 \
 #    redundantEquatable,                             \
     redundantMemberwiseInit,                        \
-#    redundantProperty,                              \
+    redundantSendable,                              \
     redundantThrows,                                \
 #    singlePropertyPerLine,                          \
 #    sortSwitchCases,                                \
+    testSuiteAccessControl,                         \
 #    unusedPrivateDeclarations,                      \
 #    urlMacro,                                       \
-#    wrapConditionalBodies,                          \
+    validateTestCases,                              \
+#    wrapCaseBodies,                                 \ # successor of wrapConditionalBodies (kept off)
     wrapEnumCases,                                  \
+#    wrapGuardStatementBodies,                       \ # successor of wrapConditionalBodies (kept off)
     wrapMultilineConditionalAssignment,             \
     wrapMultilineFunctionChains,                    \
     wrapSwitchCases,

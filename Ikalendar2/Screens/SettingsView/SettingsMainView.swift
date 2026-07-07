@@ -44,9 +44,6 @@ struct SettingsMainView: View {
             Text("Certain options only apply to smaller screen widths.")
               .font(.footnote)
           }
-          else {
-            EmptyView()
-          }
         }
 
         Section {

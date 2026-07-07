@@ -169,8 +169,7 @@ final class IkaNetworkManager: IkaNetworkService {
     }
 
     do {
-      let decoded = try decoder(data)
-      return decoded
+      return try decoder(data)
     }
     catch {
       // ERROR: fails to decode data

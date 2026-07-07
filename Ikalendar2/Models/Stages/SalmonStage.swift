@@ -58,7 +58,7 @@ extension SalmonStage {
 extension SalmonStage {
   var imageName: String {
     name
-      .replacingOccurrences(of: " ", with: "_")
+      .replacing(" ", with: "_")
   }
 
   var imageNameLarge: String {

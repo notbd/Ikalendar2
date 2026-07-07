@@ -60,7 +60,7 @@ extension HeadApparel {
 extension HeadApparel {
   var imageName: String {
     let prefix = "S2_Gear_Headgear_"
-    let content = name.replacingOccurrences(of: " ", with: "_")
+    let content = name.replacing(" ", with: "_")
     return prefix + content
   }
 

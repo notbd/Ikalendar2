@@ -147,24 +147,20 @@ struct SettingsAboutView: View {
 
     var appIconTitle: some View {
       let title = Constants.Key.BundleInfo.appDisplayName
-      let text =
-        Text(title)
-          .font(Scoped.appIconTitleFont)
-          .fontWeight(Scoped.appIconTitleFontWeight)
-          .foregroundStyle(Color.accentColor)
-      return text
+      return Text(title)
+        .font(Scoped.appIconTitleFont)
+        .fontWeight(Scoped.appIconTitleFontWeight)
+        .foregroundStyle(Color.accentColor)
     }
 
     var appIconSubtitle: some View {
       let versionNumber = Constants.Key.BundleInfo.appVersion
       let buildNumber = Constants.Key.BundleInfo.appBuild
       let subtitle = "Version \(versionNumber) (\(buildNumber))"
-      let text =
-        Text(subtitle)
-          .font(Scoped.appIconSubtitleFont)
-          .fontWeight(Scoped.appIconSubtitleFontWeight)
-          .foregroundStyle(Color.secondary)
-      return text
+      return Text(subtitle)
+        .font(Scoped.appIconSubtitleFont)
+        .fontWeight(Scoped.appIconSubtitleFontWeight)
+        .foregroundStyle(Color.secondary)
     }
 
     return

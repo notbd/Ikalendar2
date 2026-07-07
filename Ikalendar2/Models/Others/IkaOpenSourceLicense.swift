@@ -8,7 +8,7 @@
 import Foundation
 import RegexBuilder
 
-struct IkaOpenSourceLicense: Sendable {
+struct IkaOpenSourceLicense {
   let repoURL: String
   let type: String
   let typeDescription: String

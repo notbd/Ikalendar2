@@ -259,7 +259,6 @@ enum OnboardingObject {
     var vTranslation: Double
   }
 
-  @ViewBuilder
   @Sendable
   static func keyframeTransformation(
     content: PlaceholderContentView<some View>,

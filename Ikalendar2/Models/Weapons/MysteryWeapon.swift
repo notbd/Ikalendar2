@@ -38,6 +38,6 @@ extension MysteryWeapon {
 }
 
 extension MysteryWeapon {
-  var imageName: String { name.replacingOccurrences(of: " ", with: "_") }
+  var imageName: String { name.replacing(" ", with: "_") }
   var imageNameSmall: String { imageName }
 }
