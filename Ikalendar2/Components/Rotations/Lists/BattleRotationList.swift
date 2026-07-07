@@ -22,7 +22,7 @@ struct BattleRotationList: View {
 
     // filter: display current and future rotations only
     return
-      ikaCatalog.battleRotationDict[battleMode]!.filter { !$0.isExpired(ikaClock.currentTime) }
+      (ikaCatalog.battleRotationDict[battleMode] ?? []).filter { !$0.isExpired(ikaClock.currentTime) }
   }
 
   var body: some View {

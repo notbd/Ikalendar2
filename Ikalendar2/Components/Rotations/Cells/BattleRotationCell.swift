@@ -57,6 +57,12 @@ struct BattleRotationCell: View {
 struct BattleRotationCellPrimary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Cell.Primary
 
+  // Matched-geometry rule: within each cell's namespaces, the SECONDARY variant is
+  // the geometry source and the primary variant matches it (`isSource: false`).
+  // During the secondary->primary hero transition both variants briefly coexist;
+  // keeping a single source per group avoids SwiftUI's "multiple inserted views
+  // have isSource: true" undefined behavior (seen at rotation boundaries).
+
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
   @Environment(IkaClock.self) private var ikaClock
@@ -104,7 +110,8 @@ struct BattleRotationCellPrimary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.ruleIcon)
+          in: $1.ruleIcon,
+          isSource: false)
       }
   }
 
@@ -132,7 +139,8 @@ struct BattleRotationCellPrimary: View {
     .ifLet(animationNamespaces) {
       $0.matchedGeometryEffect(
         id: rotation.id,
-        in: $1.ruleTitle)
+        in: $1.ruleTitle,
+        isSource: false)
     }
   }
 
@@ -143,7 +151,8 @@ struct BattleRotationCellPrimary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageA)
+          in: $1.stageA,
+          isSource: false)
       }
   }
 
@@ -154,7 +163,8 @@ struct BattleRotationCellPrimary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageB)
+          in: $1.stageB,
+          isSource: false)
       }
   }
 
@@ -308,11 +318,6 @@ struct BattleRotationCellSecondary: View {
 }
 
 #Preview {
-  @Namespace var ruleIcon
-  @Namespace var ruleTitle
-  @Namespace var stageA
-  @Namespace var stageB
-
   GeometryReader { geo in
     List {
       Section {
