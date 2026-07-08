@@ -95,4 +95,9 @@ jobs:
             -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
             -clonedSourcePackagesDirPath SourcePackages \
             -enableCodeCoverage YES \
-            | xcpretty && exit ${PIPESTATUS[0]}
+            2>&1 | tee raw-test.log | xcpretty && exit ${PIPESTATUS[0]}
+
+      - name: Surface Test Failure Details
+        if: failure()
+        run: |
+          grep -B 2 -A 10 -E "recorded an issue|Expectation failed|Fatal error|Test .* failed" raw-test.log | head -300 || true
