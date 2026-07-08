@@ -59,12 +59,21 @@ jobs:
 
       - name: Select Xcode Version
         run: |
-          XCODE_VERSION=$(ls /Applications | grep "Xcode_26.0" | sort -V | tail -n 1)
+          XCODE_VERSION=$(ls /Applications | grep "Xcode_26" | sort -V | tail -n 1)
           sudo xcode-select -switch /Applications/$XCODE_VERSION
           echo "Selected Xcode version: $XCODE_VERSION"
 
       - name: Confirm Xcode Version
         run: /usr/bin/xcodebuild -version
+
+      - name: Ensure iOS Simulator Runtime
+        run: |
+          # Runner images only bundle the iOS runtime for their default Xcode;
+          # a version-switched Xcode may have zero available simulators.
+          if ! xcrun simctl list devices available | grep -q "iPhone"; then
+            echo "No simulator devices available - downloading iOS platform"
+            sudo xcodebuild -downloadPlatform iOS
+          fi
 
       - name: Install xcpretty
         run: gem install xcpretty --no-document
