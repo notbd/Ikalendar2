@@ -35,20 +35,29 @@ struct Ikalendar2App: App {
 
   var body: some Scene {
     WindowGroup {
-      RootView()
-        // Deliberately .accentColor, not .tint: it also sets the environment
-        // accent, which is what makes every `Color.accentColor` in the app
-        // resolve to the brand orange. (Deprecated, kept on purpose.)
-        .accentColor(.orange)
-        .environment(ikaCatalog)
-        .environment(ikaStatus)
-        .environment(ikaClock)
-        .environment(ikaDeviceMotionMonitor)
-        .environment(ikaOrientationMonitor)
-        .environment(ikaPreference)
-        .environment(ikaDiscoveryLog)
-        .environment(ikaConnectivityChecker)
-        .environment(\.ikaNetworkService, ikaNetworkService)
+      if Self.isRunningTests {
+        // Hosted unit tests only need a live host process, not the UI. A static
+        // placeholder keeps the main thread free of RootView's animations and
+        // timers (e.g. onboarding keyframes on a fresh simulator), so suites
+        // aren't starved of the main actor on congested CI runners.
+        TestHostPlaceholderView()
+      }
+      else {
+        RootView()
+          // Deliberately .accentColor, not .tint: it also sets the environment
+          // accent, which is what makes every `Color.accentColor` in the app
+          // resolve to the brand orange. (Deprecated, kept on purpose.)
+          .accentColor(.orange)
+          .environment(ikaCatalog)
+          .environment(ikaStatus)
+          .environment(ikaClock)
+          .environment(ikaDeviceMotionMonitor)
+          .environment(ikaOrientationMonitor)
+          .environment(ikaPreference)
+          .environment(ikaDiscoveryLog)
+          .environment(ikaConnectivityChecker)
+          .environment(\.ikaNetworkService, ikaNetworkService)
+      }
     }
   }
 
@@ -56,12 +65,15 @@ struct Ikalendar2App: App {
     let networkService: any IkaNetworkService =
       Self.isRunningTests ? InertNetworkService() : IkaNetworkManager()
     let clock: IkaClock = .init()
-    let preference: IkaPreference = .init()
+    // The test host persists nothing real: its stores live on a wiped throwaway
+    // suite so host state never depends on the simulator's UserDefaults history.
+    let userDefaults: UserDefaults = Self.isRunningTests ? Self.makeTestHostDefaults() : .standard
+    let preference: IkaPreference = .init(userDefaults: userDefaults)
 
     ikaNetworkService = networkService
     _ikaClock = State(initialValue: clock)
     _ikaPreference = State(initialValue: preference)
-    _ikaDiscoveryLog = State(initialValue: IkaDiscoveryLog())
+    _ikaDiscoveryLog = State(initialValue: IkaDiscoveryLog(userDefaults: userDefaults))
     _ikaStatus = State(initialValue: IkaStatus(ikaPreference: preference))
     _ikaCatalog = State(initialValue: IkaCatalog(
       ikaNetworkService: networkService,
@@ -69,6 +81,25 @@ struct Ikalendar2App: App {
     _ikaDeviceMotionMonitor = State(initialValue: IkaDeviceMotionMonitor())
     _ikaOrientationMonitor = State(initialValue: IkaOrientationMonitor())
     _ikaConnectivityChecker = State(initialValue: IkaConnectivityChecker())
+  }
+
+  /// A throwaway UserDefaults suite for the unit-test host, wiped on every launch.
+  static private func makeTestHostDefaults() -> UserDefaults {
+    let suiteName = "ikalendar2-test-host"
+    let userDefaults = UserDefaults(suiteName: suiteName) ?? .standard
+    userDefaults.removePersistentDomain(forName: suiteName)
+    return userDefaults
+  }
+}
+
+// MARK: - TestHostPlaceholderView
+
+/// Static stand-in for RootView while hosting unit tests: no animations, no timers,
+/// nothing contending with the test suites for the main actor.
+private struct TestHostPlaceholderView: View {
+  var body: some View {
+    Text("ikalendar2 unit test host")
+      .foregroundStyle(.secondary)
   }
 }
 
