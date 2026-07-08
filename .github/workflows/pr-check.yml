@@ -25,8 +25,12 @@ jobs:
         run: |
           curl -sSL -o /tmp/swiftformat.zip "https://github.com/nicklockwood/SwiftFormat/releases/download/${SWIFTFORMAT_VERSION}/swiftformat.zip"
           unzip -o /tmp/swiftformat.zip -d /tmp/swiftformat
-          sudo install /tmp/swiftformat/swiftformat /usr/local/bin/swiftformat
-          swiftformat --version
+          # Install to a dedicated dir prepended to PATH: runner images preinstall
+          # swiftformat in /opt/homebrew/bin, which would shadow /usr/local/bin.
+          mkdir -p "$RUNNER_TEMP/pinned-tools"
+          install /tmp/swiftformat/swiftformat "$RUNNER_TEMP/pinned-tools/swiftformat"
+          echo "$RUNNER_TEMP/pinned-tools" >> "$GITHUB_PATH"
+          test "$("$RUNNER_TEMP/pinned-tools/swiftformat" --version)" = "$SWIFTFORMAT_VERSION"
 
       - name: Run SwiftFormat
         run: swiftformat --lint . --reporter github-actions-log
@@ -35,8 +39,10 @@ jobs:
         run: |
           curl -sSL -o /tmp/swiftlint.zip "https://github.com/realm/SwiftLint/releases/download/${SWIFTLINT_VERSION}/portable_swiftlint.zip"
           unzip -o /tmp/swiftlint.zip -d /tmp/swiftlint
-          sudo install /tmp/swiftlint/swiftlint /usr/local/bin/swiftlint
-          swiftlint version
+          mkdir -p "$RUNNER_TEMP/pinned-tools"
+          install /tmp/swiftlint/swiftlint "$RUNNER_TEMP/pinned-tools/swiftlint"
+          echo "$RUNNER_TEMP/pinned-tools" >> "$GITHUB_PATH"
+          test "$("$RUNNER_TEMP/pinned-tools/swiftlint" version)" = "$SWIFTLINT_VERSION"
 
       - name: Run SwiftLint
         run: swiftlint
