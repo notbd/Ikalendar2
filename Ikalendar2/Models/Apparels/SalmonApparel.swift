@@ -75,25 +75,25 @@ extension SalmonApparel {
     }
   }
 
-  var imgFiln: String {
+  var imageName: String {
     switch self {
       case .head(let apparel):
-        apparel.imgFiln
+        apparel.imageName
       case .body(let apparel):
-        apparel.imgFiln
+        apparel.imageName
       case .foot(let apparel):
-        apparel.imgFiln
+        apparel.imageName
     }
   }
 
-  var imgFilnSmall: String {
+  var imageNameSmall: String {
     switch self {
       case .head(let apparel):
-        apparel.imgFilnSmall
+        apparel.imageNameSmall
       case .body(let apparel):
-        apparel.imgFilnSmall
+        apparel.imageNameSmall
       case .foot(let apparel):
-        apparel.imgFilnSmall
+        apparel.imageNameSmall
     }
   }
 }

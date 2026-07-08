@@ -37,6 +37,8 @@ extension Date {
 }
 
 extension Date {
+  // Configured once at init and only read afterwards; DateFormatter is Sendable
+  // (and thread-safe for formatting) as of the iOS 26 SDK.
   static private let ikaTimeFormatter: DateFormatter = .init(ikaType: .time)
   static private let ikaDateFormatter: DateFormatter = .init(ikaType: .date)
 
@@ -155,7 +157,7 @@ extension Date {
     let minutes = (remainingTime / 60) % 60
     let seconds = remainingTime % 60
     let timeLength: TimeLength = .init(days: days, hours: hours, minutes: minutes, seconds: seconds)
-    let timeLengthString = timeLength.getLocalizedDescriptionString()
+    let timeLengthString = timeLength.localizedDescription()
 
     return "remaining \(timeLengthString)"
   }
@@ -179,7 +181,7 @@ extension Date {
     let minutes = (untilTime / 60) % 60
     let seconds = untilTime % 60
     let timeLength: TimeLength = .init(days: days, hours: hours, minutes: minutes, seconds: seconds)
-    let timeLengthString = timeLength.getLocalizedDescriptionString()
+    let timeLengthString = timeLength.localizedDescription()
 
     return "\(timeLengthString) until"
   }

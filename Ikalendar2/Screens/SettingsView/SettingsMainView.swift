@@ -11,7 +11,6 @@ import SwiftUI
 // MARK: - SettingsMainView
 
 /// The main page for App Settings.
-@MainActor
 struct SettingsMainView: View {
   typealias Scoped = Constants.Style.Settings.Main
 
@@ -22,8 +21,8 @@ struct SettingsMainView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
-  @EnvironmentObject private var ikaLog: IkaLog
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
+  @Environment(IkaPreference.self) private var ikaPreference
 
   @State private var rowWidth: CGFloat = 390
 
@@ -45,9 +44,6 @@ struct SettingsMainView: View {
             Text("Certain options only apply to smaller screen widths.")
               .font(.footnote)
           }
-          else {
-            EmptyView()
-          }
         }
 
         Section {
@@ -67,7 +63,9 @@ struct SettingsMainView: View {
       }
       .navigationTitle("Settings")
       .navigationBarTitleDisplayMode(.large)
-      .navigationBarItems(trailing: closeButton)
+      .toolbar {
+        ToolbarItem(placement: .topBarTrailing) { closeButton }
+      }
       .listStyle(.insetGrouped)
       .onChange(of: geo.size, initial: true) { _, newVal in
         rowWidth = newVal.width
@@ -78,7 +76,8 @@ struct SettingsMainView: View {
   // MARK: - Default Mode Section
 
   private var rowDefaultTab: some View {
-    Picker(
+    @Bindable var ikaPreference = ikaPreference
+    return Picker(
       selection: $ikaPreference.preferredDefaultFlatMode,
       label: Label {
         Text("Default Tab")
@@ -99,13 +98,14 @@ struct SettingsMainView: View {
   }
 
   private var rowDefaultGameMode: some View {
-    HStack {
+    @Bindable var ikaPreference = ikaPreference
+    return HStack {
       Label {
         if !isHorizontalCompact {
           Text("Default Game Mode")
             .foregroundStyle(.primary)
         }
-        else if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
+        else if rowWidth >= Scoped.defaultModePickerNameShowedThreshold {
           Text("Game")
             .foregroundStyle(.primary)
         }
@@ -131,19 +131,20 @@ struct SettingsMainView: View {
             .tag(gameMode)
         }
       }
-      .pickerStyle(SegmentedPickerStyle())
+      .pickerStyle(.segmented)
       .fixedSize()
     }
   }
 
   private var rowDefaultBattleMode: some View {
-    HStack {
+    @Bindable var ikaPreference = ikaPreference
+    return HStack {
       Label {
         if !isHorizontalCompact {
           Text("Default Battle Mode")
             .foregroundStyle(.primary)
         }
-        else if rowWidth >= Scoped.DEFAULT_MODE_PICKER_NAME_SHOWED_THRESHOLD {
+        else if rowWidth >= Scoped.defaultModePickerNameShowedThreshold {
           Text("Battle")
             .foregroundStyle(.primary)
         }
@@ -173,7 +174,7 @@ struct SettingsMainView: View {
             .tag(battleMode)
         }
       }
-      .pickerStyle(SegmentedPickerStyle())
+      .pickerStyle(.segmented)
       .fixedSize()
       .disabled(ikaPreference.preferredDefaultGameMode != .battle || !isHorizontalCompact)
     }
@@ -182,20 +183,21 @@ struct SettingsMainView: View {
   // MARK: - Appearance Section
 
   private var rowColorScheme: some View {
-    Picker(
+    @Bindable var ikaPreference = ikaPreference
+    return Picker(
       selection: $ikaPreference.preferredAppColorScheme,
       label: Label {
         Text("Color Scheme")
           .foregroundStyle(.primary)
       } icon: {
         Image(
-          systemName: Scoped.COLOR_SCHEME_SFSYMBOL)
+          systemName: Scoped.colorSchemeSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
       })
     {
-      ForEach(IkaColorSchemeManager.PreferredColorScheme.allCases) { preferredColorScheme in
+      ForEach(IkaPreferredColorScheme.allCases) { preferredColorScheme in
         Label(
           preferredColorScheme.name.localizedStringKey,
           systemImage: preferredColorScheme.sfSymbolName)
@@ -203,15 +205,6 @@ struct SettingsMainView: View {
       }
     }
   }
-
-  @State private var rowAltAppIconIconAnimationTrigger: Int = 0
-  private var altAppIconNudgeTimer = Timer
-    .publish(
-      every: Constants.Config.Timer.nudgeSignalInterval,
-      tolerance: 0.1,
-      on: .main,
-      in: .common)
-    .autoconnect()
 
   private var rowAltAppIcon: some View {
     NavigationLink(destination: SettingsAltAppIconView()) {
@@ -221,13 +214,10 @@ struct SettingsMainView: View {
       }
       icon: {
         Image(systemName: ikaPreference.preferredAppIcon.settingsMainSFSymbolName)
-          .symbolEffect(.wiggle, value: rowAltAppIconIconAnimationTrigger)
+          .iconNudge(isActive: !ikaDiscoveryLog.hasDiscoveredAltAppIcon)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
-      }
-      .onReceive(altAppIconNudgeTimer) { _ in
-        if !ikaLog.hasDiscoveredAltAppIcon { rowAltAppIconIconAnimationTrigger += 1 }
       }
     }
   }
@@ -246,7 +236,7 @@ struct SettingsMainView: View {
       }
       icon: {
         Image(
-          systemName: Scoped.ADVANCED_OPTIONS_SFSYMBOL,
+          systemName: Scoped.advancedOptionsSFSymbol,
           variableValue: customizedPercentage)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
@@ -281,7 +271,7 @@ struct SettingsMainView: View {
         Text(currentLocale.toIkaLocale().description)
           .foregroundStyle(Color.secondary)
 
-        Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+        Constants.Style.Global.externalLinkJumpIcon
           .foregroundStyle(Color.secondary)
       }
     }
@@ -296,7 +286,7 @@ struct SettingsMainView: View {
           .foregroundStyle(.primary)
       }
       icon: {
-        Image(systemName: Scoped.ABOUT_SFSYMBOL)
+        Image(systemName: Scoped.aboutSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -311,7 +301,7 @@ struct SettingsMainView: View {
           .foregroundStyle(.primary)
       }
       icon: {
-        Image(systemName: Scoped.CREDITS_SFSYMBOL)
+        Image(systemName: Scoped.creditsSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -332,10 +322,9 @@ struct SettingsMainView: View {
   }
 }
 
-// MARK: - SettingsMainView_Previews
-
-struct SettingsMainView_Previews: PreviewProvider {
-  static var previews: some View {
+#Preview {
+  NavigationStack {
     SettingsMainView()
   }
+  .ikaPreviewEnvironment()
 }

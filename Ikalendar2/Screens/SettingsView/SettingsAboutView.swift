@@ -13,7 +13,6 @@ import SwiftUI
 // MARK: - SettingsAboutView
 
 /// The About page in App Settings.
-@MainActor
 struct SettingsAboutView: View {
   typealias Scoped = Constants.Style.Settings.About
 
@@ -21,7 +20,7 @@ struct SettingsAboutView: View {
   @Environment(\.openURL) private var openURL
   @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
-  @EnvironmentObject private var ikaLog: IkaLog
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
   @State private var appStoreOverlayPresented = false
 
@@ -29,7 +28,11 @@ struct SettingsAboutView: View {
   @State private var appIconBounceCounter: Int = 0
 
   @State private var shouldDisplayAnimatedCopy: Bool = false
-  @State private var currentToggleAfterDelayTask: Task<Void, Never>?
+
+  /// How long the unclipped overlay copy stays after a bounce (covers the longest keyframe track).
+  static private let animatedCopyLinger: TimeInterval = 1.6
+  /// Small lag so the bounce haptic lands on the squash, not the tap.
+  static private let bounceHapticDelay: TimeInterval = 0.1
 
   var body: some View {
     ZStack {
@@ -84,15 +87,23 @@ struct SettingsAboutView: View {
         .opacity(shouldDisplayAnimatedCopy ? 1 : 0)
     }
     .onChange(of: appIconBounceCounter, initial: false) {
+      // Short-lived by design: delays the haptic onto the squash frame.
       Task {
-        try? await Task.sleep(nanoseconds: UInt64(0.1 * 1_000_000_000))
+        try? await Task.sleep(for: .seconds(Self.bounceHapticDelay))
         await SimpleHaptics.generate(.light)
       }
+    }
+    // While bouncing, the icon escapes its list cell's clip bounds - so hide the
+    // original and overlay an unclipped copy at the same spot. Re-triggering
+    // restarts the linger window.
+    .task(id: appIconBounceCounter) {
+      guard appIconBounceCounter > 0 else { return }
+
       shouldDisplayAnimatedCopy = true
-      // Cancel the previous task, if it exists
-      currentToggleAfterDelayTask?.cancel()
-      // Schedule a new task
-      currentToggleAfterDelayTask = Task { await toggleShouldDisplayAnimatedCopyAfterDelay() }
+      try? await Task.sleep(for: .seconds(Self.animatedCopyLinger))
+      guard !Task.isCancelled else { return }
+
+      shouldDisplayAnimatedCopy = false
     }
   }
 
@@ -104,42 +115,49 @@ struct SettingsAboutView: View {
       .init(color: .default, size: .large)
 
     var appIconImage: some View {
-      Image(appIconVariant.getImageName(appIconDisplayMode))
+      Image(appIconVariant.imageName(for: appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .frame(
           width: appIconDisplayMode.size.screenSize,
           height: appIconDisplayMode.size.screenSize)
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.shadowRadius)
         .zIndex(1)
         .onTapGesture {
-          // trigger animation
           appIconBounceCounter += 1
         }
-        .apply(applyAppIconBounceAnimation)
+        // Inlined on the concrete view: wrapping this in a `some View` helper
+        // trips a non-Sendable metatype warning from the content closure.
+        .keyframeAnimator(
+          initialValue: SettingsAboutAppIconAnimationValues(),
+          trigger: appIconBounceCounter)
+        { content, values in
+          content
+            .scaleEffect(values.scale)
+            .scaleEffect(y: values.vStretch)
+            .offset(y: values.vTranslation)
+        } keyframes: { _ in
+          SettingsAboutAppIconAnimationValues.appIconKeyframes()
+        }
     }
 
     var appIconTitle: some View {
-      let title = Constants.Key.BundleInfo.APP_DISPLAY_NAME
-      let text =
-        Text(title)
-          .font(Scoped.APP_ICON_TITLE_FONT)
-          .fontWeight(Scoped.APP_ICON_TITLE_FONT_WEIGHT)
-          .foregroundStyle(Color.accentColor)
-      return text
+      let title = Constants.Key.BundleInfo.appDisplayName
+      return Text(title)
+        .font(Scoped.appIconTitleFont)
+        .fontWeight(Scoped.appIconTitleFontWeight)
+        .foregroundStyle(Color.accentColor)
     }
 
     var appIconSubtitle: some View {
-      let versionNumber = Constants.Key.BundleInfo.APP_VERSION
-      let buildNumber = Constants.Key.BundleInfo.APP_BUILD
+      let versionNumber = Constants.Key.BundleInfo.appVersion
+      let buildNumber = Constants.Key.BundleInfo.appBuild
       let subtitle = "Version \(versionNumber) (\(buildNumber))"
-      let text =
-        Text(subtitle)
-          .font(Scoped.APP_ICON_SUBTITLE_FONT)
-          .fontWeight(Scoped.APP_ICON_SUBTITLE_FONT_WEIGHT)
-          .foregroundStyle(Color.secondary)
-      return text
+      return Text(subtitle)
+        .font(Scoped.appIconSubtitleFont)
+        .fontWeight(Scoped.appIconSubtitleFontWeight)
+        .foregroundStyle(Color.secondary)
     }
 
     return
@@ -155,7 +173,7 @@ struct SettingsAboutView: View {
 
   private var rowShare: some View {
     // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 26
-    let shareURL: URL = .init(string: Constants.Key.URL.APP_STORE_PAGE)!
+    let shareURL: URL = .init(string: Constants.Key.URLs.appStorePage)!
 
     return
       ShareLink(item: shareURL) {
@@ -163,7 +181,7 @@ struct SettingsAboutView: View {
           Text("Share ikalendar2")
             .foregroundStyle(Color.primary)
         } icon: {
-          Image(systemName: Scoped.SHARE_SFSYMBOL)
+          Image(systemName: Scoped.shareSFSymbol)
             .imageScale(.medium)
             .symbolRenderingMode(.hierarchical)
             .foregroundStyle(Color.accentColor)
@@ -173,44 +191,34 @@ struct SettingsAboutView: View {
 
   // MARK: - Review Section
 
-  @State private var rowRatingIconAnimationTrigger: Int = 0
-  private var ratingNudgeTimer = Timer
-    .publish(
-      every: Constants.Config.Timer.nudgeSignalInterval,
-      tolerance: 0.1,
-      on: .main,
-      in: .common)
-    .autoconnect()
+  /// Fires the wiggle once as immediate tap feedback (the periodic hint is iconNudge's job).
+  @State private var ratingTapFeedbackTrigger: Int = 0
 
   private var rowRating: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
       requestReview()
-      rowRatingIconAnimationTrigger += 1
-      if !ikaLog.hasDiscoveredRating { ikaLog.hasDiscoveredRating = true }
+      ratingTapFeedbackTrigger += 1
+      if !ikaDiscoveryLog.hasDiscoveredRating { ikaDiscoveryLog.hasDiscoveredRating = true }
     } label: {
       Label {
         Text("Rate ikalendar2")
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.RATING_SFSYMBOL)
-          .symbolEffect(.wiggle, value: rowRatingIconAnimationTrigger)
+        Image(systemName: Scoped.ratingSFSymbol)
+          .symbolEffect(.wiggle, value: ratingTapFeedbackTrigger)
+          .iconNudge(isActive: !ikaDiscoveryLog.hasDiscoveredRating)
           .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
       }
     }
-    .onReceive(ratingNudgeTimer) { _ in
-      guard !ikaLog.hasDiscoveredRating else { return }
-
-      rowRatingIconAnimationTrigger += 1
-    }
   }
 
   private var rowLeavingReview: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.APP_STORE_REVIEW) else { return }
+      guard let url = URL(string: Constants.Key.URLs.appStoreReview) else { return }
 
       openURL(url)
     } label: {
@@ -219,7 +227,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.REVIEW_SFSYMBOL)
+        Image(systemName: Scoped.reviewSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -239,7 +247,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.VIEW_ON_APP_STORE_SFSYMBOL)
+        Image(systemName: Scoped.viewOnAppStoreSFSymbol)
           .imageScale(.large)
           .symbolEffect(.bounce, value: rowAppStoreOverlayBounceCounter)
           .symbolRenderingMode(.hierarchical)
@@ -248,7 +256,7 @@ struct SettingsAboutView: View {
     }
     .appStoreOverlay(isPresented: $appStoreOverlayPresented) {
       SKOverlay.AppConfiguration(
-        appIdentifier: Constants.Key.BundleInfo.APP_STORE_IDENTIFIER,
+        appIdentifier: Constants.Key.BundleInfo.appStoreIdentifier,
         position: .bottom)
     }
     .onChange(of: appStoreOverlayPresented, initial: false) { _, newVal in
@@ -259,9 +267,9 @@ struct SettingsAboutView: View {
   // MARK: - Contact Section
 
   private var rowDeveloperTwitter: some View {
-    let twitterURLString = Constants.Key.URL.TWITTER_PROFILE
+    let twitterURLString = Constants.Key.URLs.twitterProfile
     let twitterHandle = twitterURLString
-      .shortenedURL(base: Constants.Key.URL.TWITTER_BASE, newPrefix: "@")!
+      .shortenedURL(base: Constants.Key.URLs.twitterBase, newPrefix: "@")!
 
     return
       Button {
@@ -275,14 +283,14 @@ struct SettingsAboutView: View {
               .foregroundStyle(Color.primary)
           }
           icon: {
-            Image(Scoped.TWITTER_ICON_NAME)
+            Image(Scoped.twitterIconName)
               .antialiased(true)
               .resizable()
               .scaledToFit()
               .frame(
                 width: dynamicTypeSize <= .small
-                  ? Scoped.TWITTER_ICON_SIZE_SMALL
-                  : Scoped.TWITTER_ICON_SIZE_LARGE)
+                  ? Scoped.twitterIconSizeSmall
+                  : Scoped.twitterIconSizeLarge)
           }
 
           Spacer()
@@ -295,7 +303,7 @@ struct SettingsAboutView: View {
 
   private var rowDeveloperEmail: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.DEVELOPER_EMAIL) else { return }
+      guard let url = URL(string: Constants.Key.URLs.developerEmail) else { return }
 
       openURL(url)
     } label: {
@@ -304,7 +312,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.EMAIL_SFSYMBOL)
+        Image(systemName: Scoped.emailSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -316,7 +324,7 @@ struct SettingsAboutView: View {
 
   private var rowAppWebsite: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.IKALENDAR2_WEBSITE) else { return }
+      guard let url = URL(string: Constants.Key.URLs.ikalendar2Website) else { return }
 
       openURL(url)
     } label: {
@@ -325,7 +333,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.APP_WEBSITE_SFSYMBOL)
+        Image(systemName: Scoped.appWebsiteSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -334,8 +342,8 @@ struct SettingsAboutView: View {
   }
 
   private var rowSourceCode: some View {
-    let repoName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
-    let repoURLString = Constants.Key.URL.SOURCE_CODE_REPO
+    let repoName = Constants.Key.BundleInfo.appDisplayName
+    let repoURLString = Constants.Key.URLs.sourceCodeRepo
     let destination: DetailsLicenseView =
       .init(
         repoName: repoName,
@@ -349,7 +357,7 @@ struct SettingsAboutView: View {
             .foregroundStyle(.primary)
         }
         icon: {
-          Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
+          Image(systemName: Scoped.sourceCodeSFSymbol)
             .imageScale(.medium)
             .symbolRenderingMode(.hierarchical)
             .foregroundStyle(Color.accentColor)
@@ -361,7 +369,7 @@ struct SettingsAboutView: View {
 
           openURL(url)
         } label: {
-          Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+          Constants.Style.Global.externalLinkJumpIcon
         }
         .tint(Color.accentColor)
       }
@@ -369,7 +377,7 @@ struct SettingsAboutView: View {
 
   private var rowPrivacyPolicy: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.PRIVACY_POLICY) else { return }
+      guard let url = URL(string: Constants.Key.URLs.privacyPolicy) else { return }
 
       openURL(url)
     } label: {
@@ -378,7 +386,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.PRIVACY_POLICY_SFSYMBOL)
+        Image(systemName: Scoped.privacyPolicySFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -395,7 +403,7 @@ struct SettingsAboutView: View {
           .foregroundStyle(Color.primary)
       }
       icon: {
-        Image(systemName: Scoped.DEBUG_OPTIONS_SFSYMBOL)
+        Image(systemName: Scoped.debugOptionsSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
@@ -403,7 +411,7 @@ struct SettingsAboutView: View {
     }
   }
 
-  @ScaledMetric(relativeTo: .title) var littleBuddyHeight: CGFloat = Scoped.LITTLE_BUDDY_HEIGHT
+  @ScaledMetric(relativeTo: .title) var littleBuddyHeight: CGFloat = Scoped.littleBuddyHeight
 
   private var footerIkalendar3: some View {
     HStack(alignment: .center) {
@@ -416,54 +424,27 @@ struct SettingsAboutView: View {
         .padding(.vertical)
         .padding(.trailing, 10)
 
-      Text(Constants.Key.Slogan.IKALENDAR3.localizedStringKey)
+      Text(Constants.Key.Slogan.ikalendar3.localizedStringKey)
         .scaledLimitedLine(lineLimit: 2)
         .ikaFont(
           .ika2,
-          size: Scoped.SLOGAN_IKALENDAR3_FONT_SIZE,
+          size: Scoped.sloganIkalendar3FontSize,
           relativeTo: .footnote)
     }
-  }
-
-  private func applyAppIconBounceAnimation(_ content: some View) -> some View {
-    content
-      .keyframeAnimator(
-        initialValue: SettingsAboutAppIconAnimationValues(),
-        trigger: appIconBounceCounter,
-        content: SettingsAboutAppIconAnimationValues.keyframeTransformation,
-        keyframes: SettingsAboutAppIconAnimationValues.appIconKeyframes)
-  }
-
-  private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
-    try? await Task.sleep(nanoseconds: UInt64(1.6 * 1_000_000_000))
-    guard !Task.isCancelled else { return }
-
-    shouldDisplayAnimatedCopy = false
   }
 }
 
 // MARK: - SettingsAboutAppIconAnimationValues
 
+/// Animatable values for the about-page app icon bounce.
 struct SettingsAboutAppIconAnimationValues {
   var scale: Double = 1
   var vStretch: Double = 1
   var vTranslation: Double = 0
 
-  @ViewBuilder
-  @Sendable
-  static func keyframeTransformation(
-    content: PlaceholderContentView<some View>,
-    values: SettingsAboutAppIconAnimationValues)
-    -> some View
-  {
-    content
-      .scaleEffect(values.scale)
-      .scaleEffect(y: values.vStretch)
-      .offset(y: values.vTranslation)
-  }
-
+  /// Tap bounce: classic squash-and-stretch - dip, big hop with overshoot, settle.
   @KeyframesBuilder<SettingsAboutAppIconAnimationValues>
-  static func appIconKeyframes(start _: SettingsAboutAppIconAnimationValues)
+  static func appIconKeyframes()
     -> some Keyframes<SettingsAboutAppIconAnimationValues>
   {
     KeyframeTrack(\.vStretch) {
@@ -493,11 +474,18 @@ struct SettingsAboutAppIconAnimationValues {
   }
 }
 
-// MARK: - SettingsAboutView_Previews
-
-struct SettingsAboutView_Previews: PreviewProvider {
-  static var previews: some View {
+#Preview("Dark") {
+  NavigationStack {
     SettingsAboutView()
-      .preferredColorScheme(.dark)
   }
+  .ikaPreviewEnvironment()
+  .preferredColorScheme(.dark)
+}
+
+#Preview("Light") {
+  NavigationStack {
+    SettingsAboutView()
+  }
+  .ikaPreviewEnvironment()
+  .preferredColorScheme(.light)
 }

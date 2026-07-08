@@ -5,16 +5,12 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-//
-//  FlatMode.swift
-//  Ikalendar2
-//
-//  Created by Tianwei Zhang on 2025-10-27.
-//
 import SwiftUI
 
 // MARK: - FlatMode
 
+/// A flattened union of all game and battle modes, so the tab bar and
+/// default-mode picker can treat them as one list.
 enum FlatMode: String, Identifiable, CaseIterable, Equatable {
   static let `default`: Self = .regular
 
@@ -78,5 +74,5 @@ extension FlatMode {
 }
 
 extension FlatMode {
-  var imgFilnSmall: String { rawValue + "_small" }
+  var imageNameSmall: String { rawValue + "_small" }
 }

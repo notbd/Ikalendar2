@@ -14,12 +14,7 @@ import SwiftUI
 struct BattleRotationStageCardPrimary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Card.Primary
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
-
-  @Environment(\.colorScheme) private var colorScheme
-  private var colorSchemeAwareGlass: Glass {
-    colorScheme == .dark ? .clear : .regular
-  }
+  @Environment(IkaPreference.self) private var ikaPreference
 
   let rotation: BattleRotation
   let stageSelection: BattleStageSelection
@@ -35,9 +30,9 @@ struct BattleRotationStageCardPrimary: View {
       case (true, .stageB):
         rotation.stageBAltImageName
       case (false, .stageA):
-        rotation.stageA.imgFiln
+        rotation.stageA.imageName
       case (false, .stageB):
-        rotation.stageB.imgFiln
+        rotation.stageB.imageName
     }
   }
 
@@ -46,18 +41,16 @@ struct BattleRotationStageCardPrimary: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .cornerRadius(Scoped.IMG_CORNER_RADIUS)
-      .glassEffect(
-        colorSchemeAwareGlass.interactive(),
-        in: .rect(cornerRadius: Scoped.IMG_CORNER_RADIUS))
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+      .clipShape(.rect(cornerRadius: Scoped.imgCornerRadius))
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.imgCornerRadius))
+      .shadow(radius: Constants.Style.Global.shadowRadius)
       .overlay(
         StageTitleLabel(
           title: stage.name,
-          fontSize: Scoped.LABEL_FONT_SIZE,
+          fontSize: Scoped.labelFontSize,
           relTextStyle: .body)
-          .padding(.leading, Scoped.LABEL_PADDING_LEADING)
-          .padding([.bottom, .trailing], Scoped.LABEL_PADDING_BOTTOMTRAILING),
+          .padding(.leading, Scoped.labelPaddingLeading)
+          .padding([.bottom, .trailing], Scoped.labelPaddingBottomTrailing),
         alignment: .bottomTrailing)
       .animation(
         .snappy,
@@ -72,7 +65,7 @@ struct BattleRotationStageCardPrimary: View {
 struct BattleRotationStageCardSecondary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Card.Secondary
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   let rotation: BattleRotation
   let stageSelection: BattleStageSelection
@@ -88,26 +81,26 @@ struct BattleRotationStageCardSecondary: View {
       case (true, .stageB):
         rotation.stageBAltImageName
       case (false, .stageA):
-        rotation.stageA.imgFiln
+        rotation.stageA.imageName
       case (false, .stageB):
-        rotation.stageB.imgFiln
+        rotation.stageB.imageName
     }
   }
 
   var body: some View {
     VStack(
       alignment: .trailing,
-      spacing: Scoped.SPACING_V)
+      spacing: Scoped.spacingV)
     {
       Image(stageImageName)
         .antialiased(true)
         .resizable()
         .scaledToFit()
-        .cornerRadius(Scoped.IMG_CORNER_RADIUS)
+        .clipShape(.rect(cornerRadius: Scoped.imgCornerRadius))
         .glassEffect(
           .clear.interactive(),
-          in: .rect(cornerRadius: Scoped.IMG_CORNER_RADIUS))
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+          in: .rect(cornerRadius: Scoped.imgCornerRadius))
+        .shadow(radius: Constants.Style.Global.shadowRadius)
         .alignmentGuide(.battleStagesImageAlignment) { $0[.bottom] }
         .layoutPriority(1)
 
@@ -115,7 +108,7 @@ struct BattleRotationStageCardSecondary: View {
         .scaledLimitedLine()
         .ikaFont(
           .ika2,
-          size: Scoped.FONT_SIZE,
+          size: Scoped.fontSize,
           relativeTo: .body)
     }
     .animation(
@@ -126,6 +119,7 @@ struct BattleRotationStageCardSecondary: View {
 
 // MARK: - BattleStageSelection
 
+/// Which of a battle rotation's two stages a card should show.
 enum BattleStageSelection {
   case stageA
   case stageB
@@ -133,19 +127,16 @@ enum BattleStageSelection {
 
 // MARK: - BattleRotationStageCard_Previews
 
-struct BattleRotationStageCard_Previews: PreviewProvider {
-  static var previews: some View {
-    let rotation: BattleRotation = IkaMockData.getBattleRotation()
-    return
-      Group {
-        BattleRotationStageCardPrimary(
-          rotation: rotation,
-          stageSelection: .stageA)
-          .previewLayout(.fixed(width: 320, height: 200))
-        BattleRotationStageCardPrimary(
-          rotation: rotation,
-          stageSelection: .stageB)
-          .previewLayout(.fixed(width: 300, height: 240))
-      }
-  }
+#Preview("Primary / Stage A", traits: .fixedLayout(width: 320, height: 200)) {
+  BattleRotationStageCardPrimary(
+    rotation: IkaMockData.makeBattleRotation(),
+    stageSelection: .stageA)
+    .ikaPreviewEnvironment()
+}
+
+#Preview("Secondary / Stage B", traits: .fixedLayout(width: 300, height: 240)) {
+  BattleRotationStageCardSecondary(
+    rotation: IkaMockData.makeBattleRotation(),
+    stageSelection: .stageB)
+    .ikaPreviewEnvironment()
 }

@@ -9,13 +9,14 @@ import AlertKit
 import SimpleHaptics
 import SwiftUI
 
+/// The Settings page for debug actions: replay onboarding, reset states and preferences.
 struct SettingsDebugOptionsView: View {
   @Environment(IkaStatus.self) private var ikaStatus
 
-  @EnvironmentObject private var ikaLog: IkaLog
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
+  @Environment(IkaPreference.self) private var ikaPreference
 
-  @Environment(IkaInternetConnectivityPublisher.self) var gfwMonitor
+  @Environment(IkaConnectivityChecker.self) var connectivityChecker
 
   @ScaledMetric(relativeTo: .title) var squidBumperHeight: CGFloat = 50
 
@@ -56,7 +57,7 @@ struct SettingsDebugOptionsView: View {
   private var rowShowOnboarding: some View {
     Button {
       ikaStatus.isSettingsPresented = false
-      ikaLog.shouldShowOnboarding = true
+      ikaDiscoveryLog.shouldShowOnboarding = true
       SimpleHaptics.generateTask(.selection)
     } label: {
       Text("Show Onboarding Screen")
@@ -66,15 +67,11 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAppStates: some View {
     Button {
-      gfwMonitor.resetStatus()
+      connectivityChecker.resetStatus()
       ikaPreference.revertEasterEggAppIcon()
       ikaStatus.resetStatuses(shouldExitSettings: false)
-      ikaLog.resetStates(shouldResetOnboarding: false)
-      AlertKitAPI.present(
-        title: String(localized: "States Reset"),
-        icon: .done,
-        style: .iOS17AppleMusic,
-        haptic: .success)
+      ikaDiscoveryLog.resetStates(shouldResetOnboarding: false)
+      presentResetDoneAlert(titled: String(localized: "States Reset"))
     } label: {
       Text("Reset App States")
         .foregroundStyle(Color.accentColor)
@@ -84,11 +81,7 @@ struct SettingsDebugOptionsView: View {
   private var rowResetAppPreferences: some View {
     Button {
       ikaPreference.resetPreferences()
-      AlertKitAPI.present(
-        title: String(localized: "Preferences Reset"),
-        icon: .done,
-        style: .iOS17AppleMusic,
-        haptic: .success)
+      presentResetDoneAlert(titled: String(localized: "Preferences Reset"))
     } label: {
       Text("Reset App Preferences")
         .foregroundStyle(Color.accentColor)
@@ -97,19 +90,24 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAll: some View {
     Button {
-      gfwMonitor.resetStatus()
+      connectivityChecker.resetStatus()
       ikaPreference.resetPreferences()
       ikaStatus.resetStatuses(shouldExitSettings: true)
-      ikaLog.resetStates(shouldResetOnboarding: true)
-      AlertKitAPI.present(
-        title: String(localized: "All Reset"),
-        icon: .done,
-        style: .iOS17AppleMusic,
-        haptic: .success)
+      ikaDiscoveryLog.resetStates(shouldResetOnboarding: true)
+      presentResetDoneAlert(titled: String(localized: "All Reset"))
     } label: {
       Text("Reset All")
         .foregroundStyle(Color.accentColor)
     }
+  }
+
+  /// The shared confirmation toast for the reset rows above.
+  private func presentResetDoneAlert(titled title: String) {
+    AlertKitAPI.present(
+      title: title,
+      icon: .done,
+      style: .iOS17AppleMusic,
+      haptic: .success)
   }
 
   @State private var pulsingTrigger: Int = 0
@@ -152,4 +150,11 @@ struct SettingsDebugOptionsView: View {
         .padding(.horizontal)
         .glassEffect(.regular.interactive())
   }
+}
+
+#Preview {
+  NavigationStack {
+    SettingsDebugOptionsView()
+  }
+  .ikaPreviewEnvironment()
 }

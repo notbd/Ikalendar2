@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - ToolbarSettingsButton
 
 /// A settings button in the toolbar.
-@MainActor
 struct ToolbarSettingsButton: View {
   @Environment(IkaStatus.self) private var ikaStatus
   @Environment(IkaCatalog.self) private var ikaCatalog
@@ -24,10 +23,7 @@ struct ToolbarSettingsButton: View {
   }
 }
 
-// MARK: - ToolbarSettingsButton_Previews
-
-struct ToolbarSettingsButton_Previews: PreviewProvider {
-  static var previews: some View {
-    ToolbarSettingsButton()
-  }
+#Preview {
+  ToolbarSettingsButton()
+    .ikaPreviewEnvironment()
 }

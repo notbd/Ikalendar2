@@ -139,5 +139,5 @@ extension BattleStage {
 }
 
 extension BattleStage {
-  var imgFiln: String { rawValue.replacingOccurrences(of: " ", with: "_") }
+  var imageName: String { rawValue.replacing(" ", with: "_") }
 }

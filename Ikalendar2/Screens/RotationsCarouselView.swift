@@ -10,16 +10,16 @@ import SwiftUI
 
 // MARK: - RotationsCarouselView
 
-@MainActor
+/// The iPad layout: every mode side by side in a scrolling carousel.
 struct RotationsCarouselView: View {
   typealias Scoped = Constants.Style.Carousel
 
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
-  @Environment(IkaInterfaceOrientationPublisher.self) private var ikaInterfaceOrientationPublisher
-  private var isLandscape: Bool { ikaInterfaceOrientationPublisher.currentOrientation.isLandscape }
+  @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor
+  private var isLandscape: Bool { ikaOrientationMonitor.currentOrientation.isLandscape }
 
   @State private var windowWidth: CGFloat = .zero
 
@@ -29,7 +29,7 @@ struct RotationsCarouselView: View {
     NavigationStack {
       ZStack {
         content
-          .navigationTitle(Constants.Key.BundleInfo.APP_DISPLAY_NAME)
+          .navigationTitle(Constants.Key.BundleInfo.appDisplayName)
           .ignoresSafeArea(edges: .bottom)
           .apply {
             setToolbarItems($0)
@@ -136,13 +136,11 @@ struct RotationsCarouselView: View {
     .if(!isWindowWide) { wrapInHorizontalScrollView($0) }
   }
 
-  @MainActor
   private func wrapInHorizontalScrollView(_ content: some View) -> some View {
     ScrollView(.horizontal) { content }
       .scrollTargetBehavior(.viewAligned)
   }
 
-  @MainActor
   private func setToolbarItems(_ content: some View) -> some View {
     content
       .toolbar {
@@ -154,10 +152,7 @@ struct RotationsCarouselView: View {
   }
 }
 
-// MARK: - RotationsCarouselView_Previews
-
-struct RotationsCarouselView_Previews: PreviewProvider {
-  static var previews: some View {
-    RotationsCarouselView()
-  }
+#Preview {
+  RotationsCarouselView()
+    .ikaPreviewEnvironment()
 }

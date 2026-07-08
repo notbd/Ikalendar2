@@ -35,35 +35,26 @@ struct SalmonRotationWeaponsCard: View {
 struct SalmonRotationWeaponCardIcon: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Weapon
 
-  @Environment(\.colorScheme) private var colorScheme
-  private var colorSchemeAwareGlass: Glass {
-    colorScheme == .dark ? .clear : .regular
-  }
-
   let weapon: SalmonWeapon
 
   var body: some View {
-    Image(weapon.imgFiln)
+    Image(weapon.imageName)
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-      .padding(Scoped.IMG_PADDING)
-      .glassEffect(
-        colorSchemeAwareGlass.interactive(),
-        in: .rect(cornerRadius: Scoped.FRAME_CORNER_RADIUS))
+      .shadow(radius: Constants.Style.Global.shadowRadius)
+      .padding(Scoped.imgPadding)
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.frameCornerRadius))
   }
 }
 
-// MARK: - SalmonRotationWeaponCard_Previews
-
-struct SalmonRotationWeaponCard_Previews: PreviewProvider {
-  static var previews: some View {
-    SalmonRotationWeaponsCard(weapons: [
-      SalmonWeapon(5030)!,
-      SalmonWeapon(1020)!,
-      SalmonWeapon(310)!,
-      SalmonWeapon(-1)!,
-    ])
-  }
+#Preview {
+  // Enum-case construction: no fail-able-initializer force unwraps in previews.
+  SalmonRotationWeaponsCard(weapons: [
+    .vanilla(.explosher),
+    .vanilla(.dynamoRoller),
+    .vanilla(.tentaBrella),
+    .mystery(.green),
+  ])
+  .frame(width: 200, height: 200)
 }

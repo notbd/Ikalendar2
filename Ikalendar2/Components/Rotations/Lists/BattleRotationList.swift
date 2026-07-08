@@ -9,11 +9,12 @@ import SwiftUI
 
 // MARK: - BattleRotationList
 
-@MainActor
+/// The battle rotation list for one mode: current rotation featured on top,
+/// upcoming ones below.
 struct BattleRotationList: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   let specifiedBattleMode: BattleMode?
 
@@ -23,7 +24,7 @@ struct BattleRotationList: View {
 
     // filter: display current and future rotations only
     return
-      ikaCatalog.battleRotationDict[battleMode]!.filter { !$0.isExpired(ikaTimePublisher.currentTime) }
+      (ikaCatalog.battleRotationDict[battleMode] ?? []).filter { !$0.isExpired(ikaClock.currentTime) }
   }
 
   var body: some View {
@@ -50,4 +51,10 @@ struct BattleRotationList: View {
   {
     self.specifiedBattleMode = specifiedBattleMode
   }
+}
+
+#Preview {
+  // Renders straight from the preloaded preview catalog - the app's main surface.
+  BattleRotationList(specifiedBattleMode: .gachi)
+    .ikaPreviewEnvironment()
 }

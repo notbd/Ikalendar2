@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: - RotationsTabView
 
-/// The view that displays the content in a NavigationView.
+/// The view that displays the content in a navigation stack.
 struct RotationsTabView: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
 
@@ -53,11 +53,21 @@ struct RotationsTabView: View {
       case .salmon:
         SalmonRotationList()
       default:
-        BattleRotationList(specifiedBattleMode: BattleMode(rawValue: adoptedFlatMode.rawValue)!)
+        BattleRotationList(specifiedBattleMode: BattleMode(rawValue: adoptedFlatMode.rawValue) ?? .default)
     }
   }
 
   private var title: String {
     adoptedFlatMode.name
   }
+}
+
+#Preview("Battle Tab") {
+  RotationsTabView(adoptedFlatMode: .gachi)
+    .ikaPreviewEnvironment()
+}
+
+#Preview("Salmon Tab") {
+  RotationsTabView(adoptedFlatMode: .salmon)
+    .ikaPreviewEnvironment()
 }

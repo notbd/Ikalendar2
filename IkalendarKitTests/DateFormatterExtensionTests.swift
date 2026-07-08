@@ -17,8 +17,8 @@ struct DateFormatterExtensionTests {
 
   @Suite("Time Formatter Type")
   struct TimeFormatterTypeTests {
-    @Test("Time formatter with English locale produces expected format")
-    func timeFormatterWithEnglishLocaleProducesExpectedFormat() throws {
+    @Test
+    func `Time formatter with English locale produces expected format`() throws {
       let formatter: DateFormatter = .init(ikaType: .time, locale: Locale(identifier: "en_US"))
 
       // Create a specific test date: 2:30 PM
@@ -32,8 +32,8 @@ struct DateFormatterExtensionTests {
       #expect(result == "2:30 PM", "English time format should be '2:30 PM'")
     }
 
-    @Test("Time formatter with Japanese locale produces expected format")
-    func timeFormatterWithJapaneseLocaleProducesExpectedFormat() throws {
+    @Test
+    func `Time formatter with Japanese locale produces expected format`() throws {
       let formatter: DateFormatter = .init(ikaType: .time, locale: Locale(identifier: "ja_JP"))
 
       // Create a specific test date: 2:30 PM
@@ -47,15 +47,15 @@ struct DateFormatterExtensionTests {
       #expect(result == "午後2:30", "Japanese time format should be '午後2:30'")
     }
 
-    @Test("Time formatter sets correct date format for English")
-    func timeFormatterSetsCorrectDateFormatForEnglish() {
+    @Test
+    func `Time formatter sets correct date format for English`() {
       let formatter: DateFormatter = .init(ikaType: .time, locale: Locale(identifier: "en_US"))
 
       #expect(formatter.dateFormat == "h:mm a", "English time formatter should use 'h:mm a' format")
     }
 
-    @Test("Time formatter sets correct date format for Japanese")
-    func timeFormatterSetsCorrectDateFormatForJapanese() {
+    @Test
+    func `Time formatter sets correct date format for Japanese`() {
       let formatter: DateFormatter = .init(ikaType: .time, locale: Locale(identifier: "ja_JP"))
 
       #expect(formatter.dateFormat == "ah:mm", "Japanese time formatter should use 'ah:mm' format")
@@ -64,8 +64,8 @@ struct DateFormatterExtensionTests {
 
   @Suite("Date Formatter Type")
   struct DateFormatterTypeTests {
-    @Test("Date formatter with English locale produces expected format")
-    func dateFormatterWithEnglishLocaleProducesExpectedFormat() throws {
+    @Test
+    func `Date formatter with English locale produces expected format`() throws {
       let formatter: DateFormatter = .init(ikaType: .date, locale: Locale(identifier: "en_US"))
 
       // Create a specific test date: Saturday, October 28, 2023
@@ -79,8 +79,8 @@ struct DateFormatterExtensionTests {
       #expect(result == "Sat, 10/28, ", "English date format should be 'Sat, 10/28, '")
     }
 
-    @Test("Date formatter with Japanese locale produces expected format")
-    func dateFormatterWithJapaneseLocaleProducesExpectedFormat() throws {
+    @Test
+    func `Date formatter with Japanese locale produces expected format`() throws {
       let formatter: DateFormatter = .init(ikaType: .date, locale: Locale(identifier: "ja_JP"))
 
       // Create a specific test date: Saturday, October 28, 2023
@@ -94,15 +94,15 @@ struct DateFormatterExtensionTests {
       #expect(result == "10/28(土) ", "Japanese date format should be '10/28(土) '")
     }
 
-    @Test("Date formatter sets correct date format for English")
-    func dateFormatterSetsCorrectDateFormatForEnglish() {
+    @Test
+    func `Date formatter sets correct date format for English`() {
       let formatter: DateFormatter = .init(ikaType: .date, locale: Locale(identifier: "en_US"))
 
       #expect(formatter.dateFormat == "E, M/d, ", "English date formatter should use 'E, M/d, ' format")
     }
 
-    @Test("Date formatter sets correct date format for Japanese")
-    func dateFormatterSetsCorrectDateFormatForJapanese() {
+    @Test
+    func `Date formatter sets correct date format for Japanese`() {
       let formatter: DateFormatter = .init(ikaType: .date, locale: Locale(identifier: "ja_JP"))
 
       #expect(formatter.dateFormat == "M/d(E) ", "Japanese date formatter should use 'M/d(E) ' format")
@@ -111,8 +111,8 @@ struct DateFormatterExtensionTests {
 
   @Suite("Formatter Type Distinction")
   struct FormatterTypeDistinctionTests {
-    @Test("Time and date formatters produce different formats")
-    func timeAndDateFormattersProduceDifferentFormats() {
+    @Test
+    func `Time and date formatters produce different formats`() {
       let timeFormatter: DateFormatter = .init(ikaType: .time)
       let dateFormatter: DateFormatter = .init(ikaType: .date)
 
@@ -121,8 +121,8 @@ struct DateFormatterExtensionTests {
         "Time and date formatters should have different date format strings")
     }
 
-    @Test("Time and date formatters produce different outputs for same date")
-    func timeAndDateFormattersProduceDifferentOutputsForSameDate() {
+    @Test
+    func `Time and date formatters produce different outputs for same date`() {
       let timeFormatter: DateFormatter = .init(ikaType: .time)
       let dateFormatter: DateFormatter = .init(ikaType: .date)
 

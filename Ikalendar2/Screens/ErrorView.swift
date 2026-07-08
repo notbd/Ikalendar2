@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - ErrorView
 
 /// The error view showing the error if occurs.
-@MainActor
 struct ErrorView: View {
   typealias Scoped = Constants.Style.Error
 
@@ -23,16 +22,16 @@ struct ErrorView: View {
       ScrollView {
         VStack {
           Spacer()
-            .frame(height: geo.size.height * Scoped.ERROR_SECTION_PADDING_TOP_HEIGHT_RATIO)
+            .frame(height: geo.size.height * Scoped.errorSectionPaddingTopHeightRatio)
 
           errorText
             .hAlignment(.leading)
 
           Spacer()
-            .frame(height: geo.size.height * Scoped.ERROR_SECTION_SPACING_HEIGHT_RATIO)
+            .frame(height: geo.size.height * Scoped.errorSectionSpacingHeightRatio)
 
           errorImage
-            .frame(height: geo.size.height * Scoped.ERROR_IMG_HEIGHT_RATIO)
+            .frame(height: geo.size.height * Scoped.errorImgHeightRatio)
             .hAlignment(.leading)
         }
         .padding(.horizontal)
@@ -47,26 +46,26 @@ struct ErrorView: View {
     {
       Text(error.title.localizedStringKey)
         .scaledLimitedLine()
-        .if(Scoped.IF_USE_CUSTOM_FONT) {
+        .if(Scoped.shouldUseCustomFont) {
           $0
             .ikaFont(
               .ika2,
-              size: Scoped.TITLE_CUSTOM_FONT_SIZE,
+              size: Scoped.titleCustomFontSize,
               relativeTo: .largeTitle)
         } else: {
           $0.font(.system(.largeTitle, design: .rounded))
         }
 
       Spacer()
-        .frame(height: Scoped.TEXT_SECTION_SPACING)
+        .frame(height: Scoped.textSectionSpacing)
 
       Text(error.message.localizedStringKey)
-        .lineSpacing(Scoped.MESSAGE_LINE_SPACING)
-        .if(Scoped.IF_USE_CUSTOM_FONT) {
+        .lineSpacing(Scoped.messageLineSpacing)
+        .if(Scoped.shouldUseCustomFont) {
           $0
             .ikaFont(
               .ika2,
-              size: Scoped.MESSAGE_CUSTOM_FONT_SIZE,
+              size: Scoped.messageCustomFontSize,
               relativeTo: .body)
         } else: {
           $0.font(.system(.body, design: .rounded))
@@ -84,10 +83,12 @@ struct ErrorView: View {
   }
 }
 
-// MARK: - ErrorView_Previews
+#Preview("Server Error") {
+  ErrorView(error: .serverError(.badData))
+    .ikaPreviewEnvironment()
+}
 
-struct ErrorView_Previews: PreviewProvider {
-  static var previews: some View {
-    ErrorView(error: .serverError(.badData))
-  }
+#Preview("Connection Error") {
+  ErrorView(error: .connectionError)
+    .ikaPreviewEnvironment()
 }

@@ -5,17 +5,16 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-import Combine
 import IkalendarKit
 import SwiftUI
 
 /// The entry view of the app.
 /// Provide an interface for some upfront View-level configurations.
-@MainActor
 struct RootView: View {
   @Environment(\.dynamicTypeSize) var dynamicTypeSize
   @Environment(IkaStatus.self) private var ikaStatus
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
+  @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
@@ -30,10 +29,10 @@ struct RootView: View {
         refreshEntryView()
       }
       .onChange(of: ikaPreference.preferredAppColorScheme, initial: true) { _, newVal in
-        IkaColorSchemeManager.shared.handlePreferredColorSchemeChange(for: newVal)
+        IkaColorSchemeManager.handlePreferredColorSchemeChange(for: newVal)
       }
       .onAppear {
-        IkaInterfaceOrientationPublisher.shared.setInitialOrientation()
+        ikaOrientationMonitor.setInitialOrientation()
       }
       .if(isHorizontalCompact) { setUpFullScreenCoverSettingsModal($0) }
       else: { setUpSheetSettingsModal($0) }
@@ -41,6 +40,8 @@ struct RootView: View {
 
   private var settingsModal: some View {
     SettingsEntryView()
+      // .accentColor on purpose - see the note in Ikalendar2App. Sheets/covers
+      // do not inherit the root accent, so the modal re-applies it.
       .accentColor(.orange)
       .interactiveDismissDisabled()
   }
@@ -67,4 +68,9 @@ struct RootView: View {
     // Initial setup of your NavigationBar styles
     UIFontCustomizer.customizeNavigationTitleText()
   }
+}
+
+#Preview {
+  RootView()
+    .ikaPreviewEnvironment()
 }

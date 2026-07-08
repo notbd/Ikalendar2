@@ -29,6 +29,7 @@ extension View {
 
 // MARK: - ScaledLimitedLine
 
+/// Caps text to a line limit and lets it shrink to fit instead of truncating.
 struct ScaledLimitedLine: ViewModifier {
   var lineLimit: Int
   var minScaleFactor: CGFloat

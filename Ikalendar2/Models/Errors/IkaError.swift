@@ -15,23 +15,19 @@ enum IkaError: Error, Equatable {
   case connectionError
   case unknownError
   case maxAttemptsExceeded
-
-  static func == (lhs: IkaError, rhs: IkaError) -> Bool {
-    lhs.message == rhs.message
-  }
 }
 
 extension IkaError {
   var title: String {
     switch self {
       case .serverError:
-        Scoped.Title.SERVER_ERROR
+        Scoped.Title.serverError
       case .connectionError:
-        Scoped.Title.CONNECTION_ERROR
+        Scoped.Title.connectionError
       case .unknownError:
-        Scoped.Title.UNKNOWN_ERROR
+        Scoped.Title.unknownError
       case .maxAttemptsExceeded:
-        Scoped.Title.MAX_ATTEMPTS_EXCEEDED
+        Scoped.Title.maxAttemptsExceeded
     }
   }
 }
@@ -42,19 +38,19 @@ extension IkaError {
       case .serverError(let serverErrorType):
         switch serverErrorType {
           case .badResponse:
-            Scoped.Message.SERVER_ERROR_BAD_RESPONSE
+            Scoped.Message.serverErrorBadResponse
           case .badData:
-            Scoped.Message.SERVER_ERROR_BAD_DATA
+            Scoped.Message.serverErrorBadData
         }
 
       case .connectionError:
-        Scoped.Message.CONNECTION_ERROR
+        Scoped.Message.connectionError
 
       case .unknownError:
-        Scoped.Message.UNKNOWN_ERROR
+        Scoped.Message.unknownError
 
       case .maxAttemptsExceeded:
-        Scoped.Message.MAX_ATTEMPTS_EXCEEDED
+        Scoped.Message.maxAttemptsExceeded
     }
   }
 }
@@ -62,7 +58,7 @@ extension IkaError {
 // MARK: - IkaServerErrorType
 
 /// A sub-type for IkaError.serverError
-enum IkaServerErrorType: String {
+enum IkaServerErrorType: String, Equatable {
   typealias Scoped = Constants.Key.Error
 
   case badResponse

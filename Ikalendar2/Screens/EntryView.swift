@@ -11,13 +11,12 @@ import SwiftUI
 
 /// The main entry view of the app.
 /// Will set different layout for iPhone and iPad depending on the current horizontal size.
-@MainActor
 struct EntryView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   @Environment(IkaCatalog.self) private var ikaCatalog
-  @EnvironmentObject private var ikaLog: IkaLog
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
   var body: some View {
     ZStack {
@@ -28,22 +27,19 @@ struct EntryView: View {
         RotationsCarouselView()
       }
 
-      if ikaLog.shouldShowOnboarding {
+      if ikaDiscoveryLog.shouldShowOnboarding {
         OnboardingView()
           .zIndex(1)
           .transition(.opacity.animation(.default))
       }
     }
     .task {
-      await ikaCatalog.refresh(silently: ikaLog.shouldShowOnboarding)
+      await ikaCatalog.refresh(silently: ikaDiscoveryLog.shouldShowOnboarding)
     }
   }
 }
 
-// MARK: - MainView_Previews
-
-struct MainView_Previews: PreviewProvider {
-  static var previews: some View {
-    EntryView()
-  }
+#Preview {
+  EntryView()
+    .ikaPreviewEnvironment()
 }

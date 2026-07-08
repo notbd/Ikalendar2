@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+/// The iPhone layout: one tab per mode along the bottom bar.
 struct RotationsTabsView: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   var body: some View {
     @Bindable var ikaStatus = ikaStatus
@@ -70,4 +71,9 @@ struct RotationsTabsView: View {
         ikaStatus.currentGameMode.name
     }
   }
+}
+
+#Preview {
+  RotationsTabsView()
+    .ikaPreviewEnvironment()
 }

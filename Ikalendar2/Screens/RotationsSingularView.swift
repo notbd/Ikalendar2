@@ -10,12 +10,12 @@ import SwiftUI
 
 // MARK: - RotationsSingularView
 
-/// The view that displays the content in a NavigationView.
+/// The view that displays the content in a navigation stack.
 struct RotationsSingularView: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   var body: some View {
     NavigationStack {
@@ -105,7 +105,6 @@ struct RotationsSingularView: View {
 // MARK: - ToolbarBattleModePicker
 
 /// A picker component for the battle mode
-@MainActor
 struct ToolbarBattleModePicker: View {
   @Environment(IkaStatus.self) private var ikaStatus
 
@@ -121,14 +120,13 @@ struct ToolbarBattleModePicker: View {
           .tag(battleMode)
       }
     }
-    .pickerStyle(SegmentedPickerStyle())
+    .pickerStyle(.segmented)
   }
 }
 
 // MARK: - ToolbarGameModePicker
 
 /// A picker component for the game mode
-@MainActor
 struct ToolbarGameModePicker: View {
   @Environment(IkaStatus.self) private var ikaStatus
 
@@ -148,15 +146,11 @@ struct ToolbarGameModePicker: View {
           .tag(gameMode)
       }
     }
-    .pickerStyle(SegmentedPickerStyle())
+    .pickerStyle(.segmented)
   }
 }
 
-// MARK: - RotationView_Previews
-
-struct RotationView_Previews: PreviewProvider {
-  static var previews: some View {
-    RotationsSingularView()
-      .environment(IkaCatalog.shared)
-  }
+#Preview {
+  RotationsSingularView()
+    .ikaPreviewEnvironment()
 }

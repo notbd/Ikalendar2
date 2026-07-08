@@ -6,36 +6,44 @@
 //
 
 import Foundation
+import OSLog
+import SwiftUI
 
-/// `IkaNetworkManager` is a singleton class that serves as the networking layer of the application.
+// MARK: - IkaNetworkService
+
+/// Abstraction over the networking layer, enabling mock injection in tests.
+protocol IkaNetworkService: Sendable {
+  func fetchLicense(from githubRepoURLString: String) async throws -> IkaOpenSourceLicense
+  func fetchBattleRotationDict() async throws -> BattleRotationDict
+  func fetchSalmonRotations() async throws -> [SalmonRotation]
+  func fetchSalmonRewardApparelInfo() async throws -> SalmonApparelInfo
+}
+
+extension EnvironmentValues {
+  /// The app-wide networking service. Overridden at the App root; default suits previews.
+  @Entry var ikaNetworkService: any IkaNetworkService = IkaNetworkManager()
+}
+
+// MARK: - IkaNetworkManager
+
+/// `IkaNetworkManager` serves as the networking layer of the application.
 /// It is designed to handle asynchronous data fetching and decoding tasks in a unified manner.
 /// The class is architected to be easily extendable for supporting various types of data and sources.
 /// It is intended to be used in tandem with the `IkaDecoder` utility class for decoding the fetched data.
 ///
-final class IkaNetworkManager {
-  static let shared: IkaNetworkManager = .init()
+final class IkaNetworkManager: IkaNetworkService {
+  /// Dedicated session with explicit timeouts: a hanging server should fail an
+  /// auto-load attempt within seconds, not URLSession's 60s default.
+  private let session: URLSession
 
-  private init() { }
-
-  /// Asynchronously fetches a text file from a specified URL and returns its content as a `String`.
-  /// It is intended for fetching read-only textual data like logs, licenses, configuration files, etc.
-  ///
-  /// - Parameter urlString: The URL String pointing to the text file.
-  ///
-  /// - Returns: A `String` containing the text file content.
-  ///
-  /// - Throws: `IkaError` if there's any error during fetching or decoding.
-  ///
-  func fetchTextFile(from urlString: String)
-    async throws -> String
-  {
-    guard let url = URL(string: urlString) else { throw IkaError.unknownError }
-
-    return try await fetchAndDecode(
-      url: url,
-      decodeUsing: IkaDecoder.parseText)
+  init() {
+    let config: URLSessionConfiguration = .default
+    config.timeoutIntervalForRequest = 10
+    config.timeoutIntervalForResource = 30
+    session = URLSession(configuration: config)
   }
 
+  @concurrent
   func fetchLicense(from githubRepoURLString: String)
     async throws -> IkaOpenSourceLicense
   {
@@ -46,7 +54,7 @@ final class IkaNetworkManager {
 
     return try await fetchAndDecode(
       url: githubAPIURL,
-      decodeUsing: IkaDecoder.parseLicenseFromGithubAPI)
+      decodeUsing: { try IkaDecoder.parseLicenseFromGithubAPI(from: $0) })
   }
 
   /// Asynchronously fetches the battle rotation dictionary from the `splatoon2.ink` API.
@@ -55,14 +63,15 @@ final class IkaNetworkManager {
   ///
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
   ///
-  func getBattleRotationDict()
+  @concurrent
+  func fetchBattleRotationDict()
     async throws -> BattleRotationDict
   {
-    guard let url = URL(string: Constants.Key.URL.BATTLE_ROTATIONS) else { throw IkaError.unknownError }
+    guard let url = URL(string: Constants.Key.URLs.battleRotations) else { throw IkaError.unknownError }
 
     return try await fetchAndDecode(
       url: url,
-      decodeUsing: IkaDecoder.parseBattleRotationDict)
+      decodeUsing: { try IkaDecoder.parseBattleRotationDict(from: $0) })
   }
 
   /// Asynchronously fetches the salmon rotation array from the `splatoon2.ink` API.
@@ -71,14 +80,15 @@ final class IkaNetworkManager {
   ///
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
   ///
-  func getSalmonRotations()
+  @concurrent
+  func fetchSalmonRotations()
     async throws -> [SalmonRotation]
   {
-    guard let url = URL(string: Constants.Key.URL.SALMON_ROTATIONS) else { throw IkaError.unknownError }
+    guard let url = URL(string: Constants.Key.URLs.salmonRotations) else { throw IkaError.unknownError }
 
     return try await fetchAndDecode(
       url: url,
-      decodeUsing: IkaDecoder.parseSalmonRotations)
+      decodeUsing: { try IkaDecoder.parseSalmonRotations(from: $0) })
   }
 
   /// Asynchronously fetches the reward apparel info from the `splatoon2.ink` API.
@@ -87,14 +97,15 @@ final class IkaNetworkManager {
   ///
   /// - Throws: `IkaError` if there's any error during fetching or decoding.
   ///
-  func getSalmonRewardApparelInfo()
+  @concurrent
+  func fetchSalmonRewardApparelInfo()
     async throws -> SalmonApparelInfo
   {
-    guard let url = URL(string: Constants.Key.URL.SALMON_APPAREL_INFO) else { throw IkaError.unknownError }
+    guard let url = URL(string: Constants.Key.URLs.salmonApparelInfo) else { throw IkaError.unknownError }
 
     return try await fetchAndDecode(
       url: url,
-      decodeUsing: IkaDecoder.parseSalmonRewardApparelInfo)
+      decodeUsing: { try IkaDecoder.parseSalmonRewardApparelInfo(from: $0) })
   }
 
   /// Asynchronously fetches and decodes data from a specified URL.
@@ -122,18 +133,28 @@ final class IkaNetworkManager {
   ///                                           or the status code is neither 200 nor 304.
   ///   - `IkaError.serverError(.badData)`: If the decoding process fails.
   ///
+  @concurrent
   func fetchAndDecode<T>(
     url: URL,
-    decodeUsing decoder: (Data) throws -> T)
+    decodeUsing decoder: @Sendable (Data) throws -> T)
     async throws -> T
   {
     let (data, response): (Data, URLResponse)
 
     do {
-      (data, response) = try await URLSession.shared.data(from: url)
+      (data, response) = try await session.data(from: url)
+    }
+    catch is CancellationError {
+      // Task cancellation is not a connection failure - propagate as-is
+      throw CancellationError()
+    }
+    catch let urlError as URLError where urlError.code == .cancelled {
+      // URLSession reports cancellation as URLError.cancelled
+      throw CancellationError()
     }
     catch {
       // ERROR: URLSession data task fails
+      Logger.network.error("request to \(url, privacy: .public) failed: \(error, privacy: .public)")
       throw IkaError.connectionError
     }
 
@@ -142,12 +163,13 @@ final class IkaNetworkManager {
       [200, 304].contains(httpResponse.statusCode)
     else {
       // ERROR: not an HTTP response or bad status code
+      let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
+      Logger.network.error("unexpected response from \(url, privacy: .public): status \(statusCode)")
       throw IkaError.serverError(.badResponse)
     }
 
     do {
-      let decoded = try decoder(data)
-      return decoded
+      return try decoder(data)
     }
     catch {
       // ERROR: fails to decode data

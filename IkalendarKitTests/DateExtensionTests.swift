@@ -18,8 +18,8 @@ struct DateExtensionTests {
 
   @Suite("Date Subtraction")
   struct DateSubtractionTests {
-    @Test("Date subtraction returns correct time interval")
-    func dateSubtractionReturnsCorrectInterval() {
+    @Test
+    func `Date subtraction returns correct time interval`() {
       let date1: Date = .init(timeIntervalSince1970: 1000)
       let date2: Date = .init(timeIntervalSince1970: 500)
 
@@ -27,15 +27,15 @@ struct DateExtensionTests {
       #expect(result == 500.0, "Date subtraction should return the correct time interval")
     }
 
-    @Test("Date subtraction with same dates returns zero")
-    func dateSubtractionWithSameDatesReturnsZero() {
+    @Test
+    func `Date subtraction with same dates returns zero`() {
       let date: Date = .init()
       let result = date - date
       #expect(result == 0.0, "Subtracting same date should return zero")
     }
 
-    @Test("Date subtraction with past date returns negative value")
-    func dateSubtractionWithPastDateReturnsNegative() {
+    @Test
+    func `Date subtraction with past date returns negative value`() {
       let futureDate: Date = .init(timeIntervalSince1970: 1000)
       let pastDate: Date = .init(timeIntervalSince1970: 2000)
 
@@ -48,8 +48,8 @@ struct DateExtensionTests {
 
   @Suite("Remove Minutes")
   struct RemoveMinutesTests {
-    @Test("Remove minutes sets minutes, seconds, and nanoseconds to zero")
-    func removeMinutesSetsToZero() throws {
+    @Test
+    func `Remove minutes sets minutes, seconds, and nanoseconds to zero`() throws {
       let calendar: Calendar = .current
       let originalDate = try #require(calendar.date(from: DateComponents(
         year: 2023, month: 12, day: 25,
@@ -66,8 +66,8 @@ struct DateExtensionTests {
       #expect(components.second == 0)
     }
 
-    @Test("Remove minutes preserves year, month, day, and hour")
-    func removeMinutesPreservesComponents() throws {
+    @Test
+    func `Remove minutes preserves year, month, day, and hour`() throws {
       let calendar: Calendar = .current
       let originalDate = try #require(calendar.date(from: DateComponents(
         year: 2024, month: 6, day: 15,
@@ -87,8 +87,8 @@ struct DateExtensionTests {
 
   @Suite("Battle Time String")
   struct BattleTimeStringTests {
-    @Test("Battle time string without date returns only time")
-    func battleTimeStringWithoutDateReturnsTime() throws {
+    @Test
+    func `Battle time string without date returns only time`() throws {
       let testDate = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 14, minute: 30)),
         "Should be able to create test date")
@@ -99,8 +99,8 @@ struct DateExtensionTests {
       #expect(!result.isEmpty, "Result should not be empty")
     }
 
-    @Test("Battle time string with date includes 'Today' for today's date")
-    func battleTimeStringWithTodayReturnsToday() throws {
+    @Test
+    func `Battle time string with date includes 'Today' for today's date`() throws {
       // Use a fixed reference date
       let referenceDate = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
@@ -119,8 +119,8 @@ struct DateExtensionTests {
       #expect(result.count > 10, "Should be longer than time-only string")
     }
 
-    @Test("Battle time string with date includes 'Yesterday' for yesterday's date")
-    func battleTimeStringWithYesterdayReturnsYesterday() throws {
+    @Test
+    func `Battle time string with date includes 'Yesterday' for yesterday's date`() throws {
       // Use a fixed reference date
       let referenceDate = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
@@ -136,8 +136,8 @@ struct DateExtensionTests {
       #expect(result.contains(localizedYesterday), "Should contain localized 'Yesterday' for yesterday's date")
     }
 
-    @Test("Battle time string with date includes 'Tomorrow' for tomorrow's date")
-    func battleTimeStringWithTomorrowReturnsTomorrow() throws {
+    @Test
+    func `Battle time string with date includes 'Tomorrow' for tomorrow's date`() throws {
       // Use a fixed reference date
       let referenceDate = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
@@ -153,8 +153,8 @@ struct DateExtensionTests {
       #expect(result.contains(localizedTomorrow), "Should contain localized 'Tomorrow' for tomorrow's date")
     }
 
-    @Test("Battle time string with distant date returns time only")
-    func battleTimeStringWithDistantDateReturnsTimeOnly() throws {
+    @Test
+    func `Battle time string with distant date returns time only`() throws {
       // Use a fixed reference date
       let referenceDate = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
@@ -177,8 +177,8 @@ struct DateExtensionTests {
       #expect(!result.contains(localizedTomorrow), "Should not contain 'Tomorrow' for distant dates")
     }
 
-    @Test("Battle time string format consistency across locales")
-    func battleTimeStringFormatConsistencyAcrossLocales() throws {
+    @Test
+    func `Battle time string format consistency across locales`() throws {
       let testDate = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 14, minute: 30)),
         "Should be able to create test date")
@@ -197,8 +197,8 @@ struct DateExtensionTests {
 
   @Suite("Salmon Time String")
   struct SalmonTimeStringTests {
-    @Test("Salmon time string without date returns only time")
-    func salmonTimeStringWithoutDateReturnsTime() throws {
+    @Test
+    func `Salmon time string without date returns only time`() throws {
       let testDate = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 14, minute: 30)),
         "Should be able to create test date")
@@ -209,8 +209,8 @@ struct DateExtensionTests {
       #expect(!result.isEmpty, "Result should not be empty")
     }
 
-    @Test("Salmon time string with today's date includes 'Today'")
-    func salmonTimeStringWithTodayReturnsToday() throws {
+    @Test
+    func `Salmon time string with today's date includes 'Today'`() throws {
       // Use a fixed reference date
       let referenceDate = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
@@ -227,8 +227,8 @@ struct DateExtensionTests {
       #expect(result.contains(localizedToday), "Should contain localized 'Today' for current date")
     }
 
-    @Test("Salmon time string with yesterday's date includes 'Yesterday'")
-    func salmonTimeStringWithYesterdayReturnsYesterday() throws {
+    @Test
+    func `Salmon time string with yesterday's date includes 'Yesterday'`() throws {
       // Use a fixed reference date
       let referenceDate = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
@@ -244,8 +244,8 @@ struct DateExtensionTests {
       #expect(result.contains(localizedYesterday), "Should contain localized 'Yesterday' for yesterday's date")
     }
 
-    @Test("Salmon time string with tomorrow's date includes 'Tomorrow'")
-    func salmonTimeStringWithTomorrowReturnsTomorrow() throws {
+    @Test
+    func `Salmon time string with tomorrow's date includes 'Tomorrow'`() throws {
       // Use a fixed reference date
       let referenceDate = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
@@ -261,8 +261,8 @@ struct DateExtensionTests {
       #expect(result.contains(localizedTomorrow), "Should contain localized 'Tomorrow' for tomorrow's date")
     }
 
-    @Test("Salmon time string with distant date includes full date")
-    func salmonTimeStringWithDistantDateIncludesFullDate() throws {
+    @Test
+    func `Salmon time string with distant date includes full date`() throws {
       // Use a fixed reference date
       let referenceDate = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
@@ -293,8 +293,8 @@ struct DateExtensionTests {
 
   @Suite("Time Remaining String Key")
   struct TimeRemainingStringKeyTests {
-    @Test("Time remaining with past deadline returning 'Time's Up' key")
-    func timeRemainingWithPastDeadlineReturnsTimesUpKey() throws {
+    @Test
+    func `Time remaining with past deadline returning 'Time's Up' key`() throws {
       let baseTime = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
         "Should be able to create base time")
@@ -306,8 +306,8 @@ struct DateExtensionTests {
       #expect(pastResult2 == LocalizedStringKey("Time's Up"), "Past deadline should return 'Time's Up' key")
     }
 
-    @Test("Time remaining with different future deadlines produces different keys")
-    func timeRemainingWithDifferentFutureDeadlinesProducesDifferentKeys() throws {
+    @Test
+    func `Time remaining with different future deadlines produces different keys`() throws {
       let baseTime = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
         "Should be able to create base time")
@@ -339,8 +339,8 @@ struct DateExtensionTests {
 
   @Suite("Time Until String Key")
   struct TimeUntilStringKeyTests {
-    @Test("Time until with past start time returning 'Time's Up' key")
-    func timeUntilWithPastStartTimeReturnsTimesUpKey() throws {
+    @Test
+    func `Time until with past start time returning 'Time's Up' key`() throws {
       let baseTime = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
         "Should be able to create base time")
@@ -352,8 +352,8 @@ struct DateExtensionTests {
       #expect(pastResult2 == LocalizedStringKey("Time's Up"), "Past start time should return 'Time's Up' key")
     }
 
-    @Test("Time until with different future start times produces different keys")
-    func timeUntilWithDifferentFutureStartTimesProducesDifferentKeys() throws {
+    @Test
+    func `Time until with different future start times produces different keys`() throws {
       let baseTime = try #require(
         Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
         "Should be able to create base time")

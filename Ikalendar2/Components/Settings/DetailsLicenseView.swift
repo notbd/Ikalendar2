@@ -10,7 +10,8 @@ import SwiftUI
 
 // MARK: - DetailsLicenseView
 
-@MainActor
+/// Fetches and shows the license of an open source library, with a placeholder
+/// while loading and a fallback message if the fetch fails.
 struct DetailsLicenseView: View {
   typealias Scoped = Constants.Style.Settings.License
 
@@ -18,6 +19,7 @@ struct DetailsLicenseView: View {
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   @Environment(\.openURL) private var openURL
+  @Environment(\.ikaNetworkService) private var ikaNetworkService
 
   let repoName: String
   let repoURLString: String
@@ -28,7 +30,7 @@ struct DetailsLicenseView: View {
 
   var body: some View {
     ScrollView {
-      VStack(spacing: Scoped.CONTENT_SPACING_V) {
+      VStack(spacing: Scoped.contentSpacingV) {
         licenseTypeBanner
         licenseContentText
       }
@@ -38,20 +40,25 @@ struct DetailsLicenseView: View {
     .navigationTitle(repoName)
     .navigationBarTitleDisplayMode(.large)
     .if(isLinkable) {
-      $0.navigationBarItems(trailing: externalLinkButton)
+      $0.toolbar {
+        ToolbarItem(placement: .topBarTrailing) { externalLinkButton }
+      }
     }
-    .onAppear {
-      Task {
-        try? await Task.sleep(
-          nanoseconds:
-          UInt64(Constants.Config.License.licenseLoadedDelay * 1_000_000_000))
-        do {
-          licenseViewModel = try await IkaNetworkManager.shared.fetchLicense(from: repoURLString)
-          SimpleHaptics.generateTask(.light)
-        }
-        catch {
-          hasErrored = true
-        }
+    .task {
+      // .task (unlike .onAppear + Task) is cancelled when the view disappears,
+      // so a dismissed screen no longer keeps the request alive.
+      try? await Task.sleep(for: .seconds(Constants.Config.License.licenseLoadedDelay))
+      guard !Task.isCancelled else { return }
+
+      do {
+        licenseViewModel = try await ikaNetworkService.fetchLicense(from: repoURLString)
+        SimpleHaptics.generateTask(.light)
+      }
+      catch is CancellationError {
+        // view disappeared - no error state
+      }
+      catch {
+        hasErrored = true
       }
     }
     .animation(
@@ -61,27 +68,26 @@ struct DetailsLicenseView: View {
 
   private var licenseTypeBanner: some View {
     HStack {
-      Image(systemName: !hasErrored ? Scoped.LICENSE_SFSYMBOL : Scoped.ERROR_SFSYMBOL)
-        .font(Scoped.LICENSE_ICON_FONT)
-        .fontWeight(Scoped.LICENSE_ICON_FONT_WEIGHT)
+      Image(systemName: !hasErrored ? Scoped.licenseSFSymbol : Scoped.errorSFSymbol)
+        .font(Scoped.licenseIconFont)
+        .fontWeight(Scoped.licenseIconFontWeight)
 
       VStack(alignment: .leading) {
         if !hasErrored {
           Text(
-            licenseViewModel != nil
-              ? String(localized: "\(licenseViewModel!.gist) be licensed under")
-              : Constants.Key.Placeholder.UNKNOWN)
+            licenseViewModel.map { String(localized: "\($0.gist) be licensed under") }
+              ?? Constants.Key.Placeholder.unknown)
             .foregroundStyle(Color.secondary)
-            .font(Scoped.LICENSE_CAPTION_FONT)
+            .font(Scoped.licenseCaptionFont)
             .scaledLimitedLine()
         }
 
         Text(
           !hasErrored
             ? licenseViewModel?.typeDescription.localizedStringKey
-              ?? Constants.Key.Placeholder.UNKNOWN.localizedStringKey
-            : Constants.Key.Error.Title.LICENSE_FETCH_ERROR.localizedStringKey)
-          .font(Scoped.LICENSE_TYPE_FONT)
+              ?? Constants.Key.Placeholder.unknown.localizedStringKey
+            : Constants.Key.Error.Title.licenseFetchError.localizedStringKey)
+          .font(Scoped.licenseTypeFont)
           .fontWeight(.bold)
           .scaledLimitedLine()
       }
@@ -91,17 +97,14 @@ struct DetailsLicenseView: View {
 
   private var licenseContentText: some View {
     var contentText: String {
-      if hasErrored { return Constants.Key.Error.Message.LICENSE_FETCH_ERROR }
-      return
-        licenseViewModel != nil
-          ? licenseViewModel!.content
-          : Constants.Key.Placeholder.LICENSE_TEMPLATE_MIT
+      if hasErrored { return Constants.Key.Error.Message.licenseFetchError }
+      return licenseViewModel?.content ?? Constants.Key.Placeholder.licenseTemplateMit
     }
 
     var contentFont: Font {
       hasErrored || !isHorizontalCompact
-        ? Scoped.LICENSE_CONTENT_FONT_REGULAR
-        : Scoped.LICENSE_CONTENT_FONT_COMPACT
+        ? Scoped.licenseContentFontRegular
+        : Scoped.licenseContentFontCompact
     }
 
     return
@@ -118,19 +121,19 @@ struct DetailsLicenseView: View {
 
       openURL(url)
     } label: {
-      Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+      Constants.Style.Global.externalLinkJumpIcon
         .foregroundStyle(Color.primary)
     }
   }
 }
 
-// MARK: - LicenseDetailsView_Previews
-
-struct LicenseDetailsView_Previews: PreviewProvider {
-  static var previews: some View {
+#Preview {
+  // PreviewNetworkService serves a canned MIT license - no real GitHub request.
+  NavigationStack {
     DetailsLicenseView(
-      repoName: "SwiftyJSON",
-      repoURLString: "https://github.com/SwiftyJSON/SwiftyJSON",
+      repoName: "SimpleHaptics",
+      repoURLString: "https://github.com/notbd/SimpleHaptics",
       isLinkable: true)
   }
+  .ikaPreviewEnvironment()
 }

@@ -5,32 +5,39 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-import Combine
+import OSLog
 import SimpleHaptics
 import SwiftUI
 
 // MARK: - IkaCatalog
 
-/// An EnvObj class that is shared among all the views.
+/// An observable data store shared across views.
 /// Contains the rotation data and its loading status.
 @MainActor
 @Observable
 final class IkaCatalog {
   typealias Scoped = Constants.Config.Catalog
 
-  static let shared: IkaCatalog = .init()
-
   private(set) var battleRotationDict: BattleRotationDict = .init()
   private(set) var salmonRotations: [SalmonRotation] = .init()
 
-  private init() {
-    setUpLoadResultStatusSubscription()
-    setUpAutoLoadNonIdleStatusSubscription()
-    setUpAutoLoadCheckSubscription()
+  @ObservationIgnored private let ikaNetworkService: any IkaNetworkService
+  @ObservationIgnored private let ikaClock: IkaClock
+
+  @ObservationIgnored private var autoLoadCheckTask: Task<Void, Never>?
+
+  init(
+    ikaNetworkService: any IkaNetworkService,
+    ikaClock: IkaClock)
+  {
+    self.ikaNetworkService = ikaNetworkService
+    self.ikaClock = ikaClock
+    startAutoLoadChecks()
   }
 
   deinit {
-    cancellables.removeAll()
+    // Legal in a nonisolated deinit: Task is Sendable and cancel() is nonisolated.
+    autoLoadCheckTask?.cancel()
   }
 
   // MARK: Exposed
@@ -43,33 +50,17 @@ final class IkaCatalog {
 
   // MARK: Init Setup
 
-  private func setUpLoadResultStatusSubscription() {
-    loadStatusSubject
-      .filter { $0 != .loading }
-      .removeDuplicates()
-      .sink { [weak self] newStatus in
-        self?.loadResultStatus = newStatus
-      }
-      .store(in: &cancellables)
-  }
+  private func startAutoLoadChecks() {
+    // Weak self is re-acquired each lap so short-lived instances can deinit.
+    autoLoadCheckTask = Task { [weak self] in
+      while !Task.isCancelled {
+        try? await Task.sleep(for: .seconds(Constants.Config.Timer.autoLoadCheckSignalInterval))
+        guard !Task.isCancelled else { return }
+        guard let self else { return }
 
-  private func setUpAutoLoadNonIdleStatusSubscription() {
-    autoLoadStatusSubject
-      .filter { $0 != .idle }
-      .removeDuplicates()
-      .sink { [weak self] newStatus in
-        self?.autoLoadDelayedIdleStatus = newStatus
+        handleAutoLoadCheck()
       }
-      .store(in: &cancellables)
-  }
-
-  private func setUpAutoLoadCheckSubscription() {
-    IkaTimePublisher.shared
-      .autoLoadCheckPublisher
-      .sink { [weak self] _ in
-        self?.handleAutoLoadCheck()
-      }
-      .store(in: &cancellables)
+    }
   }
 
   // MARK: Load related
@@ -102,12 +93,13 @@ final class IkaCatalog {
     }
 
     didSet {
-      // broadcast newValue via loadStatusSubject
-      loadStatusSubject.send(loadStatus)
+      // Keep loadResultStatus at the last non-loading status. The dedupe check
+      // matters: duplicate updates used to cause UI glitches.
+      if loadStatus != .loading, loadResultStatus != loadStatus {
+        loadResultStatus = loadStatus
+      }
     }
   }
-
-  @ObservationIgnored private let loadStatusSubject: PassthroughSubject<LoadStatus, Never> = .init()
 
   /// Will never be in `.loading` state after catalog is first loaded.
   private(set) var loadResultStatus: LoadStatus = .loading
@@ -121,10 +113,15 @@ final class IkaCatalog {
       try await loadData()
       await setLoadStatus(.loaded)
     }
+    catch is CancellationError {
+      // Task was cancelled (e.g. owning view disappeared) - no error UI
+      return
+    }
     catch let error as IkaError {
       await setLoadStatus(.error(error))
     }
     catch {
+      Logger.store.error("catalog load failed with unexpected error: \(error, privacy: .public)")
       await setLoadStatus(.error(.unknownError))
     }
   }
@@ -134,12 +131,12 @@ final class IkaCatalog {
   {
     let (loadedBattleRotationDict, loadedSalmonRotations) = try await
       AsyncUtils.withTimeout(
-        seconds: 5,
+        seconds: Scoped.loadTimeout,
         timeoutError: IkaError.connectionError)
-      {
-        async let taskBattleRotationDict = IkaNetworkManager.shared.getBattleRotationDict()
-        async let taskSalmonRotations = IkaNetworkManager.shared.getSalmonRotations()
-        async let taskSalmonRewardApparelInfo = IkaNetworkManager.shared.getSalmonRewardApparelInfo()
+      { [ikaNetworkService] in
+        async let taskBattleRotationDict = ikaNetworkService.fetchBattleRotationDict()
+        async let taskSalmonRotations = ikaNetworkService.fetchSalmonRotations()
+        async let taskSalmonRewardApparelInfo = ikaNetworkService.fetchSalmonRewardApparelInfo()
 
         let battleRotationDict = try await taskBattleRotationDict
         var salmonRotations = try await taskSalmonRotations
@@ -166,11 +163,11 @@ final class IkaCatalog {
         loadStatus = .loading
 
       case .loaded:
-        try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusLoadedDelay * 1_000_000_000))
+        try? await Task.sleep(for: .seconds(Scoped.loadStatusLoadedDelay))
         loadStatus = .loaded
 
       case .error(let ikaError):
-        try? await Task.sleep(nanoseconds: UInt64(Scoped.loadStatusErrorDelay * 1_000_000_000))
+        try? await Task.sleep(for: .seconds(Scoped.loadStatusErrorDelay))
         loadStatus = .error(ikaError)
     }
   }
@@ -204,17 +201,15 @@ final class IkaCatalog {
     }
 
     didSet {
-      // broadcast change
-      autoLoadStatusSubject.send(autoLoadStatus)
+      // Same idea as loadResultStatus: track the last non-idle status, deduped.
+      if autoLoadStatus != .idle, autoLoadDelayedIdleStatus != autoLoadStatus {
+        autoLoadDelayedIdleStatus = autoLoadStatus
+      }
     }
   }
 
-  @ObservationIgnored private let autoLoadStatusSubject: PassthroughSubject<AutoLoadStatus, Never> = .init()
-
   /// Its `.idle` state will be delayed after the `.idle` state of the `autoLoadStatus` after first auto-load.
   private(set) var autoLoadDelayedIdleStatus: AutoLoadStatus = .idle
-
-  @ObservationIgnored private var cancellables: Set<AnyCancellable> = .init()
 
   private func handleAutoLoadCheck() {
     guard shouldAutoLoad else { return }
@@ -225,15 +220,15 @@ final class IkaCatalog {
   private var shouldAutoLoad: Bool {
     loadStatus != .loading &&
       autoLoadStatus == .idle &&
-      battleRotationDict.isOutdated
+      battleRotationDict.isOutdated(ikaClock.currentTime)
   }
 
   private var shouldAutoLoadSalmon: Bool {
     guard let firstRotation = salmonRotations.first else { return true }
 
     return
-      firstRotation.isExpired(IkaTimePublisher.shared.currentTime) ||
-      (firstRotation.isCurrent(IkaTimePublisher.shared.currentTime) && firstRotation.rewardApparel == nil)
+      firstRotation.isExpired(ikaClock.currentTime) ||
+      (firstRotation.isCurrent(ikaClock.currentTime) && firstRotation.rewardApparel == nil)
   }
 
   private func autoLoadCatalog()
@@ -265,6 +260,7 @@ final class IkaCatalog {
 
     // unknown error
     catch {
+      Logger.store.error("catalog auto-load failed with unexpected error: \(error, privacy: .public)")
       await setLoadStatus(.error(.unknownError))
       await setAutoLoadStatus(.autoLoaded(.failure))
     }
@@ -299,7 +295,7 @@ final class IkaCatalog {
     while autoLoadAttempts < Scoped.autoLoadBattleMaxAttempts {
       // new attempt
       autoLoadAttempts += 1
-      let loadedBattleRotationDict = try await IkaNetworkManager.shared.getBattleRotationDict()
+      let loadedBattleRotationDict = try await ikaNetworkService.fetchBattleRotationDict()
 
       // found updates from server - success and return
       if loadedBattleRotationDict != battleRotationDict {
@@ -308,8 +304,7 @@ final class IkaCatalog {
       }
 
       // wait and retry
-      try await Task.sleep(
-        nanoseconds: UInt64(Constants.Config.Catalog.autoLoadAttemptInterval * 1_000_000_000))
+      try await Task.sleep(for: .seconds(Scoped.autoLoadAttemptInterval))
     }
 
     // timeout - fail and throw timeout error
@@ -324,8 +319,8 @@ final class IkaCatalog {
     while autoLoadAttempts < Scoped.autoLoadSalmonMaxAttempts {
       // new attempt
       autoLoadAttempts += 1
-      var loadedSalmonRotations = try await IkaNetworkManager.shared.getSalmonRotations()
-      let loadedSalmonRewardApparelInfo = try await IkaNetworkManager.shared.getSalmonRewardApparelInfo()
+      var loadedSalmonRotations = try await ikaNetworkService.fetchSalmonRotations()
+      let loadedSalmonRewardApparelInfo = try await ikaNetworkService.fetchSalmonRewardApparelInfo()
       for (index, rotation) in loadedSalmonRotations.enumerated()
         where rotation.startTime == loadedSalmonRewardApparelInfo.availableTime
       {
@@ -339,8 +334,7 @@ final class IkaCatalog {
       }
 
       // wait and retry
-      try await Task.sleep(
-        nanoseconds: UInt64(Constants.Config.Catalog.autoLoadAttemptInterval * 1_000_000_000))
+      try await Task.sleep(for: .seconds(Scoped.autoLoadAttemptInterval))
     }
 
     // timeout - fail and throw timeout error
@@ -360,11 +354,11 @@ final class IkaCatalog {
         Task {
           // blocked if app is in background - to make sure autoLoaded can be seen when switched back
           while UIApplication.shared.applicationState != .active {
-            try? await Task.sleep(nanoseconds: UInt64(Scoped.appActiveStateCheckInterval * 1_000_000_000))
+            try? await Task.sleep(for: .seconds(Scoped.appActiveStateCheckInterval))
           }
-          try? await Task.sleep(nanoseconds: UInt64(Scoped.autoLoadedLingerLength * 1_000_000_000))
+          try? await Task.sleep(for: .seconds(Scoped.autoLoadedLingerLength))
           autoLoadStatus = .idle
-          try? await Task.sleep(nanoseconds: UInt64(Scoped.idleAndNonIdleStatusUpdateInterval * 1_000_000_000))
+          try? await Task.sleep(for: .seconds(Scoped.idleAndNonIdleStatusUpdateInterval))
           autoLoadDelayedIdleStatus = .idle
         }
 
@@ -373,3 +367,25 @@ final class IkaCatalog {
     }
   }
 }
+
+// MARK: - Preview Support
+
+#if DEBUG
+extension IkaCatalog {
+  /// A catalog preloaded with mock rotations in the `.loaded` state, so previews
+  /// render real content without waiting on a refresh pass. Defined in this file
+  /// because preloading writes through `private(set)` properties.
+  @MainActor
+  static func preview(
+    ikaNetworkService: any IkaNetworkService,
+    ikaClock: IkaClock)
+    -> IkaCatalog
+  {
+    let catalog: IkaCatalog = .init(ikaNetworkService: ikaNetworkService, ikaClock: ikaClock)
+    catalog.battleRotationDict = IkaMockData.makeBattleRotations()
+    catalog.salmonRotations = IkaMockData.makeSalmonRotations()
+    catalog.loadStatus = .loaded
+    return catalog
+  }
+}
+#endif

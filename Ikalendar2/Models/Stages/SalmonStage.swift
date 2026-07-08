@@ -56,12 +56,12 @@ extension SalmonStage {
 }
 
 extension SalmonStage {
-  var imgFiln: String {
+  var imageName: String {
     name
-      .replacingOccurrences(of: " ", with: "_")
+      .replacing(" ", with: "_")
   }
 
-  var imgFilnLarge: String {
-    imgFiln + "_Large"
+  var imageNameLarge: String {
+    imageName + "_Large"
   }
 }

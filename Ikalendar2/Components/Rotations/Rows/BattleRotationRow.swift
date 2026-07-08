@@ -10,16 +10,15 @@ import SwiftUI
 // MARK: - BattleRotationRow
 
 /// A row containing all the information of a battle rotation.
-@MainActor
 struct BattleRotationRow: View {
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
 
   private var rowType: RowType {
-    if rotation.isCurrent(ikaTimePublisher.currentTime) { .now }
-    else if rotation.isNext(ikaTimePublisher.currentTime) { .next }
+    if rotation.isCurrent(ikaClock.currentTime) { .now }
+    else if rotation.isNext(ikaClock.currentTime) { .next }
     else { .other }
   }
 
@@ -50,9 +49,9 @@ extension BattleRotationRow {
     var prefixString: String? {
       switch self {
         case .now:
-          Scoped.CURRENT_PREFIX_STRING
+          Scoped.currentPrefixString
         case .next:
-          Scoped.NEXT_PREFIX_STRING
+          Scoped.nextPrefixString
         case .other:
           nil
       }
@@ -66,12 +65,7 @@ extension BattleRotationRow {
 struct BattleRotationHeader: View {
   typealias Scoped = Constants.Style.Rotation.Header
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
-
-  @Environment(\.colorScheme) private var colorScheme
-  private var colorSchemeAwareGlass: Glass {
-    colorScheme == .dark ? .clear : .regular
-  }
+  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: BattleRotation
   let rowType: BattleRotationRow.RowType
@@ -95,19 +89,19 @@ struct BattleRotationHeader: View {
   }
 
   var body: some View {
-    HStack(spacing: Scoped.SPACING) {
+    HStack(spacing: Scoped.spacing) {
       // skip if `prefixString` is nil (case .other)
       if let prefixString = rowType.prefixString {
         Text(prefixString.localizedStringKey)
           .ikaFont(
             .ika1,
-            size: Scoped.PREFIX_FONT_SIZE,
+            size: Scoped.prefixFontSize,
             relativeTo: .title2)
           .foregroundStyle(Color.systemBackground)
-          .padding(.horizontal, Scoped.PREFIX_PADDING_H)
-          .glassEffect(
-            colorSchemeAwareGlass.tint(.secondary).interactive(),
-            in: .rect(cornerRadius: Scoped.PREFIX_FRAME_CORNER_RADIUS))
+          .padding(.horizontal, Scoped.prefixPaddingH)
+          .adaptiveGlassEffect(
+            tint: .secondary,
+            in: .rect(cornerRadius: Scoped.prefixFrameCornerRadius))
       }
 
       // Battle Time String
@@ -115,41 +109,37 @@ struct BattleRotationHeader: View {
         .scaledLimitedLine()
         .ikaFont(
           .ika2,
-          size: Scoped.CONTENT_FONT_SIZE,
+          size: Scoped.contentFontSize,
           relativeTo: .headline)
     }
   }
 }
 
-// MARK: - BattleRotationRow_Previews
+#Preview {
+  @Previewable @State var modeSelection: BattleMode = .gachi
 
-struct BattleRotationRow_Previews: PreviewProvider {
-  @State static private var modeSelection: BattleMode = .gachi
-
-  static var previews: some View {
-    NavigationView {
-      GeometryReader { geo in
-        List {
-          Section {
-            Picker("Mode", selection: $modeSelection) {
-              ForEach(BattleMode.allCases) { battleMode in
-                Text(battleMode.shortName)
-                  .tag(battleMode)
-              }
+  NavigationStack {
+    GeometryReader { geo in
+      List {
+        Section {
+          Picker("Mode", selection: $modeSelection) {
+            ForEach(BattleMode.allCases) { battleMode in
+              Text(battleMode.shortName)
+                .tag(battleMode)
             }
-            .pickerStyle(SegmentedPickerStyle())
           }
-
-          ForEach(0 ..< IkaMockData.getBattleRotations()[modeSelection]!.count, id: \.self)
-          { index in
-            BattleRotationRow(
-              rotation: IkaMockData.getBattleRotations()[modeSelection]![index],
-              rowWidth: geo.size.width)
-          }
+          .pickerStyle(.segmented)
         }
-        .listStyle(InsetGroupedListStyle())
-        .navigationTitle(modeSelection.name)
+
+        ForEach(IkaMockData.makeBattleRotations()[modeSelection] ?? []) { rotation in
+          BattleRotationRow(
+            rotation: rotation,
+            rowWidth: geo.size.width)
+        }
       }
+      .listStyle(.insetGrouped)
+      .navigationTitle(modeSelection.name)
     }
   }
+  .ikaPreviewEnvironment()
 }

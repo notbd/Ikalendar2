@@ -10,5 +10,4 @@ enum Constants {
   enum Config { }
   enum Key { }
   enum Style { }
-  enum Namespace { }
 }

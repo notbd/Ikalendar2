@@ -11,11 +11,10 @@ import SwiftUI
 // MARK: - SalmonRotationCell
 
 /// The view for the salmon rotation info that takes the entire space in the list content.
-@MainActor
 struct SalmonRotationCell: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: SalmonRotation
   let rowWidth: CGFloat
@@ -25,7 +24,7 @@ struct SalmonRotationCell: View {
   var body: some View {
     VStack(
       alignment: .leading,
-      spacing: Scoped.CELL_SPACING)
+      spacing: Scoped.cellSpacing)
     {
       SalmonRotationCellTimeTextSection(
         rotation: rotation,
@@ -34,35 +33,35 @@ struct SalmonRotationCell: View {
       if hasStageAndWeapon {
         stageAndWeaponSection
 
-        if rotation.isCurrent(ikaTimePublisher.currentTime) {
+        if rotation.isCurrent(ikaClock.currentTime) {
           progressSection
             .transition(.opacity.animation(.default))
         }
       }
     }
     // Stupid workaround because SwiftUI List cell force adds vInsets for content that's too small
-    .padding(.vertical, Scoped.CELL_PADDING_VERTICAL)
+    .padding(.vertical, Scoped.cellPaddingVertical)
   }
 
   private var stageAndWeaponSection: some View {
     SalmonStageAndWeaponsLayout {
       SalmonRotationStageCard(rotation: rotation)
-      SalmonRotationWeaponsCard(weapons: rotation.weapons!)
+      SalmonRotationWeaponsCard(weapons: rotation.weapons ?? [])
     }
   }
 
   private var progressSection: some View {
     ProgressView(
-      value: min(ikaTimePublisher.currentTime, rotation.endTime) - rotation.startTime,
+      value: min(ikaClock.currentTime, rotation.endTime) - rotation.startTime,
       total: rotation.endTime - rotation.startTime,
       label: {
-        Text(ikaTimePublisher.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
+        Text(ikaClock.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
           .contentTransition(.numericText(countsDown: true))
-          .animation(.snappy, value: ikaTimePublisher.currentTime)
+          .animation(.snappy, value: ikaClock.currentTime)
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.PROGRESS_FONT_SIZE,
+            size: Scoped.progressFontSize,
             relativeTo: .headline)
           .hAlignment(.trailing)
       })
@@ -73,84 +72,84 @@ struct SalmonRotationCell: View {
 // MARK: - SalmonRotationCellTimeTextSection
 
 /// A HStack component containing the time text of a salmon rotation.
-@MainActor
 struct SalmonRotationCellTimeTextSection: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell.TimeTextSection
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
-
-  @Environment(\.colorScheme) private var colorScheme
-  private var colorSchemeAwareGlass: Glass {
-    colorScheme == .dark ? .clear : .regular
-  }
+  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: SalmonRotation
   let rowWidth: CGFloat
 
   var body: some View {
     HStack {
-      Image(rotation.isCurrent(ikaTimePublisher.currentTime) ? .goldenEgg : .salmon)
+      Image(rotation.isCurrent(ikaClock.currentTime) ? .goldenEgg : .salmon)
         .antialiased(true)
         .resizable()
         .scaledToFit()
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-        .frame(height: rowWidth * Scoped.SALMON_ICON_HEIGHT_RATIO)
-        .if(rotation.isCurrent(ikaTimePublisher.currentTime)) {
+        .shadow(radius: Constants.Style.Global.shadowRadius)
+        .frame(height: rowWidth * Scoped.salmonIconHeightRatio)
+        .if(rotation.isCurrent(ikaClock.currentTime)) {
           $0
-            .glassEffect(
-              colorSchemeAwareGlass.interactive(),
-              in: .circle)
+            .adaptiveGlassEffect(in: .circle)
         }
         .scaleEffect(
-          rotation.isCurrent(ikaTimePublisher.currentTime)
-            ? Scoped.ICON_GOLDEN_EGG_SCALE_FACTOR
-            : Scoped.ICON_SALMON_FISH_SCALE_FACTOR)
-          .animation(.default, value: rotation.isCurrent(ikaTimePublisher.currentTime))
+          rotation.isCurrent(ikaClock.currentTime)
+            ? Scoped.iconGoldenEggScaleFactor
+            : Scoped.iconSalmonFishScaleFactor)
+          .animation(.default, value: rotation.isCurrent(ikaClock.currentTime))
 
       Spacer()
 
-      HStack(spacing: Scoped.TIME_TEXT_SPACING) {
+      HStack(spacing: Scoped.timeTextSpacing) {
         Text(rotation.startTime.toSalmonTimeString(shouldIncludeDate: true))
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.TIME_TEXT_FONT_SIZE,
+            size: Scoped.timeTextFontSize,
             relativeTo: .headline)
-          .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
-          .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
-          .glassEffect(
-            colorSchemeAwareGlass.interactive(),
-            in: .rect(cornerRadius: Scoped.TIME_TEXT_FRAME_CORNER_RADIUS))
+          .padding(.horizontal, Scoped.timeTextSinglePaddingH)
+          .padding(.vertical, Scoped.timeTextSinglePaddingV)
+          .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.timeTextFrameCornerRadius))
 
         Text("-")
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.TIME_TEXT_FONT_SIZE,
+            size: Scoped.timeTextFontSize,
             relativeTo: .headline)
 
         Text(rotation.endTime.toSalmonTimeString(shouldIncludeDate: true))
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.TIME_TEXT_FONT_SIZE,
+            size: Scoped.timeTextFontSize,
             relativeTo: .headline)
-          .padding(.horizontal, Scoped.TIME_TEXT_SINGLE_PADDING_H)
-          .padding(.vertical, Scoped.TIME_TEXT_SINGLE_PADDING_V)
-          .glassEffect(
-            colorSchemeAwareGlass.interactive(),
-            in: .rect(cornerRadius: Scoped.TIME_TEXT_FRAME_CORNER_RADIUS))
+          .padding(.horizontal, Scoped.timeTextSinglePaddingH)
+          .padding(.vertical, Scoped.timeTextSinglePaddingV)
+          .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.timeTextFrameCornerRadius))
       }
     }
   }
 }
 
-// MARK: - SalmonRotationCell_Previews
-
-struct SalmonRotationCell_Previews: PreviewProvider {
-  static var previews: some View {
+#Preview("Current (with reward gear)") {
+  List {
     SalmonRotationCell(
-      rotation: IkaMockData.getSalmonRotation(),
+      rotation: IkaMockData.makeSalmonRotation(rawStartTime: Date()),
       rowWidth: 390)
   }
+  .listStyle(.insetGrouped)
+  .ikaPreviewEnvironment()
+}
+
+#Preview("Future (time only)") {
+  List {
+    SalmonRotationCell(
+      rotation: IkaMockData.makeSalmonRotation(
+        rawStartTime: Date().addingTimeInterval(48 * 3600),
+        hasStageAndWeapons: false),
+      rowWidth: 390)
+  }
+  .listStyle(.insetGrouped)
+  .ikaPreviewEnvironment()
 }

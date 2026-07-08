@@ -1,5 +1,5 @@
 //
-//  IkaInternetConnectivityPublisher.swift
+//  IkaConnectivityChecker.swift
 //  Ikalendar2
 //
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
@@ -7,8 +7,11 @@
 
 import Foundation
 
+/// An observable on-demand checker for restricted network environments (GFW).
+/// `isGFWed` flips to true (and stays true) once all test domains are unreachable.
+@MainActor
 @Observable
-final class IkaInternetConnectivityPublisher {
+final class IkaConnectivityChecker {
   var isGFWed: Bool = false
   private(set) var checkInProgress: Bool = false
 
@@ -16,9 +19,20 @@ final class IkaInternetConnectivityPublisher {
     "www.google.com",
     "www.facebook.com",
   ]
-  private let timeoutInterval: TimeInterval = 4.0
+  static private let timeoutInterval: TimeInterval = 4.0
 
-  @MainActor
+  /// Reused across checks: creating a URLSession per call leaks the session
+  /// (it is never invalidated). Consider `.ephemeral` in the future to keep
+  /// GFW probes free of local cache interference.
+  @ObservationIgnored private let session: URLSession
+
+  init() {
+    let config: URLSessionConfiguration = .default
+    config.timeoutIntervalForRequest = Self.timeoutInterval
+    config.timeoutIntervalForResource = Self.timeoutInterval
+    session = URLSession(configuration: config)
+  }
+
   func performGFWCheck() async {
     guard !checkInProgress else { return }
 
@@ -27,12 +41,7 @@ final class IkaInternetConnectivityPublisher {
     var failedChecksCount: Int = 0
     let totalChecks = testDomains.count
 
-    let config: URLSessionConfiguration = .default
-    config.timeoutIntervalForRequest = timeoutInterval
-    config.timeoutIntervalForResource = timeoutInterval
-    let session: URLSession = .init(configuration: config)
-
-    await withTaskGroup(of: Bool.self) { group in
+    await withTaskGroup(of: Bool.self) { [session] group in
       for domain in testDomains {
         group.addTask {
           guard let url = URL(string: "https://\(domain)") else {
