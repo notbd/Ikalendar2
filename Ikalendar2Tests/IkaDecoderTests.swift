@@ -286,12 +286,25 @@ struct IkaDecoderTests {
 
   @Suite("Parse License")
   struct ParseLicenseTests {
+    /// base64 of "MIT License" wrapped with CRLF line breaks.
+    static private let licenseCRLFWrapped = """
+      { "url": "https://api.github.com/repos/SwiftyJSON/SwiftyJSON",
+        "license": { "spdx_id": "MIT", "name": "MIT License" },
+        "content": "TUlUIExp\\r\\nY2Vuc2U=\\r\\n" }
+      """
+
     @Test
     func `Valid payload decodes all fields and strips the base64 newline`() throws {
       let license = try IkaDecoder.parseLicenseFromGithubAPI(from: Fixtures.data(Fixtures.licenseValid))
       #expect(license.repoURL == "https://github.com/SwiftyJSON/SwiftyJSON")
       #expect(license.type == "MIT")
       #expect(license.typeDescription == "MIT License")
+      #expect(license.content == "MIT License")
+    }
+
+    @Test
+    func `CRLF line breaks in the base64 payload are skipped`() throws {
+      let license = try IkaDecoder.parseLicenseFromGithubAPI(from: Fixtures.data(Self.licenseCRLFWrapped))
       #expect(license.content == "MIT License")
     }
 
