@@ -194,10 +194,9 @@ jobs:
             2>&1 | tee raw-release.log | xcbeautify --renderer github-actions
 
       - name: Surface Test Failure Details
-        if: failure() || cancelled() || steps.release.outcome == 'failure'
+        if: failure() || cancelled()
         env:
           TEST_OUTCOME: ${{ steps.test.outcome }}
-          JOB_STATUS: ${{ job.status }}
         run: |
           # Fallback for diagnostics a formatter drops: read the raw xcodebuild logs.
           for log in raw-test.log raw-release.log; do
@@ -205,8 +204,9 @@ jobs:
             # The tail shows where a hung or cancelled build stopped.
             echo "===== $log (last 80 lines) ====="
             tail -n 80 "$log" | cut -c1-400
-            # After a Release-only failure, matches in the passing test log are noise.
-            if [ "$log" = "raw-test.log" ] && [ "$TEST_OUTCOME" != "failure" ] && [ "$JOB_STATUS" != "cancelled" ]; then
+            # Matches in a passing test log are noise (e.g. after a Release-only failure). A
+            # cancelled test step has the outcome "cancelled", so its log is still searched.
+            if [ "$log" = "raw-test.log" ] && [ "$TEST_OUTCOME" = "success" ]; then
               continue
             fi
             echo "===== $log (errors and failures) ====="
