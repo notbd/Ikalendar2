@@ -443,7 +443,6 @@ final class IkaCatalog {
 
 // MARK: - Preview Support
 
-#if DEBUG
 extension IkaCatalog {
   /// A catalog preloaded with mock rotations in the `.loaded` state, so previews
   /// render real content without waiting on a refresh pass. Defined in this file
@@ -461,4 +460,3 @@ extension IkaCatalog {
     return catalog
   }
 }
-#endif

@@ -170,11 +170,6 @@ jobs:
       # Release-only build settings are otherwise never exercised.
       - name: Build Release (device, unsigned)
         id: release
-        # TODO: drop continue-on-error once IkaCatalog.preview
-        # (Ikalendar2/Models/Stores/IkaCatalog.swift) is no longer wrapped in
-        # #if DEBUG. #Preview bodies are type-checked in Release, and every one
-        # calls ikaPreviewEnvironment(), which builds the catalog through it.
-        continue-on-error: true
         run: |
           set -o pipefail
           xcodebuild build \
