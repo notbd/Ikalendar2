@@ -56,7 +56,8 @@ final class IkaOrientationMonitor {
     else { return }
 
     // The notification also fires for face up and face down, which leave the interface orientation
-    // alone. @Observable does not skip equal assignments, so writing anyway re-renders every reader.
+    // alone. The current @Observable macro already skips notifying on an equal write; the guard
+    // states the intent instead of relying on that.
     let interfaceOrientation = windowScene.effectiveGeometry.interfaceOrientation
     guard interfaceOrientation != currentOrientation else { return }
 

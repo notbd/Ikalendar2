@@ -20,7 +20,7 @@ struct ModeIconStamp: View {
   let gameModeSelection: GameMode
   let battleModeSelection: BattleMode
   let shouldAnimate: Bool
-  /// 0 = at rest, 1 = docked into the nav bar badge (iPhone only; the iPad carousel stays at 0).
+  /// 0 = at rest, 1 = docked into the nav bar badge (compact width only; the regular-width carousel stays at 0).
   let dockProgress: Double
 
   private var tilt: Tilt {

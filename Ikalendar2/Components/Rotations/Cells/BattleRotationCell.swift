@@ -69,9 +69,11 @@ struct BattleRotationCellPrimary: View {
 
   // Matched-geometry rule: the primary variant is the geometry source and the
   // secondary matches it (isSource: false). The two briefly coexist during the hero
-  // transition, and more than one source per group is undefined behavior (ebf2438).
-  // The source must be the variant that stays: a non-source keeps the last frame of a
-  // removed source, which drew the new Now card's rule and stages off the card.
+  // transition, where two sources would be undefined behavior (ebf2438). The source must
+  // be the variant that stays: a non-source keeps the last frame of a removed source,
+  // which drew the new Now card's rule and stages off the card. A lone secondary has no
+  // source and keeps its own frame; the reverse flip (primary back to secondary) happens
+  // only if the clock moves backwards, and would show the mirror of that bug.
 
   @Environment(IkaClock.self) private var ikaClock
 

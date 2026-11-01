@@ -9,8 +9,8 @@ import SwiftUI
 
 // MARK: - ModeBadge
 
-/// The small glass badge at the trailing end of the iPhone nav bar that the mode stamp docks into
-/// while the list scrolls up. It shows the stamp's image, tilted like the stamp.
+/// The small glass badge at the trailing end of the compact-width nav bar that the mode stamp
+/// docks into while the list scrolls up. It shows the stamp's image, tilted like the stamp.
 struct ModeBadge: View {
   typealias Scoped = Constants.Style.Overlay.ModeIcon
 

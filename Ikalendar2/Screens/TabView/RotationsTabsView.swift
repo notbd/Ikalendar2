@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-/// The iPhone layout: one tab per mode along the bottom bar.
+/// The compact-width layout (iPhone, and iPad in Slide Over or a narrow split): one tab per mode
+/// along the bottom bar.
 struct RotationsTabsView: View {
   @Environment(IkaStatus.self) private var ikaStatus
 
