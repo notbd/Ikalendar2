@@ -13,7 +13,7 @@ import SwiftUI
 struct SalmonRotationWeaponsCard: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Weapon
 
-  let weapons: [SalmonWeapon]!
+  let weapons: [SalmonWeapon]
 
   private let columns: [GridItem] = [
     GridItem(.flexible()),
