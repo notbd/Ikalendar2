@@ -1,13 +1,35 @@
+# Dependabot reads this file from the default branch (main) only.
+# Version updates arrive as one grouped PR per ecosystem each month, opened
+# against dev. Security updates are switched on in the repository settings, not
+# here; they stay out of these groups and open as soon as an advisory lands.
 version: 2
 updates:
   - package-ecosystem: "swift"
     directory: "/"
+    target-branch: "dev"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 3
+    groups:
+      swift-packages:
+        applies-to: version-updates
+        patterns: ["*"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
+    target-branch: "dev"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 3
+    groups:
+      github-actions:
+        applies-to: version-updates
+        patterns: ["*"]
+
+  - package-ecosystem: "npm"
+    directory: "/docs"
+    target-branch: "dev"
+    schedule:
+      interval: "monthly"
+    groups:
+      docs-npm:
+        applies-to: version-updates
+        patterns: ["*"]
