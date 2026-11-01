@@ -80,14 +80,6 @@ final class IkaCatalog {
     autoLoadLingerTask?.cancel()
   }
 
-  /// Reloads every rotation feed. `silently` mutes the haptics of this one load's status
-  /// changes (used by the onboarding launch load).
-  func refresh(silently shouldEnableSilentLoading: Bool = false)
-    async
-  {
-    await loadCatalog(shouldEnableSilentLoading)
-  }
-
   private func startAutoLoadChecks() {
     // Weak self is re-acquired each lap so short-lived instances can deinit.
     autoLoadCheckTask = Task { [weak self, timing] in
@@ -109,7 +101,7 @@ final class IkaCatalog {
     case error(IkaError)
   }
 
-  /// True only for the duration of one `loadCatalog` call (and the cancellation restore);
+  /// True only for the duration of one `refresh` call (and the cancellation restore);
   /// never carries across loads.
   @ObservationIgnored private var isSilentLoadingEnabled: Bool = false
   /// The number of loads in flight, so a cancelled load can tell whether another load
@@ -148,7 +140,9 @@ final class IkaCatalog {
   /// list or ErrorView on screen instead of swapping in a loading state.
   private(set) var loadResultStatus: LoadStatus = .loading
 
-  private func loadCatalog(_ shouldEnableSilentLoading: Bool = false)
+  /// Reloads every rotation feed. `silently` mutes the haptics of this one load's status
+  /// changes (used by the onboarding launch load).
+  func refresh(silently shouldEnableSilentLoading: Bool = false)
     async
   {
     // Scoped to this call: a silent onboarding load must not also silence the
@@ -195,16 +189,10 @@ final class IkaCatalog {
         async let taskSalmonRewardApparelInfo = ikaNetworkService.fetchSalmonRewardApparelInfo()
 
         let battleRotationDict = try await taskBattleRotationDict
-        var salmonRotations = try await taskSalmonRotations
+        let salmonRotations = try await taskSalmonRotations
         let rewardInfo = try await taskSalmonRewardApparelInfo
 
-        for (index, rotation) in salmonRotations.enumerated()
-          where rotation.startTime == rewardInfo.availableTime
-        {
-          salmonRotations[index].rewardApparel = rewardInfo.apparel
-        }
-
-        return (battleRotationDict, salmonRotations)
+        return (battleRotationDict, salmonRotations.attaching(rewardInfo))
       }
 
     battleRotationDict = loadedBattleRotationDict
@@ -234,7 +222,7 @@ final class IkaCatalog {
   private func restoreLoadResultStatus() {
     guard loadResultStatus != .loading else { return }
 
-    // A cancelled load is a non-event: no haptic. `loadCatalog` resets the flag on exit.
+    // A cancelled load is a non-event: no haptic. `refresh` resets the flag on exit.
     isSilentLoadingEnabled = true
     loadStatus = loadResultStatus
   }
@@ -351,42 +339,41 @@ final class IkaCatalog {
   private func autoLoadBattleRotationDict()
     async throws
   {
-    var autoLoadAttempts = 0
-
-    while autoLoadAttempts < timing.autoLoadBattleMaxAttempts {
-      autoLoadAttempts += 1
-      let loadedBattleRotationDict = try await ikaNetworkService.fetchBattleRotationDict()
-
-      if loadedBattleRotationDict != battleRotationDict {
-        battleRotationDict = loadedBattleRotationDict
-        return
-      }
-
-      try await Task.sleep(for: .seconds(timing.autoLoadAttemptInterval))
-    }
-
-    throw IkaError.maxAttemptsExceeded
+    battleRotationDict = try await fetchUntilChanged(
+      maxAttempts: timing.autoLoadBattleMaxAttempts,
+      current: { battleRotationDict },
+      fetch: { try await ikaNetworkService.fetchBattleRotationDict() })
   }
 
   private func autoLoadSalmonRotations()
     async throws
   {
-    var autoLoadAttempts = 0
+    salmonRotations = try await fetchUntilChanged(
+      maxAttempts: timing.autoLoadSalmonMaxAttempts,
+      current: { salmonRotations },
+      fetch: {
+        let loadedSalmonRotations = try await ikaNetworkService.fetchSalmonRotations()
+        let loadedSalmonRewardApparelInfo = try await ikaNetworkService.fetchSalmonRewardApparelInfo()
+        return loadedSalmonRotations.attaching(loadedSalmonRewardApparelInfo)
+      })
+  }
 
-    while autoLoadAttempts < timing.autoLoadSalmonMaxAttempts {
-      autoLoadAttempts += 1
-      var loadedSalmonRotations = try await ikaNetworkService.fetchSalmonRotations()
-      let loadedSalmonRewardApparelInfo = try await ikaNetworkService.fetchSalmonRewardApparelInfo()
-      for (index, rotation) in loadedSalmonRotations.enumerated()
-        where rotation.startTime == loadedSalmonRewardApparelInfo.availableTime
-      {
-        loadedSalmonRotations[index].rewardApparel = loadedSalmonRewardApparelInfo.apparel
-      }
+  /// Fetches until the result differs from `current()`, which is read again after every fetch.
+  /// Sleeps `autoLoadAttemptInterval` after every unchanged result, the last one included, and
+  /// throws `maxAttemptsExceeded` once `maxAttempts` fetches came back unchanged.
+  private func fetchUntilChanged<T: Equatable>(
+    maxAttempts: Int,
+    current: () -> T,
+    fetch: () async throws -> T)
+    async throws -> T
+  {
+    var attempts = 0
 
-      if loadedSalmonRotations != salmonRotations {
-        salmonRotations = loadedSalmonRotations
-        return
-      }
+    while attempts < maxAttempts {
+      attempts += 1
+      let fetched = try await fetch()
+
+      if fetched != current() { return fetched }
 
       try await Task.sleep(for: .seconds(timing.autoLoadAttemptInterval))
     }
@@ -406,27 +393,48 @@ final class IkaCatalog {
 
       case .autoLoaded(let result):
         autoLoadStatus = .autoLoaded(result)
-        // automatically fall back to idle after a while
-        autoLoadLingerTask?.cancel()
-        autoLoadLingerTask = Task { [weak self, timing] in
-          // blocked if app is in background - to make sure autoLoaded can be seen when switched back
-          while !Task.isCancelled, self?.isAppActive() == false {
-            try? await Task.sleep(for: .seconds(timing.appActiveStateCheckInterval))
-          }
-          try? await Task.sleep(for: .seconds(timing.autoLoadedLingerLength))
-          // `try?` swallows cancellation, so check for it before every write.
-          guard !Task.isCancelled, let self else { return }
-
-          autoLoadStatus = .idle
-          try? await Task.sleep(for: .seconds(timing.idleAndNonIdleStatusUpdateInterval))
-          guard !Task.isCancelled else { return }
-
-          autoLoadDisplayStatus = .idle
-        }
+        scheduleIdleFallback()
 
       case .idle:
         autoLoadStatus = .idle
     }
+  }
+
+  /// Returns `autoLoadStatus` to `.idle` once the result has lingered for
+  /// `autoLoadedLingerLength`, and `autoLoadDisplayStatus` one
+  /// `idleAndNonIdleStatusUpdateInterval` after that.
+  private func scheduleIdleFallback() {
+    autoLoadLingerTask?.cancel()
+    autoLoadLingerTask = Task { [weak self, timing] in
+      // blocked if app is in background - to make sure autoLoaded can be seen when switched back
+      while !Task.isCancelled, self?.isAppActive() == false {
+        try? await Task.sleep(for: .seconds(timing.appActiveStateCheckInterval))
+      }
+      try? await Task.sleep(for: .seconds(timing.autoLoadedLingerLength))
+      // `try?` swallows cancellation, so check for it before every write.
+      guard !Task.isCancelled, let self else { return }
+
+      autoLoadStatus = .idle
+      try? await Task.sleep(for: .seconds(timing.idleAndNonIdleStatusUpdateInterval))
+      guard !Task.isCancelled else { return }
+
+      autoLoadDisplayStatus = .idle
+    }
+  }
+}
+
+// MARK: - Reward apparel
+
+extension [SalmonRotation] {
+  /// A copy with `info`'s reward apparel set on the rotations that start at its available time.
+  fileprivate func attaching(_ info: SalmonApparelInfo) -> [SalmonRotation] {
+    var rotations = self
+    for (index, rotation) in rotations.enumerated()
+      where rotation.startTime == info.availableTime
+    {
+      rotations[index].rewardApparel = info.apparel
+    }
+    return rotations
   }
 }
 
