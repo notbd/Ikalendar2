@@ -33,10 +33,14 @@ struct SettingsAltAppIconView: View {
   @State private var easterEggCellRectGlobal: CGRect = .init()
   @State private var easterEggBounceCounter: Int = 0
   @State private var easterEggJumpRequestCounter: Int = 0
-  /// The pending delayed jump, owned by the page rather than the Rick row: scrolling the row
-  /// off-screen must not cancel it, but leaving the page or hiding the easter-egg section does
-  /// (14102a7, 82d952a).
-  @State private var easterEggJumpTask: Task<Void, Never>?
+  /// The last jump request acted on, so showing the easter-egg section again does not replay it.
+  @State private var handledEasterEggJumpRequest: Int = 0
+
+  /// Restarts the jump task on a new request or when the easter-egg section shows or hides.
+  private struct JumpKey: Equatable {
+    let request: Int
+    let isEasterEggShown: Bool
+  }
 
   @State private var shouldDisplayAnimatedCopy: Bool = false
 
@@ -191,13 +195,14 @@ struct SettingsAltAppIconView: View {
       wasRickPreferredOnAppear = ikaPreference.preferredAppIcon == .rick
       Task { await connectivityChecker.performGFWCheck() }
     }
-    .onDisappear { easterEggJumpTask?.cancel() }
-    .onChange(of: easterEggJumpRequestCounter) {
-      easterEggJumpTask?.cancel()
-      easterEggJumpTask = Task { await jumpToGoodStuffAfterDelay() }
-    }
-    .onChange(of: showEasterEgg) { _, isShown in
-      if !isShown { easterEggJumpTask?.cancel() }
+    // The pending delayed jump, owned by the page rather than the Rick row: scrolling the row
+    // off-screen must not cancel it, but leaving the page or hiding the easter-egg section does
+    // (14102a7, 82d952a). A new request restarts the delay.
+    .task(id: JumpKey(request: easterEggJumpRequestCounter, isEasterEggShown: showEasterEgg)) {
+      guard showEasterEgg, easterEggJumpRequestCounter != handledEasterEggJumpRequest else { return }
+
+      handledEasterEggJumpRequest = easterEggJumpRequestCounter
+      await jumpToGoodStuffAfterDelay()
     }
     // While bouncing, the icon escapes its list cell's clip bounds - so hide the
     // original and overlay an unclipped copy at the same spot. Re-triggering
