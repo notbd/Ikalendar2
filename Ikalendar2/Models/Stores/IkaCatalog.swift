@@ -308,7 +308,9 @@ final class IkaCatalog {
       await setAutoLoadStatus(.autoLoaded(.failure))
     }
     catch let error as IkaError {
-      await setLoadStatus(.error(error))
+      // A loaded list stays on screen and only the toast reports the failure; a list the
+      // last full load left as ErrorView takes the new error.
+      if loadResultStatus != .loaded { await setLoadStatus(.error(error)) }
       await setAutoLoadStatus(.autoLoaded(.failure))
     }
     catch {

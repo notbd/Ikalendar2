@@ -62,6 +62,7 @@ struct IkaCatalogAutoLoadTests {
   private func settle(_ catalog: IkaCatalog, _ scenario: AutoLoadScenario) async {
     scenario.battleRotationDict = TestData.battleDict()
     scenario.isBattleFetchHeld = false
+    scenario.battleFetchError = nil
     scenario.isAppActive = true
     await waitUntil {
       !catalog.battleRotationDict.isOutdated(.init()) &&
@@ -177,6 +178,27 @@ struct IkaCatalogAutoLoadTests {
 
     await settle(catalog, scenario)
   }
+
+  @Test(.timeLimit(.minutes(1)))
+  func `A connection error during auto-load keeps the loaded rotations visible`() async {
+    let staleDict: BattleRotationDict = makeStaleBattleDict()
+    let scenario: AutoLoadScenario = .init(battleRotationDict: staleDict)
+    scenario.isAppActive = false // holds the finished cycle in `.autoLoaded`
+    let catalog = makeCatalog(scenario, timing: Self.timing)
+
+    await catalog.refresh()
+    scenario.battleFetchError = .connectionError
+    let finished: [IkaCatalog.AutoLoadStatus] = [.autoLoaded(.success), .autoLoaded(.failure)]
+    await waitUntil { finished.contains(catalog.autoLoadStatus) }
+
+    #expect(catalog.autoLoadStatus == .autoLoaded(.failure))
+    #expect(catalog.autoLoadDisplayStatus == .autoLoaded(.failure))
+    #expect(catalog.loadStatus == .loaded)
+    #expect(catalog.loadResultStatus == .loaded)
+    #expect(catalog.battleRotationDict == staleDict)
+
+    await settle(catalog, scenario)
+  }
 }
 
 // MARK: - AutoLoadScenario
@@ -193,6 +215,8 @@ final private class AutoLoadScenario {
   ]
   /// While true, battle requests wait (cooperatively, so they stay cancellable).
   var isBattleFetchHeld: Bool = false
+  /// While set, battle requests throw it.
+  var battleFetchError: IkaError?
   var isAppActive: Bool = true
   private(set) var battleFetchCount: Int = 0
   private(set) var salmonFetchCount: Int = 0
@@ -206,6 +230,7 @@ final private class AutoLoadScenario {
     while isBattleFetchHeld {
       try await Task.sleep(for: .milliseconds(10))
     }
+    if let battleFetchError { throw battleFetchError }
     return battleRotationDict
   }
 
