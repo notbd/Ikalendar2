@@ -43,11 +43,6 @@ extension Rotation {
 
   /// Equates two `Rotation` instances based on their `description`s, the same value
   /// `hash(into:)` hashes (exact, unlike comparing `hashValue`s, which can collide; 4ca6526).
-  ///
-  /// - Parameters:
-  ///   - lhs: The `Rotation` instance on the left-hand side of the operator.
-  ///   - rhs: The `Rotation` instance on the right-hand side of the operator.
-  /// - Returns: A Boolean value indicating whether the two instances are equal.
   static func == (lhs: Self, rhs: Self) -> Bool {
     lhs.description == rhs.description
   }
@@ -57,8 +52,6 @@ extension Rotation {
   /// This method is explicitly implemented to support `Hashable` conformance,
   /// particularly when not all properties of the conforming type are hashable.
   /// The hash value is generated using the `description` property.
-  ///
-  /// - Parameter hasher: The hasher to use for combining the hash components of this instance.
   func hash(into hasher: inout Hasher) {
     hasher.combine(description)
   }

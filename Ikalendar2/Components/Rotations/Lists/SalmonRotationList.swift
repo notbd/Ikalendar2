@@ -13,7 +13,6 @@ struct SalmonRotationList: View {
   @Environment(IkaClock.self) private var ikaClock
 
   private var validSalmonRotations: [SalmonRotation] {
-    // filter: display current and future rotations only
     ikaCatalog.salmonRotations.filter { !$0.isExpired(ikaClock.currentTime) }
   }
 

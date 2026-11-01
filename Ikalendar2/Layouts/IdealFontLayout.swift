@@ -98,7 +98,6 @@ struct IdealFontLayout: Layout {
 
     for index in subviews.indices {
       if index == 0 {
-        // placing title text
         subviews[index].place(
           at: CGPoint(
             x: contentX,
@@ -107,7 +106,6 @@ struct IdealFontLayout: Layout {
           proposal: contentSizeProposal)
       }
       else {
-        // skip all others
         subviews[index].place(
           at: CGPoint(
             x: bounds.midX,

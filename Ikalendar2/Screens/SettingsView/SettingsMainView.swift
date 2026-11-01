@@ -277,7 +277,7 @@ struct SettingsMainView: View {
     }
   }
 
-  // MARK: - Others Section
+  // MARK: - About and Credits
 
   private var rowAbout: some View {
     NavigationLink(destination: SettingsAboutView()) {

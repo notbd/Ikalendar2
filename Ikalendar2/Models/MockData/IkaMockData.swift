@@ -37,13 +37,10 @@ enum IkaMockData {
     var weapons: [SalmonWeapon]?
 
     if hasStageAndWeapons {
-      // Has stage and weapons
       stage = SalmonStage.allCases.randomElement()!
       weapons = []
       if mysteryWeaponType == nil {
-        // No mystery weapons
         for _ in 0 ..< 4 {
-          // no duplicates
           var randomIkaWeapon = IkaWeapon.allCases.randomElement()!
           while weapons!.contains(.vanilla(randomIkaWeapon)) {
             randomIkaWeapon = IkaWeapon.allCases.randomElement()!
@@ -52,12 +49,9 @@ enum IkaMockData {
         }
       }
       else {
-        // Has mystery weapons
         switch mysteryWeaponType! {
           case .green:
-            // Green question mark
             for _ in 0 ..< 3 {
-              // no duplicates
               var randomIkaWeapon = IkaWeapon.allCases.randomElement()!
               while weapons!.contains(.vanilla(randomIkaWeapon)) {
                 randomIkaWeapon = IkaWeapon.allCases.randomElement()!
@@ -68,7 +62,6 @@ enum IkaMockData {
             weapons!.append(SalmonWeapon(mysteryWeapon.id)!)
 
           case .gold:
-            // Gold question mark
             for _ in 0 ..< 4 {
               let mysteryWeapon: MysteryWeapon = .gold
               weapons!.append(SalmonWeapon(mysteryWeapon.id)!)
@@ -151,7 +144,6 @@ enum IkaMockData {
     func makeRandomBattleStage() -> BattleStage {
       var stage = BattleStage.allCases.randomElement()!
       while stage == .shiftyStation {
-        // exclude shifty station
         stage = BattleStage.allCases.randomElement()!
       }
       return stage
@@ -160,7 +152,6 @@ enum IkaMockData {
     let randomStageA = makeRandomBattleStage()
     var randomStageB = makeRandomBattleStage()
     while randomStageB == randomStageA {
-      // avoid duplicate
       randomStageB = makeRandomBattleStage()
     }
 

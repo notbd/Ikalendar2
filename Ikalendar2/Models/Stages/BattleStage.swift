@@ -19,7 +19,6 @@ enum BattleStage: String, Identifiable, CaseIterable, Equatable {
   case kelpDome = "Kelp Dome"
   case makoMart = "MakoMart"
   case mantaMaria = "Manta Maria"
-  /// #10
   case morayTowers = "Moray Towers"
   case musselforgeFitness = "Musselforge Fitness"
   case newAlbacoreHotel = "New Albacore Hotel"
@@ -30,7 +29,6 @@ enum BattleStage: String, Identifiable, CaseIterable, Equatable {
   case skipperPavilion = "Skipper Pavilion"
   case snapperCanal = "Snapper Canal"
   case starfishMainstage = "Starfish Mainstage"
-  /// #20
   case sturgeonShipyard = "Sturgeon Shipyard"
   case theReef = "The Reef"
   case wahooWorld = "Wahoo World"
@@ -57,7 +55,6 @@ extension BattleStage {
       case .kelpDome: "09/16/2017"
       case .makoMart: "11/25/2017"
       case .mantaMaria: "08/26/2017"
-      // #10
       case .morayTowers: "07/21/2017"
       case .musselforgeFitness: "07/21/2017"
       case .newAlbacoreHotel: "07/01/2018"
@@ -68,7 +65,6 @@ extension BattleStage {
       case .skipperPavilion: "10/03/2018"
       case .snapperCanal: "10/06/2017"
       case .starfishMainstage: "07/21/2017"
-      // #20
       case .sturgeonShipyard: "07/21/2017"
       case .theReef: "07/21/2017"
       case .wahooWorld: "06/01/2018"
@@ -90,7 +86,6 @@ extension BattleStage {
       case .kelpDome: 2147
       case .makoMart: 2167
       case .mantaMaria: 2356
-      // #10
       case .morayTowers: 2212
       case .musselforgeFitness: 1958
       case .newAlbacoreHotel: 2405
@@ -101,7 +96,6 @@ extension BattleStage {
       case .skipperPavilion: 2439
       case .snapperCanal: 2247
       case .starfishMainstage: 2320
-      // #20
       case .sturgeonShipyard: 2356
       case .theReef: 2908
       case .wahooWorld: 2858

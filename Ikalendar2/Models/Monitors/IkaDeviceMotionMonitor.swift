@@ -15,7 +15,6 @@ import UIKit
 @MainActor
 @Observable
 final class IkaDeviceMotionMonitor {
-  /// An instance of `CMMotionManager` to access motion data.
   @ObservationIgnored private let motionManager: CMMotionManager = .init()
 
   /// Long-running observation loops for scene activation/deactivation.
@@ -81,7 +80,6 @@ final class IkaDeviceMotionMonitor {
     }
   }
 
-  /// Stops any ongoing motion updates.
   private func shutdownMotionUpdates() {
     motionManager.stopDeviceMotionUpdates()
   }

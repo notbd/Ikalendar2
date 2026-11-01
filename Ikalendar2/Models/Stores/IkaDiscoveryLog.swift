@@ -17,7 +17,6 @@ final class IkaDiscoveryLog {
 
   @ObservationIgnored private let userDefaults: UserDefaults
 
-  /// Record if app should display onboarding screen to the user.
   var shouldShowOnboarding: Bool {
     didSet {
       guard oldValue != shouldShowOnboarding else { return }
@@ -26,7 +25,6 @@ final class IkaDiscoveryLog {
     }
   }
 
-  /// Record if user has tapped and discovered the rating button.
   var hasDiscoveredRating: Bool {
     didSet {
       guard oldValue != hasDiscoveredRating else { return }
@@ -35,7 +33,6 @@ final class IkaDiscoveryLog {
     }
   }
 
-  /// Record if user has tapped and discovered the alt app icon settings.
   var hasDiscoveredAltAppIcon: Bool {
     didSet {
       guard oldValue != hasDiscoveredAltAppIcon else { return }
@@ -44,7 +41,6 @@ final class IkaDiscoveryLog {
     }
   }
 
-  /// Record if user has tapped and discovered the easter egg.
   var hasDiscoveredEasterEgg: Bool {
     didSet {
       guard oldValue != hasDiscoveredEasterEgg else { return }

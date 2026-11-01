@@ -17,7 +17,6 @@ extension Constants.Config {
   }
 
   enum Catalog {
-    /// Time Intervals are measured in second(s).
     static let loadTimeout: TimeInterval = 5
 
     static let loadStatusLoadedDelay: TimeInterval = 0.2

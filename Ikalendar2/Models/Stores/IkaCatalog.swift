@@ -80,15 +80,11 @@ final class IkaCatalog {
     autoLoadLingerTask?.cancel()
   }
 
-  // MARK: Exposed
-
   func refresh(silently shouldEnableSilentLoading: Bool = false)
     async
   {
     await loadCatalog(shouldEnableSilentLoading)
   }
-
-  // MARK: Init Setup
 
   private func startAutoLoadChecks() {
     // Weak self is re-acquired each lap so short-lived instances can deinit.
@@ -103,7 +99,7 @@ final class IkaCatalog {
     }
   }
 
-  // MARK: Load related
+  // MARK: - Loading
 
   enum LoadStatus: Equatable {
     case loading
@@ -238,7 +234,7 @@ final class IkaCatalog {
     loadStatus = loadResultStatus
   }
 
-  // MARK: Auto-Load related
+  // MARK: - Auto-load
 
   enum AutoLoadStatus: Equatable {
     case autoLoading
@@ -307,24 +303,17 @@ final class IkaCatalog {
     do {
       try await autoLoadData()
 
-      // success
       if loadStatus != .loaded { await setLoadStatus(.loaded) } // show rotations if prev loading error
       await setAutoLoadStatus(.autoLoaded(.success))
     }
-
-    // auto-load timeout error
     catch IkaError.maxAttemptsExceeded {
       if loadStatus != .loaded { await setLoadStatus(.loaded) } // show rotations if prev loading error
       await setAutoLoadStatus(.autoLoaded(.failure))
     }
-
-    // loading error
     catch let error as IkaError {
       await setLoadStatus(.error(error))
       await setAutoLoadStatus(.autoLoaded(.failure))
     }
-
-    // unknown error
     catch {
       Logger.store.error("catalog auto-load failed with unexpected error: \(error, privacy: .public)")
       await setLoadStatus(.error(.unknownError))
@@ -336,19 +325,16 @@ final class IkaCatalog {
     async throws
   {
     try await withThrowingTaskGroup(of: Void.self) { group in
-      // always auto-load BattleRotationDict
       group.addTask {
         try await self.autoLoadBattleRotationDict()
       }
 
-      // only auto-load SalmonRotations if needed
       if shouldAutoLoadSalmon {
         group.addTask {
           try await self.autoLoadSalmonRotations()
         }
       }
 
-      // wait for all tasks to finish
       for try await _ in group { }
     }
   }
@@ -359,21 +345,17 @@ final class IkaCatalog {
     var autoLoadAttempts = 0
 
     while autoLoadAttempts < timing.autoLoadBattleMaxAttempts {
-      // new attempt
       autoLoadAttempts += 1
       let loadedBattleRotationDict = try await ikaNetworkService.fetchBattleRotationDict()
 
-      // found updates from server - success and return
       if loadedBattleRotationDict != battleRotationDict {
         battleRotationDict = loadedBattleRotationDict
         return
       }
 
-      // wait and retry
       try await Task.sleep(for: .seconds(timing.autoLoadAttemptInterval))
     }
 
-    // timeout - fail and throw timeout error
     throw IkaError.maxAttemptsExceeded
   }
 
@@ -383,7 +365,6 @@ final class IkaCatalog {
     var autoLoadAttempts = 0
 
     while autoLoadAttempts < timing.autoLoadSalmonMaxAttempts {
-      // new attempt
       autoLoadAttempts += 1
       var loadedSalmonRotations = try await ikaNetworkService.fetchSalmonRotations()
       let loadedSalmonRewardApparelInfo = try await ikaNetworkService.fetchSalmonRewardApparelInfo()
@@ -393,17 +374,14 @@ final class IkaCatalog {
         loadedSalmonRotations[index].rewardApparel = loadedSalmonRewardApparelInfo.apparel
       }
 
-      // found updates from server - success and return
       if loadedSalmonRotations != salmonRotations {
         salmonRotations = loadedSalmonRotations
         return
       }
 
-      // wait and retry
       try await Task.sleep(for: .seconds(timing.autoLoadAttemptInterval))
     }
 
-    // timeout - fail and throw timeout error
     throw IkaError.maxAttemptsExceeded
   }
 

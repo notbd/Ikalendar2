@@ -46,7 +46,6 @@ final class IkaConnectivityChecker {
       for domain in testDomains {
         group.addTask {
           guard let url = URL(string: "https://\(domain)") else {
-            // invalid URL treated as failure
             return false
           }
 
@@ -62,7 +61,6 @@ final class IkaConnectivityChecker {
         }
       }
 
-      // collect results
       for await success in group where !success {
         failedChecksCount += 1
       }

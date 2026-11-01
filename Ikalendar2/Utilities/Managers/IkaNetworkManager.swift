@@ -155,7 +155,6 @@ final class IkaNetworkManager: IkaNetworkService {
       throw CancellationError()
     }
     catch {
-      // ERROR: URLSession data task fails
       Logger.network.error("request to \(url, privacy: .public) failed: \(error, privacy: .public)")
       throw IkaError.connectionError
     }
@@ -164,7 +163,6 @@ final class IkaNetworkManager: IkaNetworkService {
       let httpResponse = response as? HTTPURLResponse,
       [200, 304].contains(httpResponse.statusCode)
     else {
-      // ERROR: not an HTTP response or bad status code
       let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
       Logger.network.error("unexpected response from \(url, privacy: .public): status \(statusCode)")
       throw IkaError.serverError(.badResponse)
@@ -174,7 +172,6 @@ final class IkaNetworkManager: IkaNetworkService {
       return try decoder(data)
     }
     catch {
-      // ERROR: fails to decode data
       throw IkaError.serverError(.badData)
     }
   }

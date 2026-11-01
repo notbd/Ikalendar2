@@ -129,7 +129,7 @@ extension BattleRotation {
   }
 }
 
-// MARK: - BattleRotationStageCard_Previews
+// MARK: - Previews
 
 #Preview("Primary / Stage A", traits: .fixedLayout(width: 320, height: 200)) {
   BattleRotationStageCardPrimary(

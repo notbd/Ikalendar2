@@ -50,7 +50,6 @@ enum IkaPreferredColorScheme: String, Identifiable, CaseIterable {
 /// system) and ensures smooth transitions between these states.
 @MainActor
 enum IkaColorSchemeManager {
-  /// A computed property that returns the key window from the connected scenes.
   static private var keyWindow: UIWindow? {
     UIApplication
       .shared

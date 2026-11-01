@@ -77,7 +77,6 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     var codeName: String {
       guard !rawValue.isEmpty else { return "" }
 
-      // Capitalize first letter
       return String(rawValue.prefix(1)).uppercased() + rawValue.dropFirst()
     }
 

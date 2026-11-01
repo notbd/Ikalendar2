@@ -393,7 +393,7 @@ struct SettingsAboutView: View {
     }
   }
 
-  // MARK: - Others Section
+  // MARK: - Debug
 
   private var rowDebugOptions: some View {
     NavigationLink(destination: SettingsDebugOptionsView()) {

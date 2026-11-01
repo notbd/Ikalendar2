@@ -88,7 +88,6 @@ struct BattleRotationHeader: View {
 
   var body: some View {
     HStack(spacing: Scoped.spacing) {
-      // skip if `prefixString` is nil (case .other)
       if let prefixString = rowType.prefixString {
         Text(prefixString.localizedStringKey)
           .ikaFont(
@@ -102,7 +101,6 @@ struct BattleRotationHeader: View {
             in: .rect(cornerRadius: Scoped.prefixFrameCornerRadius))
       }
 
-      // Battle Time String
       Text("\(startTimeString) - \(endTimeString)")
         .scaledLimitedLine()
         .ikaFont(

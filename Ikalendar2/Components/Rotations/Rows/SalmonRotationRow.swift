@@ -112,7 +112,6 @@ struct SalmonRotationHeader: View {
 
       Spacer()
 
-      // Time Until String (if first rotation pending)
       if
         case .first(let currentStatus) = rowType,
         currentStatus == .pending

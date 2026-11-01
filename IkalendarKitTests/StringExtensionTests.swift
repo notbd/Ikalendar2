@@ -156,7 +156,6 @@ struct StringExtensionTests {
       let urlString = "https://www.example.com/search?q=test&lang=en"
       let result = try #require(urlString.shortenedURL(), "Should handle URLs with query parameters")
 
-      // Note: query parameters are typically not included in path
       #expect(result == "www.example.com/search", "Should handle URLs with query parameters")
     }
 

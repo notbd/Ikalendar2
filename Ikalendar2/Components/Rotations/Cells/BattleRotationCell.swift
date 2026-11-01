@@ -91,8 +91,6 @@ struct BattleRotationCellPrimary: View {
         .padding(.bottom, Scoped.progressBarPaddingBottom)
         .tint(rotation.mode.themeColor)
 
-      // MARK: Stage Section
-
       HStack(spacing: Scoped.stagesSpacingH) {
         battleStageCardA
         battleStageCardB
@@ -122,7 +120,6 @@ struct BattleRotationCellPrimary: View {
 
   private var ruleTitle: some View {
     IdealFontLayout(anchor: .leading) {
-      // actual rule title
       Text(rotation.rule.name.localizedStringKey)
         .scaledLimitedLine()
         .ikaFont(
@@ -223,16 +220,12 @@ struct BattleRotationCellSecondary: View {
 
   var body: some View {
     HStack {
-      // MARK: Rule section
-
       VStack(spacing: Scoped.ruleSectionSpacing) {
         ruleIcon
         ruleTitle
       }
       .frame(width: rowWidth * Scoped.ruleSectionWidthRatio)
       .padding(.trailing, Scoped.ruleSectionPaddingTrailing)
-
-      // MARK: Stage Section
 
       BattleSecondaryStagesLayout {
         battleStageCardA
@@ -259,7 +252,6 @@ struct BattleRotationCellSecondary: View {
   }
 
   private var ruleTitle: some View {
-    // actual rule title
     Text(rotation.rule.name.localizedStringKey)
       .scaledLimitedLine()
       .ikaFont(
@@ -299,7 +291,6 @@ struct BattleRotationCellSecondary: View {
 
   private func wrapInIdealFontLayout(_ content: some View) -> some View {
     IdealFontLayout(anchor: .center) {
-      // actual rule title
       content
 
       // all other possible rule titles for the layout to compute ideal size

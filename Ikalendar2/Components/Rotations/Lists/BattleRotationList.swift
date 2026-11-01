@@ -22,7 +22,6 @@ struct BattleRotationList: View {
     let battleMode: BattleMode =
       if let specifiedBattleMode { specifiedBattleMode } else { ikaStatus.currentBattleMode }
 
-    // filter: display current and future rotations only
     return
       (ikaCatalog.battleRotationDict[battleMode] ?? []).filter { !$0.isExpired(ikaClock.currentTime) }
   }

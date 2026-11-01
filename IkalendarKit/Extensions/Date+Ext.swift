@@ -127,7 +127,6 @@ extension Date {
       return relativeDayString + " " + timeString
     }
 
-    // other than Today, Yesterday or Tomorrow
     return ikaDateString() + timeString
   }
 
@@ -140,7 +139,6 @@ extension Date {
       return String(localized: "Today")
     }
 
-    // Check if this date is yesterday relative to reference
     if
       let yesterday = calendar.date(byAdding: .day, value: -1, to: reference),
       calendar.isDate(self, inSameDayAs: yesterday)
@@ -148,7 +146,6 @@ extension Date {
       return String(localized: "Yesterday")
     }
 
-    // Check if this date is tomorrow relative to reference
     if
       let tomorrow = calendar.date(byAdding: .day, value: 1, to: reference),
       calendar.isDate(self, inSameDayAs: tomorrow)
@@ -195,10 +192,8 @@ extension Date {
   /// or `nil` if the deadline has already passed.
   private func timeLengthString(until deadline: Date) -> String? {
     let remainingTime: Int = .init(deadline - self)
-    // if time has already passed
     guard remainingTime >= 0 else { return nil }
 
-    // convert time interval to TimeLength
     let days = remainingTime / (24 * 60 * 60)
     let hours = (remainingTime / (60 * 60)) % 24
     let minutes = (remainingTime / 60) % 60

@@ -21,7 +21,6 @@ final class IkaPreference {
   @ObservationIgnored private let userDefaults: UserDefaults
   @ObservationIgnored private var isSyncing = false
 
-  /// Preferred Default FlatMode
   var preferredDefaultFlatMode: FlatMode {
     willSet {
       guard newValue != preferredDefaultFlatMode, !isSyncing else { return }
@@ -58,7 +57,6 @@ final class IkaPreference {
     }
   }
 
-  /// Preferred Default GameMode
   var preferredDefaultGameMode: GameMode {
     willSet {
       guard newValue != preferredDefaultGameMode, !isSyncing else { return }
@@ -82,7 +80,6 @@ final class IkaPreference {
     }
   }
 
-  /// Preferred Default BattleMode
   var preferredDefaultBattleMode: BattleMode {
     willSet {
       guard newValue != preferredDefaultBattleMode, !isSyncing else { return }
@@ -107,7 +104,6 @@ final class IkaPreference {
     }
   }
 
-  /// Preferred color scheme
   var preferredAppColorScheme: IkaPreferredColorScheme {
     willSet {
       guard newValue != preferredAppColorScheme else { return }
@@ -122,7 +118,6 @@ final class IkaPreference {
     }
   }
 
-  /// Preferred app icon
   var preferredAppIcon: IkaAppIcon {
     willSet {
       guard newValue != preferredAppIcon else { return }
@@ -142,7 +137,6 @@ final class IkaPreference {
     }
   }
 
-  /// Whether Tab Bar should minimized
   var shouldMinimizeTabBar: Bool {
     didSet {
       guard oldValue != shouldMinimizeTabBar else { return }
@@ -162,7 +156,6 @@ final class IkaPreference {
     }
   }
 
-  /// If should be using alt stage images
   var shouldUseAltStageImages: Bool {
     didSet {
       guard oldValue != shouldUseAltStageImages else { return }

@@ -63,7 +63,6 @@ struct SalmonStageAndWeaponsLayout: Layout {
       width: weaponsWidth,
       height: weaponsHeight)
 
-    // placing stage card and weapon card accordingly
     subviews[0].place(
       at: CGPoint(
         x: stageCenterX,
