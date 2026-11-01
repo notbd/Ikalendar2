@@ -79,49 +79,23 @@ struct RotationsCarouselView: View {
 
       if ikaPreference.preferredDefaultGameMode == .battle {
         ForEach(BattleMode.allCases) { battleMode in
-          CarouselColumn(
-            gameMode: .battle,
-            battleMode: battleMode)
-            .if(!isWindowWide) {
-              $0
-                .containerRelativeFrame(
-                  .horizontal,
-                  count: 2,
-                  spacing: 0)
-            }
+          sizedColumn(
+            CarouselColumn(
+              gameMode: .battle,
+              battleMode: battleMode))
         }
 
-        CarouselColumn(gameMode: .salmon)
-          .if(!isWindowWide) {
-            $0
-              .containerRelativeFrame(
-                .horizontal,
-                count: 2,
-                spacing: 0)
-          }
+        sizedColumn(CarouselColumn(gameMode: .salmon))
       }
 
       else {
-        CarouselColumn(gameMode: .salmon)
-          .if(!isWindowWide) {
-            $0
-              .containerRelativeFrame(
-                .horizontal,
-                count: 2,
-                spacing: 0)
-          }
+        sizedColumn(CarouselColumn(gameMode: .salmon))
 
         ForEach(BattleMode.allCases) { battleMode in
-          CarouselColumn(
-            gameMode: .battle,
-            battleMode: battleMode)
-            .if(!isWindowWide) {
-              $0
-                .containerRelativeFrame(
-                  .horizontal,
-                  count: 2,
-                  spacing: 0)
-            }
+          sizedColumn(
+            CarouselColumn(
+              gameMode: .battle,
+              battleMode: battleMode))
         }
       }
     }
@@ -130,6 +104,18 @@ struct RotationsCarouselView: View {
       .snappy,
       value: ikaPreference.preferredDefaultGameMode)
     .if(!isWindowWide) { wrapInHorizontalScrollView($0) }
+  }
+
+  /// Two columns share the window unless it is wide enough to show them all.
+  private func sizedColumn(_ column: CarouselColumn) -> some View {
+    column
+      .if(!isWindowWide) {
+        $0
+          .containerRelativeFrame(
+            .horizontal,
+            count: 2,
+            spacing: 0)
+      }
   }
 
   private func wrapInHorizontalScrollView(_ content: some View) -> some View {
