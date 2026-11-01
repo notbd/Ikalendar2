@@ -47,16 +47,11 @@ struct IkaCatalogAutoLoadTests {
     timing: IkaCatalog.Timing)
     -> IkaCatalog
   {
-    // The next shift starts in an hour, so salmon data never needs an auto-load and only
-    // the battle path runs.
-    let salmonRotations: [SalmonRotation] = [
-      TestData.salmonRotation(startOffset: 3600, endOffset: 43 * 3600, from: .init()),
-    ]
     let apparelInfo: SalmonApparelInfo = .init(apparel: .head(.oceanicHardHat), availableTime: TestData.anchor)
     return IkaCatalog(
       ikaNetworkService: MockIkaNetworkService(
         battleRotationDictHandler: { try await scenario.fetchBattleRotationDict() },
-        salmonRotationsHandler: { salmonRotations },
+        salmonRotationsHandler: { await scenario.fetchSalmonRotations() },
         salmonRewardApparelInfoHandler: { apparelInfo }),
       ikaClock: IkaClock(),
       timing: timing,
@@ -154,19 +149,53 @@ struct IkaCatalogAutoLoadTests {
 
     await settle(catalog, scenario)
   }
+
+  @Test(.timeLimit(.minutes(1)))
+  func `Salmon exhausting its attempts does not fail a successful battle auto-load`() async {
+    // The shift ended an hour ago and the server keeps serving it, as when the salmon feed
+    // updates later than the battle feed at a shared rotation boundary.
+    let staleSalmonRotations: [SalmonRotation] = [
+      TestData.salmonRotation(startOffset: -3 * 3600, endOffset: -3600, from: .init()),
+    ]
+    let scenario: AutoLoadScenario = .init(battleRotationDict: makeStaleBattleDict())
+    scenario.salmonRotations = staleSalmonRotations
+    scenario.isAppActive = false // holds the finished cycle in `.autoLoaded`
+    let catalog = makeCatalog(scenario, timing: Self.timing)
+
+    await catalog.refresh()
+    let freshDict: BattleRotationDict = TestData.battleDict()
+    scenario.battleRotationDict = freshDict
+    let finished: [IkaCatalog.AutoLoadStatus] = [.autoLoaded(.success), .autoLoaded(.failure)]
+    await waitUntil { finished.contains(catalog.autoLoadStatus) }
+
+    #expect(catalog.autoLoadStatus == .autoLoaded(.success))
+    #expect(catalog.autoLoadDisplayStatus == .autoLoaded(.success))
+    #expect(catalog.battleRotationDict == freshDict)
+    #expect(catalog.salmonRotations == staleSalmonRotations)
+    // One fetch for the refresh, then one per attempt.
+    #expect(scenario.salmonFetchCount == 1 + Self.timing.autoLoadSalmonMaxAttempts)
+
+    await settle(catalog, scenario)
+  }
 }
 
 // MARK: - AutoLoadScenario
 
-/// The outside world of one test's catalog: what the battle endpoint serves, whether its
-/// requests are held, and whether the app is active.
+/// The outside world of one test's catalog: what the battle and salmon endpoints serve,
+/// whether battle requests are held, and whether the app is active.
 @MainActor
 final private class AutoLoadScenario {
   var battleRotationDict: BattleRotationDict
+  /// By default the next shift starts in an hour, so salmon data never needs an auto-load
+  /// and only the battle path runs.
+  var salmonRotations: [SalmonRotation] = [
+    TestData.salmonRotation(startOffset: 3600, endOffset: 43 * 3600, from: .init()),
+  ]
   /// While true, battle requests wait (cooperatively, so they stay cancellable).
   var isBattleFetchHeld: Bool = false
   var isAppActive: Bool = true
   private(set) var battleFetchCount: Int = 0
+  private(set) var salmonFetchCount: Int = 0
 
   init(battleRotationDict: BattleRotationDict) {
     self.battleRotationDict = battleRotationDict
@@ -178,5 +207,10 @@ final private class AutoLoadScenario {
       try await Task.sleep(for: .milliseconds(10))
     }
     return battleRotationDict
+  }
+
+  func fetchSalmonRotations() -> [SalmonRotation] {
+    salmonFetchCount += 1
+    return salmonRotations
   }
 }

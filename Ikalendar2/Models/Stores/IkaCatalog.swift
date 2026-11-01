@@ -318,21 +318,24 @@ final class IkaCatalog {
     }
   }
 
+  /// Auto-loads the battle feed and, when it is due, the salmon feed concurrently. The result
+  /// follows the battle feed, which gates the auto-load: the salmon feed can update later than
+  /// the battle feed at a shared boundary, and its failure must not report a refreshed battle
+  /// feed as failed, so it is only logged.
   private func autoLoadData()
     async throws
   {
-    try await withThrowingTaskGroup(of: Void.self) { group in
-      group.addTask {
-        try await self.autoLoadBattleRotationDict()
-      }
+    let isSalmonDue = shouldAutoLoadSalmon
+    async let battle: Void = autoLoadBattleRotationDict()
+    async let salmon: Void = isSalmonDue ? autoLoadSalmonRotations() : ()
 
-      if shouldAutoLoadSalmon {
-        group.addTask {
-          try await self.autoLoadSalmonRotations()
-        }
-      }
-
-      for try await _ in group { }
+    // A battle error leaves the scope while salmon still runs, which cancels it.
+    try await battle
+    do {
+      try await salmon
+    }
+    catch {
+      Logger.store.notice("salmon auto-load did not refresh: \(error, privacy: .public)")
     }
   }
 
