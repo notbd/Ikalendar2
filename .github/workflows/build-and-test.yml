@@ -1,0 +1,193 @@
+# Shared lint, test and Release build jobs. Called by main-integration.yml (push
+# to main, manual dispatch) and pr-check.yml (pull requests), so every CI fix and
+# tool version lives in one place.
+name: Build and Test
+
+on:
+  workflow_call:
+    inputs:
+      reason:
+        description: "Reason for a manual trigger, echoed into the log"
+        type: string
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+env:
+  # Pinned tool versions: runner-preinstalled formatters drift across images and
+  # rule behavior changes between releases (e.g. swiftTestingTestCaseNames in 0.60+).
+  SWIFTFORMAT_VERSION: "0.62.1"
+  SWIFTLINT_VERSION: "0.63.3"
+
+jobs:
+  lint:
+    name: Lint Code
+    runs-on: macos-26
+    timeout-minutes: 10
+
+    steps:
+      - name: Log Trigger Information
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          REASON: ${{ inputs.reason }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "Trigger: Manual Dispatch. Reason: $REASON"
+          else
+            echo "Trigger: $EVENT_NAME on '$REF_NAME'."
+          fi
+
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Install SwiftFormat (pinned)
+        run: |
+          curl -sSL -o /tmp/swiftformat.zip "https://github.com/nicklockwood/SwiftFormat/releases/download/${SWIFTFORMAT_VERSION}/swiftformat.zip"
+          unzip -o /tmp/swiftformat.zip -d /tmp/swiftformat
+          # Install to a dedicated dir prepended to PATH: runner images preinstall
+          # swiftformat in /opt/homebrew/bin, which would shadow /usr/local/bin.
+          mkdir -p "$RUNNER_TEMP/pinned-tools"
+          install /tmp/swiftformat/swiftformat "$RUNNER_TEMP/pinned-tools/swiftformat"
+          echo "$RUNNER_TEMP/pinned-tools" >> "$GITHUB_PATH"
+          test "$("$RUNNER_TEMP/pinned-tools/swiftformat" --version)" = "$SWIFTFORMAT_VERSION"
+
+      - name: Run SwiftFormat
+        run: swiftformat --lint . --reporter github-actions-log
+
+      - name: Install SwiftLint (pinned)
+        run: |
+          curl -sSL -o /tmp/swiftlint.zip "https://github.com/realm/SwiftLint/releases/download/${SWIFTLINT_VERSION}/portable_swiftlint.zip"
+          unzip -o /tmp/swiftlint.zip -d /tmp/swiftlint
+          mkdir -p "$RUNNER_TEMP/pinned-tools"
+          install /tmp/swiftlint/swiftlint "$RUNNER_TEMP/pinned-tools/swiftlint"
+          echo "$RUNNER_TEMP/pinned-tools" >> "$GITHUB_PATH"
+          test "$("$RUNNER_TEMP/pinned-tools/swiftlint" version)" = "$SWIFTLINT_VERSION"
+
+      - name: Run SwiftLint
+        run: swiftlint --reporter github-actions-logging
+
+  test:
+    name: Test & Build
+    runs-on: macos-26
+    needs: lint
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Select Xcode 26 (latest GA)
+        run: |
+          set -euo pipefail
+          # GA bundles only (Xcode_26.6.0.app); betas and release candidates such as
+          # Xcode_26.7_beta.app are excluded. Fail loudly if the image has none.
+          XCODE_APP=$(ls -d /Applications/Xcode_26*.app 2>/dev/null \
+            | grep -E '/Xcode_26(\.[0-9]+)*\.app$' | sort -V | tail -n 1 || true)
+          if [ -z "$XCODE_APP" ]; then
+            echo "::error::No GA Xcode 26 found in /Applications"
+            ls -d /Applications/Xcode*.app || true
+            exit 1
+          fi
+          sudo xcode-select -switch "$XCODE_APP"
+          echo "Selected $XCODE_APP"
+          xcodebuild -version
+
+      - name: Ensure iOS Simulator Runtime
+        run: |
+          # Runner images only bundle the iOS runtime for their default Xcode;
+          # a version-switched Xcode may have zero available simulators.
+          if ! xcrun simctl list devices available | grep -q "iPhone"; then
+            echo "No simulator devices available - downloading iOS platform"
+            sudo xcodebuild -downloadPlatform iOS
+          fi
+
+      - name: Boot Simulator
+        id: sim
+        run: |
+          set -euo pipefail
+          # Boot and wait before the test step, so the cold boot and the CPU load
+          # while the simulator settles stay out of timed tests. Mirrors OS=latest:
+          # the newest available iOS runtime not newer than the selected SDK.
+          SDK_VERSION=$(xcrun --sdk iphonesimulator --show-sdk-version)
+          RUNTIME=$(xcrun simctl list -j runtimes | jq -r --arg sdk "$SDK_VERSION" '
+            def ver: split(".") | map(tonumber) | .[0:2];
+            [.runtimes[]
+              | select(.isAvailable and (.identifier | startswith("com.apple.CoreSimulator.SimRuntime.iOS-")))
+              | select((.version | ver) <= ($sdk | ver))]
+            | sort_by(.version | ver) | last | .identifier // empty')
+          UDID=$(xcrun simctl list -j devices available | jq -r --arg rt "$RUNTIME" '
+            [.devices[$rt] // [] | .[] | select(.name == "iPhone 17")] | first | .udid // empty')
+          if [ -z "$UDID" ]; then
+            echo "::error::No available iPhone 17 simulator for iOS SDK $SDK_VERSION (runtime: ${RUNTIME:-none})"
+            xcrun simctl list devices available
+            exit 1
+          fi
+          echo "Booting iPhone 17 on $RUNTIME: $UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
+      - name: Ensure xcbeautify
+        run: command -v xcbeautify || brew install xcbeautify
+
+      - name: Cache Swift Packages
+        uses: actions/cache@v6
+        with:
+          path: SourcePackages
+          key: spm-${{ runner.os }}-${{ hashFiles('Ikalendar2.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      - name: Run Unit Tests
+        env:
+          SIM_UDID: ${{ steps.sim.outputs.udid }}
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project Ikalendar2.xcodeproj \
+            -scheme Ikalendar2 \
+            -destination "id=$SIM_UDID" \
+            -clonedSourcePackagesDirPath SourcePackages \
+            -onlyUsePackageVersionsFromResolvedFile \
+            -enableCodeCoverage YES \
+            -resultBundlePath TestResults.xcresult \
+            2>&1 | tee raw-test.log | xcbeautify --renderer github-actions
+
+      - name: Report Coverage Summary
+        if: always()
+        run: |
+          if [ -d TestResults.xcresult ]; then
+            echo "## Coverage" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            xcrun xccov view --report TestResults.xcresult | head -25 >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      # Compiles the configuration that ships (Release, device SDK, unsigned). The
+      # test step builds Debug only, so code that compiles only under DEBUG and
+      # Release-only build settings are otherwise never exercised.
+      - name: Build Release (device, unsigned)
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project Ikalendar2.xcodeproj \
+            -scheme Ikalendar2 \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -clonedSourcePackagesDirPath SourcePackages \
+            -onlyUsePackageVersionsFromResolvedFile \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee raw-release.log | xcbeautify --renderer github-actions
+
+      - name: Surface Test Failure Details
+        if: failure()
+        run: |
+          # Fallback for diagnostics a formatter drops: read the raw xcodebuild logs.
+          for log in raw-test.log raw-release.log; do
+            [ -f "$log" ] || continue
+            echo "===== $log ====="
+            grep -A 3 -E "error:|\*\* (BUILD|TEST) FAILED \*\*|The following build commands failed" "$log" | head -200 || true
+            grep -B 2 -A 10 -E "recorded an issue|Expectation failed|Fatal error|Test .* failed" "$log" | head -300 || true
+          done
