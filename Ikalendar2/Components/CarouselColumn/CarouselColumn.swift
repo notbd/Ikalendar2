@@ -32,10 +32,10 @@ struct CarouselColumn: View {
       : Self.maskGradientLandscape }
 
   /// Built once per density instead of on every body pass.
-  private static let maskGradientPortrait: Gradient = makeMaskGradient(density: Scoped.maskGradientDensityPortrait)
-  private static let maskGradientLandscape: Gradient = makeMaskGradient(density: Scoped.maskGradientDensityLandscape)
+  static private let maskGradientPortrait: Gradient = makeMaskGradient(density: Scoped.maskGradientDensityPortrait)
+  static private let maskGradientLandscape: Gradient = makeMaskGradient(density: Scoped.maskGradientDensityLandscape)
 
-  private static func makeMaskGradient(density: Int) -> Gradient {
+  static private func makeMaskGradient(density: Int) -> Gradient {
     .init(
       colors:
       (0 ..< density)
