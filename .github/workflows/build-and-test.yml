@@ -112,12 +112,22 @@ jobs:
           # while the simulator settles stay out of timed tests. Mirrors OS=latest:
           # the newest available iOS runtime not newer than the selected SDK.
           SDK_VERSION=$(xcrun --sdk iphonesimulator --show-sdk-version)
-          RUNTIME=$(xcrun simctl list -j runtimes | jq -r --arg sdk "$SDK_VERSION" '
-            def ver: split(".") | map(tonumber) | .[0:2];
-            [.runtimes[]
-              | select(.isAvailable and (.identifier | startswith("com.apple.CoreSimulator.SimRuntime.iOS-")))
-              | select((.version | ver) <= ($sdk | ver))]
-            | sort_by(.version | ver) | last | .identifier // empty')
+          find_runtime() {
+            xcrun simctl list -j runtimes | jq -r --arg sdk "$SDK_VERSION" '
+              def ver: split(".") | map(tonumber) | .[0:2];
+              [.runtimes[]
+                | select(.isAvailable and (.identifier | startswith("com.apple.CoreSimulator.SimRuntime.iOS-")))
+                | select((.version | ver) <= ($sdk | ver))]
+              | sort_by(.version | ver) | last | .identifier // empty'
+          }
+          RUNTIME=$(find_runtime)
+          if [ -z "$RUNTIME" ]; then
+            # The image can carry iPhone simulators only on runtimes newer than the
+            # selected SDK, which the previous step does not catch.
+            echo "No iOS runtime <= SDK $SDK_VERSION - downloading iOS platform"
+            sudo xcodebuild -downloadPlatform iOS
+            RUNTIME=$(find_runtime)
+          fi
           UDID=$(xcrun simctl list -j devices available | jq -r --arg rt "$RUNTIME" '
             [.devices[$rt] // [] | .[] | select(.name == "iPhone 17")] | first | .udid // empty')
           if [ -z "$UDID" ]; then
@@ -141,6 +151,7 @@ jobs:
             spm-${{ runner.os }}-
 
       - name: Run Unit Tests
+        id: test
         env:
           SIM_UDID: ${{ steps.sim.outputs.udid }}
         run: |
@@ -183,12 +194,22 @@ jobs:
             2>&1 | tee raw-release.log | xcbeautify --renderer github-actions
 
       - name: Surface Test Failure Details
-        if: failure() || steps.release.outcome == 'failure'
+        if: failure() || cancelled() || steps.release.outcome == 'failure'
+        env:
+          TEST_OUTCOME: ${{ steps.test.outcome }}
+          JOB_STATUS: ${{ job.status }}
         run: |
           # Fallback for diagnostics a formatter drops: read the raw xcodebuild logs.
           for log in raw-test.log raw-release.log; do
             [ -f "$log" ] || continue
-            echo "===== $log ====="
+            # The tail shows where a hung or cancelled build stopped.
+            echo "===== $log (last 80 lines) ====="
+            tail -n 80 "$log" | cut -c1-400
+            # After a Release-only failure, matches in the passing test log are noise.
+            if [ "$log" = "raw-test.log" ] && [ "$TEST_OUTCOME" != "failure" ] && [ "$JOB_STATUS" != "cancelled" ]; then
+              continue
+            fi
+            echo "===== $log (errors and failures) ====="
             grep -A 3 -E "error:|\*\* (BUILD|TEST) FAILED \*\*|The following build commands failed" "$log" | cut -c1-400 | head -200 || true
             grep -B 2 -A 10 -E "recorded an issue|Expectation failed|Fatal error|Test .* failed" "$log" | cut -c1-400 | head -300 || true
           done

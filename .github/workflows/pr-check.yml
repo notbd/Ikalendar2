@@ -6,6 +6,9 @@ name: Pull Request Check
 on:
   pull_request:
     branches: [main, dev]
+    # docs/ has its own check (docs-check.yml), so a docs-only pull request skips the app build.
+    paths-ignore:
+      - "docs/**"
 
 permissions:
   contents: read
