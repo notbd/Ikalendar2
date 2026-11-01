@@ -121,7 +121,7 @@ struct SettingsCreditsView: View {
 struct CreditsExternalLinkCell: View {
   typealias Scoped = Constants.Style.Settings.Credits
 
-  @Environment(\.dynamicTypeSize) var dynamicTypeSize
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @Environment(\.openURL) private var openURL
 
   let name: String
@@ -168,7 +168,7 @@ struct CreditsExternalLinkCell: View {
 struct CreditsOpenSourceLibCell<Destination: View>: View {
   typealias Scoped = Constants.Style.Settings.Credits
 
-  @Environment(\.dynamicTypeSize) var dynamicTypeSize
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @Environment(\.openURL) private var openURL
 
   let name: String

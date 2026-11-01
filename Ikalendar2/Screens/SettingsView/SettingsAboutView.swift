@@ -17,7 +17,7 @@ struct SettingsAboutView: View {
 
   @Environment(\.requestReview) private var requestReview
   @Environment(\.openURL) private var openURL
-  @Environment(\.dynamicTypeSize) var dynamicTypeSize
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
@@ -410,7 +410,7 @@ struct SettingsAboutView: View {
     }
   }
 
-  @ScaledMetric(relativeTo: .title) var littleBuddyHeight: CGFloat = Scoped.littleBuddyHeight
+  @ScaledMetric(relativeTo: .title) private var littleBuddyHeight: CGFloat = Scoped.littleBuddyHeight
 
   private var footerIkalendar3: some View {
     HStack(alignment: .center) {

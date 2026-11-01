@@ -36,7 +36,7 @@ extension DateFormatter {
   /// - Parameters:
   ///   - ikaType: The `IkaDateFormatterType` that specifies the desired format.
   ///   - locale: The locale to use for formatting. If `nil`, uses `Locale.current`.
-  convenience public init(ikaType: IkaDateFormatterType, locale: Locale? = nil) {
+  public convenience init(ikaType: IkaDateFormatterType, locale: Locale? = nil) {
     self.init()
 
     let targetLocale = locale ?? Locale.current

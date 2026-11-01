@@ -30,10 +30,10 @@ struct BattleRotationCell: View {
   let rotation: BattleRotation
   let rowWidth: CGFloat
 
-  @Namespace var ruleIcon
-  @Namespace var ruleTitle
-  @Namespace var stageA
-  @Namespace var stageB
+  @Namespace private var ruleIcon
+  @Namespace private var ruleTitle
+  @Namespace private var stageA
+  @Namespace private var stageB
 
   var animationNamespaces: AnimationNamespaces {
     .init(
