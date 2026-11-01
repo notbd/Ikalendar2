@@ -5,8 +5,6 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-#if DEBUG
-
 import SwiftUI
 
 // MARK: - PreviewNetworkService
@@ -51,6 +49,7 @@ extension View {
   /// counterpart of the App composition root. Apply to any preview whose views
   /// read environment stores (they crash the preview host otherwise).
   /// Preferences land in a throwaway UserDefaults suite, not the real one.
+  /// Deliberately not behind `#if DEBUG`: `#Preview` bodies are type-checked in Release builds too.
   @MainActor
   func ikaPreviewEnvironment() -> some View {
     let previewDefaults = UserDefaults(suiteName: "ikalendar2-preview") ?? .standard
@@ -74,5 +73,3 @@ extension View {
       .environment(\.ikaNetworkService, networkService)
   }
 }
-
-#endif
