@@ -307,15 +307,15 @@ final class IkaCatalog {
       if loadStatus != .loaded { await setLoadStatus(.loaded) }
       await setAutoLoadStatus(.autoLoaded(.failure))
     }
+    // On an error, a loaded list stays on screen and only the toast reports the failure; a
+    // list the last full load left as ErrorView takes the new error.
     catch let error as IkaError {
-      // A loaded list stays on screen and only the toast reports the failure; a list the
-      // last full load left as ErrorView takes the new error.
       if loadResultStatus != .loaded { await setLoadStatus(.error(error)) }
       await setAutoLoadStatus(.autoLoaded(.failure))
     }
     catch {
       Logger.store.error("catalog auto-load failed with unexpected error: \(error, privacy: .public)")
-      await setLoadStatus(.error(.unknownError))
+      if loadResultStatus != .loaded { await setLoadStatus(.error(.unknownError)) }
       await setAutoLoadStatus(.autoLoaded(.failure))
     }
   }
