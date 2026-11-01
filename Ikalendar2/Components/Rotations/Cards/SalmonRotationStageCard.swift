@@ -42,9 +42,7 @@ struct SalmonRotationStageCard: View {
 
   var body: some View {
     Image(decorative: stageImageName)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+      .ikaFitted()
       .clipShape(.rect(cornerRadius: Scoped.stageImageCornerRadius))
       .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.stageImageCornerRadius))
       .shadow(radius: Constants.Style.Global.shadowRadius)
@@ -86,9 +84,7 @@ struct SalmonRotationStageCard: View {
 
   private var rewardApparelImg: some View {
     Image(rotation.rewardApparel?.imageName ?? "salmon")
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+      .ikaFitted()
       .padding(Scoped.apparelImagePadding)
       .frame(width: cardWidth * Scoped.apparelImageWidthRatio)
       .glassEffect(

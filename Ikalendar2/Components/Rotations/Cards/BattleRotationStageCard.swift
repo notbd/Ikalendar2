@@ -31,9 +31,7 @@ struct BattleRotationStageCardPrimary: View {
 
   var body: some View {
     Image(decorative: stageImageName)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+      .ikaFitted()
       .clipShape(.rect(cornerRadius: Scoped.imageCornerRadius))
       .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.imageCornerRadius))
       .shadow(radius: Constants.Style.Global.shadowRadius)
@@ -79,9 +77,7 @@ struct BattleRotationStageCardSecondary: View {
       spacing: Scoped.spacingV)
     {
       Image(decorative: stageImageName)
-        .antialiased(true)
-        .resizable()
-        .scaledToFit()
+        .ikaFitted()
         .clipShape(.rect(cornerRadius: Scoped.imageCornerRadius))
         .glassEffect(
           .clear.interactive(),

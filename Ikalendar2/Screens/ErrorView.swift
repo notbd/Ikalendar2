@@ -66,9 +66,7 @@ struct ErrorView: View {
 
   private var errorImage: some View {
     Image(.juddMemCake)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+      .ikaFitted()
       .saturation(0.4)
       .accessibilityHidden(true)
   }

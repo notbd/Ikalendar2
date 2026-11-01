@@ -99,16 +99,9 @@ private struct SalmonRotationHeader: View {
   var body: some View {
     HStack {
       // `.other` rows render no header (see SalmonRotationRow.body), so the prefix is always present here.
-      Text(rowType.prefixString!.localizedStringKey)
-        .ikaFont(
-          .ika1,
-          size: Scoped.prefixFontSize,
-          relativeTo: .title2)
-        .foregroundStyle(Color.systemBackground)
-        .padding(.horizontal, Scoped.prefixPaddingH)
-        .adaptiveGlassEffect(
-          tint: .gray,
-          in: .rect(cornerRadius: Scoped.prefixFrameCornerRadius))
+      if let prefixString = rowType.prefixString {
+        RotationHeaderPrefix(prefixString)
+      }
 
       Spacer()
 

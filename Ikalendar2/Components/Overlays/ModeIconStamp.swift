@@ -79,9 +79,7 @@ struct ModeIconStamp: View {
 
     return
       Image(decorative: imageName)
-        .antialiased(true)
-        .resizable()
-        .scaledToFit()
+        .ikaFitted()
         .mask(gradientMask)
         .frame(
           width: iconSize,

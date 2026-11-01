@@ -48,9 +48,7 @@ struct SettingsDebugOptionsView: View {
 
   private var rowSquidBumper: some View {
     Image(.squidBumperMemCake)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+      .ikaFitted()
       .frame(height: squidBumperHeight)
       .hAlignment(.leading)
       .accessibilityHidden(true)

@@ -105,9 +105,7 @@ struct BattleRotationCellPrimary: View {
 
   private var ruleIcon: some View {
     Image(decorative: rotation.rule.imageNameMid)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+      .ikaFitted()
       .shadow(radius: Constants.Style.Global.shadowRadius)
       .layoutPriority(1)
       .ifLet(animationNamespaces) {
@@ -237,9 +235,7 @@ struct BattleRotationCellSecondary: View {
 
   private var ruleIcon: some View {
     Image(decorative: rotation.rule.imageNameMid)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+      .ikaFitted()
       .shadow(radius: Constants.Style.Global.shadowRadius)
       .frame(height: rowWidth * Scoped.ruleImageHeightRatio)
       .padding(Scoped.ruleImagePadding)

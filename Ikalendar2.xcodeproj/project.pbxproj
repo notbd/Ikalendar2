@@ -38,6 +38,7 @@
 		7903FE8928C46F6B00245586 /* SalmonRotationStageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE8828C46F6B00245586 /* SalmonRotationStageCard.swift */; };
 		7903FE8B28C46F7A00245586 /* SalmonRotationWeaponsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE8A28C46F7A00245586 /* SalmonRotationWeaponsCard.swift */; };
 		7903FE8D28C46F9100245586 /* StageTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE8C28C46F9100245586 /* StageTitleLabel.swift */; };
+		F363DE35D150D87725101225 /* RotationHeaderPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8D63D32919FE87EE23FD1 /* RotationHeaderPrefix.swift */; };
 		7903FE9228C4701000245586 /* ModeIconStamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE8F28C4701000245586 /* ModeIconStamp.swift */; };
 		7903FE9328C4701000245586 /* AutoLoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9028C4701000245586 /* AutoLoadingOverlay.swift */; };
 		7903FE9428C4701000245586 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9128C4701000245586 /* LoadingOverlay.swift */; };
@@ -179,6 +180,7 @@
 		7903FE8828C46F6B00245586 /* SalmonRotationStageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonRotationStageCard.swift; sourceTree = "<group>"; };
 		7903FE8A28C46F7A00245586 /* SalmonRotationWeaponsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonRotationWeaponsCard.swift; sourceTree = "<group>"; };
 		7903FE8C28C46F9100245586 /* StageTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageTitleLabel.swift; sourceTree = "<group>"; };
+		02C8D63D32919FE87EE23FD1 /* RotationHeaderPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationHeaderPrefix.swift; sourceTree = "<group>"; };
 		7903FE8F28C4701000245586 /* ModeIconStamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModeIconStamp.swift; sourceTree = "<group>"; };
 		7903FE9028C4701000245586 /* AutoLoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLoadingOverlay.swift; sourceTree = "<group>"; };
 		7903FE9128C4701000245586 /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				7903FE8C28C46F9100245586 /* StageTitleLabel.swift */,
+				02C8D63D32919FE87EE23FD1 /* RotationHeaderPrefix.swift */,
 			);
 			path = Labels;
 			sourceTree = "<group>";
@@ -1000,6 +1003,7 @@
 				79D3E67128C41D7B00005DB5 /* SalmonApparel.swift in Sources */,
 				7966346E2AC147FC00AE82E2 /* GlobalPosition.swift in Sources */,
 				7903FE8D28C46F9100245586 /* StageTitleLabel.swift in Sources */,
+				F363DE35D150D87725101225 /* RotationHeaderPrefix.swift in Sources */,
 				7903FE5528C45FC000245586 /* IkaDeviceMotionMonitor.swift in Sources */,
 				7903FE8528C46F3E00245586 /* SalmonRotationCell.swift in Sources */,
 				797EA68E2AACF1350095A23B /* DetailsLicenseView.swift in Sources */,

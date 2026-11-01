@@ -39,9 +39,7 @@ private struct SalmonRotationWeaponCardIcon: View {
 
   var body: some View {
     Image(weapon.imageName)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+      .ikaFitted()
       .shadow(radius: Constants.Style.Global.shadowRadius)
       .padding(Scoped.imagePadding)
       .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.frameCornerRadius))

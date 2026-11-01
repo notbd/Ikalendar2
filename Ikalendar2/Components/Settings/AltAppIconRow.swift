@@ -35,9 +35,7 @@ struct AltAppIconRow: View {
   private var rowContent: some View {
     HStack(spacing: Scoped.spacingH) {
       Image(decorative: ikaAppIcon.imageName(for: appIconDisplayMode))
-        .antialiased(true)
-        .resizable()
-        .scaledToFit()
+        .ikaFitted()
         .frame(
           width: appIconDisplayMode.size.screenSize,
           height: appIconDisplayMode.size.screenSize)

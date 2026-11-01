@@ -260,9 +260,7 @@ struct SettingsAboutView: View {
         HStack {
           SettingsRowLabel("Twitter", titleStyle: Color.primary) {
             Image(decorative: Scoped.twitterIconName)
-              .antialiased(true)
-              .resizable()
-              .scaledToFit()
+              .ikaFitted()
               .frame(
                 width: dynamicTypeSize <= .small
                   ? Scoped.twitterIconSizeSmall
@@ -363,9 +361,7 @@ struct SettingsAboutView: View {
   private var footerIkalendar3: some View {
     HStack(alignment: .center) {
       Image(.littleBuddy)
-        .antialiased(true)
-        .resizable()
-        .scaledToFit()
+        .ikaFitted()
         .saturation(0.6)
         .frame(height: littleBuddyHeight)
         .padding(.vertical)

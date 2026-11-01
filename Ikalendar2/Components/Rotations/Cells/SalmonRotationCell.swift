@@ -87,9 +87,7 @@ private struct SalmonRotationCellTimeTextSection: View {
   var body: some View {
     HStack {
       Image(isCurrent ? .goldenEgg : .salmon)
-        .antialiased(true)
-        .resizable()
-        .scaledToFit()
+        .ikaFitted()
         .accessibilityHidden(true)
         .shadow(radius: Constants.Style.Global.shadowRadius)
         .frame(height: rowWidth * Scoped.salmonIconHeightRatio)
@@ -106,34 +104,28 @@ private struct SalmonRotationCellTimeTextSection: View {
       Spacer()
 
       HStack(spacing: Scoped.timeTextSpacing) {
-        Text(rotation.startTime.toSalmonTimeString(shouldIncludeDate: true))
-          .scaledLimitedLine()
-          .ikaFont(
-            .ika2,
-            size: Scoped.timeTextFontSize,
-            relativeTo: .headline)
-          .padding(.horizontal, Scoped.timeTextSinglePaddingH)
-          .padding(.vertical, Scoped.timeTextSinglePaddingV)
-          .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.timeTextFrameCornerRadius))
-
-        Text("-")
-          .scaledLimitedLine()
-          .ikaFont(
-            .ika2,
-            size: Scoped.timeTextFontSize,
-            relativeTo: .headline)
-
-        Text(rotation.endTime.toSalmonTimeString(shouldIncludeDate: true))
-          .scaledLimitedLine()
-          .ikaFont(
-            .ika2,
-            size: Scoped.timeTextFontSize,
-            relativeTo: .headline)
-          .padding(.horizontal, Scoped.timeTextSinglePaddingH)
-          .padding(.vertical, Scoped.timeTextSinglePaddingV)
-          .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.timeTextFrameCornerRadius))
+        framedTimeText(rotation.startTime.toSalmonTimeString(shouldIncludeDate: true))
+        timeText(Text("-"))
+        framedTimeText(rotation.endTime.toSalmonTimeString(shouldIncludeDate: true))
       }
     }
+  }
+
+  /// A start or end time in its glass frame.
+  private func framedTimeText(_ time: String) -> some View {
+    timeText(Text(time))
+      .padding(.horizontal, Scoped.timeTextSinglePaddingH)
+      .padding(.vertical, Scoped.timeTextSinglePaddingV)
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.timeTextFrameCornerRadius))
+  }
+
+  private func timeText(_ text: Text) -> some View {
+    text
+      .scaledLimitedLine()
+      .ikaFont(
+        .ika2,
+        size: Scoped.timeTextFontSize,
+        relativeTo: .headline)
   }
 }
 

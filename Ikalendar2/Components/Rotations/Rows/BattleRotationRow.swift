@@ -89,16 +89,7 @@ private struct BattleRotationHeader: View {
   var body: some View {
     HStack(spacing: Scoped.spacing) {
       if let prefixString = rowType.prefixString {
-        Text(prefixString.localizedStringKey)
-          .ikaFont(
-            .ika1,
-            size: Scoped.prefixFontSize,
-            relativeTo: .title2)
-          .foregroundStyle(Color.systemBackground)
-          .padding(.horizontal, Scoped.prefixPaddingH)
-          .adaptiveGlassEffect(
-            tint: .gray,
-            in: .rect(cornerRadius: Scoped.prefixFrameCornerRadius))
+        RotationHeaderPrefix(prefixString)
       }
 
       Text("\(startTimeString) - \(endTimeString)")
