@@ -49,8 +49,8 @@ struct CarouselColumn: View {
   private var rotationList: some View {
     switch gameMode {
       case .battle:
-        BattleRotationList(specifiedBattleMode: battleMode)
-      default:
+        BattleRotationList(battleMode: battleMode)
+      case .salmon:
         SalmonRotationList()
     }
   }

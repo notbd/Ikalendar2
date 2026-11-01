@@ -37,21 +37,9 @@ final class IkaStatus {
       isSyncing = true
       defer { isSyncing = false }
 
-      switch newValue {
-        case .regular:
-          currentGameMode = .battle
-          currentBattleMode = .regular
-
-        case .gachi:
-          currentGameMode = .battle
-          currentBattleMode = .gachi
-
-        case .league:
-          currentGameMode = .battle
-          currentBattleMode = .league
-
-        case .salmon:
-          currentGameMode = .salmon
+      currentGameMode = newValue.gameMode
+      if let battleMode = newValue.battleMode {
+        currentBattleMode = battleMode
       }
 
       SimpleHaptics.generateTask(.soft)
@@ -66,12 +54,7 @@ final class IkaStatus {
       isSyncing = true
       defer { isSyncing = false }
 
-      switch newValue {
-        case .battle:
-          currentFlatMode = .init(rawValue: currentBattleMode.rawValue) ?? .default
-        case .salmon:
-          currentFlatMode = .salmon
-      }
+      currentFlatMode = FlatMode(gameMode: newValue, battleMode: currentBattleMode)
     }
   }
 
@@ -83,14 +66,7 @@ final class IkaStatus {
       isSyncing = true
       defer { isSyncing = false }
 
-      switch newValue {
-        case .regular:
-          currentFlatMode = .regular
-        case .gachi:
-          currentFlatMode = .gachi
-        case .league:
-          currentFlatMode = .league
-      }
+      currentFlatMode = FlatMode(newValue)
     }
   }
 

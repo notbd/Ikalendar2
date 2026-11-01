@@ -13,17 +13,12 @@ import SwiftUI
 /// upcoming ones below.
 struct BattleRotationList: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
-  @Environment(IkaStatus.self) private var ikaStatus
   @Environment(IkaClock.self) private var ikaClock
 
-  let specifiedBattleMode: BattleMode?
+  let battleMode: BattleMode
 
   private var validBattleRotations: [BattleRotation] {
-    let battleMode: BattleMode =
-      if let specifiedBattleMode { specifiedBattleMode } else { ikaStatus.currentBattleMode }
-
-    return
-      (ikaCatalog.battleRotationDict[battleMode] ?? []).filter { !$0.isExpired(ikaClock.currentTime) }
+    (ikaCatalog.battleRotationDict[battleMode] ?? []).filter { !$0.isExpired(ikaClock.currentTime) }
   }
 
   var body: some View {
@@ -49,16 +44,10 @@ struct BattleRotationList: View {
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }
-
-  init(
-    specifiedBattleMode: BattleMode? = nil)
-  {
-    self.specifiedBattleMode = specifiedBattleMode
-  }
 }
 
 #Preview {
   // Renders straight from the preloaded preview catalog - the app's main surface.
-  BattleRotationList(specifiedBattleMode: .gachi)
+  BattleRotationList(battleMode: .gachi)
     .ikaPreviewEnvironment()
 }

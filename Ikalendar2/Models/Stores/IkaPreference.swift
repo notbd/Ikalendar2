@@ -32,21 +32,9 @@ final class IkaPreference {
       isSyncing = true
       defer { isSyncing = false }
 
-      switch newValue {
-        case .regular:
-          preferredDefaultGameMode = .battle
-          preferredDefaultBattleMode = .regular
-
-        case .gachi:
-          preferredDefaultGameMode = .battle
-          preferredDefaultBattleMode = .gachi
-
-        case .league:
-          preferredDefaultGameMode = .battle
-          preferredDefaultBattleMode = .league
-
-        case .salmon:
-          preferredDefaultGameMode = .salmon
+      preferredDefaultGameMode = newValue.gameMode
+      if let battleMode = newValue.battleMode {
+        preferredDefaultBattleMode = battleMode
       }
 
       SimpleHaptics.generateTask(.selection)
@@ -68,13 +56,7 @@ final class IkaPreference {
       isSyncing = true
       defer { isSyncing = false }
 
-      switch newValue {
-        case .battle:
-          preferredDefaultFlatMode = .init(rawValue: preferredDefaultBattleMode.rawValue) ?? .default
-
-        case .salmon:
-          preferredDefaultFlatMode = .salmon
-      }
+      preferredDefaultFlatMode = FlatMode(gameMode: newValue, battleMode: preferredDefaultBattleMode)
     }
 
     didSet {
@@ -91,14 +73,7 @@ final class IkaPreference {
       isSyncing = true
       defer { isSyncing = false }
 
-      switch newValue {
-        case .regular:
-          preferredDefaultFlatMode = .regular
-        case .gachi:
-          preferredDefaultFlatMode = .gachi
-        case .league:
-          preferredDefaultFlatMode = .league
-      }
+      preferredDefaultFlatMode = FlatMode(newValue)
     }
 
     didSet {

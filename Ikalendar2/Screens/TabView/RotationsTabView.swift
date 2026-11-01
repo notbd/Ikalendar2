@@ -38,18 +38,19 @@ struct RotationsTabView: View {
     switch ikaCatalog.loadResultStatus {
       case .error(let ikaError):
         ErrorView(error: ikaError)
-      default:
+      case .loading,
+           .loaded:
         rotationList
     }
   }
 
   @ViewBuilder
   private var rotationList: some View {
-    switch flatMode {
-      case .salmon:
-        SalmonRotationList()
-      default:
-        BattleRotationList(specifiedBattleMode: BattleMode(rawValue: flatMode.rawValue) ?? .default)
+    if let battleMode = flatMode.battleMode {
+      BattleRotationList(battleMode: battleMode)
+    }
+    else {
+      SalmonRotationList()
     }
   }
 

@@ -132,12 +132,8 @@ struct ModeIconStamp: View {
     shouldAnimate: Bool = true)
   {
     self.iconSize = iconSize
-    gameModeSelection = flatModeSelection == .salmon
-      ? .salmon
-      : .battle
-    battleModeSelection = flatModeSelection == .salmon
-      ? .default
-      : BattleMode(rawValue: flatModeSelection.rawValue)!
+    gameModeSelection = flatModeSelection.gameMode
+    battleModeSelection = flatModeSelection.battleMode ?? .default
     self.shouldOffset = shouldOffset
     self.shouldAnimate = shouldAnimate
   }
