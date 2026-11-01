@@ -181,8 +181,6 @@ private enum OnboardingObject {
   case title
   case button
 
-  static let duration: Double = 3
-
   enum Phase {
     case initial
     case show
