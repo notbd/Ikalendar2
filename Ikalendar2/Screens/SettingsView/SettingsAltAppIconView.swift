@@ -17,6 +17,7 @@ struct SettingsAltAppIconView: View {
 
   @Environment(\.colorScheme) private var colorScheme
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  @Environment(\.openURL) private var openURL
 
   @Environment(IkaPreference.self) private var ikaPreference
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
@@ -29,6 +30,10 @@ struct SettingsAltAppIconView: View {
 
   @State private var easterEggCellRectGlobal: CGRect = .init()
   @State private var easterEggBounceCounter: Int = 0
+  @State private var easterEggJumpRequestCounter: Int = 0
+  /// The pending delayed jump, owned by the page rather than the Rick row: scrolling the row
+  /// off-screen must not cancel it, but leaving the page or hiding the easter-egg section does.
+  @State private var easterEggJumpTask: Task<Void, Never>?
 
   @State private var shouldDisplayAnimatedCopy: Bool = false
 
@@ -102,7 +107,8 @@ struct SettingsAltAppIconView: View {
             AltAppIconEasterEggRow(
               ikaAppIcon: .rick,
               appIconColorVariant: $activeAppIconColorVariant,
-              buttonPressCounter: $easterEggBounceCounter)
+              buttonPressCounter: $easterEggBounceCounter,
+              jumpRequestCounter: $easterEggJumpRequestCounter)
               .opacity(shouldDisplayAnimatedCopy ? 0 : 1)
               .onGeometryChange(for: CGRect.self) { geo in
                 geo.frame(in: .global)
@@ -143,16 +149,17 @@ struct SettingsAltAppIconView: View {
             tolerance: .seconds(ScopedConfig.slideShowIntervalStepLength / 10))
           guard !Task.isCancelled else { return }
 
+          let nextProgress = (slideShowProgress + 1) % slideShowStepCount
           withAnimation(.snappy) {
-            slideShowProgress = (slideShowProgress + 1) % slideShowStepCount
+            slideShowProgress = nextProgress
           }
-        }
-      }
-      .onChange(of: slideShowProgress) { oldVal, _ in
-        // A wrap-around (last step -> 0) completes one interval: advance the variant.
-        if oldVal == slideShowStepCount - 1 {
-          withAnimation(.bouncy) {
-            activeAppIconColorVariant = activeAppIconColorVariant.next
+          // A wrap-around (last step -> 0) completes one interval: advance the variant.
+          // Decided here rather than by watching the progress, so the resets on
+          // pause/expand/Next can never count as a wrap-around.
+          if nextProgress == 0 {
+            withAnimation(.bouncy) {
+              activeAppIconColorVariant = activeAppIconColorVariant.next
+            }
           }
         }
       }
@@ -162,7 +169,8 @@ struct SettingsAltAppIconView: View {
         AltAppIconEasterEggRow(
           ikaAppIcon: .rick,
           appIconColorVariant: $activeAppIconColorVariant,
-          buttonPressCounter: $easterEggBounceCounter)
+          buttonPressCounter: $easterEggBounceCounter,
+          jumpRequestCounter: $easterEggJumpRequestCounter)
           .allowsHitTesting(false)
           .accessibilityHidden(true) // visual-only duplicate of the list row
           .frame(width: easterEggCellRectGlobal.width, height: easterEggCellRectGlobal.height)
@@ -179,6 +187,13 @@ struct SettingsAltAppIconView: View {
     .onAppear {
       doesPreferRickOnAppear = ikaPreference.preferredAppIcon == .rick
       Task { await connectivityChecker.performGFWCheck() }
+    }
+    .onDisappear { easterEggJumpTask?.cancel() }
+    .onChange(of: easterEggJumpRequestCounter) {
+      easterEggJumpTask = Task { await jumpToGoodStuffAfterDelay() }
+    }
+    .onChange(of: showEasterEgg) { _, isShown in
+      if !isShown { easterEggJumpTask?.cancel() }
     }
     // While bouncing, the icon escapes its list cell's clip bounds - so hide the
     // original and overlay an unclipped copy at the same spot. Re-triggering
@@ -235,6 +250,7 @@ struct SettingsAltAppIconView: View {
       }
       .accessibilityLabel(slideShowPhase.isPlaying ? Text("Pause") : Text("Play"))
       .accessibilityAddTraits(.isButton)
+      .accessibilityHidden(slideShowPhase.isPickerExpanded)
       .glassEffect(!slideShowPhase.isPickerExpanded ? .regular.interactive() : .regular)
   }
 
@@ -256,6 +272,7 @@ struct SettingsAltAppIconView: View {
       }
       .accessibilityLabel(Text("Next"))
       .accessibilityAddTraits(.isButton)
+      .accessibilityHidden(slideShowPhase.isPickerExpanded)
       .glassEffect(!slideShowPhase.isPickerExpanded ? .regular.interactive() : .regular)
   }
 
@@ -337,6 +354,18 @@ struct SettingsAltAppIconView: View {
       }
       .font(ScopedStyle.colorVariantPickerFont)
       .glassEffect(.regular.interactive())
+  }
+
+  private func jumpToGoodStuffAfterDelay() async {
+    try? await Task.sleep(for: .seconds(ScopedConfig.easterEggJumpDelay))
+    guard !Task.isCancelled else { return }
+
+    let goodStuffURLString = connectivityChecker.isGFWed
+      ? Constants.Key.URLs.theGoodStuffCN
+      : Constants.Key.URLs.theGoodStuff
+    guard let url = URL(string: goodStuffURLString) else { return }
+
+    openURL(url)
   }
 
   private var easterEggTrigger: some View {

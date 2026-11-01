@@ -76,13 +76,10 @@ struct AltAppIconRow: View {
 struct AltAppIconEasterEggRow: View {
   typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
 
-  @Environment(\.openURL) private var openURL
   @Environment(\.locale) private var currentLocale
 
   @Environment(IkaPreference.self) private var ikaPreference
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
-
-  @Environment(IkaConnectivityChecker.self) private var connectivityChecker
 
   let ikaAppIcon: IkaAppIcon
   @Binding var appIconColorVariant: IkaAppIcon.ColorVariant
@@ -91,14 +88,14 @@ struct AltAppIconEasterEggRow: View {
   }
 
   @Binding var buttonPressCounter: Int
-
-  /// The pending delayed jump, owned by the row so leaving the page cancels it.
-  @State private var jumpToURLTask: Task<Void, Never>?
+  /// Bumped to ask the page for the delayed jump. The page owns that task, so scrolling
+  /// this row off-screen does not cancel it.
+  @Binding var jumpRequestCounter: Int
 
   var body: some View {
     Button {
       // jump to the good stuff (first discovery only)
-      if !ikaDiscoveryLog.hasDiscoveredEasterEgg { jumpToURLTask = Task { await jumpToURLAfterDelay() } }
+      if !ikaDiscoveryLog.hasDiscoveredEasterEgg { jumpRequestCounter += 1 }
       if !ikaDiscoveryLog.hasDiscoveredEasterEgg { ikaDiscoveryLog.hasDiscoveredEasterEgg = true }
       // compensatory haptics for repeated presses
       if ikaPreference.preferredAppIcon == .rick { SimpleHaptics.generateTask(.medium) }
@@ -107,7 +104,6 @@ struct AltAppIconEasterEggRow: View {
     }
     label: { rowContent }
     .accessibilityAddTraits(ikaAppIcon == ikaPreference.preferredAppIcon ? .isSelected : [])
-    .onDisappear { jumpToURLTask?.cancel() }
   }
 
   private var rowContent: some View {
@@ -154,18 +150,6 @@ struct AltAppIconEasterEggRow: View {
       }
     }
     .padding(.vertical, Scoped.rowPaddingV)
-  }
-
-  private func jumpToURLAfterDelay() async {
-    try? await Task.sleep(for: .seconds(Constants.Config.Settings.AltAppIcon.easterEggJumpDelay))
-    guard !Task.isCancelled else { return }
-
-    let goodStuffURLString = connectivityChecker.isGFWed
-      ? Constants.Key.URLs.theGoodStuffCN
-      : Constants.Key.URLs.theGoodStuff
-    guard let url = URL(string: goodStuffURLString) else { return }
-
-    openURL(url)
   }
 
   private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
@@ -240,12 +224,14 @@ struct AppIconEasterEggAnimationValues {
 #Preview("Easter Egg Row") {
   @Previewable @State var colorVariant: IkaAppIcon.ColorVariant = .default
   @Previewable @State var bounceCounter: Int = 0
+  @Previewable @State var jumpRequestCounter: Int = 0
 
   List {
     AltAppIconEasterEggRow(
       ikaAppIcon: .rick,
       appIconColorVariant: $colorVariant,
-      buttonPressCounter: $bounceCounter)
+      buttonPressCounter: $bounceCounter,
+      jumpRequestCounter: $jumpRequestCounter)
   }
   .listStyle(.insetGrouped)
   .ikaPreviewEnvironment()
