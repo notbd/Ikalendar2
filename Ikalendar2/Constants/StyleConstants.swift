@@ -70,8 +70,6 @@ extension Constants.Style {
 
   enum Settings {
     enum Main {
-      static let defaultModePickerNameShowedThreshold: CGFloat = 375
-
       static let colorSchemeSFSymbol = "circle.lefthalf.filled"
 
       static let advancedOptionsSFSymbol = "wand.and.rays"

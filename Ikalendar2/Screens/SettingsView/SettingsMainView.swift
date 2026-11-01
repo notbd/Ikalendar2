@@ -24,53 +24,46 @@ struct SettingsMainView: View {
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
   @Environment(IkaPreference.self) private var ikaPreference
 
-  @State private var rowWidth: CGFloat = 390
-
   var body: some View {
-    GeometryReader { geo in
-      List {
-        Section {
-          if isHorizontalCompact {
-            rowDefaultTab
-          }
-          else {
-            rowDefaultGameMode
-            rowDefaultBattleMode
-          }
-        } header: {
-          Text("Default Mode")
-        } footer: {
-          if !isHorizontalCompact {
-            Text("Certain options only apply to smaller screen widths.")
-              .font(.footnote)
-          }
+    List {
+      Section {
+        if isHorizontalCompact {
+          rowDefaultTab
         }
-
-        Section {
-          rowColorScheme
-          rowAltAppIcon
-          rowAdvancedOptions
-        } header: { Text("Appearance") }
-
-        Section {
-          rowAppLanguage
-        } header: { Text("Language") }
-
-        Section {
-          rowAbout
-          rowCredits
+        else {
+          rowDefaultGameMode
+          rowDefaultBattleMode
+        }
+      } header: {
+        Text("Default Mode")
+      } footer: {
+        if !isHorizontalCompact {
+          Text("Certain options only apply to smaller screen widths.")
+            .font(.footnote)
         }
       }
-      .navigationTitle("Settings")
-      .navigationBarTitleDisplayMode(.large)
-      .toolbar {
-        ToolbarItem(placement: .topBarTrailing) { closeButton }
-      }
-      .listStyle(.insetGrouped)
-      .onChange(of: geo.size, initial: true) { _, newVal in
-        rowWidth = newVal.width
+
+      Section {
+        rowColorScheme
+        rowAltAppIcon
+        rowAdvancedOptions
+      } header: { Text("Appearance") }
+
+      Section {
+        rowAppLanguage
+      } header: { Text("Language") }
+
+      Section {
+        rowAbout
+        rowCredits
       }
     }
+    .navigationTitle("Settings")
+    .navigationBarTitleDisplayMode(.large)
+    .toolbar {
+      ToolbarItem(placement: .topBarTrailing) { closeButton }
+    }
+    .listStyle(.insetGrouped)
   }
 
   // MARK: - Default Mode Section
@@ -101,17 +94,8 @@ struct SettingsMainView: View {
     @Bindable var ikaPreference = ikaPreference
     return HStack {
       Label {
-        if !isHorizontalCompact {
-          Text("Default Game Mode")
-            .foregroundStyle(.primary)
-        }
-        else if rowWidth >= Scoped.defaultModePickerNameShowedThreshold {
-          Text("Game")
-            .foregroundStyle(.primary)
-        }
-        else {
-          Spacer()
-        }
+        Text("Default Game Mode")
+          .foregroundStyle(.primary)
       } icon: {
         Image(systemName: ikaPreference.preferredDefaultGameMode.sfSymbolNameSelected)
           .imageScale(.medium)
@@ -140,27 +124,15 @@ struct SettingsMainView: View {
     @Bindable var ikaPreference = ikaPreference
     return HStack {
       Label {
-        if !isHorizontalCompact {
-          Text("Default Battle Mode")
-            .foregroundStyle(.primary)
-        }
-        else if rowWidth >= Scoped.defaultModePickerNameShowedThreshold {
-          Text("Battle")
-            .foregroundStyle(.primary)
-        }
-        else {
-          Spacer()
-        }
+        Text("Default Battle Mode")
+          .foregroundStyle(.primary)
       } icon: {
         Image(
           systemName: ikaPreference.preferredDefaultBattleMode.sfSymbolNameSelected)
           .imageScale(.medium)
           .contentTransition(.symbolEffect(.replace.offUp))
           .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(
-            ikaPreference.preferredDefaultGameMode != .battle || !isHorizontalCompact
-              ? .secondary
-              : ikaPreference.preferredDefaultBattleMode.themeColor)
+          .foregroundStyle(Color.secondary)
       }
 
       Spacer()
@@ -176,7 +148,8 @@ struct SettingsMainView: View {
       }
       .pickerStyle(.segmented)
       .fixedSize()
-      .disabled(ikaPreference.preferredDefaultGameMode != .battle || !isHorizontalCompact)
+      // iPad shows every battle mode side by side; the default only matters on iPhone (see footer).
+      .disabled(true)
     }
   }
 
