@@ -36,7 +36,9 @@ extension Constants.Config {
   enum Settings {
     enum AltAppIcon {
       static let slideShowInterval: TimeInterval = 4
-      static let slideShowIntervalStepLength: TimeInterval = 0.01
+      /// ~30 progress updates per second: smooth under the snappy animation, without
+      /// re-rendering the page at 100 Hz.
+      static let slideShowIntervalStepLength: TimeInterval = 1.0 / 30
 
       static let animatedCopyLingerLength: TimeInterval = 2.1
       static let easterEggJumpDelay: TimeInterval = 1.3

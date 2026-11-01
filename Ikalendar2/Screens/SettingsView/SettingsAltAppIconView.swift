@@ -59,8 +59,10 @@ struct SettingsAltAppIconView: View {
   @State private var slideShowPhase: SlideShowPhase = .paused
   @State private var slideShowProgress: Int = 0
 
+  /// Rounded, not floored: a fractional step length must not lose the last step to
+  /// floating-point error (e.g. 119.999... -> 119), which would shorten the cycle.
   private var slideShowStepCount: Int {
-    Int(floor(ScopedConfig.slideShowInterval / ScopedConfig.slideShowIntervalStepLength))
+    Int((ScopedConfig.slideShowInterval / ScopedConfig.slideShowIntervalStepLength).rounded())
   }
 
   // MARK: Slide Show Transitions
