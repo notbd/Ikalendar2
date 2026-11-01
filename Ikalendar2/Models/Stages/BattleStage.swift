@@ -40,36 +40,8 @@ enum BattleStage: String, Identifiable, CaseIterable, Equatable {
 }
 
 extension BattleStage {
-  var name: String {
-    switch self {
-      case .anchoVGames: "Ancho-V Games"
-      case .arowanaMall: "Arowana Mall"
-      case .blackbellySkatepark: "Blackbelly Skatepark"
-      case .campTriggerfish: "Camp Triggerfish"
-      case .gobyArena: "Goby Arena"
-      case .humpbackPumpTrack: "Humpback Pump Track"
-      case .inkblotArtAcademy: "Inkblot Art Academy"
-      case .kelpDome: "Kelp Dome"
-      case .makoMart: "MakoMart"
-      case .mantaMaria: "Manta Maria"
-      // #10
-      case .morayTowers: "Moray Towers"
-      case .musselforgeFitness: "Musselforge Fitness"
-      case .newAlbacoreHotel: "New Albacore Hotel"
-      case .piranhaPit: "Piranha Pit"
-      case .portMackerel: "Port Mackerel"
-      case .shellendorfInstitute: "Shellendorf Institute"
-      case .shiftyStation: "Shifty Station"
-      case .skipperPavilion: "Skipper Pavilion"
-      case .snapperCanal: "Snapper Canal"
-      case .starfishMainstage: "Starfish Mainstage"
-      // #20
-      case .sturgeonShipyard: "Sturgeon Shipyard"
-      case .theReef: "The Reef"
-      case .wahooWorld: "Wahoo World"
-      case .walleyeWarehouse: "Walleye Warehouse"
-    }
-  }
+  /// Display name; identical to the feed's stage name, which is the raw value.
+  var name: String { rawValue }
 }
 
 extension BattleStage {
