@@ -13,7 +13,7 @@ import OSLog
 @MainActor
 @Observable
 final class IkaConnectivityChecker {
-  var isGFWed: Bool = false
+  private(set) var isGFWed: Bool = false
   private(set) var checkInProgress: Bool = false
 
   private let testDomains: [String] = [

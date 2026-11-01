@@ -15,7 +15,7 @@ import UIKit
 @Observable
 final class IkaOrientationMonitor {
   /// The current orientation of the interface.
-  var currentOrientation: UIInterfaceOrientation
+  private(set) var currentOrientation: UIInterfaceOrientation
 
   init() {
     UIDevice.current.beginGeneratingDeviceOrientationNotifications()
@@ -58,21 +58,5 @@ final class IkaOrientationMonitor {
     else { return }
 
     currentOrientation = interfaceOrientation
-  }
-}
-
-// MARK: - UIInterfaceOrientation+Description
-
-extension UIInterfaceOrientation {
-  /// Readable textual description of the orientation.
-  var description: String {
-    switch self {
-      case .unknown: "Unknown"
-      case .portrait: "Portrait"
-      case .portraitUpsideDown: "PortraitUpsideDown"
-      case .landscapeLeft: "LandscapeLeft"
-      case .landscapeRight: "LandscapeRight"
-      @unknown default: "Unknown"
-    }
   }
 }

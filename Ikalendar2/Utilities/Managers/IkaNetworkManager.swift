@@ -134,7 +134,7 @@ final class IkaNetworkManager: IkaNetworkService {
   ///   - `IkaError.serverError(.badData)`: If the decoding process fails.
   ///
   @concurrent
-  func fetchAndDecode<T>(
+  private func fetchAndDecode<T>(
     url: URL,
     decodeUsing decoder: @Sendable (Data) throws -> T)
     async throws -> T

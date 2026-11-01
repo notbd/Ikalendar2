@@ -28,8 +28,8 @@ final class IkaDeviceMotionMonitor {
 
   /// The difference between the current gravitational force component and its average
   /// of recently stored values for the x and y axes.
-  var dx: CGFloat = 0
-  var dy: CGFloat = 0
+  private(set) var dx: CGFloat = 0
+  private(set) var dy: CGFloat = 0
 
   init() {
     subscribeToAppLifecycleEvents()
