@@ -93,7 +93,7 @@ struct RotationTimeLogicTests {
     @Test
     func `Salmon reward apparel participates in equality`() {
       // The auto-loader relies on this: attaching the reward gear must register as
-      // "new data from server" (Rotation.== hashes the description, which includes it).
+      // "new data from server" (Rotation.== compares the description, which includes it).
       let plain: SalmonRotation = TestData.salmonRotation(startOffset: 0, endOffset: 42 * 3600)
       var withApparel: SalmonRotation = TestData.salmonRotation(startOffset: 0, endOffset: 42 * 3600)
       withApparel.rewardApparel = .head(.oceanicHardHat)
