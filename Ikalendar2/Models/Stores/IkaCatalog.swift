@@ -59,6 +59,7 @@ final class IkaCatalog {
   @ObservationIgnored private let isAppActive: @MainActor () -> Bool
 
   @ObservationIgnored private var autoLoadCheckTask: Task<Void, Never>?
+  @ObservationIgnored private var autoLoadLingerTask: Task<Void, Never>?
 
   init(
     ikaNetworkService: any IkaNetworkService,
@@ -76,6 +77,7 @@ final class IkaCatalog {
   deinit {
     // Legal in a nonisolated deinit: Task is Sendable and cancel() is nonisolated.
     autoLoadCheckTask?.cancel()
+    autoLoadLingerTask?.cancel()
   }
 
   // MARK: Exposed
@@ -406,19 +408,27 @@ final class IkaCatalog {
   {
     switch newVal {
       case .autoLoading:
+        // A linger left over from the previous cycle must not reset this one.
+        autoLoadLingerTask?.cancel()
         autoLoadStatus = .autoLoading
 
       case .autoLoaded(let result):
         autoLoadStatus = .autoLoaded(result)
         // automatically fall back to idle after a while
-        Task {
+        autoLoadLingerTask?.cancel()
+        autoLoadLingerTask = Task { [weak self, timing] in
           // blocked if app is in background - to make sure autoLoaded can be seen when switched back
-          while !isAppActive() {
+          while !Task.isCancelled, self?.isAppActive() == false {
             try? await Task.sleep(for: .seconds(timing.appActiveStateCheckInterval))
           }
           try? await Task.sleep(for: .seconds(timing.autoLoadedLingerLength))
+          // `try?` swallows cancellation, so check for it before every write.
+          guard !Task.isCancelled, let self else { return }
+
           autoLoadStatus = .idle
           try? await Task.sleep(for: .seconds(timing.idleAndNonIdleStatusUpdateInterval))
+          guard !Task.isCancelled else { return }
+
           autoLoadDelayedIdleStatus = .idle
         }
 
