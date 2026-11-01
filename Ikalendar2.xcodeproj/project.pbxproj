@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		61327AAE2EB58C360076DD3B /* BlurFade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61327AAD2EB58C320076DD3B /* BlurFade.swift */; };
 		61C4A00F2EF1CD00002577EA /* IconNudge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C4A0102EF1CD00002577EA /* IconNudge.swift */; };
+		49579EC5F8D1BB0518ADB874 /* PeriodicPulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A76B8AC102CA18CDD013187 /* PeriodicPulse.swift */; };
 		61C4A0132EF1CD00002577EA /* AdaptiveGlassEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C4A0142EF1CD00002577EA /* AdaptiveGlassEffect.swift */; };
 		613286FD2EB70D7E0076DD3B /* IkaConnectivityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613286FC2EB70D620076DD3B /* IkaConnectivityChecker.swift */; };
 		6146761C2ECACDFE00400325 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6146761B2ECACDFE00400325 /* Assets.xcassets */; };
@@ -151,6 +152,7 @@
 /* Begin PBXFileReference section */
 		61327AAD2EB58C320076DD3B /* BlurFade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurFade.swift; sourceTree = "<group>"; };
 		61C4A0102EF1CD00002577EA /* IconNudge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconNudge.swift; sourceTree = "<group>"; };
+		8A76B8AC102CA18CDD013187 /* PeriodicPulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodicPulse.swift; sourceTree = "<group>"; };
 		61C4A0142EF1CD00002577EA /* AdaptiveGlassEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveGlassEffect.swift; sourceTree = "<group>"; };
 		613286FC2EB70D620076DD3B /* IkaConnectivityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaConnectivityChecker.swift; sourceTree = "<group>"; };
 		6146761B2ECACDFE00400325 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 			children = (
 				61327AAD2EB58C320076DD3B /* BlurFade.swift */,
 				61C4A0102EF1CD00002577EA /* IconNudge.swift */,
+				8A76B8AC102CA18CDD013187 /* PeriodicPulse.swift */,
 				61C4A0142EF1CD00002577EA /* AdaptiveGlassEffect.swift */,
 				7903FE3328C438B400245586 /* IkaFont.swift */,
 				7903FE3728C4395600245586 /* ScaledLimitedLine.swift */,
@@ -967,6 +970,7 @@
 				7903FE7228C46D1800245586 /* SettingsAboutView.swift in Sources */,
 				61327AAE2EB58C360076DD3B /* BlurFade.swift in Sources */,
 				61C4A00F2EF1CD00002577EA /* IconNudge.swift in Sources */,
+				49579EC5F8D1BB0518ADB874 /* PeriodicPulse.swift in Sources */,
 				61C4A0132EF1CD00002577EA /* AdaptiveGlassEffect.swift in Sources */,
 				79408C6A2AA5BAA800141E58 /* IkaAppIcon.swift in Sources */,
 				394A88404DD884735184A0D5 /* IkaPreferredColorScheme.swift in Sources */,

@@ -6,7 +6,6 @@
 //
 
 import AlertKit
-import Combine
 import SimpleHaptics
 import SwiftUI
 
@@ -110,17 +109,6 @@ struct SettingsDebugOptionsView: View {
       haptic: .success)
   }
 
-  @State private var pulsingTrigger: Int = 0
-  /// View-local timer on purpose: hoisting the pulse/nudge timers into shared state made
-  /// unrelated views pulse together (a5bfe35, fixed in 20a3489). Do not lift it.
-  private var pulseTimer = Timer
-    .publish(
-      every: Constants.Config.Timer.pulseSignalInterval,
-      tolerance: 0.1,
-      on: .main,
-      in: .common)
-    .autoconnect()
-
   private var warningBanner: some View {
     let warningIcon: Image = .init(systemName: "exclamationmark.triangle.fill")
     let warningMessage: LocalizedStringKey = "Warning: Proceed with Caution"
@@ -132,19 +120,7 @@ struct SettingsDebugOptionsView: View {
         warningText
       }
       .font(.system(.body, design: .rounded, weight: .semibold))
-      .phaseAnimator([false, true], trigger: pulsingTrigger)
-      { content, value in
-        content
-          .foregroundStyle(value ? Color.red : Color.secondary)
-      } animation: { _ in
-        .spring(duration: 1.2)
-      }
-      .onAppear {
-        pulsingTrigger += 1
-      }
-      .onReceive(pulseTimer) { _ in
-        pulsingTrigger += 1
-      }
+      .periodicPulse()
 
     return
       bannerText
