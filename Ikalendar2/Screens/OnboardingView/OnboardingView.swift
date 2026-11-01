@@ -32,8 +32,6 @@ struct OnboardingView: View {
     static let autoBounceInterval: TimeInterval = 9
     /// Button pulse period (first pulse waits out the entrance first).
     static let buttonPulseInterval: TimeInterval = 9
-    /// Small lag so the bounce haptic lands on the squash, not the tap.
-    static let bounceHapticDelay: TimeInterval = 0.1
   }
 
   @State private var startAnimation: Bool = false
@@ -113,23 +111,13 @@ struct OnboardingView: View {
           width: appIconDisplayMode.size.screenSize,
           height: appIconDisplayMode.size.screenSize)
         .shadow(radius: Constants.Style.Global.shadowRadius)
-        .onChange(of: iconBounceCounter, initial: false) {
-          // Short-lived by design: delays the haptic onto the squash frame.
-          Task {
-            try? await Task.sleep(for: .seconds(Timing.bounceHapticDelay))
-            await SimpleHaptics.generate(.light)
-          }
-        }
+        .squashBounceHaptic(trigger: iconBounceCounter)
         .keyframeAnimator(
           initialValue: OnboardingObject.icon.animationValues,
           trigger: startAnimation,
           content: OnboardingObject.keyframeTransformation,
           keyframes: OnboardingObject.iconKeyframes)
-        .keyframeAnimator(
-          initialValue: OnboardingObject.iconEnd.animationValues,
-          trigger: iconBounceCounter,
-          content: OnboardingObject.keyframeTransformation,
-          keyframes: OnboardingObject.iconExtraKeyframes)
+        .squashBounce(trigger: iconBounceCounter, amplitude: .onboarding)
   }
 
   private var message: some View {
@@ -192,8 +180,6 @@ private enum OnboardingObject {
   case icon
   case title
   case button
-  /// Resting values after the entrance; the initial state of the tap/idle bounce animator.
-  case iconEnd
 
   static let duration: Double = 3
 
@@ -242,13 +228,6 @@ private enum OnboardingObject {
           scale: 0.8,
           vStretch: 1,
           vTranslation: 10)
-
-      case .iconEnd:
-        .init(
-          opacity: 1,
-          scale: 1,
-          vStretch: 1,
-          vTranslation: 0)
     }
   }
 
@@ -331,37 +310,6 @@ private enum OnboardingObject {
     KeyframeTrack(\.vTranslation) {
       LinearKeyframe(start.vTranslation, duration: Phase.show.duration + Phase.float.duration)
       SpringKeyframe(0.0, duration: Phase.bounceUp.duration, spring: .bouncy)
-    }
-  }
-
-  /// Tap/idle bounce: classic squash-and-stretch - dip, hop with overshoot, settle.
-  @KeyframesBuilder<OnboardingAnimationValues>
-  static func iconExtraKeyframes(start _: OnboardingAnimationValues)
-    -> some Keyframes<OnboardingAnimationValues>
-  {
-    KeyframeTrack(\.vStretch) {
-      CubicKeyframe(1.0, duration: 0.01)
-      CubicKeyframe(0.8, duration: 0.06)
-      CubicKeyframe(1.12, duration: 0.1)
-      CubicKeyframe(1.04, duration: 0.3)
-      CubicKeyframe(1.0, duration: 0.3)
-      CubicKeyframe(0.9, duration: 0.22)
-      CubicKeyframe(1.02, duration: 0.23)
-      CubicKeyframe(1.0, duration: 0.20)
-    }
-
-    KeyframeTrack(\.scale) {
-      LinearKeyframe(1.0, duration: 0.16)
-      SpringKeyframe(1.05, duration: 0.38, spring: .bouncy)
-      SpringKeyframe(1.05, duration: 0.27, spring: .smooth)
-      SpringKeyframe(1.0, spring: .bouncy(duration: 0.65, extraBounce: 0.1))
-    }
-
-    KeyframeTrack(\.vTranslation) {
-      SpringKeyframe(10.0, duration: 0.11, spring: .bouncy)
-      SpringKeyframe(-10.0, duration: 0.43, spring: .bouncy)
-      SpringKeyframe(-12.0, duration: 0.27, spring: .smooth)
-      SpringKeyframe(0.0, spring: .bouncy(duration: 0.65, extraBounce: 0.3))
     }
   }
 }

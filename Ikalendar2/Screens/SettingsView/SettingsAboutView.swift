@@ -30,8 +30,6 @@ struct SettingsAboutView: View {
 
   /// How long the unclipped overlay copy stays after a bounce (covers the longest keyframe track).
   static private let animatedCopyLinger: TimeInterval = 1.6
-  /// Small lag so the bounce haptic lands on the squash, not the tap.
-  static private let bounceHapticDelay: TimeInterval = 0.1
 
   var body: some View {
     ZStack {
@@ -83,13 +81,7 @@ struct SettingsAboutView: View {
         .opacity(shouldDisplayAnimatedCopy ? 1 : 0)
         .accessibilityHidden(true) // visual-only duplicate of the list row
     }
-    .onChange(of: appIconBounceCounter, initial: false) {
-      // Short-lived by design: delays the haptic onto the squash frame.
-      Task {
-        try? await Task.sleep(for: .seconds(Self.bounceHapticDelay))
-        await SimpleHaptics.generate(.light)
-      }
-    }
+    .squashBounceHaptic(trigger: appIconBounceCounter)
     // While bouncing, the icon escapes its list cell's clip bounds - so hide the
     // original and overlay an unclipped copy at the same spot. Re-triggering
     // restarts the linger window.
@@ -124,19 +116,7 @@ struct SettingsAboutView: View {
         .onTapGesture {
           appIconBounceCounter += 1
         }
-        // Inlined on the concrete view: wrapping this in a `some View` helper
-        // trips a non-Sendable metatype warning from the content closure (a58eaf9).
-        .keyframeAnimator(
-          initialValue: SettingsAboutAppIconAnimationValues(),
-          trigger: appIconBounceCounter)
-        { content, values in
-          content
-            .scaleEffect(values.scale)
-            .scaleEffect(y: values.vStretch)
-            .offset(y: values.vTranslation)
-        } keyframes: { _ in
-          SettingsAboutAppIconAnimationValues.appIconKeyframes()
-        }
+        .squashBounce(trigger: appIconBounceCounter, amplitude: .aboutIcon)
         // decorative, and the tap-to-bounce is an easter egg: keep both out of VoiceOver
         .accessibilityHidden(true)
     }
@@ -374,46 +354,6 @@ struct SettingsAboutView: View {
           .ika2,
           size: Scoped.sloganIkalendar3FontSize,
           relativeTo: .footnote)
-    }
-  }
-}
-
-// MARK: - SettingsAboutAppIconAnimationValues
-
-/// Animatable values for the about-page app icon bounce.
-private struct SettingsAboutAppIconAnimationValues {
-  var scale: Double = 1
-  var vStretch: Double = 1
-  var vTranslation: Double = 0
-
-  /// Tap bounce: classic squash-and-stretch - dip, big hop with overshoot, settle.
-  @KeyframesBuilder<SettingsAboutAppIconAnimationValues>
-  static func appIconKeyframes()
-    -> some Keyframes<SettingsAboutAppIconAnimationValues>
-  {
-    KeyframeTrack(\.vStretch) {
-      CubicKeyframe(1.0, duration: 0.01)
-      CubicKeyframe(0.8, duration: 0.06)
-      CubicKeyframe(1.12, duration: 0.1)
-      CubicKeyframe(1.04, duration: 0.3)
-      CubicKeyframe(1.0, duration: 0.3)
-      CubicKeyframe(0.9, duration: 0.22)
-      CubicKeyframe(1.02, duration: 0.23)
-      CubicKeyframe(1.0, duration: 0.20)
-    }
-
-    KeyframeTrack(\.scale) {
-      LinearKeyframe(1.0, duration: 0.16)
-      SpringKeyframe(1.03, duration: 0.38, spring: .bouncy)
-      SpringKeyframe(1.03, duration: 0.27, spring: .smooth)
-      SpringKeyframe(1.0, spring: .bouncy(duration: 0.65, extraBounce: 0.1))
-    }
-
-    KeyframeTrack(\.vTranslation) {
-      SpringKeyframe(40.0, duration: 0.11, spring: .bouncy)
-      SpringKeyframe(-30.0, duration: 0.43, spring: .bouncy)
-      SpringKeyframe(-34.0, duration: 0.27, spring: .smooth)
-      SpringKeyframe(0.0, spring: .bouncy(duration: 0.65, extraBounce: 0.3))
     }
   }
 }
