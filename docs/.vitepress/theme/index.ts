@@ -5,7 +5,6 @@ import DefaultTheme from 'vitepress/theme-without-fonts'
 import { h } from 'vue'
 import HomeCustomBody from '../HomeCustomBody.vue'
 import CustomInstallRequirement from './CustomInstallRequirement.vue'
-import CustomVPLink from './CustomVPLink.vue'
 import './myCustomVars.css'
 import 'virtual:uno.css'
 
@@ -19,6 +18,5 @@ export default {
   },
   enhanceApp({ app }) {
     app.component('HomeCustomBody', HomeCustomBody)
-    app.component('CustomVPLink', CustomVPLink)
   },
 } satisfies Theme

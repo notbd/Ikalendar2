@@ -13,7 +13,6 @@ defineProps<{
   appStoreLink?: string
   appStoreImageDark: string
   appStoreImageLight: string
-  compatibility?: string
 }>()
 
 export type HeroAction = {
@@ -350,11 +349,5 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
     max-width: 320px;
     max-height: 320px;
   }
-}
-
-.compatibility {
-  padding-top: 8px;
-  font-size: 14px;
-  color: var(--vp-c-text-2);
 }
 </style>

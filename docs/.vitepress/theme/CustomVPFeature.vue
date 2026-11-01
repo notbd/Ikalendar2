@@ -6,19 +6,11 @@ defineProps<{
   icon?: DefaultTheme.FeatureIcon
   title: string
   details?: string
-  link?: string
-  linkText?: string
-  rel?: string
-  target?: string
 }>()
 </script>
 
 <template>
-  <CustomVPLink
-    class="VPFeature"
-    :no-icon="true"
-    tag="a"
-  >
+  <div class="VPFeature">
     <article class="box">
       <div v-if="typeof icon === 'object' && icon.wrap" class="icon">
         <VPImage
@@ -38,14 +30,8 @@ defineProps<{
       <div v-else-if="icon" class="icon" v-html="icon" />
       <h2 class="title" v-html="title" />
       <p v-if="details" class="details" v-html="details" />
-
-      <div v-if="linkText" class="link-text">
-        <p class="link-text-value">
-          {{ linkText }} <span class="vpi-arrow-right link-text-icon" />
-        </p>
-      </div>
     </article>
-  </CustomVPLink>
+  </div>
 </template>
 
 <style scoped>
@@ -119,21 +105,5 @@ defineProps<{
   font-size: 14px;
   font-weight: 500;
   color: var(--vp-c-text-2);
-}
-
-.link-text {
-  padding-top: 8px;
-}
-
-.link-text-value {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--vp-c-brand-1);
-}
-
-.link-text-icon {
-  margin-left: 6px;
 }
 </style>

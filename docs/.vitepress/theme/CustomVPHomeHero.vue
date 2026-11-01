@@ -16,7 +16,6 @@ const { frontmatter: fm } = useData()
     :app-store-link="fm.hero.appStoreLink"
     :app-store-image-dark="fm.hero.appStoreImageDark"
     :app-store-image-light="fm.hero.appStoreImageLight"
-    :compatibility="fm.hero.compatibility"
     :actions="fm.hero.actions"
   >
     <template #home-hero-info-before>
