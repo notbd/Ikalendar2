@@ -161,7 +161,7 @@ struct IkaCatalogAutoLoadTests {
 /// The outside world of one test's catalog: what the battle endpoint serves, whether its
 /// requests are held, and whether the app is active.
 @MainActor
-private final class AutoLoadScenario {
+final private class AutoLoadScenario {
   var battleRotationDict: BattleRotationDict
   /// While true, battle requests wait (cooperatively, so they stay cancellable).
   var isBattleFetchHeld: Bool = false

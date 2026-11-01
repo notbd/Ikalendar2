@@ -73,7 +73,7 @@ struct IkaNetworkManagerTests {
 // MARK: - StubURLProtocol
 
 /// Answers every request with `stubbedResponse` instead of going to the network.
-private final class StubURLProtocol: URLProtocol {
+final private class StubURLProtocol: URLProtocol {
   enum Response {
     case http(statusCode: Int, body: Data)
     case failure(URLError)
