@@ -110,14 +110,6 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
           .default
       }
     }
-
-    init?(index: Int) {
-      guard index >= 0, index < ColorVariant.allCases.count else {
-        return nil // Index out of bounds
-      }
-
-      self = ColorVariant.allCases[index]
-    }
   }
 
   enum DisplaySizeVariant: Equatable {

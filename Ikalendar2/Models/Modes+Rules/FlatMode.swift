@@ -72,7 +72,3 @@ extension FlatMode {
     }
   }
 }
-
-extension FlatMode {
-  var imageNameSmall: String { rawValue + "_small" }
-}

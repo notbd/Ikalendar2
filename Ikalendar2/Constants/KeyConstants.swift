@@ -116,7 +116,6 @@ extension Constants.Key {
 
   enum Placeholder {
     static let unknown = "Unknown"
-    static let error = "Error"
     static let licenseTemplateMit = """
       MIT License
 
