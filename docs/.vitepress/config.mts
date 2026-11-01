@@ -73,6 +73,8 @@ export default defineConfig({
   title,
   description,
   head,
+  // keep the GitHub-facing README out of the published site
+  srcExclude: ['README.md'],
   sitemap: { hostname: baseUrl },
   cleanUrls: true,
   themeConfig: {
