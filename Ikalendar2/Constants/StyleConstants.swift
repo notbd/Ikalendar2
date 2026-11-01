@@ -81,15 +81,12 @@ extension Constants.Style {
       static let defaultModePickerNameShowedThreshold: CGFloat = 375
 
       static let colorSchemeSFSymbol = "circle.lefthalf.filled"
-      static let colorSchemeMenuSFSymbol = "chevron.up.chevron.down"
 
       static let advancedOptionsSFSymbol = "wand.and.rays"
 
       static let aboutSFSymbol = "house.fill"
 
       static let creditsSFSymbol = "bookmark.fill"
-
-      static let doneButtonFont: Font = .headline
     }
 
     enum AltAppIcon {
@@ -105,8 +102,6 @@ extension Constants.Style {
       static let slideShowProgressBarOpacity: CGFloat = 0.8
       static let slideShowProgressBarHeight: CGFloat = 1
       static let slideShowProgressBarPaddingH: CGFloat = 8
-
-      static let pickerNameLabelsWidth: CGFloat = 120
 
       enum Row {
         static let spacingH: CGFloat = 16
@@ -133,9 +128,6 @@ extension Constants.Style {
     }
 
     enum About {
-      static let appIconStrokeColor: Color = .tertiaryLabel
-      static let appIconStrokeLineWidth: CGFloat = 1
-      static let appIconStrokeOpacity: CGFloat = 0.4
       static let appIconTitleFont: Font = .system(.title, design: .rounded)
       static let appIconTitleFontWeight: Font.Weight = .bold
       static let appIconSubtitleFont: Font = .system(.subheadline, design: .monospaced)
@@ -184,9 +176,6 @@ extension Constants.Style {
   }
 
   enum Onboarding {
-    static let strokeColor: Color = .tertiaryLabel
-    static let strokeLineWidth: CGFloat = 1
-    static let strokeOpacity: CGFloat = 0.3
     static let titleFont: Font = .system(size: 42, design: .rounded)
     static let titleFontWeight: Font.Weight = .heavy
     static let buttonFont: Font = .system(.headline, design: .rounded, weight: .semibold)
