@@ -67,4 +67,50 @@ struct IkaDiscoveryLogTests {
 
     #expect(log.shouldShowOnboarding)
   }
+
+  // MARK: - On-disk format (golden)
+
+  // Keys are spelled out as literals on purpose: renaming a key constant would re-show
+  // onboarding and forget every discovery for upgrading users, so it must fail here.
+  // Never rewrite these literals in terms of `Constants.Key`.
+
+  @Test
+  func `Pre-seeded on-disk values load under the frozen keys`() throws {
+    let defaults = try makeTestDefaults()
+    // Onboarding defaults to true, so only an explicit stored false proves the key is read.
+    defaults.set(false, forKey: "pref.if_should_show_onboarding")
+    defaults.set(true, forKey: "pref.if_has_discovered_rating")
+    defaults.set(true, forKey: "pref.if_has_discovered_alt_app_icon")
+    defaults.set(true, forKey: "pref.if_has_discovered_easter_egg")
+
+    let log: IkaDiscoveryLog = .init(userDefaults: defaults)
+
+    #expect(!log.shouldShowOnboarding)
+    #expect(log.hasDiscoveredRating)
+    #expect(log.hasDiscoveredAltAppIcon)
+    #expect(log.hasDiscoveredEasterEgg)
+  }
+
+  @Test
+  func `Writes store Bool values under the frozen keys`() throws {
+    let defaults = try makeTestDefaults()
+    let log: IkaDiscoveryLog = .init(userDefaults: defaults)
+
+    log.shouldShowOnboarding = false
+    log.hasDiscoveredRating = true
+    log.hasDiscoveredAltAppIcon = true
+    log.hasDiscoveredEasterEgg = true
+
+    #expect(defaults.object(forKey: "pref.if_should_show_onboarding") as? Bool == false)
+    #expect(defaults.object(forKey: "pref.if_has_discovered_rating") as? Bool == true)
+    #expect(defaults.object(forKey: "pref.if_has_discovered_alt_app_icon") as? Bool == true)
+    #expect(defaults.object(forKey: "pref.if_has_discovered_easter_egg") as? Bool == true)
+
+    log.resetStates(shouldResetOnboarding: true)
+
+    #expect(defaults.object(forKey: "pref.if_should_show_onboarding") as? Bool == true)
+    #expect(defaults.object(forKey: "pref.if_has_discovered_rating") as? Bool == false)
+    #expect(defaults.object(forKey: "pref.if_has_discovered_alt_app_icon") as? Bool == false)
+    #expect(defaults.object(forKey: "pref.if_has_discovered_easter_egg") as? Bool == false)
+  }
 }

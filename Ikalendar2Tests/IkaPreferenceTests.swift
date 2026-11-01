@@ -13,7 +13,7 @@ import Testing
 
 /// Every test builds its own IkaPreference on a fresh UserDefaults suite, so the
 /// suite is parallel-safe. Haptics are no-ops on simulator; `preferredAppIcon` is
-/// only exercised in the dedicated persistence test (its didSet calls
+/// only assigned where a test needs it (its didSet calls
 /// UIApplication.setAlternateIconName, harmless but noisy on simulator).
 @MainActor
 @Suite("IkaPreference")
@@ -124,6 +124,112 @@ struct IkaPreferenceTests {
 
     IkaPreference(userDefaults: defaults).preferredAppIcon = .rick
     #expect(IkaPreference(userDefaults: defaults).preferredAppIcon == .rick)
+  }
+
+  // MARK: - On-disk format (golden)
+
+  // Keys and raw values are spelled out as literals on purpose: renaming a key constant
+  // or an enum raw value would silently reset every upgrading user's settings, so it must
+  // fail here. Never rewrite these literals in terms of `Constants.Key` or `rawValue`.
+
+  @Test
+  func `Pre-seeded on-disk values load under the frozen keys`() throws {
+    // Every value differs from its default, so a renamed key cannot pass via the fallback.
+    let defaults = try makeTestDefaults()
+    defaults.set("salmon", forKey: "pref.preferred_default.flat_mode")
+    defaults.set("salmon", forKey: "pref.preferred_default.game_mode")
+    defaults.set("league", forKey: "pref.preferred_default.battle_mode")
+    defaults.set("light", forKey: "pref.preferred_app_color_scheme")
+    defaults.set("rick", forKey: "pref.preferred_app_icon")
+    defaults.set(true, forKey: "pref.if_should_minimize_tab_bar")
+    defaults.set(true, forKey: "pref.if_should_swap_bottom_toolbar_pickers")
+    defaults.set(true, forKey: "pref.if_should_use_alt_stage_images")
+
+    let preference: IkaPreference = .init(userDefaults: defaults)
+
+    #expect(preference.preferredDefaultFlatMode == .salmon)
+    #expect(preference.preferredDefaultGameMode == .salmon)
+    #expect(preference.preferredDefaultBattleMode == .league)
+    #expect(preference.preferredAppColorScheme == .light)
+    #expect(preference.preferredAppIcon == .rick)
+    #expect(preference.shouldMinimizeTabBar)
+    #expect(preference.shouldSwapBottomToolbarPickers)
+    #expect(preference.shouldUseAltStageImages)
+  }
+
+  @Test
+  func `Writes store the frozen raw values under the frozen keys`() throws {
+    let defaults = try makeTestDefaults()
+    let preference: IkaPreference = .init(userDefaults: defaults)
+
+    preference.preferredDefaultBattleMode = .league // flat mode follows to .league
+    preference.preferredDefaultGameMode = .salmon // flat mode follows to .salmon
+    preference.preferredAppColorScheme = .light
+    preference.preferredAppIcon = .rick
+    preference.shouldMinimizeTabBar = true
+    preference.shouldSwapBottomToolbarPickers = true
+    preference.shouldUseAltStageImages = true
+
+    #expect(defaults.string(forKey: "pref.preferred_default.flat_mode") == "salmon")
+    #expect(defaults.string(forKey: "pref.preferred_default.game_mode") == "salmon")
+    #expect(defaults.string(forKey: "pref.preferred_default.battle_mode") == "league")
+    #expect(defaults.string(forKey: "pref.preferred_app_color_scheme") == "light")
+    #expect(defaults.string(forKey: "pref.preferred_app_icon") == "rick")
+    #expect(defaults.object(forKey: "pref.if_should_minimize_tab_bar") as? Bool == true)
+    #expect(defaults.object(forKey: "pref.if_should_swap_bottom_toolbar_pickers") as? Bool == true)
+    #expect(defaults.object(forKey: "pref.if_should_use_alt_stage_images") as? Bool == true)
+
+    // Resetting writes the defaults back, which pins the default raw values on disk too
+    // (a load test cannot: a broken default raw value would pass via the fallback).
+    preference.resetPreferences()
+
+    #expect(defaults.string(forKey: "pref.preferred_default.flat_mode") == "regular")
+    #expect(defaults.string(forKey: "pref.preferred_default.game_mode") == "battle")
+    #expect(defaults.string(forKey: "pref.preferred_default.battle_mode") == "regular")
+    #expect(defaults.string(forKey: "pref.preferred_app_color_scheme") == "dark")
+    #expect(defaults.string(forKey: "pref.preferred_app_icon") == "preset")
+    #expect(defaults.object(forKey: "pref.if_should_minimize_tab_bar") as? Bool == false)
+    #expect(defaults.object(forKey: "pref.if_should_swap_bottom_toolbar_pickers") as? Bool == false)
+    #expect(defaults.object(forKey: "pref.if_should_use_alt_stage_images") as? Bool == false)
+  }
+
+  @Test
+  func `Every enum raw value on disk is frozen`() {
+    // Covers the cases the two store tests above do not reach. A new case without a
+    // golden entry fails too, which forces a conscious decision about its encoding.
+    let flatModes: [FlatMode: String] = [
+      .regular: "regular",
+      .gachi: "gachi",
+      .league: "league",
+      .salmon: "salmon",
+    ]
+    let gameModes: [GameMode: String] = [
+      .battle: "battle",
+      .salmon: "salmon",
+    ]
+    let battleModes: [BattleMode: String] = [
+      .regular: "regular",
+      .gachi: "gachi",
+      .league: "league",
+    ]
+    let colorSchemes: [IkaPreferredColorScheme: String] = [
+      .system: "system",
+      .dark: "dark",
+      .light: "light",
+    ]
+    let appIcons: [IkaAppIcon: String] = [
+      .preset: "preset",
+      .signature: "signature",
+      .outlined: "outlined",
+      .legacy: "legacy",
+      .rick: "rick",
+    ]
+
+    for mode in FlatMode.allCases { #expect(mode.rawValue == flatModes[mode]) }
+    for mode in GameMode.allCases { #expect(mode.rawValue == gameModes[mode]) }
+    for mode in BattleMode.allCases { #expect(mode.rawValue == battleModes[mode]) }
+    for scheme in IkaPreferredColorScheme.allCases { #expect(scheme.rawValue == colorSchemes[scheme]) }
+    for icon in IkaAppIcon.allCases { #expect(icon.rawValue == appIcons[icon]) }
   }
 
   // MARK: - Reset & termination
