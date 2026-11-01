@@ -112,8 +112,9 @@ final class IkaCatalog {
   }
 
   @ObservationIgnored private var isSilentLoadingEnabled: Bool = false
-  /// Bumped by every load, so a cancelled load can tell whether a newer one took over.
-  @ObservationIgnored private var loadGeneration: Int = 0
+  /// The number of loads in flight, so a cancelled load can tell whether another load
+  /// (newer or older) still owns the `.loading` status.
+  @ObservationIgnored private var inFlightLoadCount: Int = 0
 
   private(set) var loadStatus: LoadStatus = .loading
   {
@@ -152,10 +153,11 @@ final class IkaCatalog {
     // Scoped to this call: a silent onboarding load must not also silence the
     // status changes of later auto-loads.
     isSilentLoadingEnabled = shouldEnableSilentLoading
-    defer { isSilentLoadingEnabled = false }
-
-    loadGeneration += 1
-    let generation = loadGeneration
+    inFlightLoadCount += 1
+    defer {
+      isSilentLoadingEnabled = false
+      inFlightLoadCount -= 1
+    }
 
     await setLoadStatus(.loading)
     do {
@@ -163,10 +165,11 @@ final class IkaCatalog {
       await setLoadStatus(.loaded)
     }
     catch is CancellationError {
-      // Task was cancelled (e.g. owning view disappeared) - no error UI. Unless a newer
-      // load took over, put the last result back: a catalog parked in `.loading` keeps the
-      // lists, the refresh button and the auto-load gate disabled, and nothing else clears it.
-      if generation == loadGeneration { restoreLoadResultStatus() }
+      // Task was cancelled (e.g. owning view disappeared) - no error UI. Unless another
+      // load is still in flight, put the last result back: a catalog parked in `.loading`
+      // keeps the lists, the refresh button and the auto-load gate disabled, and nothing
+      // else clears it. The load still in flight settles the status when it finishes.
+      if inFlightLoadCount == 1 { restoreLoadResultStatus() }
     }
     catch let error as IkaError {
       await setLoadStatus(.error(error))

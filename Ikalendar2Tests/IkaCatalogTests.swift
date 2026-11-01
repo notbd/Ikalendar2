@@ -15,7 +15,8 @@ import Testing
 ///
 /// Assertion strategy: only assert AFTER `await catalog.refresh()` returns - the
 /// status-transition delays (0.2s loaded / 1s error) complete inside refresh(), so
-/// final-state assertions are deterministic. Never poll for intermediate `.loading`.
+/// final-state assertions are deterministic. Do not poll for intermediate `.loading`,
+/// except in the cancellation tests: they wait for it to know a hanging load is in flight.
 ///
 /// The load timeout is injected: a generous one for every test except the dedicated
 /// timeout test, so a congested CI runner can never turn a mocked success into a
@@ -202,6 +203,38 @@ struct IkaCatalogTests {
     #expect(catalog.loadStatus == .loaded)
     #expect(catalog.loadResultStatus == .loaded)
     #expect(!catalog.battleRotationDict.hasEmptyMode) // the first result is kept
+  }
+
+  @Test(.timeLimit(.minutes(1)))
+  func `Cancelled refresh keeps loading while another load is in flight`() async {
+    // Two overlapping refreshes, e.g. a pull-to-refresh during an onboarding load. Only the
+    // last load in flight may restore the result, whichever of the two is cancelled first.
+    let hasLoadedOnce: FlipFlag = .init()
+    let catalog = makeCatalog(
+      battle: {
+        if await hasLoadedOnce.value {
+          return try await hangingForever()
+        }
+        await hasLoadedOnce.set()
+        return TestData.battleDict()
+      },
+      salmon: { [] })
+
+    await catalog.refresh()
+    #expect(catalog.loadStatus == .loaded)
+
+    let older = Task { await catalog.refresh() }
+    await waitUntil { catalog.loadStatus == .loading }
+
+    let newer = Task { await catalog.refresh() }
+    newer.cancel()
+    await newer.value
+    #expect(catalog.loadStatus == .loading) // the older load still owns the status
+
+    older.cancel()
+    await older.value
+    #expect(catalog.loadStatus == .loaded)
+    #expect(catalog.loadResultStatus == .loaded)
   }
 }
 

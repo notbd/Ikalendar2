@@ -81,11 +81,11 @@ final private class StubURLProtocol: URLProtocol {
 
   static let stubbedResponse: Mutex<Response?> = .init(nil)
 
-  override class func canInit(with _: URLRequest) -> Bool {
+  override static func canInit(with _: URLRequest) -> Bool {
     true
   }
 
-  override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+  override static func canonicalRequest(for request: URLRequest) -> URLRequest {
     request
   }
 
