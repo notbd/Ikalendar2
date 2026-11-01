@@ -85,6 +85,18 @@ struct ModeIconStampMathTests {
   }
 
   @Test
+  func `Dock progress is measured from the resting top inset`() {
+    // At rest under the expanded large title (168 pt inset).
+    #expect(ModeIconStamp.dockProgress(contentOffsetY: -168, restingTopInset: 168) == 0)
+    // Halfway through the dock travel while the title collapses.
+    #expect(ModeIconStamp.dockProgress(contentOffsetY: -146, restingTopInset: 168) == 0.5)
+    // At the list's new top under a still-collapsed bar (116 pt inset) after rows above were removed.
+    #expect(ModeIconStamp.dockProgress(contentOffsetY: -116, restingTopInset: 168) == 1)
+    // Pulling to refresh leaves the stamp at rest.
+    #expect(ModeIconStamp.dockProgress(contentOffsetY: -200, restingTopInset: 168) == 0)
+  }
+
+  @Test
   func `Dock style is at rest at zero and docked at one`() {
     let docked: DockStyle = ModeIconStamp.dockStyle(progress: 1)
 

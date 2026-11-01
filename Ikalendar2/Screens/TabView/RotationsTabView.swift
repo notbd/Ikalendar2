@@ -17,17 +17,28 @@ struct RotationsTabView: View {
 
   let flatMode: FlatMode
 
-  /// Driven by the scroll distance from the top of the list, not by the nav bar's safe area:
-  /// that inset does not shrink as the large title collapses but jumps by the full title height
-  /// at the end. Clamped in the transform, so scrolling past the dock travel updates nothing.
+  /// Driven by the scroll distance from where the list rests under the expanded large title, not
+  /// from the current top inset: that inset shrinks by the title height as the title collapses
+  /// (gradually under a drag, in one step at the end of a programmatic scroll) and stays shrunk
+  /// when rows above are removed while scrolled. Clamped in the transform, so scrolling past the
+  /// dock travel updates nothing.
   @State private var dockProgress: Double = 0
+  /// The list's top content inset at rest under the expanded large title.
+  @State private var restingTopInset: CGFloat = 0
 
   var body: some View {
     ZStack {
       content
         .navigationTitle(title.localizedStringKey)
-        .onScrollGeometryChange(for: Double.self) { geometry in
-          ModeIconStamp.dockProgress(travel: geometry.contentOffset.y + geometry.contentInsets.top)
+        .onScrollGeometryChange(for: CGFloat.self) { geometry in
+          geometry.contentInsets.top
+        } action: { _, topInset in
+          // Kept from the first layout, where the large title is expanded: later insets also
+          // grow by the pull-to-refresh spinner.
+          if restingTopInset == 0 { restingTopInset = topInset }
+        }
+        .onScrollGeometryChange(for: Double.self) { [restingTopInset] geometry in
+          ModeIconStamp.dockProgress(contentOffsetY: geometry.contentOffset.y, restingTopInset: restingTopInset)
         } action: { _, progress in
           dockProgress = progress
         }

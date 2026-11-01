@@ -181,6 +181,20 @@ extension ModeIconStamp {
     return min(max(Double(travel / dockTravel), 0), 1)
   }
 
+  /// The dock progress for a content offset, with the travel measured from where the list rests
+  /// under the expanded large title (`restingTopInset`) rather than from the current inset. The
+  /// inset shrinks by the title height as the title collapses, and stays shrunk when rows above
+  /// the viewport are removed while scrolled (a rotation rolling off): the list then sits at its
+  /// new top under a collapsed bar, which the current inset reads as no travel at all.
+  nonisolated static func dockProgress(
+    contentOffsetY: CGFloat,
+    restingTopInset: CGFloat,
+    dockTravel: CGFloat = Scoped.dockTravel)
+    -> Double
+  {
+    dockProgress(travel: contentOffsetY + restingTopInset, dockTravel: dockTravel)
+  }
+
   /// The stamp shrinks toward its top-trailing corner, is gone by `dockFadeOutEnd`, and stops
   /// tilting once docked.
   nonisolated static func dockStyle(progress: Double) -> DockStyle {
