@@ -44,9 +44,6 @@ struct SettingsAltAppIconView: View {
   @State private var shouldDisplayAnimatedCopy: Bool = false
 
   @State private var activeAppIconColorVariant: IkaAppIcon.ColorVariant = .default
-  private var activeAppIconDisplayMode: IkaAppIcon.DisplayMode {
-    .init(color: activeAppIconColorVariant, size: .small)
-  }
 
   @State private var slideShow: SlideShow = .init()
 
