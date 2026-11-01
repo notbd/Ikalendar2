@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 import SwiftUI
 
 extension Date {
@@ -37,10 +38,38 @@ extension Date {
 }
 
 extension Date {
-  // Configured once at init and only read afterwards; DateFormatter is Sendable
-  // (and thread-safe for formatting) as of the iOS 26 SDK.
-  static private let ikaTimeFormatter: DateFormatter = .init(ikaType: .time)
-  static private let ikaDateFormatter: DateFormatter = .init(ikaType: .date)
+  /// Cached formatters: they sit on per-second refresh paths and are expensive to create.
+  /// `DateFormatter` snapshots the time zone when it is created, so each one is re-synced
+  /// with the requested zone before every use (see `string(from:using:in:)`); otherwise
+  /// times would keep rendering in the launch-time zone after the device changes zones.
+  /// The lock makes that mutation safe from any isolation domain (iOS 17+).
+  static private let ikaTimeFormatter: OSAllocatedUnfairLock<DateFormatter> =
+    .init(initialState: .init(ikaType: .time))
+  static private let ikaDateFormatter: OSAllocatedUnfairLock<DateFormatter> =
+    .init(initialState: .init(ikaType: .date))
+
+  /// Formats `date` with a cached formatter after pointing it at `timeZone`.
+  static private func string(
+    from date: Date,
+    using lockedFormatter: OSAllocatedUnfairLock<DateFormatter>,
+    in timeZone: TimeZone)
+    -> String
+  {
+    lockedFormatter.withLock { formatter in
+      if formatter.timeZone != timeZone { formatter.timeZone = timeZone }
+      return formatter.string(from: date)
+    }
+  }
+
+  /// The time of day in the app's format (e.g. `10:00 PM`), rendered in `timeZone`.
+  func ikaTimeString(in timeZone: TimeZone = .current) -> String {
+    Date.string(from: self, using: Date.ikaTimeFormatter, in: timeZone)
+  }
+
+  /// The date in the app's format (e.g. `Sat, 10/26, `), rendered in `timeZone`.
+  func ikaDateString(in timeZone: TimeZone = .current) -> String {
+    Date.string(from: self, using: Date.ikaDateFormatter, in: timeZone)
+  }
 
   /// Formats the date as a string suitable for displaying battle rotation times.
   ///
@@ -58,7 +87,7 @@ extension Date {
     currentTime: Date? = nil)
     -> String
   {
-    let timeString = Date.ikaTimeFormatter.string(from: self)
+    let timeString = ikaTimeString()
 
     guard shouldIncludeDate
     else { return timeString }
@@ -88,7 +117,7 @@ extension Date {
     currentTime: Date? = nil)
     -> String
   {
-    let timeString = Date.ikaTimeFormatter.string(from: self)
+    let timeString = ikaTimeString()
 
     guard shouldIncludeDate
     else { return timeString }
@@ -98,8 +127,7 @@ extension Date {
     }
 
     // other than Today, Yesterday or Tomorrow
-    let dateString = Date.ikaDateFormatter.string(from: self)
-    return dateString + timeString
+    return ikaDateString() + timeString
   }
 
   /// The localized "Today", "Yesterday" or "Tomorrow" for this date relative to `reference`,
