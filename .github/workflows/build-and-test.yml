@@ -19,7 +19,7 @@ env:
   # Pinned tool versions: runner-preinstalled formatters drift across images and
   # rule behavior changes between releases (e.g. swiftTestingTestCaseNames in 0.60+).
   SWIFTFORMAT_VERSION: "0.64.5"
-  SWIFTLINT_VERSION: "0.63.3"
+  SWIFTLINT_VERSION: "0.65.1"
 
 jobs:
   lint:
