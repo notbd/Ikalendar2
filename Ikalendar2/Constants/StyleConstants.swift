@@ -33,7 +33,7 @@ extension Constants.Style {
   enum Overlay {
     enum AutoLoading {
       static let glassEffectContainerSpacing: CGFloat = 28
-      static let sfsymbolFont: Font = .system(size: 18)
+      static let symbolFont: Font = .system(size: 18)
       static let subtitle: String = "Autoloading..."
       static let subtitleFont: Font = .system(size: 14, weight: .medium, design: .rounded)
       static let subtitlePaddingH: CGFloat = 10
@@ -59,7 +59,7 @@ extension Constants.Style {
   enum Error {
     static let errorSectionPaddingTopHeightRatio: CGFloat = 0.22
     static let errorSectionSpacingHeightRatio: CGFloat = 0.14
-    static let errorImgHeightRatio: CGFloat = 0.12
+    static let errorImageHeightRatio: CGFloat = 0.12
 
     static let textSectionSpacing: CGFloat = 40
     static let messageLineSpacing: CGFloat = 6
@@ -111,7 +111,7 @@ extension Constants.Style {
       static let tabBarMinimizingOffSFSymbol = "arrow.left.and.line.vertical.and.arrow.right"
       static let tabBarMinimizingOnSFSymbol = "arrow.right.and.line.vertical.and.arrow.left"
 
-      static let altStageImgSFSymbol = "compass.drawing"
+      static let altStageImageSFSymbol = "compass.drawing"
       static let altStagePreviewShuffleSFSymbol = "arrow.triangle.2.circlepath"
 
       static let previewCellMaxWidth: CGFloat = 390
@@ -199,7 +199,7 @@ extension Constants.Style {
       }
     }
 
-    // MARK: - BATTLE
+    // MARK: - Battle
 
     enum Battle {
       enum Cell {
@@ -228,9 +228,9 @@ extension Constants.Style {
         enum Secondary {
           static let ruleSectionSpacing: CGFloat = 2
 
-          static let ruleImgHeightRatio: CGFloat = 0.1
-          static let ruleImgPadding: CGFloat = 5
-          static let ruleImgFrameCornerRadius: CGFloat = 12
+          static let ruleImageHeightRatio: CGFloat = 0.1
+          static let ruleImagePadding: CGFloat = 5
+          static let ruleImageFrameCornerRadius: CGFloat = 12
 
           static let ruleFontSize: CGFloat = 18
           static let ruleTitleHeight: CGFloat = 24
@@ -242,7 +242,7 @@ extension Constants.Style {
 
       enum Card {
         enum Primary {
-          static let imgCornerRadius: CGFloat = 12
+          static let imageCornerRadius: CGFloat = 12
           static let labelFontSize: CGFloat = 13
           static let labelPaddingLeading: CGFloat = 20
           static let labelPaddingBottomTrailing: CGFloat = 2.5
@@ -250,18 +250,18 @@ extension Constants.Style {
 
         enum Secondary {
           static let spacingV: CGFloat = 4
-          static let imgCornerRadius: CGFloat = 12
+          static let imageCornerRadius: CGFloat = 12
           static let fontSize: CGFloat = 12
         }
       }
     }
 
-    // MARK: - SALMON RUN
+    // MARK: - Salmon Run
 
     enum Salmon {
       enum Cell {
         static let cellSpacing: CGFloat = 10
-        static let cellPaddingVertical: CGFloat = 6
+        static let cellPaddingV: CGFloat = 6
 
         static let progressFontSize: CGFloat = 16
 
@@ -279,18 +279,18 @@ extension Constants.Style {
 
       enum Card {
         enum Stage {
-          static let stageImgCornerRadius: CGFloat = 12
+          static let stageImageCornerRadius: CGFloat = 12
 
           static let labelFontSize: CGFloat = 13
           static let overlayPadding: CGFloat = 4
 
-          static let apparelImgPadding: CGFloat = 4
-          static let apparelImgWidthRatio: CGFloat = 0.16
+          static let apparelImagePadding: CGFloat = 4
+          static let apparelImageWidthRatio: CGFloat = 0.16
           static let apparelFrameCornerRadius: CGFloat = 7
         }
 
         enum Weapon {
-          static let imgPadding: CGFloat = 3
+          static let imagePadding: CGFloat = 3
           static let frameCornerRadius: CGFloat = 12
         }
       }

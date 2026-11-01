@@ -74,7 +74,7 @@ struct DetailsLicenseView: View {
       VStack(alignment: .leading) {
         if !hasErrored {
           Text(
-            licenseViewModel.map { String(localized: "\($0.gist) be licensed under") }
+            licenseViewModel.map { String(localized: "\($0.ownerAndRepo) be licensed under") }
               ?? Constants.Key.Placeholder.unknown)
             .foregroundStyle(Color.secondary)
             .font(Scoped.licenseCaptionFont)

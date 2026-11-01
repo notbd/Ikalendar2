@@ -269,8 +269,8 @@ final class IkaCatalog {
 
     didSet {
       // Same idea as loadResultStatus: track the last non-idle status, deduped.
-      if autoLoadStatus != .idle, autoLoadDelayedIdleStatus != autoLoadStatus {
-        autoLoadDelayedIdleStatus = autoLoadStatus
+      if autoLoadStatus != .idle, autoLoadDisplayStatus != autoLoadStatus {
+        autoLoadDisplayStatus = autoLoadStatus
       }
     }
   }
@@ -278,7 +278,7 @@ final class IkaCatalog {
   /// What the auto-load toast shows. Follows `autoLoadStatus`, except that it returns to `.idle`
   /// one `idleAndNonIdleStatusUpdateInterval` later, so the icon keeps its final symbol while
   /// the toast fades out.
-  private(set) var autoLoadDelayedIdleStatus: AutoLoadStatus = .idle
+  private(set) var autoLoadDisplayStatus: AutoLoadStatus = .idle
 
   private func handleAutoLoadCheck() {
     guard shouldAutoLoad else { return }
@@ -421,7 +421,7 @@ final class IkaCatalog {
           try? await Task.sleep(for: .seconds(timing.idleAndNonIdleStatusUpdateInterval))
           guard !Task.isCancelled else { return }
 
-          autoLoadDelayedIdleStatus = .idle
+          autoLoadDisplayStatus = .idle
         }
 
       case .idle:

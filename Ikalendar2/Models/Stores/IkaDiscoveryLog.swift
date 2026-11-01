@@ -61,11 +61,11 @@ final class IkaDiscoveryLog {
       forKey: Scoped.hasDiscoveredEasterEgg, default: false)
   }
 
-  func resetStates(shouldResetOnboarding: Bool = false) {
+  func reset(includingOnboarding: Bool = false) {
     hasDiscoveredRating = false
     hasDiscoveredAltAppIcon = false
     hasDiscoveredEasterEgg = false
-    if shouldResetOnboarding {
+    if includingOnboarding {
       shouldShowOnboarding = true
     }
   }

@@ -69,10 +69,10 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAppStates: some View {
     Button {
-      connectivityChecker.resetStatus()
+      connectivityChecker.reset()
       ikaPreference.revertEasterEggAppIcon()
-      ikaStatus.resetStatuses(shouldExitSettings: false)
-      ikaDiscoveryLog.resetStates(shouldResetOnboarding: false)
+      ikaStatus.reset(dismissingSettings: false)
+      ikaDiscoveryLog.reset(includingOnboarding: false)
       presentResetDoneAlert(titled: String(localized: "States Reset"))
     } label: {
       Text("Reset App States")
@@ -82,7 +82,7 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAppPreferences: some View {
     Button {
-      ikaPreference.resetPreferences()
+      ikaPreference.reset()
       presentResetDoneAlert(titled: String(localized: "Preferences Reset"))
     } label: {
       Text("Reset App Preferences")
@@ -92,10 +92,10 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAll: some View {
     Button {
-      connectivityChecker.resetStatus()
-      ikaPreference.resetPreferences()
-      ikaStatus.resetStatuses(shouldExitSettings: true)
-      ikaDiscoveryLog.resetStates(shouldResetOnboarding: true)
+      connectivityChecker.reset()
+      ikaPreference.reset()
+      ikaStatus.reset(dismissingSettings: true)
+      ikaDiscoveryLog.reset(includingOnboarding: true)
       presentResetDoneAlert(titled: String(localized: "All Reset"))
     } label: {
       Text("Reset All")

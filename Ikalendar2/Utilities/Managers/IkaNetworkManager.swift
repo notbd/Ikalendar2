@@ -46,7 +46,7 @@ final class IkaNetworkManager: IkaNetworkService {
   func fetchLicense(from githubRepoURLString: String)
     async throws -> IkaOpenSourceLicense
   {
-    guard let githubAPIURLString = IkaOpenSourceLicense.parseGithubAPIURLString(from: githubRepoURLString)
+    guard let githubAPIURLString = IkaOpenSourceLicense.githubAPIURLString(fromRepoURL: githubRepoURLString)
     else { throw IkaError.unknownError }
     guard let githubAPIURL = URL(string: githubAPIURLString)
     else { throw IkaError.unknownError }

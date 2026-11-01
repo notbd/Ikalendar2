@@ -241,9 +241,9 @@ struct BattleRotationCellSecondary: View {
       .resizable()
       .scaledToFit()
       .shadow(radius: Constants.Style.Global.shadowRadius)
-      .frame(height: rowWidth * Scoped.ruleImgHeightRatio)
-      .padding(Scoped.ruleImgPadding)
-      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.ruleImgFrameCornerRadius))
+      .frame(height: rowWidth * Scoped.ruleImageHeightRatio)
+      .padding(Scoped.ruleImagePadding)
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.ruleImageFrameCornerRadius))
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,

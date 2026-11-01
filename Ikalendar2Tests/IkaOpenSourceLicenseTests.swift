@@ -27,7 +27,7 @@ struct IkaOpenSourceLicenseTests {
     ("https://github.com/misenhower/splatoon2.ink", "https://api.github.com/repos/misenhower/splatoon2.ink/license"),
   ])
   func `Repo URL maps to the license API URL`(repoURL: String, apiURL: String) {
-    #expect(IkaOpenSourceLicense.parseGithubAPIURLString(from: repoURL) == apiURL)
+    #expect(IkaOpenSourceLicense.githubAPIURLString(fromRepoURL: repoURL) == apiURL)
   }
 
   @Test(arguments: [
@@ -36,30 +36,30 @@ struct IkaOpenSourceLicenseTests {
     ("https://api.github.com/repos/misenhower/splatoon2.ink", "https://github.com/misenhower/splatoon2.ink"),
   ])
   func `API URL maps back to the repo URL`(apiURL: String, repoURL: String) {
-    #expect(IkaOpenSourceLicense.parseGithubRepoURLString(from: apiURL) == repoURL)
+    #expect(IkaOpenSourceLicense.githubRepoURLString(fromAPIURL: apiURL) == repoURL)
   }
 
   @Test
   func `Non-GitHub URLs do not parse`() {
-    #expect(IkaOpenSourceLicense.parseGithubAPIURLString(from: "https://example.com/owner/repo") == nil)
-    #expect(IkaOpenSourceLicense.parseGithubRepoURLString(from: "https://example.com/no-repos-here") == nil)
+    #expect(IkaOpenSourceLicense.githubAPIURLString(fromRepoURL: "https://example.com/owner/repo") == nil)
+    #expect(IkaOpenSourceLicense.githubRepoURLString(fromAPIURL: "https://example.com/no-repos-here") == nil)
   }
 
   @Test
   func `Owner and repo come from the repo URL`() {
     let simpleHaptics: IkaOpenSourceLicense = license(repoURL: "https://github.com/notbd/SimpleHaptics")
-    #expect(simpleHaptics.gist == "notbd/SimpleHaptics")
+    #expect(simpleHaptics.ownerAndRepo == "notbd/SimpleHaptics")
 
     let dotted: IkaOpenSourceLicense = license(repoURL: "https://github.com/misenhower/splatoon2.ink")
-    #expect(dotted.gist == "misenhower/splatoon2.ink")
+    #expect(dotted.ownerAndRepo == "misenhower/splatoon2.ink")
 
     let hyphenated: IkaOpenSourceLicense = license(repoURL: "https://github.com/sparrow-code/swift-collections")
-    #expect(hyphenated.gist == "sparrow-code/swift-collections")
+    #expect(hyphenated.ownerAndRepo == "sparrow-code/swift-collections")
   }
 
   @Test
   func `Non-GitHub repo URL falls back to the unknown placeholder`() {
     let unknown: IkaOpenSourceLicense = license(repoURL: "")
-    #expect(unknown.gist == Constants.Key.Placeholder.unknown)
+    #expect(unknown.ownerAndRepo == Constants.Key.Placeholder.unknown)
   }
 }

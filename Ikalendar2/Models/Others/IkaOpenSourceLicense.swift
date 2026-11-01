@@ -14,14 +14,14 @@ struct IkaOpenSourceLicense {
   let typeDescription: String
   let content: String
 
-  var gist: String {
-    ownerAndRepo.map { "\($0.owner)/\($0.repo)" } ?? Constants.Key.Placeholder.unknown
+  var ownerAndRepo: String {
+    ownerRepoPair.map { "\($0.owner)/\($0.repo)" } ?? Constants.Key.Placeholder.unknown
   }
 
   /// The owner and repo parsed from `repoURL`, or `nil` if it is not a GitHub repo URL.
   /// GitHub names may contain `-` and `.` (e.g. `misenhower/splatoon2.ink`).
   /// - Note: computed (not stored) so the struct keeps its memberwise initializer.
-  private var ownerAndRepo: (owner: Substring, repo: Substring)? {
+  private var ownerRepoPair: (owner: Substring, repo: Substring)? {
     guard let (_, owner, repo) = repoURL.firstMatch(of: /github.com\/([\w.-]+)\/([\w.-]+)/)?.output
     else { return nil }
 
@@ -33,13 +33,13 @@ struct IkaOpenSourceLicense {
   /// to
   /// `https://api.github.com/repos/SwiftyJSON/SwiftyJSON/license`
   ///
-  static func parseGithubAPIURLString(from repoURLString: String) -> String? {
+  static func githubAPIURLString(fromRepoURL repoURLString: String) -> String? {
     let regex = /github.com\/([\w.-]+\/[\w.-]+)/
 
-    guard let (_, gist) = repoURLString.firstMatch(of: regex)?.output
+    guard let (_, ownerAndRepo) = repoURLString.firstMatch(of: regex)?.output
     else { return nil }
 
-    return "https://api.github.com/repos/" + gist + "/license"
+    return "https://api.github.com/repos/" + ownerAndRepo + "/license"
   }
 
   /// Transform from
@@ -47,11 +47,11 @@ struct IkaOpenSourceLicense {
   /// to
   /// `https://github.com/SwiftyJSON/SwiftyJSON`
   ///
-  static func parseGithubRepoURLString(from apiURLString: String) -> String? {
+  static func githubRepoURLString(fromAPIURL apiURLString: String) -> String? {
     let regex = /api.github.com\/repos\/([\w.-]+\/[\w.-]+)/
-    guard let (_, gist) = apiURLString.firstMatch(of: regex)?.output
+    guard let (_, ownerAndRepo) = apiURLString.firstMatch(of: regex)?.output
     else { return nil }
 
-    return "https://github.com/" + gist
+    return "https://github.com/" + ownerAndRepo
   }
 }

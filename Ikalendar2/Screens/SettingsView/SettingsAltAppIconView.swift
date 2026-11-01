@@ -24,11 +24,11 @@ struct SettingsAltAppIconView: View {
 
   @Environment(IkaConnectivityChecker.self) private var connectivityChecker
 
-  @State private var doesPreferRickOnAppear: Bool = false
+  @State private var wasRickPreferredOnAppear: Bool = false
   @State private var triggeredEasterEgg: Bool = false
   /// The Rick section shows when Rick was already the chosen icon on entry, or after the hidden
   /// trigger button is tapped; when Rick was the icon on entry the button cannot hide it again.
-  private var showEasterEgg: Bool { doesPreferRickOnAppear || triggeredEasterEgg }
+  private var showEasterEgg: Bool { wasRickPreferredOnAppear || triggeredEasterEgg }
 
   @State private var easterEggCellRectGlobal: CGRect = .init()
   @State private var easterEggBounceCounter: Int = 0
@@ -188,7 +188,7 @@ struct SettingsAltAppIconView: View {
         .padding()
     }
     .onAppear {
-      doesPreferRickOnAppear = ikaPreference.preferredAppIcon == .rick
+      wasRickPreferredOnAppear = ikaPreference.preferredAppIcon == .rick
       Task { await connectivityChecker.performGFWCheck() }
     }
     .onDisappear { easterEggJumpTask?.cancel() }
@@ -375,7 +375,7 @@ struct SettingsAltAppIconView: View {
 
   private var easterEggTrigger: some View {
     Button {
-      if !doesPreferRickOnAppear { SimpleHaptics.generateTask(.soft) }
+      if !wasRickPreferredOnAppear { SimpleHaptics.generateTask(.soft) }
       withAnimation { triggeredEasterEgg.toggle() }
     }
     label: {

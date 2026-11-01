@@ -181,7 +181,7 @@ struct IkaPreferenceTests {
 
     // Resetting writes the defaults back, which pins the default raw values on disk too
     // (a load test cannot: a broken default raw value would pass via the fallback).
-    preference.resetPreferences()
+    preference.reset()
 
     #expect(defaults.string(forKey: "pref.preferred_default.flat_mode") == "regular")
     #expect(defaults.string(forKey: "pref.preferred_default.game_mode") == "battle")
@@ -243,7 +243,7 @@ struct IkaPreferenceTests {
     preference.shouldSwapBottomToolbarPickers = true
     preference.shouldUseAltStageImages = true
 
-    preference.resetPreferences()
+    preference.reset()
 
     #expect(preference.preferredDefaultFlatMode == .default)
     #expect(preference.preferredDefaultGameMode == .default)

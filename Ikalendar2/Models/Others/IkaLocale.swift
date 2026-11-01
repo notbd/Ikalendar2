@@ -17,7 +17,7 @@ enum IkaLocale {
   case zhHant
   case unknown
 
-  var description: String {
+  var displayName: String {
     switch self {
       case .en:
         "English"

@@ -42,7 +42,7 @@ struct SalmonRotationCell: View {
     }
     // Workaround (e33efad): List adds its own vertical insets to cells whose content is too
     // short (the time-only rows). Padding every cell the same way keeps row spacing consistent.
-    .padding(.vertical, Scoped.cellPaddingVertical)
+    .padding(.vertical, Scoped.cellPaddingV)
     .accessibilityElement(children: .combine)
   }
 

@@ -103,11 +103,11 @@ final class IkaStatus {
     currentBattleMode = ikaPreference.preferredDefaultBattleMode
   }
 
-  func resetStatuses(shouldExitSettings: Bool = false) {
+  func reset(dismissingSettings: Bool = false) {
     currentFlatMode = ikaPreference.preferredDefaultFlatMode
     currentGameMode = ikaPreference.preferredDefaultGameMode
     currentBattleMode = ikaPreference.preferredDefaultBattleMode
-    if shouldExitSettings {
+    if dismissingSettings {
       isSettingsPresented = false
     }
   }

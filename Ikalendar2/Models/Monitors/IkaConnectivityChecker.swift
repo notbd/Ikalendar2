@@ -16,7 +16,7 @@ import OSLog
 @Observable
 final class IkaConnectivityChecker {
   private(set) var isGFWed: Bool = false
-  private(set) var checkInProgress: Bool = false
+  private(set) var isCheckInProgress: Bool = false
 
   private let testDomains: [String] = [
     "www.google.com",
@@ -35,9 +35,9 @@ final class IkaConnectivityChecker {
   }
 
   func performGFWCheck() async {
-    guard !checkInProgress else { return }
+    guard !isCheckInProgress else { return }
 
-    checkInProgress = true
+    isCheckInProgress = true
 
     var failedChecksCount: Int = 0
     let totalChecks = testDomains.count
@@ -66,7 +66,7 @@ final class IkaConnectivityChecker {
       }
     }
 
-    checkInProgress = false
+    isCheckInProgress = false
 
     // unidirectionally flips the isGFWed status, stays true once gets there
     isGFWed = isGFWed || (failedChecksCount == totalChecks)
@@ -74,7 +74,7 @@ final class IkaConnectivityChecker {
   }
 
   /// Debug Options only: clears the sticky flag so the next check starts clean.
-  func resetStatus() {
+  func reset() {
     isGFWed = false
   }
 }

@@ -34,8 +34,8 @@ struct BattleRotationStageCardPrimary: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .clipShape(.rect(cornerRadius: Scoped.imgCornerRadius))
-      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.imgCornerRadius))
+      .clipShape(.rect(cornerRadius: Scoped.imageCornerRadius))
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.imageCornerRadius))
       .shadow(radius: Constants.Style.Global.shadowRadius)
       .overlay(
         StageTitleLabel(
@@ -82,10 +82,10 @@ struct BattleRotationStageCardSecondary: View {
         .antialiased(true)
         .resizable()
         .scaledToFit()
-        .clipShape(.rect(cornerRadius: Scoped.imgCornerRadius))
+        .clipShape(.rect(cornerRadius: Scoped.imageCornerRadius))
         .glassEffect(
           .clear.interactive(),
-          in: .rect(cornerRadius: Scoped.imgCornerRadius))
+          in: .rect(cornerRadius: Scoped.imageCornerRadius))
         .shadow(radius: Constants.Style.Global.shadowRadius)
         .alignmentGuide(.battleStagesImageAlignment) { $0[.bottom] }
         .layoutPriority(1)

@@ -30,7 +30,7 @@ enum IkaDecoder {
       let licenseType = licenseInfo.spdxID,
       let licenseTypeDescription = licenseInfo.name,
       let githubAPIURLString = dto.url,
-      let githubRepoURLString = IkaOpenSourceLicense.parseGithubRepoURLString(from: githubAPIURLString),
+      let githubRepoURLString = IkaOpenSourceLicense.githubRepoURLString(fromAPIURL: githubAPIURLString),
       let base64Content = dto.content
     else { throw IkaError.serverError(.badData) }
 

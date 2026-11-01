@@ -24,7 +24,7 @@ struct RotationsTabsView: View {
           value: flatMode)
         {
           NavigationStack {
-            RotationsTabView(adoptedFlatMode: flatMode)
+            RotationsTabView(flatMode: flatMode)
               .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                   ToolbarSettingsButton()

@@ -43,7 +43,7 @@ struct SalmonRotationWeaponCardIcon: View {
       .resizable()
       .scaledToFit()
       .shadow(radius: Constants.Style.Global.shadowRadius)
-      .padding(Scoped.imgPadding)
+      .padding(Scoped.imagePadding)
       .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.frameCornerRadius))
       .accessibilityLabel(Text(weapon.name.localizedStringKey))
   }

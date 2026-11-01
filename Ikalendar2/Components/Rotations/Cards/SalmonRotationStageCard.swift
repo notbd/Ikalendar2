@@ -45,8 +45,8 @@ struct SalmonRotationStageCard: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .clipShape(.rect(cornerRadius: Scoped.stageImgCornerRadius))
-      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.stageImgCornerRadius))
+      .clipShape(.rect(cornerRadius: Scoped.stageImageCornerRadius))
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.stageImageCornerRadius))
       .shadow(radius: Constants.Style.Global.shadowRadius)
       .overlay(
         overlay,
@@ -89,8 +89,8 @@ struct SalmonRotationStageCard: View {
       .antialiased(true)
       .resizable()
       .scaledToFit()
-      .padding(Scoped.apparelImgPadding)
-      .frame(width: cardWidth * Scoped.apparelImgWidthRatio)
+      .padding(Scoped.apparelImagePadding)
+      .frame(width: cardWidth * Scoped.apparelImageWidthRatio)
       .glassEffect(
         .clear.interactive(),
         in: .rect(cornerRadius: Scoped.apparelFrameCornerRadius))

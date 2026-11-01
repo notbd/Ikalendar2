@@ -50,7 +50,7 @@ struct IkaDiscoveryLogTests {
     log.hasDiscoveredAltAppIcon = true
     log.hasDiscoveredEasterEgg = true
 
-    log.resetStates()
+    log.reset()
 
     #expect(!log.shouldShowOnboarding)
     #expect(!log.hasDiscoveredRating)
@@ -63,7 +63,7 @@ struct IkaDiscoveryLogTests {
     let log = try IkaDiscoveryLog(userDefaults: makeTestDefaults())
     log.shouldShowOnboarding = false
 
-    log.resetStates(shouldResetOnboarding: true)
+    log.reset(includingOnboarding: true)
 
     #expect(log.shouldShowOnboarding)
   }
@@ -106,7 +106,7 @@ struct IkaDiscoveryLogTests {
     #expect(defaults.object(forKey: "pref.if_has_discovered_alt_app_icon") as? Bool == true)
     #expect(defaults.object(forKey: "pref.if_has_discovered_easter_egg") as? Bool == true)
 
-    log.resetStates(shouldResetOnboarding: true)
+    log.reset(includingOnboarding: true)
 
     #expect(defaults.object(forKey: "pref.if_should_show_onboarding") as? Bool == true)
     #expect(defaults.object(forKey: "pref.if_has_discovered_rating") as? Bool == false)

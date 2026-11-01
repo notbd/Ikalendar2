@@ -31,7 +31,7 @@ struct ErrorView: View {
             .frame(height: geo.size.height * Scoped.errorSectionSpacingHeightRatio)
 
           errorImage
-            .frame(height: geo.size.height * Scoped.errorImgHeightRatio)
+            .frame(height: geo.size.height * Scoped.errorImageHeightRatio)
             .hAlignment(.leading)
         }
         .padding(.horizontal)

@@ -241,7 +241,7 @@ struct SettingsMainView: View {
 
         Spacer()
 
-        Text(currentLocale.toIkaLocale().description)
+        Text(currentLocale.toIkaLocale().displayName)
           .foregroundStyle(Color.secondary)
 
         Constants.Style.Global.externalLinkJumpIcon

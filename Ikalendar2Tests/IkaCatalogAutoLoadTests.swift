@@ -71,7 +71,7 @@ struct IkaCatalogAutoLoadTests {
     await waitUntil {
       !catalog.battleRotationDict.isOutdated(.init()) &&
         catalog.autoLoadStatus == .idle &&
-        catalog.autoLoadDelayedIdleStatus == .idle
+        catalog.autoLoadDisplayStatus == .idle
     }
   }
 
@@ -91,18 +91,18 @@ struct IkaCatalogAutoLoadTests {
     scenario.battleRotationDict = freshDict
     scenario.isBattleFetchHeld = true
     await waitUntil { catalog.autoLoadStatus == .autoLoading }
-    #expect(catalog.autoLoadDelayedIdleStatus == .autoLoading)
+    #expect(catalog.autoLoadDisplayStatus == .autoLoading)
 
     scenario.isBattleFetchHeld = false
     await waitUntil { catalog.autoLoadStatus == .autoLoaded(.success) }
     #expect(catalog.battleRotationDict == freshDict)
     #expect(catalog.loadStatus == .loaded)
-    #expect(catalog.autoLoadDelayedIdleStatus == .autoLoaded(.success))
+    #expect(catalog.autoLoadDisplayStatus == .autoLoaded(.success))
 
     // The result lingers until the app is active, then both statuses fall back to idle.
     scenario.isAppActive = true
     await waitUntil { catalog.autoLoadStatus == .idle }
-    await waitUntil { catalog.autoLoadDelayedIdleStatus == .idle }
+    await waitUntil { catalog.autoLoadDisplayStatus == .idle }
 
     await settle(catalog, scenario)
   }
@@ -144,13 +144,13 @@ struct IkaCatalogAutoLoadTests {
     scenario.isBattleFetchHeld = true
     scenario.isAppActive = true
     await waitUntil { catalog.autoLoadStatus == .autoLoading }
-    #expect(catalog.autoLoadDelayedIdleStatus == .autoLoading)
+    #expect(catalog.autoLoadDisplayStatus == .autoLoading)
 
     // Outlast the old linger's idle delay; a linger that was not cancelled would reset
     // the delayed status of the running cycle to `.idle` here.
     try? await Task.sleep(for: .seconds(1.5))
     #expect(catalog.autoLoadStatus == .autoLoading)
-    #expect(catalog.autoLoadDelayedIdleStatus == .autoLoading)
+    #expect(catalog.autoLoadDisplayStatus == .autoLoading)
 
     await settle(catalog, scenario)
   }

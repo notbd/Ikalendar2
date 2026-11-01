@@ -24,7 +24,7 @@ struct SettingsAdvancedOptionsView: View {
 
   @State private var rowWidth: CGFloat = 390
 
-  private var doesNeedPaddedPreview: Bool {
+  private var needsPaddedPreview: Bool {
     !isHorizontalCompact && rowWidth > Scoped.previewCellMaxWidth
   }
 
@@ -92,7 +92,7 @@ struct SettingsAdvancedOptionsView: View {
           .foregroundStyle(.primary)
       }
       icon: {
-        Image(systemName: Scoped.altStageImgSFSymbol)
+        Image(systemName: Scoped.altStageImageSFSymbol)
           .imageScale(.medium)
           .symbolRenderingMode(.hierarchical)
           .foregroundStyle(Color.accentColor)
@@ -123,8 +123,8 @@ struct SettingsAdvancedOptionsView: View {
     BattleRotationCell(
       type: .primary,
       rotation: battleRotationPreviewData,
-      rowWidth: doesNeedPaddedPreview ? Scoped.previewCellMaxWidth : rowWidth)
-      .if(doesNeedPaddedPreview) {
+      rowWidth: needsPaddedPreview ? Scoped.previewCellMaxWidth : rowWidth)
+      .if(needsPaddedPreview) {
         $0
           .frame(maxWidth: Scoped.previewCellMaxWidth)
           .padding()
@@ -137,8 +137,8 @@ struct SettingsAdvancedOptionsView: View {
   private var salmonRotationPreviewCell: some View {
     SalmonRotationCell(
       rotation: salmonRotationPreviewData,
-      rowWidth: doesNeedPaddedPreview ? Scoped.previewCellMaxWidth : rowWidth)
-      .if(doesNeedPaddedPreview) {
+      rowWidth: needsPaddedPreview ? Scoped.previewCellMaxWidth : rowWidth)
+      .if(needsPaddedPreview) {
         $0
           .frame(maxWidth: Scoped.previewCellMaxWidth)
           .padding()

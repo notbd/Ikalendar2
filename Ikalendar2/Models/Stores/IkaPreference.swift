@@ -188,7 +188,7 @@ final class IkaPreference {
       forKey: Scoped.shouldUseAltStageImages, default: false)
   }
 
-  func resetPreferences() {
+  func reset() {
     preferredDefaultFlatMode = .default
     preferredDefaultGameMode = .default
     preferredDefaultBattleMode = .default

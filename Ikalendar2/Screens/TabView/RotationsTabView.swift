@@ -10,11 +10,11 @@ import SwiftUI
 
 // MARK: - RotationsTabView
 
-/// One tab's content for `adoptedFlatMode`: its rotation list (or ErrorView), the mode stamp, and pull-to-refresh.
+/// One tab's content for `flatMode`: its rotation list (or ErrorView), the mode stamp, and pull-to-refresh.
 struct RotationsTabView: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
 
-  let adoptedFlatMode: FlatMode
+  let flatMode: FlatMode
 
   var body: some View {
     ZStack {
@@ -22,7 +22,7 @@ struct RotationsTabView: View {
         .navigationTitle(title.localizedStringKey)
         .overlay(
           ModeIconStamp(
-            flatModeSelection: adoptedFlatMode,
+            flatModeSelection: flatMode,
             shouldOffset: true),
           alignment: .topTrailing)
         .refreshable {
@@ -45,25 +45,25 @@ struct RotationsTabView: View {
 
   @ViewBuilder
   private var rotationList: some View {
-    switch adoptedFlatMode {
+    switch flatMode {
       case .salmon:
         SalmonRotationList()
       default:
-        BattleRotationList(specifiedBattleMode: BattleMode(rawValue: adoptedFlatMode.rawValue) ?? .default)
+        BattleRotationList(specifiedBattleMode: BattleMode(rawValue: flatMode.rawValue) ?? .default)
     }
   }
 
   private var title: String {
-    adoptedFlatMode.name
+    flatMode.name
   }
 }
 
 #Preview("Battle Tab") {
-  RotationsTabView(adoptedFlatMode: .gachi)
+  RotationsTabView(flatMode: .gachi)
     .ikaPreviewEnvironment()
 }
 
 #Preview("Salmon Tab") {
-  RotationsTabView(adoptedFlatMode: .salmon)
+  RotationsTabView(flatMode: .salmon)
     .ikaPreviewEnvironment()
 }

@@ -78,7 +78,7 @@ struct IkaStatusTests {
     status.isSettingsPresented = true
     #expect(status.currentFlatMode != preference.preferredDefaultFlatMode)
 
-    status.resetStatuses()
+    status.reset()
 
     #expect(status.currentFlatMode == .gachi)
     #expect(status.currentGameMode == .battle)
@@ -91,7 +91,7 @@ struct IkaStatusTests {
     let (status, _) = try makeStatus()
     status.isSettingsPresented = true
 
-    status.resetStatuses(shouldExitSettings: true)
+    status.reset(dismissingSettings: true)
 
     #expect(!status.isSettingsPresented)
   }
