@@ -24,16 +24,9 @@ struct BattleRotationStageCardPrimary: View {
   }
 
   private var stageImageName: String {
-    switch (ikaPreference.shouldUseAltStageImages, stageSelection) {
-      case (true, .stageA):
-        rotation.stageAAltImageName
-      case (true, .stageB):
-        rotation.stageBAltImageName
-      case (false, .stageA):
-        rotation.stageA.imageName
-      case (false, .stageB):
-        rotation.stageB.imageName
-    }
+    rotation.stageImageName(
+      for: stageSelection,
+      shouldUseAltImage: ikaPreference.shouldUseAltStageImages)
   }
 
   var body: some View {
@@ -75,16 +68,9 @@ struct BattleRotationStageCardSecondary: View {
   }
 
   private var stageImageName: String {
-    switch (ikaPreference.shouldUseAltStageImages, stageSelection) {
-      case (true, .stageA):
-        rotation.stageAAltImageName
-      case (true, .stageB):
-        rotation.stageBAltImageName
-      case (false, .stageA):
-        rotation.stageA.imageName
-      case (false, .stageB):
-        rotation.stageB.imageName
-    }
+    rotation.stageImageName(
+      for: stageSelection,
+      shouldUseAltImage: ikaPreference.shouldUseAltStageImages)
   }
 
   var body: some View {
@@ -123,6 +109,24 @@ struct BattleRotationStageCardSecondary: View {
 enum BattleStageSelection {
   case stageA
   case stageB
+}
+
+// MARK: - BattleRotation
+
+extension BattleRotation {
+  /// The image name of the selected stage, honoring the alt stage images preference.
+  fileprivate func stageImageName(for stageSelection: BattleStageSelection, shouldUseAltImage: Bool) -> String {
+    switch (shouldUseAltImage, stageSelection) {
+      case (true, .stageA):
+        stageAAltImageName
+      case (true, .stageB):
+        stageBAltImageName
+      case (false, .stageA):
+        stageA.imageName
+      case (false, .stageB):
+        stageB.imageName
+    }
+  }
 }
 
 // MARK: - BattleRotationStageCard_Previews
