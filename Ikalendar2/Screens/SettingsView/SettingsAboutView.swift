@@ -125,7 +125,7 @@ struct SettingsAboutView: View {
           appIconBounceCounter += 1
         }
         // Inlined on the concrete view: wrapping this in a `some View` helper
-        // trips a non-Sendable metatype warning from the content closure.
+        // trips a non-Sendable metatype warning from the content closure (a58eaf9).
         .keyframeAnimator(
           initialValue: SettingsAboutAppIconAnimationValues(),
           trigger: appIconBounceCounter)

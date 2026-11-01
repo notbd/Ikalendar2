@@ -50,7 +50,8 @@ final class IkaPreference {
     }
 
     didSet {
-      // Persistence must NOT be gated on `isSyncing`: synced assignments still need to hit disk.
+      // Persistence must NOT be gated on `isSyncing`: synced assignments still need to hit disk
+      // (501a63e; pinned by IkaPreferenceTests "Synced side-effect assignments are persisted too").
       guard oldValue != preferredDefaultFlatMode else { return }
 
       userDefaults.set(preferredDefaultFlatMode.rawValue, forKey: Scoped.preferredDefaultFlatMode)
@@ -150,7 +151,9 @@ final class IkaPreference {
     }
   }
 
-  /// Bottom toolbar picker positioning
+  /// Unused by any UI since the Tab View layout (76c1355; the last readers went in 964a5c2 and
+  /// dff7a9d). Kept so the on-disk key keeps round-tripping for upgrading users; remove only
+  /// with a migration.
   var shouldSwapBottomToolbarPickers: Bool {
     didSet {
       guard oldValue != shouldSwapBottomToolbarPickers else { return }

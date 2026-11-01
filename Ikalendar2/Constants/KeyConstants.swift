@@ -22,6 +22,8 @@ extension Constants.Key {
     static let appStoreIdentifier = "1529193361"
   }
 
+  /// On-disk UserDefaults keys. Byte-for-byte frozen: renaming one resets every upgrading user.
+  /// Golden tests: IkaPreferenceTests, IkaDiscoveryLogTests.
   enum AppStorage {
     static let preferredDefaultFlatMode = "pref.preferred_default.flat_mode"
     static let preferredDefaultGameMode = "pref.preferred_default.game_mode"

@@ -192,7 +192,7 @@ enum IkaMockData {
     var battleRotationDict: BattleRotationDict = .init()
     var startTimeArray: [Date] = []
     for index in 0 ..< 8 {
-      // two hours apart like the real feed, so every rotation gets a distinct `id`
+      // two hours apart like the real feed, so every rotation gets a distinct `id` (84d9261)
       startTimeArray.append(Calendar.current.date(
         byAdding: .hour,
         value: index * 2,

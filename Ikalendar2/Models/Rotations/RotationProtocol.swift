@@ -42,7 +42,7 @@ extension Rotation {
   var id: String { "\(startTime)-\(endTime)" }
 
   /// Equates two `Rotation` instances based on their `description`s, the same value
-  /// `hash(into:)` hashes (exact, unlike comparing `hashValue`s, which can collide).
+  /// `hash(into:)` hashes (exact, unlike comparing `hashValue`s, which can collide; 4ca6526).
   ///
   /// - Parameters:
   ///   - lhs: The `Rotation` instance on the left-hand side of the operator.

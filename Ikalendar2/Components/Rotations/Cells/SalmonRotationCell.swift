@@ -80,7 +80,7 @@ struct SalmonRotationCellTimeTextSection: View {
   let rotation: SalmonRotation
   let rowWidth: CGFloat
   /// Passed in by the parent cell (which already reads the clock), so the
-  /// clock's per-second ticks do not re-render this section.
+  /// clock's per-second ticks do not re-render this section (4d22e88).
   let isCurrent: Bool
 
   var body: some View {

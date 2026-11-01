@@ -136,7 +136,8 @@ enum IkaDecoder {
 
     // Append the schedules beyond the detailed window as time-only rotations. They are
     // matched by start time rather than array position, so a leading (already finished)
-    // or reordered entry can neither duplicate a detailed shift nor push out a later one.
+    // or reordered entry can neither duplicate a detailed shift nor push out a later one
+    // (079ed0c; pinned by IkaDecoderTests).
     let lastDetailedStartTime = salmonRotations.map(\.startTime).max() ?? .distantPast
     let timeOnlyRotations: [SalmonRotation] = (dto.schedules ?? []).compactMap { scheduleDTO in
       // skip entries with missing times instead of failing the whole parse

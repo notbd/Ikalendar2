@@ -54,7 +54,7 @@ struct SettingsCreditsView: View {
   }
 
   /// Honorary credit: the decoding layer moved to native Codable, but SwiftyJSON
-  /// carried this project's parsing for years and has earned its place here.
+  /// carried this project's parsing for years and has earned its place here (restored in 529fae5).
   private var rowSwiftyJSON: some View {
     CreditsOpenSourceLibCell(
       name: "SwiftyJSON",

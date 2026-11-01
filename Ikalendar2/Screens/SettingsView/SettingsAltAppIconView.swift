@@ -32,7 +32,8 @@ struct SettingsAltAppIconView: View {
   @State private var easterEggBounceCounter: Int = 0
   @State private var easterEggJumpRequestCounter: Int = 0
   /// The pending delayed jump, owned by the page rather than the Rick row: scrolling the row
-  /// off-screen must not cancel it, but leaving the page or hiding the easter-egg section does.
+  /// off-screen must not cancel it, but leaving the page or hiding the easter-egg section does
+  /// (14102a7, 82d952a).
   @State private var easterEggJumpTask: Task<Void, Never>?
 
   @State private var shouldDisplayAnimatedCopy: Bool = false

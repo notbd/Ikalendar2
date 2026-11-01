@@ -70,7 +70,7 @@ final class IkaDeviceMotionMonitor {
     motionManager.deviceMotionUpdateInterval = interval
 
     // Weak self: the manager retains this handler, so a strong capture would pin the
-    // monitor until updates stop.
+    // monitor until updates stop (1b694aa).
     motionManager.startDeviceMotionUpdates(to: .main) { [weak self] data, _ in
       // The handler is delivered on OperationQueue.main, i.e. the main thread.
       MainActor.assumeIsolated {

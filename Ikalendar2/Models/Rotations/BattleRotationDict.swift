@@ -17,7 +17,8 @@ extension BattleRotationDict {
   }
 
   /// Whether the currently loaded rotations are already stale at `currentTime`.
-  /// All three battle modes rotate on the same schedule, so checking `.gachi` suffices.
+  /// All three battle modes rotate on the same schedule, so checking `.gachi` suffices
+  /// (pinned by RotationTimeLogicTests).
   func isOutdated(_ currentTime: Date) -> Bool {
     guard let firstGachiRotation = self[.gachi]?.first else { return false }
 

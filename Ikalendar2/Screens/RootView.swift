@@ -41,7 +41,7 @@ struct RootView: View {
   private var settingsModal: some View {
     SettingsEntryView()
       // .accentColor on purpose - see the note in Ikalendar2App. Sheets/covers
-      // do not inherit the root accent, so the modal re-applies it.
+      // do not inherit the root accent, so the modal re-applies it (1e105f8).
       .accentColor(.orange)
       .interactiveDismissDisabled()
   }
@@ -59,7 +59,8 @@ struct RootView: View {
   }
 
   /// A workaround, because as of iOS 26.0, changes in dynamicTypeSize will not affect navigation titles,
-  /// therefore force refresh the root view in order to reflect the correct title size.
+  /// therefore force refresh the root view in order to reflect the correct title size
+  /// (in place since 0062d1e, re-verified on iOS 26.0).
   private func refreshEntryView() {
     entryViewID = UUID()
   }

@@ -41,7 +41,8 @@ extension Date {
   /// Cached formatters: they sit on per-second refresh paths and are expensive to create.
   /// `DateFormatter` snapshots the time zone when it is created, so each one is re-synced
   /// with the requested zone before every use (see `string(from:using:in:)`); otherwise
-  /// times would keep rendering in the launch-time zone after the device changes zones.
+  /// times would keep rendering in the launch-time zone after the device changes zones
+  /// (f8ed5d5; pinned by DateTimeZoneTests).
   /// The lock makes that mutation safe from any isolation domain (iOS 17+).
   static private let ikaTimeFormatter: OSAllocatedUnfairLock<DateFormatter> =
     .init(initialState: .init(ikaType: .time))

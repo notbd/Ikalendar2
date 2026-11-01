@@ -17,7 +17,8 @@ extension UserDefaults {
 
   /// Reads a Bool with an explicit fallback.
   /// - Important: `bool(forKey:)` returns `false` for missing keys, which would silently break
-  ///   preferences whose default is `true` (e.g. onboarding). Always check key presence first.
+  ///   preferences whose default is `true` (e.g. onboarding). Always check key presence first
+  ///   (pinned by IkaDiscoveryLogTests "Fresh install shows onboarding and no discoveries").
   func ikaLoadBool(forKey key: String, default defaultValue: Bool) -> Bool {
     object(forKey: key) as? Bool ?? defaultValue
   }

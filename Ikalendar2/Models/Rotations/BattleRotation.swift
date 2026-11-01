@@ -37,7 +37,7 @@ extension BattleRotation {
 
   /// Picks one of the stage's general or rule-specific alt images, seeded by `description`
   /// so the same rotation always resolves to the same image. A stage without any alt image
-  /// (Shifty Station) keeps its standard image.
+  /// (Shifty Station) keeps its standard image (a0b8cef, d635200; pinned by AltStageImageTests).
   private func altImageName(for stage: BattleStage) -> String {
     let generator: SeededRandomGenerator = .init(seed: description)
 

@@ -69,7 +69,7 @@ struct BattleRotationCellPrimary: View {
 
   // Matched-geometry rule: the secondary variant is the geometry source and the
   // primary matches it (isSource: false). The two briefly coexist during the hero
-  // transition, and more than one source per group is undefined behavior.
+  // transition, and more than one source per group is undefined behavior (ebf2438).
 
   @Environment(IkaClock.self) private var ikaClock
 

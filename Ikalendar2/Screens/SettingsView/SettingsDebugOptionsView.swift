@@ -113,6 +113,8 @@ struct SettingsDebugOptionsView: View {
   }
 
   @State private var pulsingTrigger: Int = 0
+  /// View-local timer on purpose: hoisting the pulse/nudge timers into shared state made
+  /// unrelated views pulse together (a5bfe35, fixed in 20a3489). Do not lift it.
   private var pulseTimer = Timer
     .publish(
       every: Constants.Config.Timer.pulseSignalInterval,

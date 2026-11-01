@@ -46,7 +46,8 @@ struct Ikalendar2App: App {
         RootView()
           // Deliberately .accentColor, not .tint: it also sets the environment
           // accent, which is what makes every `Color.accentColor` in the app
-          // resolve to the brand orange. (Deprecated, kept on purpose.)
+          // resolve to the brand orange. (Deprecated, kept on purpose; the .tint
+          // substitution was reverted in 1e105f8.)
           .accentColor(.orange)
           .environment(ikaCatalog)
           .environment(ikaStatus)

@@ -137,7 +137,7 @@ final class IkaCatalog {
 
     didSet {
       // Keep loadResultStatus at the last non-loading status. The dedupe check
-      // matters: duplicate updates used to cause UI glitches.
+      // matters: duplicate updates used to cause UI glitches (fbc49af).
       if loadStatus != .loading, loadResultStatus != loadStatus {
         loadResultStatus = loadStatus
       }
@@ -151,7 +151,7 @@ final class IkaCatalog {
     async
   {
     // Scoped to this call: a silent onboarding load must not also silence the
-    // status changes of later auto-loads.
+    // status changes of later auto-loads (9695432).
     isSilentLoadingEnabled = shouldEnableSilentLoading
     inFlightLoadCount += 1
     defer {
@@ -168,7 +168,8 @@ final class IkaCatalog {
       // Task was cancelled (e.g. owning view disappeared) - no error UI. Unless another
       // load is still in flight, put the last result back: a catalog parked in `.loading`
       // keeps the lists, the refresh button and the auto-load gate disabled, and nothing
-      // else clears it. The load still in flight settles the status when it finishes.
+      // else clears it. The load still in flight settles the status when it finishes
+      // (649aa03, 834ef44; pinned by the cancellation tests in IkaCatalogTests).
       if inFlightLoadCount == 1 { restoreLoadResultStatus() }
     }
     catch let error as IkaError {
@@ -411,7 +412,8 @@ final class IkaCatalog {
   {
     switch newVal {
       case .autoLoading:
-        // A linger left over from the previous cycle must not reset this one.
+        // A linger left over from the previous cycle must not reset this one
+        // (11b7b79; pinned by IkaCatalogAutoLoadTests).
         autoLoadLingerTask?.cancel()
         autoLoadStatus = .autoLoading
 
@@ -446,7 +448,8 @@ final class IkaCatalog {
 extension IkaCatalog {
   /// A catalog preloaded with mock rotations in the `.loaded` state, so previews
   /// render real content without waiting on a refresh pass. Defined in this file
-  /// because preloading writes through `private(set)` properties.
+  /// because preloading writes through `private(set)` properties. Compiled in Release too,
+  /// since `#Preview` bodies are type-checked there (49b7031).
   @MainActor
   static func preview(
     ikaNetworkService: any IkaNetworkService,

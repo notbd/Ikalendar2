@@ -89,7 +89,7 @@ struct AltAppIconEasterEggRow: View {
 
   @Binding var buttonPressCounter: Int
   /// Bumped to ask the page for the delayed jump. The page owns that task, so scrolling
-  /// this row off-screen does not cancel it.
+  /// this row off-screen does not cancel it (14102a7).
   @Binding var jumpRequestCounter: Int
 
   var body: some View {
@@ -120,7 +120,7 @@ struct AltAppIconEasterEggRow: View {
           Scoped.crossFadeAnimation,
           value: appIconColorVariant)
         // Inlined on the concrete view: wrapping this in a `some View` helper
-        // trips a non-Sendable metatype warning from the content closure.
+        // trips a non-Sendable metatype warning from the content closure (a58eaf9).
         .keyframeAnimator(
           initialValue: AppIconEasterEggAnimationValues(),
           trigger: buttonPressCounter)

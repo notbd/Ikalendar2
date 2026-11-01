@@ -33,7 +33,8 @@ final class IkaClock {
   }
 
   /// One second after the previous deadline, or now if that is already past (the process was
-  /// suspended), so the ticks missed while suspended fire once instead of being replayed one by one.
+  /// suspended), so the ticks missed while suspended fire once instead of being replayed one by one
+  /// (59847fe, pinned by IkaClockTests).
   nonisolated static func nextDeadline(
     after previous: ContinuousClock.Instant,
     now: ContinuousClock.Instant)
@@ -59,7 +60,7 @@ final class IkaClock {
   }
 
   /// `TimeZone.current` is cached per process and only picks up a new system time zone after
-  /// `NSTimeZone.resetSystemTimeZone()`. Reset it whenever `name` is posted, then publish a fresh
+  /// `NSTimeZone.resetSystemTimeZone()` (8e1ea9d). Reset it whenever `name` is posted, then publish a fresh
   /// `currentTime` so views reading the clock re-render right away in the new zone. Observed for:
   /// - `significantTimeChangeNotification`: a new day (midnight), a carrier time update, or a
   ///   change to or from daylight saving time.

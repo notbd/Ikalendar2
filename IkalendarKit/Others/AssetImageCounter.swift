@@ -25,7 +25,8 @@ public enum AssetImageCounter {
   /// It checks for the existence of up to 10 images (from "prefix0" to "prefix9").
   ///
   /// - Important: 10 is a hard upper bound: assets named "prefix10" and beyond are NOT counted.
-  ///   Raise the bound here before adding more than 10 alt images for any single prefix.
+  ///   Raise the bound here before adding more than 10 alt images for any single prefix
+  ///   (pinned by AssetAlignmentTests).
   ///
   /// - Parameter prefix: The prefix to search for.
   /// - Returns: The number of images found with the specified prefix.
