@@ -48,7 +48,6 @@ struct RotationsTabView: View {
 
   @ViewBuilder
   private var rotationList: some View {
-    BattleRotationList()
     switch adoptedFlatMode {
       case .salmon:
         SalmonRotationList()
