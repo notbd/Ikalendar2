@@ -103,6 +103,23 @@ struct IkaDecoderTests {
       }
       """
 
+    /// details in reverse order, then a schedule beyond them.
+    static private let salmonRotationsReversedDetails = """
+      {
+        "details": [
+          { "start_time": 1700064000, "end_time": 1700128000,
+            "stage": { "name": "Marooner's Bay" }, "weapons": [ { "id": 10 } ] },
+          { "start_time": 1700000000, "end_time": 1700064000,
+            "stage": { "name": "Spawning Grounds" }, "weapons": [ { "id": 0 } ] }
+        ],
+        "schedules": [
+          { "start_time": 1700000000, "end_time": 1700064000 },
+          { "start_time": 1700064000, "end_time": 1700128000 },
+          { "start_time": 1700128000, "end_time": 1700192000 }
+        ]
+      }
+      """
+
     /// An unknown stage name and an empty weapons array: both degrade to nil, not an error.
     static private let salmonRotationsDegradedDetails = """
       {
@@ -191,6 +208,18 @@ struct IkaDecoderTests {
       for rotation in rotations[2...] {
         #expect(rotation.stage == nil)
       }
+    }
+
+    @Test
+    func `Out-of-order details decode sorted by start time`() throws {
+      let rotations = try IkaDecoder
+        .parseSalmonRotations(from: Fixtures.data(Self.salmonRotationsReversedDetails))
+      try #require(rotations.count == 3)
+
+      #expect(rotations.map(\.startTime.timeIntervalSince1970) == [1_700_000_000, 1_700_064_000, 1_700_128_000])
+      #expect(rotations[0].stage == .spawningGrounds)
+      #expect(rotations[1].stage == .maroonerSBay)
+      #expect(rotations[2].stage == nil)
     }
 
     @Test

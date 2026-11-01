@@ -92,7 +92,7 @@ enum IkaDecoder {
   ///
   /// - Throws: `IkaError.serverError(.badData)`: if the payload is malformed,
   ///   `details` is missing/empty, or a weapon id is invalid.
-  /// - Returns: The parsed array (will NOT be empty).
+  /// - Returns: The parsed array, sorted by start time (will NOT be empty).
   static func parseSalmonRotations(from data: Data)
     throws -> [SalmonRotation]
   {
@@ -101,7 +101,9 @@ enum IkaDecoder {
     guard let detailDTOs = dto.details, !detailDTOs.isEmpty
     else { throw IkaError.serverError(.badData) }
 
-    let salmonRotations = try detailDTOs.map { detailDTO in
+    // Sorted like the time-only tail below: the auto-load check and the list both take the
+    // first rotation as the earliest.
+    let salmonRotations = try detailDTOs.sorted { $0.startTime < $1.startTime }.map { detailDTO in
       let weapons: [SalmonWeapon]? = try detailDTO.weapons.flatMap { weaponDTOs in
         let parsed = try weaponDTOs.map { weaponDTO in
           guard let weapon = SalmonWeapon(weaponDTO.id.value)
