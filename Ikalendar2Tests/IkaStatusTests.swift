@@ -70,6 +70,28 @@ struct IkaStatusTests {
     #expect(status.currentFlatMode == .league)
   }
 
+  @Test(arguments: BattleMode.allCases)
+  func `Setting battle mode follows through to flat mode`(battleMode: BattleMode) throws {
+    let (status, _) = try makeStatus()
+    status.currentFlatMode = .salmon // move away so every assignment is a change
+    status.currentGameMode = .battle
+
+    status.currentBattleMode = battleMode
+    #expect(status.currentFlatMode.rawValue == battleMode.rawValue)
+    #expect(status.currentGameMode == .battle)
+  }
+
+  @Test
+  func `Switching to salmon keeps the last battle mode`() throws {
+    let (status, _) = try makeStatus()
+
+    status.currentFlatMode = .gachi
+    status.currentFlatMode = .salmon
+
+    #expect(status.currentGameMode == .salmon)
+    #expect(status.currentBattleMode == .gachi)
+  }
+
   @Test
   func `Reset restores the preference defaults`() throws {
     let (status, preference) = try makeStatus(flatMode: .gachi)
