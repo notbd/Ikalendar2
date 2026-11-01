@@ -78,7 +78,10 @@ export function extractIosAppVersion(): string {
     return version
   }
   catch (error) {
-    console.warn('Error:', error.message)
+    const message = error instanceof Error
+      ? error.message
+      : String(error)
+    console.warn('Error:', message)
     console.warn('--- Extracting iOS App Version Failed ---')
     return 'Unknown'
   }

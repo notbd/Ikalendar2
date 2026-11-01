@@ -8,6 +8,7 @@
     "dev:lan": "vitepress dev --host",
     "build": "vitepress build",
     "preview": "vitepress preview",
+    "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },
@@ -18,8 +19,10 @@
     "axios": "^1.21.0",
     "eslint": "^10.14.0",
     "eslint-plugin-format": "^2.0.1",
+    "typescript": "~5.9.3",
     "unocss": "^66.12.0",
     "vitepress": "^1.6.4",
-    "vue": "^3.5.44"
+    "vue": "^3.5.44",
+    "vue-tsc": "^3.3.14"
   }
 }
