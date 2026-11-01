@@ -40,13 +40,15 @@ struct IkaCatalogTests {
     loadTimeout: TimeInterval = 60)
     -> IkaCatalog
   {
-    IkaCatalog(
+    var timing: IkaCatalog.Timing = .standard
+    timing.loadTimeout = loadTimeout
+    return IkaCatalog(
       ikaNetworkService: MockIkaNetworkService(
         battleRotationDictHandler: battle,
         salmonRotationsHandler: salmon,
         salmonRewardApparelInfoHandler: apparel),
       ikaClock: IkaClock(),
-      loadTimeout: loadTimeout)
+      timing: timing)
   }
 
   // MARK: - Success

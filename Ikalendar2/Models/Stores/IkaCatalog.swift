@@ -18,25 +18,58 @@ import SwiftUI
 final class IkaCatalog {
   typealias Scoped = Constants.Config.Catalog
 
+  /// The intervals (in seconds) and attempt limits the catalog runs on. Injectable so tests
+  /// can drive the load and auto-load state machines on short intervals without racing
+  /// wall-clock deadlines; the app uses `.standard`.
+  struct Timing {
+    /// Upper bound for a full catalog load.
+    var loadTimeout: TimeInterval
+    var loadStatusLoadedDelay: TimeInterval
+    var loadStatusErrorDelay: TimeInterval
+    var autoLoadCheckInterval: TimeInterval
+    var autoLoadAttemptInterval: TimeInterval
+    var autoLoadBattleMaxAttempts: Int
+    var autoLoadSalmonMaxAttempts: Int
+    var appActiveStateCheckInterval: TimeInterval
+    var autoLoadedLingerLength: TimeInterval
+    var idleAndNonIdleStatusUpdateInterval: TimeInterval
+
+    /// The production values from `Constants.Config`.
+    static let standard: Timing = .init(
+      loadTimeout: Scoped.loadTimeout,
+      loadStatusLoadedDelay: Scoped.loadStatusLoadedDelay,
+      loadStatusErrorDelay: Scoped.loadStatusErrorDelay,
+      autoLoadCheckInterval: Constants.Config.Timer.autoLoadCheckSignalInterval,
+      autoLoadAttemptInterval: Scoped.autoLoadAttemptInterval,
+      autoLoadBattleMaxAttempts: Scoped.autoLoadBattleMaxAttempts,
+      autoLoadSalmonMaxAttempts: Scoped.autoLoadSalmonMaxAttempts,
+      appActiveStateCheckInterval: Scoped.appActiveStateCheckInterval,
+      autoLoadedLingerLength: Scoped.autoLoadedLingerLength,
+      idleAndNonIdleStatusUpdateInterval: Scoped.idleAndNonIdleStatusUpdateInterval)
+  }
+
   private(set) var battleRotationDict: BattleRotationDict = .init()
   private(set) var salmonRotations: [SalmonRotation] = .init()
 
   @ObservationIgnored private let ikaNetworkService: any IkaNetworkService
   @ObservationIgnored private let ikaClock: IkaClock
-  /// Upper bound for a full catalog load. Injectable so tests never race a
-  /// wall-clock deadline on a congested runner.
-  @ObservationIgnored private let loadTimeout: TimeInterval
+  @ObservationIgnored private let timing: Timing
+  /// Whether the app is foreground-active. Injectable so tests do not depend on the
+  /// lifecycle state of the hosting app.
+  @ObservationIgnored private let isAppActive: @MainActor () -> Bool
 
   @ObservationIgnored private var autoLoadCheckTask: Task<Void, Never>?
 
   init(
     ikaNetworkService: any IkaNetworkService,
     ikaClock: IkaClock,
-    loadTimeout: TimeInterval = Scoped.loadTimeout)
+    timing: Timing = .standard,
+    isAppActive: @escaping @MainActor () -> Bool = { UIApplication.shared.applicationState == .active })
   {
     self.ikaNetworkService = ikaNetworkService
     self.ikaClock = ikaClock
-    self.loadTimeout = loadTimeout
+    self.timing = timing
+    self.isAppActive = isAppActive
     startAutoLoadChecks()
   }
 
@@ -57,9 +90,9 @@ final class IkaCatalog {
 
   private func startAutoLoadChecks() {
     // Weak self is re-acquired each lap so short-lived instances can deinit.
-    autoLoadCheckTask = Task { [weak self] in
+    autoLoadCheckTask = Task { [weak self, timing] in
       while !Task.isCancelled {
-        try? await Task.sleep(for: .seconds(Constants.Config.Timer.autoLoadCheckSignalInterval))
+        try? await Task.sleep(for: .seconds(timing.autoLoadCheckInterval))
         guard !Task.isCancelled else { return }
         guard let self else { return }
 
@@ -136,7 +169,7 @@ final class IkaCatalog {
   {
     let (loadedBattleRotationDict, loadedSalmonRotations) = try await
       AsyncUtils.withTimeout(
-        seconds: loadTimeout,
+        seconds: timing.loadTimeout,
         timeoutError: IkaError.connectionError)
       { [ikaNetworkService] in
         async let taskBattleRotationDict = ikaNetworkService.fetchBattleRotationDict()
@@ -168,11 +201,11 @@ final class IkaCatalog {
         loadStatus = .loading
 
       case .loaded:
-        try? await Task.sleep(for: .seconds(Scoped.loadStatusLoadedDelay))
+        try? await Task.sleep(for: .seconds(timing.loadStatusLoadedDelay))
         loadStatus = .loaded
 
       case .error(let ikaError):
-        try? await Task.sleep(for: .seconds(Scoped.loadStatusErrorDelay))
+        try? await Task.sleep(for: .seconds(timing.loadStatusErrorDelay))
         loadStatus = .error(ikaError)
     }
   }
@@ -297,7 +330,7 @@ final class IkaCatalog {
   {
     var autoLoadAttempts = 0
 
-    while autoLoadAttempts < Scoped.autoLoadBattleMaxAttempts {
+    while autoLoadAttempts < timing.autoLoadBattleMaxAttempts {
       // new attempt
       autoLoadAttempts += 1
       let loadedBattleRotationDict = try await ikaNetworkService.fetchBattleRotationDict()
@@ -309,7 +342,7 @@ final class IkaCatalog {
       }
 
       // wait and retry
-      try await Task.sleep(for: .seconds(Scoped.autoLoadAttemptInterval))
+      try await Task.sleep(for: .seconds(timing.autoLoadAttemptInterval))
     }
 
     // timeout - fail and throw timeout error
@@ -321,7 +354,7 @@ final class IkaCatalog {
   {
     var autoLoadAttempts = 0
 
-    while autoLoadAttempts < Scoped.autoLoadSalmonMaxAttempts {
+    while autoLoadAttempts < timing.autoLoadSalmonMaxAttempts {
       // new attempt
       autoLoadAttempts += 1
       var loadedSalmonRotations = try await ikaNetworkService.fetchSalmonRotations()
@@ -339,7 +372,7 @@ final class IkaCatalog {
       }
 
       // wait and retry
-      try await Task.sleep(for: .seconds(Scoped.autoLoadAttemptInterval))
+      try await Task.sleep(for: .seconds(timing.autoLoadAttemptInterval))
     }
 
     // timeout - fail and throw timeout error
@@ -358,12 +391,12 @@ final class IkaCatalog {
         // automatically fall back to idle after a while
         Task {
           // blocked if app is in background - to make sure autoLoaded can be seen when switched back
-          while UIApplication.shared.applicationState != .active {
-            try? await Task.sleep(for: .seconds(Scoped.appActiveStateCheckInterval))
+          while !isAppActive() {
+            try? await Task.sleep(for: .seconds(timing.appActiveStateCheckInterval))
           }
-          try? await Task.sleep(for: .seconds(Scoped.autoLoadedLingerLength))
+          try? await Task.sleep(for: .seconds(timing.autoLoadedLingerLength))
           autoLoadStatus = .idle
-          try? await Task.sleep(for: .seconds(Scoped.idleAndNonIdleStatusUpdateInterval))
+          try? await Task.sleep(for: .seconds(timing.idleAndNonIdleStatusUpdateInterval))
           autoLoadDelayedIdleStatus = .idle
         }
 
