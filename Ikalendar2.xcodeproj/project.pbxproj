@@ -91,7 +91,6 @@
 		79AA715728C415A600A91055 /* SalmonWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA715628C415A600A91055 /* SalmonWeapon.swift */; };
 		79AA715928C4160D00A91055 /* MysteryWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA715828C4160D00A91055 /* MysteryWeapon.swift */; };
 		79B92BB628B03B1F00544939 /* Ikalendar2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92BB528B03B1F00544939 /* Ikalendar2App.swift */; };
-		79B92BB828B03B1F00544939 /* RotationsSingularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B92BB728B03B1F00544939 /* RotationsSingularView.swift */; };
 		79B92BCB28B044A200544939 /* .swiftformat in Resources */ = {isa = PBXBuildFile; fileRef = 79B92BCA28B044A200544939 /* .swiftformat */; };
 		79B92BCD28B044B400544939 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 79B92BCC28B044B400544939 /* .swiftlint.yml */; };
 		79C1485828C427B300587C6E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C1485728C427B300587C6E /* Constants.swift */; };
@@ -237,7 +236,6 @@
 		79AA715828C4160D00A91055 /* MysteryWeapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MysteryWeapon.swift; sourceTree = "<group>"; };
 		79B92BB228B03B1F00544939 /* Ikalendar2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ikalendar2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79B92BB528B03B1F00544939 /* Ikalendar2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ikalendar2App.swift; sourceTree = "<group>"; };
-		79B92BB728B03B1F00544939 /* RotationsSingularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationsSingularView.swift; sourceTree = "<group>"; };
 		79B92BC328B03BC000544939 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		79B92BCA28B044A200544939 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		79B92BCC28B044B400544939 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -660,7 +658,6 @@
 				7903FE6028C46A1700245586 /* RootView.swift */,
 				7903FE6228C46A3400245586 /* EntryView.swift */,
 				6163BFFB2EAFD82800E47B4C /* TabView */,
-				79B92BB728B03B1F00544939 /* RotationsSingularView.swift */,
 				79F90AFD2AB24DC000B454B9 /* RotationsCarouselView.swift */,
 				7903FE6428C46A4D00245586 /* ErrorView.swift */,
 				7903FE6728C46C2900245586 /* SettingsView */,
@@ -998,7 +995,6 @@
 				7943DFBB2AB52D090047250E /* CarouselColumn.swift in Sources */,
 				7903FE3628C438FC00245586 /* RoundedFont.swift in Sources */,
 				799235AE2AB3926F0071AA72 /* BattleStagesImageAlignment.swift in Sources */,
-				79B92BB828B03B1F00544939 /* RotationsSingularView.swift in Sources */,
 				79AA713628C4070700A91055 /* IkaStatus.swift in Sources */,
 				79AA714928C4095100A91055 /* BattleRotation.swift in Sources */,
 				79D3E66F28C41CCE00005DB5 /* FootApparel.swift in Sources */,
