@@ -21,9 +21,10 @@ struct RotationsTabView: View {
       content
         .navigationTitle(title.localizedStringKey)
         .overlay(
-          ModeIconStamp(
-            flatModeSelection: flatMode,
-            shouldOffset: true),
+          ModeIconStamp(flatModeSelection: flatMode)
+            .offset(
+              x: Constants.Style.Overlay.ModeIcon.iconOffsetX,
+              y: Constants.Style.Overlay.ModeIcon.iconOffsetY),
           alignment: .topTrailing)
         .refreshable {
           await ikaCatalog.refresh()

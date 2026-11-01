@@ -19,53 +19,28 @@ struct ModeIconStamp: View {
   let iconSize: CGFloat
   let gameModeSelection: GameMode
   let battleModeSelection: BattleMode
-  let shouldOffset: Bool
   let shouldAnimate: Bool
 
-  private var dx: CGFloat { ikaDeviceMotionMonitor.dx }
-  private var dy: CGFloat { ikaDeviceMotionMonitor.dy }
-  private var rotationConstant: Double { Double((pow(dx, 2) + pow(dy, 2)).squareRoot()) }
-
-  /// Remaps the device-space gravity deltas into the interface's axes for the current interface
-  /// orientation, so the tilt follows the physical tilt of the device.
-  private var axisRotationWeight: (x: CGFloat, y: CGFloat) {
-    switch ikaOrientationMonitor.currentOrientation {
-      case .unknown:
-        (dy, dx)
-      case .portrait:
-        (dy, dx)
-      case .portraitUpsideDown:
-        (-dy, -dx)
-      case .landscapeLeft:
-        (-dx, dy)
-      case .landscapeRight:
-        (dx, -dy)
-      @unknown default:
-        (dy, dx)
-    }
+  private var tilt: Tilt {
+    Self.screenTilt(
+      dx: ikaDeviceMotionMonitor.dx,
+      dy: ikaDeviceMotionMonitor.dy,
+      orientation: ikaOrientationMonitor.currentOrientation)
   }
 
   var body: some View {
     icon
       .rotationEffect(.degrees(Scoped.rotation2dDegrees))
-      .if(shouldAnimate) {
-        $0
-          .rotation3DEffect(
-            .degrees(rotationConstant * Scoped.rotation3dIntensity),
-            axis: (
-              x: axisRotationWeight.x,
-              y: axisRotationWeight.y,
-              z: 0))
-          .animation(
-            .default,
-            value: dx * dy)
-      }
-      .if(shouldOffset) {
-        $0
-          .offset(
-            x: Scoped.iconOffsetX,
-            y: Scoped.iconOffsetY)
-      }
+      // Applied at 0 degrees rather than dropped when not animating, so the view keeps its identity.
+      .rotation3DEffect(
+        .degrees(shouldAnimate ? Self.rotationAngle(for: tilt) : 0),
+        axis: (
+          x: tilt.dy,
+          y: tilt.dx,
+          z: 0))
+      .animation(
+        .default,
+        value: tilt)
   }
 
   private var icon: some View {
@@ -113,27 +88,63 @@ struct ModeIconStamp: View {
     iconSize: CGFloat = Scoped.iconSize,
     gameModeSelection: GameMode,
     battleModeSelection: BattleMode,
-    shouldOffset: Bool = false,
     shouldAnimate: Bool = true)
   {
     self.iconSize = iconSize
     self.gameModeSelection = gameModeSelection
     self.battleModeSelection = battleModeSelection
-    self.shouldOffset = shouldOffset
     self.shouldAnimate = shouldAnimate
   }
 
   init(
     iconSize: CGFloat = Scoped.iconSize,
     flatModeSelection: FlatMode,
-    shouldOffset: Bool = false,
     shouldAnimate: Bool = true)
   {
     self.iconSize = iconSize
     gameModeSelection = flatModeSelection.gameMode
     battleModeSelection = flatModeSelection.battleMode ?? .default
-    self.shouldOffset = shouldOffset
     self.shouldAnimate = shouldAnimate
+  }
+}
+
+// MARK: - Tilt math
+
+extension ModeIconStamp {
+  /// A gravity delta in the interface's axes: `dx` toward the screen's right edge, `dy` toward its top.
+  struct Tilt: Equatable {
+    var dx: CGFloat
+    var dy: CGFloat
+  }
+
+  /// Remaps the device-space gravity deltas into the interface's axes for `orientation`, so the
+  /// stamp tilts with the physical device. Every mapping is a quarter-turn rotation or a flip, so
+  /// the magnitude is unchanged.
+  nonisolated static func screenTilt(
+    dx: CGFloat,
+    dy: CGFloat,
+    orientation: UIInterfaceOrientation)
+    -> Tilt
+  {
+    switch orientation {
+      case .unknown:
+        .init(dx: dx, dy: dy)
+      case .portrait:
+        .init(dx: dx, dy: dy)
+      case .portraitUpsideDown:
+        .init(dx: -dx, dy: -dy)
+      case .landscapeLeft:
+        .init(dx: dy, dy: -dx)
+      case .landscapeRight:
+        .init(dx: -dy, dy: dx)
+      @unknown default:
+        .init(dx: dx, dy: dy)
+    }
+  }
+
+  /// The 3D tilt in degrees: proportional to the length of the gravity delta.
+  nonisolated static func rotationAngle(for tilt: Tilt) -> Double {
+    Double(hypot(tilt.dx, tilt.dy)) * Scoped.rotation3dIntensity
   }
 }
 
