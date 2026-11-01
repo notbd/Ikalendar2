@@ -36,6 +36,17 @@ struct AltStageImageTests {
     #expect(rotation.stageBAltImageName == BattleStage.shiftyStation.imageName)
   }
 
+  @Test
+  func `Alt image pick stays the same for a fixed rotation`() {
+    // The pick is seeded by `description`, so a rotation keeps its image across launches and
+    // releases. The literals follow from that seed and The Reef's alt image counts; adding or
+    // removing The Reef alt images legitimately changes them.
+    let rainmaker: BattleRotation = battleRotation(rule: .rainmaker, stageA: .theReef, stageB: .theReef)
+    let clamBlitz: BattleRotation = battleRotation(rule: .clamBlitz, stageA: .theReef, stageB: .theReef)
+    #expect(rainmaker.stageAAltImageName == "The_Reef_Alt_0")
+    #expect(clamBlitz.stageAAltImageName == "The_Reef_Alt_2") // nonzero: an always-0 pick fails
+  }
+
   @Test(arguments: BattleStage.allCases, BattleRule.allCases)
   func `Every battle alt image name resolves to an asset`(stage: BattleStage, rule: BattleRule) {
     let rotation: BattleRotation = battleRotation(rule: rule, stageA: stage, stageB: stage)
