@@ -107,7 +107,7 @@ struct SalmonRotationHeader: View {
         .foregroundStyle(Color.systemBackground)
         .padding(.horizontal, Scoped.prefixPaddingH)
         .adaptiveGlassEffect(
-          tint: .secondary,
+          tint: .gray,
           in: .rect(cornerRadius: Scoped.prefixFrameCornerRadius))
 
       Spacer()
