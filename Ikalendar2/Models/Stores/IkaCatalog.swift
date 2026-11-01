@@ -364,8 +364,8 @@ final class IkaCatalog {
   }
 
   /// Fetches until the result differs from `current()`, which is read again after every fetch.
-  /// Sleeps `autoLoadAttemptInterval` after every unchanged result, the last one included, and
-  /// throws `maxAttemptsExceeded` once `maxAttempts` fetches came back unchanged.
+  /// Sleeps `autoLoadAttemptInterval` between unchanged results and throws `maxAttemptsExceeded`
+  /// as soon as the last of `maxAttempts` fetches comes back unchanged.
   private func fetchUntilChanged<T: Equatable>(
     maxAttempts: Int,
     current: () -> T,
@@ -379,6 +379,7 @@ final class IkaCatalog {
       let fetched = try await fetch()
 
       if fetched != current() { return fetched }
+      guard attempts < maxAttempts else { break }
 
       try await Task.sleep(for: .seconds(timing.autoLoadAttemptInterval))
     }

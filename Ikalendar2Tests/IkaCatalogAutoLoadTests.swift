@@ -199,6 +199,29 @@ struct IkaCatalogAutoLoadTests {
 
     await settle(catalog, scenario)
   }
+
+  @Test(.timeLimit(.minutes(1)))
+  func `Running out of attempts fails without sleeping after the last one`() async {
+    // A single attempt on a long interval: the failure follows the unchanged fetch at once,
+    // where a trailing sleep would hold it back for the whole interval. The interval is long
+    // because a busy main actor can delay the failure by seconds.
+    var timing: IkaCatalog.Timing = Self.timing
+    timing.autoLoadAttemptInterval = 20
+    timing.autoLoadBattleMaxAttempts = 1
+    let scenario: AutoLoadScenario = .init(battleRotationDict: makeStaleBattleDict())
+    scenario.isAppActive = false // holds the failed cycle in `.autoLoaded`
+    let catalog = makeCatalog(scenario, timing: timing)
+
+    let start: ContinuousClock.Instant = .now
+    await catalog.refresh()
+    await waitUntil(timeout: .seconds(30)) { catalog.autoLoadStatus == .autoLoaded(.failure) }
+    let elapsed: Duration = .now - start
+
+    #expect(scenario.battleFetchCount == 1 + timing.autoLoadBattleMaxAttempts)
+    #expect(elapsed < .seconds(timing.autoLoadAttemptInterval))
+
+    await settle(catalog, scenario)
+  }
 }
 
 // MARK: - AutoLoadScenario
