@@ -54,13 +54,10 @@ struct SalmonRotationStageCard: View {
       .animation(
         .snappy,
         value: ikaPreference.shouldUseAltStageImages)
-      .background {
-        GeometryReader { geo in
-          Color.clear
-            .onChange(of: geo.size, initial: true) { _, newVal in
-              cardWidth = newVal.width
-            }
-        }
+      .onGeometryChange(for: CGFloat.self) { geo in
+        geo.size.width
+      } action: { newWidth in
+        cardWidth = newWidth
       }
   }
 

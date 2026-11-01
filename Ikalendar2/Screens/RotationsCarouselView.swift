@@ -39,13 +39,10 @@ struct RotationsCarouselView: View {
 
         LoadingOverlay()
       }
-      .background {
-        GeometryReader { geo in
-          Color.clear
-            .onChange(of: geo.size, initial: true) { _, newVal in
-              windowWidth = newVal.width
-            }
-        }
+      .onGeometryChange(for: CGFloat.self) { geo in
+        geo.size.width
+      } action: { newWidth in
+        windowWidth = newWidth
       }
     }
   }
