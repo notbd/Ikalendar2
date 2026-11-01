@@ -67,9 +67,11 @@ struct BattleRotationCell: View {
 struct BattleRotationCellPrimary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Cell.Primary
 
-  // Matched-geometry rule: the secondary variant is the geometry source and the
-  // primary matches it (isSource: false). The two briefly coexist during the hero
+  // Matched-geometry rule: the primary variant is the geometry source and the
+  // secondary matches it (isSource: false). The two briefly coexist during the hero
   // transition, and more than one source per group is undefined behavior (ebf2438).
+  // The source must be the variant that stays: a non-source keeps the last frame of a
+  // removed source, which drew the new Now card's rule and stages off the card.
 
   @Environment(IkaClock.self) private var ikaClock
 
@@ -111,8 +113,7 @@ struct BattleRotationCellPrimary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.ruleIcon,
-          isSource: false)
+          in: $1.ruleIcon)
       }
   }
 
@@ -140,8 +141,7 @@ struct BattleRotationCellPrimary: View {
     .ifLet(animationNamespaces) {
       $0.matchedGeometryEffect(
         id: rotation.id,
-        in: $1.ruleTitle,
-        isSource: false)
+        in: $1.ruleTitle)
     }
   }
 
@@ -152,8 +152,7 @@ struct BattleRotationCellPrimary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageA,
-          isSource: false)
+          in: $1.stageA)
       }
   }
 
@@ -164,8 +163,7 @@ struct BattleRotationCellPrimary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageB,
-          isSource: false)
+          in: $1.stageB)
       }
   }
 
@@ -243,7 +241,8 @@ struct BattleRotationCellSecondary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.ruleIcon)
+          in: $1.ruleIcon,
+          isSource: false)
       }
   }
 
@@ -259,7 +258,8 @@ struct BattleRotationCellSecondary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.ruleTitle)
+          in: $1.ruleTitle,
+          isSource: false)
       }
   }
 
@@ -270,7 +270,8 @@ struct BattleRotationCellSecondary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageA)
+          in: $1.stageA,
+          isSource: false)
       }
   }
 
@@ -281,7 +282,8 @@ struct BattleRotationCellSecondary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageB)
+          in: $1.stageB,
+          isSource: false)
       }
   }
 
