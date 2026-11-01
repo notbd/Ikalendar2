@@ -2,7 +2,6 @@
 import { type Ref, inject } from 'vue'
 import type { DefaultTheme } from 'vitepress/theme'
 import { VPButton, VPImage } from 'vitepress/theme'
-import ClientAppStoreBadge from './ClientAppStoreBadge.vue'
 
 defineProps<{
   name?: string
@@ -46,10 +45,12 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
         <div v-if="actions" class="actions">
           <div class="action">
             <a :href="appStoreLink" target="_blank" rel="noopener noreferrer">
-              <ClientAppStoreBadge
-                :light-src="appStoreImageLight"
-                :dark-src="appStoreImageDark"
-                alt="Download on the App Store"
+              <VPImage
+                :image="{
+                  light: appStoreImageLight,
+                  dark: appStoreImageDark,
+                  alt: 'Download on the App Store',
+                }"
               />
             </a>
           </div>
