@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "26.x"
+  },
   "scripts": {
     "dev": "vitepress dev --host",
     "build": "vitepress build",
@@ -9,7 +12,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^2.27.3",
     "@iconify/json": "^2.2.407",
-    "@types/node": "^20.19.25",
+    "@types/node": "^26.6.6",
     "axios": "^1.13.2",
     "eslint": "9.5.0",
     "eslint-plugin-format": "^0.1.3",
