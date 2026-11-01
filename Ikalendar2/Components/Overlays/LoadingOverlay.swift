@@ -19,7 +19,7 @@ struct LoadingOverlay: View {
 
   var body: some View {
     Color.clear
-      .edgesIgnoringSafeArea(.all)
+      .ignoresSafeArea()
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .background(.ultraThinMaterial)
       .opacity(isLoading ? 1 : 0)
