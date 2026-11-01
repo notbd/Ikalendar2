@@ -42,6 +42,7 @@
 		7903FE8D28C46F9100245586 /* StageTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE8C28C46F9100245586 /* StageTitleLabel.swift */; };
 		F363DE35D150D87725101225 /* RotationHeaderPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8D63D32919FE87EE23FD1 /* RotationHeaderPrefix.swift */; };
 		7903FE9228C4701000245586 /* ModeIconStamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE8F28C4701000245586 /* ModeIconStamp.swift */; };
+		C2AA6FF79B82B2D63E5337A9 /* ModeBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C7B4B105A44F24B2CE1E9F /* ModeBadge.swift */; };
 		7903FE9328C4701000245586 /* AutoLoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9028C4701000245586 /* AutoLoadingOverlay.swift */; };
 		7903FE9428C4701000245586 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9128C4701000245586 /* LoadingOverlay.swift */; };
 		7903FE9A28C4702100245586 /* ToolbarSettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE9528C4702100245586 /* ToolbarSettingsButton.swift */; };
@@ -189,6 +190,7 @@
 		7903FE8C28C46F9100245586 /* StageTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageTitleLabel.swift; sourceTree = "<group>"; };
 		02C8D63D32919FE87EE23FD1 /* RotationHeaderPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationHeaderPrefix.swift; sourceTree = "<group>"; };
 		7903FE8F28C4701000245586 /* ModeIconStamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModeIconStamp.swift; sourceTree = "<group>"; };
+		20C7B4B105A44F24B2CE1E9F /* ModeBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeBadge.swift; sourceTree = "<group>"; };
 		7903FE9028C4701000245586 /* AutoLoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLoadingOverlay.swift; sourceTree = "<group>"; };
 		7903FE9128C4701000245586 /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		7903FE9528C4702100245586 /* ToolbarSettingsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarSettingsButton.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				7903FE8F28C4701000245586 /* ModeIconStamp.swift */,
+				20C7B4B105A44F24B2CE1E9F /* ModeBadge.swift */,
 				7903FE9128C4701000245586 /* LoadingOverlay.swift */,
 				7903FE9028C4701000245586 /* AutoLoadingOverlay.swift */,
 			);
@@ -1008,6 +1011,7 @@
 				7903FE7F28C46EA500245586 /* BattleRotationRow.swift in Sources */,
 				79F90AFE2AB24DC000B454B9 /* RotationsCarouselView.swift in Sources */,
 				7903FE9228C4701000245586 /* ModeIconStamp.swift in Sources */,
+				C2AA6FF79B82B2D63E5337A9 /* ModeBadge.swift in Sources */,
 				79AA714128C4087300A91055 /* BattleMode.swift in Sources */,
 				79AA714D28C412E800A91055 /* SalmonRotation.swift in Sources */,
 				79AA715728C415A600A91055 /* SalmonWeapon.swift in Sources */,

@@ -20,6 +20,8 @@ struct ModeIconStamp: View {
   let gameModeSelection: GameMode
   let battleModeSelection: BattleMode
   let shouldAnimate: Bool
+  /// 0 = at rest, 1 = docked into the nav bar badge (iPhone only; the iPad carousel stays at 0).
+  let dockProgress: Double
 
   private var tilt: Tilt {
     Self.screenTilt(
@@ -29,11 +31,13 @@ struct ModeIconStamp: View {
   }
 
   var body: some View {
+    let style: DockStyle = Self.dockStyle(progress: dockProgress)
+
     icon
-      .rotationEffect(.degrees(Scoped.rotation2dDegrees))
+      .rotationEffect(.degrees(Scoped.rotation2dDegrees * style.parallaxGain))
       // Applied at 0 degrees rather than dropped when not animating, so the view keeps its identity.
       .rotation3DEffect(
-        .degrees(shouldAnimate ? Self.rotationAngle(for: tilt) : 0),
+        .degrees(shouldAnimate ? Self.rotationAngle(for: tilt) * style.parallaxGain : 0),
         axis: (
           x: tilt.dy,
           y: tilt.dx,
@@ -41,6 +45,9 @@ struct ModeIconStamp: View {
       .animation(
         .default,
         value: tilt)
+      // After the tilt animation, so docking follows the scroll without easing.
+      .scaleEffect(style.scale, anchor: .topTrailing)
+      .opacity(style.opacity)
   }
 
   private var icon: some View {
@@ -88,23 +95,27 @@ struct ModeIconStamp: View {
     iconSize: CGFloat = Scoped.iconSize,
     gameModeSelection: GameMode,
     battleModeSelection: BattleMode,
-    shouldAnimate: Bool = true)
+    shouldAnimate: Bool = true,
+    dockProgress: Double = 0)
   {
     self.iconSize = iconSize
     self.gameModeSelection = gameModeSelection
     self.battleModeSelection = battleModeSelection
     self.shouldAnimate = shouldAnimate
+    self.dockProgress = dockProgress
   }
 
   init(
     iconSize: CGFloat = Scoped.iconSize,
     flatModeSelection: FlatMode,
-    shouldAnimate: Bool = true)
+    shouldAnimate: Bool = true,
+    dockProgress: Double = 0)
   {
     self.iconSize = iconSize
     gameModeSelection = flatModeSelection.gameMode
     battleModeSelection = flatModeSelection.battleMode ?? .default
     self.shouldAnimate = shouldAnimate
+    self.dockProgress = dockProgress
   }
 }
 
@@ -145,6 +156,44 @@ extension ModeIconStamp {
   /// The 3D tilt in degrees: proportional to the length of the gravity delta.
   nonisolated static func rotationAngle(for tilt: Tilt) -> Double {
     Double(hypot(tilt.dx, tilt.dy)) * Scoped.rotation3dIntensity
+  }
+}
+
+// MARK: - Dock math
+
+extension ModeIconStamp {
+  /// How the stamp looks at a dock progress: `parallaxGain` scales both the 2D and the 3D tilt.
+  struct DockStyle: Equatable {
+    var scale: Double
+    var opacity: Double
+    var parallaxGain: Double
+  }
+
+  /// The share of `dockTravel` scrolled, clamped to 0...1. Pulling to refresh (negative travel)
+  /// leaves the stamp at rest.
+  nonisolated static func dockProgress(
+    travel: CGFloat,
+    dockTravel: CGFloat = Scoped.dockTravel)
+    -> Double
+  {
+    guard dockTravel > 0 else { return 1 }
+
+    return min(max(Double(travel / dockTravel), 0), 1)
+  }
+
+  /// The stamp shrinks toward its top-trailing corner, is gone by `dockFadeOutEnd`, and stops
+  /// tilting once docked.
+  nonisolated static func dockStyle(progress: Double) -> DockStyle {
+    .init(
+      scale: 1 - (1 - Scoped.dockedScale) * progress,
+      opacity: 1 - min(progress / Scoped.dockFadeOutEnd, 1),
+      parallaxGain: 1 - progress)
+  }
+
+  /// The badge fades in from `badgeFadeInStart`, before the stamp has faded out, so the two
+  /// overlap and the mode never disappears.
+  nonisolated static func badgeOpacity(progress: Double) -> Double {
+    max(0, (progress - Scoped.badgeFadeInStart) / (1 - Scoped.badgeFadeInStart))
   }
 }
 

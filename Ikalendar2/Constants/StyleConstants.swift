@@ -59,6 +59,16 @@ extension Constants.Style {
 
       static let iconImageNameSalmon = "mr-grizz"
       static let iconSize: CGFloat = 128
+
+      /// The scroll distance over which the stamp docks into the nav bar badge.
+      static let dockTravel: CGFloat = 44
+      static let dockedScale: Double = 0.65
+      /// The dock progress by which the stamp has faded out.
+      static let dockFadeOutEnd: Double = 0.7
+      /// The dock progress from which the badge fades in.
+      static let badgeFadeInStart: Double = 0.5
+      static let badgeSize: CGFloat = 44
+      static let badgeImageSize: CGFloat = 28
     }
   }
 
