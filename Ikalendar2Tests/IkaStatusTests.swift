@@ -73,8 +73,8 @@ struct IkaStatusTests {
   @Test(arguments: BattleMode.allCases)
   func `Setting battle mode follows through to flat mode`(battleMode: BattleMode) throws {
     let (status, _) = try makeStatus()
-    status.currentFlatMode = .salmon // move away so every assignment is a change
-    status.currentGameMode = .battle
+    // Start from another battle mode: an equal assignment is skipped by the willSet guard.
+    status.currentFlatMode = FlatMode(battleMode == .regular ? .gachi : .regular)
 
     status.currentBattleMode = battleMode
     #expect(status.currentFlatMode.rawValue == battleMode.rawValue)

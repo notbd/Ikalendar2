@@ -78,8 +78,8 @@ struct IkaPreferenceTests {
   @Test(arguments: BattleMode.allCases)
   func `Setting battle mode follows through to flat mode`(battleMode: BattleMode) throws {
     let preference = try IkaPreference(userDefaults: makeTestDefaults())
-    preference.preferredDefaultFlatMode = .salmon // move away so every assignment is a change
-    preference.preferredDefaultGameMode = .battle
+    // Start from another battle mode: an equal assignment is skipped by the willSet guard.
+    preference.preferredDefaultFlatMode = FlatMode(battleMode == .regular ? .gachi : .regular)
 
     preference.preferredDefaultBattleMode = battleMode
     #expect(preference.preferredDefaultFlatMode.rawValue == battleMode.rawValue)

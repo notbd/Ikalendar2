@@ -201,6 +201,28 @@ struct IkaCatalogAutoLoadTests {
   }
 
   @Test(.timeLimit(.minutes(1)))
+  func `An auto-load error replaces the error of a list that is not loaded`() async {
+    let scenario: AutoLoadScenario = .init(battleRotationDict: makeStaleBattleDict())
+    scenario.isAppActive = false // holds the first, failed cycle in `.autoLoaded`
+    let catalog = makeCatalog(scenario, timing: Self.timing)
+
+    // Stale data loads, its auto-load fails, then a full refresh fails: ErrorView is up.
+    await catalog.refresh()
+    await waitUntil { catalog.autoLoadStatus == .autoLoaded(.failure) }
+    scenario.battleFetchError = .connectionError
+    await catalog.refresh()
+    #expect(catalog.loadResultStatus == .error(.connectionError))
+
+    // The next auto-load fails with another error, which ErrorView now shows.
+    scenario.battleFetchError = .serverError(.badResponse)
+    scenario.isAppActive = true
+    await waitUntil { catalog.loadResultStatus == .error(.serverError(.badResponse)) }
+    #expect(catalog.loadStatus == .error(.serverError(.badResponse)))
+
+    await settle(catalog, scenario)
+  }
+
+  @Test(.timeLimit(.minutes(1)))
   func `Running out of attempts fails without sleeping after the last one`() async {
     // A single attempt on a long interval: the failure follows the unchanged fetch at once,
     // where a trailing sleep would hold it back for the whole interval. The interval is long
