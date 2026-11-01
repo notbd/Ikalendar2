@@ -176,15 +176,10 @@ struct SettingsAboutView: View {
 
     return
       ShareLink(item: shareURL) {
-        Label {
-          Text("Share ikalendar2")
-            .foregroundStyle(Color.primary)
-        } icon: {
-          Image(systemName: Scoped.shareSFSymbol)
-            .imageScale(.medium)
-            .symbolRenderingMode(.hierarchical)
-            .foregroundStyle(Color.accentColor)
-        }
+        SettingsRowLabel(
+          "Share ikalendar2",
+          titleStyle: Color.primary,
+          systemImage: Scoped.shareSFSymbol)
       }
   }
 
@@ -200,11 +195,7 @@ struct SettingsAboutView: View {
       ratingTapFeedbackTrigger += 1
       if !ikaDiscoveryLog.hasDiscoveredRating { ikaDiscoveryLog.hasDiscoveredRating = true }
     } label: {
-      Label {
-        Text("Rate ikalendar2")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
+      SettingsRowLabel("Rate ikalendar2", titleStyle: Color.primary) {
         Image(systemName: Scoped.ratingSFSymbol)
           .symbolEffect(.wiggle, value: ratingTapFeedbackTrigger)
           .iconNudge(isActive: !ikaDiscoveryLog.hasDiscoveredRating)
@@ -221,16 +212,10 @@ struct SettingsAboutView: View {
 
       openURL(url)
     } label: {
-      Label {
-        Text("Leave a Review")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.reviewSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Leave a Review",
+        titleStyle: Color.primary,
+        systemImage: Scoped.reviewSFSymbol)
     }
   }
 
@@ -241,11 +226,7 @@ struct SettingsAboutView: View {
       SimpleHaptics.generateTask(.selection)
       appStoreOverlayPresented.toggle()
     } label: {
-      Label {
-        Text("View ikalendar2 on the App Store")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
+      SettingsRowLabel("View ikalendar2 on the App Store", titleStyle: Color.primary) {
         Image(systemName: Scoped.viewOnAppStoreSFSymbol)
           .imageScale(.large)
           .symbolEffect(.bounce, value: rowAppStoreOverlayBounceCounter)
@@ -277,11 +258,7 @@ struct SettingsAboutView: View {
         openURL(url)
       } label: {
         HStack {
-          Label {
-            Text("Twitter")
-              .foregroundStyle(Color.primary)
-          }
-          icon: {
+          SettingsRowLabel("Twitter", titleStyle: Color.primary) {
             Image(decorative: Scoped.twitterIconName)
               .antialiased(true)
               .resizable()
@@ -306,16 +283,10 @@ struct SettingsAboutView: View {
 
       openURL(url)
     } label: {
-      Label {
-        Text("Feedback Email")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.emailSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Feedback Email",
+        titleStyle: Color.primary,
+        systemImage: Scoped.emailSFSymbol)
     }
   }
 
@@ -327,16 +298,10 @@ struct SettingsAboutView: View {
 
       openURL(url)
     } label: {
-      Label {
-        Text("App Website")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.appWebsiteSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "App Website",
+        titleStyle: Color.primary,
+        systemImage: Scoped.appWebsiteSFSymbol)
     }
   }
 
@@ -351,16 +316,10 @@ struct SettingsAboutView: View {
 
     return
       NavigationLink(destination: destination) {
-        Label {
-          Text("Source Code")
-            .foregroundStyle(.primary)
-        }
-        icon: {
-          Image(systemName: Scoped.sourceCodeSFSymbol)
-            .imageScale(.medium)
-            .symbolRenderingMode(.hierarchical)
-            .foregroundStyle(Color.accentColor)
-        }
+        SettingsRowLabel(
+          "Source Code",
+          titleStyle: .primary,
+          systemImage: Scoped.sourceCodeSFSymbol)
       }
       .swipeActions {
         Button {
@@ -380,16 +339,10 @@ struct SettingsAboutView: View {
 
       openURL(url)
     } label: {
-      Label {
-        Text("Privacy Policy")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.privacyPolicySFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Privacy Policy",
+        titleStyle: Color.primary,
+        systemImage: Scoped.privacyPolicySFSymbol)
     }
   }
 
@@ -397,16 +350,11 @@ struct SettingsAboutView: View {
 
   private var rowDebugOptions: some View {
     NavigationLink(destination: SettingsDebugOptionsView()) {
-      Label {
-        Text("Debug Options")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.debugOptionsSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.monochrome)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Debug Options",
+        titleStyle: Color.primary,
+        systemImage: Scoped.debugOptionsSFSymbol,
+        renderingMode: .monochrome)
     }
   }
 

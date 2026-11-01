@@ -66,11 +66,7 @@ struct SettingsAdvancedOptionsView: View {
   private var rowTabBarMinimizingSwitch: some View {
     @Bindable var ikaPreference = ikaPreference
     return Toggle(isOn: $ikaPreference.shouldMinimizeTabBar) {
-      Label {
-        Text("Minimize Tab Bar")
-          .foregroundStyle(.primary)
-      }
-      icon: {
+      SettingsRowLabel("Minimize Tab Bar", titleStyle: .primary) {
         Image(systemName: ikaPreference.shouldMinimizeTabBar
           ? Scoped.tabBarMinimizingOnSFSymbol
           : Scoped.tabBarMinimizingOffSFSymbol)
@@ -87,16 +83,10 @@ struct SettingsAdvancedOptionsView: View {
   private var rowAltStageImagesSwitch: some View {
     @Bindable var ikaPreference = ikaPreference
     return Toggle(isOn: $ikaPreference.shouldUseAltStageImages) {
-      Label {
-        Text("Alternative Stage Images")
-          .foregroundStyle(.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.altStageImageSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Alternative Stage Images",
+        titleStyle: .primary,
+        systemImage: Scoped.altStageImageSFSymbol)
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
   }

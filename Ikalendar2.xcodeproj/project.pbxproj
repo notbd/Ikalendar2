@@ -53,6 +53,7 @@
 		7943DFC32AB5398D0047250E /* SalmonRotationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFC22AB5398D0047250E /* SalmonRotationList.swift */; };
 		7966346E2AC147FC00AE82E2 /* GlobalPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7966346D2AC147FC00AE82E2 /* GlobalPosition.swift */; };
 		796634712AC1578900AE82E2 /* AltAppIconRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796634702AC1578900AE82E2 /* AltAppIconRow.swift */; };
+		1DF22B7D1A50E4A8761F59CD /* SettingsRowLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928473D9927E5A97139C279 /* SettingsRowLabel.swift */; };
 		796CEF812AB7A94E006860C6 /* Splatfont1-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */; };
 		796CEF822AB7A94E006860C6 /* Splatfont2-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */; };
 		797469C72BCCA5C100328027 /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 797469C62BCCA5C100328027 /* AlertKit */; };
@@ -195,6 +196,7 @@
 		7943DFC22AB5398D0047250E /* SalmonRotationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonRotationList.swift; sourceTree = "<group>"; };
 		7966346D2AC147FC00AE82E2 /* GlobalPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalPosition.swift; sourceTree = "<group>"; };
 		796634702AC1578900AE82E2 /* AltAppIconRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltAppIconRow.swift; sourceTree = "<group>"; };
+		E928473D9927E5A97139C279 /* SettingsRowLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowLabel.swift; sourceTree = "<group>"; };
 		796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Splatfont1-Regular.otf"; sourceTree = "<group>"; };
 		796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Splatfont2-Regular.otf"; sourceTree = "<group>"; };
 		797BDCAF28C41BD900A13F34 /* BodyApparel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyApparel.swift; sourceTree = "<group>"; };
@@ -474,6 +476,7 @@
 			isa = PBXGroup;
 			children = (
 				796634702AC1578900AE82E2 /* AltAppIconRow.swift */,
+				E928473D9927E5A97139C279 /* SettingsRowLabel.swift */,
 				797EA68D2AACF1350095A23B /* DetailsLicenseView.swift */,
 			);
 			path = Settings;
@@ -1001,6 +1004,7 @@
 				7903FE8528C46F3E00245586 /* SalmonRotationCell.swift in Sources */,
 				797EA68E2AACF1350095A23B /* DetailsLicenseView.swift in Sources */,
 				796634712AC1578900AE82E2 /* AltAppIconRow.swift in Sources */,
+				1DF22B7D1A50E4A8761F59CD /* SettingsRowLabel.swift in Sources */,
 				79D3E67328C41DD900005DB5 /* HeadApparel.swift in Sources */,
 				7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */,
 				79C1485C28C42CDE00587C6E /* StyleConstants.swift in Sources */,

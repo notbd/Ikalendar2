@@ -72,10 +72,7 @@ struct SettingsMainView: View {
     @Bindable var ikaPreference = ikaPreference
     return Picker(
       selection: $ikaPreference.preferredDefaultFlatMode,
-      label: Label {
-        Text("Default Tab")
-          .foregroundStyle(.primary)
-      } icon: {
+      label: SettingsRowLabel("Default Tab", titleStyle: .primary) {
         Image(systemName: ikaPreference.preferredDefaultFlatMode.sfSymbolNameSelected)
           .imageScale(.medium)
           .contentTransition(.symbolEffect(.replace.offUp))
@@ -93,10 +90,7 @@ struct SettingsMainView: View {
   private var rowDefaultGameMode: some View {
     @Bindable var ikaPreference = ikaPreference
     return HStack {
-      Label {
-        Text("Default Game Mode")
-          .foregroundStyle(.primary)
-      } icon: {
+      SettingsRowLabel("Default Game Mode", titleStyle: .primary) {
         Image(systemName: ikaPreference.preferredDefaultGameMode.sfSymbolNameSelected)
           .imageScale(.medium)
           .contentTransition(.symbolEffect(.replace.offUp))
@@ -123,10 +117,7 @@ struct SettingsMainView: View {
   private var rowDefaultBattleMode: some View {
     @Bindable var ikaPreference = ikaPreference
     return HStack {
-      Label {
-        Text("Default Battle Mode")
-          .foregroundStyle(.primary)
-      } icon: {
+      SettingsRowLabel("Default Battle Mode", titleStyle: .primary) {
         Image(
           systemName: ikaPreference.preferredDefaultBattleMode.sfSymbolNameSelected)
           .imageScale(.medium)
@@ -159,16 +150,10 @@ struct SettingsMainView: View {
     @Bindable var ikaPreference = ikaPreference
     return Picker(
       selection: $ikaPreference.preferredAppColorScheme,
-      label: Label {
-        Text("Color Scheme")
-          .foregroundStyle(.primary)
-      } icon: {
-        Image(
-          systemName: Scoped.colorSchemeSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      })
+      label: SettingsRowLabel(
+        "Color Scheme",
+        titleStyle: .primary,
+        systemImage: Scoped.colorSchemeSFSymbol))
     {
       ForEach(IkaPreferredColorScheme.allCases) { preferredColorScheme in
         Label(
@@ -181,11 +166,7 @@ struct SettingsMainView: View {
 
   private var rowAltAppIcon: some View {
     NavigationLink(destination: SettingsAltAppIconView()) {
-      Label {
-        Text("App Icon")
-          .foregroundStyle(.primary)
-      }
-      icon: {
+      SettingsRowLabel("App Icon", titleStyle: .primary) {
         Image(systemName: ikaPreference.preferredAppIcon.settingsMainSFSymbolName)
           .iconNudge(isActive: !ikaDiscoveryLog.hasDiscoveredAltAppIcon)
           .imageScale(.medium)
@@ -203,11 +184,7 @@ struct SettingsMainView: View {
     let customizedPercentage = Double(customizations.count(where: { $0 })) / Double(customizations.count)
 
     return NavigationLink(destination: SettingsAdvancedOptionsView()) {
-      Label {
-        Text("Advanced Options")
-          .foregroundStyle(.primary)
-      }
-      icon: {
+      SettingsRowLabel("Advanced Options", titleStyle: .primary) {
         Image(
           systemName: Scoped.advancedOptionsSFSymbol,
           variableValue: customizedPercentage)
@@ -228,16 +205,10 @@ struct SettingsMainView: View {
       openURL(url)
     } label: {
       HStack {
-        Label {
-          Text("Preferred Language")
-            .foregroundStyle(Color.primary)
-        }
-        icon: {
-          Image(systemName: currentLocale.toIkaLocale().sfSymbolName)
-            .imageScale(.medium)
-            .symbolRenderingMode(.hierarchical)
-            .foregroundStyle(Color.accentColor)
-        }
+        SettingsRowLabel(
+          "Preferred Language",
+          titleStyle: Color.primary,
+          systemImage: currentLocale.toIkaLocale().sfSymbolName)
 
         Spacer()
 
@@ -254,31 +225,19 @@ struct SettingsMainView: View {
 
   private var rowAbout: some View {
     NavigationLink(destination: SettingsAboutView()) {
-      Label {
-        Text("About")
-          .foregroundStyle(.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.aboutSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "About",
+        titleStyle: .primary,
+        systemImage: Scoped.aboutSFSymbol)
     }
   }
 
   private var rowCredits: some View {
     NavigationLink(destination: SettingsCreditsView()) {
-      Label {
-        Text("Credits")
-          .foregroundStyle(.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.creditsSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Credits",
+        titleStyle: .primary,
+        systemImage: Scoped.creditsSFSymbol)
     }
   }
 
