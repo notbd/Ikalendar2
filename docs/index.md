@@ -3,7 +3,7 @@ layout: home
 
 hero:
   image:
-    src: /assets/app-icon-1024.png
+    src: /assets/app-icon-hero.webp
     alt: Logo for ikalendar2
   name: ikalendar2
   text: Track Splatoon 2 Rotations with Style and Ease
