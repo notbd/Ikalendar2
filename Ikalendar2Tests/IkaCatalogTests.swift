@@ -288,7 +288,7 @@ private actor FlipFlag {
 
 /// Counts calls from @Sendable mock closures; main-actor tests read it synchronously.
 @MainActor
-private final class CallCounter {
+final private class CallCounter {
   private(set) var count = 0
 
   func increment() {

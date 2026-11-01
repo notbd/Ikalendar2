@@ -121,7 +121,7 @@ struct TimeLengthTests {
 // MARK: - DescriptionRow
 
 /// One golden row for `localizedDescription(locale:)`.
-struct DescriptionRow: Sendable, CustomTestStringConvertible {
+struct DescriptionRow: CustomTestStringConvertible {
   let timeLength: TimeLength
   let english: String
   let japanese: String
