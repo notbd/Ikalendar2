@@ -5,7 +5,6 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-import Combine
 import SimpleHaptics
 import StoreKit
 import SwiftUI
@@ -40,13 +39,10 @@ struct SettingsAboutView: View {
         Section {
           rowAppInfo
             .opacity(shouldDisplayAnimatedCopy ? 0 : 1)
-            .background {
-              GeometryReader { geo in
-                Color.clear
-                  .onChange(of: geo.frame(in: .global), initial: true) { _, newValue in
-                    rowAppInfoRectGlobal = newValue
-                  }
-              }
+            .onGeometryChange(for: CGRect.self) { geo in
+              geo.frame(in: .global)
+            } action: { newValue in
+              rowAppInfoRectGlobal = newValue
             }
         }
         .listRowBackground(Color.clear)

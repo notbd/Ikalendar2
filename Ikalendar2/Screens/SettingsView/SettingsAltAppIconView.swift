@@ -31,7 +31,6 @@ struct SettingsAltAppIconView: View {
   @State private var easterEggBounceCounter: Int = 0
 
   @State private var shouldDisplayAnimatedCopy: Bool = false
-  @State private var currentToggleAfterDelayTask: Task<Void, Never>?
 
   @State private var activeAppIconColorVariant: IkaAppIcon.ColorVariant = .default
   var activeAppIconDisplayMode: IkaAppIcon.DisplayMode {
@@ -105,13 +104,10 @@ struct SettingsAltAppIconView: View {
               appIconColorVariant: $activeAppIconColorVariant,
               buttonPressCounter: $easterEggBounceCounter)
               .opacity(shouldDisplayAnimatedCopy ? 0 : 1)
-              .background {
-                GeometryReader { geo in
-                  Color.clear
-                    .onChange(of: geo.frame(in: .global), initial: true) { _, newValue in
-                      easterEggCellRectGlobal = newValue
-                    }
-                }
+              .onGeometryChange(for: CGRect.self) { geo in
+                geo.frame(in: .global)
+              } action: { newValue in
+                easterEggCellRectGlobal = newValue
               }
           } header: { Text("Never Gonna Give You Up") }
         }
@@ -183,12 +179,17 @@ struct SettingsAltAppIconView: View {
       doesPreferRickOnAppear = ikaPreference.preferredAppIcon == .rick
       Task { await connectivityChecker.performGFWCheck() }
     }
-    .onChange(of: easterEggBounceCounter) {
+    // While bouncing, the icon escapes its list cell's clip bounds - so hide the
+    // original and overlay an unclipped copy at the same spot. Re-triggering
+    // restarts the linger window.
+    .task(id: easterEggBounceCounter) {
+      guard easterEggBounceCounter > 0 else { return }
+
       shouldDisplayAnimatedCopy = true
-      // Cancel the previous task, if it exists
-      currentToggleAfterDelayTask?.cancel()
-      // Schedule a new task
-      currentToggleAfterDelayTask = Task { await toggleShouldDisplayAnimatedCopyAfterDelay() }
+      try? await Task.sleep(for: .seconds(ScopedConfig.animatedCopyLingerLength))
+      guard !Task.isCancelled else { return }
+
+      shouldDisplayAnimatedCopy = false
     }
   }
 
@@ -350,13 +351,6 @@ struct SettingsAltAppIconView: View {
               : horizontalSizeClass == .compact
                 ? 0.07
                 : 0.03))
-  }
-
-  private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
-    try? await Task.sleep(for: .seconds(ScopedConfig.animatedCopyLingerLength))
-    guard !Task.isCancelled else { return }
-
-    shouldDisplayAnimatedCopy = false
   }
 }
 
