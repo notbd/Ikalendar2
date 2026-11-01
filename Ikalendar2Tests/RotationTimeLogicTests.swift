@@ -12,7 +12,7 @@ import Testing
 // MARK: - RotationTimeLogicTests
 
 /// Pins the exact boundary semantics of the rotation time predicates:
-/// isCurrent is [start, end), isExpired is end-inclusive, isNext uses strict `<`.
+/// isCurrent is [start, end), isExpired is end-inclusive, isNext(t) is isCurrent(t + 2h).
 /// These invariants drive every countdown and list-filtering decision in the app.
 @Suite("Rotation time logic")
 struct RotationTimeLogicTests {
@@ -53,12 +53,13 @@ struct RotationTimeLogicTests {
     }
 
     @Test
-    func `isNext window uses strict comparisons`() {
+    func `isNext window is the current window two hours ahead`() {
       let now: Date = TestData.anchor
 
-      // Starts exactly 2h out: startTime < now+2h is FALSE at the boundary.
+      // Starts exactly 2h out: next on the same second the rotation before it turns current.
       let exactlyTwoHoursOut: BattleRotation = TestData.battleRotation(startOffset: 2 * 3600, endOffset: 4 * 3600)
-      #expect(!exactlyTwoHoursOut.isNext(now))
+      #expect(exactlyTwoHoursOut.isNext(now))
+      #expect(!exactlyTwoHoursOut.isNext(now.addingTimeInterval(-1)))
 
       // Starts 1h out, ends 3h out: now+2h falls strictly inside.
       let upcoming: BattleRotation = TestData.battleRotation(startOffset: 3600, endOffset: 3 * 3600)
