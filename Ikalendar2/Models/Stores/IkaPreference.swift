@@ -5,6 +5,7 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
+import OSLog
 import SimpleHaptics
 import SwiftUI
 
@@ -132,7 +133,11 @@ final class IkaPreference {
       guard oldValue != preferredAppIcon else { return }
 
       userDefaults.set(preferredAppIcon.rawValue, forKey: Scoped.preferredAppIcon)
-      UIApplication.shared.setAlternateIconName(preferredAppIcon.alternateIconName)
+      UIApplication.shared.setAlternateIconName(preferredAppIcon.alternateIconName) { error in
+        if let error {
+          Logger.store.error("alternate app icon switch failed: \(error, privacy: .public)")
+        }
+      }
     }
   }
 

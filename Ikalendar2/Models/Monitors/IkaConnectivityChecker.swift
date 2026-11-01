@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 /// An observable on-demand checker for restricted network environments (GFW).
 /// `isGFWed` flips to true (and stays true) once all test domains are unreachable.
@@ -71,6 +72,7 @@ final class IkaConnectivityChecker {
 
     // unidirectionally flips the isGFWed status, stays true once gets there
     isGFWed = isGFWed || (failedChecksCount == totalChecks)
+    Logger.network.info("GFW check: \(failedChecksCount) of \(totalChecks) probes failed")
   }
 
   /// for manually reset
