@@ -11,23 +11,16 @@ import Testing
 
 // MARK: - IkaClockTests
 
-/// Pins the tick deadline arithmetic: a drift-free one-second cadence while the clock keeps
-/// up, and a single catch-up tick (not one per missed second) after a suspension.
+/// Pins the tick arithmetic: a tick publishes the whole second it woke in, so countdowns computed
+/// from the clock step by exactly one second, wherever in that second the tick landed.
 @Suite("IkaClock")
 struct IkaClockTests {
-  @Test
-  func `On-time tick keeps the one-second cadence`() {
-    let previous: ContinuousClock.Instant = .now
-    let next: ContinuousClock.Instant = IkaClock.nextDeadline(after: previous, now: previous + .milliseconds(50))
+  private let second: Date = .init(timeIntervalSinceReferenceDate: 815_000_000)
 
-    #expect(next == previous + .seconds(1))
-  }
+  @Test(arguments: [0.0, 0.3, 0.999])
+  func `A tick publishes the whole second it woke in`(offset: TimeInterval) {
+    let wake: Date = second.addingTimeInterval(offset)
 
-  @Test
-  func `Tick after a long suspension re-anchors to now instead of replaying missed ticks`() {
-    let previous: ContinuousClock.Instant = .now
-    let now: ContinuousClock.Instant = previous + .seconds(3600)
-
-    #expect(IkaClock.nextDeadline(after: previous, now: now) == now)
+    #expect(IkaClock.wholeSecond(containing: wake) == second)
   }
 }

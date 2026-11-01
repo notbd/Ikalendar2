@@ -12,7 +12,7 @@ import UIKit
 @MainActor
 @Observable
 final class IkaClock {
-  /// Updates every second (with 0.1s tolerance for power efficiency).
+  /// Updates on every whole second (with 0.1s tolerance for power efficiency), snapped to that second.
   private(set) var currentTime: Date = .init()
 
   @ObservationIgnored private var tickTask: Task<Void, Never>?
@@ -32,29 +32,28 @@ final class IkaClock {
     timeZoneChangeTask?.cancel()
   }
 
-  /// One second after the previous deadline, or now if that is already past (the process was
-  /// suspended), so the ticks missed while suspended fire once instead of being replayed one by one
-  /// (59847fe, pinned by IkaClockTests).
-  nonisolated static func nextDeadline(
-    after previous: ContinuousClock.Instant,
-    now: ContinuousClock.Instant)
-    -> ContinuousClock.Instant
-  {
-    max(previous + .seconds(1), now)
+  /// The whole second `now` is in, as a Date: what the clock publishes for a tick that woke at `now`
+  /// (pinned by IkaClockTests).
+  nonisolated static func wholeSecond(containing now: Date) -> Date {
+    Date(timeIntervalSinceReferenceDate: now.timeIntervalSinceReferenceDate.rounded(.down))
   }
 
   private func startTicking() {
-    // Deadline-based so ticks don't drift; weak self is re-acquired each lap
-    // so short-lived instances (previews, tests) can actually deinit.
+    // Sleeps to the next whole second each lap, so ticks don't drift; weak self is re-acquired
+    // each lap so short-lived instances (previews, tests) can actually deinit.
     tickTask = Task { [weak self] in
-      var nextTick: ContinuousClock.Instant = .now
       while !Task.isCancelled {
-        nextTick = Self.nextDeadline(after: nextTick, now: .now)
-        try? await Task.sleep(until: nextTick, tolerance: .seconds(0.1), clock: .continuous)
+        let now: Date = .init()
+        let nextSecond = Self.wholeSecond(containing: now).addingTimeInterval(1)
+        try? await Task.sleep(for: .seconds(nextSecond.timeIntervalSince(now)), tolerance: .seconds(0.1))
         guard !Task.isCancelled else { return }
         guard let self else { return }
 
-        currentTime = .init()
+        // Snapped to the second it represents: countdowns computed from it never skip or repeat a
+        // second, and every row flips on the same whole second. A late wake (the process was
+        // suspended) snaps to the second it actually woke in, so the missed ticks collapse into one
+        // instead of being replayed (59847fe).
+        currentTime = Self.wholeSecond(containing: .init())
       }
     }
   }
