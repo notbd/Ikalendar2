@@ -23,4 +23,12 @@ struct IkaClockTests {
 
     #expect(IkaClock.wholeSecond(containing: wake) == second)
   }
+
+  @Test
+  @MainActor
+  func `A new clock starts on a whole second`() {
+    let clock: IkaClock = .init()
+
+    #expect(clock.currentTime == IkaClock.wholeSecond(containing: clock.currentTime))
+  }
 }

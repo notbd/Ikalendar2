@@ -13,7 +13,8 @@ import UIKit
 @Observable
 final class IkaClock {
   /// Updates on every whole second (with 0.1s tolerance for power efficiency), snapped to that second.
-  private(set) var currentTime: Date = .init()
+  /// Always a whole second, including before the first tick and after a time change.
+  private(set) var currentTime: Date = IkaClock.wholeSecond(containing: .init())
 
   @ObservationIgnored private var tickTask: Task<Void, Never>?
   @ObservationIgnored private var significantTimeChangeTask: Task<Void, Never>?
@@ -71,7 +72,7 @@ final class IkaClock {
         guard let self else { return }
 
         NSTimeZone.resetSystemTimeZone()
-        currentTime = .init()
+        currentTime = Self.wholeSecond(containing: .init())
       }
     }
   }
