@@ -145,7 +145,11 @@ final class IkaCatalog {
   private func loadCatalog(_ shouldEnableSilentLoading: Bool = false)
     async
   {
+    // Scoped to this call: a silent onboarding load must not also silence the
+    // status changes of later auto-loads.
     isSilentLoadingEnabled = shouldEnableSilentLoading
+    defer { isSilentLoadingEnabled = false }
+
     await setLoadStatus(.loading)
     do {
       try await loadData()
