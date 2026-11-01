@@ -21,7 +21,7 @@ struct SettingsAltAppIconView: View {
   @Environment(IkaPreference.self) private var ikaPreference
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
-  @Environment(IkaConnectivityChecker.self) var connectivityChecker
+  @Environment(IkaConnectivityChecker.self) private var connectivityChecker
 
   @State private var doesPreferRickOnAppear: Bool = false
   @State private var triggeredEasterEgg: Bool = false
@@ -33,7 +33,7 @@ struct SettingsAltAppIconView: View {
   @State private var shouldDisplayAnimatedCopy: Bool = false
 
   @State private var activeAppIconColorVariant: IkaAppIcon.ColorVariant = .default
-  var activeAppIconDisplayMode: IkaAppIcon.DisplayMode {
+  private var activeAppIconDisplayMode: IkaAppIcon.DisplayMode {
     .init(color: activeAppIconColorVariant, size: .small)
   }
 

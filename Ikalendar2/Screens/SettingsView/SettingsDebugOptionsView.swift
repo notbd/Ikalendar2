@@ -16,9 +16,9 @@ struct SettingsDebugOptionsView: View {
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
   @Environment(IkaPreference.self) private var ikaPreference
 
-  @Environment(IkaConnectivityChecker.self) var connectivityChecker
+  @Environment(IkaConnectivityChecker.self) private var connectivityChecker
 
-  @ScaledMetric(relativeTo: .title) var squidBumperHeight: CGFloat = 50
+  @ScaledMetric(relativeTo: .title) private var squidBumperHeight: CGFloat = 50
 
   var body: some View {
     List {

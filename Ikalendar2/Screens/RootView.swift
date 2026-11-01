@@ -11,7 +11,7 @@ import SwiftUI
 /// The entry view of the app.
 /// Provide an interface for some upfront View-level configurations.
 struct RootView: View {
-  @Environment(\.dynamicTypeSize) var dynamicTypeSize
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @Environment(IkaStatus.self) private var ikaStatus
   @Environment(IkaPreference.self) private var ikaPreference
   @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor

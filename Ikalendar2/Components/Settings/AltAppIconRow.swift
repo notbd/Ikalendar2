@@ -82,7 +82,7 @@ struct AltAppIconEasterEggRow: View {
   @Environment(IkaPreference.self) private var ikaPreference
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
-  @Environment(IkaConnectivityChecker.self) var connectivityChecker
+  @Environment(IkaConnectivityChecker.self) private var connectivityChecker
 
   let ikaAppIcon: IkaAppIcon
   @Binding var appIconColorVariant: IkaAppIcon.ColorVariant
