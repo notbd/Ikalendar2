@@ -74,9 +74,9 @@ final class IkaDeviceMotionMonitor {
     motionManager.startDeviceMotionUpdates(to: .main) { [weak self] data, _ in
       // The handler is delivered on OperationQueue.main, i.e. the main thread.
       MainActor.assumeIsolated {
-        guard let self, let gravity = data?.gravity else { return }
+        guard let gravity = data?.gravity else { return }
 
-        processMotionUpdate(gravity)
+        self?.processMotionUpdate(gravity)
       }
     }
   }
