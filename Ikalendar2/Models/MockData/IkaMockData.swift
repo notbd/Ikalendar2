@@ -8,10 +8,11 @@
 import Foundation
 import IkalendarKit
 
-/// Struct providing mock data for testing purpose.
+/// Random mock rotations for SwiftUI previews and debug tooling. `makeBattleRotation()` and
+/// `makeSalmonRotation()` also run in production, feeding the Alternative Stage Images
+/// preview in Settings > Advanced Options. Unit tests use deterministic factories instead.
 /// - Note: Force-unwraps in this file are acceptable by convention: all inputs are
-///   compile-time-known values (non-empty CaseIterable enums, valid calendar math),
-///   and this type is only ever used from previews and debug tooling.
+///   compile-time-known values (non-empty CaseIterable enums, valid calendar math).
 enum IkaMockData {
   /// Generate a mock SalmonRotation data.
   /// - Parameters:
@@ -196,9 +197,10 @@ enum IkaMockData {
     var battleRotationDict: BattleRotationDict = .init()
     var startTimeArray: [Date] = []
     for index in 0 ..< 8 {
+      // two hours apart like the real feed, so every rotation gets a distinct `id`
       startTimeArray.append(Calendar.current.date(
-        byAdding: .second,
-        value: index * 15,
+        byAdding: .hour,
+        value: index * 2,
         to: Date())!)
     }
 
