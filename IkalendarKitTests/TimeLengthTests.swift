@@ -88,18 +88,20 @@ struct TimeLengthTests {
     /// Components that are not positive are dropped, except seconds, which always render
     /// (with their sign). Covers each component alone, gaps, and large values.
     @Test(arguments: [
-      DescriptionRow(english: "0s", japanese: "0秒"),
-      DescriptionRow(seconds: 45, english: "45s", japanese: "45秒"),
-      DescriptionRow(minutes: 45, english: "45m 0s", japanese: "45分0秒"),
-      DescriptionRow(hours: 3, english: "3h 0s", japanese: "3時間0秒"),
-      DescriptionRow(days: 5, english: "5d 0s", japanese: "5日0秒"),
-      DescriptionRow(hours: 1, minutes: 30, english: "1h 30m 0s", japanese: "1時間30分0秒"),
-      DescriptionRow(days: 2, seconds: 7, english: "2d 7s", japanese: "2日7秒"),
+      DescriptionRow(timeLength: .init(), english: "0s", japanese: "0秒"),
+      DescriptionRow(timeLength: .init(seconds: 45), english: "45s", japanese: "45秒"),
+      DescriptionRow(timeLength: .init(minutes: 45), english: "45m 0s", japanese: "45分0秒"),
+      DescriptionRow(timeLength: .init(hours: 3), english: "3h 0s", japanese: "3時間0秒"),
+      DescriptionRow(timeLength: .init(days: 5), english: "5d 0s", japanese: "5日0秒"),
       DescriptionRow(
-        days: 999, hours: 23, minutes: 59, seconds: 59,
+        timeLength: .init(hours: 1, minutes: 30),
+        english: "1h 30m 0s", japanese: "1時間30分0秒"),
+      DescriptionRow(timeLength: .init(days: 2, seconds: 7), english: "2d 7s", japanese: "2日7秒"),
+      DescriptionRow(
+        timeLength: .init(days: 999, hours: 23, minutes: 59, seconds: 59),
         english: "999d 23h 59m 59s", japanese: "999日23時間59分59秒"),
       DescriptionRow(
-        days: -1, hours: -2, minutes: -30, seconds: -45,
+        timeLength: .init(days: -1, hours: -2, minutes: -30, seconds: -45),
         english: "-45s", japanese: "-45秒"),
     ])
     func `Only positive components render and seconds always render`(row: DescriptionRow) {
@@ -118,19 +120,11 @@ struct TimeLengthTests {
 
 // MARK: - DescriptionRow
 
-/// One golden row for `localizedDescription(locale:)`. `TimeLength` is not `Sendable`,
-/// so the components travel as plain integers and the value is built inside the test.
+/// One golden row for `localizedDescription(locale:)`.
 struct DescriptionRow: Sendable, CustomTestStringConvertible {
-  var days: Int = 0
-  var hours: Int = 0
-  var minutes: Int = 0
-  var seconds: Int = 0
+  let timeLength: TimeLength
   let english: String
   let japanese: String
-
-  var timeLength: TimeLength {
-    .init(days: days, hours: hours, minutes: minutes, seconds: seconds)
-  }
 
   var testDescription: String { english }
 }
