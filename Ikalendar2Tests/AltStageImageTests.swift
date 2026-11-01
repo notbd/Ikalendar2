@@ -7,13 +7,13 @@
 
 import Foundation
 import Testing
-import UIKit
 @testable import Ikalendar2
 
 // MARK: - AltStageImageTests
 
-/// Alt stage image names must always resolve to a real asset. The test bundle is hosted
-/// by the app, so `UIImage(named:)` reads the app's asset catalog.
+/// How the battle alt stage image is picked. The test bundle is hosted by the app, so
+/// `AssetImageCounter` counts the real asset catalog. Whether every pick resolves to an
+/// existing asset is covered by AssetAlignmentTests.
 @Suite("Alt stage images")
 struct AltStageImageTests {
   static private let anchor: Date = .init(timeIntervalSince1970: 1_700_000_000)
@@ -45,23 +45,5 @@ struct AltStageImageTests {
     let clamBlitz: BattleRotation = battleRotation(rule: .clamBlitz, stageA: .theReef, stageB: .theReef)
     #expect(rainmaker.stageAAltImageName == "The_Reef_Alt_0")
     #expect(clamBlitz.stageAAltImageName == "The_Reef_Alt_2") // nonzero: an always-0 pick fails
-  }
-
-  @Test(arguments: BattleStage.allCases, BattleRule.allCases)
-  func `Every battle alt image name resolves to an asset`(stage: BattleStage, rule: BattleRule) {
-    let rotation: BattleRotation = battleRotation(rule: rule, stageA: stage, stageB: stage)
-    #expect(UIImage(named: rotation.stageAAltImageName) != nil, "missing \(rotation.stageAAltImageName)")
-  }
-
-  @Test(arguments: SalmonStage.allCases)
-  func `Every salmon alt image name resolves to an asset`(stage: SalmonStage) throws {
-    let rotation: SalmonRotation = .init(
-      startTime: Self.anchor,
-      endTime: Self.anchor.addingTimeInterval(36 * 60 * 60),
-      stage: stage)
-    let imageName = try #require(rotation.stageAltImageName)
-    let largeImageName = try #require(rotation.stageAltImageNameLarge)
-    #expect(UIImage(named: imageName) != nil, "missing \(imageName)")
-    #expect(UIImage(named: largeImageName) != nil, "missing \(largeImageName)")
   }
 }
