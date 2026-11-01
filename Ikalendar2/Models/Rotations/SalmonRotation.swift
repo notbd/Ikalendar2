@@ -56,6 +56,11 @@ extension SalmonRotation {
     let prefix = stage.imageName + "_Alt_"
     // does not need to divide by 2, can safely ignore large copies
     let numOfAltImages: Int = AssetImageCounter.countImagesWithPrefix(prefix)
+
+    // a stage without any alt image keeps its standard image
+    guard numOfAltImages > 0
+    else { return stage.imageName }
+
     let randomChoice = generator.nextInt(bound: numOfAltImages)
 
     return stage.imageName + "_Alt_\(randomChoice)"

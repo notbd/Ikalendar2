@@ -42,8 +42,11 @@ final public class SeededRandomGenerator {
 
   /// Generates a random integer within the range from 0 to the specified bound (exclusive).
   /// - Parameter bound: The upper bound of the range (exclusive).
-  /// - Returns: A random integer within the range from 0 to the bound (exclusive).
+  /// - Returns: A random integer within the range from 0 to the bound (exclusive), or `0` when
+  ///   `bound` is not positive (an empty range; nothing is drawn from the sequence).
   public func nextInt(bound: Int) -> Int {
+    guard bound > 0 else { return 0 }
+
     let distribution: GKRandomDistribution = .init(
       randomSource: randomSource,
       lowestValue: 0,

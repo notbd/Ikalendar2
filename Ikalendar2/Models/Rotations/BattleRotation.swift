@@ -36,7 +36,8 @@ extension BattleRotation {
   var stageBAltImageName: String { altImageName(for: stageB) }
 
   /// Picks one of the stage's general or rule-specific alt images, seeded by `description`
-  /// so the same rotation always resolves to the same image.
+  /// so the same rotation always resolves to the same image. A stage without any alt image
+  /// (Shifty Station) keeps its standard image.
   private func altImageName(for stage: BattleStage) -> String {
     let generator: SeededRandomGenerator = .init(seed: description)
 
@@ -45,8 +46,12 @@ extension BattleRotation {
 
     let numOfAltImagesGeneral: Int = AssetImageCounter.countImagesWithPrefix(generalPrefix)
     let numOfAltImagesRuleSpecific: Int = AssetImageCounter.countImagesWithPrefix(ruleSpecificPrefix)
+    let numOfAltImages = numOfAltImagesGeneral + numOfAltImagesRuleSpecific
 
-    let randomChoice = generator.nextInt(bound: numOfAltImagesGeneral + numOfAltImagesRuleSpecific)
+    guard numOfAltImages > 0
+    else { return stage.imageName }
+
+    let randomChoice = generator.nextInt(bound: numOfAltImages)
 
     return if randomChoice < numOfAltImagesGeneral {
       "\(generalPrefix)\(randomChoice)"

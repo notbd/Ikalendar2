@@ -50,7 +50,6 @@ struct SeededRandomGeneratorTests {
 
   @Test
   func `Draws respect the bound`() {
-    // Note: bound 0 is a documented crash (GKRandomDistribution lowest > highest) - never call it.
     let generator: SeededRandomGenerator = .init(seed: 7)
     for _ in 0 ..< 500 {
       let draw = generator.nextInt(bound: 7)
@@ -61,6 +60,14 @@ struct SeededRandomGeneratorTests {
     for _ in 0 ..< 10 {
       #expect(unitGenerator.nextInt(bound: 1) == 0)
     }
+  }
+
+  @Test(arguments: [0, -1, Int.min])
+  func `Non-positive bound returns zero without consuming the stream`(bound: Int) {
+    // Rotations with no alt images skip the generator, but the contract stays explicit.
+    let generator: SeededRandomGenerator = .init(seed: "empty-range")
+    #expect(generator.nextInt(bound: bound) == 0)
+    #expect(drawSequence(generator) == drawSequence(SeededRandomGenerator(seed: "empty-range")))
   }
 
   @Test
