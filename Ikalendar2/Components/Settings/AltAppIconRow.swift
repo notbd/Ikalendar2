@@ -163,7 +163,7 @@ struct AltAppIconEasterEggRow: View {
 // MARK: - AppIconEasterEggAnimationValues
 
 /// Animatable values for the easter-egg icon jump.
-struct AppIconEasterEggAnimationValues {
+private struct AppIconEasterEggAnimationValues {
   var scale = 1.0
   var verticalStretch = 1.0
   var verticalTranslation = 0.0

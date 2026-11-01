@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// The cadence is tied to the view's identity, so parent re-renders don't reset
 /// the rhythm. Starts one full interval after appearing; stops once discovered.
-struct IconNudge: ViewModifier {
+private struct IconNudge: ViewModifier {
   let isActive: Bool
   let interval: TimeInterval
 

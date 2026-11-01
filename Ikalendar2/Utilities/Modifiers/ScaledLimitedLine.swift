@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - ScaledLimitedLine
 
 /// Caps text to a line limit and lets it shrink to fit instead of truncating.
-struct ScaledLimitedLine: ViewModifier {
+private struct ScaledLimitedLine: ViewModifier {
   let lineLimit: Int
   let minScaleFactor: CGFloat
 

@@ -32,7 +32,7 @@ struct SalmonRotationWeaponsCard: View {
 
 // MARK: - SalmonRotationWeaponCardIcon
 
-struct SalmonRotationWeaponCardIcon: View {
+private struct SalmonRotationWeaponCardIcon: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Weapon
 
   let weapon: SalmonWeapon

@@ -16,7 +16,7 @@ enum IkaFont: String {
 
 // MARK: - IkaFontTextStyle
 
-struct IkaFontTextStyle: ViewModifier {
+private struct IkaFontTextStyle: ViewModifier {
   let ikaFont: IkaFont
   let size: CGFloat
   let textStyle: Font.TextStyle

@@ -188,7 +188,7 @@ struct OnboardingView: View {
 // MARK: - OnboardingObject
 
 /// The animatable pieces of the onboarding screen, with their entrance keyframes.
-enum OnboardingObject {
+private enum OnboardingObject {
   case icon
   case title
   case button

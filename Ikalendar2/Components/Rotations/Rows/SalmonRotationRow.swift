@@ -88,7 +88,7 @@ extension SalmonRotationRow {
 // MARK: - SalmonRotationHeader
 
 /// The header of the salmon rotation row.
-struct SalmonRotationHeader: View {
+private struct SalmonRotationHeader: View {
   typealias Scoped = Constants.Style.Rotation.Header
 
   @Environment(IkaClock.self) private var ikaClock

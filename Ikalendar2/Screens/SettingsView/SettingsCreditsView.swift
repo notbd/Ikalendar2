@@ -118,7 +118,7 @@ struct SettingsCreditsView: View {
 // MARK: - CreditsExternalLinkCell
 
 /// A credits row that links straight out to an external site.
-struct CreditsExternalLinkCell: View {
+private struct CreditsExternalLinkCell: View {
   typealias Scoped = Constants.Style.Settings.Credits
 
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -165,7 +165,7 @@ struct CreditsExternalLinkCell: View {
 // MARK: - CreditsOpenSourceLibCell
 
 /// A credits row for an open source library, pushing to its license page.
-struct CreditsOpenSourceLibCell<Destination: View>: View {
+private struct CreditsOpenSourceLibCell<Destination: View>: View {
   typealias Scoped = Constants.Style.Settings.Credits
 
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize

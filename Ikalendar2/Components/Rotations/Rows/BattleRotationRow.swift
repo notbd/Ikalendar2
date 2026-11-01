@@ -62,7 +62,7 @@ extension BattleRotationRow {
 // MARK: - BattleRotationHeader
 
 /// The header of the battle rotation row.
-struct BattleRotationHeader: View {
+private struct BattleRotationHeader: View {
   typealias Scoped = Constants.Style.Rotation.Header
 
   let rotation: BattleRotation

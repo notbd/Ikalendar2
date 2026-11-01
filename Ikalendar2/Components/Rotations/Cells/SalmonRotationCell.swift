@@ -75,7 +75,7 @@ struct SalmonRotationCell: View {
 // MARK: - SalmonRotationCellTimeTextSection
 
 /// A HStack component containing the time text of a salmon rotation.
-struct SalmonRotationCellTimeTextSection: View {
+private struct SalmonRotationCellTimeTextSection: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell.TimeTextSection
 
   let rotation: SalmonRotation

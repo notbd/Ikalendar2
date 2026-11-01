@@ -437,7 +437,7 @@ struct SettingsAboutView: View {
 // MARK: - SettingsAboutAppIconAnimationValues
 
 /// Animatable values for the about-page app icon bounce.
-struct SettingsAboutAppIconAnimationValues {
+private struct SettingsAboutAppIconAnimationValues {
   var scale: Double = 1
   var vStretch: Double = 1
   var vTranslation: Double = 0

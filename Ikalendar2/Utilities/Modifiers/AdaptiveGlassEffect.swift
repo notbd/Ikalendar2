@@ -11,7 +11,7 @@ import SwiftUI
 
 /// An interactive glass effect that adapts to the color scheme:
 /// `.clear` on dark (regular glass washes out there), `.regular` on light.
-struct AdaptiveGlassEffect<EffectShape: Shape>: ViewModifier {
+private struct AdaptiveGlassEffect<EffectShape: Shape>: ViewModifier {
   @Environment(\.colorScheme) private var colorScheme
 
   let tint: Color?
