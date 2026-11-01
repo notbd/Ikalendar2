@@ -68,6 +68,18 @@ struct IkaNetworkManagerTests {
       try await manager.fetchBattleRotationDict()
     }
   }
+
+  @Test
+  func `Init leaves the caller's configuration unchanged`() {
+    let configuration: URLSessionConfiguration = .ephemeral
+    let requestTimeout: TimeInterval = configuration.timeoutIntervalForRequest
+    let resourceTimeout: TimeInterval = configuration.timeoutIntervalForResource
+
+    _ = IkaNetworkManager(configuration: configuration)
+
+    #expect(configuration.timeoutIntervalForRequest == requestTimeout)
+    #expect(configuration.timeoutIntervalForResource == resourceTimeout)
+  }
 }
 
 // MARK: - StubURLProtocol

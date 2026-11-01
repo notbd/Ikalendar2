@@ -37,11 +37,12 @@ final class IkaNetworkManager: IkaNetworkService {
   private let session: URLSession
 
   /// - Parameter configuration: Injectable so tests can stub responses through a `URLProtocol`;
-  ///   the timeouts below are applied on top of it.
+  ///   the timeouts below are applied to a copy, so the caller's object stays unchanged.
   init(configuration: URLSessionConfiguration = .default) {
-    configuration.timeoutIntervalForRequest = 10
-    configuration.timeoutIntervalForResource = 30
-    session = URLSession(configuration: configuration)
+    let sessionConfiguration = configuration.copy() as? URLSessionConfiguration ?? configuration
+    sessionConfiguration.timeoutIntervalForRequest = 10
+    sessionConfiguration.timeoutIntervalForResource = 30
+    session = URLSession(configuration: sessionConfiguration)
   }
 
   @concurrent
