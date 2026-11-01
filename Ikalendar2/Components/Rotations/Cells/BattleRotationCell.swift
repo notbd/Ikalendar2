@@ -104,12 +104,13 @@ struct BattleRotationCellPrimary: View {
     }
     .padding(.top, Scoped.cellPaddingTop)
     .padding(.bottom, Scoped.cellPaddingBottom)
+    .accessibilityElement(children: .combine)
   }
 
   // MARK: Rule Section
 
   private var ruleIcon: some View {
-    Image(rotation.rule.imageNameMid)
+    Image(decorative: rotation.rule.imageNameMid)
       .antialiased(true)
       .resizable()
       .scaledToFit()
@@ -141,6 +142,7 @@ struct BattleRotationCellPrimary: View {
             .ika2,
             size: Scoped.ruleTitleFontSizeMax,
             relativeTo: Scoped.ruleTitleTextStyleRelativeTo)
+          .accessibilityHidden(true)
       }
     }
     .padding(.vertical, Scoped.ruleTitlePaddingV)
@@ -243,10 +245,11 @@ struct BattleRotationCellSecondary: View {
         battleStageCardB
       }
     }
+    .accessibilityElement(children: .combine)
   }
 
   private var ruleIcon: some View {
-    Image(rotation.rule.imageNameMid)
+    Image(decorative: rotation.rule.imageNameMid)
       .antialiased(true)
       .resizable()
       .scaledToFit()
@@ -313,6 +316,7 @@ struct BattleRotationCellSecondary: View {
             .ika2,
             size: Scoped.ruleFontSize,
             relativeTo: .body)
+          .accessibilityHidden(true)
       }
     }
   }

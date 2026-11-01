@@ -41,6 +41,7 @@ struct SalmonRotationCell: View {
     }
     // Stupid workaround because SwiftUI List cell force adds vInsets for content that's too small
     .padding(.vertical, Scoped.cellPaddingVertical)
+    .accessibilityElement(children: .combine)
   }
 
   private var stageAndWeaponSection: some View {
@@ -86,6 +87,7 @@ struct SalmonRotationCellTimeTextSection: View {
         .antialiased(true)
         .resizable()
         .scaledToFit()
+        .accessibilityHidden(true)
         .shadow(radius: Constants.Style.Global.shadowRadius)
         .frame(height: rowWidth * Scoped.salmonIconHeightRatio)
         .if(rotation.isCurrent(ikaClock.currentTime)) {

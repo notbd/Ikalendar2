@@ -37,7 +37,7 @@ struct BattleRotationStageCardPrimary: View {
   }
 
   var body: some View {
-    Image(stageImageName)
+    Image(decorative: stageImageName)
       .antialiased(true)
       .resizable()
       .scaledToFit()
@@ -92,7 +92,7 @@ struct BattleRotationStageCardSecondary: View {
       alignment: .trailing,
       spacing: Scoped.spacingV)
     {
-      Image(stageImageName)
+      Image(decorative: stageImageName)
         .antialiased(true)
         .resizable()
         .scaledToFit()

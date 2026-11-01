@@ -22,6 +22,7 @@ struct SalmonRotationStageCard: View {
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
   private var shouldOverrideWithLarge: Bool { cardWidth >= 200 }
+  private var isRewardApparelVisible: Bool { rotation.isCurrent(ikaClock.currentTime) && hasRewardApparel }
 
   private var stageImageName: String {
     // Caller (SalmonRotationCell) only renders this card when rotation.stage != nil.
@@ -40,7 +41,7 @@ struct SalmonRotationStageCard: View {
   }
 
   var body: some View {
-    Image(stageImageName)
+    Image(decorative: stageImageName)
       .antialiased(true)
       .resizable()
       .scaledToFit()
@@ -96,7 +97,9 @@ struct SalmonRotationStageCard: View {
       .glassEffect(
         .clear.interactive(),
         in: .rect(cornerRadius: Scoped.apparelFrameCornerRadius))
-      .opacity(rotation.isCurrent(ikaClock.currentTime) && hasRewardApparel ? 1 : 0)
+      .opacity(isRewardApparelVisible ? 1 : 0)
+      .accessibilityLabel(Text((rotation.rewardApparel?.name ?? "").localizedStringKey))
+      .accessibilityHidden(!isRewardApparelVisible)
   }
 }
 

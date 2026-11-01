@@ -80,6 +80,7 @@ struct ErrorView: View {
       .resizable()
       .scaledToFit()
       .saturation(0.4)
+      .accessibilityHidden(true)
   }
 }
 

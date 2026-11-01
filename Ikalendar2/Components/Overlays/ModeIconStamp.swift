@@ -78,7 +78,7 @@ struct ModeIconStamp: View {
       }
 
     return
-      Image(imageName)
+      Image(decorative: imageName)
         .antialiased(true)
         .resizable()
         .scaledToFit()

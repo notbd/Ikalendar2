@@ -20,6 +20,7 @@ struct ToolbarSettingsButton: View {
     } label: {
       Image(systemName: "gear")
     }
+    .accessibilityLabel(Text("Settings"))
   }
 }
 

@@ -318,3 +318,9 @@
 "Play" = "再生";
 "Pause" = "一時停止";
 "Next" = "次へ";
+
+/* Accessibility: rotations */
+"Refresh" = "更新";
+"Refreshing" = "更新中";
+"Mystery" = "ランダム";
+"Mystery Grizzco" = "クマサン印のランダム";

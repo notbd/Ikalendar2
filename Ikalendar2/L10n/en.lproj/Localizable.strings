@@ -318,3 +318,9 @@ Please check your internet connection and try again.";
 "Play" = "Play";
 "Pause" = "Pause";
 "Next" = "Next";
+
+/* Accessibility: rotations */
+"Refresh" = "Refresh";
+"Refreshing" = "Refreshing";
+"Mystery" = "Random";
+"Mystery Grizzco" = "Grizzco Random";
