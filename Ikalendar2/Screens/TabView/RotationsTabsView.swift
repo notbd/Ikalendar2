@@ -38,9 +38,7 @@ struct RotationsTabsView: View {
         }
       }
     }
-    .if(ikaPreference.shouldMinimizeTabBar) {
-      $0.tabBarMinimizeBehavior(.onScrollDown)
-    }
+    .tabBarMinimizeBehavior(ikaPreference.shouldMinimizeTabBar ? .onScrollDown : .automatic)
   }
 
   @ViewBuilder
