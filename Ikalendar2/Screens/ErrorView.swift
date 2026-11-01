@@ -46,30 +46,20 @@ struct ErrorView: View {
     {
       Text(error.title.localizedStringKey)
         .scaledLimitedLine()
-        .if(Scoped.shouldUseCustomFont) {
-          $0
-            .ikaFont(
-              .ika2,
-              size: Scoped.titleCustomFontSize,
-              relativeTo: .largeTitle)
-        } else: {
-          $0.font(.system(.largeTitle, design: .rounded))
-        }
+        .ikaFont(
+          .ika2,
+          size: Scoped.titleCustomFontSize,
+          relativeTo: .largeTitle)
 
       Spacer()
         .frame(height: Scoped.textSectionSpacing)
 
       Text(error.message.localizedStringKey)
         .lineSpacing(Scoped.messageLineSpacing)
-        .if(Scoped.shouldUseCustomFont) {
-          $0
-            .ikaFont(
-              .ika2,
-              size: Scoped.messageCustomFontSize,
-              relativeTo: .body)
-        } else: {
-          $0.font(.system(.body, design: .rounded))
-        }
+        .ikaFont(
+          .ika2,
+          size: Scoped.messageCustomFontSize,
+          relativeTo: .body)
     }
     .foregroundStyle(Color.secondary)
   }

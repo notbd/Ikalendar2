@@ -53,7 +53,6 @@ struct AutoLoadingOverlay: View {
       .padding()
     }
     .opacity(ikaCatalog.autoLoadStatus == .idle ? 0 : 1)
-    .transition(.scale.combined(with: .opacity))
     .animation(
       .bouncy,
       value: ikaCatalog.autoLoadStatus)

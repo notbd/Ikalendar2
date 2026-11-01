@@ -15,7 +15,6 @@ struct RotationsCarouselView: View {
   typealias Scoped = Constants.Style.Carousel
 
   @Environment(IkaCatalog.self) private var ikaCatalog
-  @Environment(IkaStatus.self) private var ikaStatus
   @Environment(IkaPreference.self) private var ikaPreference
 
   @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor

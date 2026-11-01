@@ -23,10 +23,7 @@ struct RotationsTabView: View {
         .overlay(
           ModeIconStamp(
             flatModeSelection: adoptedFlatMode,
-            shouldOffset: true)
-            .animation(
-              .snappy,
-              value: adoptedFlatMode),
+            shouldOffset: true),
           alignment: .topTrailing)
         .refreshable {
           await ikaCatalog.refresh()

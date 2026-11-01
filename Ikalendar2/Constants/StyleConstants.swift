@@ -71,7 +71,6 @@ extension Constants.Style {
     static let textSectionSpacing: CGFloat = 40
     static let messageLineSpacing: CGFloat = 6
 
-    static let shouldUseCustomFont = true
     static let titleCustomFontSize: CGFloat = 36
     static let messageCustomFontSize: CGFloat = 19
   }

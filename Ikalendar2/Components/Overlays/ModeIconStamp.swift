@@ -13,7 +13,6 @@ import SwiftUI
 struct ModeIconStamp: View {
   typealias Scoped = Constants.Style.Overlay.ModeIcon
 
-  @Environment(IkaStatus.self) private var ikaStatus
   @Environment(IkaDeviceMotionMonitor.self) private var ikaDeviceMotionMonitor
   @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor
 

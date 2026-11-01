@@ -9,7 +9,6 @@ import SwiftUI
 
 /// The iPhone layout: one tab per mode along the bottom bar.
 struct RotationsTabsView: View {
-  @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus
 
   @Environment(IkaPreference.self) private var ikaPreference
@@ -39,35 +38,6 @@ struct RotationsTabsView: View {
       }
     }
     .tabBarMinimizeBehavior(ikaPreference.shouldMinimizeTabBar ? .onScrollDown : .automatic)
-  }
-
-  @ViewBuilder
-  private var content: some View {
-    switch ikaCatalog.loadResultStatus {
-      case .error(let ikaError):
-        ErrorView(error: ikaError)
-      default:
-        rotationList
-    }
-  }
-
-  @ViewBuilder
-  private var rotationList: some View {
-    switch ikaStatus.currentGameMode {
-      case .battle:
-        BattleRotationList()
-      case .salmon:
-        SalmonRotationList()
-    }
-  }
-
-  private var title: String {
-    switch ikaStatus.currentGameMode {
-      case .battle:
-        ikaStatus.currentBattleMode.name
-      case .salmon:
-        ikaStatus.currentGameMode.name
-    }
   }
 }
 

@@ -71,15 +71,11 @@ struct BattleRotationCellPrimary: View {
   // primary matches it (isSource: false). The two briefly coexist during the hero
   // transition, and more than one source per group is undefined behavior.
 
-  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-
   @Environment(IkaClock.self) private var ikaClock
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
   let animationNamespaces: BattleRotationCell.AnimationNamespaces?
-
-  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   var body: some View {
     VStack(spacing: Scoped.cellSpacingV) {
@@ -220,8 +216,6 @@ struct BattleRotationCellSecondary: View {
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
-
-  @Environment(IkaPreference.self) private var ikaPreference
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
