@@ -52,10 +52,13 @@ final class IkaOrientationMonitor {
       let windowScene = UIApplication.shared
         .connectedScenes
         .compactMap({ $0 as? UIWindowScene })
-        .first,
-      let interfaceOrientation = windowScene.windows.first?.windowScene?
-        .effectiveGeometry.interfaceOrientation
+        .first
     else { return }
+
+    // The notification also fires for face up and face down, which leave the interface orientation
+    // alone. @Observable does not skip equal assignments, so writing anyway re-renders every reader.
+    let interfaceOrientation = windowScene.effectiveGeometry.interfaceOrientation
+    guard interfaceOrientation != currentOrientation else { return }
 
     currentOrientation = interfaceOrientation
   }
