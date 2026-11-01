@@ -175,6 +175,36 @@ struct IkaCatalogTests {
 
     #expect(catalog.loadStatus == .error(.connectionError))
   }
+
+  // MARK: - Cancellation
+
+  @Test(.timeLimit(.minutes(1)))
+  func `Cancelled refresh restores the last result instead of staying in loading`() async {
+    // The second refresh hangs until it is cancelled, like a pull-to-refresh whose view
+    // leaves the hierarchy mid-load. A catalog left in `.loading` would stay disabled.
+    let hasLoadedOnce: FlipFlag = .init()
+    let catalog = makeCatalog(
+      battle: {
+        if await hasLoadedOnce.value {
+          return try await hangingForever()
+        }
+        await hasLoadedOnce.set()
+        return TestData.battleDict()
+      },
+      salmon: { [] })
+
+    await catalog.refresh()
+    #expect(catalog.loadStatus == .loaded)
+
+    let secondRefresh = Task { await catalog.refresh() }
+    await waitUntil { catalog.loadStatus == .loading }
+    secondRefresh.cancel()
+    await secondRefresh.value
+
+    #expect(catalog.loadStatus == .loaded)
+    #expect(catalog.loadResultStatus == .loaded)
+    #expect(!catalog.battleRotationDict.hasEmptyMode) // the first result is kept
+  }
 }
 
 // MARK: - FlipFlag

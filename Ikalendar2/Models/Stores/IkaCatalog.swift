@@ -110,6 +110,8 @@ final class IkaCatalog {
   }
 
   @ObservationIgnored private var isSilentLoadingEnabled: Bool = false
+  /// Bumped by every load, so a cancelled load can tell whether a newer one took over.
+  @ObservationIgnored private var loadGeneration: Int = 0
 
   private(set) var loadStatus: LoadStatus = .loading
   {
@@ -150,14 +152,19 @@ final class IkaCatalog {
     isSilentLoadingEnabled = shouldEnableSilentLoading
     defer { isSilentLoadingEnabled = false }
 
+    loadGeneration += 1
+    let generation = loadGeneration
+
     await setLoadStatus(.loading)
     do {
       try await loadData()
       await setLoadStatus(.loaded)
     }
     catch is CancellationError {
-      // Task was cancelled (e.g. owning view disappeared) - no error UI
-      return
+      // Task was cancelled (e.g. owning view disappeared) - no error UI. Unless a newer
+      // load took over, put the last result back: a catalog parked in `.loading` keeps the
+      // lists, the refresh button and the auto-load gate disabled, and nothing else clears it.
+      if generation == loadGeneration { restoreLoadResultStatus() }
     }
     catch let error as IkaError {
       await setLoadStatus(.error(error))
@@ -212,6 +219,17 @@ final class IkaCatalog {
         try? await Task.sleep(for: .seconds(timing.loadStatusErrorDelay))
         loadStatus = .error(ikaError)
     }
+  }
+
+  /// Silently puts `loadStatus` back to the last result after a cancelled load. A load
+  /// cancelled before any result exists has nothing to restore: the launch `.task` that
+  /// issued it runs again with its recreated view.
+  private func restoreLoadResultStatus() {
+    guard loadResultStatus != .loading else { return }
+
+    // A cancelled load is a non-event: no haptic. `loadCatalog` resets the flag on exit.
+    isSilentLoadingEnabled = true
+    loadStatus = loadResultStatus
   }
 
   // MARK: Auto-Load related
