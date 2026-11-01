@@ -12,8 +12,6 @@ import SwiftUI
 
 /// One selectable app icon row: preview image, name, and active checkmark.
 struct AltAppIconRow: View {
-  typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
-
   @Environment(IkaPreference.self) private var ikaPreference
 
   let ikaAppIcon: IkaAppIcon
@@ -33,7 +31,7 @@ struct AltAppIconRow: View {
   }
 
   private var rowContent: some View {
-    HStack(spacing: Scoped.spacingH) {
+    AltAppIconRowContent(ikaAppIcon: ikaAppIcon, isSelected: ikaAppIcon == ikaPreference.preferredAppIcon) {
       Image(decorative: ikaAppIcon.imageName(for: appIconDisplayMode))
         .ikaFitted()
         .frame(
@@ -43,22 +41,7 @@ struct AltAppIconRow: View {
         .animation(
           Constants.Motion.appIconCrossFade,
           value: appIconColorVariant)
-
-      Text(ikaAppIcon.displayNameLocalizedStringKey)
-        .font(.system(.body, design: .rounded))
-        .foregroundStyle(Scoped.displayNameColor)
-
-      Spacer()
-
-      if ikaAppIcon == ikaPreference.preferredAppIcon {
-        Image(systemName: Scoped.activeIndicatorSFSymbol)
-          .font(Scoped.activeIndicatorFont)
-          .symbolRenderingMode(.palette)
-          .foregroundStyle(Color.accentColor, Color.systemGroupedBackgroundTertiary)
-          .accessibilityHidden(true) // conveyed by the row's selected trait
-      }
     }
-    .padding(.vertical, Scoped.rowPaddingV)
   }
 
   private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
@@ -72,8 +55,6 @@ struct AltAppIconRow: View {
 
 /// The Rick row. Selecting it jumps to the good stuff on first discovery.
 struct AltAppIconEasterEggRow: View {
-  typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
-
   @Environment(\.locale) private var currentLocale
 
   @Environment(IkaPreference.self) private var ikaPreference
@@ -106,7 +87,7 @@ struct AltAppIconEasterEggRow: View {
   }
 
   private var rowContent: some View {
-    HStack(spacing: Scoped.spacingH) {
+    AltAppIconRowContent(ikaAppIcon: ikaAppIcon, isSelected: ikaAppIcon == ikaPreference.preferredAppIcon) {
       Image(decorative: ikaAppIcon.imageName(for: appIconDisplayMode))
         .antialiased(true)
         .resizable()
@@ -133,6 +114,30 @@ struct AltAppIconEasterEggRow: View {
           AppIconEasterEggAnimationValues.easterEggKeyframes(
             rotationAngle: .init((Int.random(in: 16 ... 24)) * (Bool.random() ? 1 : -1)))
         }
+    }
+  }
+
+  private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
+    guard ikaPreference.preferredAppIcon != ikaAppIcon else { return }
+
+    ikaPreference.preferredAppIcon = ikaAppIcon
+  }
+}
+
+// MARK: - AltAppIconRowContent
+
+/// The label both rows share: icon, name, and the active checkmark. Each row passes its icon fully
+/// modified, so the Rick row's keyframe animator stays on its concrete image chain.
+private struct AltAppIconRowContent<Icon: View>: View {
+  typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
+
+  let ikaAppIcon: IkaAppIcon
+  let isSelected: Bool
+  @ViewBuilder let icon: Icon
+
+  var body: some View {
+    HStack(spacing: Scoped.spacingH) {
+      icon
 
       Text(ikaAppIcon.displayNameLocalizedStringKey)
         .font(.system(.body, design: .rounded))
@@ -140,7 +145,7 @@ struct AltAppIconEasterEggRow: View {
 
       Spacer()
 
-      if ikaAppIcon == ikaPreference.preferredAppIcon {
+      if isSelected {
         Image(systemName: Scoped.activeIndicatorSFSymbol)
           .font(Scoped.activeIndicatorFont)
           .symbolRenderingMode(.palette)
@@ -149,12 +154,6 @@ struct AltAppIconEasterEggRow: View {
       }
     }
     .padding(.vertical, Scoped.rowPaddingV)
-  }
-
-  private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
-    guard ikaPreference.preferredAppIcon != ikaAppIcon else { return }
-
-    ikaPreference.preferredAppIcon = ikaAppIcon
   }
 }
 

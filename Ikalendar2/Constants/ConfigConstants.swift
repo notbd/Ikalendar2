@@ -27,12 +27,4 @@ extension Constants.Config {
     static let autoLoadedLingerLength: TimeInterval = 2
     static let idleAndNonIdleStatusUpdateInterval: TimeInterval = 1
   }
-
-  enum Settings {
-    enum AltAppIcon {
-      /// ~30 progress updates per second: smooth under the snappy animation, without
-      /// re-rendering the page at 100 Hz (1839fd0).
-      static let slideShowIntervalStepLength: TimeInterval = 1.0 / 30
-    }
-  }
 }

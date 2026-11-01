@@ -50,12 +50,14 @@
 		79385E302AC621F2003D6FD7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 79385E2F2AC621F2003D6FD7 /* PrivacyInfo.xcprivacy */; };
 		7939EC182AC5133900AC48C4 /* SettingsEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7939EC172AC5133900AC48C4 /* SettingsEntryView.swift */; };
 		79408C6A2AA5BAA800141E58 /* IkaAppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79408C692AA5BAA800141E58 /* IkaAppIcon.swift */; };
+		B5BA5E86F5C534EDF51FDFE1 /* SlideShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA909A256DAE680EEF815AA /* SlideShow.swift */; };
 		394A88404DD884735184A0D5 /* IkaPreferredColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E857E9F8B05F593E9685C250 /* IkaPreferredColorScheme.swift */; };
 		7943DFBB2AB52D090047250E /* CarouselColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFBA2AB52D090047250E /* CarouselColumn.swift */; };
 		7943DFC12AB536090047250E /* BattleRotationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFC02AB536090047250E /* BattleRotationList.swift */; };
 		7943DFC32AB5398D0047250E /* SalmonRotationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943DFC22AB5398D0047250E /* SalmonRotationList.swift */; };
 		7966346E2AC147FC00AE82E2 /* GlobalPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7966346D2AC147FC00AE82E2 /* GlobalPosition.swift */; };
 		796634712AC1578900AE82E2 /* AltAppIconRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796634702AC1578900AE82E2 /* AltAppIconRow.swift */; };
+		F9F7876B2C86EDB1DFFE8418 /* SlideShowControlBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5356C78085FEAA25D6EB07B /* SlideShowControlBar.swift */; };
 		1DF22B7D1A50E4A8761F59CD /* SettingsRowLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928473D9927E5A97139C279 /* SettingsRowLabel.swift */; };
 		796CEF812AB7A94E006860C6 /* Splatfont1-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */; };
 		796CEF822AB7A94E006860C6 /* Splatfont2-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */; };
@@ -197,12 +199,14 @@
 		79385E2F2AC621F2003D6FD7 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7939EC172AC5133900AC48C4 /* SettingsEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEntryView.swift; sourceTree = "<group>"; };
 		79408C692AA5BAA800141E58 /* IkaAppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaAppIcon.swift; sourceTree = "<group>"; };
+		6EA909A256DAE680EEF815AA /* SlideShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShow.swift; sourceTree = "<group>"; };
 		E857E9F8B05F593E9685C250 /* IkaPreferredColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreferredColorScheme.swift; sourceTree = "<group>"; };
 		7943DFBA2AB52D090047250E /* CarouselColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselColumn.swift; sourceTree = "<group>"; };
 		7943DFC02AB536090047250E /* BattleRotationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleRotationList.swift; sourceTree = "<group>"; };
 		7943DFC22AB5398D0047250E /* SalmonRotationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonRotationList.swift; sourceTree = "<group>"; };
 		7966346D2AC147FC00AE82E2 /* GlobalPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalPosition.swift; sourceTree = "<group>"; };
 		796634702AC1578900AE82E2 /* AltAppIconRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltAppIconRow.swift; sourceTree = "<group>"; };
+		D5356C78085FEAA25D6EB07B /* SlideShowControlBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowControlBar.swift; sourceTree = "<group>"; };
 		E928473D9927E5A97139C279 /* SettingsRowLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowLabel.swift; sourceTree = "<group>"; };
 		796CEF7F2AB7A94E006860C6 /* Splatfont1-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Splatfont1-Regular.otf"; sourceTree = "<group>"; };
 		796CEF802AB7A94E006860C6 /* Splatfont2-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Splatfont2-Regular.otf"; sourceTree = "<group>"; };
@@ -468,6 +472,7 @@
 			isa = PBXGroup;
 			children = (
 				79408C692AA5BAA800141E58 /* IkaAppIcon.swift */,
+				6EA909A256DAE680EEF815AA /* SlideShow.swift */,
 				E857E9F8B05F593E9685C250 /* IkaPreferredColorScheme.swift */,
 				797EA68F2AAD16620095A23B /* IkaOpenSourceLicense.swift */,
 				79F90AF92AB1112700B454B9 /* IkaLocale.swift */,
@@ -487,6 +492,7 @@
 			isa = PBXGroup;
 			children = (
 				796634702AC1578900AE82E2 /* AltAppIconRow.swift */,
+				D5356C78085FEAA25D6EB07B /* SlideShowControlBar.swift */,
 				E928473D9927E5A97139C279 /* SettingsRowLabel.swift */,
 				797EA68D2AACF1350095A23B /* DetailsLicenseView.swift */,
 			);
@@ -980,6 +986,7 @@
 				49579EC5F8D1BB0518ADB874 /* PeriodicPulse.swift in Sources */,
 				61C4A0132EF1CD00002577EA /* AdaptiveGlassEffect.swift in Sources */,
 				79408C6A2AA5BAA800141E58 /* IkaAppIcon.swift in Sources */,
+				B5BA5E86F5C534EDF51FDFE1 /* SlideShow.swift in Sources */,
 				394A88404DD884735184A0D5 /* IkaPreferredColorScheme.swift in Sources */,
 				7903FE9328C4701000245586 /* AutoLoadingOverlay.swift in Sources */,
 				792E1FBD28DE89C100C3789D /* SettingsAdvancedOptionsView.swift in Sources */,
@@ -1019,6 +1026,7 @@
 				7903FE8528C46F3E00245586 /* SalmonRotationCell.swift in Sources */,
 				797EA68E2AACF1350095A23B /* DetailsLicenseView.swift in Sources */,
 				796634712AC1578900AE82E2 /* AltAppIconRow.swift in Sources */,
+				F9F7876B2C86EDB1DFFE8418 /* SlideShowControlBar.swift in Sources */,
 				1DF22B7D1A50E4A8761F59CD /* SettingsRowLabel.swift in Sources */,
 				79D3E67328C41DD900005DB5 /* HeadApparel.swift in Sources */,
 				7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */,
