@@ -29,8 +29,11 @@ struct BattleRotationList: View {
 
   var body: some View {
     GeometryReader { geo in
+      // filter once per pass; both the rows and the animation value use it
+      let rotations: [BattleRotation] = validBattleRotations
+
       List {
-        ForEach(validBattleRotations) { rotation in
+        ForEach(rotations) { rotation in
           BattleRotationRow(
             rotation: rotation,
             rowWidth: geo.size.width)
@@ -41,7 +44,7 @@ struct BattleRotationList: View {
       // map animation value to startTime to avoid animation during battle mode switch
       .animation(
         .bouncy,
-        value: validBattleRotations.map { $0.startTime })
+        value: rotations.map { $0.startTime })
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }

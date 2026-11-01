@@ -65,8 +65,6 @@ extension BattleRotationRow {
 struct BattleRotationHeader: View {
   typealias Scoped = Constants.Style.Rotation.Header
 
-  @Environment(IkaClock.self) private var ikaClock
-
   let rotation: BattleRotation
   let rowType: BattleRotationRow.RowType
 

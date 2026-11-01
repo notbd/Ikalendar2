@@ -28,7 +28,8 @@ struct SalmonRotationCell: View {
     {
       SalmonRotationCellTimeTextSection(
         rotation: rotation,
-        rowWidth: rowWidth)
+        rowWidth: rowWidth,
+        isCurrent: rotation.isCurrent(ikaClock.currentTime))
 
       if hasStageAndWeapon {
         stageAndWeaponSection
@@ -76,29 +77,30 @@ struct SalmonRotationCell: View {
 struct SalmonRotationCellTimeTextSection: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell.TimeTextSection
 
-  @Environment(IkaClock.self) private var ikaClock
-
   let rotation: SalmonRotation
   let rowWidth: CGFloat
+  /// Passed in by the parent cell (which already reads the clock), so the
+  /// clock's per-second ticks do not re-render this section.
+  let isCurrent: Bool
 
   var body: some View {
     HStack {
-      Image(rotation.isCurrent(ikaClock.currentTime) ? .goldenEgg : .salmon)
+      Image(isCurrent ? .goldenEgg : .salmon)
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .accessibilityHidden(true)
         .shadow(radius: Constants.Style.Global.shadowRadius)
         .frame(height: rowWidth * Scoped.salmonIconHeightRatio)
-        .if(rotation.isCurrent(ikaClock.currentTime)) {
+        .if(isCurrent) {
           $0
             .adaptiveGlassEffect(in: .circle)
         }
         .scaleEffect(
-          rotation.isCurrent(ikaClock.currentTime)
+          isCurrent
             ? Scoped.iconGoldenEggScaleFactor
             : Scoped.iconSalmonFishScaleFactor)
-          .animation(.default, value: rotation.isCurrent(ikaClock.currentTime))
+          .animation(.default, value: isCurrent)
 
       Spacer()
 
