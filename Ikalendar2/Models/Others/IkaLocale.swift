@@ -20,13 +20,13 @@ enum IkaLocale {
   var description: String {
     switch self {
       case .en:
-        Constants.Key.Locale.en
+        "English"
       case .ja:
-        Constants.Key.Locale.ja
+        "日本語"
       case .zhHans:
-        Constants.Key.Locale.zhHans
+        "简体中文(beta)"
       case .zhHant:
-        Constants.Key.Locale.zhHant
+        "繁體中文(beta)"
       case .unknown:
         Constants.Key.Placeholder.unknown
     }
@@ -68,15 +68,6 @@ enum IkaLocale {
         Constants.Key.URLs.NintendoSite.zhHant
       case .unknown:
         Constants.Key.URLs.NintendoSite.en
-    }
-  }
-
-  var easterEggURLString: String {
-    switch self {
-      case .zhHant:
-        Constants.Key.URLs.theGoodStuffCN
-      default:
-        Constants.Key.URLs.theGoodStuff
     }
   }
 }

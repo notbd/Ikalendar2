@@ -85,13 +85,6 @@ extension Constants.Key {
     }
   }
 
-  enum Locale {
-    static let en = "English"
-    static let ja = "日本語"
-    static let zhHans = "简体中文(beta)"
-    static let zhHant = "繁體中文(beta)"
-  }
-
   enum Slogan {
     static let copyright = "key.slogan.copyright"
     static let ikalendar3 = "key.slogan.ikalendar3"

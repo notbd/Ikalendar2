@@ -13,31 +13,6 @@ import Testing
 
 @Suite("IkaDecoder")
 struct IkaDecoderTests {
-  // MARK: - parseText
-
-  @Suite("Parse Text")
-  struct ParseTextTests {
-    @Test
-    func `Valid UTF-8 data round-trips`() throws {
-      let text = "Hello, Inkopolis! 🦑"
-      let parsed = try IkaDecoder.parseText(from: Data(text.utf8))
-      #expect(parsed == text)
-    }
-
-    @Test
-    func `Empty data decodes to empty string`() throws {
-      let parsed = try IkaDecoder.parseText(from: Data())
-      #expect(parsed.isEmpty)
-    }
-
-    @Test
-    func `Invalid UTF-8 bytes throw badData`() {
-      #expect(throws: IkaError.serverError(.badData)) {
-        try IkaDecoder.parseText(from: Data([0xFF, 0xFE, 0xFD]))
-      }
-    }
-  }
-
   // MARK: - parseBattleRotationDict
 
   @Suite("Parse Battle Rotation Dict")

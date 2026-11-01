@@ -147,12 +147,10 @@ struct RotationTimeLogicTests {
       // Documents current semantics: all three modes rotate together, so the
       // check deliberately consults .gachi alone.
       var dict: BattleRotationDict = TestData.battleDict(reference: TestData.anchor)
-      let regularFirst = try #require(dict[.regular]?.first)
       dict[.regular]?[0] = TestData.battleRotation(
         mode: .regular,
         startOffset: -7200,
         endOffset: -3600) // regular already expired
-      _ = regularFirst
 
       let gachiEnd = try #require(dict[.gachi]?.first?.endTime)
       #expect(!dict.isOutdated(gachiEnd.addingTimeInterval(-1)))

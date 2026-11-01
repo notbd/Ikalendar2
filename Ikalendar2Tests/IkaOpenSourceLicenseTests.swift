@@ -48,24 +48,18 @@ struct IkaOpenSourceLicenseTests {
   @Test
   func `Owner and repo come from the repo URL`() {
     let simpleHaptics: IkaOpenSourceLicense = license(repoURL: "https://github.com/notbd/SimpleHaptics")
-    #expect(simpleHaptics.userName == "notbd")
-    #expect(simpleHaptics.repoName == "SimpleHaptics")
     #expect(simpleHaptics.gist == "notbd/SimpleHaptics")
 
     let dotted: IkaOpenSourceLicense = license(repoURL: "https://github.com/misenhower/splatoon2.ink")
-    #expect(dotted.repoName == "splatoon2.ink")
     #expect(dotted.gist == "misenhower/splatoon2.ink")
 
     let hyphenated: IkaOpenSourceLicense = license(repoURL: "https://github.com/sparrow-code/swift-collections")
-    #expect(hyphenated.userName == "sparrow-code")
     #expect(hyphenated.gist == "sparrow-code/swift-collections")
   }
 
   @Test
   func `Non-GitHub repo URL falls back to the unknown placeholder`() {
     let unknown: IkaOpenSourceLicense = license(repoURL: "")
-    #expect(unknown.userName == Constants.Key.Placeholder.unknown)
-    #expect(unknown.repoName == Constants.Key.Placeholder.unknown)
     #expect(unknown.gist == Constants.Key.Placeholder.unknown)
   }
 }

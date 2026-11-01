@@ -14,14 +14,6 @@ struct IkaOpenSourceLicense {
   let typeDescription: String
   let content: String
 
-  var userName: String {
-    ownerAndRepo.map { String($0.owner) } ?? Constants.Key.Placeholder.unknown
-  }
-
-  var repoName: String {
-    ownerAndRepo.map { String($0.repo) } ?? Constants.Key.Placeholder.unknown
-  }
-
   var gist: String {
     ownerAndRepo.map { "\($0.owner)/\($0.repo)" } ?? Constants.Key.Placeholder.unknown
   }

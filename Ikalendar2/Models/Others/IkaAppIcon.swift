@@ -81,10 +81,6 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
       return String(rawValue.prefix(1)).uppercased() + rawValue.dropFirst()
     }
 
-    var index: Int {
-      ColorVariant.allCases.firstIndex(of: self)!
-    }
-
     var sfSymbolName: String {
       switch self {
         case .default:

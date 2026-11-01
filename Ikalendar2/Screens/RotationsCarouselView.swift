@@ -12,8 +12,6 @@ import SwiftUI
 
 /// The iPad layout: every mode side by side in a scrolling carousel.
 struct RotationsCarouselView: View {
-  typealias Scoped = Constants.Style.Carousel
-
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaPreference.self) private var ikaPreference
 

@@ -16,21 +16,6 @@ import OSLog
 /// maps and validates into domain types. Every decoding or validation failure is
 /// surfaced uniformly as `IkaError.serverError(.badData)`.
 enum IkaDecoder {
-  /// Parses and decodes a text string from the given raw data.
-  ///
-  /// - Parameter data: The raw data to decode.
-  /// - Returns: A decoded string if the decoding process is successful.
-  /// - Throws: `IkaError.serverError(.badData)`: if the data is not valid UTF-8.
-  static func parseText(from data: Data)
-    throws -> String
-  {
-    guard let str = String(data: data, encoding: .utf8) else {
-      throw IkaError.serverError(.badData)
-    }
-
-    return str
-  }
-
   /// Parse License from the GitHub API response.
   ///
   /// - Throws: `IkaError.serverError(.badData)`: if the payload is malformed, the

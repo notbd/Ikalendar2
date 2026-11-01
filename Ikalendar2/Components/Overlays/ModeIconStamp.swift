@@ -25,7 +25,6 @@ struct ModeIconStamp: View {
   private var dx: CGFloat { ikaDeviceMotionMonitor.dx }
   private var dy: CGFloat { ikaDeviceMotionMonitor.dy }
   private var rotationConstant: Double { Double((pow(dx, 2) + pow(dy, 2)).squareRoot()) }
-  private var intensity: Double = Scoped.rotation3dIntensity
 
   /// Remaps the device-space gravity deltas into the interface's axes for the current interface
   /// orientation, so the tilt follows the physical tilt of the device.
@@ -52,7 +51,7 @@ struct ModeIconStamp: View {
       .if(shouldAnimate) {
         $0
           .rotation3DEffect(
-            .degrees(rotationConstant * intensity),
+            .degrees(rotationConstant * Scoped.rotation3dIntensity),
             axis: (
               x: axisRotationWeight.x,
               y: axisRotationWeight.y,

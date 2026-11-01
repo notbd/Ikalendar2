@@ -9,10 +9,6 @@ import SwiftUI
 import UIKit
 
 extension Color {
-  /// A tertiary text color that's less prominent than secondary labels.
-  /// Use this for placeholder text or disabled content.
-  static public let tertiaryLabel: Color = .init(UIColor.tertiaryLabel)
-
   /// The primary background color for the current interface style.
   /// Use this as the main background color for your app's content.
   static public let systemBackground: Color = .init(UIColor.systemBackground)
