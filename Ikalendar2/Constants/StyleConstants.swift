@@ -126,11 +126,6 @@ extension Constants.Style {
       static let tabBarMinimizingOffSFSymbol = "arrow.left.and.line.vertical.and.arrow.right"
       static let tabBarMinimizingOnSFSymbol = "arrow.right.and.line.vertical.and.arrow.left"
 
-      static let bottomToolbarPickerPositioningSFSymbol = "arrow.left.arrow.right"
-      static let bottomToolbarPreviewSheetDetentsFraction: CGFloat = 0.07
-      static let bottomToolbarPreviewPaddingH: CGFloat = 14
-      static let bottomToolbarPreviewLingerInterval: TimeInterval = 1.5
-
       static let altStageImgSFSymbol = "compass.drawing"
       static let altStagePreviewShuffleSFSymbol = "arrow.triangle.2.circlepath"
 

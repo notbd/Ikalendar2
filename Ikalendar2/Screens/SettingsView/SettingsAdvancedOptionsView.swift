@@ -14,14 +14,10 @@ import SwiftUI
 struct SettingsAdvancedOptionsView: View {
   typealias Scoped = Constants.Style.Settings.Advanced
 
-  @Environment(IkaStatus.self) private var ikaStatus
-
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   @Environment(IkaPreference.self) private var ikaPreference
-
-  @State private var isBottomToolbarPreviewPresented = false
 
   @State private var battleRotationPreviewData: BattleRotation = IkaMockData.makeBattleRotation()
   @State private var salmonRotationPreviewData: SalmonRotation = IkaMockData.makeSalmonRotation()
@@ -61,13 +57,6 @@ struct SettingsAdvancedOptionsView: View {
       .navigationTitle("Advanced Options")
       .navigationBarTitleDisplayMode(.large)
       .listStyle(.insetGrouped)
-      .sheet(isPresented: $isBottomToolbarPreviewPresented) {
-        BottomToolbarPositioningPreview()
-          .presentationDetents([.fraction(Scoped.bottomToolbarPreviewSheetDetentsFraction)])
-          .presentationCornerRadius(0)
-          .presentationBackground(.ultraThinMaterial)
-          .interactiveDismissDisabled()
-      }
       .onChange(of: geo.size, initial: true) { _, newVal in
         rowWidth = newVal.width
       }
@@ -93,27 +82,6 @@ struct SettingsAdvancedOptionsView: View {
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
     .disabled(!isHorizontalCompact)
-  }
-
-  private var rowBottomToolbarPositioningSwitch: some View {
-    @Bindable var ikaPreference = ikaPreference
-    return Toggle(isOn: $ikaPreference.shouldSwapBottomToolbarPickers) {
-      Label {
-        Text("Swap Bottom Toolbar Pickers")
-          .foregroundStyle(.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.bottomToolbarPickerPositioningSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.monochrome)
-          .foregroundStyle(Color.accentColor)
-      }
-    }
-    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-    .disabled(!isHorizontalCompact)
-    .onChange(of: ikaPreference.shouldSwapBottomToolbarPickers) {
-      isBottomToolbarPreviewPresented.toggle()
-    }
   }
 
   private var rowAltStageImagesSwitch: some View {
@@ -198,71 +166,6 @@ struct SettingsAdvancedOptionsView: View {
 
     battleRotationPreviewData = newBattleData
     salmonRotationPreviewData = newSalmonData
-  }
-}
-
-// MARK: - BottomToolbarPositioningPreview
-
-/// A short-lived sheet that demos the bottom toolbar picker order after a swap.
-struct BottomToolbarPositioningPreview: View {
-  typealias Scoped = Constants.Style.Settings.Advanced
-
-  @Environment(\.dismiss) private var dismiss
-
-  @Environment(IkaStatus.self) private var ikaStatus
-  @Environment(IkaPreference.self) private var ikaPreference
-
-  var body: some View {
-    HStack {
-      if !ikaPreference.shouldSwapBottomToolbarPickers {
-        // keep order
-        battleModePicker
-        Spacer()
-        gameModePicker
-      }
-      else {
-        // swap order
-        gameModePicker
-        Spacer()
-        battleModePicker
-      }
-    }
-    .padding(.horizontal, Scoped.bottomToolbarPreviewPaddingH)
-    .task {
-      try? await Task.sleep(for: .seconds(Scoped.bottomToolbarPreviewLingerInterval))
-      dismiss()
-    }
-  }
-
-  private var battleModePicker: some View {
-    Picker(
-      selection: .constant(ikaStatus.currentBattleMode),
-      label: Text("Battle Mode"))
-    {
-      ForEach(BattleMode.allCases) { battleMode in
-        Text(battleMode.shortName.localizedStringKey)
-          .tag(battleMode)
-      }
-    }
-    .pickerStyle(.segmented)
-    .fixedSize()
-  }
-
-  private var gameModePicker: some View {
-    Picker(
-      selection: .constant(GameMode.battle),
-      label: Text("Game Mode"))
-    {
-      ForEach(GameMode.allCases) { gameMode in
-        Image(
-          systemName: ikaStatus.currentGameMode == gameMode
-            ? gameMode.sfSymbolNameSelected
-            : gameMode.sfSymbolNameIdle)
-          .tag(gameMode)
-      }
-    }
-    .pickerStyle(.segmented)
-    .fixedSize()
   }
 }
 
