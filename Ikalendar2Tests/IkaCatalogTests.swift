@@ -23,9 +23,7 @@ import Testing
 ///
 /// Test data uses future end times so `isOutdated` stays false and the catalog's
 /// internal 5s auto-load loop can never interfere mid-test. The auto-load state
-/// machine itself (autoLoadStatus) is intentionally untested for now: it depends on
-/// real timer ticks and UIApplication.applicationState - flaky by construction.
-/// Testing it would need an injectable check-signal source (future work).
+/// machine has its own suite (IkaCatalogAutoLoadTests) on injected short intervals.
 @MainActor
 @Suite("IkaCatalog")
 struct IkaCatalogTests {
