@@ -16,17 +16,20 @@ final class IkaClock {
   private(set) var currentTime: Date = .init()
 
   @ObservationIgnored private var tickTask: Task<Void, Never>?
-  @ObservationIgnored private var timeChangeTask: Task<Void, Never>?
+  @ObservationIgnored private var significantTimeChangeTask: Task<Void, Never>?
+  @ObservationIgnored private var timeZoneChangeTask: Task<Void, Never>?
 
   init() {
     startTicking()
-    observeSignificantTimeChanges()
+    significantTimeChangeTask = observeTimeChanges(named: UIApplication.significantTimeChangeNotification)
+    timeZoneChangeTask = observeTimeChanges(named: .NSSystemTimeZoneDidChange)
   }
 
   deinit {
     // Legal in a nonisolated deinit: Task is Sendable and cancel() is nonisolated.
     tickTask?.cancel()
-    timeChangeTask?.cancel()
+    significantTimeChangeTask?.cancel()
+    timeZoneChangeTask?.cancel()
   }
 
   /// One second after the previous deadline, or now if that is already past (the process was
@@ -56,12 +59,15 @@ final class IkaClock {
   }
 
   /// `TimeZone.current` is cached per process and only picks up a new system time zone after
-  /// `NSTimeZone.resetSystemTimeZone()`. Reset it on a significant time change (e.g. a time zone
-  /// change, a carrier time update, midnight), then publish a fresh `currentTime` so views reading
-  /// the clock re-render right away in the new zone.
-  private func observeSignificantTimeChanges() {
-    timeChangeTask = Task { [weak self] in
-      for await _ in NotificationCenter.default.notifications(named: UIApplication.significantTimeChangeNotification) {
+  /// `NSTimeZone.resetSystemTimeZone()`. Reset it whenever `name` is posted, then publish a fresh
+  /// `currentTime` so views reading the clock re-render right away in the new zone. Observed for:
+  /// - `significantTimeChangeNotification`: a new day (midnight), a carrier time update, or a
+  ///   change to or from daylight saving time.
+  /// - `NSSystemTimeZoneDidChange`: a change of the time zone, which Apple does not list among
+  ///   the significant time changes.
+  private func observeTimeChanges(named name: Notification.Name) -> Task<Void, Never> {
+    Task { [weak self] in
+      for await _ in NotificationCenter.default.notifications(named: name) {
         guard let self else { return }
 
         NSTimeZone.resetSystemTimeZone()

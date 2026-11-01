@@ -236,6 +236,41 @@ struct IkaCatalogTests {
     #expect(catalog.loadStatus == .loaded)
     #expect(catalog.loadResultStatus == .loaded)
   }
+
+  @Test(.timeLimit(.minutes(1)))
+  func `Cancelling the older refresh first keeps loading while the newer one is in flight`() async {
+    // The mirror case of the test above. Both hanging fetches must have started before the
+    // older load is cancelled, so the newer load is known to be in flight.
+    let hasLoadedOnce: FlipFlag = .init()
+    let hangingFetches: CallCounter = .init()
+    let catalog = makeCatalog(
+      battle: {
+        if await hasLoadedOnce.value {
+          await hangingFetches.increment()
+          return try await hangingForever()
+        }
+        await hasLoadedOnce.set()
+        return TestData.battleDict()
+      },
+      salmon: { [] })
+
+    await catalog.refresh()
+    #expect(catalog.loadStatus == .loaded)
+
+    let older = Task { await catalog.refresh() }
+    await waitUntil { hangingFetches.count == 1 }
+    let newer = Task { await catalog.refresh() }
+    await waitUntil { hangingFetches.count == 2 }
+
+    older.cancel()
+    await older.value
+    #expect(catalog.loadStatus == .loading) // the newer load still owns the status
+
+    newer.cancel()
+    await newer.value
+    #expect(catalog.loadStatus == .loaded)
+    #expect(catalog.loadResultStatus == .loaded)
+  }
 }
 
 // MARK: - FlipFlag
@@ -246,5 +281,17 @@ private actor FlipFlag {
 
   func set() {
     value = true
+  }
+}
+
+// MARK: - CallCounter
+
+/// Counts calls from @Sendable mock closures; main-actor tests read it synchronously.
+@MainActor
+private final class CallCounter {
+  private(set) var count = 0
+
+  func increment() {
+    count += 1
   }
 }

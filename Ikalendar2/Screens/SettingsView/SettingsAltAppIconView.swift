@@ -190,6 +190,7 @@ struct SettingsAltAppIconView: View {
     }
     .onDisappear { easterEggJumpTask?.cancel() }
     .onChange(of: easterEggJumpRequestCounter) {
+      easterEggJumpTask?.cancel()
       easterEggJumpTask = Task { await jumpToGoodStuffAfterDelay() }
     }
     .onChange(of: showEasterEgg) { _, isShown in
