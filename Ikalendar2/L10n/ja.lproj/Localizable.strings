@@ -265,11 +265,6 @@
 "Tenta Brella" = "キャンピングシェルター";
 "Undercover Brella" = "スパイガジェット";
 
-// MARK: - RandomWeapon
-
-"Random" = "ランダム";
-"Grizzco Random" = "クマサン印のランダム";
-
 // MARK: - GrizzcoWeapon
 
 "Grizzco Brella" = "クマサン印のシェルター";
