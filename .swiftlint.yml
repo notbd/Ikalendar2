@@ -12,6 +12,7 @@ excluded:
   - Pods
   - Imports
   - Ikalendar2/Tests
+  - SourcePackages # SPM checkouts cloned into the repo root by CI
 
 indentation: 2
 

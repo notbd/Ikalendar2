@@ -16,6 +16,7 @@
   Carthage,   \
   .build,     \
   Imports,    \
+  SourcePackages, \
   docs,
 
 
