@@ -50,7 +50,7 @@ dependencies:
         - name: misenhower/splatoon2.ink
           url: https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy#data-urls
           icon: github
-        - name: JelenzoBot
+        - name: JelonzoBot
           url: https://splatoon.oatmealdome.me/about
     - tier: Open Source Libraries
       size: big
