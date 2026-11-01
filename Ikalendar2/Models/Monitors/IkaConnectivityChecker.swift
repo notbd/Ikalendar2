@@ -10,6 +10,8 @@ import OSLog
 
 /// An observable on-demand checker for restricted network environments (GFW).
 /// `isGFWed` flips to true (and stays true) once all test domains are unreachable.
+/// Used by SettingsAltAppIconView: when `isGFWed`, the easter-egg link opens the Bilibili mirror
+/// instead of the YouTube one.
 @MainActor
 @Observable
 final class IkaConnectivityChecker {
@@ -22,9 +24,7 @@ final class IkaConnectivityChecker {
   ]
   static private let timeoutInterval: TimeInterval = 4.0
 
-  /// Reused across checks: creating a URLSession per call leaks the session
-  /// (it is never invalidated). Consider `.ephemeral` in the future to keep
-  /// GFW probes free of local cache interference.
+  /// One session for the object's lifetime: a session per check is never invalidated and leaks.
   @ObservationIgnored private let session: URLSession
 
   init() {
@@ -73,7 +73,7 @@ final class IkaConnectivityChecker {
     Logger.network.info("GFW check: \(failedChecksCount) of \(totalChecks) probes failed")
   }
 
-  /// for manually reset
+  /// Debug Options only: clears the sticky flag so the next check starts clean.
   func resetStatus() {
     isGFWed = false
   }

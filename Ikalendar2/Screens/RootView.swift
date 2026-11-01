@@ -66,7 +66,7 @@ struct RootView: View {
   }
 
   init() {
-    // Initial setup of your NavigationBar styles
+    // UIKit appearance proxy: must be set before the first navigation bar renders.
     UIFontCustomizer.customizeNavigationTitleText()
   }
 }

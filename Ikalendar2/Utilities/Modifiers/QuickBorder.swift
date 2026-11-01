@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-/// A modifier that quickly applies a colored border to the view.
-/// <FOR DEBUGGING PURPOSES>
+/// Debug-only layout outlines. Not referenced by app code; keep for ad-hoc layout checks.
 extension View {
   func quickBorderRed(
     opacity: Double = 1,

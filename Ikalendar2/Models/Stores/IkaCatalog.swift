@@ -80,6 +80,8 @@ final class IkaCatalog {
     autoLoadLingerTask?.cancel()
   }
 
+  /// Reloads every rotation feed. `silently` mutes the haptics of this one load's status
+  /// changes (used by the onboarding launch load).
   func refresh(silently shouldEnableSilentLoading: Bool = false)
     async
   {
@@ -107,6 +109,8 @@ final class IkaCatalog {
     case error(IkaError)
   }
 
+  /// True only for the duration of one `loadCatalog` call (and the cancellation restore);
+  /// never carries across loads.
   @ObservationIgnored private var isSilentLoadingEnabled: Bool = false
   /// The number of loads in flight, so a cancelled load can tell whether another load
   /// (newer or older) still owns the `.loading` status.
@@ -120,9 +124,8 @@ final class IkaCatalog {
 
       switch newValue {
         case .loading:
-          // Note: As of iOS 26 SDK, `.refreshable` comes with a default haptic feedback without
-          //  providing a native option to turn it off. Thus we manually disable it here until there
-          //  is a way to disable `.refreshable` haptic feedback.
+          // No haptic for .loading: as of the iOS 26 SDK, .refreshable plays its own on pull
+          // and offers no way to turn it off; ours would double it.
           break
         case .loaded:
           SimpleHaptics.generateTask(.medium)
@@ -140,7 +143,9 @@ final class IkaCatalog {
     }
   }
 
-  /// Will never be in `.loading` state after catalog is first loaded.
+  /// The last settled status: never `.loading` once the first load has finished.
+  /// RotationsTabView and RotationsCarouselView switch on this, so a refresh keeps the current
+  /// list or ErrorView on screen instead of swapping in a loading state.
   private(set) var loadResultStatus: LoadStatus = .loading
 
   private func loadCatalog(_ shouldEnableSilentLoading: Bool = false)
@@ -270,7 +275,9 @@ final class IkaCatalog {
     }
   }
 
-  /// Its `.idle` state will be delayed after the `.idle` state of the `autoLoadStatus` after first auto-load.
+  /// What the auto-load toast shows. Follows `autoLoadStatus`, except that it returns to `.idle`
+  /// one `idleAndNonIdleStatusUpdateInterval` later, so the icon keeps its final symbol while
+  /// the toast fades out.
   private(set) var autoLoadDelayedIdleStatus: AutoLoadStatus = .idle
 
   private func handleAutoLoadCheck() {
@@ -300,14 +307,16 @@ final class IkaCatalog {
 
     await setAutoLoadStatus(.autoLoading)
 
+    // After a successful auto-load, or one that ran out of attempts, show the rotations
+    // again if the last full load had errored.
     do {
       try await autoLoadData()
 
-      if loadStatus != .loaded { await setLoadStatus(.loaded) } // show rotations if prev loading error
+      if loadStatus != .loaded { await setLoadStatus(.loaded) }
       await setAutoLoadStatus(.autoLoaded(.success))
     }
     catch IkaError.maxAttemptsExceeded {
-      if loadStatus != .loaded { await setLoadStatus(.loaded) } // show rotations if prev loading error
+      if loadStatus != .loaded { await setLoadStatus(.loaded) }
       await setAutoLoadStatus(.autoLoaded(.failure))
     }
     catch let error as IkaError {

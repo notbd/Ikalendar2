@@ -40,7 +40,9 @@ struct BattleRotationList: View {
         }
       }
       .listStyle(.insetGrouped)
-      // map animation value to startTime to avoid animation during battle mode switch
+      // Animate on the start times only: the three modes share one schedule, so a mode switch
+      // leaves the start times unchanged and does not animate, while a rotation rolling off or
+      // arriving does.
       .animation(
         .bouncy,
         value: rotations.map { $0.startTime })

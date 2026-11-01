@@ -15,9 +15,7 @@ import UIKit
 /// UI components like `UINavigationBar` and `UISegmentedControl`.
 @MainActor
 public enum UIFontCustomizer {
-  /// Customizes the appearance of navigation title text.
-  /// - Note: This function sets the font of the navigation title to a rounded, bold version for large titles
-  /// and a rounded, semi-bold version for regular titles.
+  /// Sets rounded bold large titles and rounded semibold inline titles on every navigation bar.
   static public func customizeNavigationTitleText() {
     let largeTitleFont = customRoundedFont(for: .largeTitle, weight: .bold)
     let titleTextFont = customRoundedFont(for: .title3, weight: .semibold)
@@ -26,9 +24,7 @@ public enum UIFontCustomizer {
     UINavigationBar.appearance().titleTextAttributes = [.font: titleTextFont]
   }
 
-  /// Customizes the appearance of picker text.
-  /// - Note: This function sets the font of the picker's selected and normal state to a rounded, semi-bold
-  /// and rounded, regular version respectively.
+  /// Sets rounded 13 pt segmented-control labels: semibold when selected, regular otherwise.
   static public func customizePickerText() {
     let pickerFontSize: CGFloat = 13
     let pickerSelectedFont = customRoundedFont(size: pickerFontSize, weight: .semibold)
@@ -43,11 +39,7 @@ public enum UIFontCustomizer {
       for: .normal)
   }
 
-  /// Helper function to get custom rounded fonts based on text styles.
-  /// - Parameters:
-  ///   - textStyle: The text style for which to get a rounded font.
-  ///   - weight: The weight of the font.
-  /// - Returns: A UIFont object that represents the rounded font.
+  /// Returns the system font at `textStyle`'s size and `weight`, in the rounded design.
   static public func customRoundedFont(for textStyle: UIFont.TextStyle, weight: UIFont.Weight) -> UIFont {
     let fontSize = UIFont.preferredFont(forTextStyle: textStyle).pointSize
     let systemFont: UIFont = .systemFont(ofSize: fontSize, weight: weight)
@@ -57,11 +49,7 @@ public enum UIFontCustomizer {
     return UIFont(descriptor: descriptor, size: fontSize)
   }
 
-  /// Helper function to get custom rounded fonts based on font size and weight.
-  /// - Parameters:
-  ///   - size: The size of the font.
-  ///   - weight: The weight of the font.
-  /// - Returns: A UIFont object that represents the rounded font.
+  /// Returns the system font at `size` and `weight`, in the rounded design.
   static public func customRoundedFont(size: CGFloat, weight: UIFont.Weight) -> UIFont {
     let systemFont: UIFont = .systemFont(ofSize: size, weight: weight)
 

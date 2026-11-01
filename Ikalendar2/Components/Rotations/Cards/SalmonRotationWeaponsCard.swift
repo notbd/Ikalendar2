@@ -23,7 +23,7 @@ struct SalmonRotationWeaponsCard: View {
   var body: some View {
     LazyVGrid(columns: columns) {
       ForEach(Array(weapons.enumerated()), id: \.offset) { _, weapon in
-        // enumerate the array identify weapons even with same id (e.g. 4 randoms)
+        // Keyed by position: a rotation can list the same weapon more than once (e.g. four gold mystery weapons).
         SalmonRotationWeaponCardIcon(weapon: weapon)
       }
     }

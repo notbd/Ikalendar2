@@ -8,8 +8,7 @@
 import SwiftUI
 
 extension View {
-  /// A modifier that limits the text to a limited lines
-  /// and automatically scales down if needed.
+  /// Caps text at `lineLimit` lines and shrinks it (down to `minScaleFactor`) instead of truncating.
   ///
   /// - Parameters:
   ///   - lineLimit: The max number of lines (default to 1).

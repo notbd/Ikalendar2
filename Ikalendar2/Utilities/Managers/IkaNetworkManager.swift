@@ -26,11 +26,8 @@ extension EnvironmentValues {
 
 // MARK: - IkaNetworkManager
 
-/// `IkaNetworkManager` serves as the networking layer of the application.
-/// It is designed to handle asynchronous data fetching and decoding tasks in a unified manner.
-/// The class is architected to be easily extendable for supporting various types of data and sources.
-/// It is intended to be used in tandem with the `IkaDecoder` utility class for decoding the fetched data.
-///
+/// Production `IkaNetworkService`: one dedicated `URLSession` with short timeouts, decoding
+/// through `IkaDecoder`.
 final class IkaNetworkManager: IkaNetworkService {
   /// Dedicated session with explicit timeouts: a hanging server should fail an
   /// auto-load attempt within seconds, not URLSession's 60s default.
@@ -59,12 +56,7 @@ final class IkaNetworkManager: IkaNetworkService {
       decodeUsing: { try IkaDecoder.parseLicenseFromGithubAPI(from: $0) })
   }
 
-  /// Asynchronously fetches the battle rotation dictionary from the `splatoon2.ink` API.
-  ///
-  /// - Returns: A `BattleRotationDict` object containing the battle rotation data.
-  ///
-  /// - Throws: `IkaError` if there's any error during fetching or decoding.
-  ///
+  /// Fetches the battle schedules from splatoon2.ink.
   @concurrent
   func fetchBattleRotationDict()
     async throws -> BattleRotationDict
@@ -76,12 +68,7 @@ final class IkaNetworkManager: IkaNetworkService {
       decodeUsing: { try IkaDecoder.parseBattleRotationDict(from: $0) })
   }
 
-  /// Asynchronously fetches the salmon rotation array from the `splatoon2.ink` API.
-  ///
-  /// - Returns: An array of `SalmonRotation` objects containing the salmon rotation data.
-  ///
-  /// - Throws: `IkaError` if there's any error during fetching or decoding.
-  ///
+  /// Fetches the Salmon Run schedules from splatoon2.ink.
   @concurrent
   func fetchSalmonRotations()
     async throws -> [SalmonRotation]
@@ -93,12 +80,7 @@ final class IkaNetworkManager: IkaNetworkService {
       decodeUsing: { try IkaDecoder.parseSalmonRotations(from: $0) })
   }
 
-  /// Asynchronously fetches the reward apparel info from the `splatoon2.ink` API.
-  ///
-  /// - Returns: A `SalmonApparelInfo` object containing the reward apparel type and time.
-  ///
-  /// - Throws: `IkaError` if there's any error during fetching or decoding.
-  ///
+  /// Fetches the current Salmon Run reward gear from the splatoon2.ink timeline.
   @concurrent
   func fetchSalmonRewardApparelInfo()
     async throws -> SalmonApparelInfo
@@ -110,31 +92,9 @@ final class IkaNetworkManager: IkaNetworkService {
       decodeUsing: { try IkaDecoder.parseSalmonRewardApparelInfo(from: $0) })
   }
 
-  /// Asynchronously fetches and decodes data from a specified URL.
-  ///
-  /// The function initiates a URLSession data task with a given URL and checks for a valid HTTP
-  /// response with a status code of either 200 or 304. If the URLSession data task fails or the
-  /// response is not valid, a custom error of type `IkaError` is thrown.
-  ///
-  /// If the response is valid, the function attempts to decode the raw data into a model of generic
-  /// type `T` using the provided decoding closure. If the decoding process fails, a custom error of
-  /// type `IkaError` is thrown.
-  ///
-  /// Errors are propagated up the chain to be handled by the caller.
-  ///
-  /// - Parameters:
-  ///   - url: The URL from which to fetch the data.
-  ///   - decoder: A closure that takes raw `Data` and decodes it into a type `T`. This closure must be
-  ///              capable of throwing an error if the decoding process fails.
-  ///
-  /// - Returns: A model of type `T`, decoded from the fetched data.
-  ///
-  /// - Throws:
-  ///   - `IkaError.connectionError`: If the URLSession data task fails, typically due to network issues.
-  ///   - `IkaError.serverError(.badResponse)`: If the response is not a valid HTTP response
-  ///                                           or the status code is neither 200 nor 304.
-  ///   - `IkaError.serverError(.badData)`: If the decoding process fails.
-  ///
+  /// Fetches `url` with GET, accepts status 200 or 304, and decodes the body with `decoder`.
+  /// Transport failures become `.connectionError`, other statuses `.serverError(.badResponse)`,
+  /// decode failures `.serverError(.badData)`; task cancellation propagates as `CancellationError`.
   @concurrent
   private func fetchAndDecode<T>(
     url: URL,

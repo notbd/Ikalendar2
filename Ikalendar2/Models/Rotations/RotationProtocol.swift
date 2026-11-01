@@ -47,11 +47,8 @@ extension Rotation {
     lhs.description == rhs.description
   }
 
-  /// Computes the hash value for this `Rotation` instance.
-  ///
-  /// This method is explicitly implemented to support `Hashable` conformance,
-  /// particularly when not all properties of the conforming type are hashable.
-  /// The hash value is generated using the `description` property.
+  /// Hashes `description`, the same value `==` compares. Needed because SalmonRotation holds
+  /// `[SalmonWeapon]?`, which is Equatable but not Hashable.
   func hash(into hasher: inout Hasher) {
     hasher.combine(description)
   }

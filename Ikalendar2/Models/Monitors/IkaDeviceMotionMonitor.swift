@@ -8,10 +8,8 @@
 import CoreMotion
 import UIKit
 
-/// `IkaDeviceMotionMonitor` is an observable monitor broadcasting device motion updates.
-/// It captures the gravitational force changes on the x and y axes and computes the difference
-/// between the current value and the average of the recently stored values over a specified duration.
-/// App-lifetime object: its scene-lifecycle observation lives for the process duration.
+/// Publishes how far the device's gravity vector has moved on x and y from its 10 s rolling
+/// mean (`dx`, `dy`). Sampling runs only while a scene is active.
 @MainActor
 @Observable
 final class IkaDeviceMotionMonitor {
@@ -86,6 +84,8 @@ final class IkaDeviceMotionMonitor {
 
   /// Folds a new gravity sample into the rolling window and refreshes the deltas.
   private func processMotionUpdate(_ gravity: CMAcceleration) {
+    // 10 s window at 10 Hz: dx/dy are the current sample minus the window mean, so a held
+    // tilt decays to zero and only motion shows.
     let cycle = 10.0
     let interval = 0.1
     let arrayCapacity: Int = .init(cycle / interval)
@@ -99,11 +99,7 @@ final class IkaDeviceMotionMonitor {
     dy = CGFloat(gravity.y) - ys.reduce(0, +) / CGFloat(ys.count)
   }
 
-  /// Appends a value to the provided array ensuring the array's size doesn't exceed the specified capacity.
-  /// - Parameters:
-  ///   - value: The value to append.
-  ///   - array: The array to append the value to.
-  ///   - maxCapacity: The maximum number of elements the array should hold.
+  /// Appends `value`, first dropping the oldest sample once the array holds more than `maxCapacity`.
   private func appendData(
     _ value: CGFloat,
     to array: inout [CGFloat],

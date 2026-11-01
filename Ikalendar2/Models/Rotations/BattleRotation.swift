@@ -22,6 +22,8 @@ struct BattleRotation: Rotation, Hashable {
 }
 
 extension BattleRotation {
+  /// Includes the mode: the three battle feeds share start times, so the protocol's default id
+  /// would collide.
   var id: String { "\(mode)-\(startTime)-\(endTime)" }
 
   var description: String {

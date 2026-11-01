@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: - RotationsTabView
 
-/// The view that displays the content in a navigation stack.
+/// One tab's content for `adoptedFlatMode`: its rotation list (or ErrorView), the mode stamp, and pull-to-refresh.
 struct RotationsTabView: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
 

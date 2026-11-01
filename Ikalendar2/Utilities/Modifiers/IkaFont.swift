@@ -15,7 +15,7 @@ enum IkaFont: String {
 }
 
 extension View {
-  /// A modifier function that quickly applies a custom ika font to the view.
+  /// Applies one of the two Splatoon fonts at `size`, scaling with Dynamic Type relative to `textStyle`.
   ///
   /// - Parameters:
   ///   - ikaFont: The type of the ika font.

@@ -98,7 +98,7 @@ struct SalmonRotationHeader: View {
 
   var body: some View {
     HStack {
-      // can force unwrap `prefixString` here because .other row type will not have header
+      // `.other` rows render no header (see SalmonRotationRow.body), so the prefix is always present here.
       Text(rowType.prefixString!.localizedStringKey)
         .ikaFont(
           .ika1,

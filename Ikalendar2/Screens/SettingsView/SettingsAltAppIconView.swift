@@ -26,6 +26,8 @@ struct SettingsAltAppIconView: View {
 
   @State private var doesPreferRickOnAppear: Bool = false
   @State private var triggeredEasterEgg: Bool = false
+  /// The Rick section shows when Rick was already the chosen icon on entry, or after the hidden
+  /// trigger button is tapped; when Rick was the icon on entry the button cannot hide it again.
   private var showEasterEgg: Bool { doesPreferRickOnAppear || triggeredEasterEgg }
 
   @State private var easterEggCellRectGlobal: CGRect = .init()
@@ -265,7 +267,8 @@ struct SettingsAltAppIconView: View {
       .allowsHitTesting(!slideShowPhase.isPickerExpanded)
       .onTapGesture {
         SimpleHaptics.generateTask(.selection)
-        // -> outside of closure because of icon animation collision
+        // Not inside withAnimation: an implicit animation here would fight the icon's own
+        // cross-fade (AltAppIcon.Row.crossFadeAnimation).
         activeAppIconColorVariant = activeAppIconColorVariant.next
 
         withAnimation(.snappy) {

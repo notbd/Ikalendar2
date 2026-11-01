@@ -27,6 +27,8 @@ struct ModeIconStamp: View {
   private var rotationConstant: Double { Double((pow(dx, 2) + pow(dy, 2)).squareRoot()) }
   private var intensity: Double = Scoped.rotation3dIntensity
 
+  /// Remaps the device-space gravity deltas into the interface's axes for the current interface
+  /// orientation, so the tilt follows the physical tilt of the device.
   private var axisRotationWeight: (x: CGFloat, y: CGFloat) {
     switch ikaOrientationMonitor.currentOrientation {
       case .unknown:

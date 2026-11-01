@@ -68,8 +68,9 @@ struct RotationsCarouselView: View {
       alignment: .top,
       spacing: 0)
     {
-      // Stupid workaround to avoid the fact that scrolling of the first
-      // column will cause the whole navigation stack to scroll
+      // Workaround (iPadOS, since 51a25f3): without this zero-size leading ScrollView, dragging
+      // the first column scrolls the navigation stack instead of the column. Re-check on each
+      // iPadOS release.
       if isWindowWide {
         ScrollView {
           Spacer()

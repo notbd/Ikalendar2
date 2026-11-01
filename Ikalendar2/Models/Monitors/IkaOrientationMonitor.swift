@@ -30,7 +30,7 @@ final class IkaOrientationMonitor {
       object: nil)
   }
 
-  /// Should be called once the first active scene appears.
+  /// Called from RootView.onAppear: no window exists at init, so the first read has to wait for the scene.
   func setInitialOrientation() {
     guard currentOrientation == .unknown else { return }
 

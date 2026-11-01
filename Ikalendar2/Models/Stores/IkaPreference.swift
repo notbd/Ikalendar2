@@ -21,6 +21,10 @@ final class IkaPreference {
   @ObservationIgnored private let userDefaults: UserDefaults
   @ObservationIgnored private var isSyncing = false
 
+  /// Three views of one selection (FlatMode = GameMode x BattleMode). Each willSet mirrors the
+  /// change into the other two; `isSyncing` stops the cascade after one hop, so setting battle
+  /// mode alone leaves game mode untouched (pinned by IkaPreferenceTests). Persistence happens in
+  /// didSet and is deliberately not gated on `isSyncing`.
   var preferredDefaultFlatMode: FlatMode {
     willSet {
       guard newValue != preferredDefaultFlatMode, !isSyncing else { return }

@@ -97,7 +97,8 @@ struct AltAppIconEasterEggRow: View {
       // jump to the good stuff (first discovery only)
       if !ikaDiscoveryLog.hasDiscoveredEasterEgg { jumpRequestCounter += 1 }
       if !ikaDiscoveryLog.hasDiscoveredEasterEgg { ikaDiscoveryLog.hasDiscoveredEasterEgg = true }
-      // compensatory haptics for repeated presses
+      // Re-selecting the active Rick changes nothing in the preference (so no success haptic);
+      // give tactile feedback anyway.
       if ikaPreference.preferredAppIcon == .rick { SimpleHaptics.generateTask(.medium) }
       buttonPressCounter += 1
       setAltAppIcon(ikaAppIcon)

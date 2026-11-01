@@ -35,7 +35,7 @@ extension Constants.Key {
     static let shouldSwapBottomToolbarPickers = "pref.if_should_swap_bottom_toolbar_pickers"
     static let shouldUseAltStageImages = "pref.if_should_use_alt_stage_images"
 
-    /// Log
+    // IkaDiscoveryLog
     static let shouldShowOnboarding = "pref.if_should_show_onboarding"
     static let hasDiscoveredRating = "pref.if_has_discovered_rating"
     static let hasDiscoveredAltAppIcon = "pref.if_has_discovered_alt_app_icon"

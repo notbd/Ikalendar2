@@ -35,6 +35,8 @@ struct CarouselColumn: View {
   static private let maskGradientPortrait: Gradient = makeMaskGradient(density: Scoped.maskGradientDensityPortrait)
   static private let maskGradientLandscape: Gradient = makeMaskGradient(density: Scoped.maskGradientDensityLandscape)
 
+  /// Only the first of `density` evenly spaced stops is transparent: the list fades in over a
+  /// thin top band (1 / (density - 1) of its height) and is opaque below.
   static private func makeMaskGradient(density: Int) -> Gradient {
     .init(
       colors:

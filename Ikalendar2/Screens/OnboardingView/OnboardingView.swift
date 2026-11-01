@@ -192,6 +192,7 @@ enum OnboardingObject {
   case icon
   case title
   case button
+  /// Resting values after the entrance; the initial state of the tap/idle bounce animator.
   case iconEnd
 
   static let duration: Double = 3

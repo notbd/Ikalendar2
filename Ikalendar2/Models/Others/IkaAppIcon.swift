@@ -19,6 +19,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
 
   var id: String { rawValue }
 
+  /// `nil` means the primary icon: `setAlternateIconName(nil)` is how UIKit restores it.
   var alternateIconName: String? {
     switch self {
       case .default:

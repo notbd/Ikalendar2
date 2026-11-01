@@ -149,7 +149,8 @@ struct SettingsAdvancedOptionsView: View {
   }
 
   private func shufflePreviewData() {
-    // make sure stages are different
+    // Re-roll until the battle rule and both stages (and the Salmon stage) differ from the
+    // current preview, so Shuffle always shows a visible change.
     var newBattleData: BattleRotation = IkaMockData.makeBattleRotation()
     var newSalmonData: SalmonRotation = IkaMockData.makeSalmonRotation()
 

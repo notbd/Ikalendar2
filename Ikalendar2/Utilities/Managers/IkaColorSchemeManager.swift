@@ -45,9 +45,8 @@ enum IkaPreferredColorScheme: String, Identifiable, CaseIterable {
 
 // MARK: - IkaColorSchemeManager
 
-/// `IkaColorSchemeManager` is a stateless utility responsible for managing the color scheme of the
-/// application. It provides an interface to switch between different color modes (light, dark, or
-/// system) and ensures smooth transitions between these states.
+/// Stateless utility that applies the preferred color scheme to the key window with a
+/// cross-dissolve, so a scheme flip does not pop.
 @MainActor
 enum IkaColorSchemeManager {
   static private var keyWindow: UIWindow? {
@@ -59,10 +58,6 @@ enum IkaColorSchemeManager {
       .first { $0.isKeyWindow }
   }
 
-  /// Changes the app's color scheme according to the given colorScheme.
-  ///
-  /// - Parameter preferredColorScheme: The desired color scheme: system, dark, or light.
-  /// - Note: The transition between the color schemes is animated for a smooth user experience.
   static func handlePreferredColorSchemeChange(for preferredColorScheme: IkaPreferredColorScheme) {
     guard let keyWindow else { return }
 
