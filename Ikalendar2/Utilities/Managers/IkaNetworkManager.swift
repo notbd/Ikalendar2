@@ -36,11 +36,12 @@ final class IkaNetworkManager: IkaNetworkService {
   /// auto-load attempt within seconds, not URLSession's 60s default.
   private let session: URLSession
 
-  init() {
-    let config: URLSessionConfiguration = .default
-    config.timeoutIntervalForRequest = 10
-    config.timeoutIntervalForResource = 30
-    session = URLSession(configuration: config)
+  /// - Parameter configuration: Injectable so tests can stub responses through a `URLProtocol`;
+  ///   the timeouts below are applied on top of it.
+  init(configuration: URLSessionConfiguration = .default) {
+    configuration.timeoutIntervalForRequest = 10
+    configuration.timeoutIntervalForResource = 30
+    session = URLSession(configuration: configuration)
   }
 
   @concurrent
