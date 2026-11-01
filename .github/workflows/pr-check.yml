@@ -100,4 +100,6 @@ jobs:
       - name: Surface Test Failure Details
         if: failure()
         run: |
+          # xcpretty swallows compiler diagnostics, so surface build errors first.
+          grep -A 3 -E "error:|\*\* (BUILD|TEST) FAILED \*\*|The following build commands failed" raw-test.log | head -200 || true
           grep -B 2 -A 10 -E "recorded an issue|Expectation failed|Fatal error|Test .* failed" raw-test.log | head -300 || true
