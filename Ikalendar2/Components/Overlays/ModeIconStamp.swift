@@ -129,8 +129,8 @@ extension ModeIconStamp {
   }
 
   /// Remaps the device-space gravity deltas into the interface's axes for `orientation`, so the
-  /// stamp tilts with the physical device. Every mapping is a quarter-turn rotation or a flip, so
-  /// the magnitude is unchanged.
+  /// stamp tilts with the physical device. Each mapping only swaps and negates the axes, so the
+  /// magnitude is unchanged.
   nonisolated static func screenTilt(
     dx: CGFloat,
     dy: CGFloat,
