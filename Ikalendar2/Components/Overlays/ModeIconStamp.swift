@@ -87,23 +87,25 @@ struct ModeIconStamp: View {
           height: iconSize)
   }
 
+  /// Built once because `body` re-runs with every motion update.
+  /// The mask color does not matter as long as it's not .clear; only opacity matters.
+  private static let maskGradient: Gradient = .init(colors: [
+    Color.primary.opacity(1),
+    Color.primary.opacity(0.95),
+    Color.primary.opacity(0.9),
+    Color.primary.opacity(0.85),
+    Color.primary.opacity(0.8),
+    Color.primary.opacity(0.7),
+    Color.primary.opacity(0.4),
+    Color.primary.opacity(0.2),
+    Color.primary.opacity(0.1),
+    Color.primary.opacity(0.05),
+    Color.primary.opacity(0),
+  ])
+
   private var gradientMask: some View {
-    // mask color does not matter as long as it's not .clear; only opacity matters
-    let maskColor: Color = .primary
-    return LinearGradient(
-      gradient: Gradient(colors: [
-        maskColor.opacity(1),
-        maskColor.opacity(0.95),
-        maskColor.opacity(0.9),
-        maskColor.opacity(0.85),
-        maskColor.opacity(0.8),
-        maskColor.opacity(0.7),
-        maskColor.opacity(0.4),
-        maskColor.opacity(0.2),
-        maskColor.opacity(0.1),
-        maskColor.opacity(0.05),
-        maskColor.opacity(0),
-      ]),
+    LinearGradient(
+      gradient: Self.maskGradient,
       startPoint: .top,
       endPoint: .bottom)
   }
