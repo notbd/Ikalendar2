@@ -115,6 +115,8 @@ struct BattleRotationHeader: View {
 
 #Preview {
   @Previewable @State var modeSelection: BattleMode = .gachi
+  // generated once, so switching modes does not reshuffle the stages
+  @Previewable @State var rotations: BattleRotationDict = IkaMockData.makeBattleRotations()
 
   NavigationStack {
     GeometryReader { geo in
@@ -129,7 +131,7 @@ struct BattleRotationHeader: View {
           .pickerStyle(.segmented)
         }
 
-        ForEach(IkaMockData.makeBattleRotations()[modeSelection] ?? []) { rotation in
+        ForEach(rotations[modeSelection] ?? []) { rotation in
           BattleRotationRow(
             rotation: rotation,
             rowWidth: geo.size.width)

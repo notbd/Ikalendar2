@@ -46,7 +46,6 @@ extension View {
   }
 }
 
-#if DEBUG
 #Preview {
   // The star wiggles every 2s; the checkmark stays still (discovered).
   VStack(spacing: 32) {
@@ -58,4 +57,3 @@ extension View {
       .iconNudge(isActive: false, interval: 2)
   }
 }
-#endif

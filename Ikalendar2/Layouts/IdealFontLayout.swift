@@ -150,7 +150,6 @@ struct IdealFontLayout: Layout {
   }
 }
 
-#if DEBUG
 #Preview {
   // All candidates get the smallest ideal font so the anchored first (visible) one
   // never truncates; resize the window to watch it adapt.
@@ -165,4 +164,3 @@ struct IdealFontLayout: Layout {
   .frame(width: 160)
   .border(.orange)
 }
-#endif
