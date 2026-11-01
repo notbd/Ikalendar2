@@ -100,7 +100,9 @@ extension Constants.Key {
       static let serverError = "key.title.server_error"
       static let connectionError = "key.title.connection_error"
       static let unknownError = "key.title.unknown_error"
-      static let maxAttemptsExceeded = "key.title.max_attempts_exceeded" // not used for now
+      // No localized string yet: `.maxAttemptsExceeded` is caught inside
+      // IkaCatalog.autoLoadCatalog and never reaches ErrorView.
+      static let maxAttemptsExceeded = "key.title.max_attempts_exceeded"
       static let licenseFetchError = "key.title.license_fetch_error"
     }
 
@@ -109,7 +111,8 @@ extension Constants.Key {
       static let serverErrorBadData = "key.message.server_error.bad_data"
       static let connectionError = "key.message.connection_error"
       static let unknownError = "key.message.unknown_error"
-      static let maxAttemptsExceeded = "key.message.max_attempts_exceeded" // not used for now
+      // No localized string yet, same reason as `Title.maxAttemptsExceeded`.
+      static let maxAttemptsExceeded = "key.message.max_attempts_exceeded"
       static let licenseFetchError = "key.message.license_fetch_error"
     }
   }

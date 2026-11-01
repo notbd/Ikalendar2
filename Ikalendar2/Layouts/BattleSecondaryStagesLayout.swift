@@ -19,7 +19,7 @@ import SwiftUI
 ///
 /// - Precondition:
 ///   - The proposed width must already be set.
-///   - Must have exactly two subviews: one for the stage and one for the weapons.
+///   - Must have exactly two subviews: the stage A card and the stage B card.
 ///
 struct BattleSecondaryStagesLayout: Layout {
   func sizeThatFits(
@@ -70,7 +70,7 @@ struct BattleSecondaryStagesLayout: Layout {
       width: stageWidth,
       height: stageHeight)
 
-    // placing stage card
+    // stage A
     subviews[0].place(
       at: CGPoint(
         x: stageACenterX,
@@ -78,7 +78,7 @@ struct BattleSecondaryStagesLayout: Layout {
       anchor: .center,
       proposal: stageSizeProposal)
 
-    // placing weapon card
+    // stage B
     subviews[1].place(
       at: CGPoint(
         x: stageBCenterX,

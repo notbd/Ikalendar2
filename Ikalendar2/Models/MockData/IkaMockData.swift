@@ -16,8 +16,8 @@ import IkalendarKit
 enum IkaMockData {
   /// Generate a mock SalmonRotation data.
   /// - Parameters:
-  ///   - rawStartTime: The raw start time (rotation will start at the next
-  ///                       rounded hour of this time).
+  ///   - rawStartTime: Any time inside the hour the rotation starts at (minutes are dropped).
+  ///                   The rotation lasts 42 h.
   ///   - hasStageAndWeapons: If the rotation has stage and weapon information.
   ///   - mysteryWeaponType: The type of mystery weapon for the rotation. (nil, green, gold)
   /// - Returns: The SalmonRotation data.
@@ -130,16 +130,11 @@ enum IkaMockData {
     return salmonRotations
   }
 
-  /// Generate a battle rotation with random stages for a specified rule and raw start time.
+  /// Generate a battle rotation starting at the top of the hour of `rawStartTime`, lasting 2 h,
+  /// with two distinct random stages (never Shifty Station).
   ///
-  /// The battle stage `Shifty Station` is explicitly excluded from the random stage selection.
-  ///
-  /// - Parameters:
-  ///   - rule: The battle rule for the rotation. Defaults to be random.
-  ///   - rawStartTime: The raw start time for the battle rotation. Generated rotation will have started at
-  ///                   the previous rounded hour.
-  ///
-  /// - Returns: The `BattleRotation` object.
+  /// Regular always gets Turf War. For the other modes, `preferredRule` is used when given,
+  /// otherwise a random rule other than Turf War. An unspecified `preferredMode` is random.
   static func makeBattleRotation(
     preferredMode: BattleMode? = nil,
     preferredRule: BattleRule? = nil,
