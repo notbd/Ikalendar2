@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type Ref, inject } from 'vue'
-import type { DefaultTheme } from 'vitepress/theme'
-import { VPButton, VPImage } from 'vitepress/theme'
+import type { DefaultTheme } from 'vitepress/theme-without-fonts'
+import { VPButton, VPImage } from 'vitepress/theme-without-fonts'
 
 defineProps<{
   name?: string
