@@ -11,8 +11,6 @@ import SwiftUI
 
 /// An overlay indicating the loading status of the app.
 struct LoadingOverlay: View {
-  typealias Scoped = Constants.Style.Overlay.Loading
-
   @Environment(IkaCatalog.self) private var ikaCatalog
 
   private var isLoading: Bool {

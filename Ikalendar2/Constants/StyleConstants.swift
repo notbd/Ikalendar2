@@ -12,7 +12,6 @@ extension Constants.Style {
   enum Global {
     static let shadowRadius: CGFloat = 2
 
-    static let externalLinkSFSymbol = "link"
     static let externalLinkJumpSFSymbol = "arrow.up.forward.app.fill"
     static var externalLinkJumpIcon: some View {
       Image(systemName: externalLinkJumpSFSymbol)
@@ -21,8 +20,6 @@ extension Constants.Style {
   }
 
   enum Carousel {
-    static let columnFixedWidth: CGFloat = 390
-
     enum Column {
       static let listOffsetVFactorPortrait: CGFloat = 0.1
       static let listOffsetVFactorLandscape: CGFloat = 0.12
@@ -34,10 +31,6 @@ extension Constants.Style {
   }
 
   enum Overlay {
-    enum Loading {
-      static let frameCornerRadius: CGFloat = 5
-    }
-
     enum AutoLoading {
       static let glassEffectContainerSpacing: CGFloat = 28
       static let sfsymbolFont: Font = .system(size: 18)
@@ -221,7 +214,6 @@ extension Constants.Style {
           static let cellPaddingBottom: CGFloat = 6
 
           static let ruleSectionSpacing: CGFloat = 8
-          static let ruleSectionPaddingLeading: CGFloat = 10
 
           static let ruleTitleFontSizeMax: CGFloat = 48
           static let ruleTitleTextStyleRelativeTo: Font.TextStyle = .title
