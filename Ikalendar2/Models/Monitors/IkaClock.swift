@@ -26,13 +26,23 @@ final class IkaClock {
     tickTask?.cancel()
   }
 
+  /// One second after the previous deadline, or now if that is already past (the process was
+  /// suspended), so the ticks missed while suspended fire once instead of being replayed one by one.
+  nonisolated static func nextDeadline(
+    after previous: ContinuousClock.Instant,
+    now: ContinuousClock.Instant)
+    -> ContinuousClock.Instant
+  {
+    max(previous + .seconds(1), now)
+  }
+
   private func startTicking() {
     // Deadline-based so ticks don't drift; weak self is re-acquired each lap
     // so short-lived instances (previews, tests) can actually deinit.
     tickTask = Task { [weak self] in
       var nextTick: ContinuousClock.Instant = .now
       while !Task.isCancelled {
-        nextTick += .seconds(1)
+        nextTick = Self.nextDeadline(after: nextTick, now: .now)
         try? await Task.sleep(until: nextTick, tolerance: .seconds(0.1), clock: .continuous)
         guard !Task.isCancelled else { return }
         guard let self else { return }
