@@ -87,7 +87,6 @@ struct BattleRotationStageCardSecondary: View {
           .clear.interactive(),
           in: .rect(cornerRadius: Scoped.imageCornerRadius))
         .shadow(radius: Constants.Style.Global.shadowRadius)
-        .alignmentGuide(.battleStagesImageAlignment) { $0[.bottom] }
         .layoutPriority(1)
 
       Text(stage.name.localizedStringKey)

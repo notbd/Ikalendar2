@@ -18,7 +18,6 @@
 		61BB938C2E07CDD1002577EA /* IkalendarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; };
 		61C4A00C2EF1CD00002577EA /* IkalendarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61526EFE2E07802D00375181 /* IkalendarKit.framework */; };
 		7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2528C4322100245586 /* IkaDecoder.swift */; };
-		7903FE3028C437F900245586 /* QuickBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE2F28C437F900245586 /* QuickBorder.swift */; };
 		7903FE3428C438B400245586 /* IkaFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3328C438B400245586 /* IkaFont.swift */; };
 		7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE3728C4395600245586 /* ScaledLimitedLine.swift */; };
 		7903FE4328C43AB800245586 /* GrizzcoWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903FE4228C43AB800245586 /* GrizzcoWeapon.swift */; };
@@ -62,7 +61,6 @@
 		797EA6902AAD16620095A23B /* IkaOpenSourceLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797EA68F2AAD16620095A23B /* IkaOpenSourceLicense.swift */; };
 		79802FFA28C55B740048C478 /* IkaColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79802FF928C55B740048C478 /* IkaColorSchemeManager.swift */; };
 		799235AB2AB2DAD60071AA72 /* SalmonStageAndWeaponsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799235AA2AB2DAD60071AA72 /* SalmonStageAndWeaponsLayout.swift */; };
-		799235AE2AB3926F0071AA72 /* BattleStagesImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799235AD2AB3926F0071AA72 /* BattleStagesImageAlignment.swift */; };
 		799235B02AB394D30071AA72 /* BattleSecondaryStagesLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799235AF2AB394D30071AA72 /* BattleSecondaryStagesLayout.swift */; };
 		7992CB742ABD564F0088C974 /* IkaDiscoveryLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7992CB732ABD564F0088C974 /* IkaDiscoveryLog.swift */; };
 		79A7258F2A5E9367007E9C92 /* ConfigConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */; };
@@ -157,7 +155,6 @@
 		61BB93882E07CDD1002577EA /* IkalendarKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IkalendarKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61C4A0022EF1CD00002577EA /* Ikalendar2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Ikalendar2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7903FE2528C4322100245586 /* IkaDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaDecoder.swift; sourceTree = "<group>"; };
-		7903FE2F28C437F900245586 /* QuickBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBorder.swift; sourceTree = "<group>"; };
 		7903FE3328C438B400245586 /* IkaFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaFont.swift; sourceTree = "<group>"; };
 		7903FE3728C4395600245586 /* ScaledLimitedLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledLimitedLine.swift; sourceTree = "<group>"; };
 		7903FE3D28C43A0F00245586 /* Inkling_v2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inkling_v2.otf; sourceTree = "<group>"; };
@@ -202,7 +199,6 @@
 		797EA68F2AAD16620095A23B /* IkaOpenSourceLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaOpenSourceLicense.swift; sourceTree = "<group>"; };
 		79802FF928C55B740048C478 /* IkaColorSchemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaColorSchemeManager.swift; sourceTree = "<group>"; };
 		799235AA2AB2DAD60071AA72 /* SalmonStageAndWeaponsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalmonStageAndWeaponsLayout.swift; sourceTree = "<group>"; };
-		799235AD2AB3926F0071AA72 /* BattleStagesImageAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleStagesImageAlignment.swift; sourceTree = "<group>"; };
 		799235AF2AB394D30071AA72 /* BattleSecondaryStagesLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSecondaryStagesLayout.swift; sourceTree = "<group>"; };
 		7992CB732ABD564F0088C974 /* IkaDiscoveryLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaDiscoveryLog.swift; sourceTree = "<group>"; };
 		79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigConstants.swift; sourceTree = "<group>"; };
@@ -300,7 +296,6 @@
 				61C4A0102EF1CD00002577EA /* IconNudge.swift */,
 				61C4A0142EF1CD00002577EA /* AdaptiveGlassEffect.swift */,
 				7903FE3328C438B400245586 /* IkaFont.swift */,
-				7903FE2F28C437F900245586 /* QuickBorder.swift */,
 				7903FE3728C4395600245586 /* ScaledLimitedLine.swift */,
 				7966346D2AC147FC00AE82E2 /* GlobalPosition.swift */,
 			);
@@ -485,17 +480,8 @@
 				79EE3AB72AB951E900409733 /* IdealFontLayout.swift */,
 				799235AF2AB394D30071AA72 /* BattleSecondaryStagesLayout.swift */,
 				799235AA2AB2DAD60071AA72 /* SalmonStageAndWeaponsLayout.swift */,
-				799235AC2AB3922E0071AA72 /* Alignments */,
 			);
 			path = Layouts;
-			sourceTree = "<group>";
-		};
-		799235AC2AB3922E0071AA72 /* Alignments */ = {
-			isa = PBXGroup;
-			children = (
-				799235AD2AB3926F0071AA72 /* BattleStagesImageAlignment.swift */,
-			);
-			path = Alignments;
 			sourceTree = "<group>";
 		};
 		79AA712D28C4000400A91055 /* Models */ = {
@@ -977,7 +963,6 @@
 				7903FE6528C46A4D00245586 /* ErrorView.swift in Sources */,
 				7903FE9E28C4702100245586 /* ToolbarRefreshButton.swift in Sources */,
 				7943DFBB2AB52D090047250E /* CarouselColumn.swift in Sources */,
-				799235AE2AB3926F0071AA72 /* BattleStagesImageAlignment.swift in Sources */,
 				79AA713628C4070700A91055 /* IkaStatus.swift in Sources */,
 				79AA714928C4095100A91055 /* BattleRotation.swift in Sources */,
 				79D3E66F28C41CCE00005DB5 /* FootApparel.swift in Sources */,
@@ -1009,7 +994,6 @@
 				797EA68E2AACF1350095A23B /* DetailsLicenseView.swift in Sources */,
 				796634712AC1578900AE82E2 /* AltAppIconRow.swift in Sources */,
 				79D3E67328C41DD900005DB5 /* HeadApparel.swift in Sources */,
-				7903FE3028C437F900245586 /* QuickBorder.swift in Sources */,
 				7903FE2628C4322100245586 /* IkaDecoder.swift in Sources */,
 				79C1485C28C42CDE00587C6E /* StyleConstants.swift in Sources */,
 				7903FE3828C4395600245586 /* ScaledLimitedLine.swift in Sources */,
