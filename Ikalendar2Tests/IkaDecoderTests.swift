@@ -107,6 +107,27 @@ struct IkaDecoderTests {
 
   @Suite("Parse Salmon Rotations")
   struct ParseSalmonRotationsTests {
+    /// schedules still lead with a finished shift that details no longer lists, then
+    /// repeat both detailed shifts and add three more.
+    static private let salmonRotationsLeadingSchedule = """
+      {
+        "details": [
+          { "start_time": 1700064000, "end_time": 1700128000,
+            "stage": { "name": "Spawning Grounds" }, "weapons": [ { "id": 0 } ] },
+          { "start_time": 1700128000, "end_time": 1700192000,
+            "stage": { "name": "Marooner's Bay" }, "weapons": [ { "id": 10 } ] }
+        ],
+        "schedules": [
+          { "start_time": 1700000000, "end_time": 1700064000 },
+          { "start_time": 1700064000, "end_time": 1700128000 },
+          { "start_time": 1700128000, "end_time": 1700192000 },
+          { "start_time": 1700192000, "end_time": 1700256000 },
+          { "start_time": 1700256000, "end_time": 1700320000 },
+          { "start_time": 1700320000, "end_time": 1700384000 }
+        ]
+      }
+      """
+
     @Test
     func `Valid payload merges details and trailing schedules`() throws {
       let rotations = try IkaDecoder.parseSalmonRotations(from: Fixtures.data(Fixtures.salmonRotationsValid))
@@ -147,6 +168,27 @@ struct IkaDecoderTests {
       let rotations = try IkaDecoder
         .parseSalmonRotations(from: Fixtures.data(Fixtures.salmonRotationsDetailsExceedSchedules))
       #expect(rotations.count == 2)
+    }
+
+    @Test
+    func `Schedules are matched to details by start time`() throws {
+      // Matching by array position repeated details[1] as a time-only rotation here.
+      let rotations = try IkaDecoder
+        .parseSalmonRotations(from: Fixtures.data(Self.salmonRotationsLeadingSchedule))
+      try #require(rotations.count == 5)
+
+      #expect(rotations.map(\.startTime.timeIntervalSince1970) == [
+        1_700_064_000,
+        1_700_128_000,
+        1_700_192_000,
+        1_700_256_000,
+        1_700_320_000,
+      ])
+      #expect(rotations[0].stage == .spawningGrounds)
+      #expect(rotations[1].stage == .maroonerSBay)
+      for rotation in rotations[2...] {
+        #expect(rotation.stage == nil)
+      }
     }
 
     @Test

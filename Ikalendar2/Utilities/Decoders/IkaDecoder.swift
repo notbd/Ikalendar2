@@ -102,9 +102,9 @@ enum IkaDecoder {
 
   /// Parse the data into a salmon rotation array.
   ///
-  /// Detailed rotations come from `details`; any extra entries in `schedules`
-  /// become time-only rotations. Unknown stage names degrade to a nil stage;
-  /// invalid weapon ids are an error.
+  /// Detailed rotations come from `details`; `schedules` entries that start after
+  /// the last detailed rotation become time-only rotations. Unknown stage names
+  /// degrade to a nil stage; invalid weapon ids are an error.
   ///
   /// - Throws: `IkaError.serverError(.badData)`: if the payload is malformed,
   ///   `details` is missing/empty, or a weapon id is invalid.
@@ -117,7 +117,7 @@ enum IkaDecoder {
     guard let detailDTOs = dto.details, !detailDTOs.isEmpty
     else { throw IkaError.serverError(.badData) }
 
-    var salmonRotations = try detailDTOs.map { detailDTO in
+    let salmonRotations = try detailDTOs.map { detailDTO in
       let weapons: [SalmonWeapon]? = try detailDTO.weapons.flatMap { weaponDTOs in
         let parsed = try weaponDTOs.map { weaponDTO in
           guard let weapon = SalmonWeapon(weaponDTO.id.value)
@@ -135,27 +135,24 @@ enum IkaDecoder {
         weapons: weapons)
     }
 
-    // Append any schedules beyond the detailed window as time-only rotations.
-    // Guard against `schedules` being shorter than `details`: constructing a Range
-    // with lowerBound > upperBound traps at runtime.
-    if
-      let scheduleDTOs = dto.schedules,
-      scheduleDTOs.count > salmonRotations.count
-    {
-      for scheduleDTO in scheduleDTOs[salmonRotations.count...] {
-        // skip entries with missing times instead of failing the whole parse
-        guard
-          let startTime = scheduleDTO.startTime,
-          let endTime = scheduleDTO.endTime
-        else { continue }
+    // Append the schedules beyond the detailed window as time-only rotations. They are
+    // matched by start time rather than array position, so a leading (already finished)
+    // or reordered entry can neither duplicate a detailed shift nor push out a later one.
+    let lastDetailedStartTime = salmonRotations.map(\.startTime).max() ?? .distantPast
+    let timeOnlyRotations: [SalmonRotation] = (dto.schedules ?? []).compactMap { scheduleDTO in
+      // skip entries with missing times instead of failing the whole parse
+      guard
+        let startTime = scheduleDTO.startTime,
+        let endTime = scheduleDTO.endTime,
+        Date(timeIntervalSince1970: startTime) > lastDetailedStartTime
+      else { return nil }
 
-        salmonRotations.append(SalmonRotation(
-          startTime: Date(timeIntervalSince1970: startTime),
-          endTime: Date(timeIntervalSince1970: endTime)))
-      }
+      return SalmonRotation(
+        startTime: Date(timeIntervalSince1970: startTime),
+        endTime: Date(timeIntervalSince1970: endTime))
     }
 
-    return salmonRotations
+    return salmonRotations + timeOnlyRotations.sorted { $0.startTime < $1.startTime }
   }
 
   /// Parse the data into an info wrapper containing the salmon run reward apparel
