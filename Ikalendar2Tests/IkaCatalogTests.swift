@@ -17,6 +17,10 @@ import Testing
 /// status-transition delays (0.2s loaded / 1s error) complete inside refresh(), so
 /// final-state assertions are deterministic. Never poll for intermediate `.loading`.
 ///
+/// The load timeout is injected: a generous one for every test except the dedicated
+/// timeout test, so a congested CI runner can never turn a mocked success into a
+/// spurious `connectionError`.
+///
 /// Test data uses future end times so `isOutdated` stays false and the catalog's
 /// internal 5s auto-load loop can never interfere mid-test. The auto-load state
 /// machine itself (autoLoadStatus) is intentionally untested for now: it depends on
@@ -32,7 +36,8 @@ struct IkaCatalogTests {
   private func makeCatalog(
     battle: @escaping @Sendable () async throws -> BattleRotationDict,
     salmon: @escaping @Sendable () async throws -> [SalmonRotation],
-    apparel: @escaping @Sendable () async throws -> SalmonApparelInfo = { apparelInfo })
+    apparel: @escaping @Sendable () async throws -> SalmonApparelInfo = { apparelInfo },
+    loadTimeout: TimeInterval = 60)
     -> IkaCatalog
   {
     IkaCatalog(
@@ -40,7 +45,8 @@ struct IkaCatalogTests {
         battleRotationDictHandler: battle,
         salmonRotationsHandler: salmon,
         salmonRewardApparelInfoHandler: apparel),
-      ikaClock: IkaClock())
+      ikaClock: IkaClock(),
+      loadTimeout: loadTimeout)
   }
 
   // MARK: - Success
@@ -156,11 +162,12 @@ struct IkaCatalogTests {
 
   @Test(.timeLimit(.minutes(1)))
   func `Hanging fetch times out into connectionError`() async {
-    // Deliberately slow (~6s): exercises the REAL hardcoded 5s withTimeout wrapper.
-    // Kept as the single slow test; fast timeout coverage lives in AsyncUtilsTests.
+    // Exercises the catalog's withTimeout wiring end to end with a short injected
+    // timeout; finer-grained timeout coverage lives in AsyncUtilsTests.
     let catalog = makeCatalog(
       battle: { try await hangingForever() },
-      salmon: { [] })
+      salmon: { [] },
+      loadTimeout: 1)
 
     await catalog.refresh()
 

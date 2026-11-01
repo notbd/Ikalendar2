@@ -23,15 +23,20 @@ final class IkaCatalog {
 
   @ObservationIgnored private let ikaNetworkService: any IkaNetworkService
   @ObservationIgnored private let ikaClock: IkaClock
+  /// Upper bound for a full catalog load. Injectable so tests never race a
+  /// wall-clock deadline on a congested runner.
+  @ObservationIgnored private let loadTimeout: TimeInterval
 
   @ObservationIgnored private var autoLoadCheckTask: Task<Void, Never>?
 
   init(
     ikaNetworkService: any IkaNetworkService,
-    ikaClock: IkaClock)
+    ikaClock: IkaClock,
+    loadTimeout: TimeInterval = Scoped.loadTimeout)
   {
     self.ikaNetworkService = ikaNetworkService
     self.ikaClock = ikaClock
+    self.loadTimeout = loadTimeout
     startAutoLoadChecks()
   }
 
@@ -131,7 +136,7 @@ final class IkaCatalog {
   {
     let (loadedBattleRotationDict, loadedSalmonRotations) = try await
       AsyncUtils.withTimeout(
-        seconds: Scoped.loadTimeout,
+        seconds: loadTimeout,
         timeoutError: IkaError.connectionError)
       { [ikaNetworkService] in
         async let taskBattleRotationDict = ikaNetworkService.fetchBattleRotationDict()
