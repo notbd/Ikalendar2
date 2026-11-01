@@ -9,7 +9,7 @@ import CoreMotion
 import UIKit
 
 /// `IkaDeviceMotionMonitor` is an observable monitor broadcasting device motion updates.
-/// It captures the gravitational force changes on x, y, and z axes and computes the difference
+/// It captures the gravitational force changes on the x and y axes and computes the difference
 /// between the current value and the average of the recently stored values over a specified duration.
 /// App-lifetime object: its scene-lifecycle observation lives for the process duration.
 @MainActor
@@ -22,16 +22,14 @@ final class IkaDeviceMotionMonitor {
   @ObservationIgnored private var sceneActivationTask: Task<Void, Never>?
   @ObservationIgnored private var sceneDeactivationTask: Task<Void, Never>?
 
-  /// Arrays storing the x, y, and z gravitational force components over a duration.
+  /// Arrays storing the x and y gravitational force components over a duration.
   @ObservationIgnored private var xs: [CGFloat] = []
   @ObservationIgnored private var ys: [CGFloat] = []
-  @ObservationIgnored private var zs: [CGFloat] = []
 
   /// The difference between the current gravitational force component and its average
-  /// of recently stored values for x, y, and z axes.
+  /// of recently stored values for the x and y axes.
   var dx: CGFloat = 0
   var dy: CGFloat = 0
-  var dz: CGFloat = 0
 
   init() {
     subscribeToAppLifecycleEvents()
@@ -71,12 +69,14 @@ final class IkaDeviceMotionMonitor {
 
     motionManager.deviceMotionUpdateInterval = interval
 
-    motionManager.startDeviceMotionUpdates(to: .main) { data, _ in
+    // Weak self: the manager retains this handler, so a strong capture would pin the
+    // monitor until updates stop.
+    motionManager.startDeviceMotionUpdates(to: .main) { [weak self] data, _ in
       // The handler is delivered on OperationQueue.main, i.e. the main thread.
       MainActor.assumeIsolated {
-        guard let gravity = data?.gravity else { return }
+        guard let self, let gravity = data?.gravity else { return }
 
-        self.processMotionUpdate(gravity)
+        processMotionUpdate(gravity)
       }
     }
   }
@@ -95,12 +95,10 @@ final class IkaDeviceMotionMonitor {
     // Make sure the arrays contain `cycle` seconds of data at most
     appendData(CGFloat(gravity.x), to: &xs, maxCapacity: arrayCapacity)
     appendData(CGFloat(gravity.y), to: &ys, maxCapacity: arrayCapacity)
-    appendData(CGFloat(gravity.z), to: &zs, maxCapacity: arrayCapacity)
 
     // Calculate the difference between current value and array average
     dx = CGFloat(gravity.x) - xs.reduce(0, +) / CGFloat(xs.count)
     dy = CGFloat(gravity.y) - ys.reduce(0, +) / CGFloat(ys.count)
-    dz = CGFloat(gravity.z) - zs.reduce(0, +) / CGFloat(zs.count)
   }
 
   /// Appends a value to the provided array ensuring the array's size doesn't exceed the specified capacity.
