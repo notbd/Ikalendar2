@@ -17,37 +17,13 @@ struct StringExtensionTests {
 
   @Suite("LocalizedStringKey Property")
   struct LocalizedStringKeyTests {
+    /// Keys without interpolation compare by value, so `==` against a literal key is exact.
     @Test
-    func `LocalizedStringKey property returns correct type`() {
-      let testString = "test_key"
-      let result = testString.localizedStringKey
-
-      // Verify it's a LocalizedStringKey by creating Text with it (behavioral test)
-      _ = Text(result)
-
-      #expect(type(of: result) == LocalizedStringKey.self, "Result should be LocalizedStringKey type")
-    }
-
-    @Test
-    func `LocalizedStringKey works with empty string`() {
-      let emptyString = ""
-      let result = emptyString.localizedStringKey
-
-      // Test that we can create Text with empty LocalizedStringKey
-      _ = Text(result)
-
-      #expect(type(of: result) == LocalizedStringKey.self, "Should handle empty strings gracefully")
-    }
-
-    @Test
-    func `LocalizedStringKey works with special characters`() {
-      let specialString = "test_key_with_特殊文字_and_émojis_🎮"
-      let result = specialString.localizedStringKey
-
-      // Test that we can create Text with special character LocalizedStringKey
-      _ = Text(result)
-
-      #expect(type(of: result) == LocalizedStringKey.self, "Should handle special characters and emojis")
+    func `LocalizedStringKey property uses the string verbatim as the key`() {
+      #expect("test_key".localizedStringKey == "test_key")
+      #expect("".localizedStringKey == "")
+      #expect("test_key_with_特殊文字_and_émojis_🎮".localizedStringKey == "test_key_with_特殊文字_and_émojis_🎮")
+      #expect("test_key".localizedStringKey != "other_key")
     }
   }
 

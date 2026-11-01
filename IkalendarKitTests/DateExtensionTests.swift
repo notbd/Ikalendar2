@@ -12,6 +12,18 @@ import Testing
 
 // MARK: - DateExtensionTests
 
+/// `Date+Ext` reads `Locale.current`, `TimeZone.current` and `Calendar.current` internally,
+/// and none of them can be overridden for one test without mutating process-wide state that
+/// parallel suites share. So instead:
+/// - fixtures are wall-clock times in the runner's own time zone on a Gregorian calendar,
+///   which is the same instant to the code under test on every runner;
+/// - locale-dependent pieces come from `DateFormatter(ikaType:)` and
+///   `TimeLength.localizedDescription()` with their defaults, whose exact per-locale output
+///   is pinned in DateFormatterExtensionTests and TimeLengthTests;
+/// - relative-day words are looked up by key in the main bundle, as the code under test does.
+///
+/// Everything `Date+Ext` adds on top is pinned exactly: which branch fires for which day,
+/// separators, ordering, the duration breakdown and the string-key templates.
 @Suite("Date Extensions")
 struct DateExtensionTests {
   // MARK: - Date Subtraction Tests
@@ -29,7 +41,7 @@ struct DateExtensionTests {
 
     @Test
     func `Date subtraction with same dates returns zero`() {
-      let date: Date = .init()
+      let date: Date = .init(timeIntervalSince1970: 1_700_000_000)
       let result = date - date
       #expect(result == 0.0, "Subtracting same date should return zero")
     }
@@ -49,335 +61,161 @@ struct DateExtensionTests {
   @Suite("Remove Minutes")
   struct RemoveMinutesTests {
     @Test
-    func `Remove minutes sets minutes, seconds, and nanoseconds to zero`() throws {
-      let calendar: Calendar = .current
-      let originalDate = try #require(calendar.date(from: DateComponents(
+    func `Remove minutes truncates to the exact start of the hour`() throws {
+      // The sub-second part must go too.
+      let original: Date = try localDate(DateComponents(
         year: 2023, month: 12, day: 25,
-        hour: 14, minute: 30, second: 45)))
+        hour: 14, minute: 30, second: 45, nanosecond: 500_000_000))
+      let hourStart: Date = try localDate(DateComponents(year: 2023, month: 12, day: 25, hour: 14))
 
-      let result = try #require(originalDate.removeMinutes(), "removeMinutes should not return nil for valid date")
-
-      let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: result)
-      #expect(components.year == 2023)
-      #expect(components.month == 12)
-      #expect(components.day == 25)
-      #expect(components.hour == 14)
-      #expect(components.minute == 0)
-      #expect(components.second == 0)
-    }
-
-    @Test
-    func `Remove minutes preserves year, month, day, and hour`() throws {
-      let calendar: Calendar = .current
-      let originalDate = try #require(calendar.date(from: DateComponents(
-        year: 2024, month: 6, day: 15,
-        hour: 9, minute: 45, second: 30)))
-
-      let result = try #require(originalDate.removeMinutes(), "removeMinutes should not return nil for valid date")
-
-      let components = calendar.dateComponents([.year, .month, .day, .hour], from: result)
-      #expect(components.year == 2024)
-      #expect(components.month == 6)
-      #expect(components.day == 15)
-      #expect(components.hour == 9)
+      #expect(original.removeMinutes() == hourStart)
     }
   }
 
-  // MARK: - Battle Time String Tests
+  // MARK: - Battle & Salmon Time String Tests
 
-  @Suite("Battle Time String")
-  struct BattleTimeStringTests {
-    @Test
-    func `Battle time string without date returns only time`() throws {
-      let testDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 14, minute: 30)),
-        "Should be able to create test date")
-      let result = testDate.toBattleTimeString()
+  @Suite("Battle and Salmon Time Strings")
+  struct TimeStringTests {
+    /// 2023-12-25 12:00 in the runner's time zone.
+    private let referenceComponents: DateComponents = .init(year: 2023, month: 12, day: 25, hour: 12)
 
-      // Should not contain localized date words - test by checking it's relatively short (time only)
-      #expect(result.count < 20, "Time-only string should be relatively short")
-      #expect(!result.isEmpty, "Result should not be empty")
+    @Test(arguments: [
+      DateComponents(year: 2023, month: 12, day: 25, hour: 14, minute: 30),
+      DateComponents(year: 2023, month: 12, day: 27, hour: 9, minute: 5),
+    ])
+    func `Without the date flag both render the time only`(components: DateComponents) throws {
+      let date: Date = try localDate(components)
+      let reference: Date = try localDate(referenceComponents)
+      let time: String = DateFormatter(ikaType: .time).string(from: date)
+
+      #expect(date.toBattleTimeString() == time)
+      #expect(date.toSalmonTimeString() == time)
+      #expect(date.toBattleTimeString(shouldIncludeDate: false, currentTime: reference) == time)
+      #expect(date.toSalmonTimeString(shouldIncludeDate: false, currentTime: reference) == time)
     }
 
-    @Test
-    func `Battle time string with date includes 'Today' for today's date`() throws {
-      // Use a fixed reference date
-      let referenceDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create reference date")
+    /// Calendar days, not 24-hour windows: 00:30 on the next day is "Tomorrow" although it
+    /// is only 12.5 hours after the reference.
+    @Test(arguments: [
+      (DateComponents(year: 2023, month: 12, day: 24, hour: 23, minute: 59), "Yesterday"),
+      (DateComponents(year: 2023, month: 12, day: 25, hour: 0, minute: 0), "Today"),
+      (DateComponents(year: 2023, month: 12, day: 25, hour: 14, minute: 30), "Today"),
+      (DateComponents(year: 2023, month: 12, day: 25, hour: 23, minute: 59), "Today"),
+      (DateComponents(year: 2023, month: 12, day: 26, hour: 0, minute: 30), "Tomorrow"),
+    ])
+    func `Adjacent days are prefixed with the relative day`(components: DateComponents, wordKey: String) throws {
+      let date: Date = try localDate(components)
+      let reference: Date = try localDate(referenceComponents)
+      let word: String = Bundle.main.localizedString(forKey: wordKey, value: nil, table: nil)
+      let expected: String = word + " " + DateFormatter(ikaType: .time).string(from: date)
 
-      // Create a date that is the same day as our reference
-      let todayDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 14, minute: 30)),
-        "Should be able to create today's date")
-
-      let result = todayDate.toBattleTimeString(shouldIncludeDate: true, currentTime: referenceDate)
-
-      // For today's date, should contain "Today"
-      let localizedToday: String = .init(localized: "Today")
-      #expect(result.contains(localizedToday), "Should contain localized 'Today' for current date")
-      #expect(result.count > 10, "Should be longer than time-only string")
+      #expect(date.toBattleTimeString(shouldIncludeDate: true, currentTime: reference) == expected)
+      #expect(date.toSalmonTimeString(shouldIncludeDate: true, currentTime: reference) == expected)
     }
 
-    @Test
-    func `Battle time string with date includes 'Yesterday' for yesterday's date`() throws {
-      // Use a fixed reference date
-      let referenceDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create reference date")
+    /// Battles never start more than a day away, so other days get no date; salmon runs
+    /// can, so they get the date prepended (the date pattern supplies the separator).
+    @Test(arguments: [
+      DateComponents(year: 2023, month: 12, day: 23, hour: 10, minute: 45),
+      DateComponents(year: 2023, month: 12, day: 27, hour: 10, minute: 45),
+    ])
+    func `Other days add the date for salmon only`(components: DateComponents) throws {
+      let date: Date = try localDate(components)
+      let reference: Date = try localDate(referenceComponents)
+      let time: String = DateFormatter(ikaType: .time).string(from: date)
+      let day: String = DateFormatter(ikaType: .date).string(from: date)
 
-      let yesterdayDate = try #require(
-        Calendar.current.date(byAdding: .day, value: -1, to: referenceDate),
-        "Should be able to create yesterday's date")
-
-      let result = yesterdayDate.toBattleTimeString(shouldIncludeDate: true, currentTime: referenceDate)
-
-      let localizedYesterday: String = .init(localized: "Yesterday")
-      #expect(result.contains(localizedYesterday), "Should contain localized 'Yesterday' for yesterday's date")
+      #expect(date.toBattleTimeString(shouldIncludeDate: true, currentTime: reference) == time)
+      #expect(date.toSalmonTimeString(shouldIncludeDate: true, currentTime: reference) == day + time)
     }
 
+    /// Without a reference the current time is used. A fixture decades in the past is never
+    /// today, yesterday or tomorrow, so the result does not depend on when the test runs.
     @Test
-    func `Battle time string with date includes 'Tomorrow' for tomorrow's date`() throws {
-      // Use a fixed reference date
-      let referenceDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create reference date")
+    func `A missing reference time falls back to now`() throws {
+      let date: Date = try localDate(DateComponents(year: 2000, month: 1, day: 1, hour: 10, minute: 45))
+      let time: String = DateFormatter(ikaType: .time).string(from: date)
+      let day: String = DateFormatter(ikaType: .date).string(from: date)
 
-      let tomorrowDate = try #require(
-        Calendar.current.date(byAdding: .day, value: 1, to: referenceDate),
-        "Should be able to create tomorrow's date")
-
-      let result = tomorrowDate.toBattleTimeString(shouldIncludeDate: true, currentTime: referenceDate)
-
-      let localizedTomorrow: String = .init(localized: "Tomorrow")
-      #expect(result.contains(localizedTomorrow), "Should contain localized 'Tomorrow' for tomorrow's date")
-    }
-
-    @Test
-    func `Battle time string with distant date returns time only`() throws {
-      // Use a fixed reference date
-      let referenceDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create reference date")
-
-      // Test with a date that's definitely not today/yesterday/tomorrow relative to reference
-      let distantDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 30, hour: 10, minute: 45)),
-        "Should be able to create distant date")
-
-      let result = distantDate.toBattleTimeString(shouldIncludeDate: true, currentTime: referenceDate)
-
-      // Should not contain relative date localizations for distant dates
-      let localizedToday: String = .init(localized: "Today")
-      let localizedYesterday: String = .init(localized: "Yesterday")
-      let localizedTomorrow: String = .init(localized: "Tomorrow")
-
-      #expect(!result.contains(localizedToday), "Should not contain 'Today' for distant dates")
-      #expect(!result.contains(localizedYesterday), "Should not contain 'Yesterday' for distant dates")
-      #expect(!result.contains(localizedTomorrow), "Should not contain 'Tomorrow' for distant dates")
-    }
-
-    @Test
-    func `Battle time string format consistency across locales`() throws {
-      let testDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 14, minute: 30)),
-        "Should be able to create test date")
-
-      // Test without date inclusion first
-      let timeOnly = testDate.toBattleTimeString(shouldIncludeDate: false)
-      #expect(!timeOnly.isEmpty, "Time-only string should not be empty")
-
-      // Test with date inclusion
-      let withDate = testDate.toBattleTimeString(shouldIncludeDate: true)
-      #expect(withDate.count >= timeOnly.count, "String with date should be at least as long as time-only")
+      #expect(date.toBattleTimeString(shouldIncludeDate: true) == time)
+      #expect(date.toSalmonTimeString(shouldIncludeDate: true) == day + time)
     }
   }
 
-  // MARK: - Salmon Time String Tests
+  // MARK: - Countdown String Key Tests
 
-  @Suite("Salmon Time String")
-  struct SalmonTimeStringTests {
-    @Test
-    func `Salmon time string without date returns only time`() throws {
-      let testDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 14, minute: 30)),
-        "Should be able to create test date")
-      let result = testDate.toSalmonTimeString()
+  /// Keys are compared through `keyParts(_:)`, not `==` (see there for why).
+  @Suite("Time Remaining and Time Until String Keys")
+  struct CountdownStringKeyTests {
+    private let base: Date = .init(timeIntervalSince1970: 1_700_000_000)
 
-      // Should be relatively short (time only)
-      #expect(result.count < 20, "Time-only string should be relatively short")
-      #expect(!result.isEmpty, "Result should not be empty")
+    @Test(arguments: [-1.0, -59.5, -86400.0])
+    func `Past deadlines read Time's Up`(offset: TimeInterval) throws {
+      let deadline: Date = base.addingTimeInterval(offset)
+
+      let remaining = try keyParts(base.toTimeRemainingStringKey(until: deadline))
+      #expect(remaining.template == "Time's Up")
+      #expect(remaining.arguments.isEmpty)
+
+      let until = try keyParts(base.toTimeUntilStringKey(until: deadline))
+      #expect(until.template == "Time's Up")
+      #expect(until.arguments.isEmpty)
     }
 
-    @Test
-    func `Salmon time string with today's date includes 'Today'`() throws {
-      // Use a fixed reference date
-      let referenceDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create reference date")
+    /// The interval is truncated toward zero, so a deadline less than a second ago still
+    /// reads as a zero duration instead of "Time's Up".
+    @Test(arguments: [
+      (-0.5, DateComponents(day: 0, hour: 0, minute: 0, second: 0)),
+      (0.0, DateComponents(day: 0, hour: 0, minute: 0, second: 0)),
+      (59.9, DateComponents(day: 0, hour: 0, minute: 0, second: 59)),
+      (60.0, DateComponents(day: 0, hour: 0, minute: 1, second: 0)),
+      (3601.0, DateComponents(day: 0, hour: 1, minute: 0, second: 1)),
+      (86399.0, DateComponents(day: 0, hour: 23, minute: 59, second: 59)),
+      (86400.0, DateComponents(day: 1, hour: 0, minute: 0, second: 0)),
+      (90061.0, DateComponents(day: 1, hour: 1, minute: 1, second: 1)),
+      (1_000_000.0, DateComponents(day: 11, hour: 13, minute: 46, second: 40)),
+    ])
+    func `Future deadlines carry the exact breakdown`(offset: TimeInterval, breakdown: DateComponents) throws {
+      let deadline: Date = base.addingTimeInterval(offset)
+      let timeLength: TimeLength = .init(
+        days: breakdown.day ?? 0,
+        hours: breakdown.hour ?? 0,
+        minutes: breakdown.minute ?? 0,
+        seconds: breakdown.second ?? 0)
+      let duration: String = timeLength.localizedDescription()
 
-      // Create a date that is the same day as our reference
-      let todayDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 14, minute: 30)),
-        "Should be able to create today's date")
+      let remaining = try keyParts(base.toTimeRemainingStringKey(until: deadline))
+      #expect(remaining.template == "remaining %@")
+      #expect(remaining.arguments == [duration])
 
-      let result = todayDate.toSalmonTimeString(shouldIncludeDate: true, currentTime: referenceDate)
-
-      let localizedToday: String = .init(localized: "Today")
-      #expect(result.contains(localizedToday), "Should contain localized 'Today' for current date")
-    }
-
-    @Test
-    func `Salmon time string with yesterday's date includes 'Yesterday'`() throws {
-      // Use a fixed reference date
-      let referenceDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create reference date")
-
-      let yesterdayDate = try #require(
-        Calendar.current.date(byAdding: .day, value: -1, to: referenceDate),
-        "Should be able to create yesterday's date")
-
-      let result = yesterdayDate.toSalmonTimeString(shouldIncludeDate: true, currentTime: referenceDate)
-
-      let localizedYesterday: String = .init(localized: "Yesterday")
-      #expect(result.contains(localizedYesterday), "Should contain localized 'Yesterday' for yesterday's date")
-    }
-
-    @Test
-    func `Salmon time string with tomorrow's date includes 'Tomorrow'`() throws {
-      // Use a fixed reference date
-      let referenceDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create reference date")
-
-      let tomorrowDate = try #require(
-        Calendar.current.date(byAdding: .day, value: 1, to: referenceDate),
-        "Should be able to create tomorrow's date")
-
-      let result = tomorrowDate.toSalmonTimeString(shouldIncludeDate: true, currentTime: referenceDate)
-
-      let localizedTomorrow: String = .init(localized: "Tomorrow")
-      #expect(result.contains(localizedTomorrow), "Should contain localized 'Tomorrow' for tomorrow's date")
-    }
-
-    @Test
-    func `Salmon time string with distant date includes full date`() throws {
-      // Use a fixed reference date
-      let referenceDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create reference date")
-
-      // Test with a date that's definitely not today/yesterday/tomorrow relative to reference
-      let distantDate = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 30, hour: 10, minute: 45)),
-        "Should be able to create distant date")
-
-      let result = distantDate.toSalmonTimeString(shouldIncludeDate: true, currentTime: referenceDate)
-
-      // Should not contain relative date localizations for distant dates
-      let localizedToday: String = .init(localized: "Today")
-      let localizedYesterday: String = .init(localized: "Yesterday")
-      let localizedTomorrow: String = .init(localized: "Tomorrow")
-
-      #expect(!result.contains(localizedToday), "Should not contain 'Today' for distant dates")
-      #expect(!result.contains(localizedYesterday), "Should not contain 'Yesterday' for distant dates")
-      #expect(!result.contains(localizedTomorrow), "Should not contain 'Tomorrow' for distant dates")
-
-      // Should contain some form of date information
-      #expect(result.count > 10, "Should include full date information for distant dates")
+      let until = try keyParts(base.toTimeUntilStringKey(until: deadline))
+      #expect(until.template == "%@ until")
+      #expect(until.arguments == [duration])
     }
   }
+}
 
-  // MARK: - Time Remaining String Key Tests
+// MARK: - Helpers
 
-  @Suite("Time Remaining String Key")
-  struct TimeRemainingStringKeyTests {
-    @Test
-    func `Time remaining with past deadline returning 'Time's Up' key`() throws {
-      let baseTime = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create base time")
+/// A wall-clock time in the runner's own time zone on a Gregorian calendar: the same instant
+/// that `Calendar.current` and a default-zone `DateFormatter` see, whatever the runner's zone.
+private func localDate(_ components: DateComponents) throws -> Date {
+  var calendar: Calendar = .init(identifier: .gregorian)
+  calendar.timeZone = .current
+  return try #require(calendar.date(from: components))
+}
 
-      let pastResult = baseTime.toTimeRemainingStringKey(until: baseTime.addingTimeInterval(-1))
-      let pastResult2 = baseTime.toTimeRemainingStringKey(until: baseTime.addingTimeInterval(-999))
-
-      #expect(pastResult == LocalizedStringKey("Time's Up"), "Past deadline should return 'Time's Up' key")
-      #expect(pastResult2 == LocalizedStringKey("Time's Up"), "Past deadline should return 'Time's Up' key")
-    }
-
-    @Test
-    func `Time remaining with different future deadlines produces different keys`() throws {
-      let baseTime = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create base time")
-
-      let testDurations: [TimeInterval] = [
-        60, // 1 minute
-        3600, // 1 hour
-        86400, // 1 day
-        90061, // 1 day, 1 hour, 1 minute, 1 second
-      ]
-
-      var results: [LocalizedStringKey] = []
-      for duration in testDurations {
-        let futureTime = baseTime.addingTimeInterval(duration)
-        let result = baseTime.toTimeRemainingStringKey(until: futureTime)
-        results.append(result)
-      }
-
-      // Each different duration should produce a different key
-      for i in 0 ..< results.count {
-        for j in (i + 1) ..< results.count {
-          #expect(results[i] != results[j], "Different durations should produce different LocalizedStringKeys")
-        }
-      }
-    }
+/// The template and String arguments of a `LocalizedStringKey`.
+///
+/// `LocalizedStringKey ==` compares interpolated String arguments by storage rather than by
+/// value: two keys interpolating equal heap-allocated strings compare unequal, so `==` would
+/// make these tests pass or fail by string length. Reflection reads the actual parts.
+private func keyParts(_ key: LocalizedStringKey) throws -> (template: String, arguments: [String]) {
+  let mirror: Mirror = .init(reflecting: key)
+  let template = try #require(mirror.descendant("key") as? String)
+  let arguments = try #require(mirror.descendant("arguments") as? [Any])
+  let strings: [String] = try arguments.map { argument in
+    try #require(Mirror(reflecting: argument).descendant("storage", "value", ".0") as? String)
   }
-
-  // MARK: - Time Until String Key Tests
-
-  @Suite("Time Until String Key")
-  struct TimeUntilStringKeyTests {
-    @Test
-    func `Time until with past start time returning 'Time's Up' key`() throws {
-      let baseTime = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create base time")
-
-      let pastResult = baseTime.toTimeUntilStringKey(until: baseTime.addingTimeInterval(-1))
-      let pastResult2 = baseTime.toTimeUntilStringKey(until: baseTime.addingTimeInterval(-999))
-
-      #expect(pastResult == LocalizedStringKey("Time's Up"), "Past start time should return 'Time's Up' key")
-      #expect(pastResult2 == LocalizedStringKey("Time's Up"), "Past start time should return 'Time's Up' key")
-    }
-
-    @Test
-    func `Time until with different future start times produces different keys`() throws {
-      let baseTime = try #require(
-        Calendar.current.date(from: DateComponents(year: 2023, month: 12, day: 25, hour: 12, minute: 0)),
-        "Should be able to create base time")
-
-      let testDurations: [TimeInterval] = [
-        60, // 1 minute
-        3600, // 1 hour
-        86400, // 1 day
-        90061, // 1 day, 1 hour, 1 minute, 1 second
-      ]
-
-      var results: [LocalizedStringKey] = []
-      for duration in testDurations {
-        let futureTime = baseTime.addingTimeInterval(duration)
-        let result = baseTime.toTimeUntilStringKey(until: futureTime)
-        results.append(result)
-      }
-
-      // Each different duration should produce a different key
-      for i in 0 ..< results.count {
-        for j in (i + 1) ..< results.count {
-          #expect(results[i] != results[j], "Different durations should produce different LocalizedStringKeys")
-        }
-      }
-    }
-  }
+  return (template, strings)
 }
