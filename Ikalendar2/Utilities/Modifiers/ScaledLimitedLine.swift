@@ -7,6 +7,20 @@
 
 import SwiftUI
 
+// MARK: - ScaledLimitedLine
+
+/// Caps text to a line limit and lets it shrink to fit instead of truncating.
+struct ScaledLimitedLine: ViewModifier {
+  let lineLimit: Int
+  let minScaleFactor: CGFloat
+
+  func body(content: Content) -> some View {
+    content
+      .lineLimit(lineLimit)
+      .minimumScaleFactor(minScaleFactor)
+  }
+}
+
 extension View {
   /// Caps text at `lineLimit` lines and shrinks it (down to `minScaleFactor`) instead of truncating.
   ///
@@ -23,19 +37,5 @@ extension View {
       ScaledLimitedLine(
         lineLimit: lineLimit,
         minScaleFactor: minScaleFactor))
-  }
-}
-
-// MARK: - ScaledLimitedLine
-
-/// Caps text to a line limit and lets it shrink to fit instead of truncating.
-struct ScaledLimitedLine: ViewModifier {
-  var lineLimit: Int
-  var minScaleFactor: CGFloat
-
-  func body(content: Content) -> some View {
-    content
-      .lineLimit(lineLimit)
-      .minimumScaleFactor(minScaleFactor)
   }
 }

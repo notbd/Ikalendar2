@@ -24,7 +24,7 @@ struct AutoLoadingOverlay: View {
           Image(systemName: iconName)
             .symbolEffect(
               .rotate.byLayer,
-              options: .repeat(.periodic(delay: 0.2)),
+              options: .repeat(.periodic(delay: Scoped.loadingSymbolRepeatDelay)),
               isActive: ikaCatalog.autoLoadStatus == .autoLoading)
             .contentTransition(.symbolEffect(.replace.magic(fallback: .replace.byLayer)))
             .font(Scoped.symbolFont)

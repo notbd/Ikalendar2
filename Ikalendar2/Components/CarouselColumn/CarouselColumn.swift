@@ -69,7 +69,7 @@ struct CarouselColumn: View {
                 startPoint: .top,
                 endPoint: .bottom))
             .contentMargins(
-              .vertical, 20,
+              .vertical, Scoped.scrollIndicatorMarginV,
               for: .scrollIndicators)
         }
 

@@ -22,7 +22,7 @@ struct SettingsAdvancedOptionsView: View {
   @State private var battleRotationPreviewData: BattleRotation = IkaMockData.makeBattleRotation()
   @State private var salmonRotationPreviewData: SalmonRotation = IkaMockData.makeSalmonRotation()
 
-  @State private var rowWidth: CGFloat = 390
+  @State private var rowWidth: CGFloat = Scoped.previewCellMaxWidth
 
   private var needsPaddedPreview: Bool {
     !isHorizontalCompact && rowWidth > Scoped.previewCellMaxWidth
@@ -129,7 +129,7 @@ struct SettingsAdvancedOptionsView: View {
           .frame(maxWidth: Scoped.previewCellMaxWidth)
           .padding()
           .background(Color.systemGroupedBackground)
-          .clipShape(.rect(cornerRadius: 28, style: .continuous))
+          .clipShape(.rect(cornerRadius: Scoped.previewCellCornerRadius, style: .continuous))
       }
       .hAlignment(.center)
   }
@@ -143,7 +143,7 @@ struct SettingsAdvancedOptionsView: View {
           .frame(maxWidth: Scoped.previewCellMaxWidth)
           .padding()
           .background(Color.systemGroupedBackground)
-          .clipShape(.rect(cornerRadius: 28, style: .continuous))
+          .clipShape(.rect(cornerRadius: Scoped.previewCellCornerRadius, style: .continuous))
       }
       .hAlignment(.center)
   }

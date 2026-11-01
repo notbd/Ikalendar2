@@ -12,6 +12,8 @@ import SwiftUI
 
 /// The iPad layout: every mode side by side in a scrolling carousel.
 struct RotationsCarouselView: View {
+  typealias Scoped = Constants.Style.Carousel
+
   @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaPreference.self) private var ikaPreference
 
@@ -20,7 +22,7 @@ struct RotationsCarouselView: View {
 
   @State private var windowWidth: CGFloat = .zero
 
-  private var isWindowWide: Bool { isLandscape && windowWidth >= 1024 }
+  private var isWindowWide: Bool { isLandscape && windowWidth >= Scoped.allColumnsMinWidth }
 
   var body: some View {
     NavigationStack {

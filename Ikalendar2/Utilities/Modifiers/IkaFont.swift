@@ -14,6 +14,23 @@ enum IkaFont: String {
   case ika2 = "Splatfont2-Regular"
 }
 
+// MARK: - IkaFontTextStyle
+
+struct IkaFontTextStyle: ViewModifier {
+  let ikaFont: IkaFont
+  let size: CGFloat
+  let textStyle: Font.TextStyle
+
+  func body(content: Content) -> some View {
+    content
+      .font(
+        .custom(
+          ikaFont.rawValue,
+          size: size,
+          relativeTo: textStyle))
+  }
+}
+
 extension View {
   /// Applies one of the two Splatoon fonts at `size`, scaling with Dynamic Type relative to `textStyle`.
   ///
@@ -33,22 +50,5 @@ extension View {
         ikaFont: ikaFont,
         size: size,
         textStyle: textStyle))
-  }
-}
-
-// MARK: - IkaFontTextStyle
-
-struct IkaFontTextStyle: ViewModifier {
-  var ikaFont: IkaFont
-  var size: CGFloat
-  var textStyle: Font.TextStyle
-
-  func body(content: Content) -> some View {
-    content
-      .font(
-        .custom(
-          ikaFont.rawValue,
-          size: size,
-          relativeTo: textStyle))
   }
 }

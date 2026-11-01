@@ -135,11 +135,7 @@ enum IkaMockData {
     -> BattleRotation
   {
     let startTime = rawStartTime.removeMinutes()!
-    let endTime =
-      Calendar.current.date(
-        byAdding: .hour,
-        value: 2,
-        to: startTime)!
+    let endTime = startTime.addingTimeInterval(BattleRotation.rotationLength)
 
     func makeRandomBattleStage() -> BattleStage {
       var stage = BattleStage.allCases.randomElement()!

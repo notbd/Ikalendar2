@@ -387,16 +387,19 @@ struct SettingsAltAppIconView: View {
         Text("Tap Me :)")
       }
     }
-    .foregroundStyle(
-      Color.accentColor
-        .opacity(
-          ikaDiscoveryLog.hasDiscoveredEasterEgg
-            ? 1
-            : colorScheme == .light
-              ? 0.07
-              : horizontalSizeClass == .compact
-                ? 0.07
-                : 0.03))
+    .foregroundStyle(Color.accentColor.opacity(easterEggTriggerOpacity))
+  }
+
+  private var easterEggTriggerOpacity: Double {
+    if ikaDiscoveryLog.hasDiscoveredEasterEgg { return 1 }
+
+    return switch (colorScheme, horizontalSizeClass) {
+      case (.light, _),
+           (_, .compact):
+        ScopedStyle.hintOpacityCompact
+      default:
+        ScopedStyle.hintOpacityRegular
+    }
   }
 }
 

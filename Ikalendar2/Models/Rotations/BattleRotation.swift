@@ -65,9 +65,12 @@ extension BattleRotation {
 }
 
 extension BattleRotation {
+  /// How long a battle rotation lasts.
+  static let rotationLength: TimeInterval = 2 * 60 * 60
+
   /// Determines whether the rotation is coming up next.
   func isNext(_ currentTime: Date) -> Bool {
-    let twoHoursLater = currentTime.addingTimeInterval(2 * 60 * 60)
+    let twoHoursLater = currentTime.addingTimeInterval(Self.rotationLength)
     return startTime < twoHoursLater && twoHoursLater < endTime
   }
 }

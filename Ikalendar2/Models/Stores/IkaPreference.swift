@@ -7,7 +7,7 @@
 
 import OSLog
 import SimpleHaptics
-import SwiftUI
+import UIKit
 
 // MARK: - IkaPreference
 

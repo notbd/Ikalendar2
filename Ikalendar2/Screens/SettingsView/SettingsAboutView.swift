@@ -421,7 +421,7 @@ struct SettingsAboutView: View {
         .saturation(0.6)
         .frame(height: littleBuddyHeight)
         .padding(.vertical)
-        .padding(.trailing, 10)
+        .padding(.trailing, Scoped.littleBuddyPaddingTrailing)
         .accessibilityHidden(true)
 
       Text(Constants.Key.Slogan.ikalendar3.localizedStringKey)

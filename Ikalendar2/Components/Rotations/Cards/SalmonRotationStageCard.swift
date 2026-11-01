@@ -16,12 +16,12 @@ struct SalmonRotationStageCard: View {
   @Environment(IkaPreference.self) private var ikaPreference
   @Environment(IkaClock.self) private var ikaClock
 
-  @State private var cardWidth: CGFloat = 150
+  @State private var cardWidth: CGFloat = Scoped.initialCardWidth
 
   let rotation: SalmonRotation
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
-  private var shouldOverrideWithLarge: Bool { cardWidth >= 200 }
+  private var shouldOverrideWithLarge: Bool { cardWidth >= Scoped.largeImageMinWidth }
   private var isRewardApparelVisible: Bool { rotation.isCurrent(ikaClock.currentTime) && hasRewardApparel }
 
   private var stageImageName: String {

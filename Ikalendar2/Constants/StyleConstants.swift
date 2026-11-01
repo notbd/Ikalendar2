@@ -20,6 +20,9 @@ extension Constants.Style {
   }
 
   enum Carousel {
+    /// The window width from which iPad landscape shows every column at once.
+    static let allColumnsMinWidth: CGFloat = 1024
+
     enum Column {
       static let listOffsetVFactorPortrait: CGFloat = 0.1
       static let listOffsetVFactorLandscape: CGFloat = 0.12
@@ -27,6 +30,8 @@ extension Constants.Style {
 
       static let maskGradientDensityPortrait: Int = 32
       static let maskGradientDensityLandscape: Int = 30
+
+      static let scrollIndicatorMarginV: CGFloat = 20
     }
   }
 
@@ -39,6 +44,7 @@ extension Constants.Style {
       static let subtitlePaddingH: CGFloat = 10
       static let frameSide: CGFloat = 44
       static let frameCornerRadius: CGFloat = 14
+      static let loadingSymbolRepeatDelay: TimeInterval = 0.2
 
       static let loadingSFSymbol = "arrow.trianglehead.2.clockwise.rotate.90.icloud.fill"
       static let loadedSuccessSFSymbol = "checkmark.circle.fill"
@@ -82,6 +88,11 @@ extension Constants.Style {
     enum AltAppIcon {
       static let modalDimmingLayerOpacity: CGFloat = 0.35
 
+      /// Opacity of the hidden "Tap Me :)" trigger before the egg is discovered: faint on light
+      /// mode and compact width, fainter on dark mode at regular width.
+      static let hintOpacityCompact: Double = 0.07
+      static let hintOpacityRegular: Double = 0.03
+
       static let safeAreaBarGlassEffectSpacing: CGFloat = 8
       static let safeAreaBarDefaultFont: Font = .headline
       static let colorVariantPickerFont: Font = .system(.title3, design: .rounded, weight: .medium)
@@ -115,6 +126,7 @@ extension Constants.Style {
       static let altStagePreviewShuffleSFSymbol = "arrow.triangle.2.circlepath"
 
       static let previewCellMaxWidth: CGFloat = 390
+      static let previewCellCornerRadius: CGFloat = 28
     }
 
     enum About {
@@ -140,6 +152,7 @@ extension Constants.Style {
       static let debugOptionsSFSymbol = "hammer"
 
       static let littleBuddyHeight: CGFloat = 36
+      static let littleBuddyPaddingTrailing: CGFloat = 10
       static let sloganIkalendar3FontSize: CGFloat = 13
     }
 
@@ -280,6 +293,11 @@ extension Constants.Style {
       enum Card {
         enum Stage {
           static let stageImageCornerRadius: CGFloat = 12
+
+          /// The card width before its first layout pass, and the width from which the larger
+          /// stage image is used.
+          static let initialCardWidth: CGFloat = 150
+          static let largeImageMinWidth: CGFloat = 200
 
           static let labelFontSize: CGFloat = 13
           static let overlayPadding: CGFloat = 4

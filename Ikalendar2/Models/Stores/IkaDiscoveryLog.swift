@@ -5,7 +5,7 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-import SwiftUI
+import Foundation
 
 /// An observable data store shared across views, recording which app features
 /// the user has already discovered (onboarding, rating, alt icons, easter egg).
