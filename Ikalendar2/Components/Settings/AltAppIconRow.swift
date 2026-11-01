@@ -90,10 +90,13 @@ struct AltAppIconEasterEggRow: View {
 
   @Binding var buttonPressCounter: Int
 
+  /// The pending delayed jump, owned by the row so leaving the page cancels it.
+  @State private var jumpToURLTask: Task<Void, Never>?
+
   var body: some View {
     Button {
       // jump to the good stuff (first discovery only)
-      if !ikaDiscoveryLog.hasDiscoveredEasterEgg { Task { await jumpToURLAfterDelay() } }
+      if !ikaDiscoveryLog.hasDiscoveredEasterEgg { jumpToURLTask = Task { await jumpToURLAfterDelay() } }
       if !ikaDiscoveryLog.hasDiscoveredEasterEgg { ikaDiscoveryLog.hasDiscoveredEasterEgg = true }
       // compensatory haptics for repeated presses
       if ikaPreference.preferredAppIcon == .rick { SimpleHaptics.generateTask(.medium) }
@@ -101,6 +104,7 @@ struct AltAppIconEasterEggRow: View {
       setAltAppIcon(ikaAppIcon)
     }
     label: { rowContent }
+    .onDisappear { jumpToURLTask?.cancel() }
   }
 
   private var rowContent: some View {
@@ -150,6 +154,8 @@ struct AltAppIconEasterEggRow: View {
 
   private func jumpToURLAfterDelay() async {
     try? await Task.sleep(for: .seconds(Constants.Config.Settings.AltAppIcon.easterEggJumpDelay))
+    guard !Task.isCancelled else { return }
+
     let goodStuffURLString = connectivityChecker.isGFWed
       ? Constants.Key.URLs.theGoodStuffCN
       : Constants.Key.URLs.theGoodStuff
