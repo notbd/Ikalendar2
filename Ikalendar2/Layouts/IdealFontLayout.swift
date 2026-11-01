@@ -34,8 +34,8 @@ struct IdealFontLayout: Layout {
     cache _: inout ())
     -> CGSize
   {
-    let minIdealSize = minIdealSize(subviews: subviews, proposal: proposal)
-    let maxIdealSize = maxIdealSize(subviews: subviews, proposal: proposal)
+    let minIdealSize = subviews.minIdealSize(for: proposal)
+    let maxIdealSize = subviews.maxIdealSize(for: proposal)
 
     return CGSize(
       width: maxIdealSize.width,
@@ -48,8 +48,8 @@ struct IdealFontLayout: Layout {
     subviews: Subviews,
     cache _: inout ())
   {
-    let minIdealSize = minIdealSize(subviews: subviews, proposal: proposal)
-    let maxIdealSize = maxIdealSize(subviews: subviews, proposal: proposal)
+    let minIdealSize = subviews.minIdealSize(for: proposal)
+    let maxIdealSize = subviews.maxIdealSize(for: proposal)
 
     let contentWidth = maxIdealSize.width
     let contentHeight = minIdealSize.height
@@ -113,37 +113,6 @@ struct IdealFontLayout: Layout {
           anchor: .center,
           proposal: ProposedViewSize(width: 0, height: 0))
       }
-    }
-  }
-
-  private func minIdealSize(
-    subviews: Subviews,
-    proposal: ProposedViewSize)
-    -> CGSize
-  {
-    let subviewSizes = subviews.map { $0.sizeThatFits(proposal) }
-    return subviewSizes.reduce(
-      CGSize(
-        width: CGFloat.infinity,
-        height: CGFloat.infinity))
-    { currentMin, nextSize in
-      CGSize(
-        width: min(currentMin.width, nextSize.width),
-        height: min(currentMin.height, nextSize.height))
-    }
-  }
-
-  private func maxIdealSize(
-    subviews: Subviews,
-    proposal: ProposedViewSize)
-    -> CGSize
-  {
-    let subviewSizes = subviews.map { $0.sizeThatFits(proposal) }
-    return subviewSizes.reduce(.zero)
-    { currentMax, nextSize in
-      CGSize(
-        width: max(currentMax.width, nextSize.width),
-        height: max(currentMax.height, nextSize.height))
     }
   }
 }

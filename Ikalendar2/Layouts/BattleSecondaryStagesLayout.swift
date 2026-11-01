@@ -31,11 +31,11 @@ struct BattleSecondaryStagesLayout: Layout {
     guard let proposalWidth = proposal.width else { return .zero }
     guard subviews.count == 2 else { return .zero }
 
-    let hSpacings = horizontalSpacings(subviews: subviews)
+    let hSpacings = subviews.horizontalSpacings
     let subviewProposal: ProposedViewSize = .init(
       width: (proposalWidth - hSpacings[0]) * (1 / 2),
       height: proposal.height)
-    let minIdealSize = minIdealSize(subviews: subviews, proposal: subviewProposal)
+    let minIdealSize = subviews.minIdealSize(for: subviewProposal)
 
     return CGSize(
       width: proposalWidth,
@@ -51,11 +51,11 @@ struct BattleSecondaryStagesLayout: Layout {
     guard let proposalWidth = proposal.width else { return }
     guard subviews.count == 2 else { return }
 
-    let hSpacings = horizontalSpacings(subviews: subviews)
+    let hSpacings = subviews.horizontalSpacings
     let subviewProposal: ProposedViewSize = .init(
       width: (proposalWidth - hSpacings[0]) * (1 / 2),
       height: proposal.height)
-    let minIdealSize = minIdealSize(subviews: subviews, proposal: subviewProposal)
+    let minIdealSize = subviews.minIdealSize(for: subviewProposal)
 
     let stageWidth = minIdealSize.width
     let stageHeight = minIdealSize.height
@@ -85,31 +85,5 @@ struct BattleSecondaryStagesLayout: Layout {
         y: stageBCenterY),
       anchor: .center,
       proposal: stageSizeProposal)
-  }
-
-  private func horizontalSpacings(subviews: Subviews) -> [CGFloat] {
-    subviews.indices.map { index in
-      guard index < subviews.count - 1 else { return 0 }
-
-      return
-        subviews[index]
-          .spacing
-          .distance(
-            to: subviews[index + 1].spacing,
-            along: .horizontal)
-    }
-  }
-
-  private func minIdealSize(subviews: Subviews, proposal: ProposedViewSize) -> CGSize {
-    let subviewSizes = subviews.map { $0.sizeThatFits(proposal) }
-    return subviewSizes.reduce(
-      CGSize(
-        width: CGFloat.infinity,
-        height: CGFloat.infinity))
-    { currentMin, nextSize in
-      CGSize(
-        width: min(currentMin.width, nextSize.width),
-        height: min(currentMin.height, nextSize.height))
-    }
   }
 }
