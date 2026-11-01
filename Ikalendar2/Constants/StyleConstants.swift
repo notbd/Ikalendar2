@@ -107,8 +107,6 @@ extension Constants.Style {
       enum Row {
         static let spacingH: CGFloat = 16
 
-        static let crossFadeAnimation: Animation = .spring(response: 1.4, dampingFraction: 1.0, blendDuration: 0.5)
-
         static let displayNameColor: Color = .primary
 
         static let activeIndicatorSFSymbol = "checkmark.circle.fill"

@@ -87,9 +87,6 @@ private struct SquashBounce: ViewModifier {
   }
 }
 
-/// Small lag so the bounce haptic lands on the squash, not the tap.
-private let bounceHapticDelay: TimeInterval = 0.1
-
 extension View {
   /// Plays the squash-and-stretch bounce on every change of `trigger`.
   func squashBounce(trigger: Int, amplitude: SquashBounceValues.Amplitude) -> some View {
@@ -104,7 +101,7 @@ extension View {
     onChange(of: trigger, initial: false) {
       // Short-lived by design: delays the haptic onto the squash frame.
       Task {
-        try? await Task.sleep(for: .seconds(bounceHapticDelay))
+        try? await Task.sleep(for: .seconds(Constants.Motion.bounceHapticDelay))
         await SimpleHaptics.generate(.light)
       }
     }

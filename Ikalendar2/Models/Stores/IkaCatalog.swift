@@ -39,7 +39,7 @@ final class IkaCatalog {
       loadTimeout: Scoped.loadTimeout,
       loadStatusLoadedDelay: Scoped.loadStatusLoadedDelay,
       loadStatusErrorDelay: Scoped.loadStatusErrorDelay,
-      autoLoadCheckInterval: Constants.Config.Timer.autoLoadCheckSignalInterval,
+      autoLoadCheckInterval: Scoped.autoLoadCheckInterval,
       autoLoadAttemptInterval: Scoped.autoLoadAttemptInterval,
       autoLoadBattleMaxAttempts: Scoped.autoLoadBattleMaxAttempts,
       autoLoadSalmonMaxAttempts: Scoped.autoLoadSalmonMaxAttempts,

@@ -28,9 +28,6 @@ struct SettingsAboutView: View {
 
   @State private var shouldDisplayAnimatedCopy: Bool = false
 
-  /// How long the unclipped overlay copy stays after a bounce (covers the longest keyframe track).
-  static private let animatedCopyLinger: TimeInterval = 1.6
-
   var body: some View {
     ZStack {
       List {
@@ -89,7 +86,7 @@ struct SettingsAboutView: View {
       guard appIconBounceCounter > 0 else { return }
 
       shouldDisplayAnimatedCopy = true
-      try? await Task.sleep(for: .seconds(Self.animatedCopyLinger))
+      try? await Task.sleep(for: .seconds(Constants.Motion.aboutIconCopyLinger))
       guard !Task.isCancelled else { return }
 
       shouldDisplayAnimatedCopy = false

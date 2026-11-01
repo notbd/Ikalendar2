@@ -73,7 +73,7 @@ struct SettingsAltAppIconView: View {
   /// Rounded, not floored: a fractional step length must not lose the last step to
   /// floating-point error (e.g. 119.999... -> 119), which would shorten the cycle.
   private var slideShowStepCount: Int {
-    Int((ScopedConfig.slideShowInterval / ScopedConfig.slideShowIntervalStepLength).rounded())
+    Int((Constants.Motion.slideShowCycle / ScopedConfig.slideShowIntervalStepLength).rounded())
   }
 
   // MARK: Slide Show Transitions
@@ -211,7 +211,7 @@ struct SettingsAltAppIconView: View {
       guard easterEggBounceCounter > 0 else { return }
 
       shouldDisplayAnimatedCopy = true
-      try? await Task.sleep(for: .seconds(ScopedConfig.animatedCopyLingerLength))
+      try? await Task.sleep(for: .seconds(Constants.Motion.easterEggCopyLinger))
       guard !Task.isCancelled else { return }
 
       shouldDisplayAnimatedCopy = false
@@ -273,7 +273,7 @@ struct SettingsAltAppIconView: View {
       .onTapGesture {
         SimpleHaptics.generateTask(.selection)
         // Not inside withAnimation: an implicit animation here would fight the icon's own
-        // cross-fade (AltAppIcon.Row.crossFadeAnimation).
+        // cross-fade (Constants.Motion.appIconCrossFade).
         activeAppIconColorVariant = activeAppIconColorVariant.next
 
         withAnimation(.snappy) {
@@ -367,7 +367,7 @@ struct SettingsAltAppIconView: View {
   }
 
   private func jumpToGoodStuffAfterDelay() async {
-    try? await Task.sleep(for: .seconds(ScopedConfig.easterEggJumpDelay))
+    try? await Task.sleep(for: .seconds(Constants.Motion.easterEggJumpDelay))
     guard !Task.isCancelled else { return }
 
     let goodStuffURLString = connectivityChecker.isGFWed

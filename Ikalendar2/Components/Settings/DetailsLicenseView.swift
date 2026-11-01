@@ -46,7 +46,7 @@ struct DetailsLicenseView: View {
     }
     .task {
       // Cancelled with the view: dismissing the screen drops the request.
-      try? await Task.sleep(for: .seconds(Constants.Config.License.licenseLoadedDelay))
+      try? await Task.sleep(for: .seconds(Constants.Motion.licenseLoadDelay))
       guard !Task.isCancelled else { return }
 
       do {

@@ -28,7 +28,7 @@ enum IkaColorSchemeManager {
 
     UIView.transition(
       with: keyWindow,
-      duration: 0.25,
+      duration: Constants.Motion.colorSchemeCrossDissolve,
       options: .transitionCrossDissolve,
       animations: {
         switch preferredColorScheme {

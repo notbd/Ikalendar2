@@ -39,7 +39,7 @@ struct BattleRotationList: View {
       // leaves the start times unchanged and does not animate, while a rotation rolling off or
       // arriving does.
       .animation(
-        .bouncy,
+        Constants.Motion.listReflow,
         value: rotations.map { $0.startTime })
       .disabled(ikaCatalog.loadStatus != .loaded)
     }

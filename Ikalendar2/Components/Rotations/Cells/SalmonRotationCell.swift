@@ -60,7 +60,7 @@ struct SalmonRotationCell: View {
       label: {
         Text(ikaClock.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
           .contentTransition(.numericText(countsDown: true))
-          .animation(.snappy, value: ikaClock.currentTime)
+          .animation(Constants.Motion.countdownRoll, value: ikaClock.currentTime)
           .scaledLimitedLine()
           .ikaFont(
             .ika2,

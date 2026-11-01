@@ -26,7 +26,7 @@ private struct IconNudge: ViewModifier {
         guard isActive else { return }
 
         while !Task.isCancelled {
-          try? await Task.sleep(for: .seconds(interval), tolerance: .seconds(0.1))
+          try? await Task.sleep(for: .seconds(interval), tolerance: .seconds(Constants.Motion.timerTolerance))
           guard !Task.isCancelled else { return }
 
           trigger += 1
@@ -39,7 +39,7 @@ extension View {
   /// Wiggles the symbol every `interval` seconds while `isActive` is true.
   func iconNudge(
     isActive: Bool,
-    interval: TimeInterval = Constants.Config.Timer.nudgeSignalInterval)
+    interval: TimeInterval = Constants.Motion.nudgeInterval)
     -> some View
   {
     modifier(IconNudge(isActive: isActive, interval: interval))

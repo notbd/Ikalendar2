@@ -69,6 +69,7 @@
 		799235B02AB394D30071AA72 /* BattleSecondaryStagesLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799235AF2AB394D30071AA72 /* BattleSecondaryStagesLayout.swift */; };
 		7992CB742ABD564F0088C974 /* IkaDiscoveryLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7992CB732ABD564F0088C974 /* IkaDiscoveryLog.swift */; };
 		79A7258F2A5E9367007E9C92 /* ConfigConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */; };
+		24C632C5E264B5E3FDF7378C /* MotionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B726888D702F277DCBC29B /* MotionConstants.swift */; };
 		79AA713028C404FD00A91055 /* IkaPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA712F28C404FD00A91055 /* IkaPreference.swift */; };
 		79AA713228C4052300A91055 /* IkaCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713128C4052300A91055 /* IkaCatalog.swift */; };
 		79AA713428C4056700A91055 /* IkaClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA713328C4056700A91055 /* IkaClock.swift */; };
@@ -213,6 +214,7 @@
 		799235AF2AB394D30071AA72 /* BattleSecondaryStagesLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSecondaryStagesLayout.swift; sourceTree = "<group>"; };
 		7992CB732ABD564F0088C974 /* IkaDiscoveryLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaDiscoveryLog.swift; sourceTree = "<group>"; };
 		79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigConstants.swift; sourceTree = "<group>"; };
+		42B726888D702F277DCBC29B /* MotionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionConstants.swift; sourceTree = "<group>"; };
 		79AA712F28C404FD00A91055 /* IkaPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaPreference.swift; sourceTree = "<group>"; };
 		79AA713128C4052300A91055 /* IkaCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaCatalog.swift; sourceTree = "<group>"; };
 		79AA713328C4056700A91055 /* IkaClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkaClock.swift; sourceTree = "<group>"; };
@@ -665,6 +667,7 @@
 				79C1485B28C42CDE00587C6E /* StyleConstants.swift */,
 				79C1485928C42A3B00587C6E /* KeyConstants.swift */,
 				79A7258E2A5E9367007E9C92 /* ConfigConstants.swift */,
+				42B726888D702F277DCBC29B /* MotionConstants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1028,6 +1031,7 @@
 				7943DFC32AB5398D0047250E /* SalmonRotationList.swift in Sources */,
 				7903FE8B28C46F7A00245586 /* SalmonRotationWeaponsCard.swift in Sources */,
 				79A7258F2A5E9367007E9C92 /* ConfigConstants.swift in Sources */,
+				24C632C5E264B5E3FDF7378C /* MotionConstants.swift in Sources */,
 				7903FE8328C46F2200245586 /* BattleRotationCell.swift in Sources */,
 				6163C16F2EB0072700E47B4C /* FlatMode.swift in Sources */,
 				7939EC182AC5133900AC48C4 /* SettingsEntryView.swift in Sources */,

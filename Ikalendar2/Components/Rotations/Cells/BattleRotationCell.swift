@@ -189,7 +189,7 @@ struct BattleRotationCellPrimary: View {
   private var remainingTimeSection: some View {
     Text(ikaClock.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
       .contentTransition(.numericText(countsDown: true))
-      .animation(.snappy, value: ikaClock.currentTime)
+      .animation(Constants.Motion.countdownRoll, value: ikaClock.currentTime)
       .scaledLimitedLine()
       .foregroundStyle(Color.secondary)
       .ikaFont(

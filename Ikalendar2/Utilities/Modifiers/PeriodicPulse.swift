@@ -32,7 +32,7 @@ private struct PeriodicPulse: ViewModifier {
         trigger += 1
 
         while !Task.isCancelled {
-          try? await Task.sleep(for: .seconds(interval), tolerance: .seconds(0.1))
+          try? await Task.sleep(for: .seconds(interval), tolerance: .seconds(Constants.Motion.timerTolerance))
           guard !Task.isCancelled else { return }
 
           trigger += 1
@@ -44,8 +44,8 @@ private struct PeriodicPulse: ViewModifier {
 extension View {
   /// Pulses the content red every `interval` seconds while it is on screen.
   func periodicPulse(
-    every interval: TimeInterval = Constants.Config.Timer.pulseSignalInterval,
-    animation: Animation = .spring(duration: 1.2))
+    every interval: TimeInterval = Constants.Motion.pulseInterval,
+    animation: Animation = Constants.Motion.pulse)
     -> some View
   {
     modifier(PeriodicPulse(interval: interval, animation: animation))

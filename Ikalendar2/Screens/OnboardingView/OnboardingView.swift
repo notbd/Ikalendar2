@@ -165,9 +165,9 @@ struct OnboardingView: View {
     } animation: { phase in
       switch phase {
         case 1:
-          .bouncy(duration: 0.4, extraBounce: 0.2)
+          Constants.Motion.buttonPulseOut
         default:
-          .snappy(duration: 0.5)
+          Constants.Motion.buttonPulseIn
       }
     }
   }

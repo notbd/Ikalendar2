@@ -41,7 +41,7 @@ struct AltAppIconRow: View {
           height: appIconDisplayMode.size.screenSize)
         .shadow(radius: Constants.Style.Global.shadowRadius)
         .animation(
-          Scoped.crossFadeAnimation,
+          Constants.Motion.appIconCrossFade,
           value: appIconColorVariant)
 
       Text(ikaAppIcon.displayNameLocalizedStringKey)
@@ -116,7 +116,7 @@ struct AltAppIconEasterEggRow: View {
           height: appIconDisplayMode.size.screenSize)
         .shadow(radius: Constants.Style.Global.shadowRadius)
         .animation(
-          Scoped.crossFadeAnimation,
+          Constants.Motion.appIconCrossFade,
           value: appIconColorVariant)
         // Inlined on the concrete view: wrapping this in a `some View` helper
         // trips a non-Sendable metatype warning from the content closure (a58eaf9).
