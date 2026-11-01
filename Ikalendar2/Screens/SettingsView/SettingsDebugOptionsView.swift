@@ -52,6 +52,7 @@ struct SettingsDebugOptionsView: View {
       .scaledToFit()
       .frame(height: squidBumperHeight)
       .hAlignment(.leading)
+      .accessibilityHidden(true)
   }
 
   private var rowShowOnboarding: some View {

@@ -164,6 +164,7 @@ struct SettingsAltAppIconView: View {
           appIconColorVariant: $activeAppIconColorVariant,
           buttonPressCounter: $easterEggBounceCounter)
           .allowsHitTesting(false)
+          .accessibilityHidden(true) // visual-only duplicate of the list row
           .frame(width: easterEggCellRectGlobal.width, height: easterEggCellRectGlobal.height)
           .globalPosition(x: easterEggCellRectGlobal.midX, y: easterEggCellRectGlobal.midY)
           .opacity(shouldDisplayAnimatedCopy ? 1 : 0)
@@ -232,6 +233,8 @@ struct SettingsAltAppIconView: View {
           togglePlayback()
         }
       }
+      .accessibilityLabel(slideShowPhase.isPlaying ? Text("Pause") : Text("Play"))
+      .accessibilityAddTraits(.isButton)
       .glassEffect(!slideShowPhase.isPickerExpanded ? .regular.interactive() : .regular)
   }
 
@@ -251,6 +254,8 @@ struct SettingsAltAppIconView: View {
           slideShowProgress = 0
         }
       }
+      .accessibilityLabel(Text("Next"))
+      .accessibilityAddTraits(.isButton)
       .glassEffect(!slideShowPhase.isPickerExpanded ? .regular.interactive() : .regular)
   }
 
@@ -270,6 +275,8 @@ struct SettingsAltAppIconView: View {
               expandPicker()
             }
           }
+          .accessibilityAddTraits(.isButton)
+          .accessibilityHidden(slideShowPhase.isPickerExpanded || variant != activeAppIconColorVariant)
       }
     }
   }
@@ -285,6 +292,7 @@ struct SettingsAltAppIconView: View {
       .vAlignment(.bottom)
       .padding(.horizontal, ScopedStyle.slideShowProgressBarPaddingH)
       .allowsHitTesting(false)
+      .accessibilityHidden(slideShowPhase.isPickerExpanded)
       .clipShape(.capsule)
       // identity reset: skip the fill-drain animation when the variant or phase jumps
       .id("\(activeAppIconColorVariant)-\(slideShowPhase.isPlaying)")
@@ -310,6 +318,10 @@ struct SettingsAltAppIconView: View {
             collapsePicker()
           }
         }
+        .accessibilityLabel(Text(variant.displayNameLocalizedStringKey))
+        .accessibilityAddTraits(.isButton)
+        .accessibilityAddTraits(variant == activeAppIconColorVariant ? .isSelected : [])
+        .accessibilityHidden(!slideShowPhase.isPickerExpanded)
     }
   }
 

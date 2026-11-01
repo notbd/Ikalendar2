@@ -313,3 +313,8 @@ Please check your internet connection and try again.";
 "Friendship Bracelet" = "Friendship Bracelet";
 "Flipper Floppers" = "Flipper Floppers";
 "Wooden Sandals" = "Wooden Sandals";
+
+/* Accessibility: settings */
+"Play" = "Play";
+"Pause" = "Pause";
+"Next" = "Next";

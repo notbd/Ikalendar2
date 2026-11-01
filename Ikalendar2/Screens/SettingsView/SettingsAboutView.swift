@@ -81,6 +81,7 @@ struct SettingsAboutView: View {
         .frame(width: rowAppInfoRectGlobal.width, height: rowAppInfoRectGlobal.height)
         .globalPosition(x: rowAppInfoRectGlobal.midX, y: rowAppInfoRectGlobal.midY)
         .opacity(shouldDisplayAnimatedCopy ? 1 : 0)
+        .accessibilityHidden(true) // visual-only duplicate of the list row
     }
     .onChange(of: appIconBounceCounter, initial: false) {
       // Short-lived by design: delays the haptic onto the squash frame.
@@ -136,6 +137,8 @@ struct SettingsAboutView: View {
         } keyframes: { _ in
           SettingsAboutAppIconAnimationValues.appIconKeyframes()
         }
+        // decorative, and the tap-to-bounce is an easter egg: keep both out of VoiceOver
+        .accessibilityHidden(true)
     }
 
     var appIconTitle: some View {
@@ -279,7 +282,7 @@ struct SettingsAboutView: View {
               .foregroundStyle(Color.primary)
           }
           icon: {
-            Image(Scoped.twitterIconName)
+            Image(decorative: Scoped.twitterIconName)
               .antialiased(true)
               .resizable()
               .scaledToFit()
@@ -419,6 +422,7 @@ struct SettingsAboutView: View {
         .frame(height: littleBuddyHeight)
         .padding(.vertical)
         .padding(.trailing, 10)
+        .accessibilityHidden(true)
 
       Text(Constants.Key.Slogan.ikalendar3.localizedStringKey)
         .scaledLimitedLine(lineLimit: 2)

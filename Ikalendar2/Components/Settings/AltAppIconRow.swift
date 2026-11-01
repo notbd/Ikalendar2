@@ -29,11 +29,12 @@ struct AltAppIconRow: View {
     label: {
       rowContent
     }
+    .accessibilityAddTraits(ikaAppIcon == ikaPreference.preferredAppIcon ? .isSelected : [])
   }
 
   private var rowContent: some View {
     HStack(spacing: Scoped.spacingH) {
-      Image(ikaAppIcon.imageName(for: appIconDisplayMode))
+      Image(decorative: ikaAppIcon.imageName(for: appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
@@ -56,6 +57,7 @@ struct AltAppIconRow: View {
           .font(Scoped.activeIndicatorFont)
           .symbolRenderingMode(.palette)
           .foregroundStyle(Color.accentColor, Color.systemGroupedBackgroundTertiary)
+          .accessibilityHidden(true) // conveyed by the row's selected trait
       }
     }
     .padding(.vertical, Scoped.rowPaddingV)
@@ -104,12 +106,13 @@ struct AltAppIconEasterEggRow: View {
       setAltAppIcon(ikaAppIcon)
     }
     label: { rowContent }
+    .accessibilityAddTraits(ikaAppIcon == ikaPreference.preferredAppIcon ? .isSelected : [])
     .onDisappear { jumpToURLTask?.cancel() }
   }
 
   private var rowContent: some View {
     HStack(spacing: Scoped.spacingH) {
-      Image(ikaAppIcon.imageName(for: appIconDisplayMode))
+      Image(decorative: ikaAppIcon.imageName(for: appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
@@ -147,6 +150,7 @@ struct AltAppIconEasterEggRow: View {
           .font(Scoped.activeIndicatorFont)
           .symbolRenderingMode(.palette)
           .foregroundStyle(Color.accentColor, Color.systemGroupedBackgroundTertiary)
+          .accessibilityHidden(true) // conveyed by the row's selected trait
       }
     }
     .padding(.vertical, Scoped.rowPaddingV)

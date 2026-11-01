@@ -313,3 +313,8 @@
 "Friendship Bracelet" = "チギリノヒモ";
 "Flipper Floppers" = "ゲソバタアシスト";
 "Wooden Sandals" = "バンカラコロン";
+
+/* Accessibility: settings */
+"Play" = "再生";
+"Pause" = "一時停止";
+"Next" = "次へ";
