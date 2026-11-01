@@ -23,7 +23,7 @@ import GameplayKit
 /// let randomValue2 = generator.nextInt(bound: 20) // Will be the same as randomValue1
 /// ```
 final public class SeededRandomGenerator {
-  private var originalSeed: Data
+  private let originalSeed: Data
   private var randomSource: GKARC4RandomSource
 
   /// Initializes the generator with an integer seed.

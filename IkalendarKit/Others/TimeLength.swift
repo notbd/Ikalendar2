@@ -10,7 +10,7 @@ import Foundation
 /// Represents a time duration broken down into days, hours, minutes, and seconds.
 ///
 /// This struct is useful for converting a time interval into a human-readable, localized string.
-public struct TimeLength {
+public struct TimeLength: Hashable, Sendable {
   /// The number of days.
   public let days: Int
 
