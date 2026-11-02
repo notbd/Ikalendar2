@@ -26,24 +26,18 @@ struct CarouselColumn: View {
 
   private var modeIconSizeFactor: CGFloat { listVOffsetFactor * Scoped.modeIconSizeFactor }
 
-  private var maskGradient: Gradient {
-    isPortrait
-      ? Self.maskGradientPortrait
-      : Self.maskGradientLandscape }
+  /// Fades rows out over the list's top `listFadeHeight` and leaves the rest opaque.
+  private var fadeMask: some View {
+    VStack(spacing: 0) {
+      LinearGradient(
+        colors: [.clear, .black],
+        startPoint: .top,
+        endPoint: .bottom)
+        .frame(height: Scoped.listFadeHeight)
 
-  /// Built once per density instead of on every body pass.
-  static private let maskGradientPortrait: Gradient = makeMaskGradient(density: Scoped.maskGradientDensityPortrait)
-  static private let maskGradientLandscape: Gradient = makeMaskGradient(density: Scoped.maskGradientDensityLandscape)
-
-  /// Only the first of `density` evenly spaced stops is transparent: the list fades in over a
-  /// thin top band (1 / (density - 1) of its height) and is opaque below.
-  static private func makeMaskGradient(density: Int) -> Gradient {
-    .init(
-      colors:
-      (0 ..< density)
-        .map { $0 == 0
-          ? Color.primary.opacity(0)
-          : Color.primary }) }
+      Rectangle()
+    }
+  }
 
   @ViewBuilder
   private var rotationList: some View {
@@ -60,17 +54,16 @@ struct CarouselColumn: View {
       ZStack {
         VStack {
           Spacer()
-            .frame(height: geo.size.height * listVOffsetFactor)
+            .frame(height: max(geo.size.height * listVOffsetFactor - Scoped.listFadeHeight, 0))
 
+          // The list starts one fade height higher and insets its content and indicators by the
+          // same amount, so at rest the first row sits below the fade, unfaded, where it would
+          // be without it; only rows scrolled up pass through the fade.
           rotationList
-            .mask(
-              LinearGradient(
-                gradient: maskGradient,
-                startPoint: .top,
-                endPoint: .bottom))
-            .contentMargins(
-              .vertical, Scoped.scrollIndicatorMarginV,
-              for: .scrollIndicators)
+            .contentMargins(.top, Scoped.listFadeHeight, for: .scrollContent)
+            .mask(fadeMask)
+            .contentMargins(.top, Scoped.scrollIndicatorMarginV + Scoped.listFadeHeight, for: .scrollIndicators)
+            .contentMargins(.bottom, Scoped.scrollIndicatorMarginV, for: .scrollIndicators)
         }
 
         ModeIconStamp(

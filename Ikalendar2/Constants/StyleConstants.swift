@@ -28,8 +28,8 @@ extension Constants.Style {
       static let listOffsetVFactorLandscape: CGFloat = 0.12
       static let modeIconSizeFactor: CGFloat = 1.3
 
-      static let maskGradientDensityPortrait: Int = 32
-      static let maskGradientDensityLandscape: Int = 30
+      /// The band at the list's top over which scrolled rows fade out.
+      static let listFadeHeight: CGFloat = 32
 
       static let scrollIndicatorMarginV: CGFloat = 20
     }
