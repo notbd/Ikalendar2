@@ -7,7 +7,6 @@ iOS/SwiftUI app that tracks Splatoon 2 rotation schedules. See `README.md` for t
 - Commit messages and PR text are in English, conventional commits (`fix`, `feat`, `refactor`, `chore`, `docs`, `test`, `style`). Stated by the owner during the v2.4.x quality-overhaul session (2026-07).
 - Never change core business logic or redesign the UI without explicit approval. Propose the change instead.
 - Formatting follows the project's `.swiftformat` and `.swiftlint.yml`. The owner re-runs the linters on their own, so minor lint issues are acceptable.
-- Git commits are SSH-signed through 1Password. If signing fails (a timeout means the owner is away), stop and ask the owner to authorize, then retry. Never bypass with `commit.gpgsign=false` or `--no-gpg-sign` (global rule in `~/.claude/docs/work-rules.md`).
 
 ## Architecture after the 2026-07 quality overhaul
 
