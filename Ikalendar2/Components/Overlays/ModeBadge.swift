@@ -70,10 +70,19 @@ struct ModeBadge: View {
     }
   }
 
-  /// Mr. Grizz sits in the lower part of his canvas (under his antenna), so he is lifted to put his
-  /// body in the middle of the badge; the other images are centered in theirs.
+  /// Nudges each image's visual weight onto the badge's center: Mr. Grizz sits in the lower part
+  /// of his canvas (under his antenna), so he is lifted; the regular image's two arrows put its
+  /// weight above its middle, so it is lowered. The shields are centered in theirs.
   private var imageOffsetY: CGFloat {
-    flatMode == .salmon ? Scoped.badgeImageOffsetYSalmon : 0
+    switch flatMode {
+      case .regular:
+        Scoped.badgeImageOffsetYRegular
+      case .gachi,
+           .league:
+        0
+      case .salmon:
+        Scoped.badgeImageOffsetYSalmon
+    }
   }
 
   /// The asset redrawn to fit a `side`-point square at `scale` with high-quality resampling, cached.
