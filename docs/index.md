@@ -58,7 +58,7 @@ dependencies:
         - name: SwiftyJSON/SwiftyJSON
           url: https://github.com/SwiftyJSON/SwiftyJSON
           icon: github
-          description: The better way to deal with JSON data in Swift.
+          description: Powered our JSON parsing for years. Thank you!
         - name: notbd/SimpleHaptics
           url: https://github.com/notbd/SimpleHaptics
           icon: github
