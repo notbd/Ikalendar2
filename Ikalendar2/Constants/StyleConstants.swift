@@ -70,9 +70,10 @@ extension Constants.Style {
       /// The dock progress from which the badge fades in.
       static let badgeFadeInStart: Double = 0.5
       static let badgeSize: CGFloat = 44
-      static let badgeImageSize: CGFloat = 28
-      /// For the regular and salmon images, whose artwork looks smaller at the same size.
-      static let badgeImageSizeSparse: CGFloat = 30
+      static let badgeImageSize: CGFloat = 27
+      static let badgeImageSizeRegular: CGFloat = 29
+      static let badgeImageSizeSalmon: CGFloat = 30
+      static let badgeImageOffsetYSalmon: CGFloat = -3
     }
   }
 
