@@ -25,6 +25,9 @@ struct RotationsTabView: View {
   @State private var dockProgress: Double = 0
   /// The list's top content inset at rest under the expanded large title.
   @State private var restingTopInset: CGFloat = 0
+  /// How far the top inset has grown past its resting value: the pull-to-refresh spinner's height
+  /// while a refresh runs, 0 otherwise.
+  @State private var refreshTopInset: CGFloat = 0
 
   var body: some View {
     ZStack {
@@ -36,6 +39,7 @@ struct RotationsTabView: View {
           // Kept from the first layout, where the large title is expanded: later insets also
           // grow by the pull-to-refresh spinner.
           if restingTopInset == 0 { restingTopInset = topInset }
+          refreshTopInset = max(topInset - restingTopInset, 0)
         }
         .onScrollGeometryChange(for: Double.self) { [restingTopInset] geometry in
           ModeIconStamp.dockProgress(contentOffsetY: geometry.contentOffset.y, restingTopInset: restingTopInset)
@@ -46,9 +50,12 @@ struct RotationsTabView: View {
           ModeIconStamp(
             flatModeSelection: flatMode,
             dockProgress: dockProgress)
+            // While a refresh runs, the spinner's height is added to the safe area this overlay
+            // hangs from, so the stamp is lifted by it to stay put instead of jumping down and
+            // back up when the refresh ends.
             .offset(
               x: Constants.Style.Overlay.ModeIcon.iconOffsetX,
-              y: Constants.Style.Overlay.ModeIcon.iconOffsetY),
+              y: Constants.Style.Overlay.ModeIcon.iconOffsetY - refreshTopInset),
           alignment: .topTrailing)
         .toolbar {
           ToolbarItem(placement: .topBarTrailing) {
