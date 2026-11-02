@@ -72,7 +72,7 @@ extension Constants.Style {
       static let badgeSize: CGFloat = 44
       static let badgeImageSize: CGFloat = 27
       static let badgeImageSizeRegular: CGFloat = 29
-      static let badgeImageSizeSalmon: CGFloat = 28
+      static let badgeImageSizeSalmon: CGFloat = 25
       static let badgeImageOffsetYSalmon: CGFloat = -3
     }
   }

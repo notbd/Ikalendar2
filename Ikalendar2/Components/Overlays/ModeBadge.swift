@@ -14,11 +14,15 @@ import SwiftUI
 struct ModeBadge: View {
   typealias Scoped = Constants.Style.Overlay.ModeIcon
 
+  /// The asset images redrawn at badge size, keyed by name, point size and display scale.
+  @MainActor static private var resampledImages: [String: UIImage] = [:]
+
+  @Environment(\.displayScale) private var displayScale
+
   let flatMode: FlatMode
 
   var body: some View {
-    Image(decorative: imageName)
-      .ikaFitted()
+    badgeImage
       .frame(
         width: imageSize,
         height: imageSize)
@@ -32,6 +36,19 @@ struct ModeBadge: View {
       .adaptiveGlassEffect(isInteractive: false, in: .circle)
       // The navigation title already names the mode.
       .accessibilityHidden(true)
+  }
+
+  /// The image as resampled for the badge, drawn pixel for pixel; the plain asset only if the
+  /// asset cannot be loaded as a UIImage.
+  @ViewBuilder
+  private var badgeImage: some View {
+    if let image = Self.resampled(imageName, toFit: imageSize, scale: displayScale) {
+      Image(uiImage: image)
+    }
+    else {
+      Image(decorative: imageName)
+        .ikaFitted()
+    }
   }
 
   private var imageName: String {
@@ -57,6 +74,27 @@ struct ModeBadge: View {
   /// body in the middle of the badge; the other images are centered in theirs.
   private var imageOffsetY: CGFloat {
     flatMode == .salmon ? Scoped.badgeImageOffsetYSalmon : 0
+  }
+
+  /// The asset redrawn to fit a `side`-point square at `scale` with high-quality resampling, cached.
+  /// The artwork is 256 to 447 px across; shrunk to badge size by `resizable()`, the GPU's filter
+  /// samples only a few of the source pixels behind each screen pixel and leaves jagged edges.
+  @MainActor
+  static private func resampled(_ name: String, toFit side: CGFloat, scale: CGFloat) -> UIImage? {
+    let key = "\(name)@\(side)x\(scale)"
+    if let cached = resampledImages[key] { return cached }
+    guard let source = UIImage(named: name) else { return nil }
+
+    let fit: CGFloat = min(side / source.size.width, side / source.size.height)
+    let size: CGSize = .init(width: source.size.width * fit, height: source.size.height * fit)
+    let format: UIGraphicsImageRendererFormat = .init()
+    format.scale = scale
+    let image: UIImage = UIGraphicsImageRenderer(size: size, format: format).image { context in
+      context.cgContext.interpolationQuality = .high
+      source.draw(in: CGRect(origin: .zero, size: size))
+    }
+    resampledImages[key] = image
+    return image
   }
 }
 
