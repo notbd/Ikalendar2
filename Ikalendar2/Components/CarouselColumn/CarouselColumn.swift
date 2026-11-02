@@ -26,17 +26,22 @@ struct CarouselColumn: View {
 
   private var modeIconSizeFactor: CGFloat { listVOffsetFactor * Scoped.modeIconSizeFactor }
 
-  /// Fades rows out over the list's top `listFadeHeight` and leaves the rest opaque.
-  private var fadeMask: some View {
-    VStack(spacing: 0) {
-      LinearGradient(
-        colors: [.clear, .black],
-        startPoint: .top,
-        endPoint: .bottom)
-        .frame(height: Scoped.listFadeHeight)
+  private var maskGradientDensity: Int {
+    isPortrait
+      ? Scoped.maskGradientDensityPortrait
+      : Scoped.maskGradientDensityLandscape }
 
-      Rectangle()
-    }
+  /// How far the fade has grown in: 0 with the list at rest, 1 once it has scrolled up
+  /// `maskFadeInTravel`. Clamped in the transform, so further scrolling updates nothing.
+  @State private var maskFadeIn: Double = 0
+
+  /// The list fades in over a thin top band (1 / (density - 1) of its height) and is opaque
+  /// below. The band only fades as far as the list has scrolled, so rows at rest are never dimmed.
+  private var maskGradient: Gradient {
+    .init(stops: [
+      .init(color: .black.opacity(1 - maskFadeIn), location: 0),
+      .init(color: .black, location: 1 / CGFloat(maskGradientDensity - 1)),
+    ])
   }
 
   @ViewBuilder
@@ -54,16 +59,23 @@ struct CarouselColumn: View {
       ZStack {
         VStack {
           Spacer()
-            .frame(height: max(geo.size.height * listVOffsetFactor - Scoped.listFadeHeight, 0))
+            .frame(height: geo.size.height * listVOffsetFactor)
 
-          // The list starts one fade height higher and insets its content and indicators by the
-          // same amount, so at rest the first row sits below the fade, unfaded, where it would
-          // be without it; only rows scrolled up pass through the fade.
           rotationList
-            .contentMargins(.top, Scoped.listFadeHeight, for: .scrollContent)
-            .mask(fadeMask)
-            .contentMargins(.top, Scoped.scrollIndicatorMarginV + Scoped.listFadeHeight, for: .scrollIndicators)
-            .contentMargins(.bottom, Scoped.scrollIndicatorMarginV, for: .scrollIndicators)
+            .onScrollGeometryChange(for: Double.self) { geometry in
+              let travel: CGFloat = geometry.contentOffset.y + geometry.contentInsets.top
+              return min(max(Double(travel / Scoped.maskFadeInTravel), 0), 1)
+            } action: { _, fadeIn in
+              maskFadeIn = fadeIn
+            }
+            .mask(
+              LinearGradient(
+                gradient: maskGradient,
+                startPoint: .top,
+                endPoint: .bottom))
+            .contentMargins(
+              .vertical, Scoped.scrollIndicatorMarginV,
+              for: .scrollIndicators)
         }
 
         ModeIconStamp(
