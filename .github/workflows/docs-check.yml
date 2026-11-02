@@ -1,0 +1,53 @@
+# Lints, type-checks and builds the docs/ landing site when a pull request touches it.
+# The build reads MARKETING_VERSION from project.pbxproj (docs/.vitepress/utils/extractIosAppVersion.ts),
+# so that file is a trigger too. Vercel builds the preview deployments separately.
+name: Docs Check
+
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - "Ikalendar2.xcodeproj/project.pbxproj"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Lint, Type Check and Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    defaults:
+      run:
+        working-directory: docs
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      # Reads the pnpm version from the packageManager field in docs/package.json.
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          package_json_file: docs/package.json
+
+      # The Node version lives only in docs/.nvmrc (and package.json engines).
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: docs/.nvmrc
+          cache: pnpm
+          cache-dependency-path: docs/pnpm-lock.yaml
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Type Check
+        run: pnpm typecheck
+
+      - name: Build
+        run: pnpm build

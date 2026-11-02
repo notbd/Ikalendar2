@@ -1,0 +1,24 @@
+{
+  "originHash" : "12273c0629c407a2718aab228b8f8572f0f0735ced30cc2cf9adc771fb407e56",
+  "pins" : [
+    {
+      "identity" : "alertkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sparrowcode/AlertKit",
+      "state" : {
+        "revision" : "3b73be8db5a7e7efaf474c6ed919f5a437d843c9",
+        "version" : "5.1.9"
+      }
+    },
+    {
+      "identity" : "simplehaptics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/notbd/SimpleHaptics",
+      "state" : {
+        "revision" : "5639baa4d2fe458b1351e3f0c0f06b4176f9fe3e",
+        "version" : "0.2.0"
+      }
+    }
+  ],
+  "version" : 3
+}

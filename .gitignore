@@ -51,7 +51,6 @@ playground.xcworkspace
 # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
 Packages/
 Package.pins
-Package.resolved
 # *.xcodeproj
 #
 # Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
@@ -100,3 +99,6 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+# CI SPM checkout directory (xcodebuild -clonedSourcePackagesDirPath)
+SourcePackages/

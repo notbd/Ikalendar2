@@ -19,7 +19,7 @@ import SwiftUI
 ///
 /// - Precondition:
 ///   - The proposed width must already be set.
-///   - Must have exactly two subviews: one for the stage and one for the weapons.
+///   - Must have exactly two subviews: the stage A card and the stage B card.
 ///
 struct BattleSecondaryStagesLayout: Layout {
   func sizeThatFits(
@@ -28,17 +28,17 @@ struct BattleSecondaryStagesLayout: Layout {
     cache _: inout ())
     -> CGSize
   {
-    guard proposal.width != nil else { return .zero }
+    guard let proposalWidth = proposal.width else { return .zero }
     guard subviews.count == 2 else { return .zero }
 
-    let hSpacings = getHSpacings(subviews: subviews)
+    let hSpacings = subviews.horizontalSpacings
     let subviewProposal: ProposedViewSize = .init(
-      width: (proposal.width! - hSpacings[0]) * (1 / 2),
+      width: (proposalWidth - hSpacings[0]) * (1 / 2),
       height: proposal.height)
-    let minIdealSize = getMinIdealSize(subviews: subviews, proposal: subviewProposal)
+    let minIdealSize = subviews.minIdealSize(for: subviewProposal)
 
     return CGSize(
-      width: proposal.width!,
+      width: proposalWidth,
       height: minIdealSize.height)
   }
 
@@ -48,14 +48,14 @@ struct BattleSecondaryStagesLayout: Layout {
     subviews: Subviews,
     cache _: inout ())
   {
-    guard proposal.width != nil else { return }
+    guard let proposalWidth = proposal.width else { return }
     guard subviews.count == 2 else { return }
 
-    let hSpacings = getHSpacings(subviews: subviews)
+    let hSpacings = subviews.horizontalSpacings
     let subviewProposal: ProposedViewSize = .init(
-      width: (proposal.width! - hSpacings[0]) * (1 / 2),
+      width: (proposalWidth - hSpacings[0]) * (1 / 2),
       height: proposal.height)
-    let minIdealSize = getMinIdealSize(subviews: subviews, proposal: subviewProposal)
+    let minIdealSize = subviews.minIdealSize(for: subviewProposal)
 
     let stageWidth = minIdealSize.width
     let stageHeight = minIdealSize.height
@@ -70,7 +70,7 @@ struct BattleSecondaryStagesLayout: Layout {
       width: stageWidth,
       height: stageHeight)
 
-    // placing stage card
+    // stage A
     subviews[0].place(
       at: CGPoint(
         x: stageACenterX,
@@ -78,39 +78,12 @@ struct BattleSecondaryStagesLayout: Layout {
       anchor: .center,
       proposal: stageSizeProposal)
 
-    // placing weapon card
+    // stage B
     subviews[1].place(
       at: CGPoint(
         x: stageBCenterX,
         y: stageBCenterY),
       anchor: .center,
       proposal: stageSizeProposal)
-  }
-
-  private func getHSpacings(subviews: Subviews) -> [CGFloat] {
-    subviews.indices.map { index in
-      guard index < subviews.count - 1 else { return 0 }
-
-      return
-        subviews[index]
-          .spacing
-          .distance(
-            to: subviews[index + 1].spacing,
-            along: .horizontal)
-    }
-  }
-
-  private func getMinIdealSize(subviews: Subviews, proposal: ProposedViewSize) -> CGSize {
-    let subviewSizes = subviews.map { $0.sizeThatFits(proposal) }
-    let minIdealSize: CGSize = subviewSizes.reduce(
-      CGSize(
-        width: CGFloat.infinity,
-        height: CGFloat.infinity))
-    { currentMin, nextSize in
-      CGSize(
-        width: min(currentMin.width, nextSize.width),
-        height: min(currentMin.height, nextSize.height))
-    }
-    return minIdealSize
   }
 }

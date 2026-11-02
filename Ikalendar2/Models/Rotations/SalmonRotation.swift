@@ -53,12 +53,17 @@ extension SalmonRotation {
 
     let generator: SeededRandomGenerator = .init(seed: description)
 
-    let prefix = stage.imgFiln + "_Alt_"
-    // does not need to divide by 2, can safely ignore large copies
+    let prefix = stage.imageName + "_Alt_"
+    // Counts only `<stage>_Alt_<n>`; the `_Large` copies have a different name and are not double-counted.
     let numOfAltImages: Int = AssetImageCounter.countImagesWithPrefix(prefix)
+
+    // a stage without any alt image keeps its standard image
+    guard numOfAltImages > 0
+    else { return stage.imageName }
+
     let randomChoice = generator.nextInt(bound: numOfAltImages)
 
-    return stage.imgFiln + "_Alt_\(randomChoice)"
+    return stage.imageName + "_Alt_\(randomChoice)"
   }
 
   var stageAltImageNameLarge: String? {

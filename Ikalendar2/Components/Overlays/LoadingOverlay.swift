@@ -10,10 +10,7 @@ import SwiftUI
 // MARK: - LoadingOverlay
 
 /// An overlay indicating the loading status of the app.
-@MainActor
 struct LoadingOverlay: View {
-  typealias Scoped = Constants.Style.Overlay.Loading
-
   @Environment(IkaCatalog.self) private var ikaCatalog
 
   private var isLoading: Bool {
@@ -22,7 +19,7 @@ struct LoadingOverlay: View {
 
   var body: some View {
     Color.clear
-      .edgesIgnoringSafeArea(.all)
+      .ignoresSafeArea()
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .background(.ultraThinMaterial)
       .opacity(isLoading ? 1 : 0)
@@ -32,10 +29,7 @@ struct LoadingOverlay: View {
   }
 }
 
-// MARK: - LoadingOverlay_Previews
-
-struct LoadingOverlay_Previews: PreviewProvider {
-  static var previews: some View {
-    LoadingOverlay()
-  }
+#Preview {
+  LoadingOverlay()
+    .ikaPreviewEnvironment()
 }

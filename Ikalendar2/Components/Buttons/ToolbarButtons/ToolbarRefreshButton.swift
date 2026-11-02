@@ -10,7 +10,6 @@ import SwiftUI
 // MARK: - ToolbarRefreshButton
 
 /// A refresh button in the toolbar.
-@MainActor
 struct ToolbarRefreshButton: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
 
@@ -30,14 +29,12 @@ struct ToolbarRefreshButton: View {
           options: .speed(2),
           isActive: isRefreshing)
     }
+    .accessibilityLabel(isRefreshing ? Text("Refreshing") : Text("Refresh"))
     .disabled(isRefreshing)
   }
 }
 
-// MARK: - ToolbarRefreshButton_Previews
-
-struct ToolbarRefreshButton_Previews: PreviewProvider {
-  static var previews: some View {
-    ToolbarRefreshButton()
-  }
+#Preview {
+  ToolbarRefreshButton()
+    .ikaPreviewEnvironment()
 }

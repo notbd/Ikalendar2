@@ -5,16 +5,12 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-//
-//  FlatMode.swift
-//  Ikalendar2
-//
-//  Created by Tianwei Zhang on 2025-10-27.
-//
 import SwiftUI
 
 // MARK: - FlatMode
 
+/// A flattened union of all game and battle modes, so the tab bar and
+/// default-mode picker can treat them as one list.
 enum FlatMode: String, Identifiable, CaseIterable, Equatable {
   static let `default`: Self = .regular
 
@@ -24,6 +20,47 @@ enum FlatMode: String, Identifiable, CaseIterable, Equatable {
   case salmon
 
   var id: String { rawValue }
+}
+
+// MARK: - GameMode and BattleMode conversions
+
+extension FlatMode {
+  /// The flat mode for a game mode; `battleMode` decides it when the game mode is battle.
+  init(gameMode: GameMode, battleMode: BattleMode) {
+    switch gameMode {
+      case .battle: self.init(battleMode)
+      case .salmon: self = .salmon
+    }
+  }
+
+  init(_ battleMode: BattleMode) {
+    switch battleMode {
+      case .regular: self = .regular
+      case .gachi: self = .gachi
+      case .league: self = .league
+    }
+  }
+
+  var gameMode: GameMode {
+    switch self {
+      case .regular,
+           .gachi,
+           .league:
+        .battle
+      case .salmon:
+        .salmon
+    }
+  }
+
+  /// `nil` for salmon, which has no battle mode.
+  var battleMode: BattleMode? {
+    switch self {
+      case .regular: .regular
+      case .gachi: .gachi
+      case .league: .league
+      case .salmon: nil
+    }
+  }
 }
 
 extension FlatMode {
@@ -75,8 +112,4 @@ extension FlatMode {
       case .salmon: "lifepreserver"
     }
   }
-}
-
-extension FlatMode {
-  var imgFilnSmall: String { rawValue + "_small" }
 }

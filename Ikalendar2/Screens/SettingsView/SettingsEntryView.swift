@@ -7,17 +7,22 @@
 
 import SwiftUI
 
+/// The root of the settings modal, hosting the whole settings navigation stack.
 struct SettingsEntryView: View {
-  @EnvironmentObject private var ikaLog: IkaLog
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
   var body: some View {
-    NavigationView {
+    NavigationStack {
       SettingsMainView()
     }
     .presentationSizing(.page)
-    .navigationViewStyle(StackNavigationViewStyle())
     .overlay(
       AutoLoadingOverlay(),
       alignment: .bottomTrailing)
   }
+}
+
+#Preview {
+  SettingsEntryView()
+    .ikaPreviewEnvironment()
 }

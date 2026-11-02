@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+/// The compact-width layout (iPhone, and iPad in Slide Over or a narrow split): one tab per mode
+/// along the bottom bar.
 struct RotationsTabsView: View {
-  @Environment(IkaCatalog.self) private var ikaCatalog
   @Environment(IkaStatus.self) private var ikaStatus
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   var body: some View {
     @Bindable var ikaStatus = ikaStatus
@@ -24,7 +25,7 @@ struct RotationsTabsView: View {
           value: flatMode)
         {
           NavigationStack {
-            RotationsTabView(adoptedFlatMode: flatMode)
+            RotationsTabView(flatMode: flatMode)
               .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                   ToolbarSettingsButton()
@@ -37,37 +38,11 @@ struct RotationsTabsView: View {
         }
       }
     }
-    .if(ikaPreference.shouldMinimizeTabBar) {
-      $0.tabBarMinimizeBehavior(.onScrollDown)
-    }
+    .tabBarMinimizeBehavior(ikaPreference.shouldMinimizeTabBar ? .onScrollDown : .automatic)
   }
+}
 
-  @ViewBuilder
-  private var content: some View {
-    switch ikaCatalog.loadResultStatus {
-      case .error(let ikaError):
-        ErrorView(error: ikaError)
-      default:
-        rotationList
-    }
-  }
-
-  @ViewBuilder
-  private var rotationList: some View {
-    switch ikaStatus.currentGameMode {
-      case .battle:
-        BattleRotationList()
-      case .salmon:
-        SalmonRotationList()
-    }
-  }
-
-  private var title: String {
-    switch ikaStatus.currentGameMode {
-      case .battle:
-        ikaStatus.currentBattleMode.name
-      case .salmon:
-        ikaStatus.currentGameMode.name
-    }
-  }
+#Preview {
+  RotationsTabsView()
+    .ikaPreviewEnvironment()
 }

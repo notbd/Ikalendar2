@@ -8,47 +8,13 @@
 import Foundation
 import UIKit
 
-/// `IkaColorSchemeManager` is a singleton class responsible for managing the color scheme of the application.
-/// It provides an interface to switch between different color modes (light, dark, or system) and ensures
-/// smooth transitions between these states.
+// MARK: - IkaColorSchemeManager
+
+/// Stateless utility that applies the preferred color scheme to the key window with a
+/// cross-dissolve, so a scheme flip does not pop.
 @MainActor
-final class IkaColorSchemeManager {
-  static let shared: IkaColorSchemeManager = .init()
-
-  enum PreferredColorScheme: String, Identifiable, CaseIterable {
-    static let `default`: Self = .dark
-
-    case system
-    case dark
-    case light
-
-    var id: String { rawValue }
-
-    var name: String {
-      switch self {
-        case .system:
-          "Follow System"
-        case .dark:
-          "Dark"
-        case .light:
-          "Light"
-      }
-    }
-
-    var sfSymbolName: String {
-      switch self {
-        case .system:
-          "macbook.and.iphone"
-        case .dark:
-          "moon.fill"
-        case .light:
-          "sun.max.fill"
-      }
-    }
-  }
-
-  /// A computed property that returns the key window from the connected scenes.
-  private var keyWindow: UIWindow? {
+enum IkaColorSchemeManager {
+  static private var keyWindow: UIWindow? {
     UIApplication
       .shared
       .connectedScenes
@@ -57,18 +23,12 @@ final class IkaColorSchemeManager {
       .first { $0.isKeyWindow }
   }
 
-  private init() { }
-
-  /// Changes the app's color scheme according to the given colorScheme.
-  ///
-  /// - Parameter preferredColorScheme: The desired color scheme: system, dark, or light.
-  /// - Note: The transition between the color schemes is animated for a smooth user experience.
-  func handlePreferredColorSchemeChange(for preferredColorScheme: PreferredColorScheme) {
+  static func handlePreferredColorSchemeChange(for preferredColorScheme: IkaPreferredColorScheme) {
     guard let keyWindow else { return }
 
     UIView.transition(
       with: keyWindow,
-      duration: 0.25,
+      duration: Constants.Motion.colorSchemeCrossDissolve,
       options: .transitionCrossDissolve,
       animations: {
         switch preferredColorScheme {

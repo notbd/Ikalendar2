@@ -10,23 +10,32 @@ import SwiftUI
 
 // MARK: - BattleRotationCell
 
-@MainActor
+/// Switches a battle rotation between its featured (primary) and compact
+/// (secondary) look, owning the namespaces that animate elements between the two.
 struct BattleRotationCell: View {
   enum CellType {
     case primary
     case secondary
   }
 
+  /// The matched-geometry namespaces shared between the primary and secondary looks.
+  struct AnimationNamespaces {
+    let ruleIcon: Namespace.ID
+    let ruleTitle: Namespace.ID
+    let stageA: Namespace.ID
+    let stageB: Namespace.ID
+  }
+
   let type: CellType
   let rotation: BattleRotation
   let rowWidth: CGFloat
 
-  @Namespace var ruleIcon
-  @Namespace var ruleTitle
-  @Namespace var stageA
-  @Namespace var stageB
+  @Namespace private var ruleIcon
+  @Namespace private var ruleTitle
+  @Namespace private var stageA
+  @Namespace private var stageB
 
-  var animationNamespaces: Constants.Namespace.Battle {
+  var animationNamespaces: AnimationNamespaces {
     .init(
       ruleIcon: ruleIcon,
       ruleTitle: ruleTitle,
@@ -55,22 +64,25 @@ struct BattleRotationCell: View {
 
 /// The primary version of a cell component for the battle rotation that takes
 /// all the space in the list content.
-@MainActor
 struct BattleRotationCellPrimary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Cell.Primary
 
-  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  // Matched-geometry rule: the primary variant is the geometry source and the
+  // secondary matches it (isSource: false). The two briefly coexist during the hero
+  // transition, where two sources would be undefined behavior (ebf2438). The source must
+  // be the variant that stays: a non-source keeps the last frame of a removed source,
+  // which drew the new Now card's rule and stages off the card. A lone secondary has no
+  // source and keeps its own frame; the reverse flip (primary back to secondary) happens
+  // only if the clock moves backwards, and would show the mirror of that bug.
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
-  let animationNamespaces: Constants.Namespace.Battle?
-
-  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
+  let animationNamespaces: BattleRotationCell.AnimationNamespaces?
 
   var body: some View {
-    VStack(spacing: Scoped.CELL_SPACING_V) {
+    VStack(spacing: Scoped.cellSpacingV) {
       HStack(alignment: .center) {
         ruleSection
         Spacer()
@@ -78,30 +90,27 @@ struct BattleRotationCellPrimary: View {
       }
 
       ProgressView(
-        value: min(ikaTimePublisher.currentTime, rotation.endTime) - rotation.startTime,
+        value: min(ikaClock.currentTime, rotation.endTime) - rotation.startTime,
         total: rotation.endTime - rotation.startTime)
-        .padding(.bottom, Scoped.PROGRESS_BAR_PADDING_BOTTOM)
+        .padding(.bottom, Scoped.progressBarPaddingBottom)
         .tint(rotation.mode.themeColor)
 
-      // MARK: Stage Section
-
-      HStack(spacing: Scoped.STAGES_SPACING_H) {
+      HStack(spacing: Scoped.stagesSpacingH) {
         battleStageCardA
         battleStageCardB
       }
     }
-    .padding(.top, Scoped.CELL_PADDING_TOP)
-    .padding(.bottom, Scoped.CELL_PADDING_BOTTOM)
+    .padding(.top, Scoped.cellPaddingTop)
+    .padding(.bottom, Scoped.cellPaddingBottom)
+    .accessibilityElement(children: .combine)
   }
 
   // MARK: Rule Section
 
   private var ruleIcon: some View {
-    Image(rotation.rule.imgFilnMid)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+    Image(decorative: rotation.rule.imageNameMid)
+      .ikaFitted()
+      .shadow(radius: Constants.Style.Global.shadowRadius)
       .layoutPriority(1)
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
@@ -112,13 +121,12 @@ struct BattleRotationCellPrimary: View {
 
   private var ruleTitle: some View {
     IdealFontLayout(anchor: .leading) {
-      // actual rule title
       Text(rotation.rule.name.localizedStringKey)
         .scaledLimitedLine()
         .ikaFont(
           .ika2,
-          size: Scoped.RULE_TITLE_FONT_SIZE_MAX,
-          relativeTo: Scoped.RULE_TITLE_TEXT_STYLE_RELATIVE_TO)
+          size: Scoped.ruleTitleFontSizeMax,
+          relativeTo: Scoped.ruleTitleTextStyleRelativeTo)
 
       // all other possible rule titles for the layout to compute ideal size
       ForEach(BattleRule.allCases) { rule in
@@ -126,11 +134,12 @@ struct BattleRotationCellPrimary: View {
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.RULE_TITLE_FONT_SIZE_MAX,
-            relativeTo: Scoped.RULE_TITLE_TEXT_STYLE_RELATIVE_TO)
+            size: Scoped.ruleTitleFontSizeMax,
+            relativeTo: Scoped.ruleTitleTextStyleRelativeTo)
+          .accessibilityHidden(true)
       }
     }
-    .padding(.vertical, Scoped.RULE_TITLE_PADDING_V)
+    .padding(.vertical, Scoped.ruleTitlePaddingV)
     .ifLet(animationNamespaces) {
       $0.matchedGeometryEffect(
         id: rotation.id,
@@ -163,14 +172,14 @@ struct BattleRotationCellPrimary: View {
   private var ruleSection: some View {
     HStack(
       alignment: .center,
-      spacing: Scoped.RULE_SECTION_SPACING)
+      spacing: Scoped.ruleSectionSpacing)
     {
       ruleIcon
       ruleTitle
     }
     .frame(
-      width: rowWidth * Scoped.RULE_SECTION_WIDTH_RATIO,
-      height: rowWidth * Scoped.RULE_SECTION_HEIGHT_RATIO,
+      width: rowWidth * Scoped.ruleSectionWidthRatio,
+      height: rowWidth * Scoped.ruleSectionHeightRatio,
       alignment: .leading)
     .hAlignment(.leading)
   }
@@ -178,17 +187,17 @@ struct BattleRotationCellPrimary: View {
   // MARK: Remaining Time Section
 
   private var remainingTimeSection: some View {
-    Text(ikaTimePublisher.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
+    Text(ikaClock.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
       .contentTransition(.numericText(countsDown: true))
-      .animation(.snappy, value: ikaTimePublisher.currentTime)
+      .animation(Constants.Motion.countdownRoll, value: ikaClock.currentTime)
       .scaledLimitedLine()
       .foregroundStyle(Color.secondary)
       .ikaFont(
         .ika2,
-        size: Scoped.REMAINING_TIME_FONT_SIZE,
-        relativeTo: Scoped.REMAINING_TIME_TEXT_STYLE_RELATIVE_TO)
+        size: Scoped.remainingTimeFontSize,
+        relativeTo: Scoped.remainingTimeTextStyleRelativeTo)
       .frame(
-        width: rowWidth * Scoped.REMAINING_TIME_SECTION_WIDTH_RATIO,
+        width: rowWidth * Scoped.remainingTimeSectionWidthRatio,
         alignment: .trailing)
   }
 }
@@ -197,76 +206,62 @@ struct BattleRotationCellPrimary: View {
 
 /// The secondary version of a cell component for the battle rotation
 /// that takes all the space in a list unit.
-@MainActor
 struct BattleRotationCellSecondary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Cell.Secondary
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
-  @Environment(\.colorScheme) private var colorScheme
-  private var colorSchemeAwareGlass: Glass {
-    colorScheme == .dark ? .clear : .regular
-  }
-
-  @EnvironmentObject private var ikaPreference: IkaPreference
-
   let rotation: BattleRotation
   let rowWidth: CGFloat
-  let animationNamespaces: Constants.Namespace.Battle?
+  let animationNamespaces: BattleRotationCell.AnimationNamespaces?
 
   var body: some View {
     HStack {
-      // MARK: Rule section
-
-      VStack(spacing: Scoped.RULE_SECTION_SPACING) {
+      VStack(spacing: Scoped.ruleSectionSpacing) {
         ruleIcon
         ruleTitle
       }
-      .frame(width: rowWidth * Scoped.RULE_SECTION_WIDTH_RATIO)
-      .padding(.trailing, Scoped.RULE_SECTION_PADDING_TRAILING)
-
-      // MARK: Stage Section
+      .frame(width: rowWidth * Scoped.ruleSectionWidthRatio)
+      .padding(.trailing, Scoped.ruleSectionPaddingTrailing)
 
       BattleSecondaryStagesLayout {
         battleStageCardA
         battleStageCardB
       }
     }
+    .accessibilityElement(children: .combine)
   }
 
   private var ruleIcon: some View {
-    Image(rotation.rule.imgFilnMid)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-      .frame(height: rowWidth * Scoped.RULE_IMG_HEIGHT_RATIO)
-      .padding(Scoped.RULE_IMG_PADDING)
-      .glassEffect(
-        colorSchemeAwareGlass.interactive(),
-        in: .rect(cornerRadius: Scoped.RULE_IMG_FRAME_CORNER_RADIUS))
+    Image(decorative: rotation.rule.imageNameMid)
+      .ikaFitted()
+      .shadow(radius: Constants.Style.Global.shadowRadius)
+      .frame(height: rowWidth * Scoped.ruleImageHeightRatio)
+      .padding(Scoped.ruleImagePadding)
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.ruleImageFrameCornerRadius))
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.ruleIcon)
+          in: $1.ruleIcon,
+          isSource: false)
       }
   }
 
   private var ruleTitle: some View {
-    // actual rule title
     Text(rotation.rule.name.localizedStringKey)
       .scaledLimitedLine()
       .ikaFont(
         .ika2,
-        size: Scoped.RULE_FONT_SIZE,
+        size: Scoped.ruleFontSize,
         relativeTo: .body)
       .if(!isHorizontalCompact) { wrapInIdealFontLayout($0) }
-      .frame(height: Scoped.RULE_TITLE_HEIGHT)
+      .frame(height: Scoped.ruleTitleHeight)
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.ruleTitle)
+          in: $1.ruleTitle,
+          isSource: false)
       }
   }
 
@@ -277,7 +272,8 @@ struct BattleRotationCellSecondary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageA)
+          in: $1.stageA,
+          isSource: false)
       }
   }
 
@@ -288,13 +284,13 @@ struct BattleRotationCellSecondary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageB)
+          in: $1.stageB,
+          isSource: false)
       }
   }
 
   private func wrapInIdealFontLayout(_ content: some View) -> some View {
     IdealFontLayout(anchor: .center) {
-      // actual rule title
       content
 
       // all other possible rule titles for the layout to compute ideal size
@@ -303,44 +299,37 @@ struct BattleRotationCellSecondary: View {
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.RULE_FONT_SIZE,
+            size: Scoped.ruleFontSize,
             relativeTo: .body)
+          .accessibilityHidden(true)
       }
     }
   }
 }
 
-// MARK: - BattleRotationCell_Previews
-
-struct BattleRotationCell_Previews: PreviewProvider {
-  static var previews: some View {
-    @Namespace var ruleIcon
-    @Namespace var ruleTitle
-    @Namespace var stageA
-    @Namespace var stageB
-
-    GeometryReader { geo in
-      List {
-        Section {
-          BattleRotationCellPrimary(
-            rotation: IkaMockData.getBattleRotation(
-              preferredMode: .gachi,
-              preferredRule: .towerControl,
-              rawStartTime: Date()),
-            rowWidth: geo.size.width,
-            animationNamespaces: nil)
-        }
-        Section {
-          BattleRotationCellSecondary(
-            rotation: IkaMockData.getBattleRotation(
-              preferredMode: .gachi,
-              preferredRule: .clamBlitz,
-              rawStartTime: Date()),
-            rowWidth: geo.size.width,
-            animationNamespaces: nil)
-        }
+#Preview("Primary + Secondary") {
+  GeometryReader { geo in
+    List {
+      Section("Primary (featured)") {
+        BattleRotationCellPrimary(
+          rotation: IkaMockData.makeBattleRotation(
+            preferredMode: .gachi,
+            preferredRule: .towerControl,
+            rawStartTime: Date()),
+          rowWidth: geo.size.width,
+          animationNamespaces: nil)
       }
-      .listStyle(InsetGroupedListStyle())
+      Section("Secondary (compact)") {
+        BattleRotationCellSecondary(
+          rotation: IkaMockData.makeBattleRotation(
+            preferredMode: .league,
+            preferredRule: .clamBlitz,
+            rawStartTime: Date()),
+          rowWidth: geo.size.width,
+          animationNamespaces: nil)
+      }
     }
+    .listStyle(.insetGrouped)
   }
+  .ikaPreviewEnvironment()
 }

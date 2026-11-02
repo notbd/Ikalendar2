@@ -8,7 +8,6 @@
 
 // MARK: - Onboarding
 
-"Welcome to %@" = "Welcome to %@";
 "Welcome to\n%@" = "Welcome to\n%@";
 "Get Started" = "Get Started";
 
@@ -21,7 +20,6 @@
 // Main
 "Settings" = "Settings";
 "Done" = "Done";
-"Close" = "Close";
 "Default Mode" = "Default Mode";
 "Default Tab" = "Default Tab";
 "Default Game Mode" = "Default Game Mode";
@@ -51,7 +49,6 @@
 "Tap Me :)" = "Tap Me :)";
 // Advanced Options
 "Minimize Tab Bar" = "Minimize Tab Bar";
-"Swap Bottom Toolbar Pickers" = "Swap Bottom Toolbar Pickers";
 "Certain options only apply to smaller screen widths." =
 "Certain options only apply to smaller screen widths.";
 "Alternative Stage Images" = "Alternative Stage Images";
@@ -268,11 +265,6 @@ Please check your internet connection and try again.";
 "Tenta Brella" = "Tenta Brella";
 "Undercover Brella" = "Undercover Brella";
 
-// MARK: - RandomWeapon
-
-"Random" = "Random";
-"Grizzco Random" = "Grizzco Random";
-
 // MARK: - GrizzcoWeapon
 
 "Grizzco Brella" = "Grizzco Brella";
@@ -295,7 +287,7 @@ Please check your internet connection and try again.";
 
 // MARK: - ClothesApparel
 
-"Squiddor Polo" = "Squiddor Polo";
+"Squiddor Polo" = "Squiddor Polo";
 "Anchor Life Vest" = "Anchor Life Vest";
 "Juice Parka" = "Juice Parka";
 "Garden Gear" = "Garden Gear";
@@ -313,3 +305,14 @@ Please check your internet connection and try again.";
 "Friendship Bracelet" = "Friendship Bracelet";
 "Flipper Floppers" = "Flipper Floppers";
 "Wooden Sandals" = "Wooden Sandals";
+
+/* Accessibility: settings */
+"Play" = "Play";
+"Pause" = "Pause";
+"Next" = "Next";
+
+/* Accessibility: rotations */
+"Refresh" = "Refresh";
+"Refreshing" = "Refreshing";
+"Mystery" = "Random";
+"Mystery Grizzco" = "Grizzco Random";

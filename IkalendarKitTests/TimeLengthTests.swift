@@ -17,8 +17,8 @@ struct TimeLengthTests {
 
   @Suite("Initialization")
   struct InitializationTests {
-    @Test("Initialize with all default values")
-    func initializeWithAllDefaultValues() {
+    @Test
+    func `Initialize with all default values`() {
       let timeLength: TimeLength = .init()
 
       #expect(timeLength.days == 0)
@@ -27,8 +27,8 @@ struct TimeLengthTests {
       #expect(timeLength.seconds == 0)
     }
 
-    @Test("Initialize with specific values")
-    func initializeWithSpecificValues() {
+    @Test
+    func `Initialize with specific values`() {
       let timeLength: TimeLength = .init(days: 2, hours: 5, minutes: 30, seconds: 45)
 
       #expect(timeLength.days == 2)
@@ -37,8 +37,8 @@ struct TimeLengthTests {
       #expect(timeLength.seconds == 45)
     }
 
-    @Test("Initialize with partial values")
-    func initializeWithPartialValues() {
+    @Test
+    func `Initialize with partial values`() {
       let timeLength: TimeLength = .init(hours: 3, minutes: 15)
 
       #expect(timeLength.days == 0)
@@ -47,18 +47,8 @@ struct TimeLengthTests {
       #expect(timeLength.seconds == 0)
     }
 
-    @Test("Initialize with zero values")
-    func initializeWithZeroValues() {
-      let timeLength: TimeLength = .init(days: 0, hours: 0, minutes: 0, seconds: 0)
-
-      #expect(timeLength.days == 0)
-      #expect(timeLength.hours == 0)
-      #expect(timeLength.minutes == 0)
-      #expect(timeLength.seconds == 0)
-    }
-
-    @Test("Initialize with negative values")
-    func initializeWithNegativeValues() {
+    @Test
+    func `Initialize with negative values`() {
       let timeLength: TimeLength = .init(days: -1, hours: -2, minutes: -30, seconds: -45)
 
       #expect(timeLength.days == -1)
@@ -70,209 +60,71 @@ struct TimeLengthTests {
 
   // MARK: - Localized Description Tests
 
+  /// Exact golden strings. Every test passes an explicit locale, because the default
+  /// argument reads `Locale.current`, which differs from runner to runner.
   @Suite("Localized Description")
   struct LocalizedDescriptionTests {
-    @Test("Description with all components present")
-    func descriptionWithAllComponentsPresent() {
+    /// One locale per branch of `localizedSuffixes(for:)` and `separator(for:)`.
+    /// zh_CN and zh_TW pin a current quirk: they are on the no-separator list but not on
+    /// the suffix list, so they join English suffixes without spaces.
+    @Test(arguments: [
+      ("en_US", "1d 2h 3m 4s"),
+      ("xx_XX", "1d 2h 3m 4s"),
+      ("ja_JP", "1日2時間3分4秒"),
+      ("ja", "1日2時間3分4秒"),
+      ("zh_Hans", "1天2小时3分4秒"),
+      ("zh-Hans", "1天2小时3分4秒"),
+      ("zh_Hant", "1天2小時3分4秒"),
+      ("zh-Hant", "1天2小時3分4秒"),
+      ("zh_CN", "1d2h3m4s"),
+      ("zh_TW", "1d2h3m4s"),
+    ])
+    func `Full duration renders exactly per locale`(localeID: String, expected: String) {
       let timeLength: TimeLength = .init(days: 1, hours: 2, minutes: 3, seconds: 4)
-      let description = timeLength.getLocalizedDescriptionString()
 
-      #expect(!description.isEmpty, "Description should not be empty")
-      // Should contain all components
-      #expect(description.contains("1"), "Should contain days value")
-      #expect(description.contains("2"), "Should contain hours value")
-      #expect(description.contains("3"), "Should contain minutes value")
-      #expect(description.contains("4"), "Should contain seconds value")
+      #expect(timeLength.localizedDescription(locale: Locale(identifier: localeID)) == expected)
     }
 
-    @Test("Description with only seconds")
-    func descriptionWithOnlySeconds() {
-      let timeLength: TimeLength = .init(seconds: 30)
-      let description = timeLength.getLocalizedDescriptionString()
-
-      #expect(!description.isEmpty, "Description should not be empty")
-      #expect(description.contains("30"), "Should contain seconds value")
+    /// Components that are not positive are dropped, except seconds, which always render
+    /// (with their sign). Covers each component alone, gaps, and large values.
+    @Test(arguments: [
+      DescriptionRow(timeLength: .init(), english: "0s", japanese: "0秒"),
+      DescriptionRow(timeLength: .init(seconds: 45), english: "45s", japanese: "45秒"),
+      DescriptionRow(timeLength: .init(minutes: 45), english: "45m 0s", japanese: "45分0秒"),
+      DescriptionRow(timeLength: .init(hours: 3), english: "3h 0s", japanese: "3時間0秒"),
+      DescriptionRow(timeLength: .init(days: 5), english: "5d 0s", japanese: "5日0秒"),
+      DescriptionRow(
+        timeLength: .init(hours: 1, minutes: 30),
+        english: "1h 30m 0s", japanese: "1時間30分0秒"),
+      DescriptionRow(timeLength: .init(days: 2, seconds: 7), english: "2d 7s", japanese: "2日7秒"),
+      DescriptionRow(
+        timeLength: .init(days: 999, hours: 23, minutes: 59, seconds: 59),
+        english: "999d 23h 59m 59s", japanese: "999日23時間59分59秒"),
+      DescriptionRow(
+        timeLength: .init(days: -1, hours: -2, minutes: -30, seconds: -45),
+        english: "-45s", japanese: "-45秒"),
+    ])
+    func `Only positive components render and seconds always render`(row: DescriptionRow) {
+      #expect(row.timeLength.localizedDescription(locale: Locale(identifier: "en_US")) == row.english)
+      #expect(row.timeLength.localizedDescription(locale: Locale(identifier: "ja_JP")) == row.japanese)
     }
 
-    @Test("Description with zero seconds shows seconds")
-    func descriptionWithZeroSecondsShowsSeconds() {
-      let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 0)
-      let description = timeLength.getLocalizedDescriptionString()
-
-      #expect(description.contains("0"), "Should always include seconds, even when zero")
-    }
-
-    @Test("Description excludes zero components except seconds")
-    func descriptionExcludesZeroComponentsExceptSeconds() {
-      let timeLength: TimeLength = .init(days: 0, hours: 0, minutes: 0, seconds: 45)
-      let description = timeLength.getLocalizedDescriptionString()
-
-      // Should only show seconds since other components are zero
-      #expect(description.contains("45"), "Should show seconds value")
-      // Should be relatively short since only seconds is included
-      #expect(description.count < 20, "Should be short when only seconds is present")
-    }
-  }
-
-  // MARK: - Locale-Specific Formatting Tests
-
-  @Suite("Locale-Specific Formatting")
-  struct LocaleSpecificFormattingTests {
-    @Test("English locale uses spaces between components")
-    func englishLocaleUsesSpacesBetweenComponents() {
-      let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
-      let englishLocale: Locale = .init(identifier: "en_US")
-      let description = timeLength.getLocalizedDescriptionString(locale: englishLocale)
-
-      #expect(description.contains(" "), "English format should contain spaces")
-    }
-
-    @Test("Japanese locale joins components without spaces")
-    func japaneseLocaleJoinsComponentsWithoutSpaces() {
-      let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
-      let japaneseLocale: Locale = .init(identifier: "ja_JP")
-      let description = timeLength.getLocalizedDescriptionString(locale: japaneseLocale)
-
-      // Japanese format should not have spaces between components
-      let hasSpaces = description.contains(" ")
-      #expect(!hasSpaces, "Japanese format should not contain spaces")
-    }
-
-    @Test("Simplified Chinese locale joins components without spaces")
-    func simplifiedChineseLocaleJoinsComponentsWithoutSpaces() {
-      let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
-      let chineseSimplifiedLocale: Locale = .init(identifier: "zh_Hans")
-      let description = timeLength.getLocalizedDescriptionString(locale: chineseSimplifiedLocale)
-
-      // Chinese format should not have spaces between components
-      let hasSpaces = description.contains(" ")
-      #expect(!hasSpaces, "Simplified Chinese format should not contain spaces")
-    }
-
-    @Test("Traditional Chinese locale joins components without spaces")
-    func traditionalChineseLocaleJoinsComponentsWithoutSpaces() {
-      let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
-      let chineseTraditionalLocale: Locale = .init(identifier: "zh_Hant")
-      let description = timeLength.getLocalizedDescriptionString(locale: chineseTraditionalLocale)
-
-      // Chinese format should not have spaces between components
-      let hasSpaces = description.contains(" ")
-      #expect(!hasSpaces, "Traditional Chinese format should not contain spaces")
-    }
-
-    @Test("Unknown locale defaults to English format")
-    func unknownLocaleDefaultsToEnglishFormat() {
-      let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
-      let unknownLocale: Locale = .init(identifier: "xx_XX")
-      let description = timeLength.getLocalizedDescriptionString(locale: unknownLocale)
-
-      #expect(description.contains(" "), "Unknown locale should default to English format with spaces")
-    }
-
-    @Test("Different locales produce different output formats")
-    func differentLocalesProduceDifferentOutputFormats() {
-      let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
-
-      let englishDescription = timeLength.getLocalizedDescriptionString(locale: Locale(identifier: "en_US"))
-      let japaneseDescription = timeLength.getLocalizedDescriptionString(locale: Locale(identifier: "ja_JP"))
-
-      #expect(englishDescription != japaneseDescription, "Different locales should produce different formats")
-    }
-  }
-
-  // MARK: - Edge Cases Tests
-
-  @Suite("Edge Cases")
-  struct EdgeCasesTests {
-    @Test("Large values handled correctly")
-    func largeValuesHandledCorrectly() {
-      let timeLength: TimeLength = .init(days: 999, hours: 23, minutes: 59, seconds: 59)
-      let description = timeLength.getLocalizedDescriptionString()
-
-      #expect(!description.isEmpty, "Should handle large values")
-      #expect(description.contains("999"), "Should contain large days value")
-      #expect(description.contains("23"), "Should contain hours value")
-      #expect(description.contains("59"), "Should contain minutes value")
-    }
-
-    @Test("Negative values handled correctly")
-    func negativeValuesHandledCorrectly() {
-      let timeLength: TimeLength = .init(days: -1, hours: -2, minutes: -30, seconds: -45)
-      let description = timeLength.getLocalizedDescriptionString()
-
-      #expect(!description.isEmpty, "Should handle negative values")
-      // The description should include the negative values
-      #expect(description.contains("-"), "Should contain negative indicators")
-    }
-
-    @Test("Zero time length shows only seconds")
-    func zeroTimeLengthShowsOnlySeconds() {
-      let timeLength: TimeLength = .init()
-      let description = timeLength.getLocalizedDescriptionString()
-
-      #expect(!description.isEmpty, "Description should not be empty for zero time")
-      #expect(description.contains("0"), "Should show zero seconds")
-    }
-
-    @Test("Single unit values work correctly")
-    func singleUnitValuesWorkCorrectly() {
-      let dayOnly: TimeLength = .init(days: 5)
-      let hourOnly: TimeLength = .init(hours: 3)
-      let minuteOnly: TimeLength = .init(minutes: 45)
-      let secondOnly: TimeLength = .init(seconds: 30)
-
-      let dayDescription = dayOnly.getLocalizedDescriptionString()
-      let hourDescription = hourOnly.getLocalizedDescriptionString()
-      let minuteDescription = minuteOnly.getLocalizedDescriptionString()
-      let secondDescription = secondOnly.getLocalizedDescriptionString()
-
-      #expect(dayDescription.contains("5"), "Day-only should work")
-      #expect(hourDescription.contains("3"), "Hour-only should work")
-      #expect(minuteDescription.contains("45"), "Minute-only should work")
-      #expect(secondDescription.contains("30"), "Second-only should work")
-
-      // All should also include seconds (always shown)
-      #expect(dayDescription.contains("0"), "Day-only should include zero seconds")
-      #expect(hourDescription.contains("0"), "Hour-only should include zero seconds")
-      #expect(minuteDescription.contains("0"), "Minute-only should include zero seconds")
-    }
-  }
-
-  // MARK: - Consistency Tests
-
-  @Suite("Consistency Tests")
-  struct ConsistencyTests {
-    @Test("Same values produce same description")
-    func sameValuesProduceSameDescription() {
-      let timeLength1: TimeLength = .init(days: 1, hours: 2, minutes: 3, seconds: 4)
-      let timeLength2: TimeLength = .init(days: 1, hours: 2, minutes: 3, seconds: 4)
-
-      let description1 = timeLength1.getLocalizedDescriptionString()
-      let description2 = timeLength2.getLocalizedDescriptionString()
-
-      #expect(description1 == description2, "Same values should produce identical descriptions")
-    }
-
-    @Test("Multiple calls produce consistent results")
-    func multipleCallsProduceConsistentResults() {
-      let timeLength: TimeLength = .init(hours: 1, minutes: 30, seconds: 45)
-
-      let description1 = timeLength.getLocalizedDescriptionString()
-      let description2 = timeLength.getLocalizedDescriptionString()
-      let description3 = timeLength.getLocalizedDescriptionString()
-
-      #expect(description1 == description2, "Multiple calls should be consistent")
-      #expect(description2 == description3, "Multiple calls should be consistent")
-    }
-
-    @Test("Current locale default works correctly")
-    func currentLocaleDefaultWorksCorrectly() {
+    @Test
+    func `Default locale is the current locale`() {
       let timeLength: TimeLength = .init(hours: 2, minutes: 15, seconds: 30)
 
-      let defaultDescription = timeLength.getLocalizedDescriptionString()
-      let explicitCurrentDescription = timeLength.getLocalizedDescriptionString(locale: .current)
-
-      #expect(defaultDescription == explicitCurrentDescription, "Default locale should match explicit current locale")
+      #expect(timeLength.localizedDescription() == timeLength.localizedDescription(locale: .current))
     }
   }
+}
+
+// MARK: - DescriptionRow
+
+/// One golden row for `localizedDescription(locale:)`.
+struct DescriptionRow: CustomTestStringConvertible {
+  let timeLength: TimeLength
+  let english: String
+  let japanese: String
+
+  var testDescription: String { english }
 }

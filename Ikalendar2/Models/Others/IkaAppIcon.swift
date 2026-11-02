@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The selectable app icons, including a certain easter egg.
 enum IkaAppIcon: String, CaseIterable, Identifiable {
   static let `default`: Self = .preset
 
@@ -18,6 +19,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
 
   var id: String { rawValue }
 
+  /// `nil` means the primary icon: `setAlternateIconName(nil)` is how UIKit restores it.
   var alternateIconName: String? {
     switch self {
       case .default:
@@ -76,12 +78,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     var codeName: String {
       guard !rawValue.isEmpty else { return "" }
 
-      // Capitalize first letter
       return String(rawValue.prefix(1)).uppercased() + rawValue.dropFirst()
-    }
-
-    var index: Int {
-      ColorVariant.allCases.firstIndex(of: self)!
     }
 
     var sfSymbolName: String {
@@ -108,14 +105,6 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
         case .clearDark:
           .default
       }
-    }
-
-    init?(index: Int) {
-      guard index >= 0, index < ColorVariant.allCases.count else {
-        return nil // Index out of bounds
-      }
-
-      self = ColorVariant.allCases[index]
     }
   }
 
@@ -151,7 +140,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     let color: ColorVariant
     let size: DisplaySizeVariant
 
-    func getImageSuffix() -> String {
+    var imageSuffix: String {
       "-iOS-\(color.codeName)-\(size.imageAssetSize)x\(size.imageAssetSize)"
     }
   }
@@ -167,7 +156,7 @@ enum IkaAppIcon: String, CaseIterable, Identifiable {
     }
   }
 
-  func getImageName(_ displayMode: DisplayMode) -> String {
-    iconSetName + displayMode.getImageSuffix()
+  func imageName(for displayMode: DisplayMode) -> String {
+    iconSetName + displayMode.imageSuffix
   }
 }

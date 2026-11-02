@@ -29,7 +29,7 @@ Track Splatoon 2 rotation schedules with style and ease.
       srcset="./Resources/MetaAssets/README/Demos/demo-universal.webp"
       type="image/webp">
     <img
-      src="./Resources/MetaAssets/README/Demos/demo-universal.png"
+      src="./Resources/MetaAssets/README/Demos/demo-universal.PNG"
       alt="App Demo">
   </picture>
 </div>
@@ -60,7 +60,7 @@ ikalendar2 is available for download on the App Store for free.
 
 - Previous versions compatible with OSes from iOS / iPadOS `13` to `18` are still available on the App Store for users with older devices.
 
-- Compatibility with macOS on Apple Silicon is provided through Mac Catalyst.
+- On Macs with Apple Silicon, the iPad version of ikalendar2 runs natively as a "Designed for iPad" app.
 
 # Previews
 
@@ -120,6 +120,21 @@ I built ikalendar2 to solve this specific problem. It fetches **only the necessa
 
 ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to capture some of Splatoon's visual style while keeping the interface clean and functional. The goal is to make it the perfect tool not just for myself but also for all other players who need a better way to keep up with the game.
 
+# Testing
+
+The project ships two Swift Testing bundles: `IkalendarKitTests` (framework utilities) and `Ikalendar2Tests` (decoders, model invariants, preference persistence, and the catalog loading state machine).
+
+Running the tests requires Xcode 26 or later. Run everything from Xcode by selecting the `Ikalendar2` scheme and pressing `Cmd+U`, or from the command line:
+
+```bash
+xcodebuild test \
+  -project Ikalendar2.xcodeproj \
+  -scheme Ikalendar2 \
+  -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest'
+```
+
+To run a single suite, append e.g. `-only-testing:Ikalendar2Tests/IkaDecoderTests`.
+
 # Website
 
 ikalendar2 has a landing page hosted at [`ikalendar.app`](https://ikalendar.app).
@@ -148,7 +163,7 @@ ikalendar2 is made possible thanks to the following projects:
 
 ### Dependencies
 
-- [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
+- [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) — powered this app's JSON parsing for years before the move to native Codable
 - [SimpleHaptics](https://github.com/notbd/SimpleHaptics)
 - [AlertKit](https://github.com/sparrowcode/AlertKit)
 

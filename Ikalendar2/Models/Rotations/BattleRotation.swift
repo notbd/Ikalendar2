@@ -22,6 +22,8 @@ struct BattleRotation: Rotation, Hashable {
 }
 
 extension BattleRotation {
+  /// Includes the mode: the three battle feeds share start times, so the protocol's default id
+  /// would collide.
   var id: String { "\(mode)-\(startTime)-\(endTime)" }
 
   var description: String {
@@ -32,35 +34,26 @@ extension BattleRotation {
 }
 
 extension BattleRotation {
-  var stageAAltImageName: String {
+  var stageAAltImageName: String { altImageName(for: stageA) }
+  var stageBAltImageName: String { altImageName(for: stageB) }
+
+  /// Picks one of the stage's general or rule-specific alt images, seeded by `description`
+  /// so the same rotation always resolves to the same image. A stage without any alt image
+  /// (Shifty Station) keeps its standard image (a0b8cef, d635200; pinned by AltStageImageTests).
+  private func altImageName(for stage: BattleStage) -> String {
     let generator: SeededRandomGenerator = .init(seed: description)
 
-    let generalPrefix = stageA.imgFiln + "_Alt_"
-    let ruleSpecificPrefix = stageA.imgFiln + "_Alt+\(rule.abbreviation)_"
+    let generalPrefix = stage.imageName + "_Alt_"
+    let ruleSpecificPrefix = stage.imageName + "_Alt+\(rule.abbreviation)_"
 
     let numOfAltImagesGeneral: Int = AssetImageCounter.countImagesWithPrefix(generalPrefix)
     let numOfAltImagesRuleSpecific: Int = AssetImageCounter.countImagesWithPrefix(ruleSpecificPrefix)
+    let numOfAltImages = numOfAltImagesGeneral + numOfAltImagesRuleSpecific
 
-    let randomChoice = generator.nextInt(bound: numOfAltImagesGeneral + numOfAltImagesRuleSpecific)
+    guard numOfAltImages > 0
+    else { return stage.imageName }
 
-    return if randomChoice < numOfAltImagesGeneral {
-      "\(generalPrefix)\(randomChoice)"
-    }
-    else {
-      "\(ruleSpecificPrefix)\(randomChoice - numOfAltImagesGeneral)"
-    }
-  }
-
-  var stageBAltImageName: String {
-    let generator: SeededRandomGenerator = .init(seed: description)
-
-    let generalPrefix = stageB.imgFiln + "_Alt_"
-    let ruleSpecificPrefix = stageB.imgFiln + "_Alt+\(rule.abbreviation)_"
-
-    let numOfAltImagesGeneral: Int = AssetImageCounter.countImagesWithPrefix(generalPrefix)
-    let numOfAltImagesRuleSpecific: Int = AssetImageCounter.countImagesWithPrefix(ruleSpecificPrefix)
-
-    let randomChoice = generator.nextInt(bound: numOfAltImagesGeneral + numOfAltImagesRuleSpecific)
+    let randomChoice = generator.nextInt(bound: numOfAltImages)
 
     return if randomChoice < numOfAltImagesGeneral {
       "\(generalPrefix)\(randomChoice)"
@@ -72,13 +65,12 @@ extension BattleRotation {
 }
 
 extension BattleRotation {
-  /// Determines whether the rotation is coming up next.
+  /// How long a battle rotation lasts.
+  static let rotationLength: TimeInterval = 2 * 60 * 60
+
+  /// Determines whether the rotation is coming up next: it will be current one rotation from
+  /// now, so it turns next on the same second the rotation before it turns current.
   func isNext(_ currentTime: Date) -> Bool {
-    let twoHoursLater =
-      Calendar.current.date(
-        byAdding: .hour,
-        value: 2,
-        to: currentTime)!
-    return startTime < twoHoursLater && twoHoursLater < endTime
+    isCurrent(currentTime.addingTimeInterval(Self.rotationLength))
   }
 }

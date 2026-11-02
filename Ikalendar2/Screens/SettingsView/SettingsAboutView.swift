@@ -5,7 +5,6 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-import Combine
 import SimpleHaptics
 import StoreKit
 import SwiftUI
@@ -13,15 +12,14 @@ import SwiftUI
 // MARK: - SettingsAboutView
 
 /// The About page in App Settings.
-@MainActor
 struct SettingsAboutView: View {
   typealias Scoped = Constants.Style.Settings.About
 
   @Environment(\.requestReview) private var requestReview
   @Environment(\.openURL) private var openURL
-  @Environment(\.dynamicTypeSize) var dynamicTypeSize
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-  @EnvironmentObject private var ikaLog: IkaLog
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
   @State private var appStoreOverlayPresented = false
 
@@ -29,7 +27,6 @@ struct SettingsAboutView: View {
   @State private var appIconBounceCounter: Int = 0
 
   @State private var shouldDisplayAnimatedCopy: Bool = false
-  @State private var currentToggleAfterDelayTask: Task<Void, Never>?
 
   var body: some View {
     ZStack {
@@ -37,13 +34,10 @@ struct SettingsAboutView: View {
         Section {
           rowAppInfo
             .opacity(shouldDisplayAnimatedCopy ? 0 : 1)
-            .background {
-              GeometryReader { geo in
-                Color.clear
-                  .onChange(of: geo.frame(in: .global), initial: true) { _, newValue in
-                    rowAppInfoRectGlobal = newValue
-                  }
-              }
+            .onGeometryChange(for: CGRect.self) { geo in
+              geo.frame(in: .global)
+            } action: { newValue in
+              rowAppInfoRectGlobal = newValue
             }
         }
         .listRowBackground(Color.clear)
@@ -82,17 +76,20 @@ struct SettingsAboutView: View {
         .frame(width: rowAppInfoRectGlobal.width, height: rowAppInfoRectGlobal.height)
         .globalPosition(x: rowAppInfoRectGlobal.midX, y: rowAppInfoRectGlobal.midY)
         .opacity(shouldDisplayAnimatedCopy ? 1 : 0)
+        .accessibilityHidden(true) // visual-only duplicate of the list row
     }
-    .onChange(of: appIconBounceCounter, initial: false) {
-      Task {
-        try? await Task.sleep(nanoseconds: UInt64(0.1 * 1_000_000_000))
-        await SimpleHaptics.generate(.light)
-      }
+    .squashBounceHaptic(trigger: appIconBounceCounter)
+    // While bouncing, the icon escapes its list cell's clip bounds - so hide the
+    // original and overlay an unclipped copy at the same spot. Re-triggering
+    // restarts the linger window.
+    .task(id: appIconBounceCounter) {
+      guard appIconBounceCounter > 0 else { return }
+
       shouldDisplayAnimatedCopy = true
-      // Cancel the previous task, if it exists
-      currentToggleAfterDelayTask?.cancel()
-      // Schedule a new task
-      currentToggleAfterDelayTask = Task { await toggleShouldDisplayAnimatedCopyAfterDelay() }
+      try? await Task.sleep(for: .seconds(Constants.Motion.aboutIconCopyLinger))
+      guard !Task.isCancelled else { return }
+
+      shouldDisplayAnimatedCopy = false
     }
   }
 
@@ -104,42 +101,39 @@ struct SettingsAboutView: View {
       .init(color: .default, size: .large)
 
     var appIconImage: some View {
-      Image(appIconVariant.getImageName(appIconDisplayMode))
+      Image(appIconVariant.imageName(for: appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
         .frame(
           width: appIconDisplayMode.size.screenSize,
           height: appIconDisplayMode.size.screenSize)
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+        .shadow(radius: Constants.Style.Global.shadowRadius)
         .zIndex(1)
         .onTapGesture {
-          // trigger animation
           appIconBounceCounter += 1
         }
-        .apply(applyAppIconBounceAnimation)
+        .squashBounce(trigger: appIconBounceCounter, amplitude: .aboutIcon)
+        // decorative, and the tap-to-bounce is an easter egg: keep both out of VoiceOver
+        .accessibilityHidden(true)
     }
 
     var appIconTitle: some View {
-      let title = Constants.Key.BundleInfo.APP_DISPLAY_NAME
-      let text =
-        Text(title)
-          .font(Scoped.APP_ICON_TITLE_FONT)
-          .fontWeight(Scoped.APP_ICON_TITLE_FONT_WEIGHT)
-          .foregroundStyle(Color.accentColor)
-      return text
+      let title = Constants.Key.BundleInfo.appDisplayName
+      return Text(title)
+        .font(Scoped.appIconTitleFont)
+        .fontWeight(Scoped.appIconTitleFontWeight)
+        .foregroundStyle(Color.accentColor)
     }
 
     var appIconSubtitle: some View {
-      let versionNumber = Constants.Key.BundleInfo.APP_VERSION
-      let buildNumber = Constants.Key.BundleInfo.APP_BUILD
+      let versionNumber = Constants.Key.BundleInfo.appVersion
+      let buildNumber = Constants.Key.BundleInfo.appBuild
       let subtitle = "Version \(versionNumber) (\(buildNumber))"
-      let text =
-        Text(subtitle)
-          .font(Scoped.APP_ICON_SUBTITLE_FONT)
-          .fontWeight(Scoped.APP_ICON_SUBTITLE_FONT_WEIGHT)
-          .foregroundStyle(Color.secondary)
-      return text
+      return Text(subtitle)
+        .font(Scoped.appIconSubtitleFont)
+        .fontWeight(Scoped.appIconSubtitleFontWeight)
+        .foregroundStyle(Color.secondary)
     }
 
     return
@@ -155,75 +149,50 @@ struct SettingsAboutView: View {
 
   private var rowShare: some View {
     // NOTE: could not find a way to trigger haptics when tapped ShareLink as of iOS 26
-    let shareURL: URL = .init(string: Constants.Key.URL.APP_STORE_PAGE)!
+    let shareURL: URL = .init(string: Constants.Key.URLs.appStorePage)!
 
     return
       ShareLink(item: shareURL) {
-        Label {
-          Text("Share ikalendar2")
-            .foregroundStyle(Color.primary)
-        } icon: {
-          Image(systemName: Scoped.SHARE_SFSYMBOL)
-            .imageScale(.medium)
-            .symbolRenderingMode(.hierarchical)
-            .foregroundStyle(Color.accentColor)
-        }
+        SettingsRowLabel(
+          "Share ikalendar2",
+          titleStyle: Color.primary,
+          systemImage: Scoped.shareSFSymbol)
       }
   }
 
   // MARK: - Review Section
 
-  @State private var rowRatingIconAnimationTrigger: Int = 0
-  private var ratingNudgeTimer = Timer
-    .publish(
-      every: Constants.Config.Timer.nudgeSignalInterval,
-      tolerance: 0.1,
-      on: .main,
-      in: .common)
-    .autoconnect()
+  /// Fires the wiggle once as immediate tap feedback (the periodic hint is iconNudge's job).
+  @State private var ratingTapFeedbackTrigger: Int = 0
 
   private var rowRating: some View {
     Button {
       SimpleHaptics.generateTask(.selection)
       requestReview()
-      rowRatingIconAnimationTrigger += 1
-      if !ikaLog.hasDiscoveredRating { ikaLog.hasDiscoveredRating = true }
+      ratingTapFeedbackTrigger += 1
+      if !ikaDiscoveryLog.hasDiscoveredRating { ikaDiscoveryLog.hasDiscoveredRating = true }
     } label: {
-      Label {
-        Text("Rate ikalendar2")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.RATING_SFSYMBOL)
-          .symbolEffect(.wiggle, value: rowRatingIconAnimationTrigger)
+      SettingsRowLabel("Rate ikalendar2", titleStyle: Color.primary) {
+        Image(systemName: Scoped.ratingSFSymbol)
+          .symbolEffect(.wiggle, value: ratingTapFeedbackTrigger)
+          .iconNudge(isActive: !ikaDiscoveryLog.hasDiscoveredRating)
           .imageScale(.medium)
           .symbolRenderingMode(.monochrome)
           .foregroundStyle(Color.accentColor)
       }
     }
-    .onReceive(ratingNudgeTimer) { _ in
-      guard !ikaLog.hasDiscoveredRating else { return }
-
-      rowRatingIconAnimationTrigger += 1
-    }
   }
 
   private var rowLeavingReview: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.APP_STORE_REVIEW) else { return }
+      guard let url = URL(string: Constants.Key.URLs.appStoreReview) else { return }
 
       openURL(url)
     } label: {
-      Label {
-        Text("Leave a Review")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.REVIEW_SFSYMBOL)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Leave a Review",
+        titleStyle: Color.primary,
+        systemImage: Scoped.reviewSFSymbol)
     }
   }
 
@@ -234,12 +203,8 @@ struct SettingsAboutView: View {
       SimpleHaptics.generateTask(.selection)
       appStoreOverlayPresented.toggle()
     } label: {
-      Label {
-        Text("View ikalendar2 on the App Store")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.VIEW_ON_APP_STORE_SFSYMBOL)
+      SettingsRowLabel("View ikalendar2 on the App Store", titleStyle: Color.primary) {
+        Image(systemName: Scoped.viewOnAppStoreSFSymbol)
           .imageScale(.large)
           .symbolEffect(.bounce, value: rowAppStoreOverlayBounceCounter)
           .symbolRenderingMode(.hierarchical)
@@ -248,7 +213,7 @@ struct SettingsAboutView: View {
     }
     .appStoreOverlay(isPresented: $appStoreOverlayPresented) {
       SKOverlay.AppConfiguration(
-        appIdentifier: Constants.Key.BundleInfo.APP_STORE_IDENTIFIER,
+        appIdentifier: Constants.Key.BundleInfo.appStoreIdentifier,
         position: .bottom)
     }
     .onChange(of: appStoreOverlayPresented, initial: false) { _, newVal in
@@ -259,9 +224,9 @@ struct SettingsAboutView: View {
   // MARK: - Contact Section
 
   private var rowDeveloperTwitter: some View {
-    let twitterURLString = Constants.Key.URL.TWITTER_PROFILE
+    let twitterURLString = Constants.Key.URLs.twitterProfile
     let twitterHandle = twitterURLString
-      .shortenedURL(base: Constants.Key.URL.TWITTER_BASE, newPrefix: "@")!
+      .shortenedURL(base: Constants.Key.URLs.twitterBase, newPrefix: "@")!
 
     return
       Button {
@@ -270,19 +235,13 @@ struct SettingsAboutView: View {
         openURL(url)
       } label: {
         HStack {
-          Label {
-            Text("Twitter")
-              .foregroundStyle(Color.primary)
-          }
-          icon: {
-            Image(Scoped.TWITTER_ICON_NAME)
-              .antialiased(true)
-              .resizable()
-              .scaledToFit()
+          SettingsRowLabel("Twitter", titleStyle: Color.primary) {
+            Image(decorative: Scoped.twitterIconName)
+              .ikaFitted()
               .frame(
                 width: dynamicTypeSize <= .small
-                  ? Scoped.TWITTER_ICON_SIZE_SMALL
-                  : Scoped.TWITTER_ICON_SIZE_LARGE)
+                  ? Scoped.twitterIconSizeSmall
+                  : Scoped.twitterIconSizeLarge)
           }
 
           Spacer()
@@ -295,20 +254,14 @@ struct SettingsAboutView: View {
 
   private var rowDeveloperEmail: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.DEVELOPER_EMAIL) else { return }
+      guard let url = URL(string: Constants.Key.URLs.developerEmail) else { return }
 
       openURL(url)
     } label: {
-      Label {
-        Text("Feedback Email")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.EMAIL_SFSYMBOL)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Feedback Email",
+        titleStyle: Color.primary,
+        systemImage: Scoped.emailSFSymbol)
     }
   }
 
@@ -316,26 +269,20 @@ struct SettingsAboutView: View {
 
   private var rowAppWebsite: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.IKALENDAR2_WEBSITE) else { return }
+      guard let url = URL(string: Constants.Key.URLs.ikalendar2Website) else { return }
 
       openURL(url)
     } label: {
-      Label {
-        Text("App Website")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.APP_WEBSITE_SFSYMBOL)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "App Website",
+        titleStyle: Color.primary,
+        systemImage: Scoped.appWebsiteSFSymbol)
     }
   }
 
   private var rowSourceCode: some View {
-    let repoName = Constants.Key.BundleInfo.APP_DISPLAY_NAME
-    let repoURLString = Constants.Key.URL.SOURCE_CODE_REPO
+    let repoName = Constants.Key.BundleInfo.appDisplayName
+    let repoURLString = Constants.Key.URLs.sourceCodeRepo
     let destination: DetailsLicenseView =
       .init(
         repoName: repoName,
@@ -344,16 +291,10 @@ struct SettingsAboutView: View {
 
     return
       NavigationLink(destination: destination) {
-        Label {
-          Text("Source Code")
-            .foregroundStyle(.primary)
-        }
-        icon: {
-          Image(systemName: Scoped.SOURCE_CODE_SFSYMBOL)
-            .imageScale(.medium)
-            .symbolRenderingMode(.hierarchical)
-            .foregroundStyle(Color.accentColor)
-        }
+        SettingsRowLabel(
+          "Source Code",
+          titleStyle: .primary,
+          systemImage: Scoped.sourceCodeSFSymbol)
       }
       .swipeActions {
         Button {
@@ -361,7 +302,7 @@ struct SettingsAboutView: View {
 
           openURL(url)
         } label: {
-          Constants.Style.Global.EXTERNAL_LINK_JUMP_ICON
+          Constants.Style.Global.externalLinkJumpIcon
         }
         .tint(Color.accentColor)
       }
@@ -369,135 +310,63 @@ struct SettingsAboutView: View {
 
   private var rowPrivacyPolicy: some View {
     Button {
-      guard let url = URL(string: Constants.Key.URL.PRIVACY_POLICY) else { return }
+      guard let url = URL(string: Constants.Key.URLs.privacyPolicy) else { return }
 
       openURL(url)
     } label: {
-      Label {
-        Text("Privacy Policy")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.PRIVACY_POLICY_SFSYMBOL)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Privacy Policy",
+        titleStyle: Color.primary,
+        systemImage: Scoped.privacyPolicySFSymbol)
     }
   }
 
-  // MARK: - Others Section
+  // MARK: - Debug
 
   private var rowDebugOptions: some View {
     NavigationLink(destination: SettingsDebugOptionsView()) {
-      Label {
-        Text("Debug Options")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.DEBUG_OPTIONS_SFSYMBOL)
-          .imageScale(.medium)
-          .symbolRenderingMode(.monochrome)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Debug Options",
+        titleStyle: Color.primary,
+        systemImage: Scoped.debugOptionsSFSymbol,
+        renderingMode: .monochrome)
     }
   }
 
-  @ScaledMetric(relativeTo: .title) var littleBuddyHeight: CGFloat = Scoped.LITTLE_BUDDY_HEIGHT
+  @ScaledMetric(relativeTo: .title) private var littleBuddyHeight: CGFloat = Scoped.littleBuddyHeight
 
   private var footerIkalendar3: some View {
     HStack(alignment: .center) {
       Image(.littleBuddy)
-        .antialiased(true)
-        .resizable()
-        .scaledToFit()
+        .ikaFitted()
         .saturation(0.6)
         .frame(height: littleBuddyHeight)
         .padding(.vertical)
-        .padding(.trailing, 10)
+        .padding(.trailing, Scoped.littleBuddyPaddingTrailing)
+        .accessibilityHidden(true)
 
-      Text(Constants.Key.Slogan.IKALENDAR3.localizedStringKey)
+      Text(Constants.Key.Slogan.ikalendar3.localizedStringKey)
         .scaledLimitedLine(lineLimit: 2)
         .ikaFont(
           .ika2,
-          size: Scoped.SLOGAN_IKALENDAR3_FONT_SIZE,
+          size: Scoped.sloganIkalendar3FontSize,
           relativeTo: .footnote)
     }
   }
-
-  private func applyAppIconBounceAnimation(_ content: some View) -> some View {
-    content
-      .keyframeAnimator(
-        initialValue: SettingsAboutAppIconAnimationValues(),
-        trigger: appIconBounceCounter,
-        content: SettingsAboutAppIconAnimationValues.keyframeTransformation,
-        keyframes: SettingsAboutAppIconAnimationValues.appIconKeyframes)
-  }
-
-  private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
-    try? await Task.sleep(nanoseconds: UInt64(1.6 * 1_000_000_000))
-    guard !Task.isCancelled else { return }
-
-    shouldDisplayAnimatedCopy = false
-  }
 }
 
-// MARK: - SettingsAboutAppIconAnimationValues
-
-struct SettingsAboutAppIconAnimationValues {
-  var scale: Double = 1
-  var vStretch: Double = 1
-  var vTranslation: Double = 0
-
-  @ViewBuilder
-  @Sendable
-  static func keyframeTransformation(
-    content: PlaceholderContentView<some View>,
-    values: SettingsAboutAppIconAnimationValues)
-    -> some View
-  {
-    content
-      .scaleEffect(values.scale)
-      .scaleEffect(y: values.vStretch)
-      .offset(y: values.vTranslation)
-  }
-
-  @KeyframesBuilder<SettingsAboutAppIconAnimationValues>
-  static func appIconKeyframes(start _: SettingsAboutAppIconAnimationValues)
-    -> some Keyframes<SettingsAboutAppIconAnimationValues>
-  {
-    KeyframeTrack(\.vStretch) {
-      CubicKeyframe(1.0, duration: 0.01)
-      CubicKeyframe(0.8, duration: 0.06)
-      CubicKeyframe(1.12, duration: 0.1)
-      CubicKeyframe(1.04, duration: 0.3)
-      CubicKeyframe(1.0, duration: 0.3)
-      CubicKeyframe(0.9, duration: 0.22)
-      CubicKeyframe(1.02, duration: 0.23)
-      CubicKeyframe(1.0, duration: 0.20)
-    }
-
-    KeyframeTrack(\.scale) {
-      LinearKeyframe(1.0, duration: 0.16)
-      SpringKeyframe(1.03, duration: 0.38, spring: .bouncy)
-      SpringKeyframe(1.03, duration: 0.27, spring: .smooth)
-      SpringKeyframe(1.0, spring: .bouncy(duration: 0.65, extraBounce: 0.1))
-    }
-
-    KeyframeTrack(\.vTranslation) {
-      SpringKeyframe(40.0, duration: 0.11, spring: .bouncy)
-      SpringKeyframe(-30.0, duration: 0.43, spring: .bouncy)
-      SpringKeyframe(-34.0, duration: 0.27, spring: .smooth)
-      SpringKeyframe(0.0, spring: .bouncy(duration: 0.65, extraBounce: 0.3))
-    }
-  }
-}
-
-// MARK: - SettingsAboutView_Previews
-
-struct SettingsAboutView_Previews: PreviewProvider {
-  static var previews: some View {
+#Preview("Dark") {
+  NavigationStack {
     SettingsAboutView()
-      .preferredColorScheme(.dark)
   }
+  .ikaPreviewEnvironment()
+  .preferredColorScheme(.dark)
+}
+
+#Preview("Light") {
+  NavigationStack {
+    SettingsAboutView()
+  }
+  .ikaPreviewEnvironment()
+  .preferredColorScheme(.light)
 }

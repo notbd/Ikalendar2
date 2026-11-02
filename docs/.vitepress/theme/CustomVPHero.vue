@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { type Ref, inject } from 'vue'
-import type { DefaultTheme } from 'vitepress/theme'
-import { VPButton, VPImage } from 'vitepress/theme'
-import ClientAppStoreBadge from './ClientAppStoreBadge.vue'
+import type { DefaultTheme } from 'vitepress/theme-without-fonts'
+import type { Ref } from 'vue'
+import { VPButton, VPImage } from 'vitepress/theme-without-fonts'
+import { inject } from 'vue'
 
 defineProps<{
   name?: string
@@ -13,7 +13,6 @@ defineProps<{
   appStoreLink?: string
   appStoreImageDark: string
   appStoreImageLight: string
-  compatibility?: string
 }>()
 
 export type HeroAction = {
@@ -46,10 +45,12 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
         <div v-if="actions" class="actions">
           <div class="action">
             <a :href="appStoreLink" target="_blank" rel="noopener noreferrer">
-              <ClientAppStoreBadge
-                :light-src="appStoreImageLight"
-                :dark-src="appStoreImageDark"
-                alt="Download on the App Store"
+              <VPImage
+                :image="{
+                  light: appStoreImageLight,
+                  dark: appStoreImageDark,
+                  alt: 'Download on the App Store',
+                }"
               />
             </a>
           </div>
@@ -83,28 +84,19 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
 
 <style scoped>
 .VPHero {
-  margin-top: calc(
-    (var(--vp-nav-height) + var(--vp-layout-top-height, 0px)) * -1
-  );
-  padding: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 48px)
-    24px 48px;
+  margin-top: calc((var(--vp-nav-height) + var(--vp-layout-top-height, 0px)) * -1);
+  padding: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 48px) 24px 48px;
 }
 
 @media (min-width: 640px) {
   .VPHero {
-    padding: calc(
-        var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 80px
-      )
-      48px 64px;
+    padding: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 80px) 48px 64px;
   }
 }
 
 @media (min-width: 960px) {
   .VPHero {
-    padding: calc(
-        var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 80px
-      )
-      64px 64px;
+    padding: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 80px) 64px 64px;
   }
 }
 
@@ -357,11 +349,5 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
     max-width: 320px;
     max-height: 320px;
   }
-}
-
-.compatibility {
-  padding-top: 8px;
-  font-size: 14px;
-  color: var(--vp-c-text-2);
 }
 </style>

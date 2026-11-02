@@ -21,20 +21,10 @@ enum SalmonStage: Int, Identifiable, CaseIterable, Equatable {
 /// Fail-able SalmonStage initializer using Stage Name.
 extension SalmonStage {
   init?(name: String) {
-    switch name {
-      case "Spawning Grounds":
-        self = .spawningGrounds
-      case "Marooner's Bay":
-        self = .maroonerSBay
-      case "Lost Outpost":
-        self = .lostOutpost
-      case "Salmonid Smokeyard":
-        self = .salmonidSmokeyard
-      case "Ruins of Ark Polaris":
-        self = .ruinsOfArkPolaris
-      default:
-        return nil
-    }
+    guard let stage = Self.allCases.first(where: { $0.name == name })
+    else { return nil }
+
+    self = stage
   }
 }
 
@@ -56,12 +46,12 @@ extension SalmonStage {
 }
 
 extension SalmonStage {
-  var imgFiln: String {
+  var imageName: String {
     name
-      .replacingOccurrences(of: " ", with: "_")
+      .replacing(" ", with: "_")
   }
 
-  var imgFilnLarge: String {
-    imgFiln + "_Large"
+  var imageNameLarge: String {
+    imageName + "_Large"
   }
 }

@@ -3,7 +3,7 @@ layout: home
 
 hero:
   image:
-    src: /assets/app-icon-1024.png
+    src: /assets/app-icon-hero.webp
     alt: Logo for ikalendar2
   name: ikalendar2
   text: Track Splatoon 2 Rotations with Style and Ease
@@ -50,7 +50,7 @@ dependencies:
         - name: misenhower/splatoon2.ink
           url: https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy#data-urls
           icon: github
-        - name: JelenzoBot
+        - name: JelonzoBot
           url: https://splatoon.oatmealdome.me/about
     - tier: Open Source Libraries
       size: big
@@ -58,7 +58,7 @@ dependencies:
         - name: SwiftyJSON/SwiftyJSON
           url: https://github.com/SwiftyJSON/SwiftyJSON
           icon: github
-          description: The better way to deal with JSON data in Swift.
+          description: Powered our JSON parsing for years. Thank you!
         - name: notbd/SimpleHaptics
           url: https://github.com/notbd/SimpleHaptics
           icon: github

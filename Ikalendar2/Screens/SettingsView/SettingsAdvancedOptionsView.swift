@@ -10,26 +10,22 @@ import SwiftUI
 
 // MARK: - SettingsAdvancedOptionsView
 
-@MainActor
+/// The Settings page for the more niche toggles, with live preview cells.
 struct SettingsAdvancedOptionsView: View {
   typealias Scoped = Constants.Style.Settings.Advanced
-
-  @Environment(IkaStatus.self) private var ikaStatus
 
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
-  @State private var isBottomToolbarPreviewPresented = false
+  @State private var battleRotationPreviewData: BattleRotation = IkaMockData.makeBattleRotation()
+  @State private var salmonRotationPreviewData: SalmonRotation = IkaMockData.makeSalmonRotation()
 
-  @State private var battleRotationPreviewData: BattleRotation = IkaMockData.getBattleRotation()
-  @State private var salmonRotationPreviewData: SalmonRotation = IkaMockData.getSalmonRotation()
+  @State private var rowWidth: CGFloat = Scoped.previewCellMaxWidth
 
-  @State private var rowWidth: CGFloat = 390
-
-  private var doesNeedPaddedPreview: Bool {
-    !isHorizontalCompact && rowWidth > Scoped.PREVIEW_CELL_MAX_WIDTH
+  private var needsPaddedPreview: Bool {
+    !isHorizontalCompact && rowWidth > Scoped.previewCellMaxWidth
   }
 
   var body: some View {
@@ -61,13 +57,6 @@ struct SettingsAdvancedOptionsView: View {
       .navigationTitle("Advanced Options")
       .navigationBarTitleDisplayMode(.large)
       .listStyle(.insetGrouped)
-      .sheet(isPresented: $isBottomToolbarPreviewPresented) {
-        BottomToolbarPositioningPreview()
-          .presentationDetents([.fraction(Scoped.BOTTOM_TOOLBAR_PREVIEW_SHEET_DETENTS_FRACTION)])
-          .presentationCornerRadius(0)
-          .presentationBackground(.ultraThinMaterial)
-          .interactiveDismissDisabled()
-      }
       .onChange(of: geo.size, initial: true) { _, newVal in
         rowWidth = newVal.width
       }
@@ -75,15 +64,12 @@ struct SettingsAdvancedOptionsView: View {
   }
 
   private var rowTabBarMinimizingSwitch: some View {
-    Toggle(isOn: $ikaPreference.shouldMinimizeTabBar) {
-      Label {
-        Text("Minimize Tab Bar")
-          .foregroundStyle(.primary)
-      }
-      icon: {
+    @Bindable var ikaPreference = ikaPreference
+    return Toggle(isOn: $ikaPreference.shouldMinimizeTabBar) {
+      SettingsRowLabel("Minimize Tab Bar", titleStyle: .primary) {
         Image(systemName: ikaPreference.shouldMinimizeTabBar
-          ? Scoped.TAB_BAR_MINIMIZING_ON_SFSYMBOL
-          : Scoped.TAB_BAR_MINIMIZING_OFF_SFSYMBOL)
+          ? Scoped.tabBarMinimizingOnSFSymbol
+          : Scoped.tabBarMinimizingOffSFSymbol)
           .imageScale(.medium)
           .contentTransition(.symbolEffect(.replace.magic(fallback: .replace.byLayer)))
           .symbolRenderingMode(.monochrome)
@@ -94,38 +80,13 @@ struct SettingsAdvancedOptionsView: View {
     .disabled(!isHorizontalCompact)
   }
 
-  private var rowBottomToolbarPositioningSwitch: some View {
-    Toggle(isOn: $ikaPreference.shouldSwapBottomToolbarPickers) {
-      Label {
-        Text("Swap Bottom Toolbar Pickers")
-          .foregroundStyle(.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.BOTTOM_TOOLBAR_PICKER_POSITIONING_SFSYMBOL)
-          .imageScale(.medium)
-          .symbolRenderingMode(.monochrome)
-          .foregroundStyle(Color.accentColor)
-      }
-    }
-    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-    .disabled(!isHorizontalCompact)
-    .onChange(of: ikaPreference.shouldSwapBottomToolbarPickers) {
-      isBottomToolbarPreviewPresented.toggle()
-    }
-  }
-
   private var rowAltStageImagesSwitch: some View {
-    Toggle(isOn: $ikaPreference.shouldUseAltStageImages) {
-      Label {
-        Text("Alternative Stage Images")
-          .foregroundStyle(.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.ALT_STAGE_IMG_SFSYMBOL)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+    @Bindable var ikaPreference = ikaPreference
+    return Toggle(isOn: $ikaPreference.shouldUseAltStageImages) {
+      SettingsRowLabel(
+        "Alternative Stage Images",
+        titleStyle: .primary,
+        systemImage: Scoped.altStageImageSFSymbol)
     }
     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
   }
@@ -142,7 +103,7 @@ struct SettingsAdvancedOptionsView: View {
       } label: {
         Label(
           "Shuffle",
-          systemImage: Scoped.ALT_STAGE_PREVIEW_SHUFFLE_SFSYMBOL)
+          systemImage: Scoped.altStagePreviewShuffleSFSymbol)
           .font(.footnote.bold())
       }
     }
@@ -152,13 +113,13 @@ struct SettingsAdvancedOptionsView: View {
     BattleRotationCell(
       type: .primary,
       rotation: battleRotationPreviewData,
-      rowWidth: doesNeedPaddedPreview ? Scoped.PREVIEW_CELL_MAX_WIDTH : rowWidth)
-      .if(doesNeedPaddedPreview) {
+      rowWidth: needsPaddedPreview ? Scoped.previewCellMaxWidth : rowWidth)
+      .if(needsPaddedPreview) {
         $0
-          .frame(maxWidth: Scoped.PREVIEW_CELL_MAX_WIDTH)
+          .frame(maxWidth: Scoped.previewCellMaxWidth)
           .padding()
           .background(Color.systemGroupedBackground)
-          .clipShape(.rect(cornerRadius: 28, style: .continuous))
+          .clipShape(.rect(cornerRadius: Scoped.previewCellCornerRadius, style: .continuous))
       }
       .hAlignment(.center)
   }
@@ -166,31 +127,32 @@ struct SettingsAdvancedOptionsView: View {
   private var salmonRotationPreviewCell: some View {
     SalmonRotationCell(
       rotation: salmonRotationPreviewData,
-      rowWidth: doesNeedPaddedPreview ? Scoped.PREVIEW_CELL_MAX_WIDTH : rowWidth)
-      .if(doesNeedPaddedPreview) {
+      rowWidth: needsPaddedPreview ? Scoped.previewCellMaxWidth : rowWidth)
+      .if(needsPaddedPreview) {
         $0
-          .frame(maxWidth: Scoped.PREVIEW_CELL_MAX_WIDTH)
+          .frame(maxWidth: Scoped.previewCellMaxWidth)
           .padding()
           .background(Color.systemGroupedBackground)
-          .clipShape(.rect(cornerRadius: 28, style: .continuous))
+          .clipShape(.rect(cornerRadius: Scoped.previewCellCornerRadius, style: .continuous))
       }
       .hAlignment(.center)
   }
 
   private func shufflePreviewData() {
-    // make sure stages are different
-    var newBattleData: BattleRotation = IkaMockData.getBattleRotation()
-    var newSalmonData: SalmonRotation = IkaMockData.getSalmonRotation()
+    // Re-roll until the battle rule and both stages (and the Salmon stage) differ from the
+    // current preview, so Shuffle always shows a visible change.
+    var newBattleData: BattleRotation = IkaMockData.makeBattleRotation()
+    var newSalmonData: SalmonRotation = IkaMockData.makeSalmonRotation()
 
     while
       newBattleData.rule == battleRotationPreviewData.rule ||
       newBattleData.stageA == battleRotationPreviewData.stageA ||
       newBattleData.stageB == battleRotationPreviewData.stageB
     {
-      newBattleData = IkaMockData.getBattleRotation()
+      newBattleData = IkaMockData.makeBattleRotation()
     }
     while newSalmonData.stage == salmonRotationPreviewData.stage {
-      newSalmonData = IkaMockData.getSalmonRotation()
+      newSalmonData = IkaMockData.makeSalmonRotation()
     }
 
     battleRotationPreviewData = newBattleData
@@ -198,77 +160,9 @@ struct SettingsAdvancedOptionsView: View {
   }
 }
 
-// MARK: - BottomToolbarPositioningPreview
-
-struct BottomToolbarPositioningPreview: View {
-  typealias Scoped = Constants.Style.Settings.Advanced
-
-  @Environment(\.dismiss) private var dismiss
-
-  @Environment(IkaStatus.self) private var ikaStatus
-  @EnvironmentObject private var ikaPreference: IkaPreference
-
-  var body: some View {
-    HStack {
-      if !ikaPreference.shouldSwapBottomToolbarPickers {
-        // keep order
-        battleModePicker
-        Spacer()
-        gameModePicker
-      }
-      else {
-        // swap order
-        gameModePicker
-        Spacer()
-        battleModePicker
-      }
-    }
-    .padding(.horizontal, Scoped.BOTTOM_TOOLBAR_PREVIEW_PADDING_H)
-    .task {
-      try? await Task.sleep(
-        nanoseconds: UInt64(Scoped.BOTTOM_TOOLBAR_PREVIEW_LINGER_INTERVAL * 1_000_000_000))
-      dismiss()
-    }
-  }
-
-  private var battleModePicker: some View {
-    Picker(
-      selection: .constant(ikaStatus.currentBattleMode),
-      label: Text("Battle Mode"))
-    {
-      ForEach(BattleMode.allCases) { battleMode in
-        Text(battleMode.shortName.localizedStringKey)
-          .tag(battleMode)
-      }
-    }
-    .pickerStyle(SegmentedPickerStyle())
-    .fixedSize()
-  }
-
-  private var gameModePicker: some View {
-    Picker(
-      selection: .constant(GameMode.battle),
-      label: Text("Game Mode"))
-    {
-      ForEach(GameMode.allCases) { gameMode in
-        Image(
-          systemName: ikaStatus.currentGameMode == gameMode
-            ? gameMode.sfSymbolNameSelected
-            : gameMode.sfSymbolNameIdle)
-          .tag(gameMode)
-      }
-    }
-    .pickerStyle(SegmentedPickerStyle())
-    .fixedSize()
-  }
-}
-
-// MARK: - SettingsAdvancedOptionsView_Previews
-
-struct SettingsAdvancedOptionsView_Previews: PreviewProvider {
-  static var previews: some View {
+#Preview {
+  NavigationStack {
     SettingsAdvancedOptionsView()
-      .environment(IkaStatus.shared)
-      .environmentObject(IkaPreference.shared)
   }
+  .ikaPreviewEnvironment()
 }

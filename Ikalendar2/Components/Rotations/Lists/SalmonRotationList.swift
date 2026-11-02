@@ -7,23 +7,22 @@
 
 import SwiftUI
 
-@MainActor
+/// The salmon rotation list: the open/soonest shift first, later ones below.
 struct SalmonRotationList: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   private var validSalmonRotations: [SalmonRotation] {
-    // filter: display current and future rotations only
-    ikaCatalog.salmonRotations.filter { !$0.isExpired(ikaTimePublisher.currentTime) }
+    ikaCatalog.salmonRotations.filter { !$0.isExpired(ikaClock.currentTime) }
   }
 
   var body: some View {
     GeometryReader { geo in
+      // filter once per pass; both the rows and the animation value use it
+      let rotations: [SalmonRotation] = validSalmonRotations
+
       List {
-        ForEach(
-          Array(zip(validSalmonRotations.indices, validSalmonRotations)),
-          id: \.1)
-        { index, rotation in
+        ForEach(Array(rotations.enumerated()), id: \.element) { index, rotation in
           SalmonRotationRow(
             rotation: rotation,
             index: index,
@@ -33,9 +32,14 @@ struct SalmonRotationList: View {
       }
       .listStyle(.insetGrouped)
       .animation(
-        .bouncy,
-        value: validSalmonRotations)
+        Constants.Motion.listReflow,
+        value: rotations)
       .disabled(ikaCatalog.loadStatus != .loaded)
     }
   }
+}
+
+#Preview {
+  SalmonRotationList()
+    .ikaPreviewEnvironment()
 }

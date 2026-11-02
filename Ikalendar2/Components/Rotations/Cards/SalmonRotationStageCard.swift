@@ -10,62 +10,58 @@ import SwiftUI
 // MARK: - SalmonRotationStageCard
 
 /// A card component that displays the stage information of a salmon rotation.
-@MainActor
 struct SalmonRotationStageCard: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Stage
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaPreference.self) private var ikaPreference
+  @Environment(IkaClock.self) private var ikaClock
 
-  @State private var cardWidth: CGFloat = 150
-
-  @Environment(\.colorScheme) private var colorScheme
-  private var colorSchemeAwareGlass: Glass {
-    colorScheme == .dark ? .clear : .regular
-  }
+  @State private var cardWidth: CGFloat = Scoped.initialCardWidth
 
   let rotation: SalmonRotation
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
-  private var shouldOverrideWithLarge: Bool { cardWidth >= 200 }
+  private var shouldOverrideWithLarge: Bool { cardWidth >= Scoped.largeImageMinWidth }
+  private var isRewardApparelVisible: Bool { rotation.isCurrent(ikaClock.currentTime) && hasRewardApparel }
 
-  private var stageImageName: String { ikaPreference.shouldUseAltStageImages
-    ? shouldOverrideWithLarge
-      ? rotation.stageAltImageNameLarge!
-      : rotation.stageAltImageName!
-    : shouldOverrideWithLarge
-      ? rotation.stage!.imgFilnLarge
-      : rotation.stage!.imgFiln }
+  private var stageImageName: String {
+    // Caller (SalmonRotationCell) only renders this card when rotation.stage != nil.
+    guard let stage = rotation.stage else {
+      assertionFailure("SalmonRotationStageCard requires rotation.stage != nil (guarded by caller)")
+      return ""
+    }
+
+    return ikaPreference.shouldUseAltStageImages
+      ? shouldOverrideWithLarge
+        ? rotation.stageAltImageNameLarge ?? stage.imageNameLarge
+        : rotation.stageAltImageName ?? stage.imageName
+      : shouldOverrideWithLarge
+        ? stage.imageNameLarge
+        : stage.imageName
+  }
 
   var body: some View {
-    Image(stageImageName)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
-      .cornerRadius(Scoped.STAGE_IMG_CORNER_RADIUS)
-      .glassEffect(
-        colorSchemeAwareGlass.interactive(),
-        in: .rect(cornerRadius: Scoped.STAGE_IMG_CORNER_RADIUS))
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+    Image(decorative: stageImageName)
+      .ikaFitted()
+      .clipShape(.rect(cornerRadius: Scoped.stageImageCornerRadius))
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.stageImageCornerRadius))
+      .shadow(radius: Constants.Style.Global.shadowRadius)
       .overlay(
         overlay,
         alignment: .bottom)
       .animation(
         .snappy,
         value: ikaPreference.shouldUseAltStageImages)
-      .background {
-        GeometryReader { geo in
-          Color.clear
-            .onChange(of: geo.size, initial: true) { _, newVal in
-              cardWidth = newVal.width
-            }
-        }
+      .onGeometryChange(for: CGFloat.self) { geo in
+        geo.size.width
+      } action: { newWidth in
+        cardWidth = newWidth
       }
   }
 
   private var overlay: some View {
     HStack(alignment: .bottom) {
-      if rotation.isCurrent(ikaTimePublisher.currentTime) {
+      if rotation.isCurrent(ikaClock.currentTime) {
         stageTitleLabel
         Spacer()
         rewardApparelImg
@@ -76,36 +72,33 @@ struct SalmonRotationStageCard: View {
         stageTitleLabel
       }
     }
-    .padding(Scoped.OVERLAY_PADDING)
+    .padding(Scoped.overlayPadding)
   }
 
   private var stageTitleLabel: some View {
     StageTitleLabel(
-      title: rotation.stage!.name,
-      fontSize: Scoped.LABEL_FONT_SIZE,
+      title: rotation.stage?.name ?? "",
+      fontSize: Scoped.labelFontSize,
       relTextStyle: .body)
   }
 
   private var rewardApparelImg: some View {
-    Image(rotation.rewardApparel?.imgFiln ?? "salmon")
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
-      .padding(Scoped.APPAREL_IMG_PADDING)
-      .frame(width: cardWidth * Scoped.APPAREL_IMG_WIDTH_RATIO)
+    Image(rotation.rewardApparel?.imageName ?? "salmon")
+      .ikaFitted()
+      .padding(Scoped.apparelImagePadding)
+      .frame(width: cardWidth * Scoped.apparelImageWidthRatio)
       .glassEffect(
         .clear.interactive(),
-        in: .rect(cornerRadius: Scoped.APPAREL_FRAME_CORNER_RADIUS))
-      .opacity(rotation.isCurrent(ikaTimePublisher.currentTime) && hasRewardApparel ? 1 : 0)
+        in: .rect(cornerRadius: Scoped.apparelFrameCornerRadius))
+      .opacity(isRewardApparelVisible ? 1 : 0)
+      .accessibilityLabel(Text((rotation.rewardApparel?.name ?? "").localizedStringKey))
+      .accessibilityHidden(!isRewardApparelVisible)
   }
 }
 
-// MARK: - SalmonRotationStageCard_Previews
-
-struct SalmonRotationStageCard_Previews: PreviewProvider {
-  static var previews: some View {
-    SalmonRotationStageCard(
-      rotation: IkaMockData.getSalmonRotation())
-      .frame(width: 312)
-  }
+#Preview {
+  SalmonRotationStageCard(
+    rotation: IkaMockData.makeSalmonRotation(rawStartTime: Date()))
+    .frame(width: 312)
+    .ikaPreviewEnvironment()
 }

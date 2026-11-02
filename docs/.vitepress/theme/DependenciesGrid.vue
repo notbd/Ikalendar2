@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useSponsorsGrid } from 'vitepress/dist/client/theme-default/composables/sponsor-grid.js'
 import type { Dependency, GridSize } from './HomeDependencies.vue'
+import { useSponsorsGrid } from 'vitepress/dist/client/theme-default/composables/sponsor-grid.js'
+import { ref } from 'vue'
 
 type Props = {
   size?: GridSize

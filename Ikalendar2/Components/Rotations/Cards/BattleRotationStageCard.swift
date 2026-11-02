@@ -14,12 +14,7 @@ import SwiftUI
 struct BattleRotationStageCardPrimary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Card.Primary
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
-
-  @Environment(\.colorScheme) private var colorScheme
-  private var colorSchemeAwareGlass: Glass {
-    colorScheme == .dark ? .clear : .regular
-  }
+  @Environment(IkaPreference.self) private var ikaPreference
 
   let rotation: BattleRotation
   let stageSelection: BattleStageSelection
@@ -29,35 +24,24 @@ struct BattleRotationStageCardPrimary: View {
   }
 
   private var stageImageName: String {
-    switch (ikaPreference.shouldUseAltStageImages, stageSelection) {
-      case (true, .stageA):
-        rotation.stageAAltImageName
-      case (true, .stageB):
-        rotation.stageBAltImageName
-      case (false, .stageA):
-        rotation.stageA.imgFiln
-      case (false, .stageB):
-        rotation.stageB.imgFiln
-    }
+    rotation.stageImageName(
+      for: stageSelection,
+      shouldUseAltImage: ikaPreference.shouldUseAltStageImages)
   }
 
   var body: some View {
-    Image(stageImageName)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
-      .cornerRadius(Scoped.IMG_CORNER_RADIUS)
-      .glassEffect(
-        colorSchemeAwareGlass.interactive(),
-        in: .rect(cornerRadius: Scoped.IMG_CORNER_RADIUS))
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
+    Image(decorative: stageImageName)
+      .ikaFitted()
+      .clipShape(.rect(cornerRadius: Scoped.imageCornerRadius))
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.imageCornerRadius))
+      .shadow(radius: Constants.Style.Global.shadowRadius)
       .overlay(
         StageTitleLabel(
           title: stage.name,
-          fontSize: Scoped.LABEL_FONT_SIZE,
+          fontSize: Scoped.labelFontSize,
           relTextStyle: .body)
-          .padding(.leading, Scoped.LABEL_PADDING_LEADING)
-          .padding([.bottom, .trailing], Scoped.LABEL_PADDING_BOTTOMTRAILING),
+          .padding(.leading, Scoped.labelPaddingLeading)
+          .padding([.bottom, .trailing], Scoped.labelPaddingBottomTrailing),
         alignment: .bottomTrailing)
       .animation(
         .snappy,
@@ -72,7 +56,7 @@ struct BattleRotationStageCardPrimary: View {
 struct BattleRotationStageCardSecondary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Card.Secondary
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
   let rotation: BattleRotation
   let stageSelection: BattleStageSelection
@@ -82,40 +66,30 @@ struct BattleRotationStageCardSecondary: View {
   }
 
   private var stageImageName: String {
-    switch (ikaPreference.shouldUseAltStageImages, stageSelection) {
-      case (true, .stageA):
-        rotation.stageAAltImageName
-      case (true, .stageB):
-        rotation.stageBAltImageName
-      case (false, .stageA):
-        rotation.stageA.imgFiln
-      case (false, .stageB):
-        rotation.stageB.imgFiln
-    }
+    rotation.stageImageName(
+      for: stageSelection,
+      shouldUseAltImage: ikaPreference.shouldUseAltStageImages)
   }
 
   var body: some View {
     VStack(
       alignment: .trailing,
-      spacing: Scoped.SPACING_V)
+      spacing: Scoped.spacingV)
     {
-      Image(stageImageName)
-        .antialiased(true)
-        .resizable()
-        .scaledToFit()
-        .cornerRadius(Scoped.IMG_CORNER_RADIUS)
+      Image(decorative: stageImageName)
+        .ikaFitted()
+        .clipShape(.rect(cornerRadius: Scoped.imageCornerRadius))
         .glassEffect(
           .clear.interactive(),
-          in: .rect(cornerRadius: Scoped.IMG_CORNER_RADIUS))
-        .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-        .alignmentGuide(.battleStagesImageAlignment) { $0[.bottom] }
+          in: .rect(cornerRadius: Scoped.imageCornerRadius))
+        .shadow(radius: Constants.Style.Global.shadowRadius)
         .layoutPriority(1)
 
       Text(stage.name.localizedStringKey)
         .scaledLimitedLine()
         .ikaFont(
           .ika2,
-          size: Scoped.FONT_SIZE,
+          size: Scoped.fontSize,
           relativeTo: .body)
     }
     .animation(
@@ -126,26 +100,42 @@ struct BattleRotationStageCardSecondary: View {
 
 // MARK: - BattleStageSelection
 
+/// Which of a battle rotation's two stages a card should show.
 enum BattleStageSelection {
   case stageA
   case stageB
 }
 
-// MARK: - BattleRotationStageCard_Previews
+// MARK: - BattleRotation
 
-struct BattleRotationStageCard_Previews: PreviewProvider {
-  static var previews: some View {
-    let rotation: BattleRotation = IkaMockData.getBattleRotation()
-    return
-      Group {
-        BattleRotationStageCardPrimary(
-          rotation: rotation,
-          stageSelection: .stageA)
-          .previewLayout(.fixed(width: 320, height: 200))
-        BattleRotationStageCardPrimary(
-          rotation: rotation,
-          stageSelection: .stageB)
-          .previewLayout(.fixed(width: 300, height: 240))
-      }
+extension BattleRotation {
+  /// The image name of the selected stage, honoring the alt stage images preference.
+  fileprivate func stageImageName(for stageSelection: BattleStageSelection, shouldUseAltImage: Bool) -> String {
+    switch (shouldUseAltImage, stageSelection) {
+      case (true, .stageA):
+        stageAAltImageName
+      case (true, .stageB):
+        stageBAltImageName
+      case (false, .stageA):
+        stageA.imageName
+      case (false, .stageB):
+        stageB.imageName
+    }
   }
+}
+
+// MARK: - Previews
+
+#Preview("Primary / Stage A", traits: .fixedLayout(width: 320, height: 200)) {
+  BattleRotationStageCardPrimary(
+    rotation: IkaMockData.makeBattleRotation(),
+    stageSelection: .stageA)
+    .ikaPreviewEnvironment()
+}
+
+#Preview("Secondary / Stage B", traits: .fixedLayout(width: 300, height: 240)) {
+  BattleRotationStageCardSecondary(
+    rotation: IkaMockData.makeBattleRotation(),
+    stageSelection: .stageB)
+    .ikaPreviewEnvironment()
 }

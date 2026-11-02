@@ -1,3 +1,5 @@
+# Runs on every push to main (drives the README badge) and on manual dispatch.
+# The jobs live in build-and-test.yml, shared with pr-check.yml.
 name: Test & Build Status
 
 on:
@@ -11,60 +13,12 @@ on:
         required: false
         default: "Manual build"
 
+permissions:
+  contents: read
+
 jobs:
-  test-and-build:
-    name: Lint, Test & Build
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Select Xcode Version
-        run: |
-          XCODE_VERSION=$(ls /Applications | grep "Xcode_26.0" | sort -V | tail -n 1)
-          sudo xcode-select -switch /Applications/$XCODE_VERSION
-          echo "Selected Xcode version: $XCODE_VERSION"
-
-      - name: Confirm Xcode Version
-        run: /usr/bin/xcodebuild -version
-
-      - name: Install xcpretty
-        run: gem install xcpretty --no-document
-
-      - name: Run SwiftFormat
-        run: swiftformat --lint . --reporter github-actions-log
-
-      - name: Install SwiftLint
-        run: brew install swiftlint
-
-      - name: Run SwiftLint
-        run: swiftlint
-
-      - name: Run Unit Tests
-        run: |
-          set -o pipefail
-          xcodebuild test \
-            -project Ikalendar2.xcodeproj \
-            -scheme IkalendarKit \
-            -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
-            -enableCodeCoverage YES \
-            | xcpretty && exit ${PIPESTATUS[0]}
-
-      - name: Build Application
-        run: |
-          set -o pipefail
-          xcodebuild build \
-            -project Ikalendar2.xcodeproj \
-            -scheme Ikalendar2 \
-            -configuration Debug \
-            -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
-            | xcpretty && exit ${PIPESTATUS[0]}
-
-      - name: Log Trigger Information
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "Trigger: Manual Dispatch. Reason: ${{ github.event.inputs.reason }}"
-          else
-            echo "Trigger: Push to branch '${{ github.ref_name }}'."
-          fi
+  ci:
+    name: CI
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      reason: ${{ inputs.reason }}

@@ -10,26 +10,25 @@ import SwiftUI
 
 // MARK: - RotationsCarouselView
 
-@MainActor
+/// The iPad layout: every mode side by side in a scrolling carousel.
 struct RotationsCarouselView: View {
   typealias Scoped = Constants.Style.Carousel
 
   @Environment(IkaCatalog.self) private var ikaCatalog
-  @Environment(IkaStatus.self) private var ikaStatus
-  @EnvironmentObject private var ikaPreference: IkaPreference
+  @Environment(IkaPreference.self) private var ikaPreference
 
-  @Environment(IkaInterfaceOrientationPublisher.self) private var ikaInterfaceOrientationPublisher
-  private var isLandscape: Bool { ikaInterfaceOrientationPublisher.currentOrientation.isLandscape }
+  @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor
+  private var isLandscape: Bool { ikaOrientationMonitor.currentOrientation.isLandscape }
 
   @State private var windowWidth: CGFloat = .zero
 
-  private var isWindowWide: Bool { isLandscape && windowWidth >= 1024 }
+  private var isWindowWide: Bool { isLandscape && windowWidth >= Scoped.allColumnsMinWidth }
 
   var body: some View {
     NavigationStack {
       ZStack {
         content
-          .navigationTitle(Constants.Key.BundleInfo.APP_DISPLAY_NAME)
+          .navigationTitle(Constants.Key.BundleInfo.appDisplayName)
           .ignoresSafeArea(edges: .bottom)
           .apply {
             setToolbarItems($0)
@@ -40,13 +39,10 @@ struct RotationsCarouselView: View {
 
         LoadingOverlay()
       }
-      .background {
-        GeometryReader { geo in
-          Color.clear
-            .onChange(of: geo.size, initial: true) { _, newVal in
-              windowWidth = newVal.width
-            }
-        }
+      .onGeometryChange(for: CGFloat.self) { geo in
+        geo.size.width
+      } action: { newWidth in
+        windowWidth = newWidth
       }
     }
   }
@@ -72,8 +68,9 @@ struct RotationsCarouselView: View {
       alignment: .top,
       spacing: 0)
     {
-      // Stupid workaround to avoid the fact that scrolling of the first
-      // column will cause the whole navigation stack to scroll
+      // Workaround (iPadOS, since 51a25f3): without this zero-size leading ScrollView, dragging
+      // the first column scrolls the navigation stack instead of the column. Re-check on each
+      // iPadOS release.
       if isWindowWide {
         ScrollView {
           Spacer()
@@ -83,49 +80,23 @@ struct RotationsCarouselView: View {
 
       if ikaPreference.preferredDefaultGameMode == .battle {
         ForEach(BattleMode.allCases) { battleMode in
-          CarouselColumn(
-            gameMode: .battle,
-            battleMode: battleMode)
-            .if(!isWindowWide) {
-              $0
-                .containerRelativeFrame(
-                  .horizontal,
-                  count: 2,
-                  spacing: 0)
-            }
+          sizedColumn(
+            CarouselColumn(
+              gameMode: .battle,
+              battleMode: battleMode))
         }
 
-        CarouselColumn(gameMode: .salmon)
-          .if(!isWindowWide) {
-            $0
-              .containerRelativeFrame(
-                .horizontal,
-                count: 2,
-                spacing: 0)
-          }
+        sizedColumn(CarouselColumn(gameMode: .salmon))
       }
 
       else {
-        CarouselColumn(gameMode: .salmon)
-          .if(!isWindowWide) {
-            $0
-              .containerRelativeFrame(
-                .horizontal,
-                count: 2,
-                spacing: 0)
-          }
+        sizedColumn(CarouselColumn(gameMode: .salmon))
 
         ForEach(BattleMode.allCases) { battleMode in
-          CarouselColumn(
-            gameMode: .battle,
-            battleMode: battleMode)
-            .if(!isWindowWide) {
-              $0
-                .containerRelativeFrame(
-                  .horizontal,
-                  count: 2,
-                  spacing: 0)
-            }
+          sizedColumn(
+            CarouselColumn(
+              gameMode: .battle,
+              battleMode: battleMode))
         }
       }
     }
@@ -136,13 +107,23 @@ struct RotationsCarouselView: View {
     .if(!isWindowWide) { wrapInHorizontalScrollView($0) }
   }
 
-  @MainActor
+  /// Two columns share the window unless it is wide enough to show them all.
+  private func sizedColumn(_ column: CarouselColumn) -> some View {
+    column
+      .if(!isWindowWide) {
+        $0
+          .containerRelativeFrame(
+            .horizontal,
+            count: 2,
+            spacing: 0)
+      }
+  }
+
   private func wrapInHorizontalScrollView(_ content: some View) -> some View {
     ScrollView(.horizontal) { content }
       .scrollTargetBehavior(.viewAligned)
   }
 
-  @MainActor
   private func setToolbarItems(_ content: some View) -> some View {
     content
       .toolbar {
@@ -154,10 +135,7 @@ struct RotationsCarouselView: View {
   }
 }
 
-// MARK: - RotationsCarouselView_Previews
-
-struct RotationsCarouselView_Previews: PreviewProvider {
-  static var previews: some View {
-    RotationsCarouselView()
-  }
+#Preview {
+  RotationsCarouselView()
+    .ikaPreviewEnvironment()
 }

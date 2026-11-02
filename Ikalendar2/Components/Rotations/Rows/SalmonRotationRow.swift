@@ -11,9 +11,8 @@ import SwiftUI
 // MARK: - SalmonRotationRow
 
 /// A row containing all the information of a salmon rotation.
-@MainActor
 struct SalmonRotationRow: View {
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
+  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: SalmonRotation
   let index: Int
@@ -23,7 +22,7 @@ struct SalmonRotationRow: View {
     // expired rotations already filtered out, so index will reflect truth
     switch index {
       case 0:
-        rotation.isFuture(ikaTimePublisher.currentTime) ? .first(.pending) : .first(.active)
+        rotation.isFuture(ikaClock.currentTime) ? .first(.pending) : .first(.active)
       case 1:
         .second
       default:
@@ -71,13 +70,13 @@ extension SalmonRotationRow {
         case .first(let currentStatus):
           switch currentStatus {
             case .pending:
-              Scoped.FIRST_PREFIX_STRINGS.pending
+              Scoped.firstPrefixStrings.pending
             case .active:
-              Scoped.FIRST_PREFIX_STRINGS.active
+              Scoped.firstPrefixStrings.active
           }
 
         case .second:
-          Scoped.SECOND_PREFIX_STRING
+          Scoped.secondPrefixString
 
         case .other:
           nil
@@ -89,47 +88,34 @@ extension SalmonRotationRow {
 // MARK: - SalmonRotationHeader
 
 /// The header of the salmon rotation row.
-struct SalmonRotationHeader: View {
+private struct SalmonRotationHeader: View {
   typealias Scoped = Constants.Style.Rotation.Header
 
-  @EnvironmentObject private var ikaTimePublisher: IkaTimePublisher
-
-  @Environment(\.colorScheme) private var colorScheme
-  private var colorSchemeAwareGlass: Glass {
-    colorScheme == .dark ? .clear : .regular
-  }
+  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: SalmonRotation
   let rowType: SalmonRotationRow.RowType
 
   var body: some View {
     HStack {
-      // can force unwrap `prefixString` here because .other row type will not have header
-      Text(rowType.prefixString!.localizedStringKey)
-        .ikaFont(
-          .ika1,
-          size: Scoped.PREFIX_FONT_SIZE,
-          relativeTo: .title2)
-        .foregroundStyle(Color.systemBackground)
-        .padding(.horizontal, Scoped.PREFIX_PADDING_H)
-        .glassEffect(
-          colorSchemeAwareGlass.tint(.secondary).interactive(),
-          in: .rect(cornerRadius: Scoped.PREFIX_FRAME_CORNER_RADIUS))
+      // `.other` rows render no header (see SalmonRotationRow.body), so the prefix is always present here.
+      if let prefixString = rowType.prefixString {
+        RotationHeaderPrefix(prefixString)
+      }
 
       Spacer()
 
-      // Time Until String (if first rotation pending)
       if
         case .first(let currentStatus) = rowType,
         currentStatus == .pending
       {
-        Text(ikaTimePublisher.currentTime.toTimeUntilStringKey(until: rotation.startTime))
+        Text(ikaClock.currentTime.toTimeUntilStringKey(until: rotation.startTime))
           .contentTransition(.numericText(countsDown: true))
-          .animation(.snappy, value: ikaTimePublisher.currentTime)
+          .animation(Constants.Motion.countdownRoll, value: ikaClock.currentTime)
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
-            size: Scoped.CONTENT_FONT_SIZE,
+            size: Scoped.contentFontSize,
             relativeTo: .headline)
       }
     }
@@ -137,13 +123,18 @@ struct SalmonRotationHeader: View {
   }
 }
 
-// MARK: - SalmonRotationRow_Previews
-
-struct SalmonRotationRow_Previews: PreviewProvider {
-  static var previews: some View {
+#Preview {
+  List {
     SalmonRotationRow(
-      rotation: IkaMockData.getSalmonRotation(),
+      rotation: IkaMockData.makeSalmonRotation(rawStartTime: Date()),
       index: 0,
       rowWidth: 390)
+    SalmonRotationRow(
+      rotation: IkaMockData.makeSalmonRotation(
+        rawStartTime: Date().addingTimeInterval(42 * 3600)),
+      index: 1,
+      rowWidth: 390)
   }
+  .listStyle(.insetGrouped)
+  .ikaPreviewEnvironment()
 }

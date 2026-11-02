@@ -42,11 +42,11 @@ extension GrizzcoWeapon {
 }
 
 extension GrizzcoWeapon {
-  var imgFiln: String {
+  var imageName: String {
     let prefix = "S2_Weapon_Main_"
-    let content = name.replacingOccurrences(of: " ", with: "_")
+    let content = name.replacing(" ", with: "_")
     return prefix + content
   }
 
-  var imgFilnSmall: String { key }
+  var imageNameSmall: String { key }
 }

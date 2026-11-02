@@ -19,27 +19,13 @@ enum BattleRule: String, Identifiable, CaseIterable, Equatable {
 }
 
 extension BattleRule {
-  var key: String {
-    switch self {
-      case .turfWar: "turf_war"
-      case .splatZones: "splat_zones"
-      case .towerControl: "tower_control"
-      case .rainmaker: "rainmaker"
-      case .clamBlitz: "clam_blitz"
-    }
-  }
+  /// Asset-name stem, e.g. `turf_war` for "Turf War".
+  var key: String { rawValue.lowercased().replacing(" ", with: "_") }
 }
 
 extension BattleRule {
-  var name: String {
-    switch self {
-      case .turfWar: "Turf War"
-      case .splatZones: "Splat Zones"
-      case .towerControl: "Tower Control"
-      case .rainmaker: "Rainmaker"
-      case .clamBlitz: "Clam Blitz"
-    }
-  }
+  /// Display name; identical to the feed's rule name, which is the raw value.
+  var name: String { rawValue }
 
   var abbreviation: String {
     switch self {
@@ -89,6 +75,6 @@ extension BattleRule {
 }
 
 extension BattleRule {
-  var imgFilnMid: String { key + "_mid" }
-  var imgFilnLarge: String { key + "_large" }
+  var imageNameMid: String { key + "_mid" }
+  var imageNameLarge: String { key + "_large" }
 }

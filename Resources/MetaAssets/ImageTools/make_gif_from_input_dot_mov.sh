@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 set -euo pipefail
 
 # Step 1: Generate GIF from input.mov (continue even if this fails)

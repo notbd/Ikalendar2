@@ -13,7 +13,7 @@ import SwiftUI
 struct SalmonRotationWeaponsCard: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Weapon
 
-  let weapons: [SalmonWeapon]!
+  let weapons: [SalmonWeapon]
 
   private let columns: [GridItem] = [
     GridItem(.flexible()),
@@ -23,7 +23,7 @@ struct SalmonRotationWeaponsCard: View {
   var body: some View {
     LazyVGrid(columns: columns) {
       ForEach(Array(weapons.enumerated()), id: \.offset) { _, weapon in
-        // enumerate the array identify weapons even with same id (e.g. 4 randoms)
+        // Keyed by position: a rotation can list the same weapon more than once (e.g. four gold mystery weapons).
         SalmonRotationWeaponCardIcon(weapon: weapon)
       }
     }
@@ -32,38 +32,28 @@ struct SalmonRotationWeaponsCard: View {
 
 // MARK: - SalmonRotationWeaponCardIcon
 
-struct SalmonRotationWeaponCardIcon: View {
+private struct SalmonRotationWeaponCardIcon: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Weapon
-
-  @Environment(\.colorScheme) private var colorScheme
-  private var colorSchemeAwareGlass: Glass {
-    colorScheme == .dark ? .clear : .regular
-  }
 
   let weapon: SalmonWeapon
 
   var body: some View {
-    Image(weapon.imgFiln)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
-      .shadow(radius: Constants.Style.Global.SHADOW_RADIUS)
-      .padding(Scoped.IMG_PADDING)
-      .glassEffect(
-        colorSchemeAwareGlass.interactive(),
-        in: .rect(cornerRadius: Scoped.FRAME_CORNER_RADIUS))
+    Image(weapon.imageName)
+      .ikaFitted()
+      .shadow(radius: Constants.Style.Global.shadowRadius)
+      .padding(Scoped.imagePadding)
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.frameCornerRadius))
+      .accessibilityLabel(Text(weapon.name.localizedStringKey))
   }
 }
 
-// MARK: - SalmonRotationWeaponCard_Previews
-
-struct SalmonRotationWeaponCard_Previews: PreviewProvider {
-  static var previews: some View {
-    SalmonRotationWeaponsCard(weapons: [
-      SalmonWeapon(5030)!,
-      SalmonWeapon(1020)!,
-      SalmonWeapon(310)!,
-      SalmonWeapon(-1)!,
-    ])
-  }
+#Preview {
+  // Enum-case construction: no fail-able-initializer force unwraps in previews.
+  SalmonRotationWeaponsCard(weapons: [
+    .vanilla(.explosher),
+    .vanilla(.dynamoRoller),
+    .vanilla(.tentaBrella),
+    .mystery(.green),
+  ])
+  .frame(width: 200, height: 200)
 }

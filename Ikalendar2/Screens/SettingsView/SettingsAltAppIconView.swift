@@ -5,91 +5,47 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-import Combine
 import SimpleHaptics
 import SwiftUI
 
 // MARK: - SettingsAltAppIconView
 
 /// The Settings page for switching alternate App Icons.
-@MainActor
 struct SettingsAltAppIconView: View {
-  typealias ScopedConfig = Constants.Config.Settings.AltAppIcon
   typealias ScopedStyle = Constants.Style.Settings.AltAppIcon
 
   @Environment(\.colorScheme) private var colorScheme
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  @Environment(\.openURL) private var openURL
 
-  @EnvironmentObject private var ikaPreference: IkaPreference
-  @EnvironmentObject private var ikaLog: IkaLog
+  @Environment(IkaPreference.self) private var ikaPreference
+  @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
-  @Environment(IkaInternetConnectivityPublisher.self) var gfwMonitor
+  @Environment(IkaConnectivityChecker.self) private var connectivityChecker
 
-  @State private var doesPreferRickOnAppear: Bool = false
+  @State private var wasRickPreferredOnAppear: Bool = false
   @State private var triggeredEasterEgg: Bool = false
-  private var showEasterEgg: Bool { doesPreferRickOnAppear || triggeredEasterEgg }
+  /// The Rick section shows when Rick was already the chosen icon on entry, or after the hidden
+  /// trigger button is tapped; when Rick was the icon on entry the button cannot hide it again.
+  private var showEasterEgg: Bool { wasRickPreferredOnAppear || triggeredEasterEgg }
 
   @State private var easterEggCellRectGlobal: CGRect = .init()
   @State private var easterEggBounceCounter: Int = 0
+  @State private var easterEggJumpRequestCounter: Int = 0
+  /// The last jump request acted on, so showing the easter-egg section again does not replay it.
+  @State private var handledEasterEggJumpRequest: Int = 0
+
+  /// Restarts the jump task on a new request or when the easter-egg section shows or hides.
+  private struct JumpKey: Equatable {
+    let request: Int
+    let isEasterEggShown: Bool
+  }
 
   @State private var shouldDisplayAnimatedCopy: Bool = false
-  @State private var currentToggleAfterDelayTask: Task<Void, Never>?
 
-  @State private var isVariantPickerExpanded: Bool = false
   @State private var activeAppIconColorVariant: IkaAppIcon.ColorVariant = .default
-  var activeAppIconDisplayMode: IkaAppIcon.DisplayMode {
-    .init(color: activeAppIconColorVariant, size: .small)
-  }
 
-  @State private var slideShowTimerCancellable: AnyCancellable?
-  @State private var isSlideShowActive: Bool = false
-  @State private var wasSlideShowActiveBeforePickerExpanded: Bool = false
-  @State private var slideShowProgress: Int = 0
-  var slideShowIntervalStepCount: Int {
-    Int(floor(ScopedConfig.slideShowInterval / ScopedConfig.slideShowIntervalStepLength))
-  }
-
-  private var slideShowTimerPublisher: AnyPublisher<Date, Never> {
-    Timer.publish(
-      every: ScopedConfig.slideShowIntervalStepLength,
-      tolerance: ScopedConfig.slideShowIntervalStepLength / 10,
-      on: .main,
-      in: .common)
-      .autoconnect()
-      .eraseToAnyPublisher()
-  }
-
-  private func startSlideShow() {
-    guard !isSlideShowActive else { return }
-
-    slideShowTimerCancellable =
-      slideShowTimerPublisher
-        .sink { _ in
-          withAnimation(.snappy) {
-            slideShowProgress = (slideShowProgress + 1) % slideShowIntervalStepCount
-          }
-        }
-    isSlideShowActive = true
-
-    withAnimation(.bouncy) {
-      isVariantPickerExpanded = false
-    }
-  }
-
-  private func stopSlideShow() {
-    slideShowTimerCancellable?.cancel()
-    slideShowTimerCancellable = nil
-    resetSlideShowProgress()
-    isSlideShowActive = false
-  }
-
-  private func toggleSlideShow() {
-    isSlideShowActive ? stopSlideShow() : startSlideShow()
-  }
-
-  private func resetSlideShowProgress() {
-    slideShowProgress = 0
-  }
+  @State private var slideShow: SlideShow = .init()
 
   var body: some View {
     ZStack {
@@ -99,15 +55,13 @@ struct SettingsAltAppIconView: View {
             AltAppIconEasterEggRow(
               ikaAppIcon: .rick,
               appIconColorVariant: $activeAppIconColorVariant,
-              buttonPressCounter: $easterEggBounceCounter)
+              buttonPressCounter: $easterEggBounceCounter,
+              jumpRequestCounter: $easterEggJumpRequestCounter)
               .opacity(shouldDisplayAnimatedCopy ? 0 : 1)
-              .background {
-                GeometryReader { geo in
-                  Color.clear
-                    .onChange(of: geo.frame(in: .global), initial: true) { _, newValue in
-                      easterEggCellRectGlobal = newValue
-                    }
-                }
+              .onGeometryChange(for: CGRect.self) { geo in
+                geo.frame(in: .global)
+              } action: { newValue in
+                easterEggCellRectGlobal = newValue
               }
           } header: { Text("Never Gonna Give You Up") }
         }
@@ -130,14 +84,22 @@ struct SettingsAltAppIconView: View {
       .navigationBarTitleDisplayMode(.large)
       .listStyle(.insetGrouped)
       .onAppear {
-        if !ikaLog.hasDiscoveredAltAppIcon { ikaLog.hasDiscoveredAltAppIcon = true }
-        startSlideShow()
+        if !ikaDiscoveryLog.hasDiscoveredAltAppIcon { ikaDiscoveryLog.hasDiscoveredAltAppIcon = true }
+        slideShow.play(now: .now)
       }
-      .onChange(of: slideShowProgress) { oldVal, _ in
-        if oldVal == slideShowIntervalStepCount - 1 {
-          withAnimation(.bouncy) {
-            activeAppIconColorVariant = activeAppIconColorVariant.next
-          }
+      // One task per cycle: sleeps to the cycle's end, then advances the variant and starts the
+      // next cycle, which restarts this task. Pause, picker expansion and Next change or clear
+      // `cycleStart`, so a pending switch never fires for a stale cycle. Zero tolerance: the
+      // default leeway (a tenth of the sleep) let the full bar sit for up to 0.4 s.
+      .task(id: slideShow.cycleStart) {
+        guard let cycle = slideShow.cycle else { return }
+
+        try? await Task.sleep(for: .seconds(max(0, cycle.upperBound.timeIntervalSinceNow)), tolerance: .zero)
+        guard !Task.isCancelled else { return }
+
+        withAnimation(.bouncy) {
+          activeAppIconColorVariant = activeAppIconColorVariant.next
+          slideShow.restartCycle(now: .now)
         }
       }
 
@@ -146,8 +108,10 @@ struct SettingsAltAppIconView: View {
         AltAppIconEasterEggRow(
           ikaAppIcon: .rick,
           appIconColorVariant: $activeAppIconColorVariant,
-          buttonPressCounter: $easterEggBounceCounter)
+          buttonPressCounter: $easterEggBounceCounter,
+          jumpRequestCounter: $easterEggJumpRequestCounter)
           .allowsHitTesting(false)
+          .accessibilityHidden(true) // visual-only duplicate of the list row
           .frame(width: easterEggCellRectGlobal.width, height: easterEggCellRectGlobal.height)
           .globalPosition(x: easterEggCellRectGlobal.midX, y: easterEggCellRectGlobal.midY)
           .opacity(shouldDisplayAnimatedCopy ? 1 : 0)
@@ -156,165 +120,67 @@ struct SettingsAltAppIconView: View {
       modalDimmingLayer
     }
     .safeAreaBar(edge: .bottom) {
-      slideShowControl
+      SlideShowControlBar(slideShow: $slideShow, appIconColorVariant: $activeAppIconColorVariant)
         .padding()
     }
     .onAppear {
-      doesPreferRickOnAppear = ikaPreference.preferredAppIcon == .rick
-      Task { await gfwMonitor.performGFWCheck() }
+      wasRickPreferredOnAppear = ikaPreference.preferredAppIcon == .rick
+      Task { await connectivityChecker.performGFWCheck() }
     }
-    .onChange(of: easterEggBounceCounter) {
+    // The pending delayed jump, owned by the page rather than the Rick row: scrolling the row
+    // off-screen must not cancel it, but leaving the page or hiding the easter-egg section does
+    // (14102a7, 82d952a). A new request restarts the delay.
+    .task(id: JumpKey(request: easterEggJumpRequestCounter, isEasterEggShown: showEasterEgg)) {
+      guard showEasterEgg, easterEggJumpRequestCounter != handledEasterEggJumpRequest else { return }
+
+      handledEasterEggJumpRequest = easterEggJumpRequestCounter
+      await jumpToGoodStuffAfterDelay()
+    }
+    // While bouncing, the icon escapes its list cell's clip bounds - so hide the
+    // original and overlay an unclipped copy at the same spot. Re-triggering
+    // restarts the linger window.
+    .task(id: easterEggBounceCounter) {
+      guard easterEggBounceCounter > 0 else { return }
+
       shouldDisplayAnimatedCopy = true
-      // Cancel the previous task, if it exists
-      currentToggleAfterDelayTask?.cancel()
-      // Schedule a new task
-      currentToggleAfterDelayTask = Task { await toggleShouldDisplayAnimatedCopyAfterDelay() }
+      try? await Task.sleep(for: .seconds(Constants.Motion.easterEggCopyLinger))
+      guard !Task.isCancelled else { return }
+
+      shouldDisplayAnimatedCopy = false
     }
   }
 
   private var modalDimmingLayer: some View {
     Color.black
       .ignoresSafeArea()
-      .opacity(!isVariantPickerExpanded ? 0 : ScopedStyle.MODAL_DIMMING_LAYER_OPACITY)
+      .opacity(!slideShow.isPickerExpanded ? 0 : ScopedStyle.modalDimmingLayerOpacity)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .onTapGesture {
         withAnimation(.bouncy) {
-          isVariantPickerExpanded.toggle()
-          wasSlideShowActiveBeforePickerExpanded ? startSlideShow() : { }()
+          slideShow.collapsePicker(now: .now)
         }
       }
   }
 
-  private var slideShowControl: some View {
-    GlassEffectContainer(spacing: ScopedStyle.SAFE_AREA_BAR_GLASS_EFFECT_SPACING) {
-      HStack {
-        appIconSlideShowPlayPauseButton
-        activeAppIconColorVariantPicker
-        appIconSlideShowNextButton
-      }
-      .font(ScopedStyle.SAFE_AREA_BAR_DEFAULT_FONT)
-    }
-  }
+  private func jumpToGoodStuffAfterDelay() async {
+    try? await Task.sleep(for: .seconds(Constants.Motion.easterEggJumpDelay))
+    guard !Task.isCancelled else { return }
 
-  private var appIconSlideShowPlayPauseButton: some View {
-    Image(systemName: isSlideShowActive ? "pause" : "play")
-      .symbolVariant(.fill)
-      .contentTransition(.symbolEffect(.replace.offUp))
-      .frame(
-        width: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE,
-        height: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE)
-      .contentShape(Rectangle())
-      .onTapGesture {
-        SimpleHaptics.generateTask(.selection)
-        withAnimation(.bouncy) {
-          toggleSlideShow()
-        }
-      }
-      .glassEffect(.regular.interactive())
-  }
+    let goodStuffURLString = connectivityChecker.isGFWed
+      ? Constants.Key.URLs.theGoodStuffCN
+      : Constants.Key.URLs.theGoodStuff
+    guard let url = URL(string: goodStuffURLString) else { return }
 
-  private var appIconSlideShowNextButton: some View {
-    Image(systemName: "forward.end")
-      .symbolVariant(.fill)
-      .opacity(!isVariantPickerExpanded ? 1 : ScopedStyle.SLIDE_SHOW_NEXT_BUTTON_DISABLED_OPACITY)
-      .frame(width: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE, height: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE)
-      .contentShape(Rectangle())
-      .allowsHitTesting(!isVariantPickerExpanded)
-      .onTapGesture {
-        SimpleHaptics.generateTask(.selection)
-        // -> outside of closure because of icon animation collision
-        activeAppIconColorVariant = activeAppIconColorVariant.next
-
-        withAnimation(.snappy) {
-          resetSlideShowProgress()
-        }
-      }
-      .glassEffect(!isVariantPickerExpanded ? .regular.interactive() : .regular)
-  }
-
-  private var pickerNameLabels: some View {
-    ZStack {
-      ForEach(IkaAppIcon.ColorVariant.allCases) { variant in
-        Text(variant.displayNameLocalizedStringKey)
-          .blurFade(isShown: !isVariantPickerExpanded && variant == activeAppIconColorVariant)
-          .frame(
-            height: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE)
-          .fixedSize()
-          .padding(.horizontal, ScopedStyle.SLIDE_SHOW_CONTROL_PICKER_NAME_LABEL_PADDING_H)
-          .contentShape(Rectangle())
-          .allowsHitTesting(!isVariantPickerExpanded && variant == activeAppIconColorVariant)
-          .onTapGesture {
-            withAnimation(.bouncy) {
-              isVariantPickerExpanded.toggle()
-              wasSlideShowActiveBeforePickerExpanded = isSlideShowActive
-              stopSlideShow()
-            }
-          }
-      }
-    }
-  }
-
-  private var progressBar: some View {
-    ProgressView(
-      value: Double(slideShowProgress),
-      total: Double(slideShowIntervalStepCount))
-      .tint(.accentColor)
-      .opacity(ScopedStyle.SLIDE_SHOW_PROGRESS_BAR_OPACITY)
-      .frame(height: ScopedStyle.SLIDE_SHOW_PROGRESS_BAR_HEIGHT)
-      .blurFade(isShown: !isVariantPickerExpanded)
-      .vAlignment(.bottom)
-      .padding(.horizontal, ScopedStyle.SLIDE_SHOW_PROGRESS_BAR_PADDING_H)
-      .allowsHitTesting(false)
-      .clipShape(.capsule)
-      .id("\(activeAppIconColorVariant)-\(isSlideShowActive)")
-  }
-
-  private var pickerIcons: some View {
-    Group {
-      ForEach(IkaAppIcon.ColorVariant.allCases) { variant in
-        Image(systemName: variant.sfSymbolName)
-          .symbolEffect(
-            .bounce.down.byLayer,
-            options: .nonRepeating,
-            isActive: activeAppIconColorVariant == variant)
-          .blurFade(isShown: isVariantPickerExpanded)
-          .frame(
-            width: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE,
-            height: ScopedStyle.SLIDE_SHOW_CONTROL_BUTTON_SIZE)
-          .contentShape(Rectangle())
-          .allowsHitTesting(isVariantPickerExpanded)
-          .onTapGesture {
-            SimpleHaptics.generateTask(.selection)
-            withAnimation(.bouncy) {
-              activeAppIconColorVariant = variant
-              isVariantPickerExpanded.toggle()
-            }
-          }
-      }
-    }
-  }
-
-  private var activeAppIconColorVariantPicker: some View {
-    let layout = isVariantPickerExpanded ? AnyLayout(HStackLayout()) : AnyLayout(ZStackLayout())
-    return
-      ZStack {
-        pickerNameLabels
-          .overlay(alignment: .bottom) {
-            progressBar
-          }
-        layout { pickerIcons }
-      }
-      .font(ScopedStyle.COLOR_VARIANT_PICKER_FONT)
-      .glassEffect(.regular.interactive())
+    openURL(url)
   }
 
   private var easterEggTrigger: some View {
     Button {
-      if !doesPreferRickOnAppear { SimpleHaptics.generateTask(.soft) }
+      if !wasRickPreferredOnAppear { SimpleHaptics.generateTask(.soft) }
       withAnimation { triggeredEasterEgg.toggle() }
     }
     label: {
-      if ikaLog.hasDiscoveredEasterEgg {
+      if ikaDiscoveryLog.hasDiscoveredEasterEgg {
         Image(systemName: showEasterEgg ? "party.popper.fill" : "party.popper")
           .transition(.symbolEffect(.automatic))
       }
@@ -322,30 +188,25 @@ struct SettingsAltAppIconView: View {
         Text("Tap Me :)")
       }
     }
-    .foregroundStyle(
-      Color.accentColor
-        .opacity(
-          ikaLog.hasDiscoveredEasterEgg
-            ? 1
-            : colorScheme == .light
-              ? 0.07
-              : horizontalSizeClass == .compact
-                ? 0.07
-                : 0.03))
+    .foregroundStyle(Color.accentColor.opacity(easterEggTriggerOpacity))
   }
 
-  private func toggleShouldDisplayAnimatedCopyAfterDelay() async {
-    try? await Task.sleep(nanoseconds: UInt64(2.1 * 1_000_000_000))
-    guard !Task.isCancelled else { return }
+  private var easterEggTriggerOpacity: Double {
+    if ikaDiscoveryLog.hasDiscoveredEasterEgg { return 1 }
 
-    shouldDisplayAnimatedCopy = false
+    return switch (colorScheme, horizontalSizeClass) {
+      case (.light, _),
+           (_, .compact):
+        ScopedStyle.hintOpacityCompact
+      default:
+        ScopedStyle.hintOpacityRegular
+    }
   }
 }
 
-// MARK: - SettingsAppIconView_Previews
-
-struct SettingsAppIconView_Previews: PreviewProvider {
-  static var previews: some View {
+#Preview {
+  NavigationStack {
     SettingsAltAppIconView()
   }
+  .ikaPreviewEnvironment()
 }

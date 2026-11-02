@@ -18,7 +18,6 @@ export type Dependency = {
   name: string
   url: string
   icon?: string
-  description?: string
 }
 
 defineProps<{
@@ -99,10 +98,5 @@ defineProps<{
 
 .sponsors {
   padding-top: 32px;
-}
-
-.action {
-  padding-top: 40px;
-  text-align: center;
 }
 </style>

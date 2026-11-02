@@ -10,14 +10,11 @@ import SwiftUI
 
 /// Constant data holding `config`s for the app.
 extension Constants.Config {
-  enum Timer {
-    static let autoLoadCheckSignalInterval: TimeInterval = 5
-    static let nudgeSignalInterval: TimeInterval = 5
-    static let pulseSignalInterval: TimeInterval = 3
-  }
-
   enum Catalog {
-    /// Time Intervals are measured in second(s).
+    static let loadTimeout: TimeInterval = 5
+
+    static let autoLoadCheckInterval: TimeInterval = 5
+
     static let loadStatusLoadedDelay: TimeInterval = 0.2
     static let loadStatusErrorDelay: TimeInterval = 1
 
@@ -29,18 +26,5 @@ extension Constants.Config {
     static let appActiveStateCheckInterval: TimeInterval = 1
     static let autoLoadedLingerLength: TimeInterval = 2
     static let idleAndNonIdleStatusUpdateInterval: TimeInterval = 1
-  }
-
-  enum Settings {
-    static let aboutRatingsBounceInterval: TimeInterval = 7
-
-    enum AltAppIcon {
-      static let slideShowInterval: TimeInterval = 4
-      static let slideShowIntervalStepLength: TimeInterval = 0.01
-    }
-  }
-
-  enum License {
-    static let licenseLoadedDelay: TimeInterval = 0.2
   }
 }

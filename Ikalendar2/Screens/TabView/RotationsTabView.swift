@@ -10,24 +10,62 @@ import SwiftUI
 
 // MARK: - RotationsTabView
 
-/// The view that displays the content in a NavigationView.
+/// One tab's content for `flatMode`: its rotation list (or ErrorView), the mode stamp that docks
+/// into a nav bar badge on scroll, and pull-to-refresh.
 struct RotationsTabView: View {
   @Environment(IkaCatalog.self) private var ikaCatalog
 
-  let adoptedFlatMode: FlatMode
+  let flatMode: FlatMode
+
+  /// Driven by the scroll distance from where the list rests under the expanded large title, not
+  /// from the current top inset: that inset shrinks by the title height as the title collapses
+  /// (gradually under a drag, in one step at the end of a programmatic scroll) and stays shrunk
+  /// when rows above are removed while scrolled. Clamped in the transform, so scrolling past the
+  /// dock travel updates nothing.
+  @State private var dockProgress: Double = 0
+  /// The list's top content inset at rest under the expanded large title.
+  @State private var restingTopInset: CGFloat = 0
+  /// How far the top inset has grown past its resting value: the pull-to-refresh spinner's height
+  /// while a refresh runs, 0 otherwise.
+  @State private var refreshTopInset: CGFloat = 0
 
   var body: some View {
     ZStack {
       content
         .navigationTitle(title.localizedStringKey)
+        .onScrollGeometryChange(for: CGFloat.self) { geometry in
+          geometry.contentInsets.top
+        } action: { _, topInset in
+          // Kept from the first layout, where the large title is expanded: later insets also
+          // grow by the pull-to-refresh spinner.
+          if restingTopInset == 0 { restingTopInset = topInset }
+          refreshTopInset = max(topInset - restingTopInset, 0)
+        }
+        .onScrollGeometryChange(for: Double.self) { [restingTopInset] geometry in
+          ModeIconStamp.dockProgress(contentOffsetY: geometry.contentOffset.y, restingTopInset: restingTopInset)
+        } action: { _, progress in
+          dockProgress = progress
+        }
         .overlay(
           ModeIconStamp(
-            flatModeSelection: adoptedFlatMode,
-            shouldOffset: true)
-            .animation(
-              .snappy,
-              value: adoptedFlatMode),
+            flatModeSelection: flatMode,
+            dockProgress: dockProgress)
+            // While a refresh runs, the spinner's height is added to the safe area this overlay
+            // hangs from, so the stamp is lifted by it to stay put instead of jumping down and
+            // back up when the refresh ends.
+            .offset(
+              x: Constants.Style.Overlay.ModeIcon.iconOffsetX,
+              y: Constants.Style.Overlay.ModeIcon.iconOffsetY - refreshTopInset),
           alignment: .topTrailing)
+        .toolbar {
+          ToolbarItem(placement: .topBarTrailing) {
+            ModeBadge(flatMode: flatMode)
+              .opacity(ModeIconStamp.badgeOpacity(progress: dockProgress))
+              .allowsHitTesting(false)
+          }
+          // The badge draws its own glass, so the glass fades in with the badge.
+          .sharedBackgroundVisibility(.hidden)
+        }
         .refreshable {
           await ikaCatalog.refresh()
         }
@@ -41,23 +79,33 @@ struct RotationsTabView: View {
     switch ikaCatalog.loadResultStatus {
       case .error(let ikaError):
         ErrorView(error: ikaError)
-      default:
+      case .loading,
+           .loaded:
         rotationList
     }
   }
 
   @ViewBuilder
   private var rotationList: some View {
-    BattleRotationList()
-    switch adoptedFlatMode {
-      case .salmon:
-        SalmonRotationList()
-      default:
-        BattleRotationList(specifiedBattleMode: BattleMode(rawValue: adoptedFlatMode.rawValue)!)
+    if let battleMode = flatMode.battleMode {
+      BattleRotationList(battleMode: battleMode)
+    }
+    else {
+      SalmonRotationList()
     }
   }
 
   private var title: String {
-    adoptedFlatMode.name
+    flatMode.name
   }
+}
+
+#Preview("Battle Tab") {
+  RotationsTabView(flatMode: .gachi)
+    .ikaPreviewEnvironment()
+}
+
+#Preview("Salmon Tab") {
+  RotationsTabView(flatMode: .salmon)
+    .ikaPreviewEnvironment()
 }

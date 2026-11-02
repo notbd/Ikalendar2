@@ -24,14 +24,14 @@ struct SalmonStageAndWeaponsLayout: Layout {
     cache _: inout ())
     -> CGSize
   {
-    guard proposal.width != nil else { return .zero }
+    guard let proposalWidth = proposal.width else { return .zero }
     guard subviews.count == 2 else { return .zero }
 
-    let hSpacings = getHSpacings(subviews: subviews)
-    let correctHeight = (proposal.width! - hSpacings[0]) * (9 / (16 + 9))
+    let hSpacings = subviews.horizontalSpacings
+    let correctHeight = (proposalWidth - hSpacings[0]) * (9 / (16 + 9))
 
     return CGSize(
-      width: proposal.width!,
+      width: proposalWidth,
       height: correctHeight)
   }
 
@@ -41,11 +41,11 @@ struct SalmonStageAndWeaponsLayout: Layout {
     subviews: Subviews,
     cache _: inout ())
   {
-    guard proposal.width != nil else { return }
+    guard let proposalWidth = proposal.width else { return }
     guard subviews.count == 2 else { return }
 
-    let hSpacings = getHSpacings(subviews: subviews)
-    let correctHeight = (proposal.width! - hSpacings[0]) * (9 / (16 + 9))
+    let hSpacings = subviews.horizontalSpacings
+    let correctHeight = (proposalWidth - hSpacings[0]) * (9 / (16 + 9))
 
     let stageHeight = correctHeight
     let stageWidth = stageHeight * (16 / 9)
@@ -63,7 +63,6 @@ struct SalmonStageAndWeaponsLayout: Layout {
       width: weaponsWidth,
       height: weaponsHeight)
 
-    // placing stage card and weapon card accordingly
     subviews[0].place(
       at: CGPoint(
         x: stageCenterX,
@@ -77,18 +76,5 @@ struct SalmonStageAndWeaponsLayout: Layout {
         y: weaponsCenterY),
       anchor: .center,
       proposal: weaponsSizeProposal)
-  }
-
-  private func getHSpacings(subviews: Subviews) -> [CGFloat] {
-    subviews.indices.map { index in
-      guard index < subviews.count - 1 else { return 0 }
-
-      return
-        subviews[index]
-          .spacing
-          .distance(
-            to: subviews[index + 1].spacing,
-            along: .horizontal)
-    }
   }
 }

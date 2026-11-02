@@ -56,18 +56,8 @@ extension BattleMode {
       case .league: "person.2.fill"
     }
   }
-
-  var sfSymbolNameIdle: String {
-    switch self {
-      case .regular: "paintbrush"
-      case .gachi: "person"
-      case .league: "person.2"
-    }
-  }
 }
 
 extension BattleMode {
-  var imgFilnSmall: String { rawValue + "_small" }
-  var imgFilnMid: String { rawValue + "_mid" }
-  var imgFilnLarge: String { rawValue + "_large" }
+  var imageNameLarge: String { rawValue + "_large" }
 }
