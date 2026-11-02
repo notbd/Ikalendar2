@@ -22,6 +22,8 @@ extension Constants.Key {
     static let appStoreIdentifier = "1529193361"
   }
 
+  /// On-disk UserDefaults keys. Byte-for-byte frozen: renaming one resets every upgrading user.
+  /// Golden tests: IkaPreferenceTests, IkaDiscoveryLogTests.
   enum AppStorage {
     static let preferredDefaultFlatMode = "pref.preferred_default.flat_mode"
     static let preferredDefaultGameMode = "pref.preferred_default.game_mode"
@@ -33,7 +35,7 @@ extension Constants.Key {
     static let shouldSwapBottomToolbarPickers = "pref.if_should_swap_bottom_toolbar_pickers"
     static let shouldUseAltStageImages = "pref.if_should_use_alt_stage_images"
 
-    /// Log
+    // IkaDiscoveryLog
     static let shouldShowOnboarding = "pref.if_should_show_onboarding"
     static let hasDiscoveredRating = "pref.if_has_discovered_rating"
     static let hasDiscoveredAltAppIcon = "pref.if_has_discovered_alt_app_icon"
@@ -83,13 +85,6 @@ extension Constants.Key {
     }
   }
 
-  enum Locale {
-    static let en = "English"
-    static let ja = "日本語"
-    static let zhHans = "简体中文(beta)"
-    static let zhHant = "繁體中文(beta)"
-  }
-
   enum Slogan {
     static let copyright = "key.slogan.copyright"
     static let ikalendar3 = "key.slogan.ikalendar3"
@@ -100,7 +95,9 @@ extension Constants.Key {
       static let serverError = "key.title.server_error"
       static let connectionError = "key.title.connection_error"
       static let unknownError = "key.title.unknown_error"
-      static let maxAttemptsExceeded = "key.title.max_attempts_exceeded" // not used for now
+      // No localized string yet: `.maxAttemptsExceeded` is caught inside
+      // IkaCatalog.autoLoadCatalog and never reaches ErrorView.
+      static let maxAttemptsExceeded = "key.title.max_attempts_exceeded"
       static let licenseFetchError = "key.title.license_fetch_error"
     }
 
@@ -109,14 +106,14 @@ extension Constants.Key {
       static let serverErrorBadData = "key.message.server_error.bad_data"
       static let connectionError = "key.message.connection_error"
       static let unknownError = "key.message.unknown_error"
-      static let maxAttemptsExceeded = "key.message.max_attempts_exceeded" // not used for now
+      // No localized string yet, same reason as `Title.maxAttemptsExceeded`.
+      static let maxAttemptsExceeded = "key.message.max_attempts_exceeded"
       static let licenseFetchError = "key.message.license_fetch_error"
     }
   }
 
   enum Placeholder {
     static let unknown = "Unknown"
-    static let error = "Error"
     static let licenseTemplateMit = """
       MIT License
 

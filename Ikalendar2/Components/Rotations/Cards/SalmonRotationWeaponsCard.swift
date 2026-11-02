@@ -13,7 +13,7 @@ import SwiftUI
 struct SalmonRotationWeaponsCard: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Weapon
 
-  let weapons: [SalmonWeapon]!
+  let weapons: [SalmonWeapon]
 
   private let columns: [GridItem] = [
     GridItem(.flexible()),
@@ -23,7 +23,7 @@ struct SalmonRotationWeaponsCard: View {
   var body: some View {
     LazyVGrid(columns: columns) {
       ForEach(Array(weapons.enumerated()), id: \.offset) { _, weapon in
-        // enumerate the array identify weapons even with same id (e.g. 4 randoms)
+        // Keyed by position: a rotation can list the same weapon more than once (e.g. four gold mystery weapons).
         SalmonRotationWeaponCardIcon(weapon: weapon)
       }
     }
@@ -32,19 +32,18 @@ struct SalmonRotationWeaponsCard: View {
 
 // MARK: - SalmonRotationWeaponCardIcon
 
-struct SalmonRotationWeaponCardIcon: View {
+private struct SalmonRotationWeaponCardIcon: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Card.Weapon
 
   let weapon: SalmonWeapon
 
   var body: some View {
     Image(weapon.imageName)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+      .ikaFitted()
       .shadow(radius: Constants.Style.Global.shadowRadius)
-      .padding(Scoped.imgPadding)
+      .padding(Scoped.imagePadding)
       .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.frameCornerRadius))
+      .accessibilityLabel(Text(weapon.name.localizedStringKey))
   }
 }
 

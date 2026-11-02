@@ -58,9 +58,7 @@ extension IkaError {
 // MARK: - IkaServerErrorType
 
 /// A sub-type for IkaError.serverError
-enum IkaServerErrorType: String, Equatable {
-  typealias Scoped = Constants.Key.Error
-
+enum IkaServerErrorType: Equatable {
   case badResponse
   case badData
 }

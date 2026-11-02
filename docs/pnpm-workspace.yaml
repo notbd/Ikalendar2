@@ -1,0 +1,12 @@
+# Vercel installs with pnpm 9, which cannot parse the extra lockfile document
+# that pnpm 12 writes when packageManager is pinned. Keep the lockfile
+# single-document so pnpm 9 and pnpm 12 can both install it frozen.
+pmOnFail: ignore
+
+packages:
+  - .
+
+# pnpm 11+ blocks dependency build scripts unless they are listed here.
+allowBuilds:
+  esbuild: true
+  unrs-resolver: false

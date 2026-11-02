@@ -15,7 +15,6 @@ struct RotationsCarouselView: View {
   typealias Scoped = Constants.Style.Carousel
 
   @Environment(IkaCatalog.self) private var ikaCatalog
-  @Environment(IkaStatus.self) private var ikaStatus
   @Environment(IkaPreference.self) private var ikaPreference
 
   @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor
@@ -23,7 +22,7 @@ struct RotationsCarouselView: View {
 
   @State private var windowWidth: CGFloat = .zero
 
-  private var isWindowWide: Bool { isLandscape && windowWidth >= 1024 }
+  private var isWindowWide: Bool { isLandscape && windowWidth >= Scoped.allColumnsMinWidth }
 
   var body: some View {
     NavigationStack {
@@ -40,13 +39,10 @@ struct RotationsCarouselView: View {
 
         LoadingOverlay()
       }
-      .background {
-        GeometryReader { geo in
-          Color.clear
-            .onChange(of: geo.size, initial: true) { _, newVal in
-              windowWidth = newVal.width
-            }
-        }
+      .onGeometryChange(for: CGFloat.self) { geo in
+        geo.size.width
+      } action: { newWidth in
+        windowWidth = newWidth
       }
     }
   }
@@ -72,8 +68,9 @@ struct RotationsCarouselView: View {
       alignment: .top,
       spacing: 0)
     {
-      // Stupid workaround to avoid the fact that scrolling of the first
-      // column will cause the whole navigation stack to scroll
+      // Workaround (iPadOS, since 51a25f3): without this zero-size leading ScrollView, dragging
+      // the first column scrolls the navigation stack instead of the column. Re-check on each
+      // iPadOS release.
       if isWindowWide {
         ScrollView {
           Spacer()
@@ -83,49 +80,23 @@ struct RotationsCarouselView: View {
 
       if ikaPreference.preferredDefaultGameMode == .battle {
         ForEach(BattleMode.allCases) { battleMode in
-          CarouselColumn(
-            gameMode: .battle,
-            battleMode: battleMode)
-            .if(!isWindowWide) {
-              $0
-                .containerRelativeFrame(
-                  .horizontal,
-                  count: 2,
-                  spacing: 0)
-            }
+          sizedColumn(
+            CarouselColumn(
+              gameMode: .battle,
+              battleMode: battleMode))
         }
 
-        CarouselColumn(gameMode: .salmon)
-          .if(!isWindowWide) {
-            $0
-              .containerRelativeFrame(
-                .horizontal,
-                count: 2,
-                spacing: 0)
-          }
+        sizedColumn(CarouselColumn(gameMode: .salmon))
       }
 
       else {
-        CarouselColumn(gameMode: .salmon)
-          .if(!isWindowWide) {
-            $0
-              .containerRelativeFrame(
-                .horizontal,
-                count: 2,
-                spacing: 0)
-          }
+        sizedColumn(CarouselColumn(gameMode: .salmon))
 
         ForEach(BattleMode.allCases) { battleMode in
-          CarouselColumn(
-            gameMode: .battle,
-            battleMode: battleMode)
-            .if(!isWindowWide) {
-              $0
-                .containerRelativeFrame(
-                  .horizontal,
-                  count: 2,
-                  spacing: 0)
-            }
+          sizedColumn(
+            CarouselColumn(
+              gameMode: .battle,
+              battleMode: battleMode))
         }
       }
     }
@@ -134,6 +105,18 @@ struct RotationsCarouselView: View {
       .snappy,
       value: ikaPreference.preferredDefaultGameMode)
     .if(!isWindowWide) { wrapInHorizontalScrollView($0) }
+  }
+
+  /// Two columns share the window unless it is wide enough to show them all.
+  private func sizedColumn(_ column: CarouselColumn) -> some View {
+    column
+      .if(!isWindowWide) {
+        $0
+          .containerRelativeFrame(
+            .horizontal,
+            count: 2,
+            spacing: 0)
+      }
   }
 
   private func wrapInHorizontalScrollView(_ content: some View) -> some View {

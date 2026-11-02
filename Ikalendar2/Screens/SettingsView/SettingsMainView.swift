@@ -24,53 +24,46 @@ struct SettingsMainView: View {
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
   @Environment(IkaPreference.self) private var ikaPreference
 
-  @State private var rowWidth: CGFloat = 390
-
   var body: some View {
-    GeometryReader { geo in
-      List {
-        Section {
-          if isHorizontalCompact {
-            rowDefaultTab
-          }
-          else {
-            rowDefaultGameMode
-            rowDefaultBattleMode
-          }
-        } header: {
-          Text("Default Mode")
-        } footer: {
-          if !isHorizontalCompact {
-            Text("Certain options only apply to smaller screen widths.")
-              .font(.footnote)
-          }
+    List {
+      Section {
+        if isHorizontalCompact {
+          rowDefaultTab
         }
-
-        Section {
-          rowColorScheme
-          rowAltAppIcon
-          rowAdvancedOptions
-        } header: { Text("Appearance") }
-
-        Section {
-          rowAppLanguage
-        } header: { Text("Language") }
-
-        Section {
-          rowAbout
-          rowCredits
+        else {
+          rowDefaultGameMode
+          rowDefaultBattleMode
+        }
+      } header: {
+        Text("Default Mode")
+      } footer: {
+        if !isHorizontalCompact {
+          Text("Certain options only apply to smaller screen widths.")
+            .font(.footnote)
         }
       }
-      .navigationTitle("Settings")
-      .navigationBarTitleDisplayMode(.large)
-      .toolbar {
-        ToolbarItem(placement: .topBarTrailing) { closeButton }
-      }
-      .listStyle(.insetGrouped)
-      .onChange(of: geo.size, initial: true) { _, newVal in
-        rowWidth = newVal.width
+
+      Section {
+        rowColorScheme
+        rowAltAppIcon
+        rowAdvancedOptions
+      } header: { Text("Appearance") }
+
+      Section {
+        rowAppLanguage
+      } header: { Text("Language") }
+
+      Section {
+        rowAbout
+        rowCredits
       }
     }
+    .navigationTitle("Settings")
+    .navigationBarTitleDisplayMode(.large)
+    .toolbar {
+      ToolbarItem(placement: .topBarTrailing) { closeButton }
+    }
+    .listStyle(.insetGrouped)
   }
 
   // MARK: - Default Mode Section
@@ -79,10 +72,7 @@ struct SettingsMainView: View {
     @Bindable var ikaPreference = ikaPreference
     return Picker(
       selection: $ikaPreference.preferredDefaultFlatMode,
-      label: Label {
-        Text("Default Tab")
-          .foregroundStyle(.primary)
-      } icon: {
+      label: SettingsRowLabel("Default Tab", titleStyle: .primary) {
         Image(systemName: ikaPreference.preferredDefaultFlatMode.sfSymbolNameSelected)
           .imageScale(.medium)
           .contentTransition(.symbolEffect(.replace.offUp))
@@ -100,19 +90,7 @@ struct SettingsMainView: View {
   private var rowDefaultGameMode: some View {
     @Bindable var ikaPreference = ikaPreference
     return HStack {
-      Label {
-        if !isHorizontalCompact {
-          Text("Default Game Mode")
-            .foregroundStyle(.primary)
-        }
-        else if rowWidth >= Scoped.defaultModePickerNameShowedThreshold {
-          Text("Game")
-            .foregroundStyle(.primary)
-        }
-        else {
-          Spacer()
-        }
-      } icon: {
+      SettingsRowLabel("Default Game Mode", titleStyle: .primary) {
         Image(systemName: ikaPreference.preferredDefaultGameMode.sfSymbolNameSelected)
           .imageScale(.medium)
           .contentTransition(.symbolEffect(.replace.offUp))
@@ -139,28 +117,13 @@ struct SettingsMainView: View {
   private var rowDefaultBattleMode: some View {
     @Bindable var ikaPreference = ikaPreference
     return HStack {
-      Label {
-        if !isHorizontalCompact {
-          Text("Default Battle Mode")
-            .foregroundStyle(.primary)
-        }
-        else if rowWidth >= Scoped.defaultModePickerNameShowedThreshold {
-          Text("Battle")
-            .foregroundStyle(.primary)
-        }
-        else {
-          Spacer()
-        }
-      } icon: {
+      SettingsRowLabel("Default Battle Mode", titleStyle: .primary) {
         Image(
           systemName: ikaPreference.preferredDefaultBattleMode.sfSymbolNameSelected)
           .imageScale(.medium)
           .contentTransition(.symbolEffect(.replace.offUp))
           .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(
-            ikaPreference.preferredDefaultGameMode != .battle || !isHorizontalCompact
-              ? .secondary
-              : ikaPreference.preferredDefaultBattleMode.themeColor)
+          .foregroundStyle(Color.secondary)
       }
 
       Spacer()
@@ -176,7 +139,8 @@ struct SettingsMainView: View {
       }
       .pickerStyle(.segmented)
       .fixedSize()
-      .disabled(ikaPreference.preferredDefaultGameMode != .battle || !isHorizontalCompact)
+      // iPad shows every battle mode side by side; the default only matters on iPhone (see footer).
+      .disabled(true)
     }
   }
 
@@ -186,16 +150,10 @@ struct SettingsMainView: View {
     @Bindable var ikaPreference = ikaPreference
     return Picker(
       selection: $ikaPreference.preferredAppColorScheme,
-      label: Label {
-        Text("Color Scheme")
-          .foregroundStyle(.primary)
-      } icon: {
-        Image(
-          systemName: Scoped.colorSchemeSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      })
+      label: SettingsRowLabel(
+        "Color Scheme",
+        titleStyle: .primary,
+        systemImage: Scoped.colorSchemeSFSymbol))
     {
       ForEach(IkaPreferredColorScheme.allCases) { preferredColorScheme in
         Label(
@@ -208,11 +166,7 @@ struct SettingsMainView: View {
 
   private var rowAltAppIcon: some View {
     NavigationLink(destination: SettingsAltAppIconView()) {
-      Label {
-        Text("App Icon")
-          .foregroundStyle(.primary)
-      }
-      icon: {
+      SettingsRowLabel("App Icon", titleStyle: .primary) {
         Image(systemName: ikaPreference.preferredAppIcon.settingsMainSFSymbolName)
           .iconNudge(isActive: !ikaDiscoveryLog.hasDiscoveredAltAppIcon)
           .imageScale(.medium)
@@ -230,11 +184,7 @@ struct SettingsMainView: View {
     let customizedPercentage = Double(customizations.count(where: { $0 })) / Double(customizations.count)
 
     return NavigationLink(destination: SettingsAdvancedOptionsView()) {
-      Label {
-        Text("Advanced Options")
-          .foregroundStyle(.primary)
-      }
-      icon: {
+      SettingsRowLabel("Advanced Options", titleStyle: .primary) {
         Image(
           systemName: Scoped.advancedOptionsSFSymbol,
           variableValue: customizedPercentage)
@@ -255,20 +205,14 @@ struct SettingsMainView: View {
       openURL(url)
     } label: {
       HStack {
-        Label {
-          Text("Preferred Language")
-            .foregroundStyle(Color.primary)
-        }
-        icon: {
-          Image(systemName: currentLocale.toIkaLocale().sfSymbolName)
-            .imageScale(.medium)
-            .symbolRenderingMode(.hierarchical)
-            .foregroundStyle(Color.accentColor)
-        }
+        SettingsRowLabel(
+          "Preferred Language",
+          titleStyle: Color.primary,
+          systemImage: currentLocale.toIkaLocale().sfSymbolName)
 
         Spacer()
 
-        Text(currentLocale.toIkaLocale().description)
+        Text(currentLocale.toIkaLocale().displayName)
           .foregroundStyle(Color.secondary)
 
         Constants.Style.Global.externalLinkJumpIcon
@@ -277,35 +221,23 @@ struct SettingsMainView: View {
     }
   }
 
-  // MARK: - Others Section
+  // MARK: - About and Credits
 
   private var rowAbout: some View {
     NavigationLink(destination: SettingsAboutView()) {
-      Label {
-        Text("About")
-          .foregroundStyle(.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.aboutSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "About",
+        titleStyle: .primary,
+        systemImage: Scoped.aboutSFSymbol)
     }
   }
 
   private var rowCredits: some View {
     NavigationLink(destination: SettingsCreditsView()) {
-      Label {
-        Text("Credits")
-          .foregroundStyle(.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.creditsSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Credits",
+        titleStyle: .primary,
+        systemImage: Scoped.creditsSFSymbol)
     }
   }
 

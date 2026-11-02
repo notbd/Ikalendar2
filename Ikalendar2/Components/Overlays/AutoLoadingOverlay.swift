@@ -24,10 +24,10 @@ struct AutoLoadingOverlay: View {
           Image(systemName: iconName)
             .symbolEffect(
               .rotate.byLayer,
-              options: .repeat(.periodic(delay: 0.2)),
+              options: .repeat(.periodic(delay: Scoped.loadingSymbolRepeatDelay)),
               isActive: ikaCatalog.autoLoadStatus == .autoLoading)
             .contentTransition(.symbolEffect(.replace.magic(fallback: .replace.byLayer)))
-            .font(Scoped.sfsymbolFont)
+            .font(Scoped.symbolFont)
             .frame(
               width: Scoped.frameSide,
               height: Scoped.frameSide)
@@ -36,7 +36,7 @@ struct AutoLoadingOverlay: View {
               in: .rect(cornerRadius: Scoped.frameCornerRadius))
             .glassEffectID("icon", in: ns)
 
-          if ikaCatalog.autoLoadDelayedIdleStatus == .autoLoading {
+          if ikaCatalog.autoLoadDisplayStatus == .autoLoading {
             Text(Scoped.subtitle.localizedStringKey)
               .font(Scoped.subtitleFont)
               .padding(.horizontal, Scoped.subtitlePaddingH)
@@ -53,14 +53,13 @@ struct AutoLoadingOverlay: View {
       .padding()
     }
     .opacity(ikaCatalog.autoLoadStatus == .idle ? 0 : 1)
-    .transition(.scale.combined(with: .opacity))
     .animation(
       .bouncy,
       value: ikaCatalog.autoLoadStatus)
   }
 
   private var iconName: String {
-    switch ikaCatalog.autoLoadDelayedIdleStatus {
+    switch ikaCatalog.autoLoadDisplayStatus {
       case .autoLoading:
         Scoped.loadingSFSymbol
 

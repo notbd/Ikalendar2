@@ -8,20 +8,16 @@
 import SwiftUI
 
 extension View {
-  /// This function will transform a view by the application of a higher order function.
+  /// Applies `transformation` to the view, so a helper function can stay inside a linear
+  /// modifier chain.
   ///
   /// ### Usage example: ###
   /// ```
-  /// var body: some view {
+  /// var body: some View {
   ///   myView
   ///     .apply { $0.padding(8) }
   /// }
   /// ```
-  ///
-  /// - Parameters:
-  ///   - transformation: The transform function/modifier.
-  ///
-  /// - Returns: The resulted view.
   public func apply(
     _ transformation: (Self) -> some View)
     -> some View
@@ -29,23 +25,17 @@ extension View {
     transformation(self)
   }
 
-  /// This function will apply transform to our view when condition is true,
-  /// otherwise it will leave the original view untouched.
+  /// Applies `transformation` only while `condition` is true. Changing `condition` changes the
+  /// view's identity, so `@State` inside resets.
   ///
   /// ### Usage example: ###
   /// ```
-  /// var body: some view {
+  /// var body: some View {
   ///   myView
   ///     .if(X) { $0.padding(8) }
   ///     .if(Y) { $0.background(Color.blue) }
   /// }
   /// ```
-  ///
-  /// - Parameters:
-  ///   - condition: The condition for the transform.
-  ///   - transformation: The transform function/modifier.
-  ///
-  /// - Returns: The resulted view.
   @ViewBuilder
   public func `if`(
     _ condition: Bool,
@@ -56,23 +46,16 @@ extension View {
     else { self }
   }
 
-  /// This function will apply a transform to our view when condition is true,
-  /// and the another transform to the view otherwise.
+  /// Applies one of two transformations by `condition`. Same identity caveat as
+  /// `if(_:transformation:)`.
   ///
   /// ### Usage example: ###
   /// ```
-  /// var body: some view {
+  /// var body: some View {
   ///   myView
   ///     .if(X) { $0.padding(8) } else: { $0.background(Color.blue) }
   /// }
   /// ```
-  ///
-  /// - Parameters:
-  ///   - condition: The condition for the transform.
-  ///   - trueTransformation: The transform to apply if the condition is true.
-  ///   - falseTransformation: The condition to apply for the transform is false.
-  ///
-  /// - Returns: The resulted view.
   @ViewBuilder
   public func `if`(
     _ condition: Bool,
@@ -84,21 +67,15 @@ extension View {
     else { falseTransformation(self) }
   }
 
-  /// This function will apply a transform to our view if the value is non-nil.
+  /// Applies `transformation` with the unwrapped value when `value` is non-nil.
   ///
   /// ### Usage example: ###
   /// ```
-  /// var body: some view {
+  /// var body: some View {
   ///   myView
   ///     .ifLet(optionalColor) { $0.foregroundStyle($1) }
   /// }
   /// ```
-  ///
-  /// - Parameters:
-  ///   - value: The optional value to evaluate.
-  ///   - transformation: The transform function/modifier.
-  ///
-  /// - Returns: The resulted view.
   @ViewBuilder
   public func ifLet<V>(
     _ value: V?,
@@ -106,31 +83,6 @@ extension View {
     -> some View
   {
     if let value { transformation(self, value) }
-    else { self }
-  }
-
-  /// This function will apply a transform to our view if the value is nil.
-  ///
-  /// ### Usage example: ###
-  /// ```
-  /// var body: some view {
-  ///   myView
-  ///     .ifNil(optionalValue) { $0.hidden() }
-  /// }
-  /// ```
-  ///
-  /// - Parameters:
-  ///   - value: The optional value to evaluate.
-  ///   - transformation: The transform function/modifier.
-  ///
-  /// - Returns: The resulted view.
-  @ViewBuilder
-  public func ifNil(
-    _ value: (some Any)?,
-    transformation: (Self) -> some View)
-    -> some View
-  {
-    if value == nil { transformation(self) }
     else { self }
   }
 }

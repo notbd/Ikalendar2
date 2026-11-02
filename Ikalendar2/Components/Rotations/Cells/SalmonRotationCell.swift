@@ -28,7 +28,8 @@ struct SalmonRotationCell: View {
     {
       SalmonRotationCellTimeTextSection(
         rotation: rotation,
-        rowWidth: rowWidth)
+        rowWidth: rowWidth,
+        isCurrent: rotation.isCurrent(ikaClock.currentTime))
 
       if hasStageAndWeapon {
         stageAndWeaponSection
@@ -39,8 +40,10 @@ struct SalmonRotationCell: View {
         }
       }
     }
-    // Stupid workaround because SwiftUI List cell force adds vInsets for content that's too small
-    .padding(.vertical, Scoped.cellPaddingVertical)
+    // Workaround (e33efad): List adds its own vertical insets to cells whose content is too
+    // short (the time-only rows). Padding every cell the same way keeps row spacing consistent.
+    .padding(.vertical, Scoped.cellPaddingV)
+    .accessibilityElement(children: .combine)
   }
 
   private var stageAndWeaponSection: some View {
@@ -57,7 +60,7 @@ struct SalmonRotationCell: View {
       label: {
         Text(ikaClock.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
           .contentTransition(.numericText(countsDown: true))
-          .animation(.snappy, value: ikaClock.currentTime)
+          .animation(Constants.Motion.countdownRoll, value: ikaClock.currentTime)
           .scaledLimitedLine()
           .ikaFont(
             .ika2,
@@ -72,63 +75,57 @@ struct SalmonRotationCell: View {
 // MARK: - SalmonRotationCellTimeTextSection
 
 /// A HStack component containing the time text of a salmon rotation.
-struct SalmonRotationCellTimeTextSection: View {
+private struct SalmonRotationCellTimeTextSection: View {
   typealias Scoped = Constants.Style.Rotation.Salmon.Cell.TimeTextSection
-
-  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: SalmonRotation
   let rowWidth: CGFloat
+  /// Passed in by the parent cell (which already reads the clock), so the
+  /// clock's per-second ticks do not re-render this section (4d22e88).
+  let isCurrent: Bool
 
   var body: some View {
     HStack {
-      Image(rotation.isCurrent(ikaClock.currentTime) ? .goldenEgg : .salmon)
-        .antialiased(true)
-        .resizable()
-        .scaledToFit()
+      Image(isCurrent ? .goldenEgg : .salmon)
+        .ikaFitted()
+        .accessibilityHidden(true)
         .shadow(radius: Constants.Style.Global.shadowRadius)
         .frame(height: rowWidth * Scoped.salmonIconHeightRatio)
-        .if(rotation.isCurrent(ikaClock.currentTime)) {
+        .if(isCurrent) {
           $0
             .adaptiveGlassEffect(in: .circle)
         }
         .scaleEffect(
-          rotation.isCurrent(ikaClock.currentTime)
+          isCurrent
             ? Scoped.iconGoldenEggScaleFactor
             : Scoped.iconSalmonFishScaleFactor)
-          .animation(.default, value: rotation.isCurrent(ikaClock.currentTime))
+          .animation(.default, value: isCurrent)
 
       Spacer()
 
       HStack(spacing: Scoped.timeTextSpacing) {
-        Text(rotation.startTime.toSalmonTimeString(shouldIncludeDate: true))
-          .scaledLimitedLine()
-          .ikaFont(
-            .ika2,
-            size: Scoped.timeTextFontSize,
-            relativeTo: .headline)
-          .padding(.horizontal, Scoped.timeTextSinglePaddingH)
-          .padding(.vertical, Scoped.timeTextSinglePaddingV)
-          .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.timeTextFrameCornerRadius))
-
-        Text("-")
-          .scaledLimitedLine()
-          .ikaFont(
-            .ika2,
-            size: Scoped.timeTextFontSize,
-            relativeTo: .headline)
-
-        Text(rotation.endTime.toSalmonTimeString(shouldIncludeDate: true))
-          .scaledLimitedLine()
-          .ikaFont(
-            .ika2,
-            size: Scoped.timeTextFontSize,
-            relativeTo: .headline)
-          .padding(.horizontal, Scoped.timeTextSinglePaddingH)
-          .padding(.vertical, Scoped.timeTextSinglePaddingV)
-          .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.timeTextFrameCornerRadius))
+        framedTimeText(rotation.startTime.toSalmonTimeString(shouldIncludeDate: true))
+        timeText(Text("-"))
+        framedTimeText(rotation.endTime.toSalmonTimeString(shouldIncludeDate: true))
       }
     }
+  }
+
+  /// A start or end time in its glass frame.
+  private func framedTimeText(_ time: String) -> some View {
+    timeText(Text(time))
+      .padding(.horizontal, Scoped.timeTextSinglePaddingH)
+      .padding(.vertical, Scoped.timeTextSinglePaddingV)
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.timeTextFrameCornerRadius))
+  }
+
+  private func timeText(_ text: Text) -> some View {
+    text
+      .scaledLimitedLine()
+      .ikaFont(
+        .ika2,
+        size: Scoped.timeTextFontSize,
+        relativeTo: .headline)
   }
 }
 

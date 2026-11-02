@@ -1,5 +1,5 @@
 //
-//  RotationProtocol.swift
+//  Rotation.swift
 //  Ikalendar2
 //
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
@@ -19,7 +19,8 @@ import Foundation
 protocol Rotation: Identifiable, CustomStringConvertible, Equatable, Hashable {
   /// Uniquely identifies a rotation event based on its time range.
   ///
-  /// The default implementation combines the Unix timestamps of the `startTime` and `endTime`.
+  /// The default implementation joins the `description`s of `startTime` and `endTime`
+  /// (e.g. `2023-11-14 22:00:00 +0000-2023-11-16 16:00:00 +0000`).
   var id: String { get }
 
   /// Provides a string representation of a rotation event.
@@ -37,26 +38,17 @@ protocol Rotation: Identifiable, CustomStringConvertible, Equatable, Hashable {
 extension Rotation {
   /// Default implementation of the `id` property.
   ///
-  /// Constructs the ID by combining the Unix timestamps of the `startTime` and `endTime` properties.
+  /// Constructs the ID by joining the `description`s of the `startTime` and `endTime` properties.
   var id: String { "\(startTime)-\(endTime)" }
 
-  /// Equates two `Rotation` instances based on their `hashValue`s.
-  ///
-  /// - Parameters:
-  ///   - lhs: The `Rotation` instance on the left-hand side of the operator.
-  ///   - rhs: The `Rotation` instance on the right-hand side of the operator.
-  /// - Returns: A Boolean value indicating whether the two instances are equal.
+  /// Equates two `Rotation` instances based on their `description`s, the same value
+  /// `hash(into:)` hashes (exact, unlike comparing `hashValue`s, which can collide; 4ca6526).
   static func == (lhs: Self, rhs: Self) -> Bool {
-    lhs.hashValue == rhs.hashValue
+    lhs.description == rhs.description
   }
 
-  /// Computes the hash value for this `Rotation` instance.
-  ///
-  /// This method is explicitly implemented to support `Hashable` conformance,
-  /// particularly when not all properties of the conforming type are hashable.
-  /// The hash value is generated using the `description` property.
-  ///
-  /// - Parameter hasher: The hasher to use for combining the hash components of this instance.
+  /// Hashes `description`, the same value `==` compares. Needed because SalmonRotation holds
+  /// `[SalmonWeapon]?`, which is Equatable but not Hashable.
   func hash(into hasher: inout Hasher) {
     hasher.combine(description)
   }

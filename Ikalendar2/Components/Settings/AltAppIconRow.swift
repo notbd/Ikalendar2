@@ -12,8 +12,6 @@ import SwiftUI
 
 /// One selectable app icon row: preview image, name, and active checkmark.
 struct AltAppIconRow: View {
-  typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
-
   @Environment(IkaPreference.self) private var ikaPreference
 
   let ikaAppIcon: IkaAppIcon
@@ -29,36 +27,21 @@ struct AltAppIconRow: View {
     label: {
       rowContent
     }
+    .accessibilityAddTraits(ikaAppIcon == ikaPreference.preferredAppIcon ? .isSelected : [])
   }
 
   private var rowContent: some View {
-    HStack(spacing: Scoped.spacingH) {
-      Image(ikaAppIcon.imageName(for: appIconDisplayMode))
-        .antialiased(true)
-        .resizable()
-        .scaledToFit()
+    AltAppIconRowContent(ikaAppIcon: ikaAppIcon, isSelected: ikaAppIcon == ikaPreference.preferredAppIcon) {
+      Image(decorative: ikaAppIcon.imageName(for: appIconDisplayMode))
+        .ikaFitted()
         .frame(
           width: appIconDisplayMode.size.screenSize,
           height: appIconDisplayMode.size.screenSize)
         .shadow(radius: Constants.Style.Global.shadowRadius)
         .animation(
-          Scoped.crossFadeAnimation,
+          Constants.Motion.appIconCrossFade,
           value: appIconColorVariant)
-
-      Text(ikaAppIcon.displayNameLocalizedStringKey)
-        .font(.system(.body, design: .rounded))
-        .foregroundStyle(Scoped.displayNameColor)
-
-      Spacer()
-
-      if ikaAppIcon == ikaPreference.preferredAppIcon {
-        Image(systemName: Scoped.activeIndicatorSFSymbol)
-          .font(Scoped.activeIndicatorFont)
-          .symbolRenderingMode(.palette)
-          .foregroundStyle(Color.accentColor, Color.systemGroupedBackgroundTertiary)
-      }
     }
-    .padding(.vertical, Scoped.rowPaddingV)
   }
 
   private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
@@ -72,15 +55,10 @@ struct AltAppIconRow: View {
 
 /// The Rick row. Selecting it jumps to the good stuff on first discovery.
 struct AltAppIconEasterEggRow: View {
-  typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
-
-  @Environment(\.openURL) private var openURL
   @Environment(\.locale) private var currentLocale
 
   @Environment(IkaPreference.self) private var ikaPreference
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
-
-  @Environment(IkaConnectivityChecker.self) var connectivityChecker
 
   let ikaAppIcon: IkaAppIcon
   @Binding var appIconColorVariant: IkaAppIcon.ColorVariant
@@ -89,23 +67,28 @@ struct AltAppIconEasterEggRow: View {
   }
 
   @Binding var buttonPressCounter: Int
+  /// Bumped to ask the page for the delayed jump. The page owns that task, so scrolling
+  /// this row off-screen does not cancel it (14102a7).
+  @Binding var jumpRequestCounter: Int
 
   var body: some View {
     Button {
       // jump to the good stuff (first discovery only)
-      if !ikaDiscoveryLog.hasDiscoveredEasterEgg { Task { await jumpToURLAfterDelay() } }
+      if !ikaDiscoveryLog.hasDiscoveredEasterEgg { jumpRequestCounter += 1 }
       if !ikaDiscoveryLog.hasDiscoveredEasterEgg { ikaDiscoveryLog.hasDiscoveredEasterEgg = true }
-      // compensatory haptics for repeated presses
+      // Re-selecting the active Rick changes nothing in the preference (so no success haptic);
+      // give tactile feedback anyway.
       if ikaPreference.preferredAppIcon == .rick { SimpleHaptics.generateTask(.medium) }
       buttonPressCounter += 1
       setAltAppIcon(ikaAppIcon)
     }
     label: { rowContent }
+    .accessibilityAddTraits(ikaAppIcon == ikaPreference.preferredAppIcon ? .isSelected : [])
   }
 
   private var rowContent: some View {
-    HStack(spacing: Scoped.spacingH) {
-      Image(ikaAppIcon.imageName(for: appIconDisplayMode))
+    AltAppIconRowContent(ikaAppIcon: ikaAppIcon, isSelected: ikaAppIcon == ikaPreference.preferredAppIcon) {
+      Image(decorative: ikaAppIcon.imageName(for: appIconDisplayMode))
         .antialiased(true)
         .resizable()
         .scaledToFit()
@@ -114,10 +97,10 @@ struct AltAppIconEasterEggRow: View {
           height: appIconDisplayMode.size.screenSize)
         .shadow(radius: Constants.Style.Global.shadowRadius)
         .animation(
-          Scoped.crossFadeAnimation,
+          Constants.Motion.appIconCrossFade,
           value: appIconColorVariant)
         // Inlined on the concrete view: wrapping this in a `some View` helper
-        // trips a non-Sendable metatype warning from the content closure.
+        // trips a non-Sendable metatype warning from the content closure (a58eaf9).
         .keyframeAnimator(
           initialValue: AppIconEasterEggAnimationValues(),
           trigger: buttonPressCounter)
@@ -131,31 +114,7 @@ struct AltAppIconEasterEggRow: View {
           AppIconEasterEggAnimationValues.easterEggKeyframes(
             rotationAngle: .init((Int.random(in: 16 ... 24)) * (Bool.random() ? 1 : -1)))
         }
-
-      Text(ikaAppIcon.displayNameLocalizedStringKey)
-        .font(.system(.body, design: .rounded))
-        .foregroundStyle(Scoped.displayNameColor)
-
-      Spacer()
-
-      if ikaAppIcon == ikaPreference.preferredAppIcon {
-        Image(systemName: Scoped.activeIndicatorSFSymbol)
-          .font(Scoped.activeIndicatorFont)
-          .symbolRenderingMode(.palette)
-          .foregroundStyle(Color.accentColor, Color.systemGroupedBackgroundTertiary)
-      }
     }
-    .padding(.vertical, Scoped.rowPaddingV)
-  }
-
-  private func jumpToURLAfterDelay() async {
-    try? await Task.sleep(for: .seconds(Constants.Config.Settings.AltAppIcon.easterEggJumpDelay))
-    let goodStuffURLString = connectivityChecker.isGFWed
-      ? Constants.Key.URLs.theGoodStuffCN
-      : Constants.Key.URLs.theGoodStuff
-    guard let url = URL(string: goodStuffURLString) else { return }
-
-    openURL(url)
   }
 
   private func setAltAppIcon(_ ikaAppIcon: IkaAppIcon) {
@@ -165,10 +124,43 @@ struct AltAppIconEasterEggRow: View {
   }
 }
 
+// MARK: - AltAppIconRowContent
+
+/// The label both rows share: icon, name, and the active checkmark. Each row passes its icon fully
+/// modified, so the Rick row's keyframe animator stays on its concrete image chain.
+private struct AltAppIconRowContent<Icon: View>: View {
+  typealias Scoped = Constants.Style.Settings.AltAppIcon.Row
+
+  let ikaAppIcon: IkaAppIcon
+  let isSelected: Bool
+  @ViewBuilder let icon: Icon
+
+  var body: some View {
+    HStack(spacing: Scoped.spacingH) {
+      icon
+
+      Text(ikaAppIcon.displayNameLocalizedStringKey)
+        .font(.system(.body, design: .rounded))
+        .foregroundStyle(Scoped.displayNameColor)
+
+      Spacer()
+
+      if isSelected {
+        Image(systemName: Scoped.activeIndicatorSFSymbol)
+          .font(Scoped.activeIndicatorFont)
+          .symbolRenderingMode(.palette)
+          .foregroundStyle(Color.accentColor, Color.systemGroupedBackgroundTertiary)
+          .accessibilityHidden(true) // conveyed by the row's selected trait
+      }
+    }
+    .padding(.vertical, Scoped.rowPaddingV)
+  }
+}
+
 // MARK: - AppIconEasterEggAnimationValues
 
 /// Animatable values for the easter-egg icon jump.
-struct AppIconEasterEggAnimationValues {
+private struct AppIconEasterEggAnimationValues {
   var scale = 1.0
   var verticalStretch = 1.0
   var verticalTranslation = 0.0
@@ -230,12 +222,14 @@ struct AppIconEasterEggAnimationValues {
 #Preview("Easter Egg Row") {
   @Previewable @State var colorVariant: IkaAppIcon.ColorVariant = .default
   @Previewable @State var bounceCounter: Int = 0
+  @Previewable @State var jumpRequestCounter: Int = 0
 
   List {
     AltAppIconEasterEggRow(
       ikaAppIcon: .rick,
       appIconColorVariant: $colorVariant,
-      buttonPressCounter: $bounceCounter)
+      buttonPressCounter: $bounceCounter,
+      jumpRequestCounter: $jumpRequestCounter)
   }
   .listStyle(.insetGrouped)
   .ikaPreviewEnvironment()

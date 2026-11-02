@@ -1,103 +1,24 @@
 # This workflow runs on every pull request to provide fast feedback.
 # It ensures code quality and that all unit tests pass before merging.
+# The jobs live in build-and-test.yml, shared with main-integration.yml.
 name: Pull Request Check
 
 on:
   pull_request:
     branches: [main, dev]
+    # docs/ has its own check (docs-check.yml), so a docs-only pull request skips the app build.
+    paths-ignore:
+      - "docs/**"
 
-env:
-  # Pinned tool versions: runner-preinstalled formatters drift across images and
-  # rule behavior changes between releases (e.g. swiftTestingTestCaseNames in 0.60+).
-  SWIFTFORMAT_VERSION: "0.62.1"
-  SWIFTLINT_VERSION: "0.63.3"
+permissions:
+  contents: read
+
+# A new push to the same pull request cancels the run it supersedes.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
-  lint:
-    name: Lint Code
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Install SwiftFormat (pinned)
-        run: |
-          curl -sSL -o /tmp/swiftformat.zip "https://github.com/nicklockwood/SwiftFormat/releases/download/${SWIFTFORMAT_VERSION}/swiftformat.zip"
-          unzip -o /tmp/swiftformat.zip -d /tmp/swiftformat
-          # Install to a dedicated dir prepended to PATH: runner images preinstall
-          # swiftformat in /opt/homebrew/bin, which would shadow /usr/local/bin.
-          mkdir -p "$RUNNER_TEMP/pinned-tools"
-          install /tmp/swiftformat/swiftformat "$RUNNER_TEMP/pinned-tools/swiftformat"
-          echo "$RUNNER_TEMP/pinned-tools" >> "$GITHUB_PATH"
-          test "$("$RUNNER_TEMP/pinned-tools/swiftformat" --version)" = "$SWIFTFORMAT_VERSION"
-
-      - name: Run SwiftFormat
-        run: swiftformat --lint . --reporter github-actions-log
-
-      - name: Install SwiftLint (pinned)
-        run: |
-          curl -sSL -o /tmp/swiftlint.zip "https://github.com/realm/SwiftLint/releases/download/${SWIFTLINT_VERSION}/portable_swiftlint.zip"
-          unzip -o /tmp/swiftlint.zip -d /tmp/swiftlint
-          mkdir -p "$RUNNER_TEMP/pinned-tools"
-          install /tmp/swiftlint/swiftlint "$RUNNER_TEMP/pinned-tools/swiftlint"
-          echo "$RUNNER_TEMP/pinned-tools" >> "$GITHUB_PATH"
-          test "$("$RUNNER_TEMP/pinned-tools/swiftlint" version)" = "$SWIFTLINT_VERSION"
-
-      - name: Run SwiftLint
-        run: swiftlint
-
-  test:
-    name: Build and Test
-    runs-on: macos-latest
-    # This job depends on the lint job passing first
-    needs: lint
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Select Xcode Version
-        run: |
-          XCODE_VERSION=$(ls /Applications | grep "Xcode_26" | sort -V | tail -n 1)
-          sudo xcode-select -switch /Applications/$XCODE_VERSION
-          echo "Selected Xcode version: $XCODE_VERSION"
-
-      - name: Confirm Xcode Version
-        run: /usr/bin/xcodebuild -version
-
-      - name: Ensure iOS Simulator Runtime
-        run: |
-          # Runner images only bundle the iOS runtime for their default Xcode;
-          # a version-switched Xcode may have zero available simulators.
-          if ! xcrun simctl list devices available | grep -q "iPhone"; then
-            echo "No simulator devices available - downloading iOS platform"
-            sudo xcodebuild -downloadPlatform iOS
-          fi
-
-      - name: Install xcpretty
-        run: gem install xcpretty --no-document
-
-      - name: Cache Swift Packages
-        uses: actions/cache@v4
-        with:
-          path: SourcePackages
-          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
-          restore-keys: |
-            spm-${{ runner.os }}-
-
-      - name: Run Unit Tests
-        run: |
-          set -o pipefail
-          xcodebuild test \
-            -project Ikalendar2.xcodeproj \
-            -scheme Ikalendar2 \
-            -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
-            -clonedSourcePackagesDirPath SourcePackages \
-            -enableCodeCoverage YES \
-            2>&1 | tee raw-test.log | xcpretty && exit ${PIPESTATUS[0]}
-
-      - name: Surface Test Failure Details
-        if: failure()
-        run: |
-          grep -B 2 -A 10 -E "recorded an issue|Expectation failed|Fatal error|Test .* failed" raw-test.log | head -300 || true
+  ci:
+    name: CI
+    uses: ./.github/workflows/build-and-test.yml

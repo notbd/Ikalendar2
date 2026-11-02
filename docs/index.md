@@ -3,7 +3,7 @@ layout: home
 
 hero:
   image:
-    src: /assets/app-icon-1024.png
+    src: /assets/app-icon-hero.webp
     alt: Logo for ikalendar2
   name: ikalendar2
   text: Track Splatoon 2 Rotations with Style and Ease
@@ -50,7 +50,7 @@ dependencies:
         - name: misenhower/splatoon2.ink
           url: https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy#data-urls
           icon: github
-        - name: JelenzoBot
+        - name: JelonzoBot
           url: https://splatoon.oatmealdome.me/about
     - tier: Open Source Libraries
       size: big

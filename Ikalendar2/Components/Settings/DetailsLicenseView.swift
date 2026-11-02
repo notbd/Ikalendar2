@@ -45,9 +45,8 @@ struct DetailsLicenseView: View {
       }
     }
     .task {
-      // .task (unlike .onAppear + Task) is cancelled when the view disappears,
-      // so a dismissed screen no longer keeps the request alive.
-      try? await Task.sleep(for: .seconds(Constants.Config.License.licenseLoadedDelay))
+      // Cancelled with the view: dismissing the screen drops the request.
+      try? await Task.sleep(for: .seconds(Constants.Motion.licenseLoadDelay))
       guard !Task.isCancelled else { return }
 
       do {
@@ -75,7 +74,7 @@ struct DetailsLicenseView: View {
       VStack(alignment: .leading) {
         if !hasErrored {
           Text(
-            licenseViewModel.map { String(localized: "\($0.gist) be licensed under") }
+            licenseViewModel.map { String(localized: "\($0.ownerAndRepo) be licensed under") }
               ?? Constants.Key.Placeholder.unknown)
             .foregroundStyle(Color.secondary)
             .font(Scoped.licenseCaptionFont)

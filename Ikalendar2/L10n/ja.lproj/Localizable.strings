@@ -8,7 +8,6 @@
 
 // MARK: - Onboarding
 
-"Welcome to %@" = "ようこそ%@へ";
 "Welcome to\n%@" = "ようこそ\n%@へ";
 "Get Started" = "始める";
 
@@ -21,7 +20,6 @@
 // Main
 "Settings" = "設定";
 "Done" = "完了";
-"Close" = "閉じる";
 "Default Mode" = "デフォルトのモード";
 "Default Tab" = "起動時のタブ";
 "Default Game Mode" = "デフォルトのゲームモード";
@@ -51,7 +49,6 @@
 "Tap Me :)" = "タップして :)";
 // Advanced Options
 "Minimize Tab Bar" = "タブバーを最小化";
-"Swap Bottom Toolbar Pickers" = "下部工具列のピッカーを交換";
 "Certain options only apply to smaller screen widths." =
 "一部のオプションは、より狭い画面幅にのみ適用されます。";
 "Alternative Stage Images" = "追加ステージ画像を利用";
@@ -249,7 +246,7 @@
 "Slosher" = "バケットスロッシャー";
 "Tri-Slosher" = "ヒッセン";
 "Sloshing Machine" = "スクリュースロッシャー";
-"Bloblobber" = "オーバーフロッシャー  ";
+"Bloblobber" = "オーバーフロッシャー";
 "Explosher" = "エクスプロッシャー";
 // Splatlings
 "Mini Splatling" = "スプラスピナー";
@@ -267,11 +264,6 @@
 "Splat Brella" = "パラシェルター";
 "Tenta Brella" = "キャンピングシェルター";
 "Undercover Brella" = "スパイガジェット";
-
-// MARK: - RandomWeapon
-
-"Random" = "ランダム";
-"Grizzco Random" = "クマサン印のランダム";
 
 // MARK: - GrizzcoWeapon
 
@@ -295,7 +287,7 @@
 
 // MARK: - ClothesApparel
 
-"Squiddor Polo" = "イカテンくんポロ";
+"Squiddor Polo" = "イカテンくんポロ";
 "Anchor Life Vest" = "アンカーベスト";
 "Juice Parka" = "フューエルブルゾン";
 "Garden Gear" = "マクレGT";
@@ -313,3 +305,14 @@
 "Friendship Bracelet" = "チギリノヒモ";
 "Flipper Floppers" = "ゲソバタアシスト";
 "Wooden Sandals" = "バンカラコロン";
+
+/* Accessibility: settings */
+"Play" = "再生";
+"Pause" = "一時停止";
+"Next" = "次へ";
+
+/* Accessibility: rotations */
+"Refresh" = "更新";
+"Refreshing" = "更新中";
+"Mystery" = "ランダム";
+"Mystery Grizzco" = "クマサン印のランダム";

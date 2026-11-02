@@ -9,6 +9,8 @@ import Foundation
 
 /// Small async helpers that don't belong anywhere else.
 enum AsyncUtils {
+  /// Races `operation` against a deadline. The first to finish wins and the other is cancelled;
+  /// a cancelled race surfaces `CancellationError`, not `timeoutError`.
   static func withTimeout<T: Sendable>(
     seconds: TimeInterval,
     timeoutError: Error,

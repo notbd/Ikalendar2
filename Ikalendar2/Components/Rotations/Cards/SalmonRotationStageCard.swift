@@ -16,12 +16,13 @@ struct SalmonRotationStageCard: View {
   @Environment(IkaPreference.self) private var ikaPreference
   @Environment(IkaClock.self) private var ikaClock
 
-  @State private var cardWidth: CGFloat = 150
+  @State private var cardWidth: CGFloat = Scoped.initialCardWidth
 
   let rotation: SalmonRotation
 
   private var hasRewardApparel: Bool { rotation.rewardApparel != nil }
-  private var shouldOverrideWithLarge: Bool { cardWidth >= 200 }
+  private var shouldOverrideWithLarge: Bool { cardWidth >= Scoped.largeImageMinWidth }
+  private var isRewardApparelVisible: Bool { rotation.isCurrent(ikaClock.currentTime) && hasRewardApparel }
 
   private var stageImageName: String {
     // Caller (SalmonRotationCell) only renders this card when rotation.stage != nil.
@@ -40,12 +41,10 @@ struct SalmonRotationStageCard: View {
   }
 
   var body: some View {
-    Image(stageImageName)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
-      .clipShape(.rect(cornerRadius: Scoped.stageImgCornerRadius))
-      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.stageImgCornerRadius))
+    Image(decorative: stageImageName)
+      .ikaFitted()
+      .clipShape(.rect(cornerRadius: Scoped.stageImageCornerRadius))
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.stageImageCornerRadius))
       .shadow(radius: Constants.Style.Global.shadowRadius)
       .overlay(
         overlay,
@@ -53,13 +52,10 @@ struct SalmonRotationStageCard: View {
       .animation(
         .snappy,
         value: ikaPreference.shouldUseAltStageImages)
-      .background {
-        GeometryReader { geo in
-          Color.clear
-            .onChange(of: geo.size, initial: true) { _, newVal in
-              cardWidth = newVal.width
-            }
-        }
+      .onGeometryChange(for: CGFloat.self) { geo in
+        geo.size.width
+      } action: { newWidth in
+        cardWidth = newWidth
       }
   }
 
@@ -88,15 +84,15 @@ struct SalmonRotationStageCard: View {
 
   private var rewardApparelImg: some View {
     Image(rotation.rewardApparel?.imageName ?? "salmon")
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
-      .padding(Scoped.apparelImgPadding)
-      .frame(width: cardWidth * Scoped.apparelImgWidthRatio)
+      .ikaFitted()
+      .padding(Scoped.apparelImagePadding)
+      .frame(width: cardWidth * Scoped.apparelImageWidthRatio)
       .glassEffect(
         .clear.interactive(),
         in: .rect(cornerRadius: Scoped.apparelFrameCornerRadius))
-      .opacity(rotation.isCurrent(ikaClock.currentTime) && hasRewardApparel ? 1 : 0)
+      .opacity(isRewardApparelVisible ? 1 : 0)
+      .accessibilityLabel(Text((rotation.rewardApparel?.name ?? "").localizedStringKey))
+      .accessibilityHidden(!isRewardApparelVisible)
   }
 }
 

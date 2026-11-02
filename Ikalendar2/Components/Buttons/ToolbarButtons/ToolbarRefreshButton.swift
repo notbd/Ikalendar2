@@ -29,6 +29,7 @@ struct ToolbarRefreshButton: View {
           options: .speed(2),
           isActive: isRefreshing)
     }
+    .accessibilityLabel(isRefreshing ? Text("Refreshing") : Text("Refresh"))
     .disabled(isRefreshing)
   }
 }

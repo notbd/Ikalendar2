@@ -5,7 +5,6 @@
 //  Copyright (c) TIANWEI ZHANG. All rights reserved.
 //
 
-import Combine
 import SimpleHaptics
 import StoreKit
 import SwiftUI
@@ -18,7 +17,7 @@ struct SettingsAboutView: View {
 
   @Environment(\.requestReview) private var requestReview
   @Environment(\.openURL) private var openURL
-  @Environment(\.dynamicTypeSize) var dynamicTypeSize
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
 
@@ -29,24 +28,16 @@ struct SettingsAboutView: View {
 
   @State private var shouldDisplayAnimatedCopy: Bool = false
 
-  /// How long the unclipped overlay copy stays after a bounce (covers the longest keyframe track).
-  static private let animatedCopyLinger: TimeInterval = 1.6
-  /// Small lag so the bounce haptic lands on the squash, not the tap.
-  static private let bounceHapticDelay: TimeInterval = 0.1
-
   var body: some View {
     ZStack {
       List {
         Section {
           rowAppInfo
             .opacity(shouldDisplayAnimatedCopy ? 0 : 1)
-            .background {
-              GeometryReader { geo in
-                Color.clear
-                  .onChange(of: geo.frame(in: .global), initial: true) { _, newValue in
-                    rowAppInfoRectGlobal = newValue
-                  }
-              }
+            .onGeometryChange(for: CGRect.self) { geo in
+              geo.frame(in: .global)
+            } action: { newValue in
+              rowAppInfoRectGlobal = newValue
             }
         }
         .listRowBackground(Color.clear)
@@ -85,14 +76,9 @@ struct SettingsAboutView: View {
         .frame(width: rowAppInfoRectGlobal.width, height: rowAppInfoRectGlobal.height)
         .globalPosition(x: rowAppInfoRectGlobal.midX, y: rowAppInfoRectGlobal.midY)
         .opacity(shouldDisplayAnimatedCopy ? 1 : 0)
+        .accessibilityHidden(true) // visual-only duplicate of the list row
     }
-    .onChange(of: appIconBounceCounter, initial: false) {
-      // Short-lived by design: delays the haptic onto the squash frame.
-      Task {
-        try? await Task.sleep(for: .seconds(Self.bounceHapticDelay))
-        await SimpleHaptics.generate(.light)
-      }
-    }
+    .squashBounceHaptic(trigger: appIconBounceCounter)
     // While bouncing, the icon escapes its list cell's clip bounds - so hide the
     // original and overlay an unclipped copy at the same spot. Re-triggering
     // restarts the linger window.
@@ -100,7 +86,7 @@ struct SettingsAboutView: View {
       guard appIconBounceCounter > 0 else { return }
 
       shouldDisplayAnimatedCopy = true
-      try? await Task.sleep(for: .seconds(Self.animatedCopyLinger))
+      try? await Task.sleep(for: .seconds(Constants.Motion.aboutIconCopyLinger))
       guard !Task.isCancelled else { return }
 
       shouldDisplayAnimatedCopy = false
@@ -127,19 +113,9 @@ struct SettingsAboutView: View {
         .onTapGesture {
           appIconBounceCounter += 1
         }
-        // Inlined on the concrete view: wrapping this in a `some View` helper
-        // trips a non-Sendable metatype warning from the content closure.
-        .keyframeAnimator(
-          initialValue: SettingsAboutAppIconAnimationValues(),
-          trigger: appIconBounceCounter)
-        { content, values in
-          content
-            .scaleEffect(values.scale)
-            .scaleEffect(y: values.vStretch)
-            .offset(y: values.vTranslation)
-        } keyframes: { _ in
-          SettingsAboutAppIconAnimationValues.appIconKeyframes()
-        }
+        .squashBounce(trigger: appIconBounceCounter, amplitude: .aboutIcon)
+        // decorative, and the tap-to-bounce is an easter egg: keep both out of VoiceOver
+        .accessibilityHidden(true)
     }
 
     var appIconTitle: some View {
@@ -177,15 +153,10 @@ struct SettingsAboutView: View {
 
     return
       ShareLink(item: shareURL) {
-        Label {
-          Text("Share ikalendar2")
-            .foregroundStyle(Color.primary)
-        } icon: {
-          Image(systemName: Scoped.shareSFSymbol)
-            .imageScale(.medium)
-            .symbolRenderingMode(.hierarchical)
-            .foregroundStyle(Color.accentColor)
-        }
+        SettingsRowLabel(
+          "Share ikalendar2",
+          titleStyle: Color.primary,
+          systemImage: Scoped.shareSFSymbol)
       }
   }
 
@@ -201,11 +172,7 @@ struct SettingsAboutView: View {
       ratingTapFeedbackTrigger += 1
       if !ikaDiscoveryLog.hasDiscoveredRating { ikaDiscoveryLog.hasDiscoveredRating = true }
     } label: {
-      Label {
-        Text("Rate ikalendar2")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
+      SettingsRowLabel("Rate ikalendar2", titleStyle: Color.primary) {
         Image(systemName: Scoped.ratingSFSymbol)
           .symbolEffect(.wiggle, value: ratingTapFeedbackTrigger)
           .iconNudge(isActive: !ikaDiscoveryLog.hasDiscoveredRating)
@@ -222,16 +189,10 @@ struct SettingsAboutView: View {
 
       openURL(url)
     } label: {
-      Label {
-        Text("Leave a Review")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.reviewSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Leave a Review",
+        titleStyle: Color.primary,
+        systemImage: Scoped.reviewSFSymbol)
     }
   }
 
@@ -242,11 +203,7 @@ struct SettingsAboutView: View {
       SimpleHaptics.generateTask(.selection)
       appStoreOverlayPresented.toggle()
     } label: {
-      Label {
-        Text("View ikalendar2 on the App Store")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
+      SettingsRowLabel("View ikalendar2 on the App Store", titleStyle: Color.primary) {
         Image(systemName: Scoped.viewOnAppStoreSFSymbol)
           .imageScale(.large)
           .symbolEffect(.bounce, value: rowAppStoreOverlayBounceCounter)
@@ -278,15 +235,9 @@ struct SettingsAboutView: View {
         openURL(url)
       } label: {
         HStack {
-          Label {
-            Text("Twitter")
-              .foregroundStyle(Color.primary)
-          }
-          icon: {
-            Image(Scoped.twitterIconName)
-              .antialiased(true)
-              .resizable()
-              .scaledToFit()
+          SettingsRowLabel("Twitter", titleStyle: Color.primary) {
+            Image(decorative: Scoped.twitterIconName)
+              .ikaFitted()
               .frame(
                 width: dynamicTypeSize <= .small
                   ? Scoped.twitterIconSizeSmall
@@ -307,16 +258,10 @@ struct SettingsAboutView: View {
 
       openURL(url)
     } label: {
-      Label {
-        Text("Feedback Email")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.emailSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Feedback Email",
+        titleStyle: Color.primary,
+        systemImage: Scoped.emailSFSymbol)
     }
   }
 
@@ -328,16 +273,10 @@ struct SettingsAboutView: View {
 
       openURL(url)
     } label: {
-      Label {
-        Text("App Website")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.appWebsiteSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "App Website",
+        titleStyle: Color.primary,
+        systemImage: Scoped.appWebsiteSFSymbol)
     }
   }
 
@@ -352,16 +291,10 @@ struct SettingsAboutView: View {
 
     return
       NavigationLink(destination: destination) {
-        Label {
-          Text("Source Code")
-            .foregroundStyle(.primary)
-        }
-        icon: {
-          Image(systemName: Scoped.sourceCodeSFSymbol)
-            .imageScale(.medium)
-            .symbolRenderingMode(.hierarchical)
-            .foregroundStyle(Color.accentColor)
-        }
+        SettingsRowLabel(
+          "Source Code",
+          titleStyle: .primary,
+          systemImage: Scoped.sourceCodeSFSymbol)
       }
       .swipeActions {
         Button {
@@ -381,48 +314,36 @@ struct SettingsAboutView: View {
 
       openURL(url)
     } label: {
-      Label {
-        Text("Privacy Policy")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.privacyPolicySFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.hierarchical)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Privacy Policy",
+        titleStyle: Color.primary,
+        systemImage: Scoped.privacyPolicySFSymbol)
     }
   }
 
-  // MARK: - Others Section
+  // MARK: - Debug
 
   private var rowDebugOptions: some View {
     NavigationLink(destination: SettingsDebugOptionsView()) {
-      Label {
-        Text("Debug Options")
-          .foregroundStyle(Color.primary)
-      }
-      icon: {
-        Image(systemName: Scoped.debugOptionsSFSymbol)
-          .imageScale(.medium)
-          .symbolRenderingMode(.monochrome)
-          .foregroundStyle(Color.accentColor)
-      }
+      SettingsRowLabel(
+        "Debug Options",
+        titleStyle: Color.primary,
+        systemImage: Scoped.debugOptionsSFSymbol,
+        renderingMode: .monochrome)
     }
   }
 
-  @ScaledMetric(relativeTo: .title) var littleBuddyHeight: CGFloat = Scoped.littleBuddyHeight
+  @ScaledMetric(relativeTo: .title) private var littleBuddyHeight: CGFloat = Scoped.littleBuddyHeight
 
   private var footerIkalendar3: some View {
     HStack(alignment: .center) {
       Image(.littleBuddy)
-        .antialiased(true)
-        .resizable()
-        .scaledToFit()
+        .ikaFitted()
         .saturation(0.6)
         .frame(height: littleBuddyHeight)
         .padding(.vertical)
-        .padding(.trailing, 10)
+        .padding(.trailing, Scoped.littleBuddyPaddingTrailing)
+        .accessibilityHidden(true)
 
       Text(Constants.Key.Slogan.ikalendar3.localizedStringKey)
         .scaledLimitedLine(lineLimit: 2)
@@ -430,46 +351,6 @@ struct SettingsAboutView: View {
           .ika2,
           size: Scoped.sloganIkalendar3FontSize,
           relativeTo: .footnote)
-    }
-  }
-}
-
-// MARK: - SettingsAboutAppIconAnimationValues
-
-/// Animatable values for the about-page app icon bounce.
-struct SettingsAboutAppIconAnimationValues {
-  var scale: Double = 1
-  var vStretch: Double = 1
-  var vTranslation: Double = 0
-
-  /// Tap bounce: classic squash-and-stretch - dip, big hop with overshoot, settle.
-  @KeyframesBuilder<SettingsAboutAppIconAnimationValues>
-  static func appIconKeyframes()
-    -> some Keyframes<SettingsAboutAppIconAnimationValues>
-  {
-    KeyframeTrack(\.vStretch) {
-      CubicKeyframe(1.0, duration: 0.01)
-      CubicKeyframe(0.8, duration: 0.06)
-      CubicKeyframe(1.12, duration: 0.1)
-      CubicKeyframe(1.04, duration: 0.3)
-      CubicKeyframe(1.0, duration: 0.3)
-      CubicKeyframe(0.9, duration: 0.22)
-      CubicKeyframe(1.02, duration: 0.23)
-      CubicKeyframe(1.0, duration: 0.20)
-    }
-
-    KeyframeTrack(\.scale) {
-      LinearKeyframe(1.0, duration: 0.16)
-      SpringKeyframe(1.03, duration: 0.38, spring: .bouncy)
-      SpringKeyframe(1.03, duration: 0.27, spring: .smooth)
-      SpringKeyframe(1.0, spring: .bouncy(duration: 0.65, extraBounce: 0.1))
-    }
-
-    KeyframeTrack(\.vTranslation) {
-      SpringKeyframe(40.0, duration: 0.11, spring: .bouncy)
-      SpringKeyframe(-30.0, duration: 0.43, spring: .bouncy)
-      SpringKeyframe(-34.0, duration: 0.27, spring: .smooth)
-      SpringKeyframe(0.0, spring: .bouncy(duration: 0.65, extraBounce: 0.3))
     }
   }
 }

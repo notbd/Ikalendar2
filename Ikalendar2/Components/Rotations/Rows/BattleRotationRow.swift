@@ -62,10 +62,8 @@ extension BattleRotationRow {
 // MARK: - BattleRotationHeader
 
 /// The header of the battle rotation row.
-struct BattleRotationHeader: View {
+private struct BattleRotationHeader: View {
   typealias Scoped = Constants.Style.Rotation.Header
-
-  @Environment(IkaClock.self) private var ikaClock
 
   let rotation: BattleRotation
   let rowType: BattleRotationRow.RowType
@@ -90,21 +88,10 @@ struct BattleRotationHeader: View {
 
   var body: some View {
     HStack(spacing: Scoped.spacing) {
-      // skip if `prefixString` is nil (case .other)
       if let prefixString = rowType.prefixString {
-        Text(prefixString.localizedStringKey)
-          .ikaFont(
-            .ika1,
-            size: Scoped.prefixFontSize,
-            relativeTo: .title2)
-          .foregroundStyle(Color.systemBackground)
-          .padding(.horizontal, Scoped.prefixPaddingH)
-          .adaptiveGlassEffect(
-            tint: .secondary,
-            in: .rect(cornerRadius: Scoped.prefixFrameCornerRadius))
+        RotationHeaderPrefix(prefixString)
       }
 
-      // Battle Time String
       Text("\(startTimeString) - \(endTimeString)")
         .scaledLimitedLine()
         .ikaFont(
@@ -117,6 +104,8 @@ struct BattleRotationHeader: View {
 
 #Preview {
   @Previewable @State var modeSelection: BattleMode = .gachi
+  // generated once, so switching modes does not reshuffle the stages
+  @Previewable @State var rotations: BattleRotationDict = IkaMockData.makeBattleRotations()
 
   NavigationStack {
     GeometryReader { geo in
@@ -131,7 +120,7 @@ struct BattleRotationHeader: View {
           .pickerStyle(.segmented)
         }
 
-        ForEach(IkaMockData.makeBattleRotations()[modeSelection] ?? []) { rotation in
+        ForEach(rotations[modeSelection] ?? []) { rotation in
           BattleRotationRow(
             rotation: rotation,
             rowWidth: geo.size.width)

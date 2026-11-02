@@ -34,8 +34,8 @@ struct IdealFontLayout: Layout {
     cache _: inout ())
     -> CGSize
   {
-    let minIdealSize = minIdealSize(subviews: subviews, proposal: proposal)
-    let maxIdealSize = maxIdealSize(subviews: subviews, proposal: proposal)
+    let minIdealSize = subviews.minIdealSize(for: proposal)
+    let maxIdealSize = subviews.maxIdealSize(for: proposal)
 
     return CGSize(
       width: maxIdealSize.width,
@@ -48,8 +48,8 @@ struct IdealFontLayout: Layout {
     subviews: Subviews,
     cache _: inout ())
   {
-    let minIdealSize = minIdealSize(subviews: subviews, proposal: proposal)
-    let maxIdealSize = maxIdealSize(subviews: subviews, proposal: proposal)
+    let minIdealSize = subviews.minIdealSize(for: proposal)
+    let maxIdealSize = subviews.maxIdealSize(for: proposal)
 
     let contentWidth = maxIdealSize.width
     let contentHeight = minIdealSize.height
@@ -98,7 +98,6 @@ struct IdealFontLayout: Layout {
 
     for index in subviews.indices {
       if index == 0 {
-        // placing title text
         subviews[index].place(
           at: CGPoint(
             x: contentX,
@@ -107,7 +106,6 @@ struct IdealFontLayout: Layout {
           proposal: contentSizeProposal)
       }
       else {
-        // skip all others
         subviews[index].place(
           at: CGPoint(
             x: bounds.midX,
@@ -117,40 +115,8 @@ struct IdealFontLayout: Layout {
       }
     }
   }
-
-  private func minIdealSize(
-    subviews: Subviews,
-    proposal: ProposedViewSize)
-    -> CGSize
-  {
-    let subviewSizes = subviews.map { $0.sizeThatFits(proposal) }
-    return subviewSizes.reduce(
-      CGSize(
-        width: CGFloat.infinity,
-        height: CGFloat.infinity))
-    { currentMin, nextSize in
-      CGSize(
-        width: min(currentMin.width, nextSize.width),
-        height: min(currentMin.height, nextSize.height))
-    }
-  }
-
-  private func maxIdealSize(
-    subviews: Subviews,
-    proposal: ProposedViewSize)
-    -> CGSize
-  {
-    let subviewSizes = subviews.map { $0.sizeThatFits(proposal) }
-    return subviewSizes.reduce(.zero)
-    { currentMax, nextSize in
-      CGSize(
-        width: max(currentMax.width, nextSize.width),
-        height: max(currentMax.height, nextSize.height))
-    }
-  }
 }
 
-#if DEBUG
 #Preview {
   // All candidates get the smallest ideal font so the anchored first (visible) one
   // never truncates; resize the window to watch it adapt.
@@ -165,4 +131,3 @@ struct IdealFontLayout: Layout {
   .frame(width: 160)
   .border(.orange)
 }
-#endif

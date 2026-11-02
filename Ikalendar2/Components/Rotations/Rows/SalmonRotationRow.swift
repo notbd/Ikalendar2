@@ -88,7 +88,7 @@ extension SalmonRotationRow {
 // MARK: - SalmonRotationHeader
 
 /// The header of the salmon rotation row.
-struct SalmonRotationHeader: View {
+private struct SalmonRotationHeader: View {
   typealias Scoped = Constants.Style.Rotation.Header
 
   @Environment(IkaClock.self) private var ikaClock
@@ -98,28 +98,20 @@ struct SalmonRotationHeader: View {
 
   var body: some View {
     HStack {
-      // can force unwrap `prefixString` here because .other row type will not have header
-      Text(rowType.prefixString!.localizedStringKey)
-        .ikaFont(
-          .ika1,
-          size: Scoped.prefixFontSize,
-          relativeTo: .title2)
-        .foregroundStyle(Color.systemBackground)
-        .padding(.horizontal, Scoped.prefixPaddingH)
-        .adaptiveGlassEffect(
-          tint: .secondary,
-          in: .rect(cornerRadius: Scoped.prefixFrameCornerRadius))
+      // `.other` rows render no header (see SalmonRotationRow.body), so the prefix is always present here.
+      if let prefixString = rowType.prefixString {
+        RotationHeaderPrefix(prefixString)
+      }
 
       Spacer()
 
-      // Time Until String (if first rotation pending)
       if
         case .first(let currentStatus) = rowType,
         currentStatus == .pending
       {
         Text(ikaClock.currentTime.toTimeUntilStringKey(until: rotation.startTime))
           .contentTransition(.numericText(countsDown: true))
-          .animation(.snappy, value: ikaClock.currentTime)
+          .animation(Constants.Motion.countdownRoll, value: ikaClock.currentTime)
           .scaledLimitedLine()
           .ikaFont(
             .ika2,

@@ -1,7 +1,7 @@
-import { URL, fileURLToPath } from 'node:url'
-import { defineConfig } from 'vitepress'
 import type { DefaultTheme, HeadConfig } from 'vitepress'
+import { fileURLToPath, URL } from 'node:url'
 import UnoCSS from 'unocss/vite'
+import { defineConfig } from 'vitepress'
 import { extractIosAppVersion } from './utils/extractIosAppVersion'
 
 const title = 'ikalendar2'
@@ -11,26 +11,78 @@ const baseDomain = 'ikalendar.app'
 const baseUrl = `https://${baseDomain}`
 const authorName = 'Tianwei Zhang'
 const head: HeadConfig[] = [
-  ['link', { rel: 'icon', href: '/favicon.ico', type: 'image/png', sizes: '128x128' }],
-  ['link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' }],
-  ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
-  ['meta', { name: 'author', content: authorName }],
-  ['meta', { name: 'creator', content: authorName }],
-  ['meta', { name: 'generator', content: 'VitePress' }],
-  ['meta', { name: 'keywords', content: 'ikalendar, ikalendar2, splatoon, splatoon2, rotation, schedule, tracker, salmon run' }],
-  ['meta', { property: 'og:type', content: 'website' }],
-  ['meta', { property: 'og:url', content: baseUrl }],
-  ['meta', { name: 'og:title', content: `${title} · ${baseDomain}` }],
-  ['meta', { name: 'og:description', content: description }],
-  ['meta', { name: 'og:site_name', content: baseDomain }],
-  ['meta', { property: 'og:image', content: `${baseUrl}/assets/app-icon-1024.png` }],
-  ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-  ['meta', { name: 'twitter:title', content: `${title} · ${baseDomain}` }],
-  ['meta', { name: 'twitter:description', content: description }],
-  ['meta', { name: 'twitter:creator', content: '@ikalendar_app' }],
-  ['meta', { name: 'twitter:creatorId', content: '1565930842802851843' }],
-  ['meta', { name: 'twitter:image', content: `${baseUrl}/assets/banner-2_1-1024.png` }],
-  ['meta', { name: 'twitter:url', content: baseUrl }],
+  [
+    'link',
+    { rel: 'icon', href: '/favicon.ico' },
+  ],
+  [
+    'link',
+    { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' },
+  ],
+  [
+    'meta',
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+  ],
+  [
+    'meta',
+    { name: 'author', content: authorName },
+  ],
+  [
+    'meta',
+    { name: 'creator', content: authorName },
+  ],
+  [
+    'meta',
+    { name: 'keywords', content: 'ikalendar, ikalendar2, splatoon, splatoon2, rotation, schedule, tracker, salmon run' },
+  ],
+  [
+    'meta',
+    { property: 'og:type', content: 'website' },
+  ],
+  [
+    'meta',
+    { property: 'og:title', content: `${title} · ${baseDomain}` },
+  ],
+  [
+    'meta',
+    { property: 'og:description', content: description },
+  ],
+  [
+    'meta',
+    { property: 'og:site_name', content: baseDomain },
+  ],
+  [
+    'meta',
+    { property: 'og:image', content: `${baseUrl}/assets/app-icon-1024.png` },
+  ],
+  [
+    'meta',
+    { name: 'twitter:card', content: 'summary_large_image' },
+  ],
+  [
+    'meta',
+    { name: 'twitter:title', content: `${title} · ${baseDomain}` },
+  ],
+  [
+    'meta',
+    { name: 'twitter:description', content: description },
+  ],
+  [
+    'meta',
+    { name: 'twitter:site', content: '@ikalendar_app' },
+  ],
+  [
+    'meta',
+    { name: 'twitter:creator', content: '@ikalendar_app' },
+  ],
+  [
+    'meta',
+    { name: 'twitter:creator:id', content: '1565930842802851843' },
+  ],
+  [
+    'meta',
+    { name: 'twitter:image', content: `${baseUrl}/assets/banner-2_1-1024.png` },
+  ],
 ]
 
 const Nav: DefaultTheme.NavItem[] = [
@@ -73,8 +125,27 @@ export default defineConfig({
   title,
   description,
   head,
+  // keep the GitHub-facing README out of the published site
+  srcExclude: ['README.md'],
   sitemap: { hostname: baseUrl },
   cleanUrls: true,
+  transformPageData(pageData) {
+    // per-page canonical URL and og:url
+    const canonicalUrl = `${baseUrl}/${pageData.relativePath}`
+      .replace(/index\.md$/, '')
+      .replace(/\.md$/, '')
+    pageData.frontmatter.head ??= []
+    pageData.frontmatter.head.push(
+      [
+        'link',
+        { rel: 'canonical', href: canonicalUrl },
+      ],
+      [
+        'meta',
+        { property: 'og:url', content: canonicalUrl },
+      ],
+    )
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: '/assets/app-icon-128.png',

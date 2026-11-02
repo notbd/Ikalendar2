@@ -6,14 +6,17 @@
 //
 
 import Foundation
+import OSLog
 
 /// An observable on-demand checker for restricted network environments (GFW).
 /// `isGFWed` flips to true (and stays true) once all test domains are unreachable.
+/// Used by SettingsAltAppIconView: when `isGFWed`, the easter-egg link opens the Bilibili mirror
+/// instead of the YouTube one.
 @MainActor
 @Observable
 final class IkaConnectivityChecker {
-  var isGFWed: Bool = false
-  private(set) var checkInProgress: Bool = false
+  private(set) var isGFWed: Bool = false
+  private(set) var isCheckInProgress: Bool = false
 
   private let testDomains: [String] = [
     "www.google.com",
@@ -21,9 +24,7 @@ final class IkaConnectivityChecker {
   ]
   static private let timeoutInterval: TimeInterval = 4.0
 
-  /// Reused across checks: creating a URLSession per call leaks the session
-  /// (it is never invalidated). Consider `.ephemeral` in the future to keep
-  /// GFW probes free of local cache interference.
+  /// One session for the object's lifetime: a session per check is never invalidated and leaks.
   @ObservationIgnored private let session: URLSession
 
   init() {
@@ -34,9 +35,9 @@ final class IkaConnectivityChecker {
   }
 
   func performGFWCheck() async {
-    guard !checkInProgress else { return }
+    guard !isCheckInProgress else { return }
 
-    checkInProgress = true
+    isCheckInProgress = true
 
     var failedChecksCount: Int = 0
     let totalChecks = testDomains.count
@@ -45,7 +46,6 @@ final class IkaConnectivityChecker {
       for domain in testDomains {
         group.addTask {
           guard let url = URL(string: "https://\(domain)") else {
-            // invalid URL treated as failure
             return false
           }
 
@@ -61,20 +61,20 @@ final class IkaConnectivityChecker {
         }
       }
 
-      // collect results
       for await success in group where !success {
         failedChecksCount += 1
       }
     }
 
-    checkInProgress = false
+    isCheckInProgress = false
 
     // unidirectionally flips the isGFWed status, stays true once gets there
     isGFWed = isGFWed || (failedChecksCount == totalChecks)
+    Logger.network.info("GFW check: \(failedChecksCount) of \(totalChecks) probes failed")
   }
 
-  /// for manually reset
-  func resetStatus() {
+  /// Debug Options only: clears the sticky flag so the next check starts clean.
+  func reset() {
     isGFWed = false
   }
 }

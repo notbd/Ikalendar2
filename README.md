@@ -29,7 +29,7 @@ Track Splatoon 2 rotation schedules with style and ease.
       srcset="./Resources/MetaAssets/README/Demos/demo-universal.webp"
       type="image/webp">
     <img
-      src="./Resources/MetaAssets/README/Demos/demo-universal.png"
+      src="./Resources/MetaAssets/README/Demos/demo-universal.PNG"
       alt="App Demo">
   </picture>
 </div>
@@ -60,7 +60,7 @@ ikalendar2 is available for download on the App Store for free.
 
 - Previous versions compatible with OSes from iOS / iPadOS `13` to `18` are still available on the App Store for users with older devices.
 
-- Compatibility with macOS on Apple Silicon is provided through Mac Catalyst.
+- On Macs with Apple Silicon, the iPad version of ikalendar2 runs natively as a "Designed for iPad" app.
 
 # Previews
 
@@ -124,7 +124,7 @@ ikalendar2 is written in SwiftUI using modern iOS features and APIs. I tried to 
 
 The project ships two Swift Testing bundles: `IkalendarKitTests` (framework utilities) and `Ikalendar2Tests` (decoders, model invariants, preference persistence, and the catalog loading state machine).
 
-Run everything from Xcode by selecting the `Ikalendar2` scheme and pressing `Cmd+U`, or from the command line:
+Running the tests requires Xcode 26 or later. Run everything from Xcode by selecting the `Ikalendar2` scheme and pressing `Cmd+U`, or from the command line:
 
 ```bash
 xcodebuild test \

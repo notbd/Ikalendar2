@@ -36,26 +36,19 @@ extension DateFormatter {
   /// - Parameters:
   ///   - ikaType: The `IkaDateFormatterType` that specifies the desired format.
   ///   - locale: The locale to use for formatting. If `nil`, uses `Locale.current`.
-  convenience public init(ikaType: IkaDateFormatterType, locale: Locale? = nil) {
+  public convenience init(ikaType: IkaDateFormatterType, locale: Locale? = nil) {
     self.init()
 
     let targetLocale = locale ?? Locale.current
     self.locale = targetLocale
 
+    // zh locales fall through to the English patterns until Chinese l10n ships (the strings tables are en/ja only).
     switch ikaType {
       case .time:
         if targetLocale.identifier.starts(with: "ja") {
           // Japanese
           dateFormat = "ah:mm"
         }
-//      else if targetLocale.identifier.starts(with: "zh_Hans") {
-//        // Simplified Han
-//        dateFormat = "a h:mm"
-//      }
-//      else if targetLocale.identifier.starts(with: "zh_Hant") {
-//        // Traditional Han
-//        dateFormat = "a h:mm"
-//      }
         else {
           // default: English
           dateFormat = "h:mm a"
@@ -66,15 +59,6 @@ extension DateFormatter {
           // Japanese
           dateFormat = "M/d(E) "
         }
-//      else if targetLocale.identifier.starts(with: "zh_Hans") {
-//        // Simplified Han
-//        dateFormat = "ah:mm"
-//      }
-//
-//      else if targetLocale.identifier.starts(with: "zh_Hant") {
-//        // Traditional Han
-//        dateFormat = "ah:mm"
-//      }
         else {
           // default: English
           dateFormat = "E, M/d, "

@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// The cadence is tied to the view's identity, so parent re-renders don't reset
 /// the rhythm. Starts one full interval after appearing; stops once discovered.
-struct IconNudge: ViewModifier {
+private struct IconNudge: ViewModifier {
   let isActive: Bool
   let interval: TimeInterval
 
@@ -26,7 +26,7 @@ struct IconNudge: ViewModifier {
         guard isActive else { return }
 
         while !Task.isCancelled {
-          try? await Task.sleep(for: .seconds(interval), tolerance: .seconds(0.1))
+          try? await Task.sleep(for: .seconds(interval), tolerance: .seconds(Constants.Motion.timerTolerance))
           guard !Task.isCancelled else { return }
 
           trigger += 1
@@ -39,14 +39,13 @@ extension View {
   /// Wiggles the symbol every `interval` seconds while `isActive` is true.
   func iconNudge(
     isActive: Bool,
-    interval: TimeInterval = Constants.Config.Timer.nudgeSignalInterval)
+    interval: TimeInterval = Constants.Motion.nudgeInterval)
     -> some View
   {
     modifier(IconNudge(isActive: isActive, interval: interval))
   }
 }
 
-#if DEBUG
 #Preview {
   // The star wiggles every 2s; the checkmark stays still (discovered).
   VStack(spacing: 32) {
@@ -58,4 +57,3 @@ extension View {
       .iconNudge(isActive: false, interval: 2)
   }
 }
-#endif

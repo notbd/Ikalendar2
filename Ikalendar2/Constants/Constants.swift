@@ -9,5 +9,6 @@
 enum Constants {
   enum Config { }
   enum Key { }
+  enum Motion { }
   enum Style { }
 }

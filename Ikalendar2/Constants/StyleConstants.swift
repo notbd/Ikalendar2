@@ -12,7 +12,6 @@ extension Constants.Style {
   enum Global {
     static let shadowRadius: CGFloat = 2
 
-    static let externalLinkSFSymbol = "link"
     static let externalLinkJumpSFSymbol = "arrow.up.forward.app.fill"
     static var externalLinkJumpIcon: some View {
       Image(systemName: externalLinkJumpSFSymbol)
@@ -21,7 +20,8 @@ extension Constants.Style {
   }
 
   enum Carousel {
-    static let columnFixedWidth: CGFloat = 390
+    /// The window width from which iPad landscape shows every column at once.
+    static let allColumnsMinWidth: CGFloat = 1024
 
     enum Column {
       static let listOffsetVFactorPortrait: CGFloat = 0.1
@@ -30,22 +30,23 @@ extension Constants.Style {
 
       static let maskGradientDensityPortrait: Int = 32
       static let maskGradientDensityLandscape: Int = 30
+      /// The scroll distance over which the top fade grows in from none to full.
+      static let maskFadeInTravel: CGFloat = 24
+
+      static let scrollIndicatorMarginV: CGFloat = 20
     }
   }
 
   enum Overlay {
-    enum Loading {
-      static let frameCornerRadius: CGFloat = 5
-    }
-
     enum AutoLoading {
       static let glassEffectContainerSpacing: CGFloat = 28
-      static let sfsymbolFont: Font = .system(size: 18)
+      static let symbolFont: Font = .system(size: 18)
       static let subtitle: String = "Autoloading..."
       static let subtitleFont: Font = .system(size: 14, weight: .medium, design: .rounded)
       static let subtitlePaddingH: CGFloat = 10
       static let frameSide: CGFloat = 44
       static let frameCornerRadius: CGFloat = 14
+      static let loadingSymbolRepeatDelay: TimeInterval = 0.2
 
       static let loadingSFSymbol = "arrow.trianglehead.2.clockwise.rotate.90.icloud.fill"
       static let loadedSuccessSFSymbol = "checkmark.circle.fill"
@@ -60,40 +61,53 @@ extension Constants.Style {
 
       static let iconImageNameSalmon = "mr-grizz"
       static let iconSize: CGFloat = 128
+
+      /// The scroll distance over which the stamp docks into the nav bar badge.
+      static let dockTravel: CGFloat = 44
+      static let dockedScale: Double = 0.65
+      /// The dock progress by which the stamp has faded out.
+      static let dockFadeOutEnd: Double = 0.7
+      /// The dock progress from which the badge fades in.
+      static let badgeFadeInStart: Double = 0.5
+      static let badgeSize: CGFloat = 44
+      static let badgeImageSize: CGFloat = 27
+      static let badgeImageSizeRegular: CGFloat = 29
+      static let badgeImageSizeSalmon: CGFloat = 25
+      static let badgeImageOffsetYRegular: CGFloat = 1
+      static let badgeImageOffsetYSalmon: CGFloat = -2
     }
   }
 
   enum Error {
     static let errorSectionPaddingTopHeightRatio: CGFloat = 0.22
     static let errorSectionSpacingHeightRatio: CGFloat = 0.14
-    static let errorImgHeightRatio: CGFloat = 0.12
+    static let errorImageHeightRatio: CGFloat = 0.12
 
     static let textSectionSpacing: CGFloat = 40
     static let messageLineSpacing: CGFloat = 6
 
-    static let shouldUseCustomFont = true
     static let titleCustomFontSize: CGFloat = 36
     static let messageCustomFontSize: CGFloat = 19
   }
 
   enum Settings {
     enum Main {
-      static let defaultModePickerNameShowedThreshold: CGFloat = 375
-
       static let colorSchemeSFSymbol = "circle.lefthalf.filled"
-      static let colorSchemeMenuSFSymbol = "chevron.up.chevron.down"
 
       static let advancedOptionsSFSymbol = "wand.and.rays"
 
       static let aboutSFSymbol = "house.fill"
 
       static let creditsSFSymbol = "bookmark.fill"
-
-      static let doneButtonFont: Font = .headline
     }
 
     enum AltAppIcon {
       static let modalDimmingLayerOpacity: CGFloat = 0.35
+
+      /// Opacity of the hidden "Tap Me :)" trigger before the egg is discovered: faint on light
+      /// mode and compact width, fainter on dark mode at regular width.
+      static let hintOpacityCompact: Double = 0.07
+      static let hintOpacityRegular: Double = 0.03
 
       static let safeAreaBarGlassEffectSpacing: CGFloat = 8
       static let safeAreaBarDefaultFont: Font = .headline
@@ -106,12 +120,8 @@ extension Constants.Style {
       static let slideShowProgressBarHeight: CGFloat = 1
       static let slideShowProgressBarPaddingH: CGFloat = 8
 
-      static let pickerNameLabelsWidth: CGFloat = 120
-
       enum Row {
         static let spacingH: CGFloat = 16
-
-        static let crossFadeAnimation: Animation = .spring(response: 1.4, dampingFraction: 1.0, blendDuration: 0.5)
 
         static let displayNameColor: Color = .primary
 
@@ -126,21 +136,14 @@ extension Constants.Style {
       static let tabBarMinimizingOffSFSymbol = "arrow.left.and.line.vertical.and.arrow.right"
       static let tabBarMinimizingOnSFSymbol = "arrow.right.and.line.vertical.and.arrow.left"
 
-      static let bottomToolbarPickerPositioningSFSymbol = "arrow.left.arrow.right"
-      static let bottomToolbarPreviewSheetDetentsFraction: CGFloat = 0.07
-      static let bottomToolbarPreviewPaddingH: CGFloat = 14
-      static let bottomToolbarPreviewLingerInterval: TimeInterval = 1.5
-
-      static let altStageImgSFSymbol = "compass.drawing"
+      static let altStageImageSFSymbol = "compass.drawing"
       static let altStagePreviewShuffleSFSymbol = "arrow.triangle.2.circlepath"
 
       static let previewCellMaxWidth: CGFloat = 390
+      static let previewCellCornerRadius: CGFloat = 28
     }
 
     enum About {
-      static let appIconStrokeColor: Color = .tertiaryLabel
-      static let appIconStrokeLineWidth: CGFloat = 1
-      static let appIconStrokeOpacity: CGFloat = 0.4
       static let appIconTitleFont: Font = .system(.title, design: .rounded)
       static let appIconTitleFontWeight: Font.Weight = .bold
       static let appIconSubtitleFont: Font = .system(.subheadline, design: .monospaced)
@@ -163,6 +166,7 @@ extension Constants.Style {
       static let debugOptionsSFSymbol = "hammer"
 
       static let littleBuddyHeight: CGFloat = 36
+      static let littleBuddyPaddingTrailing: CGFloat = 10
       static let sloganIkalendar3FontSize: CGFloat = 13
     }
 
@@ -189,9 +193,6 @@ extension Constants.Style {
   }
 
   enum Onboarding {
-    static let strokeColor: Color = .tertiaryLabel
-    static let strokeLineWidth: CGFloat = 1
-    static let strokeOpacity: CGFloat = 0.3
     static let titleFont: Font = .system(size: 42, design: .rounded)
     static let titleFontWeight: Font.Weight = .heavy
     static let buttonFont: Font = .system(.headline, design: .rounded, weight: .semibold)
@@ -225,7 +226,7 @@ extension Constants.Style {
       }
     }
 
-    // MARK: - BATTLE
+    // MARK: - Battle
 
     enum Battle {
       enum Cell {
@@ -238,7 +239,6 @@ extension Constants.Style {
           static let cellPaddingBottom: CGFloat = 6
 
           static let ruleSectionSpacing: CGFloat = 8
-          static let ruleSectionPaddingLeading: CGFloat = 10
 
           static let ruleTitleFontSizeMax: CGFloat = 48
           static let ruleTitleTextStyleRelativeTo: Font.TextStyle = .title
@@ -255,9 +255,9 @@ extension Constants.Style {
         enum Secondary {
           static let ruleSectionSpacing: CGFloat = 2
 
-          static let ruleImgHeightRatio: CGFloat = 0.1
-          static let ruleImgPadding: CGFloat = 5
-          static let ruleImgFrameCornerRadius: CGFloat = 12
+          static let ruleImageHeightRatio: CGFloat = 0.1
+          static let ruleImagePadding: CGFloat = 5
+          static let ruleImageFrameCornerRadius: CGFloat = 12
 
           static let ruleFontSize: CGFloat = 18
           static let ruleTitleHeight: CGFloat = 24
@@ -269,7 +269,7 @@ extension Constants.Style {
 
       enum Card {
         enum Primary {
-          static let imgCornerRadius: CGFloat = 12
+          static let imageCornerRadius: CGFloat = 12
           static let labelFontSize: CGFloat = 13
           static let labelPaddingLeading: CGFloat = 20
           static let labelPaddingBottomTrailing: CGFloat = 2.5
@@ -277,18 +277,18 @@ extension Constants.Style {
 
         enum Secondary {
           static let spacingV: CGFloat = 4
-          static let imgCornerRadius: CGFloat = 12
+          static let imageCornerRadius: CGFloat = 12
           static let fontSize: CGFloat = 12
         }
       }
     }
 
-    // MARK: - SALMON RUN
+    // MARK: - Salmon Run
 
     enum Salmon {
       enum Cell {
         static let cellSpacing: CGFloat = 10
-        static let cellPaddingVertical: CGFloat = 6
+        static let cellPaddingV: CGFloat = 6
 
         static let progressFontSize: CGFloat = 16
 
@@ -306,18 +306,23 @@ extension Constants.Style {
 
       enum Card {
         enum Stage {
-          static let stageImgCornerRadius: CGFloat = 12
+          static let stageImageCornerRadius: CGFloat = 12
+
+          /// The card width before its first layout pass, and the width from which the larger
+          /// stage image is used.
+          static let initialCardWidth: CGFloat = 150
+          static let largeImageMinWidth: CGFloat = 200
 
           static let labelFontSize: CGFloat = 13
           static let overlayPadding: CGFloat = 4
 
-          static let apparelImgPadding: CGFloat = 4
-          static let apparelImgWidthRatio: CGFloat = 0.16
+          static let apparelImagePadding: CGFloat = 4
+          static let apparelImageWidthRatio: CGFloat = 0.16
           static let apparelFrameCornerRadius: CGFloat = 7
         }
 
         enum Weapon {
-          static let imgPadding: CGFloat = 3
+          static let imagePadding: CGFloat = 3
           static let frameCornerRadius: CGFloat = 12
         }
       }

@@ -16,21 +16,6 @@ import OSLog
 /// maps and validates into domain types. Every decoding or validation failure is
 /// surfaced uniformly as `IkaError.serverError(.badData)`.
 enum IkaDecoder {
-  /// Parses and decodes a text string from the given raw data.
-  ///
-  /// - Parameter data: The raw data to decode.
-  /// - Returns: A decoded string if the decoding process is successful.
-  /// - Throws: `IkaError.serverError(.badData)`: if the data is not valid UTF-8.
-  static func parseText(from data: Data)
-    throws -> String
-  {
-    guard let str = String(data: data, encoding: .utf8) else {
-      throw IkaError.serverError(.badData)
-    }
-
-    return str
-  }
-
   /// Parse License from the GitHub API response.
   ///
   /// - Throws: `IkaError.serverError(.badData)`: if the payload is malformed, the
@@ -45,15 +30,14 @@ enum IkaDecoder {
       let licenseType = licenseInfo.spdxID,
       let licenseTypeDescription = licenseInfo.name,
       let githubAPIURLString = dto.url,
-      let githubRepoURLString = IkaOpenSourceLicense.parseGithubRepoURLString(from: githubAPIURLString),
+      let githubRepoURLString = IkaOpenSourceLicense.githubRepoURLString(fromAPIURL: githubAPIURLString),
       let base64Content = dto.content
     else { throw IkaError.serverError(.badData) }
 
-    // GitHub inserts newline characters into the base64 payload - strip them
-    let sanitizedBase64Content = base64Content.replacing("\n", with: "")
-
+    // GitHub wraps the base64 payload with line breaks - skip them (and any other
+    // non-base64 character, e.g. a `\r`)
     guard
-      let decodedData = Data(base64Encoded: sanitizedBase64Content),
+      let decodedData = Data(base64Encoded: base64Content, options: .ignoreUnknownCharacters),
       let decodedString = String(data: decodedData, encoding: .utf8)
     else { throw IkaError.serverError(.badData) }
 
@@ -102,13 +86,13 @@ enum IkaDecoder {
 
   /// Parse the data into a salmon rotation array.
   ///
-  /// Detailed rotations come from `details`; any extra entries in `schedules`
-  /// become time-only rotations. Unknown stage names degrade to a nil stage;
-  /// invalid weapon ids are an error.
+  /// Detailed rotations come from `details`; `schedules` entries that start after
+  /// the last detailed rotation become time-only rotations. Unknown stage names
+  /// degrade to a nil stage; invalid weapon ids are an error.
   ///
   /// - Throws: `IkaError.serverError(.badData)`: if the payload is malformed,
   ///   `details` is missing/empty, or a weapon id is invalid.
-  /// - Returns: The parsed array (will NOT be empty).
+  /// - Returns: The parsed array, sorted by start time (will NOT be empty).
   static func parseSalmonRotations(from data: Data)
     throws -> [SalmonRotation]
   {
@@ -117,7 +101,9 @@ enum IkaDecoder {
     guard let detailDTOs = dto.details, !detailDTOs.isEmpty
     else { throw IkaError.serverError(.badData) }
 
-    var salmonRotations = try detailDTOs.map { detailDTO in
+    // Sorted like the time-only tail below: the auto-load check and the list both take the
+    // first rotation as the earliest.
+    let salmonRotations = try detailDTOs.sorted { $0.startTime < $1.startTime }.map { detailDTO in
       let weapons: [SalmonWeapon]? = try detailDTO.weapons.flatMap { weaponDTOs in
         let parsed = try weaponDTOs.map { weaponDTO in
           guard let weapon = SalmonWeapon(weaponDTO.id.value)
@@ -135,27 +121,25 @@ enum IkaDecoder {
         weapons: weapons)
     }
 
-    // Append any schedules beyond the detailed window as time-only rotations.
-    // Guard against `schedules` being shorter than `details`: constructing a Range
-    // with lowerBound > upperBound traps at runtime.
-    if
-      let scheduleDTOs = dto.schedules,
-      scheduleDTOs.count > salmonRotations.count
-    {
-      for scheduleDTO in scheduleDTOs[salmonRotations.count...] {
-        // skip entries with missing times instead of failing the whole parse
-        guard
-          let startTime = scheduleDTO.startTime,
-          let endTime = scheduleDTO.endTime
-        else { continue }
+    // Append the schedules beyond the detailed window as time-only rotations. They are
+    // matched by start time rather than array position, so a leading (already finished)
+    // or reordered entry can neither duplicate a detailed shift nor push out a later one
+    // (079ed0c; pinned by IkaDecoderTests).
+    let lastDetailedStartTime = salmonRotations.map(\.startTime).max() ?? .distantPast
+    let timeOnlyRotations: [SalmonRotation] = (dto.schedules ?? []).compactMap { scheduleDTO in
+      // skip entries with missing times instead of failing the whole parse
+      guard
+        let startTime = scheduleDTO.startTime,
+        let endTime = scheduleDTO.endTime,
+        Date(timeIntervalSince1970: startTime) > lastDetailedStartTime
+      else { return nil }
 
-        salmonRotations.append(SalmonRotation(
-          startTime: Date(timeIntervalSince1970: startTime),
-          endTime: Date(timeIntervalSince1970: endTime)))
-      }
+      return SalmonRotation(
+        startTime: Date(timeIntervalSince1970: startTime),
+        endTime: Date(timeIntervalSince1970: endTime))
     }
 
-    return salmonRotations
+    return salmonRotations + timeOnlyRotations.sorted { $0.startTime < $1.startTime }
   }
 
   /// Parse the data into an info wrapper containing the salmon run reward apparel

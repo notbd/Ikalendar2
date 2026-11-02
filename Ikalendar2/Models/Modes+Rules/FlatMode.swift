@@ -22,6 +22,47 @@ enum FlatMode: String, Identifiable, CaseIterable, Equatable {
   var id: String { rawValue }
 }
 
+// MARK: - GameMode and BattleMode conversions
+
+extension FlatMode {
+  /// The flat mode for a game mode; `battleMode` decides it when the game mode is battle.
+  init(gameMode: GameMode, battleMode: BattleMode) {
+    switch gameMode {
+      case .battle: self.init(battleMode)
+      case .salmon: self = .salmon
+    }
+  }
+
+  init(_ battleMode: BattleMode) {
+    switch battleMode {
+      case .regular: self = .regular
+      case .gachi: self = .gachi
+      case .league: self = .league
+    }
+  }
+
+  var gameMode: GameMode {
+    switch self {
+      case .regular,
+           .gachi,
+           .league:
+        .battle
+      case .salmon:
+        .salmon
+    }
+  }
+
+  /// `nil` for salmon, which has no battle mode.
+  var battleMode: BattleMode? {
+    switch self {
+      case .regular: .regular
+      case .gachi: .gachi
+      case .league: .league
+      case .salmon: nil
+    }
+  }
+}
+
 extension FlatMode {
   var themeColor: Color {
     switch self {
@@ -71,8 +112,4 @@ extension FlatMode {
       case .salmon: "lifepreserver"
     }
   }
-}
-
-extension FlatMode {
-  var imageNameSmall: String { rawValue + "_small" }
 }

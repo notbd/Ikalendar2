@@ -11,7 +11,7 @@ import SwiftUI
 /// The entry view of the app.
 /// Provide an interface for some upfront View-level configurations.
 struct RootView: View {
-  @Environment(\.dynamicTypeSize) var dynamicTypeSize
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @Environment(IkaStatus.self) private var ikaStatus
   @Environment(IkaPreference.self) private var ikaPreference
   @Environment(IkaOrientationMonitor.self) private var ikaOrientationMonitor
@@ -41,7 +41,7 @@ struct RootView: View {
   private var settingsModal: some View {
     SettingsEntryView()
       // .accentColor on purpose - see the note in Ikalendar2App. Sheets/covers
-      // do not inherit the root accent, so the modal re-applies it.
+      // do not inherit the root accent, so the modal re-applies it (1e105f8).
       .accentColor(.orange)
       .interactiveDismissDisabled()
   }
@@ -59,13 +59,14 @@ struct RootView: View {
   }
 
   /// A workaround, because as of iOS 26.0, changes in dynamicTypeSize will not affect navigation titles,
-  /// therefore force refresh the root view in order to reflect the correct title size.
+  /// therefore force refresh the root view in order to reflect the correct title size
+  /// (in place since 0062d1e, re-verified on iOS 26.0).
   private func refreshEntryView() {
     entryViewID = UUID()
   }
 
   init() {
-    // Initial setup of your NavigationBar styles
+    // UIKit appearance proxy: must be set before the first navigation bar renders.
     UIFontCustomizer.customizeNavigationTitleText()
   }
 }

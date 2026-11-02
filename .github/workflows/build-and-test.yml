@@ -1,0 +1,249 @@
+# Shared lint, test and Release build jobs. Called by main-integration.yml (push
+# to main, manual dispatch) and pr-check.yml (pull requests), so every CI fix and
+# tool version lives in one place.
+name: Build and Test
+
+on:
+  workflow_call:
+    inputs:
+      reason:
+        description: "Reason for a manual trigger, echoed into the log"
+        type: string
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+env:
+  # Pinned tool versions: runner-preinstalled formatters drift across images and
+  # rule behavior changes between releases (e.g. swiftTestingTestCaseNames in 0.60+).
+  SWIFTFORMAT_VERSION: "0.64.5"
+  SWIFTLINT_VERSION: "0.65.1"
+
+jobs:
+  lint:
+    name: Lint Code
+    runs-on: macos-26
+    timeout-minutes: 10
+
+    steps:
+      - name: Log Trigger Information
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          REASON: ${{ inputs.reason }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "Trigger: Manual Dispatch. Reason: $REASON"
+          else
+            echo "Trigger: $EVENT_NAME on '$REF_NAME'."
+          fi
+
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Install SwiftFormat (pinned)
+        run: |
+          curl -sSL -o /tmp/swiftformat.zip "https://github.com/nicklockwood/SwiftFormat/releases/download/${SWIFTFORMAT_VERSION}/swiftformat.zip"
+          unzip -o /tmp/swiftformat.zip -d /tmp/swiftformat
+          # Install to a dedicated dir prepended to PATH: runner images preinstall
+          # swiftformat in /opt/homebrew/bin, which would shadow /usr/local/bin.
+          mkdir -p "$RUNNER_TEMP/pinned-tools"
+          install /tmp/swiftformat/swiftformat "$RUNNER_TEMP/pinned-tools/swiftformat"
+          echo "$RUNNER_TEMP/pinned-tools" >> "$GITHUB_PATH"
+          test "$("$RUNNER_TEMP/pinned-tools/swiftformat" --version)" = "$SWIFTFORMAT_VERSION"
+
+      - name: Run SwiftFormat
+        run: swiftformat --lint . --reporter github-actions-log
+
+      - name: Install SwiftLint (pinned)
+        run: |
+          curl -sSL -o /tmp/swiftlint.zip "https://github.com/realm/SwiftLint/releases/download/${SWIFTLINT_VERSION}/portable_swiftlint.zip"
+          unzip -o /tmp/swiftlint.zip -d /tmp/swiftlint
+          mkdir -p "$RUNNER_TEMP/pinned-tools"
+          install /tmp/swiftlint/swiftlint "$RUNNER_TEMP/pinned-tools/swiftlint"
+          echo "$RUNNER_TEMP/pinned-tools" >> "$GITHUB_PATH"
+          test "$("$RUNNER_TEMP/pinned-tools/swiftlint" version)" = "$SWIFTLINT_VERSION"
+
+      - name: Run SwiftLint
+        run: swiftlint --reporter github-actions-logging
+
+  # Runs alongside lint rather than after it: lint takes seconds, and waiting for it
+  # cost a second macOS runner hand-off before the long build could start.
+  test:
+    name: Test
+    runs-on: macos-26
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - &select-xcode
+        name: Select Xcode 26 (latest GA)
+        run: |
+          set -euo pipefail
+          # GA bundles only (Xcode_26.6.0.app); betas and release candidates such as
+          # Xcode_26.7_beta.app are excluded. Fail loudly if the image has none.
+          XCODE_APP=$(ls -d /Applications/Xcode_26*.app 2>/dev/null \
+            | grep -E '/Xcode_26(\.[0-9]+)*\.app$' | sort -V | tail -n 1 || true)
+          if [ -z "$XCODE_APP" ]; then
+            echo "::error::No GA Xcode 26 found in /Applications"
+            ls -d /Applications/Xcode*.app || true
+            exit 1
+          fi
+          sudo xcode-select -switch "$XCODE_APP"
+          echo "Selected $XCODE_APP"
+          xcodebuild -version
+
+      - name: Ensure iOS Simulator Runtime
+        run: |
+          # Runner images only bundle the iOS runtime for their default Xcode;
+          # a version-switched Xcode may have zero available simulators.
+          if ! xcrun simctl list devices available | grep -q "iPhone"; then
+            echo "No simulator devices available - downloading iOS platform"
+            sudo xcodebuild -downloadPlatform iOS
+          fi
+
+      - name: Start Simulator Boot
+        id: sim
+        run: |
+          set -euo pipefail
+          # Starts the cold boot (about 2 minutes on this runner) without waiting, so it
+          # runs during the build; "Wait for Simulator" blocks on it before the tests.
+          # Mirrors OS=latest: the newest available iOS runtime not newer than the SDK.
+          SDK_VERSION=$(xcrun --sdk iphonesimulator --show-sdk-version)
+          find_runtime() {
+            xcrun simctl list -j runtimes | jq -r --arg sdk "$SDK_VERSION" '
+              def ver: split(".") | map(tonumber) | .[0:2];
+              [.runtimes[]
+                | select(.isAvailable and (.identifier | startswith("com.apple.CoreSimulator.SimRuntime.iOS-")))
+                | select((.version | ver) <= ($sdk | ver))]
+              | sort_by(.version | ver) | last | .identifier // empty'
+          }
+          RUNTIME=$(find_runtime)
+          if [ -z "$RUNTIME" ]; then
+            # The image can carry iPhone simulators only on runtimes newer than the
+            # selected SDK, which the previous step does not catch.
+            echo "No iOS runtime <= SDK $SDK_VERSION - downloading iOS platform"
+            sudo xcodebuild -downloadPlatform iOS
+            RUNTIME=$(find_runtime)
+          fi
+          UDID=$(xcrun simctl list -j devices available | jq -r --arg rt "$RUNTIME" '
+            [.devices[$rt] // [] | .[] | select(.name == "iPhone 17")] | first | .udid // empty')
+          if [ -z "$UDID" ]; then
+            echo "::error::No available iPhone 17 simulator for iOS SDK $SDK_VERSION (runtime: ${RUNTIME:-none})"
+            xcrun simctl list devices available
+            exit 1
+          fi
+          echo "Booting iPhone 17 on $RUNTIME: $UDID"
+          xcrun simctl boot "$UDID"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
+      - &ensure-xcbeautify
+        name: Ensure xcbeautify
+        run: command -v xcbeautify || brew install xcbeautify
+
+      # No SPM cache: restoring it took 30 to 54 seconds, longer than cloning the two
+      # small packages, and xcodebuild fetched them again after the restore anyway.
+      - name: Build for Testing
+        id: build
+        env:
+          SIM_UDID: ${{ steps.sim.outputs.udid }}
+        run: |
+          set -o pipefail
+          xcodebuild build-for-testing \
+            -project Ikalendar2.xcodeproj \
+            -scheme Ikalendar2 \
+            -destination "id=$SIM_UDID" \
+            -clonedSourcePackagesDirPath SourcePackages \
+            -onlyUsePackageVersionsFromResolvedFile \
+            -enableCodeCoverage YES \
+            2>&1 | tee raw-build.log | xcbeautify --renderer github-actions
+
+      # Keeps the boot and the CPU load while the simulator settles out of timed tests.
+      - name: Wait for Simulator
+        env:
+          SIM_UDID: ${{ steps.sim.outputs.udid }}
+        run: xcrun simctl bootstatus "$SIM_UDID" -b
+
+      - name: Run Unit Tests
+        id: test
+        env:
+          SIM_UDID: ${{ steps.sim.outputs.udid }}
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building \
+            -project Ikalendar2.xcodeproj \
+            -scheme Ikalendar2 \
+            -destination "id=$SIM_UDID" \
+            -clonedSourcePackagesDirPath SourcePackages \
+            -onlyUsePackageVersionsFromResolvedFile \
+            -enableCodeCoverage YES \
+            -resultBundlePath TestResults.xcresult \
+            2>&1 | tee raw-test.log | xcbeautify --renderer github-actions
+
+      - name: Report Coverage Summary
+        if: always()
+        run: |
+          if [ -d TestResults.xcresult ]; then
+            echo "## Coverage" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            xcrun xccov view --report TestResults.xcresult | head -25 >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - &surface-failure-details
+        name: Surface Failure Details
+        if: failure() || cancelled()
+        env:
+          TEST_OUTCOME: ${{ steps.test.outcome }}
+        run: |
+          # Fallback for diagnostics a formatter drops: read the raw xcodebuild logs.
+          for log in raw-build.log raw-test.log raw-release.log; do
+            [ -f "$log" ] || continue
+            # The tail shows where a hung or cancelled build stopped.
+            echo "===== $log (last 80 lines) ====="
+            tail -n 80 "$log" | cut -c1-400
+            # Matches in a passing test log are noise. A cancelled test step has the
+            # outcome "cancelled", so its log is still searched.
+            if [ "$log" = "raw-test.log" ] && [ "$TEST_OUTCOME" = "success" ]; then
+              continue
+            fi
+            echo "===== $log (errors and failures) ====="
+            grep -A 3 -E "error:|\*\* (BUILD|TEST) FAILED \*\*|The following build commands failed" "$log" | cut -c1-400 | head -200 || true
+            grep -B 2 -A 10 -E "recorded an issue|Expectation failed|Fatal error|Test .* failed" "$log" | cut -c1-400 | head -300 || true
+          done
+
+  # Compiles the configuration that ships (Release, device SDK, unsigned). The test
+  # job builds Debug only, so code that compiles only under DEBUG and Release-only
+  # build settings are otherwise never exercised. A job of its own, so it runs on a
+  # second runner at the same time as the test job instead of after it.
+  release:
+    name: Release Build
+    runs-on: macos-26
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - *select-xcode
+
+      - *ensure-xcbeautify
+
+      - name: Build Release (device, unsigned)
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project Ikalendar2.xcodeproj \
+            -scheme Ikalendar2 \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -clonedSourcePackagesDirPath SourcePackages \
+            -onlyUsePackageVersionsFromResolvedFile \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee raw-release.log | xcbeautify --renderer github-actions
+
+      - *surface-failure-details

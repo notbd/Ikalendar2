@@ -16,9 +16,9 @@ struct SettingsDebugOptionsView: View {
   @Environment(IkaDiscoveryLog.self) private var ikaDiscoveryLog
   @Environment(IkaPreference.self) private var ikaPreference
 
-  @Environment(IkaConnectivityChecker.self) var connectivityChecker
+  @Environment(IkaConnectivityChecker.self) private var connectivityChecker
 
-  @ScaledMetric(relativeTo: .title) var squidBumperHeight: CGFloat = 50
+  @ScaledMetric(relativeTo: .title) private var squidBumperHeight: CGFloat = 50
 
   var body: some View {
     List {
@@ -47,11 +47,10 @@ struct SettingsDebugOptionsView: View {
 
   private var rowSquidBumper: some View {
     Image(.squidBumperMemCake)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+      .ikaFitted()
       .frame(height: squidBumperHeight)
       .hAlignment(.leading)
+      .accessibilityHidden(true)
   }
 
   private var rowShowOnboarding: some View {
@@ -67,10 +66,10 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAppStates: some View {
     Button {
-      connectivityChecker.resetStatus()
+      connectivityChecker.reset()
       ikaPreference.revertEasterEggAppIcon()
-      ikaStatus.resetStatuses(shouldExitSettings: false)
-      ikaDiscoveryLog.resetStates(shouldResetOnboarding: false)
+      ikaStatus.reset(dismissingSettings: false)
+      ikaDiscoveryLog.reset(includingOnboarding: false)
       presentResetDoneAlert(titled: String(localized: "States Reset"))
     } label: {
       Text("Reset App States")
@@ -80,7 +79,7 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAppPreferences: some View {
     Button {
-      ikaPreference.resetPreferences()
+      ikaPreference.reset()
       presentResetDoneAlert(titled: String(localized: "Preferences Reset"))
     } label: {
       Text("Reset App Preferences")
@@ -90,10 +89,10 @@ struct SettingsDebugOptionsView: View {
 
   private var rowResetAll: some View {
     Button {
-      connectivityChecker.resetStatus()
-      ikaPreference.resetPreferences()
-      ikaStatus.resetStatuses(shouldExitSettings: true)
-      ikaDiscoveryLog.resetStates(shouldResetOnboarding: true)
+      connectivityChecker.reset()
+      ikaPreference.reset()
+      ikaStatus.reset(dismissingSettings: true)
+      ikaDiscoveryLog.reset(includingOnboarding: true)
       presentResetDoneAlert(titled: String(localized: "All Reset"))
     } label: {
       Text("Reset All")
@@ -110,15 +109,6 @@ struct SettingsDebugOptionsView: View {
       haptic: .success)
   }
 
-  @State private var pulsingTrigger: Int = 0
-  private var pulseTimer = Timer
-    .publish(
-      every: Constants.Config.Timer.pulseSignalInterval,
-      tolerance: 0.1,
-      on: .main,
-      in: .common)
-    .autoconnect()
-
   private var warningBanner: some View {
     let warningIcon: Image = .init(systemName: "exclamationmark.triangle.fill")
     let warningMessage: LocalizedStringKey = "Warning: Proceed with Caution"
@@ -130,19 +120,7 @@ struct SettingsDebugOptionsView: View {
         warningText
       }
       .font(.system(.body, design: .rounded, weight: .semibold))
-      .phaseAnimator([false, true], trigger: pulsingTrigger)
-      { content, value in
-        content
-          .foregroundStyle(value ? Color.red : Color.secondary)
-      } animation: { _ in
-        .spring(duration: 1.2)
-      }
-      .onAppear {
-        pulsingTrigger += 1
-      }
-      .onReceive(pulseTimer) { _ in
-        pulsingTrigger += 1
-      }
+      .periodicPulse()
 
     return
       bannerText

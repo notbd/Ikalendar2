@@ -13,31 +13,6 @@ import Testing
 
 @Suite("IkaDecoder")
 struct IkaDecoderTests {
-  // MARK: - parseText
-
-  @Suite("Parse Text")
-  struct ParseTextTests {
-    @Test
-    func `Valid UTF-8 data round-trips`() throws {
-      let text = "Hello, Inkopolis! 🦑"
-      let parsed = try IkaDecoder.parseText(from: Data(text.utf8))
-      #expect(parsed == text)
-    }
-
-    @Test
-    func `Empty data decodes to empty string`() throws {
-      let parsed = try IkaDecoder.parseText(from: Data())
-      #expect(parsed.isEmpty)
-    }
-
-    @Test
-    func `Invalid UTF-8 bytes throw badData`() {
-      #expect(throws: IkaError.serverError(.badData)) {
-        try IkaDecoder.parseText(from: Data([0xFF, 0xFE, 0xFD]))
-      }
-    }
-  }
-
   // MARK: - parseBattleRotationDict
 
   @Suite("Parse Battle Rotation Dict")
@@ -96,8 +71,8 @@ struct IkaDecoderTests {
     }
 
     @Test
-    func `Malformed JSON throws`() {
-      #expect(throws: (any Error).self) {
+    func `Malformed JSON throws badData`() {
+      #expect(throws: IkaError.serverError(.badData)) {
         try IkaDecoder.parseBattleRotationDict(from: Fixtures.data(Fixtures.battleRotationsMalformed))
       }
     }
@@ -107,6 +82,71 @@ struct IkaDecoderTests {
 
   @Suite("Parse Salmon Rotations")
   struct ParseSalmonRotationsTests {
+    /// schedules still lead with a finished shift that details no longer lists, then
+    /// repeat both detailed shifts and add three more.
+    static private let salmonRotationsLeadingSchedule = """
+      {
+        "details": [
+          { "start_time": 1700064000, "end_time": 1700128000,
+            "stage": { "name": "Spawning Grounds" }, "weapons": [ { "id": 0 } ] },
+          { "start_time": 1700128000, "end_time": 1700192000,
+            "stage": { "name": "Marooner's Bay" }, "weapons": [ { "id": 10 } ] }
+        ],
+        "schedules": [
+          { "start_time": 1700000000, "end_time": 1700064000 },
+          { "start_time": 1700064000, "end_time": 1700128000 },
+          { "start_time": 1700128000, "end_time": 1700192000 },
+          { "start_time": 1700192000, "end_time": 1700256000 },
+          { "start_time": 1700256000, "end_time": 1700320000 },
+          { "start_time": 1700320000, "end_time": 1700384000 }
+        ]
+      }
+      """
+
+    /// details in reverse order, then a schedule beyond them.
+    static private let salmonRotationsReversedDetails = """
+      {
+        "details": [
+          { "start_time": 1700064000, "end_time": 1700128000,
+            "stage": { "name": "Marooner's Bay" }, "weapons": [ { "id": 10 } ] },
+          { "start_time": 1700000000, "end_time": 1700064000,
+            "stage": { "name": "Spawning Grounds" }, "weapons": [ { "id": 0 } ] }
+        ],
+        "schedules": [
+          { "start_time": 1700000000, "end_time": 1700064000 },
+          { "start_time": 1700064000, "end_time": 1700128000 },
+          { "start_time": 1700128000, "end_time": 1700192000 }
+        ]
+      }
+      """
+
+    /// An unknown stage name and an empty weapons array: both degrade to nil, not an error.
+    static private let salmonRotationsDegradedDetails = """
+      {
+        "details": [
+          { "start_time": 1700000000, "end_time": 1700064000,
+            "stage": { "name": "Atlantis" }, "weapons": [ { "id": 0 } ] },
+          { "start_time": 1700064000, "end_time": 1700128000,
+            "stage": { "name": "Lost Outpost" }, "weapons": [] }
+        ]
+      }
+      """
+
+    /// One schedule entry lacks start_time and another lacks end_time.
+    static private let salmonRotationsScheduleMissingTimes = """
+      {
+        "details": [
+          { "start_time": 1700000000, "end_time": 1700064000 }
+        ],
+        "schedules": [
+          { "start_time": 1700000000, "end_time": 1700064000 },
+          { "end_time": 1700128000 },
+          { "start_time": 1700128000 },
+          { "start_time": 1700192000, "end_time": 1700256000 }
+        ]
+      }
+      """
+
     @Test
     func `Valid payload merges details and trailing schedules`() throws {
       let rotations = try IkaDecoder.parseSalmonRotations(from: Fixtures.data(Fixtures.salmonRotationsValid))
@@ -150,12 +190,71 @@ struct IkaDecoderTests {
     }
 
     @Test
+    func `Schedules are matched to details by start time`() throws {
+      // Matching by array position repeated details[1] as a time-only rotation here.
+      let rotations = try IkaDecoder
+        .parseSalmonRotations(from: Fixtures.data(Self.salmonRotationsLeadingSchedule))
+      try #require(rotations.count == 5)
+
+      #expect(rotations.map(\.startTime.timeIntervalSince1970) == [
+        1_700_064_000,
+        1_700_128_000,
+        1_700_192_000,
+        1_700_256_000,
+        1_700_320_000,
+      ])
+      #expect(rotations[0].stage == .spawningGrounds)
+      #expect(rotations[1].stage == .maroonerSBay)
+      for rotation in rotations[2...] {
+        #expect(rotation.stage == nil)
+      }
+    }
+
+    @Test
+    func `Out-of-order details decode sorted by start time`() throws {
+      let rotations = try IkaDecoder
+        .parseSalmonRotations(from: Fixtures.data(Self.salmonRotationsReversedDetails))
+      try #require(rotations.count == 3)
+
+      #expect(rotations.map(\.startTime.timeIntervalSince1970) == [1_700_000_000, 1_700_064_000, 1_700_128_000])
+      #expect(rotations[0].stage == .spawningGrounds)
+      #expect(rotations[1].stage == .maroonerSBay)
+      #expect(rotations[2].stage == nil)
+    }
+
+    @Test
     func `Minimal details decode with nil stage and weapons`() throws {
       let rotations = try IkaDecoder
         .parseSalmonRotations(from: Fixtures.data(Fixtures.salmonRotationsMinimalDetails))
       let first = try #require(rotations.first)
       #expect(first.stage == nil)
       #expect(first.weapons == nil)
+    }
+
+    @Test
+    func `Unknown salmon stage name degrades to a nil stage`() throws {
+      let rotations = try IkaDecoder
+        .parseSalmonRotations(from: Fixtures.data(Self.salmonRotationsDegradedDetails))
+      let first = try #require(rotations.first)
+      #expect(first.stage == nil)
+      #expect(first.weapons == [.vanilla(.splooshOMatic)])
+    }
+
+    @Test
+    func `Empty weapons array decodes as nil weapons`() throws {
+      let rotations = try IkaDecoder
+        .parseSalmonRotations(from: Fixtures.data(Self.salmonRotationsDegradedDetails))
+      let last = try #require(rotations.last)
+      #expect(rotations.count == 2)
+      #expect(last.stage == .lostOutpost)
+      #expect(last.weapons == nil)
+    }
+
+    @Test
+    func `Schedule entries with missing times are skipped`() throws {
+      let rotations = try IkaDecoder
+        .parseSalmonRotations(from: Fixtures.data(Self.salmonRotationsScheduleMissingTimes))
+      #expect(rotations.map(\.startTime.timeIntervalSince1970) == [1_700_000_000, 1_700_192_000])
     }
 
     @Test
@@ -244,12 +343,25 @@ struct IkaDecoderTests {
 
   @Suite("Parse License")
   struct ParseLicenseTests {
+    /// base64 of "MIT License" wrapped with CRLF line breaks.
+    static private let licenseCRLFWrapped = """
+      { "url": "https://api.github.com/repos/SwiftyJSON/SwiftyJSON",
+        "license": { "spdx_id": "MIT", "name": "MIT License" },
+        "content": "TUlUIExp\\r\\nY2Vuc2U=\\r\\n" }
+      """
+
     @Test
     func `Valid payload decodes all fields and strips the base64 newline`() throws {
       let license = try IkaDecoder.parseLicenseFromGithubAPI(from: Fixtures.data(Fixtures.licenseValid))
       #expect(license.repoURL == "https://github.com/SwiftyJSON/SwiftyJSON")
       #expect(license.type == "MIT")
       #expect(license.typeDescription == "MIT License")
+      #expect(license.content == "MIT License")
+    }
+
+    @Test
+    func `CRLF line breaks in the base64 payload are skipped`() throws {
+      let license = try IkaDecoder.parseLicenseFromGithubAPI(from: Fixtures.data(Self.licenseCRLFWrapped))
       #expect(license.content == "MIT License")
     }
 

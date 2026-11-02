@@ -2,20 +2,15 @@
 import type { DependencyCategory } from './HomeDependencies.vue'
 import DependenciesGrid from './DependenciesGrid.vue'
 
-type Props = {
-  mode?: 'normal' | 'aside'
+const props = defineProps<{
   data: DependencyCategory[]
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  mode: 'normal',
-})
+}>()
 
 const dependencyCategories = props.data
 </script>
 
 <template>
-  <div class="VPSponsors vp-sponsor" :class="[mode]">
+  <div class="VPSponsors vp-sponsor normal">
     <section
       v-for="(category, index) in dependencyCategories"
       :key="index"

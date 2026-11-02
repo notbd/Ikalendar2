@@ -15,7 +15,7 @@ import UIKit
 @Observable
 final class IkaOrientationMonitor {
   /// The current orientation of the interface.
-  var currentOrientation: UIInterfaceOrientation
+  private(set) var currentOrientation: UIInterfaceOrientation
 
   init() {
     UIDevice.current.beginGeneratingDeviceOrientationNotifications()
@@ -30,7 +30,7 @@ final class IkaOrientationMonitor {
       object: nil)
   }
 
-  /// Should be called once the first active scene appears.
+  /// Called from RootView.onAppear: no window exists at init, so the first read has to wait for the scene.
   func setInitialOrientation() {
     guard currentOrientation == .unknown else { return }
 
@@ -52,27 +52,15 @@ final class IkaOrientationMonitor {
       let windowScene = UIApplication.shared
         .connectedScenes
         .compactMap({ $0 as? UIWindowScene })
-        .first,
-      let interfaceOrientation = windowScene.windows.first?.windowScene?
-        .effectiveGeometry.interfaceOrientation
+        .first
     else { return }
 
+    // The notification also fires for face up and face down, which leave the interface orientation
+    // alone. The current @Observable macro already skips notifying on an equal write; the guard
+    // states the intent instead of relying on that.
+    let interfaceOrientation = windowScene.effectiveGeometry.interfaceOrientation
+    guard interfaceOrientation != currentOrientation else { return }
+
     currentOrientation = interfaceOrientation
-  }
-}
-
-// MARK: - UIInterfaceOrientation+Description
-
-extension UIInterfaceOrientation {
-  /// Readable textual description of the orientation.
-  var description: String {
-    switch self {
-      case .unknown: "Unknown"
-      case .portrait: "Portrait"
-      case .portraitUpsideDown: "PortraitUpsideDown"
-      case .landscapeLeft: "LandscapeLeft"
-      case .landscapeRight: "LandscapeRight"
-      @unknown default: "Unknown"
-    }
   }
 }

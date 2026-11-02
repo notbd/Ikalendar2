@@ -12,7 +12,6 @@ import SwiftUI
 /// A settings button in the toolbar.
 struct ToolbarSettingsButton: View {
   @Environment(IkaStatus.self) private var ikaStatus
-  @Environment(IkaCatalog.self) private var ikaCatalog
 
   var body: some View {
     Button {
@@ -20,6 +19,7 @@ struct ToolbarSettingsButton: View {
     } label: {
       Image(systemName: "gear")
     }
+    .accessibilityLabel(Text("Settings"))
   }
 }
 

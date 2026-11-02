@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # ==========================================================
 # convert_png_to_webp.sh
 # Batch convert PNG/PNG images to WebP using ffmpeg

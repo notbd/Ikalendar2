@@ -24,25 +24,16 @@ struct BattleRotationStageCardPrimary: View {
   }
 
   private var stageImageName: String {
-    switch (ikaPreference.shouldUseAltStageImages, stageSelection) {
-      case (true, .stageA):
-        rotation.stageAAltImageName
-      case (true, .stageB):
-        rotation.stageBAltImageName
-      case (false, .stageA):
-        rotation.stageA.imageName
-      case (false, .stageB):
-        rotation.stageB.imageName
-    }
+    rotation.stageImageName(
+      for: stageSelection,
+      shouldUseAltImage: ikaPreference.shouldUseAltStageImages)
   }
 
   var body: some View {
-    Image(stageImageName)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
-      .clipShape(.rect(cornerRadius: Scoped.imgCornerRadius))
-      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.imgCornerRadius))
+    Image(decorative: stageImageName)
+      .ikaFitted()
+      .clipShape(.rect(cornerRadius: Scoped.imageCornerRadius))
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.imageCornerRadius))
       .shadow(radius: Constants.Style.Global.shadowRadius)
       .overlay(
         StageTitleLabel(
@@ -75,16 +66,9 @@ struct BattleRotationStageCardSecondary: View {
   }
 
   private var stageImageName: String {
-    switch (ikaPreference.shouldUseAltStageImages, stageSelection) {
-      case (true, .stageA):
-        rotation.stageAAltImageName
-      case (true, .stageB):
-        rotation.stageBAltImageName
-      case (false, .stageA):
-        rotation.stageA.imageName
-      case (false, .stageB):
-        rotation.stageB.imageName
-    }
+    rotation.stageImageName(
+      for: stageSelection,
+      shouldUseAltImage: ikaPreference.shouldUseAltStageImages)
   }
 
   var body: some View {
@@ -92,16 +76,13 @@ struct BattleRotationStageCardSecondary: View {
       alignment: .trailing,
       spacing: Scoped.spacingV)
     {
-      Image(stageImageName)
-        .antialiased(true)
-        .resizable()
-        .scaledToFit()
-        .clipShape(.rect(cornerRadius: Scoped.imgCornerRadius))
+      Image(decorative: stageImageName)
+        .ikaFitted()
+        .clipShape(.rect(cornerRadius: Scoped.imageCornerRadius))
         .glassEffect(
           .clear.interactive(),
-          in: .rect(cornerRadius: Scoped.imgCornerRadius))
+          in: .rect(cornerRadius: Scoped.imageCornerRadius))
         .shadow(radius: Constants.Style.Global.shadowRadius)
-        .alignmentGuide(.battleStagesImageAlignment) { $0[.bottom] }
         .layoutPriority(1)
 
       Text(stage.name.localizedStringKey)
@@ -125,7 +106,25 @@ enum BattleStageSelection {
   case stageB
 }
 
-// MARK: - BattleRotationStageCard_Previews
+// MARK: - BattleRotation
+
+extension BattleRotation {
+  /// The image name of the selected stage, honoring the alt stage images preference.
+  fileprivate func stageImageName(for stageSelection: BattleStageSelection, shouldUseAltImage: Bool) -> String {
+    switch (shouldUseAltImage, stageSelection) {
+      case (true, .stageA):
+        stageAAltImageName
+      case (true, .stageB):
+        stageBAltImageName
+      case (false, .stageA):
+        stageA.imageName
+      case (false, .stageB):
+        stageB.imageName
+    }
+  }
+}
+
+// MARK: - Previews
 
 #Preview("Primary / Stage A", traits: .fixedLayout(width: 320, height: 200)) {
   BattleRotationStageCardPrimary(

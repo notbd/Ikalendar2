@@ -54,7 +54,7 @@ struct SettingsCreditsView: View {
   }
 
   /// Honorary credit: the decoding layer moved to native Codable, but SwiftyJSON
-  /// carried this project's parsing for years and has earned its place here.
+  /// carried this project's parsing for years and has earned its place here (restored in 529fae5).
   private var rowSwiftyJSON: some View {
     CreditsOpenSourceLibCell(
       name: "SwiftyJSON",
@@ -118,10 +118,10 @@ struct SettingsCreditsView: View {
 // MARK: - CreditsExternalLinkCell
 
 /// A credits row that links straight out to an external site.
-struct CreditsExternalLinkCell: View {
+private struct CreditsExternalLinkCell: View {
   typealias Scoped = Constants.Style.Settings.Credits
 
-  @Environment(\.dynamicTypeSize) var dynamicTypeSize
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @Environment(\.openURL) private var openURL
 
   let name: String
@@ -165,10 +165,10 @@ struct CreditsExternalLinkCell: View {
 // MARK: - CreditsOpenSourceLibCell
 
 /// A credits row for an open source library, pushing to its license page.
-struct CreditsOpenSourceLibCell<Destination: View>: View {
+private struct CreditsOpenSourceLibCell<Destination: View>: View {
   typealias Scoped = Constants.Style.Settings.Credits
 
-  @Environment(\.dynamicTypeSize) var dynamicTypeSize
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @Environment(\.openURL) private var openURL
 
   let name: String

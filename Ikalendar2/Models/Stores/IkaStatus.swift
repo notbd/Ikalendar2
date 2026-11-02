@@ -25,6 +25,11 @@ final class IkaStatus {
     }
   }
 
+  /// Three views of one selection (FlatMode = GameMode x BattleMode). Setting the flat mode
+  /// mirrors it into game and battle mode; setting game or battle mode rebuilds the flat mode.
+  /// `isSyncing` stops the cascade after one hop, so setting battle
+  /// mode alone leaves game mode untouched (the same topology IkaPreferenceTests pins for
+  /// IkaPreference).
   var currentFlatMode: FlatMode
   {
     willSet {
@@ -33,21 +38,9 @@ final class IkaStatus {
       isSyncing = true
       defer { isSyncing = false }
 
-      switch newValue {
-        case .regular:
-          currentGameMode = .battle
-          currentBattleMode = .regular
-
-        case .gachi:
-          currentGameMode = .battle
-          currentBattleMode = .gachi
-
-        case .league:
-          currentGameMode = .battle
-          currentBattleMode = .league
-
-        case .salmon:
-          currentGameMode = .salmon
+      currentGameMode = newValue.gameMode
+      if let battleMode = newValue.battleMode {
+        currentBattleMode = battleMode
       }
 
       SimpleHaptics.generateTask(.soft)
@@ -62,12 +55,7 @@ final class IkaStatus {
       isSyncing = true
       defer { isSyncing = false }
 
-      switch newValue {
-        case .battle:
-          currentFlatMode = .init(rawValue: currentBattleMode.rawValue) ?? .default
-        case .salmon:
-          currentFlatMode = .salmon
-      }
+      currentFlatMode = FlatMode(gameMode: newValue, battleMode: currentBattleMode)
     }
   }
 
@@ -79,14 +67,7 @@ final class IkaStatus {
       isSyncing = true
       defer { isSyncing = false }
 
-      switch newValue {
-        case .regular:
-          currentFlatMode = .regular
-        case .gachi:
-          currentFlatMode = .gachi
-        case .league:
-          currentFlatMode = .league
-      }
+      currentFlatMode = FlatMode(newValue)
     }
   }
 
@@ -99,11 +80,11 @@ final class IkaStatus {
     currentBattleMode = ikaPreference.preferredDefaultBattleMode
   }
 
-  func resetStatuses(shouldExitSettings: Bool = false) {
+  func reset(dismissingSettings: Bool = false) {
     currentFlatMode = ikaPreference.preferredDefaultFlatMode
     currentGameMode = ikaPreference.preferredDefaultGameMode
     currentBattleMode = ikaPreference.preferredDefaultBattleMode
-    if shouldExitSettings {
+    if dismissingSettings {
       isSettingsPresented = false
     }
   }

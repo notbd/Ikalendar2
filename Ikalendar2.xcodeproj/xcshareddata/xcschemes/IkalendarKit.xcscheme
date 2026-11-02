@@ -30,7 +30,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:IkalendarKit/IkalendarKit.xctestplan"
+            reference = "container:IkalendarKit.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>

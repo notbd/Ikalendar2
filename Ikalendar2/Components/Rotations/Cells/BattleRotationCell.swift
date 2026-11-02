@@ -30,10 +30,10 @@ struct BattleRotationCell: View {
   let rotation: BattleRotation
   let rowWidth: CGFloat
 
-  @Namespace var ruleIcon
-  @Namespace var ruleTitle
-  @Namespace var stageA
-  @Namespace var stageB
+  @Namespace private var ruleIcon
+  @Namespace private var ruleTitle
+  @Namespace private var stageA
+  @Namespace private var stageB
 
   var animationNamespaces: AnimationNamespaces {
     .init(
@@ -67,19 +67,19 @@ struct BattleRotationCell: View {
 struct BattleRotationCellPrimary: View {
   typealias Scoped = Constants.Style.Rotation.Battle.Cell.Primary
 
-  // Matched-geometry rule: the secondary variant is the geometry source and the
-  // primary matches it (isSource: false). The two briefly coexist during the hero
-  // transition, and more than one source per group is undefined behavior.
-
-  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  // Matched-geometry rule: the primary variant is the geometry source and the
+  // secondary matches it (isSource: false). The two briefly coexist during the hero
+  // transition, where two sources would be undefined behavior (ebf2438). The source must
+  // be the variant that stays: a non-source keeps the last frame of a removed source,
+  // which drew the new Now card's rule and stages off the card. A lone secondary has no
+  // source and keeps its own frame; the reverse flip (primary back to secondary) happens
+  // only if the clock moves backwards, and would show the mirror of that bug.
 
   @Environment(IkaClock.self) private var ikaClock
 
   let rotation: BattleRotation
   let rowWidth: CGFloat
   let animationNamespaces: BattleRotationCell.AnimationNamespaces?
-
-  private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
   var body: some View {
     VStack(spacing: Scoped.cellSpacingV) {
@@ -95,8 +95,6 @@ struct BattleRotationCellPrimary: View {
         .padding(.bottom, Scoped.progressBarPaddingBottom)
         .tint(rotation.mode.themeColor)
 
-      // MARK: Stage Section
-
       HStack(spacing: Scoped.stagesSpacingH) {
         battleStageCardA
         battleStageCardB
@@ -104,28 +102,25 @@ struct BattleRotationCellPrimary: View {
     }
     .padding(.top, Scoped.cellPaddingTop)
     .padding(.bottom, Scoped.cellPaddingBottom)
+    .accessibilityElement(children: .combine)
   }
 
   // MARK: Rule Section
 
   private var ruleIcon: some View {
-    Image(rotation.rule.imageNameMid)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+    Image(decorative: rotation.rule.imageNameMid)
+      .ikaFitted()
       .shadow(radius: Constants.Style.Global.shadowRadius)
       .layoutPriority(1)
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.ruleIcon,
-          isSource: false)
+          in: $1.ruleIcon)
       }
   }
 
   private var ruleTitle: some View {
     IdealFontLayout(anchor: .leading) {
-      // actual rule title
       Text(rotation.rule.name.localizedStringKey)
         .scaledLimitedLine()
         .ikaFont(
@@ -141,14 +136,14 @@ struct BattleRotationCellPrimary: View {
             .ika2,
             size: Scoped.ruleTitleFontSizeMax,
             relativeTo: Scoped.ruleTitleTextStyleRelativeTo)
+          .accessibilityHidden(true)
       }
     }
     .padding(.vertical, Scoped.ruleTitlePaddingV)
     .ifLet(animationNamespaces) {
       $0.matchedGeometryEffect(
         id: rotation.id,
-        in: $1.ruleTitle,
-        isSource: false)
+        in: $1.ruleTitle)
     }
   }
 
@@ -159,8 +154,7 @@ struct BattleRotationCellPrimary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageA,
-          isSource: false)
+          in: $1.stageA)
       }
   }
 
@@ -171,8 +165,7 @@ struct BattleRotationCellPrimary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageB,
-          isSource: false)
+          in: $1.stageB)
       }
   }
 
@@ -196,7 +189,7 @@ struct BattleRotationCellPrimary: View {
   private var remainingTimeSection: some View {
     Text(ikaClock.currentTime.toTimeRemainingStringKey(until: rotation.endTime))
       .contentTransition(.numericText(countsDown: true))
-      .animation(.snappy, value: ikaClock.currentTime)
+      .animation(Constants.Motion.countdownRoll, value: ikaClock.currentTime)
       .scaledLimitedLine()
       .foregroundStyle(Color.secondary)
       .ikaFont(
@@ -219,16 +212,12 @@ struct BattleRotationCellSecondary: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   private var isHorizontalCompact: Bool { horizontalSizeClass == .compact }
 
-  @Environment(IkaPreference.self) private var ikaPreference
-
   let rotation: BattleRotation
   let rowWidth: CGFloat
   let animationNamespaces: BattleRotationCell.AnimationNamespaces?
 
   var body: some View {
     HStack {
-      // MARK: Rule section
-
       VStack(spacing: Scoped.ruleSectionSpacing) {
         ruleIcon
         ruleTitle
@@ -236,33 +225,30 @@ struct BattleRotationCellSecondary: View {
       .frame(width: rowWidth * Scoped.ruleSectionWidthRatio)
       .padding(.trailing, Scoped.ruleSectionPaddingTrailing)
 
-      // MARK: Stage Section
-
       BattleSecondaryStagesLayout {
         battleStageCardA
         battleStageCardB
       }
     }
+    .accessibilityElement(children: .combine)
   }
 
   private var ruleIcon: some View {
-    Image(rotation.rule.imageNameMid)
-      .antialiased(true)
-      .resizable()
-      .scaledToFit()
+    Image(decorative: rotation.rule.imageNameMid)
+      .ikaFitted()
       .shadow(radius: Constants.Style.Global.shadowRadius)
-      .frame(height: rowWidth * Scoped.ruleImgHeightRatio)
-      .padding(Scoped.ruleImgPadding)
-      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.ruleImgFrameCornerRadius))
+      .frame(height: rowWidth * Scoped.ruleImageHeightRatio)
+      .padding(Scoped.ruleImagePadding)
+      .adaptiveGlassEffect(in: .rect(cornerRadius: Scoped.ruleImageFrameCornerRadius))
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.ruleIcon)
+          in: $1.ruleIcon,
+          isSource: false)
       }
   }
 
   private var ruleTitle: some View {
-    // actual rule title
     Text(rotation.rule.name.localizedStringKey)
       .scaledLimitedLine()
       .ikaFont(
@@ -274,7 +260,8 @@ struct BattleRotationCellSecondary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.ruleTitle)
+          in: $1.ruleTitle,
+          isSource: false)
       }
   }
 
@@ -285,7 +272,8 @@ struct BattleRotationCellSecondary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageA)
+          in: $1.stageA,
+          isSource: false)
       }
   }
 
@@ -296,13 +284,13 @@ struct BattleRotationCellSecondary: View {
       .ifLet(animationNamespaces) {
         $0.matchedGeometryEffect(
           id: rotation.id,
-          in: $1.stageB)
+          in: $1.stageB,
+          isSource: false)
       }
   }
 
   private func wrapInIdealFontLayout(_ content: some View) -> some View {
     IdealFontLayout(anchor: .center) {
-      // actual rule title
       content
 
       // all other possible rule titles for the layout to compute ideal size
@@ -313,6 +301,7 @@ struct BattleRotationCellSecondary: View {
             .ika2,
             size: Scoped.ruleFontSize,
             relativeTo: .body)
+          .accessibilityHidden(true)
       }
     }
   }

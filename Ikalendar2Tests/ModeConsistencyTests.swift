@@ -11,17 +11,15 @@ import Testing
 
 // MARK: - ModeConsistencyTests
 
-/// Static invariants across the mode/stage/weapon enums. Several of these guard
-/// raw-value alignments that production code relies on via `?? .default` fallbacks -
-/// if one of these tests fails, a silent fallback would be masking a real modeling bug.
+/// Static invariants across the mode/stage/weapon enums. The FlatMode alignment tests keep
+/// the mode raw values in step; the FlatMode conversions themselves are pinned by
+/// FlatModeConversionTests.
 @Suite("Mode consistency")
 struct ModeConsistencyTests {
   // MARK: - FlatMode <-> BattleMode/GameMode alignment
 
   @Test(arguments: BattleMode.allCases)
   func `Every battle mode raw value maps to a flat mode`(mode: BattleMode) {
-    // Guards IkaPreference/IkaStatus: FlatMode(rawValue: battleMode.rawValue) ?? .default
-    // - the fallback must never actually engage.
     #expect(FlatMode(rawValue: mode.rawValue) != nil)
   }
 

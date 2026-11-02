@@ -10,7 +10,7 @@ import Foundation
 /// Represents a time duration broken down into days, hours, minutes, and seconds.
 ///
 /// This struct is useful for converting a time interval into a human-readable, localized string.
-public struct TimeLength {
+public struct TimeLength: Hashable, Sendable {
   /// The number of days.
   public let days: Int
 
@@ -51,7 +51,6 @@ public struct TimeLength {
   public func localizedDescription(locale: Locale = .current) -> String {
     var elements: [String] = []
 
-    // Determine the appropriate suffixes based on locale
     let (daysSuffix, hoursSuffix, minutesSuffix, secondsSuffix) = localizedSuffixes(for: locale)
 
     if days > 0 {
@@ -69,7 +68,6 @@ public struct TimeLength {
     // Always include seconds
     elements.append(String(seconds) + secondsSuffix)
 
-    // Determine separator based on locale
     let separator = separator(for: locale)
     return elements.joined(separator: separator)
   }
@@ -110,10 +108,10 @@ public struct TimeLength {
       locale.identifier.starts(with: "zh_CN") ||
       locale.identifier.starts(with: "zh_TW")
     {
-      "" // No separator for these languages
+      ""
     }
     else {
-      " " // Space separator for other languages
+      " "
     }
   }
 }

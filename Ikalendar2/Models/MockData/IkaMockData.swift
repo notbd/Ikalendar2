@@ -8,15 +8,16 @@
 import Foundation
 import IkalendarKit
 
-/// Struct providing mock data for testing purpose.
+/// Random mock rotations for SwiftUI previews and debug tooling. `makeBattleRotation()` and
+/// `makeSalmonRotation()` also run in production, feeding the Alternative Stage Images
+/// preview in Settings > Advanced Options. Unit tests use deterministic factories instead.
 /// - Note: Force-unwraps in this file are acceptable by convention: all inputs are
-///   compile-time-known values (non-empty CaseIterable enums, valid calendar math),
-///   and this type is only ever used from previews and debug tooling.
+///   compile-time-known values (non-empty CaseIterable enums, valid calendar math).
 enum IkaMockData {
   /// Generate a mock SalmonRotation data.
   /// - Parameters:
-  ///   - rawStartTime: The raw start time (rotation will start at the next
-  ///                       rounded hour of this time).
+  ///   - rawStartTime: Any time inside the hour the rotation starts at (minutes are dropped).
+  ///                   The rotation lasts 42 h.
   ///   - hasStageAndWeapons: If the rotation has stage and weapon information.
   ///   - mysteryWeaponType: The type of mystery weapon for the rotation. (nil, green, gold)
   /// - Returns: The SalmonRotation data.
@@ -36,13 +37,10 @@ enum IkaMockData {
     var weapons: [SalmonWeapon]?
 
     if hasStageAndWeapons {
-      // Has stage and weapons
       stage = SalmonStage.allCases.randomElement()!
       weapons = []
       if mysteryWeaponType == nil {
-        // No mystery weapons
         for _ in 0 ..< 4 {
-          // no duplicates
           var randomIkaWeapon = IkaWeapon.allCases.randomElement()!
           while weapons!.contains(.vanilla(randomIkaWeapon)) {
             randomIkaWeapon = IkaWeapon.allCases.randomElement()!
@@ -51,12 +49,9 @@ enum IkaMockData {
         }
       }
       else {
-        // Has mystery weapons
         switch mysteryWeaponType! {
           case .green:
-            // Green question mark
             for _ in 0 ..< 3 {
-              // no duplicates
               var randomIkaWeapon = IkaWeapon.allCases.randomElement()!
               while weapons!.contains(.vanilla(randomIkaWeapon)) {
                 randomIkaWeapon = IkaWeapon.allCases.randomElement()!
@@ -67,7 +62,6 @@ enum IkaMockData {
             weapons!.append(SalmonWeapon(mysteryWeapon.id)!)
 
           case .gold:
-            // Gold question mark
             for _ in 0 ..< 4 {
               let mysteryWeapon: MysteryWeapon = .gold
               weapons!.append(SalmonWeapon(mysteryWeapon.id)!)
@@ -129,16 +123,11 @@ enum IkaMockData {
     return salmonRotations
   }
 
-  /// Generate a battle rotation with random stages for a specified rule and raw start time.
+  /// Generate a battle rotation starting at the top of the hour of `rawStartTime`, lasting 2 h,
+  /// with two distinct random stages (never Shifty Station).
   ///
-  /// The battle stage `Shifty Station` is explicitly excluded from the random stage selection.
-  ///
-  /// - Parameters:
-  ///   - rule: The battle rule for the rotation. Defaults to be random.
-  ///   - rawStartTime: The raw start time for the battle rotation. Generated rotation will have started at
-  ///                   the previous rounded hour.
-  ///
-  /// - Returns: The `BattleRotation` object.
+  /// Regular always gets Turf War. For the other modes, `preferredRule` is used when given,
+  /// otherwise a random rule other than Turf War. An unspecified `preferredMode` is random.
   static func makeBattleRotation(
     preferredMode: BattleMode? = nil,
     preferredRule: BattleRule? = nil,
@@ -146,16 +135,11 @@ enum IkaMockData {
     -> BattleRotation
   {
     let startTime = rawStartTime.removeMinutes()!
-    let endTime =
-      Calendar.current.date(
-        byAdding: .hour,
-        value: 2,
-        to: startTime)!
+    let endTime = startTime.addingTimeInterval(BattleRotation.rotationLength)
 
     func makeRandomBattleStage() -> BattleStage {
       var stage = BattleStage.allCases.randomElement()!
       while stage == .shiftyStation {
-        // exclude shifty station
         stage = BattleStage.allCases.randomElement()!
       }
       return stage
@@ -164,7 +148,6 @@ enum IkaMockData {
     let randomStageA = makeRandomBattleStage()
     var randomStageB = makeRandomBattleStage()
     while randomStageB == randomStageA {
-      // avoid duplicate
       randomStageB = makeRandomBattleStage()
     }
 
@@ -196,9 +179,10 @@ enum IkaMockData {
     var battleRotationDict: BattleRotationDict = .init()
     var startTimeArray: [Date] = []
     for index in 0 ..< 8 {
+      // two hours apart like the real feed, so every rotation gets a distinct `id` (84d9261)
       startTimeArray.append(Calendar.current.date(
-        byAdding: .second,
-        value: index * 15,
+        byAdding: .hour,
+        value: index * 2,
         to: Date())!)
     }
 

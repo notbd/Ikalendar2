@@ -8,3 +8,5 @@ Built with VitePress and deployed on Vercel.<br>
 <br>
 Licensed under <a href='./LICENSE'>GPLv3</a>.
 </samp>
+
+Develop: `cd docs && pnpm install && pnpm dev` (Node version in `.nvmrc`, pnpm version in the `packageManager` field of `package.json`).
