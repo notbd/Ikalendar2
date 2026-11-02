@@ -69,17 +69,19 @@ jobs:
       - name: Run SwiftLint
         run: swiftlint --reporter github-actions-logging
 
+  # Runs alongside lint rather than after it: lint takes seconds, and waiting for it
+  # cost a second macOS runner hand-off before the long build could start.
   test:
-    name: Test & Build
+    name: Test
     runs-on: macos-26
-    needs: lint
     timeout-minutes: 45
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v7
 
-      - name: Select Xcode 26 (latest GA)
+      - &select-xcode
+        name: Select Xcode 26 (latest GA)
         run: |
           set -euo pipefail
           # GA bundles only (Xcode_26.6.0.app); betas and release candidates such as
@@ -104,13 +106,13 @@ jobs:
             sudo xcodebuild -downloadPlatform iOS
           fi
 
-      - name: Boot Simulator
+      - name: Start Simulator Boot
         id: sim
         run: |
           set -euo pipefail
-          # Boot and wait before the test step, so the cold boot and the CPU load
-          # while the simulator settles stay out of timed tests. Mirrors OS=latest:
-          # the newest available iOS runtime not newer than the selected SDK.
+          # Starts the cold boot (about 2 minutes on this runner) without waiting, so it
+          # runs during the build; "Wait for Simulator" blocks on it before the tests.
+          # Mirrors OS=latest: the newest available iOS runtime not newer than the SDK.
           SDK_VERSION=$(xcrun --sdk iphonesimulator --show-sdk-version)
           find_runtime() {
             xcrun simctl list -j runtimes | jq -r --arg sdk "$SDK_VERSION" '
@@ -136,19 +138,35 @@ jobs:
             exit 1
           fi
           echo "Booting iPhone 17 on $RUNTIME: $UDID"
-          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl boot "$UDID"
           echo "udid=$UDID" >> "$GITHUB_OUTPUT"
 
-      - name: Ensure xcbeautify
+      - &ensure-xcbeautify
+        name: Ensure xcbeautify
         run: command -v xcbeautify || brew install xcbeautify
 
-      - name: Cache Swift Packages
-        uses: actions/cache@v6
-        with:
-          path: SourcePackages
-          key: spm-${{ runner.os }}-${{ hashFiles('Ikalendar2.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
-          restore-keys: |
-            spm-${{ runner.os }}-
+      # No SPM cache: restoring it took 30 to 54 seconds, longer than cloning the two
+      # small packages, and xcodebuild fetched them again after the restore anyway.
+      - name: Build for Testing
+        id: build
+        env:
+          SIM_UDID: ${{ steps.sim.outputs.udid }}
+        run: |
+          set -o pipefail
+          xcodebuild build-for-testing \
+            -project Ikalendar2.xcodeproj \
+            -scheme Ikalendar2 \
+            -destination "id=$SIM_UDID" \
+            -clonedSourcePackagesDirPath SourcePackages \
+            -onlyUsePackageVersionsFromResolvedFile \
+            -enableCodeCoverage YES \
+            2>&1 | tee raw-build.log | xcbeautify --renderer github-actions
+
+      # Keeps the boot and the CPU load while the simulator settles out of timed tests.
+      - name: Wait for Simulator
+        env:
+          SIM_UDID: ${{ steps.sim.outputs.udid }}
+        run: xcrun simctl bootstatus "$SIM_UDID" -b
 
       - name: Run Unit Tests
         id: test
@@ -156,7 +174,7 @@ jobs:
           SIM_UDID: ${{ steps.sim.outputs.udid }}
         run: |
           set -o pipefail
-          xcodebuild test \
+          xcodebuild test-without-building \
             -project Ikalendar2.xcodeproj \
             -scheme Ikalendar2 \
             -destination "id=$SIM_UDID" \
@@ -176,11 +194,46 @@ jobs:
             echo '```' >> "$GITHUB_STEP_SUMMARY"
           fi
 
-      # Compiles the configuration that ships (Release, device SDK, unsigned). The
-      # test step builds Debug only, so code that compiles only under DEBUG and
-      # Release-only build settings are otherwise never exercised.
+      - &surface-failure-details
+        name: Surface Failure Details
+        if: failure() || cancelled()
+        env:
+          TEST_OUTCOME: ${{ steps.test.outcome }}
+        run: |
+          # Fallback for diagnostics a formatter drops: read the raw xcodebuild logs.
+          for log in raw-build.log raw-test.log raw-release.log; do
+            [ -f "$log" ] || continue
+            # The tail shows where a hung or cancelled build stopped.
+            echo "===== $log (last 80 lines) ====="
+            tail -n 80 "$log" | cut -c1-400
+            # Matches in a passing test log are noise. A cancelled test step has the
+            # outcome "cancelled", so its log is still searched.
+            if [ "$log" = "raw-test.log" ] && [ "$TEST_OUTCOME" = "success" ]; then
+              continue
+            fi
+            echo "===== $log (errors and failures) ====="
+            grep -A 3 -E "error:|\*\* (BUILD|TEST) FAILED \*\*|The following build commands failed" "$log" | cut -c1-400 | head -200 || true
+            grep -B 2 -A 10 -E "recorded an issue|Expectation failed|Fatal error|Test .* failed" "$log" | cut -c1-400 | head -300 || true
+          done
+
+  # Compiles the configuration that ships (Release, device SDK, unsigned). The test
+  # job builds Debug only, so code that compiles only under DEBUG and Release-only
+  # build settings are otherwise never exercised. A job of its own, so it runs on a
+  # second runner at the same time as the test job instead of after it.
+  release:
+    name: Release Build
+    runs-on: macos-26
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - *select-xcode
+
+      - *ensure-xcbeautify
+
       - name: Build Release (device, unsigned)
-        id: release
         run: |
           set -o pipefail
           xcodebuild build \
@@ -193,23 +246,4 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             2>&1 | tee raw-release.log | xcbeautify --renderer github-actions
 
-      - name: Surface Test Failure Details
-        if: failure() || cancelled()
-        env:
-          TEST_OUTCOME: ${{ steps.test.outcome }}
-        run: |
-          # Fallback for diagnostics a formatter drops: read the raw xcodebuild logs.
-          for log in raw-test.log raw-release.log; do
-            [ -f "$log" ] || continue
-            # The tail shows where a hung or cancelled build stopped.
-            echo "===== $log (last 80 lines) ====="
-            tail -n 80 "$log" | cut -c1-400
-            # Matches in a passing test log are noise (e.g. after a Release-only failure). A
-            # cancelled test step has the outcome "cancelled", so its log is still searched.
-            if [ "$log" = "raw-test.log" ] && [ "$TEST_OUTCOME" = "success" ]; then
-              continue
-            fi
-            echo "===== $log (errors and failures) ====="
-            grep -A 3 -E "error:|\*\* (BUILD|TEST) FAILED \*\*|The following build commands failed" "$log" | cut -c1-400 | head -200 || true
-            grep -B 2 -A 10 -E "recorded an issue|Expectation failed|Fatal error|Test .* failed" "$log" | cut -c1-400 | head -300 || true
-          done
+      - *surface-failure-details

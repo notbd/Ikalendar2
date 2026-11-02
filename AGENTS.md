@@ -18,7 +18,7 @@ State as of the overhaul (branch `claude/clever-hamilton-6e120a`, 13 commits on 
 - The `IkaNetworkService` protocol plus an `@Entry` environment key enable test mocks. The app injects an `InertNetworkService` when it runs as a unit-test host, which prevents main-actor contention flakiness.
 - `IkaDecoder` was rewritten on native Codable with a private wire-DTO layer (`FlexibleIntID` handles string-or-int ids). The SwiftyJSON dependency is gone; only SimpleHaptics and AlertKit remain.
 - OSLog loggers (network, decode, store) are wired at the places that used to swallow errors. `IkaNetworkManager` has a dedicated session with 10 s and 30 s timeouts. `AssetImageCounter` memoizes behind `OSAllocatedUnfairLock` (the Kit targets iOS 17, so no `Mutex`).
-- CI pins SwiftFormat 0.64.5 and SwiftLint 0.65.1 from release binaries (`.github/workflows/build-and-test.yml`), caches SPM with `-clonedSourcePackagesDirPath SourcePackages` (gitignored), and Dependabot watches swift and actions.
+- CI pins SwiftFormat 0.64.5 and SwiftLint 0.65.1 from release binaries (`.github/workflows/build-and-test.yml`), clones SPM packages into `SourcePackages` (gitignored, not cached: restoring the cache took longer than cloning), runs lint, the tests and the Release build as three parallel jobs, and boots the simulator during the build. Dependabot watches swift and actions.
 - Owner decisions: no product extensions yet (the Widget is the agreed next candidate), no snapshot tests, Live Activity permanently skipped.
 
 ## Deliberate designs that must not be cleaned up
