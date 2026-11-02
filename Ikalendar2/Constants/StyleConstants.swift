@@ -69,6 +69,8 @@ extension Constants.Style {
       static let badgeFadeInStart: Double = 0.5
       static let badgeSize: CGFloat = 44
       static let badgeImageSize: CGFloat = 28
+      /// For the regular and salmon images, whose artwork looks smaller at the same size.
+      static let badgeImageSizeSparse: CGFloat = 30
     }
   }
 
